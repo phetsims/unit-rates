@@ -1,5 +1,14 @@
 {
   "unit-rates.title": {
     "value": "Unit Rates"
+  },
+  "racing": {
+    "value": "Racing"
+  },
+  "shopping": {
+    "value": "Shopping"
+  },
+  "lab": {
+    "value": "Lab"
   }
 }

@@ -14,17 +14,17 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {UnitRatesModel} unitRatesModel
+   * @param {RacingModel} model
    * @constructor
    */
-  function UnitRatesScreenView( unitRatesModel ) {
+  function RacingScreenView( model ) {
 
     ScreenView.call( this );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
-        unitRatesModel.reset();
+        model.reset();
       },
       right:  this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10
@@ -32,9 +32,9 @@ define( function( require ) {
     this.addChild( resetAllButton );
   }
 
-  unitRates.register( 'UnitRatesScreenView', UnitRatesScreenView );
+  unitRates.register( 'RacingScreenView', RacingScreenView );
 
-  return inherit( ScreenView, UnitRatesScreenView, {
+  return inherit( ScreenView, RacingScreenView, {
 
     //TODO Called by the animation loop. Optional, so if your view has no animation, please delete this.
     // @public

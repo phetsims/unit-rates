@@ -9,12 +9,20 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var UnitRatesScreen = require( 'UNIT_RATES/unit-rates/UnitRatesScreen' );
+  var LabScreen = require( 'UNIT_RATES/lab/LabScreen' );
+  var RacingScreen = require( 'UNIT_RATES/racing/RacingScreen' );
+  var ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
   var unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );
+
+  var screens = [
+    new RacingScreen(),
+    new ShoppingScreen(),
+    new LabScreen()
+  ];
 
   var simOptions = {
     credits: {
@@ -36,7 +44,7 @@ define( function( require ) {
   }
 
   SimLauncher.launch( function() {
-    var sim = new Sim( unitRatesTitleString, [ new UnitRatesScreen() ], simOptions );
+    var sim = new Sim( unitRatesTitleString, screens, simOptions );
     sim.start();
   } );
 } );
