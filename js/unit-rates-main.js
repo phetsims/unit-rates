@@ -1,4 +1,5 @@
 // Copyright 2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * Main entry point for the sim.
@@ -19,8 +20,8 @@ define( function( require ) {
   var unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );
 
   var screens = [
-    new RacingScreen(),
     new ShoppingScreen(),
+    new RacingScreen(),
     new LabScreen()
   ];
 

@@ -9,7 +9,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var Screen = require( 'JOIST/Screen' );
   var ShoppingModel = require( 'UNIT_RATES/shopping/model/ShoppingModel' );
   var ShoppingScreenView = require( 'UNIT_RATES/shopping/view/ShoppingScreenView' );
@@ -18,16 +18,17 @@ define( function( require ) {
   // strings
   var shoppingString = require( 'string!UNIT_RATES/shopping' );
 
+  // images
+  var screenIcon = require( 'image!UNIT_RATES/Shopping-screen-icon.png' );
+
   /**
    * @constructor
    */
   function ShoppingScreen() {
 
-    var icon = new Rectangle( 0, 0, Screen.HOME_SCREEN_ICON_SIZE.width, Screen.HOME_SCREEN_ICON_SIZE.height, {
-      fill: 'green'
-    } );
-
-    Screen.call( this, shoppingString, icon,
+    Screen.call( this,
+      shoppingString,
+      new Image( screenIcon ),
       function() { return new ShoppingModel(); },
       function( model ) { return new ShoppingScreenView( model ); },
       { backgroundColor: 'white' }

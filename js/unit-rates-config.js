@@ -43,5 +43,6 @@ require.config( {
   },
 
   // optional cache buster to make browser refresh load all included scripts, can be disabled with ?cacheBuster=false
-  urlArgs: phet.chipper.getCacheBusterArgs()
+  //FIXME: uncomment urlArgs on publish
+  //urlArgs: phet.chipper.getCacheBusterArgs()
 } );

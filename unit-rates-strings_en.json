@@ -2,11 +2,23 @@
   "unit-rates.title": {
     "value": "Unit Rates"
   },
-  "racing": {
-    "value": "Racing"
-  },
   "shopping": {
     "value": "Shopping"
+  },
+  "sceneOne": {
+    "value": "1"
+  },
+  "numberLine": {
+    "value": "Double Number Line"
+  },
+  "challenges": {
+    "value": "Challenges"
+  },
+  "challenges": {
+    "value": "Challenges"
+  },
+  "racing": {
+    "value": "Racing"
   },
   "lab": {
     "value": "Lab"

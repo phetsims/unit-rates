@@ -1,0 +1,60 @@
+// Copyright 2002-2016, University of Colorado Boulder
+
+/**
+ *
+ * @author Dave Schmitz (Schmitzware)
+ */
+define( function( require ) {
+  'use strict';
+
+  // modules
+  // modules
+  var inherit = require( 'PHET_CORE/inherit' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var SceneMode = require( 'UNIT_RATES/shopping/enum/SceneMode' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+
+  // constants
+  var SCENE_BUTTON_FONT = new PhetFont( 24 );
+
+  // strings
+  var sceneOneString = require( 'string!UNIT_RATES/sceneOne' );
+
+  /**
+   * @param {Property.<SceneMode>} itemTypeProperty
+   * @param {Object} [options]
+   * @constructor
+   */
+  function SceneControlButtons( sceneModeProperty, options ) {
+
+    options = options || {};
+
+    options = _.extend( {
+      orientation: 'vertical',
+      baseColor: 'white',
+      spacing: 15,
+      buttonContentXMargin: 18
+    }, options );
+
+    // FIXME: move number strings to strings file?
+    RadioButtonGroup.call( this, sceneModeProperty, [
+      { value: SceneMode.FRUIT, node: new Text( sceneOneString, { font: SCENE_BUTTON_FONT, maxWidth: 25 } ) },
+      { value: SceneMode.PRODUCE, node: new Text( '2', { font: SCENE_BUTTON_FONT, maxWidth: 25 } ) },
+      { value: SceneMode.CANDY, node: new Text( '3', { font: SCENE_BUTTON_FONT, maxWidth: 25 } ) }
+    ], options );
+  }
+
+  unitRates.register( 'SceneControlButtons', SceneControlButtons );
+
+  return inherit( RadioButtonGroup, SceneControlButtons, {
+
+  } ); // define
+
+} ); // inherit
