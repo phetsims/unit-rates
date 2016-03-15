@@ -37,7 +37,9 @@ define( function( require ) {
 
     // properties
     this.sceneModeProperty = new Property( SceneMode.FRUIT );
-    this.itemTypeProperty = new Property( ItemType.APPLES );
+    this.fruitItemTypeProperty = new Property( ItemType.APPLES );
+    this.produceItemTypeProperty = new Property( ItemType.CARROTS );
+    this.candyItemTypeProperty = new Property( ItemType.RED_CANDY );
 
     // scene buttons
     var sceneControlButtons = new SceneControlButtons( model, this.sceneModeProperty, {
@@ -58,12 +60,22 @@ define( function( require ) {
       top: this.layoutBounds.top + SCREEN_MARGIN } );
     this.addChild( challangesNode );
 
-    // item selection
-    var itemsComboBox = new ItemComboBox( model, this.itemTypeProperty, this, {
+    // item selection - 1 combo boxe for each scene, hidden and shown based on sceneModeProperty
+    var itemComboBoxOptions = {
       left:  this.layoutBounds.left + SCREEN_MARGIN,
       bottom: this.layoutBounds.bottom - SCREEN_MARGIN
-    } );
-    this.addChild( itemsComboBox );
+    };
+    this.fruitItemsComboBox = new ItemComboBox( model, SceneMode.FRUIT, this.fruitItemTypeProperty,
+      this, itemComboBoxOptions);
+    this.addChild( this.fruitItemsComboBox );
+
+    this.produceItemsComboBox = new ItemComboBox( model, SceneMode.PRODUCE, this.produceItemTypeProperty,
+      this, itemComboBoxOptions);
+    this.addChild( this.produceItemsComboBox );
+
+    this.candyItemsComboBox = new ItemComboBox( model, SceneMode.CANDY, this.candyItemTypeProperty,
+      this, itemComboBoxOptions);
+    this.addChild( this.candyItemsComboBox );
 
     // shelf
     var itemShelfNode = new ItemShelfNode( model, {
@@ -82,6 +94,11 @@ define( function( require ) {
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
+        this.sceneModeProperty.reset();
+        this.fruitItemTypeProperty.reset();
+        this.produceItemTypeProperty.reset();
+        this.candyItemTypeProperty.reset();
+
         model.reset();
       },
       right:  this.layoutBounds.maxX - 10,
@@ -90,14 +107,34 @@ define( function( require ) {
     this.addChild( resetAllButton );
 
     // select the scene
-    this.sceneModeProperty.link( function( mode, oldMode ) {
-      itemsComboBox.setSceneMode( mode );
+    var self = this;
+    this.sceneModeProperty.link( function( sceneMode, oldSceneMode ) {
+      // hide/show different combo boxes
+      switch( sceneMode ) {
+        case SceneMode.FRUIT:
+          self.fruitItemsComboBox.visible = true;
+          self.produceItemsComboBox.visible = false;
+          self.candyItemsComboBox.visible = false;
+          break;
+        case SceneMode.PRODUCE:
+          self.fruitItemsComboBox.visible = false;
+          self.produceItemsComboBox.visible = true;
+          self.candyItemsComboBox.visible = false;
+          break;
+        case SceneMode.CANDY:
+          self.fruitItemsComboBox.visible = false;
+          self.produceItemsComboBox.visible = false;
+          self.candyItemsComboBox.visible = true;
+          break;
+        default:
+    }
     } );
 
     // select the item
-    this.itemTypeProperty.link( function( type, oldType ) {
-      console.log( 'Item '  + type );
-    } );
+    // FIXME: multilink property?
+    //this.itemTypeProperty.link( function( itemType, oldItemType ) {
+    //  console.log( 'Item '  + type );
+    //} );
 
   }
 

@@ -35,7 +35,7 @@ define( function( require ) {
     TOMATOES: tomatoesString,
     RED_CANDY: redCandyString,
     YELLOW_CANDY: yellowCandyString,
-    GREEN_CANDY: yellowCandyString,
+    GREEN_CANDY: greenCandyString,
     BLUE_CANDY: blueCandyString
   } );
 
