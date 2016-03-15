@@ -20,26 +20,30 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var Shape = require( 'KITE/Shape' );
+  var Path = require( 'SCENERY/nodes/Path' );
 
   // strings
   var numberLineString = require( 'string!UNIT_RATES/numberLine' );
 
   // constants
-  var LINE_WIDTH = 600;
-  var LINE_HEIGHT = 80;
-  var LINE_AXIS_OFFSET = 15;
-  var LINE_ARROW_SIZE = 3;
+  var BUTTON_CONTENT = new Text( '+', { font: new PhetFont( 18 ), fontWeight: 'bold', maxWidth: 30 } );
+  var BUTTON_COLOR = 'yellow';
 
-  var ADD_BUTTON_CONTENT = new Text( '+', { font: new PhetFont( 18 ), fontWeight: 'bold', maxWidth: 30 } );
-  var ADD_BUTTON_COLOR = 'yellow';
-
+  var GRAPH_BUTTON_SPACING = 10; // horizontal space from button to graph y-axis line
+  var GRAPH_WIDTH = 575;
+  var GRAPH_HEIGHT = 80;
+  var GRAPH_X_AXIS_OFFSET = 10; // offset from origin for the two x-axes
+  var GRAPH_ARROW_SIZE = 3;
+  var GRAPH_ARROW_LABEL_MARGIN = 10;  // horizontal space from arrows to the labels
+  var GRAPH_ARROW_LABEL_OPTIONS = { font: new PhetFont( 14 ), maxWidth: 100 };
 
   /**
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineNode( options ) {
+  function DoubleNumberLineNode( model, options ) {
 
     options = options || {};
 
@@ -49,56 +53,88 @@ define( function( require ) {
 
     // add buttons
     var addCostButton = new RectangularPushButton( {
-      content:ADD_BUTTON_CONTENT,
-      baseColor: ADD_BUTTON_COLOR,
+      content:BUTTON_CONTENT,
+      baseColor: BUTTON_COLOR,
       listener: function() {
         console.log('add Cost');
       }
     } );
     contentNode.addChild( addCostButton );
 
-    var addItemButton = new RectangularPushButton( {
-      content: ADD_BUTTON_CONTENT,
-      baseColor: ADD_BUTTON_COLOR,
+    var addUnitButton = new RectangularPushButton( {
+      content: BUTTON_CONTENT,
+      baseColor: BUTTON_COLOR,
       left: addCostButton.left,
-      top: addCostButton.top + LINE_HEIGHT,
+      top: addCostButton.top + GRAPH_HEIGHT,
       listener: function() {
-        console.log('add Item/Weight');
+        console.log('add Unit');
       }
     } );
-    contentNode.addChild( addItemButton );
+    contentNode.addChild( addUnitButton );
+
+    // graph bounds
+    this.graphBounds = new Bounds2(
+      addUnitButton.right + GRAPH_BUTTON_SPACING,
+      addCostButton.top,
+      GRAPH_WIDTH - GRAPH_ARROW_SIZE,
+      addUnitButton.right + GRAPH_BUTTON_SPACING + GRAPH_HEIGHT);
+
+    /* 4 debugging graphBounds
+    var graphBoundsNode = new Path( new Shape().rect(this.graphBounds.minX, this.graphBounds.minY,
+      this.graphBounds.maxX, this.graphBounds.maxY), {
+      fill: 'grey',
+      stroke: 'red',
+      lineWidth: 1
+    } );
+    contentNode.addChild( graphBoundsNode );
+    */
 
     // lines
-    var zeroMarkerX = addCostButton.right + 10;
-    var zeroMarkerY = ( addItemButton.bottom - addCostButton.top ) / 2;
+    var xOrigin = this.graphBounds.minX;
+    var yOrigin = this.graphBounds.centerY;
 
-    var zeroMarker = new Path( new Shape()
-        .moveTo( zeroMarkerX, addCostButton.top )
-        .lineTo( zeroMarkerX, addItemButton.bottom ), {
+    var xZeroLine = new Path( new Shape()
+        .moveTo( xOrigin, addCostButton.top )
+        .lineTo( xOrigin, addUnitButton.bottom ), {
       stroke: 'black',
       lineWidth: 1.25
     } );
-    contentNode.addChild( zeroMarker );
+    contentNode.addChild( xZeroLine );
 
     var arrowOptions =  {
-        headHeight:LINE_ARROW_SIZE,
-        headWidth: LINE_ARROW_SIZE,
+        headHeight:GRAPH_ARROW_SIZE,
+        headWidth: GRAPH_ARROW_SIZE,
         tailWidth: .1,
         fill: 'black'
       };
-    var topArrowNode = new ArrowNode( zeroMarkerX, zeroMarkerY - LINE_AXIS_OFFSET,
-      LINE_WIDTH, zeroMarkerY - LINE_AXIS_OFFSET, arrowOptions);
+    var topArrowNode = new ArrowNode( xOrigin, yOrigin - GRAPH_X_AXIS_OFFSET,
+      xOrigin + GRAPH_WIDTH, yOrigin - GRAPH_X_AXIS_OFFSET, arrowOptions);
     contentNode.addChild( topArrowNode );
 
-    var bottomArrowNode = new ArrowNode( zeroMarkerX, zeroMarkerY + LINE_AXIS_OFFSET,
-      LINE_WIDTH, zeroMarkerY + LINE_AXIS_OFFSET, arrowOptions);
+    var bottomArrowNode = new ArrowNode( xOrigin, yOrigin + GRAPH_X_AXIS_OFFSET,
+      xOrigin + GRAPH_WIDTH, yOrigin + GRAPH_X_AXIS_OFFSET, arrowOptions);
     contentNode.addChild( bottomArrowNode );
+
+    // arrow labels
+    var topArrowLabel = new Text( 'cost', _.extend( {}, GRAPH_ARROW_LABEL_OPTIONS, {
+        left: topArrowNode.right + GRAPH_ARROW_LABEL_MARGIN,
+        centerY: topArrowNode.centerY
+      } )
+     );
+    contentNode.addChild( topArrowLabel );
+
+    var bottomArrowLabel = new Text( 'unit', _.extend( {}, GRAPH_ARROW_LABEL_OPTIONS, {
+        left: bottomArrowNode.right + GRAPH_ARROW_LABEL_MARGIN,
+        centerY: bottomArrowNode.centerY
+      } )
+     );
+    contentNode.addChild( bottomArrowLabel );
 
     // erase
     var eraserButton = new EraserButton( {
       baseColor: '#f2f2f2',
       left: bottomArrowNode.right,
-      top: addItemButton.bottom + 10,
+      top: addUnitButton.bottom + 10,
       listener: function() {
         console.log('erase');
       }
@@ -117,13 +153,17 @@ define( function( require ) {
       showTitleWhenExpanded: true,
       contentAlign: 'left',
       contentXMargin: 25,
-      contentYMargin: 5,
+      contentYMargin: 5
     } );
 
     this.mutate( options );
   }
 
   return inherit( AccordionBox, DoubleNumberLineNode, {
+
+    addItem: function() {
+
+    },
 
     reset: function() {
       this.expandedProperty.reset();

@@ -12,13 +12,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var SceneMode = require( 'UNIT_RATES/shopping/enum/SceneMode' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   // constants
@@ -32,7 +27,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function SceneControlButtons( sceneModeProperty, options ) {
+  function SceneControlButtons( model, sceneModeProperty, options ) {
 
     options = options || {};
 

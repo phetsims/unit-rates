@@ -14,9 +14,13 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var AccordionBox = require( 'SUN/AccordionBox' );
+  var Property = require( 'AXON/Property' );
 
   // strings
   var challengesString = require( 'string!UNIT_RATES/challenges' );
+  var unitRateString = require( 'string!UNIT_RATES/unitRate' );
+
 
   /**
    * @param {Object} model
@@ -28,17 +32,37 @@ define( function( require ) {
     //
     options = options || {};
 
-    Node.call( this, options );
+    this.expandedProperty = new Property( true );
 
-    var dummyNode = new Text( challengesString, { font: new PhetFont( 18 ), fontWeight: 'bold', maxWidth: 250 } );
-    this.addChild( dummyNode );
+    var contentNode = new Node();
 
+    var dummyNode = new Text( unitRateString, { font: new PhetFont( 14 ),  maxWidth: 100 } );
+    contentNode.addChild( dummyNode );
+
+    AccordionBox.call( this, contentNode, {
+      expandedProperty: this.expandedProperty,
+      fill: 'white',
+      cornerRadius: 10,
+      buttonLength: 20,
+      buttonXMargin: 15,
+      buttonYMargin: 15,
+      titleNode: new Text( challengesString, { font: URConstants.PANEL_TITLE_FONT, maxWidth: 100 } ),
+      titleAlignX: 'left',
+      showTitleWhenExpanded: true,
+      contentAlign: 'left',
+      contentXMargin: 25,
+      contentYMargin: 5
+    } );
+
+    this.mutate( options );
   }
 
-  unitRates.register( 'ChallengesNode', ChallengesNode );
+  return inherit( AccordionBox, ChallengesNode, {
 
-  return inherit( Node, ChallengesNode, {
+    reset: function() {
+      this.expandedProperty.reset();
+    }
 
-  } ); // inherit
+  } );  // define
 
-} ); // define
+} );  // inherit

@@ -30,6 +30,7 @@ define( function( require ) {
       stroke: 'black'
     }, options );
 
+    var content = [ ];
 
     Panel.call( this, content, options );
   }

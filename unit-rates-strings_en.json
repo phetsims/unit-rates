@@ -11,11 +11,47 @@
   "numberLine": {
     "value": "Double Number Line"
   },
-  "challenges": {
-    "value": "Challenges"
+  "apples": {
+    "value": "Apples"
+  },
+  "lemons": {
+    "value": "Lemons"
+  },
+  "oranges": {
+    "value": "Oranges"
+  },
+  "pears": {
+    "value": "Pears"
+  },
+  "carrots": {
+    "value": "Carrots"
+  },
+  "cucumbers": {
+    "value": "Cucumbers"
+  },
+  "potatoes": {
+    "value": "Potatoes"
+  },
+  "tomatoes": {
+    "value": "Tomatoes"
+  },
+  "redCandy": {
+    "value": "Red Candy"
+  },
+  "yellowCandy": {
+    "value": "Yellow Candy"
+  },
+  "greenCandy": {
+    "value": "Green Candy"
+  },
+  "blueCandy": {
+    "value": "Blue Candy"
   },
   "challenges": {
     "value": "Challenges"
+  },
+  "unitRate": {
+    "value": "Unit Rate?"
   },
   "racing": {
     "value": "Racing"
