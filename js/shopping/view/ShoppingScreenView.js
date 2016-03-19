@@ -2,7 +2,7 @@
 
 /**
  *
- * @author TBD
+ * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
   'use strict';
@@ -21,7 +21,7 @@ define( function( require ) {
   var ItemScaleNode = require( 'UNIT_RATES/shopping/view/ItemScaleNode' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Property = require( 'AXON/Property' );
-
+  var Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var SCREEN_MARGIN = 30;
@@ -35,7 +35,12 @@ define( function( require ) {
 
     ScreenView.call( this );
 
+    var self = this;
+
+    this.model = model;
+
     // properties
+    // FIXME: scene & item randomly choosen @ startup
     this.sceneModeProperty = new Property( SceneMode.FRUIT );
     this.fruitItemTypeProperty = new Property( ItemType.APPLES );
     this.produceItemTypeProperty = new Property( ItemType.CARROTS );
@@ -78,28 +83,26 @@ define( function( require ) {
     this.addChild( this.candyItemsComboBox );
 
     // shelf
-    var itemShelfNode = new ItemShelfNode( model, {
+    var itemShelfNode = new ItemShelfNode( model.shelf, {
       centerX:  this.layoutBounds.centerX,
       bottom: this.layoutBounds.bottom - SCREEN_MARGIN
     } );
     this.addChild( itemShelfNode );
 
     // scale
-    var itemScaleNode = new ItemScaleNode( model, {
-      centerX:  this.layoutBounds.centerX,
-      bottom: itemShelfNode.top - 90
-    } );
+    var itemScaleNode = new ItemScaleNode( model.item );
+    itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, itemShelfNode.top - 90 ) );
     this.addChild( itemScaleNode );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
-        this.sceneModeProperty.reset();
-        this.fruitItemTypeProperty.reset();
-        this.produceItemTypeProperty.reset();
-        this.candyItemTypeProperty.reset();
-
         model.reset();
+
+        self.fruitItemTypeProperty.reset();
+        self.produceItemTypeProperty.reset();
+        self.candyItemTypeProperty.reset();
+        self.sceneModeProperty.reset();
       },
       right:  this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10
@@ -107,8 +110,8 @@ define( function( require ) {
     this.addChild( resetAllButton );
 
     // select the scene
-    var self = this;
     this.sceneModeProperty.link( function( sceneMode, oldSceneMode ) {
+
       // hide/show different combo boxes
       switch( sceneMode ) {
         case SceneMode.FRUIT:
@@ -127,14 +130,26 @@ define( function( require ) {
           self.candyItemsComboBox.visible = true;
           break;
         default:
-    }
+      }
     } );
 
     // select the item
-    // FIXME: multilink property?
-    //this.itemTypeProperty.link( function( itemType, oldItemType ) {
-    //  console.log( 'Item '  + type );
-    //} );
+    Property.multilink( [ this.sceneModeProperty, this.fruitItemTypeProperty, this.produceItemTypeProperty,
+      this.candyItemTypeProperty ], function( sceneMode, fruitItemType, produceItemType, candyItemType ) {
+     switch( sceneMode ) {
+        case SceneMode.FRUIT:
+            self.model.itemType = fruitItemType;
+          break;
+        case SceneMode.PRODUCE:
+            self.model.itemType = produceItemType;
+          break;
+        case SceneMode.CANDY:
+            self.model.itemType = candyItemType;
+          break;
+        default:
+    }
+    } );
+
 
   }
 

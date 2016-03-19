@@ -16,7 +16,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
-  var shoppingString = require( 'string!UNIT_RATES/shopping' );
+  var shoppingString = require( 'string!UNIT_RATES/Shopping' );
 
   // images
   var screenIcon = require( 'image!UNIT_RATES/Shopping-screen-icon.png' );

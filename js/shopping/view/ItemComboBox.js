@@ -15,7 +15,6 @@ define( function( require ) {
   var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var ComboBox = require( 'SUN/ComboBox' );

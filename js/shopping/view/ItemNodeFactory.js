@@ -9,16 +9,72 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var ItemType = require( 'UNIT_RATES/shopping/enum/ItemType' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var RadialGradient = require( 'SCENERY/util/RadialGradient' );
 
   // constants
 
 
   var ItemNodeFactory = {
+
+     /**
+     * Creates an item of specified type and size
+     *
+     * @param {ItemType} type
+     * @param {number} size in pixels
+     * @returns {Node}
+     * @public
+     */
+    create: function( type, size ) {
+
+      var item = null;
+
+      switch( type ) {
+        case ItemType.APPLES:
+          item = this.createApple( size );
+          break;
+        case ItemType.LEMONS:
+          item = this.createLemon( size );
+          break;
+        case ItemType.ORANGES:
+          item = this.createOrange( size );
+          break;
+        case ItemType.PEARS:
+          item = this.createPear( size );
+          break;
+        case ItemType.CARROTS:
+          item = this.createCarrot( size );
+          break;
+        case ItemType.CUCUMBERS:
+          item = this.createCucumber( size );
+          break;
+        case ItemType.POTATOES:
+          item = this.createPotatoe( size );
+          break;
+        case ItemType.TOMATOES:
+          item = this.createTomatoe( size );
+          break;
+        case ItemType.RED_CANDY:
+          item = this.createRedCandy( size );
+          break;
+        case ItemType.YELLOW_CANDY:
+          item = this.createYellowCandy( size );
+          break;
+        case ItemType.GREEN_CANDY:
+          item = this.createGreenCandy( size );
+          break;
+        case ItemType.BLUE_CANDY:
+          item = this.createBlueCandy( size );
+          break;
+        default:
+      }
+
+      assert && assert( item !== null, 'Unable to create item node of type:' + type );
+
+      return item;
+    },
 
     // ----------------------------- Fruit ----------------------------- //
 
@@ -32,7 +88,7 @@ define( function( require ) {
     createApple: function( size ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'red', stroke: 'black' } )
+          new Circle( size, { fill: 'crimson', stroke: 'black' } )
         ]
       } );
     },
@@ -47,7 +103,7 @@ define( function( require ) {
     createLemon: function( size ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'yellow', stroke: 'black' } )
+          new Circle( size, { fill: 'gold', stroke: 'black' } )
         ]
       } );
     },
@@ -62,7 +118,7 @@ define( function( require ) {
     createOrange: function( size ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'orange', stroke: 'black' } )
+          new Circle( size, { fill: 'darkorange', stroke: 'black' } )
         ]
       } );
     },
@@ -107,7 +163,7 @@ define( function( require ) {
     createCucumber: function( size ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'green', stroke: 'black' } )
+          new Circle( size, { fill: 'darkgreen', stroke: 'black' } )
         ]
       } );
     },
@@ -122,7 +178,7 @@ define( function( require ) {
     createPotatoe: function( size ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'brown', stroke: 'black' } )
+          new Circle( size, { fill: 'sienna', stroke: 'black' } )
         ]
       } );
     },
@@ -137,7 +193,7 @@ define( function( require ) {
     createTomatoe: function( size ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'red', stroke: 'black' } )
+          new Circle( size, { fill: 'firebrick', stroke: 'black' } )
         ]
       } );
     },
@@ -169,7 +225,7 @@ define( function( require ) {
     createYellowCandy: function( size ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'gold', stroke: 'black' } )
+          new Circle( size, { fill: 'yellow', stroke: 'black' } )
         ]
       } );
     },

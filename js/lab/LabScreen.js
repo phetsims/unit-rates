@@ -16,7 +16,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
-  var labString = require( 'string!UNIT_RATES/lab' );
+  var labString = require( 'string!UNIT_RATES/Lab' );
 
   // images
   var screenIcon = require( 'image!UNIT_RATES/Lab-screen-icon.png' );

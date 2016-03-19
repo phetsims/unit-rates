@@ -10,7 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -18,8 +18,8 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // strings
-  var challengesString = require( 'string!UNIT_RATES/challenges' );
-  var unitRateString = require( 'string!UNIT_RATES/unitRate' );
+  var challengesString = require( 'string!UNIT_RATES/Challenges' );
+  var unitRateString = require( 'string!UNIT_RATES/UnitRate' );
 
 
   /**
@@ -32,7 +32,7 @@ define( function( require ) {
     //
     options = options || {};
 
-    this.expandedProperty = new Property( true );
+    this.expandedProperty = new Property( false );
 
     var contentNode = new Node();
 
@@ -46,7 +46,7 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 15,
       buttonYMargin: 15,
-      titleNode: new Text( challengesString, { font: URConstants.PANEL_TITLE_FONT, maxWidth: 100 } ),
+      titleNode: new Text( challengesString, { font: ShoppingConstants.PANEL_TITLE_FONT, maxWidth: 100 } ),
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       contentAlign: 'left',

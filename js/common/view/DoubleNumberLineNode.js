@@ -10,7 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var AccordionBox = require( 'SUN/AccordionBox' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -22,10 +22,9 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Shape = require( 'KITE/Shape' );
-  var Path = require( 'SCENERY/nodes/Path' );
 
   // strings
-  var numberLineString = require( 'string!UNIT_RATES/numberLine' );
+  var doubleNumberLineString = require( 'string!UNIT_RATES/DoubleNumberLine' );
 
   // constants
   var BUTTON_CONTENT = new Text( '+', { font: new PhetFont( 18 ), fontWeight: 'bold', maxWidth: 30 } );
@@ -148,7 +147,7 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 15,
       buttonYMargin: 15,
-      titleNode: new Text( numberLineString, { font: URConstants.PANEL_TITLE_FONT } ),
+      titleNode: new Text( doubleNumberLineString, { font: ShoppingConstants.PANEL_TITLE_FONT } ),
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       contentAlign: 'left',

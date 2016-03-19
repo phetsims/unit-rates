@@ -16,7 +16,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
-  var racingString = require( 'string!UNIT_RATES/racing' );
+  var racingString = require( 'string!UNIT_RATES/Racing' );
 
   // images
   var screenIcon = require( 'image!UNIT_RATES/Racing-screen-icon.png' );

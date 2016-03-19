@@ -11,7 +11,6 @@
 
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   // constants
   var URConstants = {
@@ -19,7 +18,6 @@
     //----------------------------------------------------------------------------
     // Views
     //----------------------------------------------------------------------------
-    PANEL_TITLE_FONT: new PhetFont( 14 ),
 
     //----------------------------------------------------------------------------
     // Models

@@ -1,62 +1,65 @@
 {
-  "unit-rates.title": {
+  "Unit-Rates.title": {
     "value": "Unit Rates"
   },
-  "shopping": {
+  "Shopping": {
     "value": "Shopping"
   },
-  "sceneOne": {
-    "value": "1"
-  },
-  "numberLine": {
+  "DoubleNumberLine": {
     "value": "Double Number Line"
   },
-  "apples": {
+  "currencySymbol": {
+    "value": "$"
+  },
+  "Cost": {
+    "value": "Cost"
+  },
+  "Apples": {
     "value": "Apples"
   },
-  "lemons": {
+  "Lemons": {
     "value": "Lemons"
   },
-  "oranges": {
+  "Oranges": {
     "value": "Oranges"
   },
-  "pears": {
+  "Pears": {
     "value": "Pears"
   },
-  "carrots": {
+  "Carrots": {
     "value": "Carrots"
   },
-  "cucumbers": {
+  "Cucumbers": {
     "value": "Cucumbers"
   },
-  "potatoes": {
+  "Potatoes": {
     "value": "Potatoes"
   },
-  "tomatoes": {
+  "Tomatoes": {
     "value": "Tomatoes"
   },
-  "redCandy": {
+  "RedCandy": {
     "value": "Red Candy"
   },
-  "yellowCandy": {
+  "YellowCandy": {
     "value": "Yellow Candy"
   },
-  "greenCandy": {
+  "GreenCandy": {
     "value": "Green Candy"
   },
-  "blueCandy": {
+  "BlueCandy": {
     "value": "Blue Candy"
   },
-  "challenges": {
+  "Challenges": {
     "value": "Challenges"
   },
-  "unitRate": {
+  "UnitRate": {
     "value": "Unit Rate?"
   },
-  "racing": {
+  "Racing": {
     "value": "Racing"
   },
-  "lab": {
+  "Lab": {
     "value": "Lab"
   }
 }
