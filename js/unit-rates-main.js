@@ -19,12 +19,6 @@ define( function( require ) {
   // strings
   var unitRatesTitleString = require( 'string!UNIT_RATES/Unit-Rates.title' );
 
-  var screens = [
-    new ShoppingScreen(),
-    new RacingScreen(),
-    new LabScreen()
-  ];
-
   var simOptions = {
     credits: {
       //TODO fill in proper credits, all of these fields are optional, see joist.AboutDialog
@@ -45,6 +39,11 @@ define( function( require ) {
   }
 
   SimLauncher.launch( function() {
+    var screens = [
+      new ShoppingScreen(),
+      new RacingScreen(),
+      new LabScreen()
+    ];
     var sim = new Sim( unitRatesTitleString, screens, simOptions );
     sim.start();
   } );
