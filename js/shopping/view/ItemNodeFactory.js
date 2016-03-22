@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemType = require( 'UNIT_RATES/shopping/enum/ItemType' );
+  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Circle = require( 'SCENERY/nodes/Circle' );
 
@@ -22,7 +22,7 @@ define( function( require ) {
      /**
      * Creates an node of size for specified item
      *
-     * @param {ItemType} type
+     * @param {Item} item
      * @param {number} size in pixels
      * @returns {Node}
      * @public
@@ -32,40 +32,40 @@ define( function( require ) {
       var itemNode = null;
 
       switch( item.type ) {
-        case ItemType.APPLES:
+        case ItemData.APPLES.type:
           itemNode = this.createApple( size );
           break;
-        case ItemType.LEMONS:
+        case ItemData.LEMONS.type:
           itemNode = this.createLemon( size );
           break;
-        case ItemType.ORANGES:
+        case ItemData.ORANGES.type:
           itemNode = this.createOrange( size );
           break;
-        case ItemType.PEARS:
+        case ItemData.PEARS.type:
           itemNode = this.createPear( size );
           break;
-        case ItemType.CARROTS:
+        case ItemData.CARROTS.type:
           itemNode = this.createCarrot( size );
           break;
-        case ItemType.CUCUMBERS:
+        case ItemData.CUCUMBERS.type:
           itemNode = this.createCucumber( size );
           break;
-        case ItemType.POTATOES:
+        case ItemData.POTATOES.type:
           itemNode = this.createPotatoe( size );
           break;
-        case ItemType.TOMATOES:
+        case ItemData.TOMATOES.type:
           itemNode = this.createTomatoe( size );
           break;
-        case ItemType.RED_CANDY:
+        case ItemData.RED_CANDY.type:
           itemNode = this.createRedCandy( size );
           break;
-        case ItemType.YELLOW_CANDY:
+        case ItemData.YELLOW_CANDY.type:
           itemNode = this.createYellowCandy( size );
           break;
-        case ItemType.GREEN_CANDY:
+        case ItemType.GREEN_CANDY.type:
           itemNode = this.createGreenCandy( size );
           break;
-        case ItemType.BLUE_CANDY:
+        case ItemData.BLUE_CANDY.type:
           itemNode = this.createBlueCandy( size );
           break;
         default:

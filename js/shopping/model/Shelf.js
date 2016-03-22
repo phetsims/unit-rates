@@ -11,9 +11,8 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemCollection = require( 'UNIT_RATES/shopping/model/ItemCollection' );
-  var ItemType = require( 'UNIT_RATES/shopping/enum/ItemType' );
+  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var Random = require( 'DOT/Random' );
 
   // contants
@@ -21,14 +20,13 @@ define( function( require ) {
 
   /**
    *
-   * {Property.<ItemType>} itemTypeProperty
    * @constructor
    */
-  function Shelf( itemTypeProperty ) {
+  function Shelf( itemDataProperty ) {
 
-    // @public (all)
-    ItemCollection.call( this, itemTypeProperty );
+    ItemCollection.call( this );
 
+    this.itemDataProperty = itemDataProperty;
     this.populate();
   }
 
@@ -36,20 +34,27 @@ define( function( require ) {
 
   return inherit( ItemCollection, Shelf, {
 
-    // Resets all model elements
+    /**
+     * Populates all item types
+     * @private
+     */
     populate: function() {
 
       // FIXME: populate all item types
-      for (var key in ItemType) {
+      for (var key in ItemData) {
+        var itemData = ItemData[ key ];
         var itemCount = RAND.random() * 10;
         for (var i = 0; i < itemCount; i++) {
-          this.createItem( ItemType[key], 1, ShoppingConstants.APPLE_RATE );
+          this.createItem( itemData.type, 1, itemData.rate );
         }
       }
     },
 
-    // Resets all model elements
-    reset: function() {
+    /**
+     * Resets all model elements
+     * @private
+     */
+   reset: function() {
       ItemCollection.prototype.reset.call( this );
       this.populate();
     }

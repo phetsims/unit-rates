@@ -11,7 +11,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var SceneMode = require( 'UNIT_RATES/shopping/enum/SceneMode' );
-  var ItemType = require( 'UNIT_RATES/shopping/enum/ItemType' );
+  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
@@ -25,12 +25,12 @@ define( function( require ) {
 
   /**
    *
-   * @param {Property.<ItemType>} itemModeProperty
+   * @param {Property.<ItemData>} itemDataProperty
    * @param {Node}
    * @param {Object} [options]
    * @constructor
    */
-  function ItemComboBox( model, sceneMode, itemModeProperty, parentNode, options ) {
+  function ItemComboBox( model, sceneMode, itemDataProperty, parentNode, options ) {
 
     options = _.extend( {
       listPosition: 'above',
@@ -46,44 +46,44 @@ define( function( require ) {
     switch( sceneMode ) {
       case SceneMode.FRUIT:
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.APPLES, ItemNodeFactory.createApple( ICON_SIZE ) ), ItemType.APPLES )
+          this.createItemRow( ItemData.APPLES.type, ItemNodeFactory.createApple( ICON_SIZE ) ), ItemData.APPLES )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.LEMONS, ItemNodeFactory.createLemon( ICON_SIZE ) ), ItemType.LEMONS )
+          this.createItemRow( ItemData.LEMONS.type, ItemNodeFactory.createLemon( ICON_SIZE ) ), ItemData.LEMONS )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.ORANGES, ItemNodeFactory.createOrange( ICON_SIZE ) ), ItemType.ORANGES )
+          this.createItemRow( ItemData.ORANGES.type, ItemNodeFactory.createOrange( ICON_SIZE ) ), ItemData.ORANGES )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.PEARS, ItemNodeFactory.createPear( ICON_SIZE ) ), ItemType.PEARS )
+          this.createItemRow( ItemData.PEARS.type, ItemNodeFactory.createPear( ICON_SIZE ) ), ItemData.PEARS )
         );
         break;
       case SceneMode.PRODUCE:
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.CARROTS, ItemNodeFactory.createCarrot( ICON_SIZE ) ), ItemType.CARROTS )
+          this.createItemRow( ItemData.CARROTS.type, ItemNodeFactory.createCarrot( ICON_SIZE ) ), ItemData.CARROTS )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.CUCUMBERS, ItemNodeFactory.createCucumber( ICON_SIZE ) ), ItemType.CUCUMBERS )
+          this.createItemRow( ItemData.CUCUMBERS.type, ItemNodeFactory.createCucumber( ICON_SIZE ) ), ItemData.CUCUMBERS )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.POTATOES, ItemNodeFactory.createPotatoe( ICON_SIZE ) ), ItemType.POTATOES )
+          this.createItemRow( ItemData.POTATOES.type, ItemNodeFactory.createPotatoe( ICON_SIZE ) ), ItemData.POTATOES )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.TOMATOES, ItemNodeFactory.createTomatoe( ICON_SIZE ) ), ItemType.TOMATOES )
+          this.createItemRow( ItemData.TOMATOES.type, ItemNodeFactory.createTomatoe( ICON_SIZE ) ), ItemData.TOMATOES )
         );
         break;
       case SceneMode.CANDY:
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.RED_CANDY, ItemNodeFactory.createRedCandy( ICON_SIZE ) ), ItemType.RED_CANDY )
+          this.createItemRow( ItemData.RED_CANDY.type, ItemNodeFactory.createRedCandy( ICON_SIZE ) ), ItemData.RED_CANDY )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.YELLOW_CANDY, ItemNodeFactory.createYellowCandy( ICON_SIZE ) ), ItemType.YELLOW_CANDY )
+          this.createItemRow( ItemData.YELLOW_CANDY.type, ItemNodeFactory.createYellowCandy( ICON_SIZE ) ), ItemData.YELLOW_CANDY )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.GREEN_CANDY, ItemNodeFactory.createGreenCandy( ICON_SIZE ) ), ItemType.GREEN_CANDY )
+          this.createItemRow( ItemData.GREEN_CANDY.type, ItemNodeFactory.createGreenCandy( ICON_SIZE ) ), ItemData.GREEN_CANDY )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemType.BLUE_CANDY, ItemNodeFactory.createBlueCandy( ICON_SIZE ) ), ItemType.BLUE_CANDY )
+          this.createItemRow( ItemData.BLUE_CANDY.type, ItemNodeFactory.createBlueCandy( ICON_SIZE ) ), ItemData.BLUE_CANDY )
         );
         break;
       default:
@@ -91,7 +91,7 @@ define( function( require ) {
 
     assert && assert( items.length > 0, 'Item list is empty' );
 
-    ComboBox.call( this, items, itemModeProperty, parentNode, options );
+    ComboBox.call( this, items, itemDataProperty, parentNode, options );
   }
 
   unitRates.register( 'ItemComboBox', ItemComboBox );

@@ -42,7 +42,7 @@ define( function( require ) {
     // @protected
     this.shelf = shelf;
 
-    // @protected
+    // @protected - used to tell when an item node is moved
     this.dragEndEmitter = new Emitter();
     this.dragEndEmitter.addListener( itemMovedCallback );
 
@@ -65,7 +65,7 @@ define( function( require ) {
     options.children = [ this.shelfNode ];
 
     // refresh on item change
-    shelf.itemTypeProperty.link( function( type, oldType ) {
+    shelf.itemDataProperty.link( function( type, oldType ) {
       self.refresh();
     } );
 
@@ -79,7 +79,10 @@ define( function( require ) {
 
   return inherit( Node, ItemShelfNode, {
 
-    //
+    /**
+     * Creates nodes for each item
+     * @@public
+     */
     refresh: function() {
 
       var self = this;
@@ -88,11 +91,12 @@ define( function( require ) {
       this.shelfNode.removeAllChildren();
 
       // create nodes for all items of type
-      var itemArray = this.shelf.getItemsWithType( this.shelf.itemTypeProperty.value );
+      var itemArray = this.shelf.getItemsWithType( this.shelf.itemDataProperty.value.type );
       itemArray.forEach( function( item ) {
 
         var itemNode = ItemNodeFactory.createNode( item, ShoppingConstants.ITEM_SIZE );
 
+        // translate node according to item position property
         item.positionProperty.link( function( position, oldPosition ) {
           itemNode.translation = position;
         } );
@@ -125,7 +129,7 @@ define( function( require ) {
           },
 
           translate: function( translation ) {
-            // move node
+            // update node position
             item.positionProperty.value = translation.position;
             console.log('translate: ' + translation);
           }

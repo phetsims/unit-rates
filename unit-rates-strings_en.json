@@ -11,8 +11,14 @@
   "currencySymbol": {
     "value": "$"
   },
+  "weightUnit": {
+    "value": "lbs"
+  },
   "Cost": {
     "value": "Cost"
+  },
+  "Weight": {
+    "value": "Weight"
   },
   "Apples": {
     "value": "Apples"

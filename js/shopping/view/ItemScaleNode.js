@@ -45,18 +45,20 @@ define( function( require ) {
     this.addChild( weighScaleImage );
 
     // cost of items display, always visible
-    var costDisplayNode = new ValueDisplayNode( {
+    // @private
+    this.costDisplayNode = new ValueDisplayNode( {
       centerX: this.centerX - ( DISPLAY_SIZE.width / 2 ) - DISPLAY_SPACING,
       centerY: this.bottom - DISPLAY_BOTTOM_OFFSET
     } );
-    this.addChild( costDisplayNode );
+    this.addChild( this.costDisplayNode );
 
     // weight of items display, visibility changes
-    var weightDisplayNode = new ValueDisplayNode( {
+    // @private
+    this.weightDisplayNode = new ValueDisplayNode( {
       centerX: this.centerX + ( DISPLAY_SIZE.width / 2 ) + DISPLAY_SPACING,
       centerY: this.bottom - DISPLAY_BOTTOM_OFFSET
     } );
-    this.addChild( weightDisplayNode );
+    this.addChild( this.weightDisplayNode );
   }
 
   /**
@@ -76,13 +78,14 @@ define( function( require ) {
       align: 'center'
     }, options );
 
-    var valueText = new Text( '-', {
+    // @private
+    this.valueText = new Text( '-', {
       font: DISPLAY_FONT,
       maxWidth: 0.9 * DISPLAY_SIZE.width,
       maxHeight: 0.9 * DISPLAY_SIZE.height
     } );
 
-    return new Panel( valueText, options);
+    return new Panel( this.valueText, options);
   }
 
   unitRates.register( 'ItemScaleNode', ItemScaleNode );
@@ -91,6 +94,7 @@ define( function( require ) {
 
     /**
      * Reset the  scale node to its initial state
+     * @public
      */
     reset: function() {
     }

@@ -12,7 +12,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SceneMode = require( 'UNIT_RATES/shopping/enum/SceneMode' );
-  var ItemType = require( 'UNIT_RATES/shopping/enum/ItemType' );
+  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var SceneControlButtons = require( 'UNIT_RATES/shopping/view/SceneControlButtons' );
   var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
   var ChallangesNode = require( 'UNIT_RATES/common/view/ChallangesNode' );
@@ -42,9 +42,9 @@ define( function( require ) {
     // properties
     // FIXME: scene & item randomly choosen @ startup
     this.sceneModeProperty = new Property( SceneMode.FRUIT );
-    this.fruitItemTypeProperty = new Property( ItemType.APPLES );
-    this.produceItemTypeProperty = new Property( ItemType.CARROTS );
-    this.candyItemTypeProperty = new Property( ItemType.RED_CANDY );
+    this.fruitItemDataProperty = new Property( ItemData.APPLES );
+    this.produceItemDataProperty = new Property( ItemData.CARROTS );
+    this.candyItemDataProperty = new Property( ItemData.RED_CANDY );
 
     // scene buttons
     var sceneControlButtons = new SceneControlButtons( model, this.sceneModeProperty, {
@@ -70,15 +70,15 @@ define( function( require ) {
       left:  this.layoutBounds.left + SCREEN_MARGIN,
       bottom: this.layoutBounds.bottom - SCREEN_MARGIN
     };
-    this.fruitItemsComboBox = new ItemComboBox( model, SceneMode.FRUIT, this.fruitItemTypeProperty,
+    this.fruitItemsComboBox = new ItemComboBox( model, SceneMode.FRUIT, this.fruitItemDataProperty,
       this, itemComboBoxOptions);
     this.addChild( this.fruitItemsComboBox );
 
-    this.produceItemsComboBox = new ItemComboBox( model, SceneMode.PRODUCE, this.produceItemTypeProperty,
+    this.produceItemsComboBox = new ItemComboBox( model, SceneMode.PRODUCE, this.produceItemDataProperty,
       this, itemComboBoxOptions);
     this.addChild( this.produceItemsComboBox );
 
-    this.candyItemsComboBox = new ItemComboBox( model, SceneMode.CANDY, this.candyItemTypeProperty,
+    this.candyItemsComboBox = new ItemComboBox( model, SceneMode.CANDY, this.candyItemDataProperty,
       this, itemComboBoxOptions);
     this.addChild( this.candyItemsComboBox );
 
@@ -98,17 +98,17 @@ define( function( require ) {
     this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this) );
 
     // select the item based on scene & item selection
-    Property.multilink( [ this.sceneModeProperty, this.fruitItemTypeProperty, this.produceItemTypeProperty,
-      this.candyItemTypeProperty ], this.itemSelectionChanged.bind( this ) );
+    Property.multilink( [ this.sceneModeProperty, this.fruitItemDataProperty, this.produceItemDataProperty,
+      this.candyItemDataProperty ], this.itemSelectionChanged.bind( this ) );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
 
-        self.fruitItemTypeProperty.reset();
-        self.produceItemTypeProperty.reset();
-        self.candyItemTypeProperty.reset();
+        self.fruitItemDataProperty.reset();
+        self.produceItemDataProperty.reset();
+        self.candyItemDataProperty.reset();
         self.sceneModeProperty.reset();
       },
       right:  this.layoutBounds.maxX - 10,
@@ -147,21 +147,22 @@ define( function( require ) {
     },
 
     // @private
-    itemSelectionChanged: function( sceneMode, fruitItemType, produceItemType, candyItemType ) {
+    itemSelectionChanged: function( sceneMode, fruitItemData, produceItemData, candyItemData ) {
       switch( sceneMode ) {
         case SceneMode.FRUIT:
-            this.model.itemType = fruitItemType;
+            this.model.itemData = fruitItemData;
           break;
         case SceneMode.PRODUCE:
-            this.model.itemType = produceItemType;
+            this.model.itemData = produceItemData;
           break;
         case SceneMode.CANDY:
-            this.model.itemType = candyItemType;
+            this.model.itemData = candyItemData;
           break;
         default:
       }
     },
 
+    // Called when an item's node is dragged to a new location
     // @private
     itemMoved: function( item ) {
 
@@ -173,7 +174,6 @@ define( function( require ) {
       // Snap back to shelf
       item.reset();
       this.itemShelfNode.refresh();
-
     }
 
   } ); // inherit

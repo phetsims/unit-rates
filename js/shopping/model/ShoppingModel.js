@@ -14,23 +14,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
   var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
-  var ItemType = require( 'UNIT_RATES/shopping/enum/ItemType' );
-
-  // strings
-  /*
-  var applesString = require( 'string!UNIT_RATES/Apples' );
-  var lemonsString = require( 'string!UNIT_RATES/Lemons' );
-  var orangesString = require( 'string!UNIT_RATES/Oranges' );
-  var pearsString = require( 'string!UNIT_RATES/Pears' );
-  var carrotsString = require( 'string!UNIT_RATES/Carrots' );
-  var cucumbersString = require( 'string!UNIT_RATES/Cucumbers' );
-  var potatoesString = require( 'string!UNIT_RATES/Potatoes' );
-  var tomatoesString = require( 'string!UNIT_RATES/Tomatoes' );
-  var redCandyString = require( 'string!UNIT_RATES/RedCandy' );
-  var yellowCandyString = require( 'string!UNIT_RATES/YellowCandy' );
-  var greenCandyString = require( 'string!UNIT_RATES/GreenCandy' );
-  var blueCandyString = require( 'string!UNIT_RATES/BlueCandy' );
-  */
+  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
 
   /**
    * @constructor
@@ -39,15 +23,15 @@ define( function( require ) {
 
     // @public (all)
     PropertySet.call( this, {
-      itemType: ItemType.APPLES
+      itemData: ItemData.APPLES
     } );
 
     // @public
-    this.shelf = new Shelf( this.itemTypeProperty );
-    this.scale = new Scale( this.itemTypeProperty );
+    this.shelf = new Shelf( this.itemDataProperty );
+    this.scale = new Scale( this.itemDataProperty );
 
     //
-    this.itemTypeProperty.link( function( type, oldType ) {
+    this.itemDataProperty.link( function( data, oldData ) {
     } );
   }
 

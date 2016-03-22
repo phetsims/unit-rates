@@ -17,25 +17,19 @@ define( function( require ) {
 
   /**
    *
-   * {Property.<ItemType>} itemTypeProperty
    * @constructor
    */
-  function Scale( itemTypeProperty ) {
+  function Scale( itemDataProperty ) {
 
     // @public (all)
-    ItemCollection.call( this, itemTypeProperty, {
+    ItemCollection.call( this, itemDataProperty, {
     } );
 
     var self = this;
 
+    this.itemDataProperty = itemDataProperty;
     this.costProperty = new Property( 0.0 );
     this.weightProperty = new Property( 0.0 );
-
-    // on item change
-    this.itemTypeProperty.link( function( type, oldType ) {
-
-
-    } );
   }
 
   unitRates.register( 'Scale', Scale );
