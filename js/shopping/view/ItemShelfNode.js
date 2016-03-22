@@ -29,7 +29,7 @@ define( function( require ) {
 
   /**
    * @param {Shelf} shelf
-   * @param (function (item)} itemMovedCallback // FIXME hwo to document
+   * @param (function} itemMovedCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
@@ -69,8 +69,13 @@ define( function( require ) {
       self.refresh();
     } );
 
-    // refresh on item addition/removal
-    shelf.addListeners( self.refresh.bind( this ), self.refresh.bind( this ) );
+    // refresh on item additions/removals
+    shelf.addListeners( function( item, observableArray ) {
+      self.refresh()
+    },
+    function( item, observableArray ) {
+      self.refresh()
+    } );
 
     Node.call( this, options );
   }
@@ -94,7 +99,7 @@ define( function( require ) {
       var itemArray = this.shelf.getItemsWithType( this.shelf.itemDataProperty.value.type );
       itemArray.forEach( function( item ) {
 
-        var itemNode = ItemNodeFactory.createNode( item, ShoppingConstants.ITEM_SIZE );
+        var itemNode = ItemNodeFactory.createItemNode( item, ShoppingConstants.ITEM_SIZE );
 
         // translate node according to item position property
         item.positionProperty.link( function( position, oldPosition ) {

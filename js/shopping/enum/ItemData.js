@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ * Container for all supported items & assocaited static attributes (type,unit,rate)
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

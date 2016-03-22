@@ -167,7 +167,7 @@ define( function( require ) {
     itemMoved: function( item ) {
 
       // Remove from shelf
-      //this.model.shelf.removeItem( item );
+      this.model.shelf.removeItem( item );
 
       // Add to scale
 

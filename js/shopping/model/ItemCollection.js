@@ -1,7 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A collection of different types of items (i.e. apple, cucumbers, blue candy)
+ * A collection of all different types of items (i.e. apple, cucumbers, blue candy). Specific type of items
+ * are collected in their own ObservableArray. Specific arrays are mapped by item type.
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -35,9 +36,9 @@ define( function( require ) {
 
     /**
      * Creates a new item/adds it to the types specific array
-     * @param {ItemType} type
-     * @param {ItemUnit} unit
-     * @param {ItemRate} rate
+     * @param {string} type
+     * @param {string | number} unit
+     * @param {number} rate
      * @public
      */
     createItem: function( type, unit, rate ) {
@@ -46,8 +47,9 @@ define( function( require ) {
 
     /**
      * Adds an item to the types specific array
-
-          * @public
+     *
+     * @param {Item} item
+     * @public
      */
      addItem: function( item ) {
       var itemArray = this.getItemsWithType( item.type );
@@ -57,6 +59,7 @@ define( function( require ) {
 
     /**
      * Removes an item from the types specific array
+     * @param {Item} item
      * @public
      */
     removeItem: function( item ) {
@@ -67,6 +70,9 @@ define( function( require ) {
 
     /**
      * Adds addition/removal listeners to all type specific arrays
+     *
+     * @param {function( Item, ObservableArray )} itemAddedListener
+     * @param {function( Item, ObservableArray )} itemRemovedListener
      * @public
      */
     addListeners: function( itemAddedListener, itemRemovedListener ) {
@@ -78,6 +84,8 @@ define( function( require ) {
 
     /**
      * Gets the collection for a specific type, or create an empty collection if none exists
+     *
+     * @param {string} type
      * @protected
      */
     getItemsWithType: function( type ) {

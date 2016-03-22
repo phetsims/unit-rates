@@ -27,7 +27,7 @@ define( function( require ) {
      * @returns {Node}
      * @public
      */
-    createNode: function( item, size ) {
+    createItemNode: function( item, size ) {
 
       var itemNode = null;
 
@@ -72,6 +72,8 @@ define( function( require ) {
       }
 
       assert && assert( itemNode !== null, 'Unable to create item node of type:' + item.type );
+
+      itemNode.item = item;
 
       return itemNode;
     },
