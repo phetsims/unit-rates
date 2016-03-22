@@ -13,56 +13,74 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Item = require( 'UNIT_RATES/shopping/model/Item' );
-  var ItemType = require( 'UNIT_RATES/shopping/enum/ItemType' );
-
+  var ObservableArray = require( 'AXON/ObservableArray' );
 
   /**
    * @constructor
    */
   function ItemCollection( itemTypeProperty ) {
 
-    // @public (all)
-    PropertySet.call( this, {
-      items: null // the current item collection
-    } );
-
     var self = this;
 
     this.itemTypeProperty = itemTypeProperty;
 
     // @private - the collection of different types of items
-    this.itemsMap= {};
+    this.itemsMap = {};
 
     // on item change, fetch the current collection
     this.itemTypeProperty.link( function( type, oldType ) {
       self.items = self.getItemsWithType( type );
     } );
+
+    Object.call( this );
   }
 
   unitRates.register( 'ItemCollection', ItemCollection );
 
   return inherit( PropertySet, ItemCollection, {
 
-    // Resets all model elements
-    createItem: function( type, unit, rate, initialPosition ) {
-      this.items.push( new Item( this.itemTypeProperty.value, unit, rate, initialPosition ) );
+    // Creates a new item
+    // @public
+    createItem: function( type, unit, rate ) {
+      this.addItem( new Item( type, unit, rate ) );
+    },
+
+    // @public
+    addItem: function( item ) {
+      var itemArray = this.getItemsWithType( item.type );
+      itemArray.add( item );
+      console.log( 'addItem ' + item.type);
+    },
+
+    // @public
+    removeItem: function( item ) {
+      var itemArray = this.getItemsWithType( item.type );
+      itemArray.remove( item );
+      console.log( 'removeItem ' + item.type);
     },
 
     // Gets the collection for a specific type, or create an empty collection if none exists
     getItemsWithType: function( type ) {
-
       if ( !this.itemsMap.hasOwnProperty( type ) ) {
         console.log( 'New ' + type + ' Collection: ');
-        this.itemsMap[ type ] = [];
+
+        var itemArray = new ObservableArray();
+        this.itemsMap[ type ] = itemArray;
       }
 
       return this.itemsMap[ type ];
     },
 
+    addListeners: function( itemAddedListener, itemRemovedListener ) {
+      for (var type in this.itemsMap) {
+        var itemArray = this.getItemsWithType( type );
+        itemArray.addListeners( itemAddedListener, itemRemovedListener );
+      }
+    },
+
     // Resets all model elements
     reset: function() {
-      this.items = [];
-      PropertySet.prototype.reset.call( this );
+      this.itemsMap = {};
     }
 
   } );

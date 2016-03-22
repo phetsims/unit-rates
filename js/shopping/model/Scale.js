@@ -13,45 +13,46 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemCollection = require( 'UNIT_RATES/shopping/model/ItemCollection' );
-  var ItemType = require( 'UNIT_RATES/shopping/enum/ItemType' );
-  var Random = require( 'DOT/Random' );
-
-  // contants
-  var RAND = new Random();
+  var Property = require( 'AXON/Property' );
 
   /**
    *
    * {Property.<ItemType>} itemTypeProperty
    * @constructor
    */
-  function Shelf( itemTypeProperty ) {
+  function Scale( itemTypeProperty ) {
 
     // @public (all)
-    ItemCollection.call( this, itemTypeProperty );
+    ItemCollection.call( this, itemTypeProperty, {
+    } );
 
-    this.populate();
+    var self = this;
+
+    this.costProperty = new Property( 0.0 );
+    this.weightProperty = new Property( 0.0 );
+
+    // on item change
+    this.itemTypeProperty.link( function( type, oldType ) {
+
+
+    } );
   }
 
-  unitRates.register( 'Shelf', Shelf );
+  unitRates.register( 'Scale', Scale );
 
-  return inherit( ItemCollection, Shelf, {
-
-    // Resets all model elements
-    populate: function() {
-
-      // FIXME: populate all item types
-      for (var key in ItemType) {
-        var itemCount = RAND.random() * 10;
-        for (var i = 0; i < itemCount; i++) {
-          this.createItem( ItemType[key], 1, ShoppingConstants.APPLE_RATE );
-        }
-      }
-    },
+  return inherit( ItemCollection, Scale, {
 
     // Resets all model elements
+    // @public
     reset: function() {
       ItemCollection.prototype.reset.call( this );
-      this.populate();
+    },
+
+    // @private
+    updateValues: function() {
+      // FIXME
+      this.costProperty = 0.0;
+      this.weightProperty = 0.0;
     }
 
   } );

@@ -25,7 +25,7 @@ define( function( require ) {
 
   // constants
   var SCREEN_MARGIN = 30;
-  var PANEL_HORIZONTAL_SPACING = 30;
+  var PANEL_HORIZONTAL_SPACING = 30; // space between scene buttons/numberline/challenges
 
   /**
    * @param {ShoppingModel} model
@@ -82,17 +82,24 @@ define( function( require ) {
       this, itemComboBoxOptions);
     this.addChild( this.candyItemsComboBox );
 
+    // scale
+    var itemScaleNode = new ItemScaleNode( model.scale );
+    itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, doubleNumberLineNode.bottom + 200 ) );
+    this.addChild( itemScaleNode );
+
     // shelf
-    var itemShelfNode = new ItemShelfNode( model.shelf, {
+    this.itemShelfNode = new ItemShelfNode( model.shelf, this.itemMoved.bind (this ), {
       centerX:  this.layoutBounds.centerX,
       bottom: this.layoutBounds.bottom - SCREEN_MARGIN
     } );
-    this.addChild( itemShelfNode );
+    this.addChild( this.itemShelfNode );
 
-    // scale
-    var itemScaleNode = new ItemScaleNode( model.item );
-    itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, itemShelfNode.top - 90 ) );
-    this.addChild( itemScaleNode );
+    // select the scene
+    this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this) );
+
+    // select the item based on scene & item selection
+    Property.multilink( [ this.sceneModeProperty, this.fruitItemTypeProperty, this.produceItemTypeProperty,
+      this.candyItemTypeProperty ], this.itemSelectionChanged.bind( this ) );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
@@ -109,58 +116,64 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    // select the scene
-    this.sceneModeProperty.link( function( sceneMode, oldSceneMode ) {
-
-      // hide/show different combo boxes
-      switch( sceneMode ) {
-        case SceneMode.FRUIT:
-          self.fruitItemsComboBox.visible = true;
-          self.produceItemsComboBox.visible = false;
-          self.candyItemsComboBox.visible = false;
-          break;
-        case SceneMode.PRODUCE:
-          self.fruitItemsComboBox.visible = false;
-          self.produceItemsComboBox.visible = true;
-          self.candyItemsComboBox.visible = false;
-          break;
-        case SceneMode.CANDY:
-          self.fruitItemsComboBox.visible = false;
-          self.produceItemsComboBox.visible = false;
-          self.candyItemsComboBox.visible = true;
-          break;
-        default:
-      }
-    } );
-
-    // select the item
-    Property.multilink( [ this.sceneModeProperty, this.fruitItemTypeProperty, this.produceItemTypeProperty,
-      this.candyItemTypeProperty ], function( sceneMode, fruitItemType, produceItemType, candyItemType ) {
-     switch( sceneMode ) {
-        case SceneMode.FRUIT:
-            self.model.itemType = fruitItemType;
-          break;
-        case SceneMode.PRODUCE:
-            self.model.itemType = produceItemType;
-          break;
-        case SceneMode.CANDY:
-            self.model.itemType = candyItemType;
-          break;
-        default:
-    }
-    } );
-
-
   }
 
   unitRates.register( 'ShoppingScreenView', ShoppingScreenView );
 
   return inherit( ScreenView, ShoppingScreenView, {
 
-    //TODO Called by the animation loop. Optional, so if your view has no animation, please delete this.
-    // @public
-    step: function( dt ) {
-      //TODO Handle view animation here.
+    // @private
+    sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
+
+      // hide/show different combo boxes based on scene selection
+      switch( sceneMode ) {
+        case SceneMode.FRUIT:
+          this.fruitItemsComboBox.visible   = true;
+          this.produceItemsComboBox.visible = false;
+          this.candyItemsComboBox.visible   = false;
+          break;
+        case SceneMode.PRODUCE:
+          this.fruitItemsComboBox.visible   = false;
+          this.produceItemsComboBox.visible = true;
+          this.candyItemsComboBox.visible   = false;
+          break;
+        case SceneMode.CANDY:
+          this.fruitItemsComboBox.visible   = false;
+          this.produceItemsComboBox.visible = false;
+          this.candyItemsComboBox.visible   = true;
+          break;
+        default:
+      }
+    },
+
+    // @private
+    itemSelectionChanged: function( sceneMode, fruitItemType, produceItemType, candyItemType ) {
+      switch( sceneMode ) {
+        case SceneMode.FRUIT:
+            this.model.itemType = fruitItemType;
+          break;
+        case SceneMode.PRODUCE:
+            this.model.itemType = produceItemType;
+          break;
+        case SceneMode.CANDY:
+            this.model.itemType = candyItemType;
+          break;
+        default:
+      }
+    },
+
+    // @private
+    itemMoved: function( item ) {
+
+      // Remove from shelf
+      //this.model.shelf.removeItem( item );
+
+      // Add to scale
+
+      // Snap back to shelf
+      item.reset();
+      this.itemShelfNode.refresh();
+
     }
 
   } ); // inherit

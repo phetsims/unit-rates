@@ -20,60 +20,60 @@ define( function( require ) {
   var ItemNodeFactory = {
 
      /**
-     * Creates an item of specified type and size
+     * Creates an node of size for specified item
      *
      * @param {ItemType} type
      * @param {number} size in pixels
      * @returns {Node}
      * @public
      */
-    create: function( type, size ) {
+    createNode: function( item, size ) {
 
-      var item = null;
+      var itemNode = null;
 
-      switch( type ) {
+      switch( item.type ) {
         case ItemType.APPLES:
-          item = this.createApple( size );
+          itemNode = this.createApple( size );
           break;
         case ItemType.LEMONS:
-          item = this.createLemon( size );
+          itemNode = this.createLemon( size );
           break;
         case ItemType.ORANGES:
-          item = this.createOrange( size );
+          itemNode = this.createOrange( size );
           break;
         case ItemType.PEARS:
-          item = this.createPear( size );
+          itemNode = this.createPear( size );
           break;
         case ItemType.CARROTS:
-          item = this.createCarrot( size );
+          itemNode = this.createCarrot( size );
           break;
         case ItemType.CUCUMBERS:
-          item = this.createCucumber( size );
+          itemNode = this.createCucumber( size );
           break;
         case ItemType.POTATOES:
-          item = this.createPotatoe( size );
+          itemNode = this.createPotatoe( size );
           break;
         case ItemType.TOMATOES:
-          item = this.createTomatoe( size );
+          itemNode = this.createTomatoe( size );
           break;
         case ItemType.RED_CANDY:
-          item = this.createRedCandy( size );
+          itemNode = this.createRedCandy( size );
           break;
         case ItemType.YELLOW_CANDY:
-          item = this.createYellowCandy( size );
+          itemNode = this.createYellowCandy( size );
           break;
         case ItemType.GREEN_CANDY:
-          item = this.createGreenCandy( size );
+          itemNode = this.createGreenCandy( size );
           break;
         case ItemType.BLUE_CANDY:
-          item = this.createBlueCandy( size );
+          itemNode = this.createBlueCandy( size );
           break;
         default:
       }
 
-      assert && assert( item !== null, 'Unable to create item node of type:' + type );
+      assert && assert( itemNode !== null, 'Unable to create item node of type:' + item.type );
 
-      return item;
+      return itemNode;
     },
 
     // ----------------------------- Fruit ----------------------------- //

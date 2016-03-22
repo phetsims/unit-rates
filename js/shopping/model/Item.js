@@ -12,12 +12,11 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   //var unitRates = require( 'UNIT_RATES/unitRates' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var Vector2 = require( 'DOT/Vector2' );
 
-  function Item( type, unit, rate, initialPosition ) {
-    PropertySet.call( this,
-      {
-        userControlled: false,
-        position: initialPosition
+  function Item( type, unit, rate ) {
+    PropertySet.call( this, {
+        position: new Vector2( 0, 0 )
       } );
 
     this.type = type;

@@ -28,12 +28,12 @@ define( function( require ) {
   var DISPLAY_FONT = new PhetFont( 20 );
 
   /**
-   * FIXME: Add cost/weight readouts
    *
+   * @param {Scale} scale
    * @param {Object} [options]
    * @constructor
    */
-  function ItemScaleNode( model, options ) {
+  function ItemScaleNode( scale, options ) {
 
     options = options || {};
 

@@ -13,6 +13,7 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
+  var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
   var ItemType = require( 'UNIT_RATES/shopping/enum/ItemType' );
 
   // strings
@@ -41,10 +42,9 @@ define( function( require ) {
       itemType: ItemType.APPLES
     } );
 
-    var self = this;
-
     // @public
     this.shelf = new Shelf( this.itemTypeProperty );
+    this.scale = new Scale( this.itemTypeProperty );
 
     //
     this.itemTypeProperty.link( function( type, oldType ) {
