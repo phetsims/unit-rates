@@ -27,11 +27,6 @@ define( function( require ) {
     // @private - the collection of different types of items
     this.itemsMap = {};
 
-    // on item change, fetch the current collection
-    this.itemTypeProperty.link( function( type, oldType ) {
-      self.items = self.getItemsWithType( type );
-    } );
-
     Object.call( this );
   }
 
@@ -39,12 +34,13 @@ define( function( require ) {
 
   return inherit( PropertySet, ItemCollection, {
 
-    // Creates a new item
+    // Creates a new item/adds it to the types specific array
     // @public
     createItem: function( type, unit, rate ) {
       this.addItem( new Item( type, unit, rate ) );
     },
 
+    // Adds an item to the types specific array
     // @public
     addItem: function( item ) {
       var itemArray = this.getItemsWithType( item.type );
@@ -52,6 +48,7 @@ define( function( require ) {
       console.log( 'addItem ' + item.type);
     },
 
+    // Removes an item from the types specific array
     // @public
     removeItem: function( item ) {
       var itemArray = this.getItemsWithType( item.type );
@@ -59,7 +56,17 @@ define( function( require ) {
       console.log( 'removeItem ' + item.type);
     },
 
+    // Adds addition/removal listeners to all type specific arrays
+    // @public
+    addListeners: function( itemAddedListener, itemRemovedListener ) {
+      for (var type in this.itemsMap) {
+        var itemArray = this.getItemsWithType( type );
+        itemArray.addListeners( itemAddedListener, itemRemovedListener );
+      }
+    },
+
     // Gets the collection for a specific type, or create an empty collection if none exists
+    // @protected
     getItemsWithType: function( type ) {
       if ( !this.itemsMap.hasOwnProperty( type ) ) {
         console.log( 'New ' + type + ' Collection: ');
@@ -69,13 +76,6 @@ define( function( require ) {
       }
 
       return this.itemsMap[ type ];
-    },
-
-    addListeners: function( itemAddedListener, itemRemovedListener ) {
-      for (var type in this.itemsMap) {
-        var itemArray = this.getItemsWithType( type );
-        itemArray.addListeners( itemAddedListener, itemRemovedListener );
-      }
     },
 
     // Resets all model elements

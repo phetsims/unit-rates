@@ -64,10 +64,12 @@ define( function( require ) {
     assert && assert( !options.children, 'additional children not supported' );
     options.children = [ this.shelfNode ];
 
-    // on item change
+    // refresh on item change
     shelf.itemTypeProperty.link( function( type, oldType ) {
       self.refresh();
     } );
+
+    // refresh on item addition/removal
     shelf.addListeners( self.refresh.bind( this ), self.refresh.bind( this ) );
 
     Node.call( this, options );
@@ -85,8 +87,9 @@ define( function( require ) {
       // remove old nodes
       this.shelfNode.removeAllChildren();
 
-      // create nodes for new item type
-      this.shelf.items.forEach( function( item ) {
+      // create nodes for all items of type
+      var itemArray = this.shelf.getItemsWithType( this.shelf.itemTypeProperty.value );
+      itemArray.forEach( function( item ) {
 
         var itemNode = ItemNodeFactory.createNode( item, ShoppingConstants.ITEM_SIZE );
 
@@ -97,7 +100,7 @@ define( function( require ) {
         var x = item.positionProperty.value.x;
         var y = item.positionProperty.value.y;
 
-        // Place on scale
+        // position on scale - FIXME: left to right?
         if ( x === 0 && y === 0 ) {
           x = itemNode.width + RAND.random() * (SHELF_SIZE.width - 2 * itemNode.width);
           y = -SHELF_SIZE.height / 2.0;
@@ -106,6 +109,7 @@ define( function( require ) {
 
         self.shelfNode.addChild( itemNode );
 
+        // add a drag listener
         itemNode.addInputListener( new SimpleDragHandler( {
           start: function( e ) {
             console.log('start drag: ' + e.pointer.point);
@@ -116,10 +120,12 @@ define( function( require ) {
           },
 
           end: function( e ) {
+            // announce drag complete
             self.dragEndEmitter.emit1( item );
           },
 
           translate: function( translation ) {
+            // move node
             item.positionProperty.value = translation.position;
             console.log('translate: ' + translation);
           }
@@ -128,7 +134,7 @@ define( function( require ) {
 
       } );
 
-      console.log( 'Refresh shelf items: ' + this.shelf.items.length);
+      console.log( 'Refresh shelf items: ' + itemArray.length);
     }
 
   } ); // inherit
