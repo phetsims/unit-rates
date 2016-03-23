@@ -16,11 +16,16 @@ define( function( require ) {
 
   function Item( type, unit, rate ) {
     PropertySet.call( this, {
-        position: new Vector2( 0, 0 )
-      } );
+      position: new Vector2( 0, 0 )
+    } );
 
+    // @public (readonly)
     this.type = type;
+
+    // @public (readonly)
     this.unit = unit;
+
+    // @public (readonly)
     this.rate = rate;
   }
 

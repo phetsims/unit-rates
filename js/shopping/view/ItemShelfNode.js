@@ -16,7 +16,6 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Shape = require( 'KITE/Shape' );
-  var Emitter = require( 'AXON/Emitter' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Vector2 = require( 'DOT/Vector2' );
   var Random = require( 'DOT/Random' );
@@ -29,22 +28,20 @@ define( function( require ) {
 
   /**
    * @param {Shelf} shelf
+   * @param {Node} itemLayer
    * @param (function} itemMovedCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
-  function ItemShelfNode( shelf, itemMovedCallback, options ) {
+  function ItemShelfNode( shelf, itemLayer, itemMovedCallback, options ) {
 
     options = options || {};
 
     var self = this;
 
-    // @protected
     this.shelf = shelf;
-
-    // @protected - used to tell when an item node is moved
-    this.dragEndEmitter = new Emitter();
-    this.dragEndEmitter.addListener( itemMovedCallback );
+    this.itemLayer = itemLayer;
+    this.itemMovedCallback = itemMovedCallback;
 
     // front & top face
     this.shelfNode = new Path( new Shape()
@@ -65,16 +62,16 @@ define( function( require ) {
     options.children = [ this.shelfNode ];
 
     // refresh on item change
-    shelf.itemDataProperty.link( function( type, oldType ) {
-      self.refresh();
+    shelf.itemDataProperty.lazyLink( function( type, oldType ) {
+      self.populate();
     } );
 
     // refresh on item additions/removals
     shelf.addListeners( function( item, observableArray ) {
-      self.refresh()
+      console.log( 'Shelf: ' + observableArray.length );
     },
     function( item, observableArray ) {
-      self.refresh()
+      console.log( 'Shelf: ' + observableArray.length );
     } );
 
     Node.call( this, options );
@@ -92,65 +89,40 @@ define( function( require ) {
      * @public
      */
     pointInDropArea: function( point ) {
-      var localPoint = this.shelfNode.globalToParentPoint( point );
-      return this.shelfNode.containsPoint( localPoint );
+      return this.bounds.containsPoint( point );
     },
 
     /**
      * Creates nodes for each item
      * @public
      */
-    refresh: function() {
+    populate: function() {
 
       var self = this;
 
-      // remove old nodes
-      this.shelfNode.removeAllChildren();
+      var bounds = self.getBounds();
+
+      // get the current array for the item type
+      var itemArray = this.shelf.getItemsWithType( this.shelf.itemDataProperty.value.type );
 
       // create nodes for all items of type
-      var itemArray = this.shelf.getItemsWithType( this.shelf.itemDataProperty.value.type );
       itemArray.forEach( function( item ) {
 
-        var itemNode = ItemNodeFactory.createItemNode( item, ShoppingConstants.ITEM_SIZE );
+        var position = item.positionProperty.value;
 
-        // translate node according to item position property
-        item.positionProperty.link( function( position, oldPosition ) {
-          // update node position in local coordinates
-          itemNode.translation = itemNode.globalToParentPoint( position );
-        } );
-
-        var x = item.positionProperty.value.x;
-        var y = item.positionProperty.value.y;
-
-        // position on scale - FIXME: left to right?
-        if ( x === 0 && y === 0 ) {
-          // create a random local position on the shelf
-          x = itemNode.width + RAND.random() * (SHELF_SIZE.width - 2 * itemNode.width);
-          y = -SHELF_SIZE.height / 2.0;
-
-          // store the global screen position in the item
-          item.position = itemNode.parentToGlobalPoint( new Vector2( x, y ) );;
+        if(position.x === 0 && position.y === 0) {
+          // create a random position on the shelf
+          var r = RAND.random();
+          position = new Vector2( bounds.minX * r +  ( 1.0 - r ) * bounds.maxX, bounds.minY )
         }
 
-        self.shelfNode.addChild( itemNode );
+        // create new item node
+        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, self.itemMovedCallback );
 
-        // add a drag listener
-        itemNode.addInputListener( new SimpleDragHandler( {
-          end: function( e ) {
-            // announce drag complete
-            self.dragEndEmitter.emit1( item );
-          },
-
-          translate: function( translation ) {
-            // update node position in screen coordinates
-            item.positionProperty.value = itemNode.parentToGlobalPoint( translation.position );
-          }
-
-        } ) );
+        // add to the screen for layering purposes
+        self.itemLayer.addChild( itemNode );
 
       } );
-
-      console.log( 'Refresh shelf items: ' + itemArray.length);
     },
 
     /**

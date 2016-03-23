@@ -19,6 +19,7 @@ define( function( require ) {
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
   var ItemShelfNode = require( 'UNIT_RATES/shopping/view/ItemShelfNode' );
   var ItemScaleNode = require( 'UNIT_RATES/shopping/view/ItemScaleNode' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -53,18 +54,6 @@ define( function( require ) {
     } );
     this.addChild( sceneControlButtons );
 
-    // number line
-    var doubleNumberLineNode = new DoubleNumberLineNode( model, {
-      left:  sceneControlButtons.right + PANEL_HORIZONTAL_SPACING,
-      top: this.layoutBounds.top + SCREEN_MARGIN } );
-    this.addChild( doubleNumberLineNode );
-
-    // challenges
-    var challangesNode = new ChallangesNode( model, {
-      left:  doubleNumberLineNode.right + PANEL_HORIZONTAL_SPACING,
-      top: this.layoutBounds.top + SCREEN_MARGIN } );
-    this.addChild( challangesNode );
-
     // item selection - 1 combo boxe for each scene, hidden and shown based on sceneModeProperty
     var itemComboBoxOptions = {
       left:  this.layoutBounds.left + SCREEN_MARGIN,
@@ -82,17 +71,32 @@ define( function( require ) {
       this, itemComboBoxOptions);
     this.addChild( this.candyItemsComboBox );
 
+    // number line
+    var doubleNumberLineNode = new DoubleNumberLineNode( model, {
+      left:  sceneControlButtons.right + PANEL_HORIZONTAL_SPACING,
+      top: this.layoutBounds.top + SCREEN_MARGIN } );
+    this.addChild( doubleNumberLineNode );
+
+    this.itemsLayer = new Node();
+    this.addChild( this.itemsLayer );
+
     // scale
-    this.itemScaleNode = new ItemScaleNode( model.scale, this.itemMoved.bind( this ) );
-    this.itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, doubleNumberLineNode.bottom + 200 ) );
+    this.itemScaleNode = new ItemScaleNode( model.scale, this.itemsLayer, this.itemMoved.bind( this ) );
+    this.itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, doubleNumberLineNode.bottom + 200 ) );  // FIXME
     this.addChild( this.itemScaleNode );
 
     // shelf
-    this.itemShelfNode = new ItemShelfNode( model.shelf, this.itemMoved.bind( this ), {
+    this.itemShelfNode = new ItemShelfNode( model.shelf, this.itemsLayer, this.itemMoved.bind( this ), {
       centerX:  this.layoutBounds.centerX,
       bottom: this.layoutBounds.bottom - SCREEN_MARGIN
     } );
     this.addChild( this.itemShelfNode );
+
+    // challenges
+    var challangesNode = new ChallangesNode( model, {
+      left:  doubleNumberLineNode.right + PANEL_HORIZONTAL_SPACING,
+      top: this.layoutBounds.top + SCREEN_MARGIN } );
+    this.addChild( challangesNode );
 
     // select the scene
     this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this) );
@@ -116,6 +120,11 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
+    // move items layer on top of all other nodes
+    this.itemsLayer.moveToFront();
+
+    // initialize shelf items
+    this.itemShelfNode.populate();
   }
 
   unitRates.register( 'ShoppingScreenView', ShoppingScreenView );
@@ -148,6 +157,9 @@ define( function( require ) {
 
     // @private
     itemSelectionChanged: function( sceneMode, fruitItemData, produceItemData, candyItemData ) {
+
+      this.itemsLayer.removeAllChildren();
+
       switch( sceneMode ) {
         case SceneMode.FRUIT:
             this.model.itemData = fruitItemData;
@@ -164,31 +176,25 @@ define( function( require ) {
 
     // Called when an item's node is dragged to a new location
     // @private
-    itemMoved: function( item ) {
+    itemMoved: function( itemNode ) {
 
-      // Check node position (screen coordinates)
-      if( this.itemScaleNode.pointInDropArea( item.positionProperty.value ) ) {
-
-        // Remove from shelf
-        this.model.shelf.removeItem( item );
-
-        // Add to scale
-        this.model.scale.addItem( item );
+      // Check node position
+      if( this.itemScaleNode.pointInDropArea( itemNode.item.positionProperty.value ) ) {
+        console.log('on scale');
+        // Remove from shelf & add to scale
+        this.model.shelf.removeItem( itemNode.item );
+        this.model.scale.addItem( itemNode.item );
       }
-      else if( this.itemShelfNode.pointInDropArea( item.positionProperty.value ) ) {
+      else if( this.itemShelfNode.pointInDropArea( itemNode.item.positionProperty.value ) ) {
+        console.log('on shelf');
 
-        // Remove from shelf
-        this.model.scale.removeItem( item );
-
-        // Add to scale
-        this.model.shelf.addItem( item );
+        // Remove from scale & add to shelf
+        this.model.scale.removeItem( itemNode.item );
+        this.model.shelf.addItem( itemNode.item );
       }
       else {
-
         // Send it back from whence it came
-        item.reset();
-        this.itemShelfNode.refresh();
-        this.itemScaleNode.refresh();
+        itemNode.restoreLastPosition();
       }
     }
 

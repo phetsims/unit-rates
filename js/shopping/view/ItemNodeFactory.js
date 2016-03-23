@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var ItemNode = require( 'UNIT_RATES/shopping/view/ItemNode' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Circle = require( 'SCENERY/nodes/Circle' );
@@ -23,59 +24,63 @@ define( function( require ) {
      * Creates an node of size for specified item
      *
      * @param {Item} item
-     * @param {number} size in pixels
+     * @param {number} size
+     * @param {Vector2} position
+     * @param (function(ItemNode)} movedCallback - function called when item drag ends
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createItemNode: function( item, size ) {
+    createItem: function( item, size, position, movedCallback, options ) {
 
-      var itemNode = null;
+      var imageNode = null;
 
       switch( item.type ) {
         case ItemData.APPLES.type:
-          itemNode = this.createApple( size );
+          imageNode = this.createApple( size, options );
           break;
         case ItemData.LEMONS.type:
-          itemNode = this.createLemon( size );
+          imageNode = this.createLemon( size, options );
           break;
         case ItemData.ORANGES.type:
-          itemNode = this.createOrange( size );
+          imageNode = this.createOrange( size, options );
           break;
         case ItemData.PEARS.type:
-          itemNode = this.createPear( size );
+          imageNode = this.createPear( size, options );
           break;
         case ItemData.CARROTS.type:
-          itemNode = this.createCarrot( size );
+          imageNode = this.createCarrot( size, options );
           break;
         case ItemData.CUCUMBERS.type:
-          itemNode = this.createCucumber( size );
+          imageNode = this.createCucumber( size, options );
           break;
         case ItemData.POTATOES.type:
-          itemNode = this.createPotatoe( size );
+          imageNode = this.createPotatoe( size, options );
           break;
         case ItemData.TOMATOES.type:
-          itemNode = this.createTomatoe( size );
+          imageNode = this.createTomato( size, options );
           break;
         case ItemData.RED_CANDY.type:
-          itemNode = this.createRedCandy( size );
+          imageNode = this.createRedCandy( size, options );
           break;
         case ItemData.YELLOW_CANDY.type:
-          itemNode = this.createYellowCandy( size );
+          imageNode = this.createYellowCandy( size, options );
           break;
         case ItemType.GREEN_CANDY.type:
-          itemNode = this.createGreenCandy( size );
+          imageNode = this.createGreenCandy( size, options );
           break;
         case ItemData.BLUE_CANDY.type:
-          itemNode = this.createBlueCandy( size );
+          imageNode = this.createBlueCandy( size, options );
           break;
         default:
       }
 
-      assert && assert( itemNode !== null, 'Unable to create item node of type:' + item.type );
+      assert && assert( imageNode !== null, 'Unable to create item node of type:' + item.type );
 
-      itemNode.item = item;
+      return new ItemNode( item, position, movedCallback, {
+        children: [ imageNode ]
+      }, options );
 
-      return itemNode;
     },
 
     // ----------------------------- Fruit ----------------------------- //
@@ -84,60 +89,64 @@ define( function( require ) {
      * Creates a apple
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createApple: function( size ) {
+    createApple: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'crimson', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     /**
      * Creates a lemon
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createLemon: function( size ) {
+    createLemon: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'gold', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     /**
      * Creates a orange
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createOrange: function( size ) {
+    createOrange: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'darkorange', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     /**
      * Creates a pear
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createPear: function( size ) {
+    createPear: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'lime', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     // ----------------------------- Produce ----------------------------- //
@@ -146,58 +155,62 @@ define( function( require ) {
      * Creates a carrot
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createCarrot: function( size ) {
+    createCarrot: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'orange', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     /**
      * Creates a cucumber
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createCucumber: function( size ) {
+    createCucumber: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'darkgreen', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     /**
      * Creates a potatoe
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createPotatoe: function( size ) {
+    createPotatoe: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'sienna', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     /**
-     * Creates a tomatoe
+     * Creates a tomato
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createTomatoe: function( size ) {
+    createTomato: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'firebrick', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     // ----------------------------- Candy ----------------------------- //
@@ -206,60 +219,64 @@ define( function( require ) {
      * Creates a red candy
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createRedCandy: function( size ) {
+    createRedCandy: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'red', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     /**
      * Creates a yellow candy
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createYellowCandy: function( size ) {
+    createYellowCandy: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'yellow', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     /**
      * Creates a green candy
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createGreenCandy: function( size ) {
+    createGreenCandy: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'green', stroke: 'black' } )
         ]
-      } );
+      }, options );
     },
 
     /**
      * Creates a blue candy
      *
      * @param {number} size in pixels
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createBlueCandy: function( size ) {
+    createBlueCandy: function( size, options ) {
       return new Node( {
         children: [
           new Circle( size, { fill: 'blue', stroke: 'black' } )
         ]
-      } );
+      }, options );
     }
 
     // ----------------------------- Bags ----------------------------- //

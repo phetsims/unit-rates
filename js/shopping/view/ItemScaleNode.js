@@ -34,17 +34,20 @@ define( function( require ) {
   /**
    *
    * @param {Scale} scale
+   * @param {Node} itemLayer
    * @param (function} itemMovedCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
-  function ItemScaleNode( scale, itemMovedCallback, options ) {
+  function ItemScaleNode( scale, itemLayer, itemMovedCallback, options ) {
 
     options = options || {};
 
     Node.call( this, options );
 
     var self = this;
+
+    this.itemLayer = itemLayer;
     this.scale = scale;
 
     // @protected - used to tell when an item node is moved
@@ -90,15 +93,18 @@ define( function( require ) {
         self.costDisplayNode.centerX = self.costOnlyDisplayX;
       }
 
-      self.refresh();
+      self.populate();
+
     } );
 
     // refresh on item additions/removals
     scale.addListeners( function( item, observableArray ) {
-      self.refresh()
+      console.log( 'Scale: ' + observableArray.length );
+
+      // FIXME: expand fruit bag types into individual items
     },
     function( item, observableArray ) {
-      self.refresh()
+      console.log( 'Scale: ' + observableArray.length );
     } );
   }
 
@@ -141,51 +147,34 @@ define( function( require ) {
      * @public
      */
     pointInDropArea: function( point ) {
-      var localPoint = this.scaleNode.globalToParentPoint( point );
-      return this.scaleNode.containsPoint( localPoint );
+      return this.bounds.containsPoint( point );
     },
 
     /**
      * Creates nodes for each item
      * @public
      */
-    refresh: function() {
+    populate: function() {
 
       var self = this;
 
-      // remove old nodes
-      this.scaleNode.removeAllChildren();
+      var bounds = self.getBounds();
+
+      // get the current array for the item type
+      var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
 
       // create nodes for all items of type
-      var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
       itemArray.forEach( function( item ) {
 
-        var itemNode = ItemNodeFactory.createItemNode( item, ShoppingConstants.ITEM_SIZE );
-        self.scaleNode.addChild( itemNode );
+        var position = item.positionProperty.value;
 
-        // translate node according to item position property
-        item.positionProperty.link( function( position, oldPosition ) {
-          // update node position in local coordinates
-          itemNode.translation = itemNode.globalToParentPoint( position );
-        } );
+        // create new item node
+        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, self.itemMovedCallback );
 
-        // add a drag listener
-        itemNode.addInputListener( new SimpleDragHandler( {
-          end: function( e ) {
-            // announce drag complete
-            self.dragEndEmitter.emit1( item );
-          },
-
-          translate: function( translation ) {
-            // update node position in screen coordinates
-            item.positionProperty.value = itemNode.parentToGlobalPoint( translation.position );
-          }
-
-        } ) );
+        // add to the screen for layering purposes
+        self.itemLayer.addChild( itemNode );
 
       } );
-
-      console.log( 'Refresh scale items: ' + itemArray.length);
     },
 
     /**

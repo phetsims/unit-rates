@@ -69,7 +69,7 @@ define( function( require ) {
           this.createItemRow( ItemData.POTATOES.type, ItemNodeFactory.createPotatoe( ICON_SIZE ) ), ItemData.POTATOES )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( ItemData.TOMATOES.type, ItemNodeFactory.createTomatoe( ICON_SIZE ) ), ItemData.TOMATOES )
+          this.createItemRow( ItemData.TOMATOES.type, ItemNodeFactory.createTomato( ICON_SIZE ) ), ItemData.TOMATOES )
         );
         break;
       case SceneMode.CANDY:
