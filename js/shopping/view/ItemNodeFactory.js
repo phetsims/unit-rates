@@ -66,7 +66,7 @@ define( function( require ) {
         case ItemData.YELLOW_CANDY.type:
           imageNode = this.createYellowCandy( size, options );
           break;
-        case ItemType.GREEN_CANDY.type:
+        case ItemData.GREEN_CANDY.type:
           imageNode = this.createGreenCandy( size, options );
           break;
         case ItemData.BLUE_CANDY.type:

@@ -14,7 +14,6 @@ define( function( require ) {
   var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Shape = require( 'KITE/Shape' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -110,10 +109,10 @@ define( function( require ) {
 
         var position = item.positionProperty.value;
 
+        // init position - create a random position on the shelf
         if(position.x === 0 && position.y === 0) {
-          // create a random position on the shelf
           var r = RAND.random();
-          position = new Vector2( bounds.minX * r +  ( 1.0 - r ) * bounds.maxX, bounds.minY )
+          position = new Vector2( bounds.minX * r +  ( 1.0 - r ) * bounds.maxX, bounds.minY );
         }
 
         // create new item node

@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemCollection = require( 'UNIT_RATES/shopping/model/ItemCollection' );
   var Property = require( 'AXON/Property' );
 
@@ -24,8 +23,6 @@ define( function( require ) {
     // @public (all)
     ItemCollection.call( this, itemDataProperty, {
     } );
-
-    var self = this;
 
     this.itemDataProperty = itemDataProperty;
     this.costProperty     = new Property( 0.0 );

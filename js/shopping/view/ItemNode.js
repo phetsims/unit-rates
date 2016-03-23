@@ -10,12 +10,9 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Emitter = require( 'AXON/Emitter' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var Property = require( 'AXON/Property' );
 
   /**
    * @param {Item} item

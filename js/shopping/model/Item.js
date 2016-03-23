@@ -10,11 +10,19 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  //var unitRates = require( 'UNIT_RATES/unitRates' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  function Item( type, unit, rate ) {
+  /**
+   * @param {ItemType} item
+   * @param {number} units
+   * @param (number} rate
+   * @param (number} [weight]
+   * @constructor
+   */
+  function Item( type, units, rate, weight ) {
+
+    // @public (readwrite)
     PropertySet.call( this, {
       position: new Vector2( 0, 0 )
     } );
@@ -23,10 +31,14 @@ define( function( require ) {
     this.type = type;
 
     // @public (readonly)
-    this.unit = unit;
+    this.units = units;
 
     // @public (readonly)
     this.rate = rate;
+
+    // @public (readonly)
+    this.weight = weight;
+
   }
 
   return inherit( PropertySet, Item, {

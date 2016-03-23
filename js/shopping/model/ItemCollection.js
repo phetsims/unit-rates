@@ -23,8 +23,6 @@ define( function( require ) {
    */
   function ItemCollection() {
 
-    var self = this;
-
     // @private - the collection of different types of items
     this.itemsMap = {};
 

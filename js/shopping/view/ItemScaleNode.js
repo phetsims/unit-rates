@@ -13,7 +13,6 @@ define( function( require ) {
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Image = require( 'SCENERY/nodes/Image' );
@@ -157,8 +156,6 @@ define( function( require ) {
     populate: function() {
 
       var self = this;
-
-      var bounds = self.getBounds();
 
       // get the current array for the item type
       var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
