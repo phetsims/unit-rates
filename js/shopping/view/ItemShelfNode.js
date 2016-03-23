@@ -85,8 +85,20 @@ define( function( require ) {
   return inherit( Node, ItemShelfNode, {
 
     /**
+     * Checks if a point is in a droppable location
+     *
+     * @param {Vector2} point
+     * @return {boolean}
+     * @public
+     */
+    pointInDropArea: function( point ) {
+      var localPoint = this.shelfNode.globalToParentPoint( point );
+      return this.shelfNode.containsPoint( localPoint );
+    },
+
+    /**
      * Creates nodes for each item
-     * @@public
+     * @public
      */
     refresh: function() {
 
@@ -103,7 +115,8 @@ define( function( require ) {
 
         // translate node according to item position property
         item.positionProperty.link( function( position, oldPosition ) {
-          itemNode.translation = position;
+          // update node position in local coordinates
+          itemNode.translation = itemNode.globalToParentPoint( position );
         } );
 
         var x = item.positionProperty.value.x;
@@ -111,32 +124,26 @@ define( function( require ) {
 
         // position on scale - FIXME: left to right?
         if ( x === 0 && y === 0 ) {
+          // create a random local position on the shelf
           x = itemNode.width + RAND.random() * (SHELF_SIZE.width - 2 * itemNode.width);
           y = -SHELF_SIZE.height / 2.0;
-          item.position = new Vector2( x, y );
+
+          // store the global screen position in the item
+          item.position = itemNode.parentToGlobalPoint( new Vector2( x, y ) );;
         }
 
         self.shelfNode.addChild( itemNode );
 
         // add a drag listener
         itemNode.addInputListener( new SimpleDragHandler( {
-          start: function( e ) {
-            console.log('start drag: ' + e.pointer.point);
-          },
-
-          drag: function( e ) {
-            console.log('drag: ' + e.pointer.point);
-          },
-
           end: function( e ) {
             // announce drag complete
             self.dragEndEmitter.emit1( item );
           },
 
           translate: function( translation ) {
-            // update node position
-            item.positionProperty.value = translation.position;
-            console.log('translate: ' + translation);
+            // update node position in screen coordinates
+            item.positionProperty.value = itemNode.parentToGlobalPoint( translation.position );
           }
 
         } ) );
@@ -144,6 +151,14 @@ define( function( require ) {
       } );
 
       console.log( 'Refresh shelf items: ' + itemArray.length);
+    },
+
+    /**
+     * Reset the shelf node to its initial state
+     * @public
+     */
+    reset: function() {
+      // FIXME
     }
 
   } ); // inherit

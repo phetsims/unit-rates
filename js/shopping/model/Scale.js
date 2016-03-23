@@ -28,8 +28,8 @@ define( function( require ) {
     var self = this;
 
     this.itemDataProperty = itemDataProperty;
-    this.costProperty = new Property( 0.0 );
-    this.weightProperty = new Property( 0.0 );
+    this.costProperty     = new Property( 0.0 );
+    this.weightProperty   = new Property( 0.0 );
   }
 
   unitRates.register( 'Scale', Scale );

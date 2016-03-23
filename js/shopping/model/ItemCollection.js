@@ -14,6 +14,7 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Item = require( 'UNIT_RATES/shopping/model/Item' );
+  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var ObservableArray = require( 'AXON/ObservableArray' );
 
   /**
@@ -26,6 +27,12 @@ define( function( require ) {
 
     // @private - the collection of different types of items
     this.itemsMap = {};
+
+    // create empty item arrays
+    for (var key in ItemData) {
+      var itemData = ItemData[ key ];
+      this.getItemsWithType( itemData.type );
+    }
 
     Object.call( this );
   }
@@ -53,8 +60,11 @@ define( function( require ) {
      */
      addItem: function( item ) {
       var itemArray = this.getItemsWithType( item.type );
-      itemArray.add( item );
-      console.log( 'addItem ' + item.type);
+
+      if( !itemArray.contains( item ) ) {
+        itemArray.add( item );
+        console.log( 'addItem ' + item.type);
+      }
     },
 
     /**

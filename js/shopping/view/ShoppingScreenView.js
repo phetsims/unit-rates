@@ -83,12 +83,12 @@ define( function( require ) {
     this.addChild( this.candyItemsComboBox );
 
     // scale
-    var itemScaleNode = new ItemScaleNode( model.scale );
-    itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, doubleNumberLineNode.bottom + 200 ) );
-    this.addChild( itemScaleNode );
+    this.itemScaleNode = new ItemScaleNode( model.scale, this.itemMoved.bind( this ) );
+    this.itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, doubleNumberLineNode.bottom + 200 ) );
+    this.addChild( this.itemScaleNode );
 
     // shelf
-    this.itemShelfNode = new ItemShelfNode( model.shelf, this.itemMoved.bind (this ), {
+    this.itemShelfNode = new ItemShelfNode( model.shelf, this.itemMoved.bind( this ), {
       centerX:  this.layoutBounds.centerX,
       bottom: this.layoutBounds.bottom - SCREEN_MARGIN
     } );
@@ -166,14 +166,30 @@ define( function( require ) {
     // @private
     itemMoved: function( item ) {
 
-      // Remove from shelf
-      this.model.shelf.removeItem( item );
+      // Check node position (screen coordinates)
+      if( this.itemScaleNode.pointInDropArea( item.positionProperty.value ) ) {
 
-      // Add to scale
+        // Remove from shelf
+        this.model.shelf.removeItem( item );
 
-      // Snap back to shelf
-      item.reset();
-      this.itemShelfNode.refresh();
+        // Add to scale
+        this.model.scale.addItem( item );
+      }
+      else if( this.itemShelfNode.pointInDropArea( item.positionProperty.value ) ) {
+
+        // Remove from shelf
+        this.model.scale.removeItem( item );
+
+        // Add to scale
+        this.model.shelf.addItem( item );
+      }
+      else {
+
+        // Send it back from whence it came
+        item.reset();
+        this.itemShelfNode.refresh();
+        this.itemScaleNode.refresh();
+      }
     }
 
   } ); // inherit
