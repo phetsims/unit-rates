@@ -66,7 +66,7 @@ define( function( require ) {
     options.children = [ this.topNode, new Path( frontShape, pathOptions ) ];
 
     // refresh on item change
-    shelf.itemDataProperty.lazyLink( function( type, oldType ) {
+    shelf.itemDataProperty.lazyLink( function( itemData, oldItemData ) {
       self.populate();
     } );
 

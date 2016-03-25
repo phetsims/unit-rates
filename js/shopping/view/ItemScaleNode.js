@@ -54,6 +54,7 @@ define( function( require ) {
 
     this.scale = scale;
     this.itemLayer = itemLayer;
+    this.itemMovedCallback = itemMovedCallback;
 
     // This is Loading the scale image and scaling it to desired width and adding to the node
     this.scaleNode = new Image( scaleImage, { pickable: true } );
