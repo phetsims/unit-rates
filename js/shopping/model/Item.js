@@ -15,12 +15,12 @@ define( function( require ) {
 
   /**
    * @param {ItemType} item
-   * @param {number} units
    * @param (number} rate
-   * @param (number} [weight]
+   * @param {number} units
+   * @param (number} weight
    * @constructor
    */
-  function Item( type, units, rate, weight ) {
+  function Item( type, rate, units, weight ) {
 
     // @public (readwrite)
     PropertySet.call( this, {
@@ -31,14 +31,13 @@ define( function( require ) {
     this.type = type;
 
     // @public (readonly)
-    this.units = units;
-
-    // @public (readonly)
     this.rate = rate;
 
     // @public (readonly)
-    this.weight = weight;
+    this.units = units;
 
+    // @public (readonly)
+    this.weight = weight;
   }
 
   return inherit( PropertySet, Item, {

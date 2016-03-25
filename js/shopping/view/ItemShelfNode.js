@@ -42,35 +42,32 @@ define( function( require ) {
     this.itemLayer = itemLayer;
     this.itemMovedCallback = itemMovedCallback;
 
-    // front & top face
-    this.shelfNode = new Path( new Shape()
+    var pathOptions = {
+      fill: 'white',
+      stroke: 'black',
+      lineWidth: 1,
+      pickable: true
+    };
+
+    this.topNode =  new Path( new Shape()
       .moveTo( 0, 10 )                                                  // Top face
       .lineTo( SHELF_SIZE.width, 10)
       .lineTo( ( 1 - BACK_OFFSET ) * SHELF_SIZE.width, -BACK_DEPTH )
       .lineTo( BACK_OFFSET * SHELF_SIZE.width, -BACK_DEPTH )
-      .lineTo( 0, 10 )                                                  // Front face
+      .lineTo( 0, 10 ), pathOptions );
+
+    var frontShape = new Shape()
+      .moveTo( 0, 10 )                                                  // Front face
       .lineTo( 0, SHELF_SIZE.height )
       .lineTo( SHELF_SIZE.width, SHELF_SIZE.height)
-      .lineTo( SHELF_SIZE.width, 10), {
-      fill: 'white',
-      stroke: 'black',
-      lineWidth: 1
-    } );
+      .lineTo( SHELF_SIZE.width, 10);
 
     assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ this.shelfNode ];
+    options.children = [ this.topNode, new Path( frontShape, pathOptions ) ];
 
     // refresh on item change
     shelf.itemDataProperty.lazyLink( function( type, oldType ) {
       self.populate();
-    } );
-
-    // refresh on item additions/removals
-    shelf.addListeners( function( item, observableArray ) {
-      console.log( 'Shelf: ' + observableArray.length );
-    },
-    function( item, observableArray ) {
-      console.log( 'Shelf: ' + observableArray.length );
     } );
 
     Node.call( this, options );
@@ -83,12 +80,13 @@ define( function( require ) {
     /**
      * Checks if a point is in a droppable location
      *
-     * @param {Vector2} point
+     * @param {Vector2} point - parent (layer) coordinates
      * @return {boolean}
      * @public
      */
     pointInDropArea: function( point ) {
-      return this.bounds.containsPoint( point );
+      var localPoint = this.parentToLocalPoint( point );
+      return this.topNode.containsPoint( localPoint );
     },
 
     /**

@@ -46,8 +46,8 @@ define( function( require ) {
      * @param {number} rate
      * @public
      */
-    createItem: function( type, unit, rate ) {
-      this.addItem( new Item( type, unit, rate ) );
+    createItem: function( type, unit, rate, weight ) {
+      this.addItem( new Item( type, unit, rate, weight ) );
     },
 
     /**
@@ -61,7 +61,6 @@ define( function( require ) {
 
       if( !itemArray.contains( item ) ) {
         itemArray.add( item );
-        console.log( 'addItem ' + item.type);
       }
     },
 
@@ -73,7 +72,6 @@ define( function( require ) {
     removeItem: function( item ) {
       var itemArray = this.getItemsWithType( item.type );
       itemArray.remove( item );
-      console.log( 'removeItem ' + item.type);
     },
 
     /**
@@ -98,8 +96,6 @@ define( function( require ) {
      */
     getItemsWithType: function( type ) {
       if ( !this.itemsMap.hasOwnProperty( type ) ) {
-        console.log( 'New ' + type + ' Collection: ');
-
         var itemArray = new ObservableArray();
         this.itemsMap[ type ] = itemArray;
       }

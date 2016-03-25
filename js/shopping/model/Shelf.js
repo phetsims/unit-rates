@@ -27,6 +27,15 @@ define( function( require ) {
     ItemCollection.call( this );
 
     this.itemDataProperty = itemDataProperty;
+
+    // refresh on item additions/removals
+    this.addListeners( function( item, observableArray ) {
+      console.log( 'Shelf: ' + observableArray.length );
+    },
+    function( item, observableArray ) {
+      console.log( 'Shelf: ' + observableArray.length );
+    } );
+
     this.populate();
   }
 
@@ -40,12 +49,12 @@ define( function( require ) {
      */
     populate: function() {
 
-      // FIXME: populate all item types
+      // FIXME: populate sim initial content
       for (var key in ItemData) {
         var itemData = ItemData[ key ];
         var itemCount = RAND.random() * 10;
         for (var i = 0; i < itemCount; i++) {
-          this.createItem( itemData.type, 1, itemData.rate );
+          this.createItem( itemData.type, itemData.rate, 1, 1 );
         }
       }
     },

@@ -158,6 +158,12 @@ define( function( require ) {
     // @private
     itemSelectionChanged: function( sceneMode, fruitItemData, produceItemData, candyItemData ) {
 
+      // dispose of children before calling removeAllChildren
+      this.itemsLayer.getChildren().forEach( function( child ) {
+        if ( child.dispose ) {
+          child.dispose();
+        }
+      } );
       this.itemsLayer.removeAllChildren();
 
       switch( sceneMode ) {
@@ -178,14 +184,17 @@ define( function( require ) {
     // @private
     itemMoved: function( itemNode ) {
 
+      var nodeCenterBottom = new Vector2( itemNode.item.positionProperty.value.x,
+      itemNode.item.positionProperty.value.y + itemNode.height / 2 );
+
       // Check node position
-      if( this.itemScaleNode.pointInDropArea( itemNode.item.positionProperty.value ) ) {
+      if( this.itemScaleNode.pointInDropArea( nodeCenterBottom ) ) {
         console.log('on scale');
         // Remove from shelf & add to scale
         this.model.shelf.removeItem( itemNode.item );
         this.model.scale.addItem( itemNode.item );
       }
-      else if( this.itemShelfNode.pointInDropArea( itemNode.item.positionProperty.value ) ) {
+      else if( this.itemShelfNode.pointInDropArea( nodeCenterBottom ) ) {
         console.log('on shelf');
 
         // Remove from scale & add to shelf

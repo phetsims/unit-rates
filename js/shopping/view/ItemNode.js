@@ -30,6 +30,7 @@ define( function( require ) {
     var self = this;
 
     this.item = item;
+    this.movedCallback = movedCallback;
     this.lastPosition = position;
     this.item.positionProperty.value = this.lastPosition;
 
@@ -38,12 +39,13 @@ define( function( require ) {
     this.dragEndEmitter.addListener( movedCallback );
 
     // translate node according to item position property
-    this.item.positionProperty.link( function( position, oldPosition ) {
+    this.positionListener = function( position, oldPosition ) {
         self.translation = position;
-    } );
+    };
+    this.item.positionProperty.link( this.positionListener );
 
     // add a drag listener
-    this.addInputListener( new SimpleDragHandler( {
+    this.dragListener = new SimpleDragHandler( {
 
       start: function( e ) {
         self.moveToFront();
@@ -59,13 +61,26 @@ define( function( require ) {
         // update node position in screen coordinates
         self.item.positionProperty.value = translation.position;
       }
-
-    } ) );
+    } );
+    this.addInputListener( this.dragListener );
   }
 
   unitRates.register( 'ItemNode', ItemNode );
 
   return inherit( Node, ItemNode, {
+
+    // @public
+    dispose: function() {
+
+      // unlink position
+      this.item.positionProperty.unlink( this.positionListener );
+
+      // remove emitter listener
+      this.dragEndEmitter.removeListener( this.movedCallback );
+
+      // remove input listener
+      this.removeInputListener( this.dragListener );
+    },
 
     /**
      * Moves the node to the position before the last drag

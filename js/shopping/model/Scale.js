@@ -24,26 +24,60 @@ define( function( require ) {
     ItemCollection.call( this, itemDataProperty, {
     } );
 
+    var self = this;
+
     this.itemDataProperty = itemDataProperty;
     this.costProperty     = new Property( 0.0 );
     this.weightProperty   = new Property( 0.0 );
+
+    // update value text
+    itemDataProperty.link( function( value, oldValue ) {
+
+      self.costProperty.reset();
+      self.weightProperty.reset();
+
+      // get the current array for the item type
+      var cost = 0;
+      var weight = 0;
+      var itemArray = self.getItemsWithType( value.type );
+      itemArray.forEach( function( item ) {
+
+        cost += ( item.rate * item.units * item.weight );
+        weight += item.weight;
+      } );
+
+      self.costProperty.value = cost;
+      self.weightProperty.value = weight;
+    } );
+
+    // refresh on item additions/removals
+    this.addListeners( function( item, observableArray ) {
+      console.log( 'Scale: ' + observableArray.length );
+
+      self.costProperty.value += ( item.rate * item.units * item.weight );
+      self.weightProperty.value += item.weight;
+
+      // FIXME: expand fruit bag types into individual items
+    },
+    function( item, observableArray ) {
+      console.log( 'Scale: ' + observableArray.length );
+
+      self.costProperty.value -= ( item.rate * item.units * item.weight );
+      self.weightProperty.value -= item.weight;
+    } );
   }
 
   unitRates.register( 'Scale', Scale );
 
   return inherit( ItemCollection, Scale, {
 
-    // Resets all model elements
-    // @public
+    /**
+     * @public
+     */
     reset: function() {
+      this.costProperty.reset();
+      this.weightProperty.reset();
       ItemCollection.prototype.reset.call( this );
-    },
-
-    // @private
-    updateValues: function() {
-      // FIXME
-      this.costProperty = 0.0;
-      this.weightProperty = 0.0;
     }
 
   } );
