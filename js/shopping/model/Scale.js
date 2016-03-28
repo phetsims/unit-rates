@@ -12,6 +12,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ItemCollection = require( 'UNIT_RATES/shopping/model/ItemCollection' );
+  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
+  var Item = require( 'UNIT_RATES/shopping/model/Item' );
   var Property = require( 'AXON/Property' );
 
   /**
@@ -42,7 +44,7 @@ define( function( require ) {
       var itemArray = self.getItemsWithType( value.type );
       itemArray.forEach( function( item ) {
 
-        cost += ( item.rate * item.units * item.weight );
+        cost += ( item.rate * item.count * item.weight );
         weight += item.weight;
       } );
 
@@ -54,15 +56,13 @@ define( function( require ) {
     this.addListeners( function( item, observableArray ) {
       console.log( 'Scale: ' + observableArray.length );
 
-      self.costProperty.value += ( item.rate * item.units * item.weight );
+      self.costProperty.value += ( item.rate * item.count * item.weight );
       self.weightProperty.value += item.weight;
-
-      // FIXME: expand fruit bag types into individual items
     },
     function( item, observableArray ) {
       console.log( 'Scale: ' + observableArray.length );
 
-      self.costProperty.value -= ( item.rate * item.units * item.weight );
+      self.costProperty.value -= ( item.rate * item.count * item.weight );
       self.weightProperty.value -= item.weight;
     } );
   }
@@ -70,6 +70,49 @@ define( function( require ) {
   unitRates.register( 'Scale', Scale );
 
   return inherit( ItemCollection, Scale, {
+
+    /**
+     * Adds an item to the types specific array - fruit types are a special case
+     *
+     * @param {Item} item
+     * @override @public
+     */
+     addItem: function( item ) {
+
+      // expand fruit & candy bag types into individual items (note: produce types remain in bags)
+      if ( item.count > 1 ) {
+
+        switch( item.type ) {
+          case ItemData.APPLES.type:
+            for ( var i = 0; i < item.count; i++ ) {
+              ItemCollection.prototype.addItem.call( this, new Item( ItemData.APPLES, 1 ) );
+            };
+            break;
+          case ItemData.LEMONS.type:
+            for ( var i = 0; i < item.count; i++ ) {
+              ItemCollection.prototype.addItem.call( this, new Item( ItemData.LEMONS, 1 ) );
+            };
+            break;
+          case ItemData.ORANGES.type:
+            for ( var i = 0; i < item.count; i++ ) {
+              ItemCollection.prototype.addItem.call( this, new Item( ItemData.ORANGES, 1 ) );
+            };
+            break;
+          case ItemData.PEARS.type:
+            for ( var i = 0; i < item.count; i++ ) {
+              ItemCollection.prototype.addItem.call( this, new Item( ItemData.PEARS, 1 ) );
+            };
+            break;
+
+          default:
+            ItemCollection.prototype.addItem.call( this, item );
+        }
+      }
+      else {
+         ItemCollection.prototype.addItem.call( this, item );
+      }
+
+    },
 
     /**
      * @public

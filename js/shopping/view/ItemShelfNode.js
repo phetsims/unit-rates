@@ -20,10 +20,9 @@ define( function( require ) {
   var Random = require( 'DOT/Random' );
 
   // constants
-  var RAND = new Random();
-  var BACK_DEPTH = 15;
+  var BACK_DEPTH = 35
   var BACK_OFFSET = 0.15;
-  var SHELF_SIZE = new Dimension2( 340, 30 );
+  var SHELF_SIZE = new Dimension2( 340, 20 );
 
   /**
    * @param {Shelf} shelf
@@ -49,18 +48,21 @@ define( function( require ) {
       pickable: true
     };
 
+    this.backEdgeMinX = BACK_OFFSET * SHELF_SIZE.width;
+    this.backEdgeMaxX = ( 1 - BACK_OFFSET ) * SHELF_SIZE.width;
+
     this.topNode =  new Path( new Shape()
-      .moveTo( 0, 10 )                                                  // Top face
-      .lineTo( SHELF_SIZE.width, 10)
-      .lineTo( ( 1 - BACK_OFFSET ) * SHELF_SIZE.width, -BACK_DEPTH )
-      .lineTo( BACK_OFFSET * SHELF_SIZE.width, -BACK_DEPTH )
-      .lineTo( 0, 10 ), pathOptions );
+      .moveTo( 0, 0 )                                                  // Top face
+      .lineTo( SHELF_SIZE.width, 0)
+      .lineTo( this.backEdgeMaxX, -BACK_DEPTH )
+      .lineTo( this.backEdgeMinX, -BACK_DEPTH )
+      .lineTo( 0, 0 ), pathOptions );
 
     var frontShape = new Shape()
-      .moveTo( 0, 10 )                                                  // Front face
+      .moveTo( 0, 0 )                                                  // Front face
       .lineTo( 0, SHELF_SIZE.height )
       .lineTo( SHELF_SIZE.width, SHELF_SIZE.height)
-      .lineTo( SHELF_SIZE.width, 10);
+      .lineTo( SHELF_SIZE.width, 0);
 
     assert && assert( !options.children, 'additional children not supported' );
     options.children = [ this.topNode, new Path( frontShape, pathOptions ) ];
@@ -103,22 +105,24 @@ define( function( require ) {
       var itemArray = this.shelf.getItemsWithType( this.shelf.itemDataProperty.value.type );
 
       // create nodes for all items of type
+      var initialX = bounds.minX + self.backEdgeMinX;
+      var initialY = bounds.minY;
       itemArray.forEach( function( item ) {
 
         var position = item.positionProperty.value;
 
-        // init position - create a random position on the shelf
-        if(position.x === 0 && position.y === 0) {
-          var r = RAND.random();
-          position = new Vector2( bounds.minX * r +  ( 1.0 - r ) * bounds.maxX, bounds.minY );
-        }
-
         // create new item node
         var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, self.itemMovedCallback );
+
+        // init position - create a random position on the shelf
+        if(position.x === 0 && position.y === 0) {
+          item.positionProperty.value = new Vector2( initialX, initialY );
+        }
 
         // add to the screen for layering purposes
         self.itemLayer.addChild( itemNode );
 
+        initialX += itemNode.width + 2;
       } );
     },
 

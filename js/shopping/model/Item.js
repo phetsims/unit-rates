@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A specific instance of an item (i.e. apple, cucumbers, blue candy) and it's attributes
+ * A specific instance of an item (i.e. apple, cucumbers, blue candy) with it's attributes
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -14,13 +14,11 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {ItemType} item
-   * @param (number} rate
-   * @param {number} units
-   * @param (number} weight
+   * @param {ItemData} data
+   * @param {number} [count]
    * @constructor
    */
-  function Item( type, rate, units, weight ) {
+  function Item( data, count ) {
 
     // @public (readwrite)
     PropertySet.call( this, {
@@ -28,16 +26,16 @@ define( function( require ) {
     } );
 
     // @public (readonly)
-    this.type = type;
+    this.type = data.type;
 
     // @public (readonly)
-    this.rate = rate;
+    this.rate = data.rate;
 
     // @public (readonly)
-    this.units = units;
+    this.weight = data.weight;
 
     // @public (readonly)
-    this.weight = weight;
+    this.count = count || 1;
   }
 
   return inherit( PropertySet, Item, {

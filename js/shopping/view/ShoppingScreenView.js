@@ -82,7 +82,7 @@ define( function( require ) {
 
     // scale
     this.itemScaleNode = new ItemScaleNode( model.scale, this.itemsLayer, this.itemMoved.bind( this ) );
-    this.itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, doubleNumberLineNode.bottom + 200 ) );  // FIXME
+    this.itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, doubleNumberLineNode.bottom + 225 ) );
     this.addChild( this.itemScaleNode );
 
     // shelf
@@ -187,12 +187,22 @@ define( function( require ) {
       var nodeCenterBottom = new Vector2( itemNode.item.positionProperty.value.x,
       itemNode.item.positionProperty.value.y + itemNode.height / 2 );
 
-      // Check node position
+      // Check node position - on scale, shelf or in no-man's land
       if( this.itemScaleNode.pointInDropArea( nodeCenterBottom ) ) {
         console.log('on scale');
+
         // Remove from shelf & add to scale
         this.model.shelf.removeItem( itemNode.item );
         this.model.scale.addItem( itemNode.item );
+
+        // Fruit & candy bags (aka. itemNode.item.count > 1) should be expaned into individual items
+        if( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) {
+          // remove the bag node
+          this.itemsLayer.removeChild( itemNode );
+
+          // populate new scale items
+          this.itemScaleNode.populate();
+        }
       }
       else if( this.itemShelfNode.pointInDropArea( nodeCenterBottom ) ) {
         console.log('on shelf');

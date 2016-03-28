@@ -41,13 +41,12 @@ define( function( require ) {
 
     /**
      * Creates a new item/adds it to the types specific array
-     * @param {string} type
-     * @param {string | number} unit
-     * @param {number} rate
+     * @param {ItemData} data
+     * @param {number} [count]
      * @public
      */
-    createItem: function( type, unit, rate, weight ) {
-      this.addItem( new Item( type, unit, rate, weight ) );
+    createItem: function( data, count ) {
+      this.addItem( new Item( data, count ) );
     },
 
     /**

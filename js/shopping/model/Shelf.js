@@ -49,12 +49,71 @@ define( function( require ) {
      */
     populate: function() {
 
-      // FIXME: populate sim initial content
+      // populate initial shelf ontent
       for (var key in ItemData) {
+
         var itemData = ItemData[ key ];
-        var itemCount = RAND.random() * 10;
-        for (var i = 0; i < itemCount; i++) {
-          this.createItem( itemData.type, itemData.rate, 1, 1 );
+
+        switch( itemData.type ) {
+          case ItemData.APPLES.type:
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+            break;
+          case ItemData.LEMONS.type:
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+            break;
+          case ItemData.ORANGES.type:
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+            break;
+          case ItemData.PEARS.type:
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+            break;
+          case ItemData.CARROTS.type:
+              this.createItem( itemData, 4 );
+              this.createItem( itemData, 4 );
+              this.createItem( itemData, 4 );
+              this.createItem( itemData, 4 );
+            break;
+          case ItemData.CUCUMBERS.type:
+              this.createItem( itemData, 3 );
+              this.createItem( itemData, 3 );
+              this.createItem( itemData, 3 );
+              this.createItem( itemData, 3 );
+            break;
+          case ItemData.POTATOES.type:
+              this.createItem( itemData, 3 );
+              this.createItem( itemData, 3 );
+              this.createItem( itemData, 3 );
+              this.createItem( itemData, 3 );
+            break;
+          case ItemData.TOMATOES.type:
+              this.createItem( itemData, 4 );
+              this.createItem( itemData, 4 );
+              this.createItem( itemData, 4 );
+              this.createItem( itemData, 4 );
+            break;
+          /*
+          case ItemData.RED_CANDY.type:
+            break;
+          case ItemData.YELLOW_CANDY.type:
+            break;
+          case ItemData.GREEN_CANDY.type:
+            break;
+          case ItemData.BLUE_CANDY.type:
+            break;
+          */
+          default:
+            var itemCount = RAND.random() * 7;
+            for (var i = 0; i < itemCount; i++) {
+              this.createItem( itemData, 1 );
+            }
         }
       }
     },

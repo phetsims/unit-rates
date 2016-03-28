@@ -14,8 +14,12 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Vector2 = require( 'DOT/Vector2' );
+  var Random = require( 'DOT/Random' );
 
-  // constants
+  // contants
+  var RAND = new Random();
 
 
   var ItemNodeFactory = {
@@ -33,53 +37,70 @@ define( function( require ) {
      */
     createItem: function( item, size, position, movedCallback, options ) {
 
-      var imageNode = null;
+      var itemNode = new ItemNode( item, position, movedCallback, options );
 
-      switch( item.type ) {
-        case ItemData.APPLES.type:
-          imageNode = this.createApple( size, options );
-          break;
-        case ItemData.LEMONS.type:
-          imageNode = this.createLemon( size, options );
-          break;
-        case ItemData.ORANGES.type:
-          imageNode = this.createOrange( size, options );
-          break;
-        case ItemData.PEARS.type:
-          imageNode = this.createPear( size, options );
-          break;
-        case ItemData.CARROTS.type:
-          imageNode = this.createCarrot( size, options );
-          break;
-        case ItemData.CUCUMBERS.type:
-          imageNode = this.createCucumber( size, options );
-          break;
-        case ItemData.POTATOES.type:
-          imageNode = this.createPotatoe( size, options );
-          break;
-        case ItemData.TOMATOES.type:
-          imageNode = this.createTomato( size, options );
-          break;
-        case ItemData.RED_CANDY.type:
-          imageNode = this.createRedCandy( size, options );
-          break;
-        case ItemData.YELLOW_CANDY.type:
-          imageNode = this.createYellowCandy( size, options );
-          break;
-        case ItemData.GREEN_CANDY.type:
-          imageNode = this.createGreenCandy( size, options );
-          break;
-        case ItemData.BLUE_CANDY.type:
-          imageNode = this.createBlueCandy( size, options );
-          break;
-        default:
+      for (var i = 0; i < item.count; i++) {
+
+        var imageNode = null;
+
+        switch( item.type ) {
+          case ItemData.APPLES.type:
+            imageNode = this.createApple( size, options );
+            break;
+          case ItemData.LEMONS.type:
+            imageNode = this.createLemon( size, options );
+            break;
+          case ItemData.ORANGES.type:
+            imageNode = this.createOrange( size, options );
+            break;
+          case ItemData.PEARS.type:
+            imageNode = this.createPear( size, options );
+            break;
+          case ItemData.CARROTS.type:
+            imageNode = this.createCarrot( size, options );
+            break;
+          case ItemData.CUCUMBERS.type:
+            imageNode = this.createCucumber( size, options );
+            break;
+          case ItemData.POTATOES.type:
+            imageNode = this.createPotato( size, options );
+            break;
+          case ItemData.TOMATOES.type:
+            imageNode = this.createTomato( size, options );
+            break;
+          case ItemData.RED_CANDY.type:
+            imageNode = this.createRedCandy( size, options );
+            break;
+          case ItemData.YELLOW_CANDY.type:
+            imageNode = this.createYellowCandy( size, options );
+            break;
+          case ItemData.GREEN_CANDY.type:
+            imageNode = this.createGreenCandy( size, options );
+            break;
+          case ItemData.BLUE_CANDY.type:
+            imageNode = this.createBlueCandy( size, options );
+            break;
+          default:
+        }
+
+        assert && assert( imageNode !== null, 'Unable to create item node of type:' + item.type );
+
+        // in the case of multiple count, jitter the positions for placement in a bag.
+        if( item.count > 1 ) {
+          imageNode.center = new Vector2( ( RAND.random() - 0.5 ) * imageNode.width,
+          ( RAND.random() - 0.5 ) * imageNode.height );
+        }
+
+        itemNode.addChild( imageNode );
+      };
+
+      // If multiple count, create a larger bage to hold typed nodes
+      if( item.count > 1 ) {
+        var bagNode = this.createBag( 2 * size, options );
+        itemNode.addChild( bagNode );
       }
 
-      assert && assert( imageNode !== null, 'Unable to create item node of type:' + item.type );
-
-      return new ItemNode( item, position, movedCallback, {
-        children: [ imageNode ]
-      }, options );
+      return itemNode
 
     },
 
@@ -96,7 +117,7 @@ define( function( require ) {
     createApple: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'crimson', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'crimson', stroke: 'black' } )
         ]
       }, options );
     },
@@ -112,7 +133,7 @@ define( function( require ) {
     createLemon: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'gold', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'gold', stroke: 'black' } )
         ]
       }, options );
     },
@@ -128,7 +149,7 @@ define( function( require ) {
     createOrange: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'darkorange', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'darkorange', stroke: 'black' } )
         ]
       }, options );
     },
@@ -144,7 +165,7 @@ define( function( require ) {
     createPear: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'lime', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'lime', stroke: 'black' } )
         ]
       }, options );
     },
@@ -162,7 +183,7 @@ define( function( require ) {
     createCarrot: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'orange', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'orange', stroke: 'black' } )
         ]
       }, options );
     },
@@ -176,23 +197,23 @@ define( function( require ) {
     createCucumber: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'darkgreen', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'darkgreen', stroke: 'black' } )
         ]
       }, options );
     },
 
     /**
-     * Creates a potatoe
+     * Creates a potato
      *
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createPotatoe: function( size, options ) {
+    createPotato: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'sienna', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'sienna', stroke: 'black' } )
         ]
       }, options );
     },
@@ -208,7 +229,7 @@ define( function( require ) {
     createTomato: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'firebrick', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'firebrick', stroke: 'black' } )
         ]
       }, options );
     },
@@ -226,7 +247,7 @@ define( function( require ) {
     createRedCandy: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'red', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'red', stroke: 'black' } )
         ]
       }, options );
     },
@@ -242,7 +263,7 @@ define( function( require ) {
     createYellowCandy: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'yellow', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'yellow', stroke: 'black' } )
         ]
       }, options );
     },
@@ -258,7 +279,7 @@ define( function( require ) {
     createGreenCandy: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'green', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'green', stroke: 'black' } )
         ]
       }, options );
     },
@@ -274,14 +295,28 @@ define( function( require ) {
     createBlueCandy: function( size, options ) {
       return new Node( {
         children: [
-          new Circle( size, { fill: 'blue', stroke: 'black' } )
+          new Circle( size / 2, { fill: 'blue', stroke: 'black' } )
         ]
       }, options );
-    }
+    },
 
     // ----------------------------- Bags ----------------------------- //
 
-    // FIXME: add bags
+    /**
+     * Creates a blue candy
+     *
+     * @param {number} size in pixels
+     * @param {Object} [options]
+     * @returns {Node}
+     * @public
+     */
+    createBag: function( size, options ) {
+      return new Node( {
+        children: [
+          new Rectangle( -size / 2, -size / 2, size, size, { fill: 'rgba(128, 128, 128, 0.3)', stroke: 'black' } )
+        ]
+      }, options );
+    }
 
   }; // ItemNodeFactory
 

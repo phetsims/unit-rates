@@ -10,81 +10,66 @@ define( function( require ) {
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
-  // strings
-  var applesString = require( 'string!UNIT_RATES/Apples' );
-  var lemonsString = require( 'string!UNIT_RATES/Lemons' );
-  var orangesString = require( 'string!UNIT_RATES/Oranges' );
-  var pearsString = require( 'string!UNIT_RATES/Pears' );
-  var carrotsString = require( 'string!UNIT_RATES/Carrots' );
-  var cucumbersString = require( 'string!UNIT_RATES/Cucumbers' );
-  var potatoesString = require( 'string!UNIT_RATES/Potatoes' );
-  var tomatoesString = require( 'string!UNIT_RATES/Tomatoes' );
-  var redCandyString = require( 'string!UNIT_RATES/RedCandy' );
-  var yellowCandyString = require( 'string!UNIT_RATES/YellowCandy' );
-  var greenCandyString = require( 'string!UNIT_RATES/GreenCandy' );
-  var blueCandyString = require( 'string!UNIT_RATES/BlueCandy' );
-  var weightUnitString = require( 'string!UNIT_RATES/weightUnit' );
-
   var ItemData = Object.freeze( {
     APPLES: {
-      type: applesString,
-      unit: applesString,
-      rate: 0.5
+      type: 'apple',
+      rate: 0.5,
+      weight: 1
     },
     LEMONS: {
-      type: lemonsString,
-      unit: lemonsString,
-      rate: 0.5
+      type: 'lemon',
+      rate: 0.25,
+      weight: 1
     },
     ORANGES: {
-      type: orangesString,
-      unit: orangesString,
-      rate: 0.5
+      type: 'orange',
+      rate: 0.75,
+      weight: 1
     },
     PEARS: {
-      type: pearsString,
-      unit: pearsString,
-      rate: 0.5
+      type: 'pear',
+      rate: 0.4,
+      weight: 1
     },
     CARROTS:{
-      type: carrotsString,
-      unit: carrotsString,
-      rate: 0.5
+      type: 'carrot',
+      rate: 0.15,
+      weight: 1
     },
     CUCUMBERS: {
-      type: cucumbersString,
-      unit: cucumbersString,
-      rate: 0.5
+      type: 'cucumber',
+      rate: 0.22,
+      weight: 1
     },
     POTATOES: {
-      type: potatoesString,
-      unit: potatoesString,
-      rate: 0.5
+      type: 'potato',
+      rate: 0.45,
+      weight: 1
     },
     TOMATOES: {
-      type: tomatoesString,
-      unit: tomatoesString,
-      rate: 0.5
+      type: 'tomato',
+      rate: 0.3,
+      weight: 1
     },
     RED_CANDY: {
-      type: redCandyString,
-      unit: weightUnitString,
-      rate: 0.5
+      type: 'redCandy',
+      rate: 0.5,
+      weight: 1
     },
     YELLOW_CANDY: {
-      type: yellowCandyString,
-      unit: weightUnitString,
-      rate: 0.5
+      type: 'yellowCandy',
+      rate: 0.5,
+      weight: 1
     },
     GREEN_CANDY: {
-      type: greenCandyString,
-      unit: weightUnitString,
-      rate: 0.5
+      type: 'greenCandy',
+      rate: 0.7,
+      weight: 1
     },
     BLUE_CANDY: {
-      type: blueCandyString,
-      unit: weightUnitString,
-      rate: 0.5
+      type: 'blueCandy',
+      rate: 0.4,
+      weight: 1
     }
   } );
 

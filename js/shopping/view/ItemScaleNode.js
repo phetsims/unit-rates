@@ -21,12 +21,15 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Panel = require( 'SUN/Panel' );
   var Util = require( 'DOT/Util' );
+  var Vector2 = require( 'DOT/Vector2' );
+  var Random = require( 'DOT/Random' );
   var Dimension2 = require( 'DOT/Dimension2' );
 
   // images
   var scaleImage = require( 'mipmap!UNIT_RATES/scale.png' );
 
   // constants
+  var RAND = new Random();
   var DISPLAY_SIZE = new Dimension2( 80, 50 );
   var DISPLAY_BOTTOM_OFFSET = 32;
   var DISPLAY_SPACING = 10;  // space beteen mutliple displays
@@ -99,7 +102,6 @@ define( function( require ) {
       // Check data type
       self.weightDisplayNode.visible = ( data === ItemData.RED_CANDY   || data === ItemData.YELLOW_CANDY ||
                                          data === ItemData.GREEN_CANDY || data === ItemData.BLUE_CANDY );
-
       // move cost display
       if ( self.weightDisplayNode.visible ) {
         self.costDisplayNode.centerX = self.costUnitDisplayX;
@@ -109,7 +111,6 @@ define( function( require ) {
       }
 
       self.populate();
-
     } );
   }
 
@@ -168,12 +169,16 @@ define( function( require ) {
     },
 
     /**
-     * Creates nodes for each item
+     * Creates nodes for each new item
      * @public
      */
     populate: function() {
 
       var self = this;
+
+      // calc the drop zone center (for positioning new items)
+      var dropCenter = this.dropNode.getGlobalBounds().getCenter();
+      var layerDropCenter = this.itemLayer.globalToParentPoint( dropCenter );
 
       // get the current array for the item type
       var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
@@ -185,6 +190,18 @@ define( function( require ) {
 
         // create new item node
         var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, self.itemMovedCallback );
+
+        // init position - create a random position on the shelf
+        if(position.x === 0 && position.y === 0) {
+
+          // jitter the initial positions
+          var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.dropNode.width * 0.8 ) );
+          var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.dropNode.height * 0.25 ) );
+          item.positionProperty.value = new Vector2(
+            layerDropCenter.x + jitterX,
+            layerDropCenter.y + jitterY - itemNode.height / 2
+          );
+        }
 
         // add to the screen for layering purposes
         self.itemLayer.addChild( itemNode );
