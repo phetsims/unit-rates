@@ -41,7 +41,7 @@ define( function( require ) {
     // translate node according to item position property
     this.positionListener = function( position, oldPosition ) {
         self.translation = position;
-    }
+    };
     this.item.positionProperty.link( this.positionListener );
 
     // add a drag listener

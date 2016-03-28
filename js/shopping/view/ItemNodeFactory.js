@@ -92,7 +92,7 @@ define( function( require ) {
         }
 
         itemNode.addChild( imageNode );
-      };
+      }
 
       // If multiple count, create a larger bage to hold typed nodes
       if( item.count > 1 ) {
@@ -100,7 +100,7 @@ define( function( require ) {
         itemNode.addChild( bagNode );
       }
 
-      return itemNode
+      return itemNode;
 
     },
 

@@ -17,10 +17,9 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Vector2 = require( 'DOT/Vector2' );
-  var Random = require( 'DOT/Random' );
 
   // constants
-  var BACK_DEPTH = 35
+  var BACK_DEPTH = 35;
   var BACK_OFFSET = 0.15;
   var SHELF_SIZE = new Dimension2( 340, 20 );
 
