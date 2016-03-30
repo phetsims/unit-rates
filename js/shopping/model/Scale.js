@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * All the items currently on the shelf
+ * All the items currently on the scale
  *
  * @author Dave Schmitz (Schmitzware)
  */

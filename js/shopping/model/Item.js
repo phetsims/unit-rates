@@ -22,7 +22,7 @@ define( function( require ) {
 
     // @public (readwrite)
     PropertySet.call( this, {
-      position: new Vector2( 0, 0 )
+      position: new Vector2( 0, 0 ) // (0, 0) is considered an uninitialized position
     } );
 
     // @public (readonly)

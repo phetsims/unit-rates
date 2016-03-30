@@ -80,17 +80,22 @@ define( function( require ) {
     this.itemsLayer = new Node();
     this.addChild( this.itemsLayer );
 
-    // scale
-    this.itemScaleNode = new ItemScaleNode( model.scale, this.itemsLayer, this.itemMoved.bind( this ) );
-    this.itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, doubleNumberLineNode.bottom + 225 ) );
-    this.addChild( this.itemScaleNode );
-
     // shelf
     this.itemShelfNode = new ItemShelfNode( model.shelf, this.itemsLayer, this.itemMoved.bind( this ), {
       centerX:  this.layoutBounds.centerX,
       bottom: this.layoutBounds.bottom - SCREEN_MARGIN
     } );
     this.addChild( this.itemShelfNode );
+
+    // scale
+    this.itemScaleNode = new ItemScaleNode( model.scale, this.itemsLayer, this.itemMoved.bind( this ) , {
+      centerX:  this.layoutBounds.centerX,
+      bottom: this.itemShelfNode.top - 50
+    } );
+
+    //this.itemScaleNode = new ItemScaleNode( model.scale, this.itemsLayer, this.itemMoved.bind( this ) );
+    //this.itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, this.itemShelfNode.top + 150) );
+    this.addChild( this.itemScaleNode );
 
     // challenges
     var challangesNode = new ChallangesNode( model, {
@@ -195,8 +200,10 @@ define( function( require ) {
         this.model.shelf.removeItem( itemNode.item );
         this.model.scale.addItem( itemNode.item );
 
-        // Fruit & candy bags (aka. itemNode.item.count > 1) should be expaned into individual items
-        if( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) {
+        // Fruit & candy bags should be expanded
+        if( this.sceneModeProperty.value === SceneMode.CANDY ||
+          ( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) ) {
+
           // remove the bag node
           this.itemsLayer.removeChild( itemNode );
 

@@ -44,7 +44,7 @@ define( function( require ) {
   return inherit( ItemCollection, Shelf, {
 
     /**
-     * Populates all item types
+     * Populates the initial for item types for the shelf
      * @private
      */
     populate: function() {

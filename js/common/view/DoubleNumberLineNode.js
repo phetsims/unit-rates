@@ -31,8 +31,8 @@ define( function( require ) {
   var BUTTON_COLOR = 'yellow';
 
   var GRAPH_BUTTON_SPACING = 10; // horizontal space from button to graph y-axis line
-  var GRAPH_WIDTH = 575;
-  var GRAPH_HEIGHT = 80;
+  var GRAPH_WIDTH = 550;
+  var GRAPH_HEIGHT = 70;
   var GRAPH_X_AXIS_OFFSET = 10; // offset from origin for the two x-axes
   var GRAPH_ARROW_SIZE = 3;
   var GRAPH_ARROW_LABEL_MARGIN = 10;  // horizontal space from arrows to the labels

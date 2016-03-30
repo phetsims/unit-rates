@@ -13,6 +13,7 @@ define( function( require ) {
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
+  var CandyContainerNode = require( 'UNIT_RATES/shopping/view/CandyContainerNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
@@ -51,31 +52,33 @@ define( function( require ) {
 
     options = options || {};
 
-    Node.call( this, options );
-
     var self = this;
 
     this.scale = scale;
     this.itemLayer = itemLayer;
     this.itemMovedCallback = itemMovedCallback;
+    this.typeIsCandy = false;
 
-    // This is Loading the scale image and scaling it to desired width and adding to the node
+    // load the scale image
     this.scaleNode = new Image( scaleImage, { pickable: true } );
-    this.addChild( this.scaleNode );
 
-    // a transparant node with the approximate shape of the top of the scale - used for a drop location
-    this.dropNode = new Path( new Shape()
+    // a transparant node with the approximate shape of the top of the scale - defines a drop location
+    this.scaleDropNode = new Path( new Shape()
        .ellipse( this.scaleNode.centerX, this.scaleNode.top + 12,
         this.scaleNode.width * 0.47, this.scaleNode.height * 0.13, 0 ), {
       //fill: 'orange', // uncomment to see drop zone
       lineWidth: 0,
       pickable: true
     } );
-    this.scaleNode.addChild( this.dropNode );
+
+    this.candyContainer = new CandyContainerNode( 75, 100, {
+      centerX: this.scaleNode.centerX,
+      bottom: this.scaleNode.top - this.scaleNode.top + 15
+    } );
 
     // @private
-    this.costOnlyDisplayX = self.centerX;
-    this.costUnitDisplayX = this.centerX - ( DISPLAY_SIZE.width / 2 ) - DISPLAY_SPACING;
+    this.costOnlyDisplayX = this.scaleNode.centerX;
+    this.costUnitDisplayX = this.scaleNode.centerX - ( DISPLAY_SIZE.width / 2 ) - DISPLAY_SPACING;
 
     // cost of items display, always visible
     // @private
@@ -83,25 +86,28 @@ define( function( require ) {
       preText: currencySymbolString,
       decimalPlaces: 2,
       centerX: this.costUnitDisplayX,
-      centerY: this.bottom - DISPLAY_BOTTOM_OFFSET
+      centerY: this.scaleNode.bottom - DISPLAY_BOTTOM_OFFSET
     } );
-    this.addChild( this.costDisplayNode );
 
     // weight of items display, visibility changes
     // @private
     this.weightDisplayNode = new ValueDisplayNode( this.scale.weightProperty, {
       postText: weightUnitString,
-      centerX: this.centerX + ( DISPLAY_SIZE.width / 2 ) + DISPLAY_SPACING,
-      centerY: this.bottom - DISPLAY_BOTTOM_OFFSET
+      centerX: this.scaleNode.centerX + ( DISPLAY_SIZE.width / 2 ) + DISPLAY_SPACING,
+      centerY: this.scaleNode.bottom - DISPLAY_BOTTOM_OFFSET
     } );
-    this.addChild( this.weightDisplayNode );
 
     // refresh on item change
     scale.itemDataProperty.link( function( data, oldData ) {
 
       // Check data type
-      self.weightDisplayNode.visible = ( data === ItemData.RED_CANDY   || data === ItemData.YELLOW_CANDY ||
-                                         data === ItemData.GREEN_CANDY || data === ItemData.BLUE_CANDY );
+      self.typeIsCandy = ( data === ItemData.RED_CANDY   || data === ItemData.YELLOW_CANDY ||
+                          data === ItemData.GREEN_CANDY || data === ItemData.BLUE_CANDY );
+
+      // Show/hide candy specific UI elements
+      self.candyContainer.visible    = self.typeIsCandy;
+      self.weightDisplayNode.visible = self.typeIsCandy;
+
       // move cost display
       if ( self.weightDisplayNode.visible ) {
         self.costDisplayNode.centerX = self.costUnitDisplayX;
@@ -112,6 +118,12 @@ define( function( require ) {
 
       self.populate();
     } );
+
+    assert && assert( !options.children, 'additional children not supported' );
+    options.children = [ this.scaleNode, this.scaleDropNode, this.candyContainer, this.costDisplayNode, this.weightDisplayNode ];
+
+    Node.call( this, options );
+
   }
 
   /**
@@ -122,6 +134,8 @@ define( function( require ) {
    * @private
    */
   function ValueDisplayNode( property, options ) {
+
+    options = options || {};
 
     options = _.extend( {
       minWidth: DISPLAY_SIZE.width,
@@ -164,39 +178,53 @@ define( function( require ) {
      */
     pointInDropArea: function( point ) {
       var scalePoint = this.parentToLocalPoint( point );
-      var localPoint = this.dropNode.parentToLocalPoint( scalePoint );
-      return this.dropNode.containsPoint( localPoint );
+
+      var inDropArea = false;
+      if ( this.typeIsCandy ) {
+        inDropArea = this.candyContainer.containsPoint( scalePoint );
+      }
+      else {
+        inDropArea = this.scaleDropNode.containsPoint( scalePoint );
+      }
+
+      return inDropArea;
     },
 
     /**
-     * Creates nodes for each new item
+     * Creates nodes for each item
      * @public
      */
     populate: function() {
 
       var self = this;
 
-      // calc the drop zone center (for positioning new items)
-      var dropCenter = this.dropNode.getGlobalBounds().getCenter();
-      var layerDropCenter = this.itemLayer.globalToParentPoint( dropCenter );
-
       // get the current array for the item type
       var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
 
-      // create nodes for all items of type
-      itemArray.forEach( function( item ) {
+      if ( this.typeIsCandy ) {
+        // let the candy container render the items as it sees fit
+        this.candyContainer.populate( itemArray );
+      }
+      else {
+
+        // calc the drop zone center (for positioning new items)
+        var dropCenter = this.scaleDropNode.getGlobalBounds().getCenter();
+        var layerDropCenter = this.itemLayer.globalToParentPoint( dropCenter );
+
+        // create nodes for all items of type (fruit | produce)
+        itemArray.forEach( function( item ) {
 
         var position = item.positionProperty.value;
 
         // create new item node
         var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, self.itemMovedCallback );
 
-        // init position - create a random position on the shelf
+        // initial position - create a random position on the shelf
         if(position.x === 0 && position.y === 0) {
 
           // jitter the initial positions
-          var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.dropNode.width * 0.8 ) );
-          var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.dropNode.height * 0.25 ) );
+          var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.width * 0.8 ) );
+          var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.height * 0.25 ) );
           item.positionProperty.value = new Vector2(
             layerDropCenter.x + jitterX,
             layerDropCenter.y + jitterY - itemNode.height / 2
@@ -206,6 +234,8 @@ define( function( require ) {
         // add to the screen for layering purposes
         self.itemLayer.addChild( itemNode );
       } );
+      }
+
     },
 
     /**
