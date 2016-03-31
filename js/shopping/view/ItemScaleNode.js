@@ -71,10 +71,10 @@ define( function( require ) {
       pickable: true
     } );
 
-    this.candyContainer = new CandyContainerNode( 75, 100, {
-      centerX: this.scaleNode.centerX,
-      bottom: this.scaleNode.top - this.scaleNode.top + 15
-    } );
+    //this.candyContainer = new CandyContainerNode( 75, 100, {
+    //  centerX: this.scaleNode.centerX,
+    //  bottom: this.scaleNode.top - this.scaleNode.top + 15
+    //} );
 
     // @private
     this.costOnlyDisplayX = this.scaleNode.centerX;
@@ -105,7 +105,7 @@ define( function( require ) {
                           data === ItemData.GREEN_CANDY || data === ItemData.BLUE_CANDY );
 
       // Show/hide candy specific UI elements
-      self.candyContainer.visible    = self.typeIsCandy;
+      //self.candyContainer.visible    = self.typeIsCandy;
       self.weightDisplayNode.visible = self.typeIsCandy;
 
       // move cost display
@@ -120,7 +120,8 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ this.scaleNode, this.scaleDropNode, this.candyContainer, this.costDisplayNode, this.weightDisplayNode ];
+    //options.children = [ this.scaleNode, this.scaleDropNode, this.candyContainer, this.costDisplayNode, this.weightDisplayNode ];
+    options.children = [ this.scaleNode, this.scaleDropNode, this.costDisplayNode, this.weightDisplayNode ];
 
     Node.call( this, options );
 
@@ -158,8 +159,8 @@ define( function( require ) {
 
     // update value text
     property.link( function( value, oldValue ) {
-      var fixedValue = Util.toFixed( value,  options.decimalPlaces );
-      valueText.setText( options.preText + fixedValue.toString() + options.postText );
+      var fixedValue = Util.toFixed( value, options.decimalPlaces );
+      valueText.setText( options.preText + ' ' + fixedValue.toString() + ' ' + options.postText );
     } );
 
     return new Panel( valueText, options);
@@ -181,7 +182,8 @@ define( function( require ) {
 
       var inDropArea = false;
       if ( this.typeIsCandy ) {
-        inDropArea = this.candyContainer.containsPoint( scalePoint );
+        //inDropArea = this.candyContainer.containsPoint( scalePoint ); // FIXME: container still undecided
+        inDropArea = this.scaleDropNode.containsPoint( scalePoint );
       }
       else {
         inDropArea = this.scaleDropNode.containsPoint( scalePoint );
@@ -201,11 +203,12 @@ define( function( require ) {
       // get the current array for the item type
       var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
 
-      if ( this.typeIsCandy ) {
-        // let the candy container render the items as it sees fit
-        this.candyContainer.populate( itemArray );
-      }
-      else {
+      // FIXME: candy container design under review
+      //if ( this.typeIsCandy ) {
+      //  // let the candy container render the items as it sees fit
+      //  this.candyContainer.populate( itemArray );
+      //}
+      //else {
 
         // calc the drop zone center (for positioning new items)
         var dropCenter = this.scaleDropNode.getGlobalBounds().getCenter();
@@ -234,7 +237,7 @@ define( function( require ) {
         // add to the screen for layering purposes
         self.itemLayer.addChild( itemNode );
       } );
-      }
+      //}
 
     },
 

@@ -201,8 +201,8 @@ define( function( require ) {
         this.model.numberLine.addItem( itemNode.item );
 
         // Fruit & candy bags should be expanded
-        if( this.sceneModeProperty.value === SceneMode.CANDY ||
-          ( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) ) {
+        //if( this.sceneModeProperty.value === SceneMode.CANDY ||
+        if( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) {
 
           // remove the bag node
           this.itemsLayer.removeChild( itemNode );

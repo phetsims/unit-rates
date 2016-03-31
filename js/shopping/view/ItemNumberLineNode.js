@@ -22,15 +22,10 @@ define( function( require ) {
   var cucumbersString = require( 'string!UNIT_RATES/Cucumbers' );
   var potatoesString = require( 'string!UNIT_RATES/Potatoes' );
   var tomatoesString = require( 'string!UNIT_RATES/Tomatoes' );
-  var redCandyString = require( 'string!UNIT_RATES/RedCandy' );
-  var yellowCandyString = require( 'string!UNIT_RATES/YellowCandy' );
-  var greenCandyString = require( 'string!UNIT_RATES/GreenCandy' );
-  var blueCandyString = require( 'string!UNIT_RATES/BlueCandy' );
   var costString = require( 'string!UNIT_RATES/Cost' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
   var weightString = require( 'string!UNIT_RATES/Weight' );
   var weightMassString = require( 'string!UNIT_RATES/weightMass' );
-
   var costCurrencyString = costString + ' (' + currencySymbolString + ')';
   var weightUnitString = weightString + ' (' + weightMassString + ')';
 
