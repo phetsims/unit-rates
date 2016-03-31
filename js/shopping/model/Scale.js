@@ -82,30 +82,18 @@ define( function( require ) {
       // expand fruit & candy bag types into individual items (note: produce types remain in bags)
       if ( item.count > 1 ) {
 
-        var i;
-        switch( item.type ) {
-          case ItemData.APPLES.type:
-            for ( i = 0; i < item.count; i++ ) {
-              ItemCollection.prototype.addItem.call( this, new Item( ItemData.APPLES, 1 ) );
-            }
-            break;
-          case ItemData.LEMONS.type:
-            for ( i = 0; i < item.count; i++ ) {
-              ItemCollection.prototype.addItem.call( this, new Item( ItemData.LEMONS, 1 ) );
-            }
-            break;
-          case ItemData.ORANGES.type:
-            for ( i = 0; i < item.count; i++ ) {
-              ItemCollection.prototype.addItem.call( this, new Item( ItemData.ORANGES, 1 ) );
-            }
-            break;
-          case ItemData.PEARS.type:
-            for ( i = 0; i < item.count; i++ ) {
-              ItemCollection.prototype.addItem.call( this, new Item( ItemData.PEARS, 1 ) );
-            }
-            break;
-          default:
-            ItemCollection.prototype.addItem.call( this, item );
+        var types = {};
+        types[ ItemData.APPLES.type ] = ItemData.APPLES;
+        types[ ItemData.LEMONS.type ] = ItemData.LEMONS;
+        types[ ItemData.ORANGES.type ] = ItemData.ORANGES;
+        types[ ItemData.PEARS.type ] = ItemData.PEARS;
+        if ( types[ item.type ] ) {
+          for ( var i = 0; i < item.count; i++ ) {
+            ItemCollection.prototype.addItem.call( this, new Item( types[ item.type ], 1 ) );
+          }
+        }
+        else {
+          ItemCollection.prototype.addItem.call( this, item );
         }
       }
       else {

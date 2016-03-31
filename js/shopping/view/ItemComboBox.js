@@ -101,6 +101,7 @@ define( function( require ) {
         );
         break;
       default:
+        assert && assert( true, 'Combo box using unrecognized type' );
     }
 
     assert && assert( items.length > 0, 'Item list is empty' );
@@ -127,7 +128,7 @@ define( function( require ) {
           console.log( 'Scene candy' );
           break;
       default:
-          console.log( 'FIXME' );
+        assert && assert( true, 'Combo box using unrecognized scene' );
       }
 
     },
@@ -139,7 +140,7 @@ define( function( require ) {
      */
     createItemRow: function( itemString, itemNode ) {
 
-      var itemText = new Text( itemString, { font: FONT, maxWidth: 200 } );
+      var itemText = new Text( itemString, { font: FONT, maxWidth: 150 } );
       var hStrut = new HStrut( 175 - itemText.width - itemNode.width ); // FIXME: how to justify entries?
 
       // container for one row in the legend

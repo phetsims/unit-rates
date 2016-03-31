@@ -38,7 +38,7 @@ define( function( require ) {
 
   // strings
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
-  var weightUnitString = require( 'string!UNIT_RATES/weightUnit' );
+  var weightMassString = require( 'string!UNIT_RATES/weightMass' );
 
   /**
    *
@@ -92,7 +92,7 @@ define( function( require ) {
     // weight of items display, visibility changes
     // @private
     this.weightDisplayNode = new ValueDisplayNode( this.scale.weightProperty, {
-      postText: weightUnitString,
+      postText: weightMassString,
       centerX: this.scaleNode.centerX + ( DISPLAY_SIZE.width / 2 ) + DISPLAY_SPACING,
       centerY: this.scaleNode.bottom - DISPLAY_BOTTOM_OFFSET
     } );

@@ -104,11 +104,18 @@ define( function( require ) {
             break;
           case ItemData.YELLOW_CANDY.type:
             break;
-          case ItemData.GREEN_CANDY.type:
-            break;
-          case ItemData.BLUE_CANDY.type:
-            break;
           */
+          case ItemData.GREEN_CANDY.type:
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+              this.createItem( itemData,  5);
+             break;
+          case ItemData.BLUE_CANDY.type:
+              this.createItem( itemData, 5);
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+             break;
+
           default:
             var itemCount = RAND.random() * 7;
             for (var i = 0; i < itemCount; i++) {

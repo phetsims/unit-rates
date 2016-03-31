@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * The whole enchilada - shelf, scale, number line & challanges
+ * The whole enchilada - shelf, scale, number line & challenges
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -14,6 +14,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
   var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
+  var NumberLine = require( 'UNIT_RATES/shopping/model/NumberLine' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
 
   /**
@@ -29,6 +30,7 @@ define( function( require ) {
     // @public
     this.shelf = new Shelf( this.itemDataProperty );
     this.scale = new Scale( this.itemDataProperty );
+    this.numberLine = new NumberLine( this.itemDataProperty );
 
     //
     this.itemDataProperty.link( function( data, oldData ) {

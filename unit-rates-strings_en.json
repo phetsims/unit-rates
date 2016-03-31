@@ -11,7 +11,7 @@
   "currencySymbol": {
     "value": "$"
   },
-  "weightUnit": {
+  "weightMass": {
     "value": "lbs"
   },
   "Cost": {

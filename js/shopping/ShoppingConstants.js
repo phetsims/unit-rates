@@ -11,7 +11,7 @@
 
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   // constants
   var ShoppingConstants = {
@@ -19,8 +19,6 @@
     //----------------------------------------------------------------------------
     // Views
     //----------------------------------------------------------------------------
-    PANEL_TITLE_FONT: new PhetFont( 14 ),
-
     ITEM_SIZE:  30
 
     //----------------------------------------------------------------------------

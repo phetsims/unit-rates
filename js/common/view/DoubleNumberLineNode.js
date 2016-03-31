@@ -115,24 +115,26 @@ define( function( require ) {
     contentNode.addChild( bottomArrowNode );
 
     // arrow labels
-    var topArrowLabel = new Text( 'cost', _.extend( {}, GRAPH_ARROW_LABEL_OPTIONS, {
+    // @protected
+    this.topArrowLabel = new Text( 'top', _.extend( {}, GRAPH_ARROW_LABEL_OPTIONS, {
         left: topArrowNode.right + GRAPH_ARROW_LABEL_MARGIN,
         centerY: topArrowNode.centerY
       } )
      );
-    contentNode.addChild( topArrowLabel );
+    contentNode.addChild( this.topArrowLabel );
 
-    var bottomArrowLabel = new Text( 'unit', _.extend( {}, GRAPH_ARROW_LABEL_OPTIONS, {
+    // @protected
+    this.bottomArrowLabel = new Text( 'bottom', _.extend( {}, GRAPH_ARROW_LABEL_OPTIONS, {
         left: bottomArrowNode.right + GRAPH_ARROW_LABEL_MARGIN,
         centerY: bottomArrowNode.centerY
       } )
      );
-    contentNode.addChild( bottomArrowLabel );
+    contentNode.addChild( this.bottomArrowLabel );
 
     // erase
     var eraserButton = new EraserButton( {
       baseColor: '#f2f2f2',
-      left: bottomArrowNode.right,
+      left: this.bottomArrowLabel.right,
       top: addUnitButton.bottom + 10,
       listener: function() {
         console.log('erase');
@@ -158,12 +160,30 @@ define( function( require ) {
     this.mutate( options );
   }
 
+  unitRates.register( 'DoubleNumberLineNode', DoubleNumberLineNode );
+
   return inherit( AccordionBox, DoubleNumberLineNode, {
 
-    addItem: function() {
+    /**
+     * @param {string} top
+     * @param {string} bottom
+     * @public
+     */
+    setLineLabels: function( top, bottom ) {
 
+      this.topArrowLabel.setText( top );
+      this.bottomArrowLabel.setText( bottom );
     },
 
+    /**
+     * @public
+     */
+    addItem: function() {
+    },
+
+    /**
+     * @public
+     */
     reset: function() {
       this.expandedProperty.reset();
     }

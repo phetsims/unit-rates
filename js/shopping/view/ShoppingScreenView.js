@@ -14,8 +14,8 @@ define( function( require ) {
   var SceneMode = require( 'UNIT_RATES/shopping/enum/SceneMode' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var SceneControlButtons = require( 'UNIT_RATES/shopping/view/SceneControlButtons' );
-  var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
-  var ChallangesNode = require( 'UNIT_RATES/common/view/ChallangesNode' );
+  var ItemNumberLineNode = require( 'UNIT_RATES/shopping/view/ItemNumberLineNode' );
+  var ChallengesNode = require( 'UNIT_RATES/common/view/ChallengesNode' );
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
   var ItemShelfNode = require( 'UNIT_RATES/shopping/view/ItemShelfNode' );
   var ItemScaleNode = require( 'UNIT_RATES/shopping/view/ItemScaleNode' );
@@ -72,10 +72,10 @@ define( function( require ) {
     this.addChild( this.candyItemsComboBox );
 
     // number line
-    var doubleNumberLineNode = new DoubleNumberLineNode( model, {
+    var itemNumberLineNode = new ItemNumberLineNode( model, {
       left:  sceneControlButtons.right + PANEL_HORIZONTAL_SPACING,
       top: this.layoutBounds.top + SCREEN_MARGIN } );
-    this.addChild( doubleNumberLineNode );
+    this.addChild( itemNumberLineNode );
 
     this.itemsLayer = new Node();
     this.addChild( this.itemsLayer );
@@ -92,16 +92,13 @@ define( function( require ) {
       centerX:  this.layoutBounds.centerX,
       bottom: this.itemShelfNode.top - 50
     } );
-
-    //this.itemScaleNode = new ItemScaleNode( model.scale, this.itemsLayer, this.itemMoved.bind( this ) );
-    //this.itemScaleNode.setCenterBottom( new Vector2( this.layoutBounds.centerX, this.itemShelfNode.top + 150) );
     this.addChild( this.itemScaleNode );
 
     // challenges
-    var challangesNode = new ChallangesNode( model, {
-      left:  doubleNumberLineNode.right + PANEL_HORIZONTAL_SPACING,
+    var challengesNode = new ChallengesNode( model, {
+      left:  itemNumberLineNode.right + PANEL_HORIZONTAL_SPACING,
       top: this.layoutBounds.top + SCREEN_MARGIN } );
-    this.addChild( challangesNode );
+    this.addChild( challengesNode );
 
     // select the scene
     this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this) );
@@ -157,6 +154,7 @@ define( function( require ) {
           this.candyItemsComboBox.visible   = true;
           break;
         default:
+          assert && assert( true, 'Unrecognized scene' );
       }
     },
 
@@ -182,6 +180,7 @@ define( function( require ) {
             this.model.itemData = candyItemData;
           break;
         default:
+          assert && assert( true, 'Unrecognized scene' );
       }
     },
 
@@ -196,9 +195,10 @@ define( function( require ) {
       if( this.itemScaleNode.pointInDropArea( nodeCenterBottom ) ) {
         console.log('on scale');
 
-        // Remove from shelf & add to scale
+        // Remove from shelf & add to scale/number line
         this.model.shelf.removeItem( itemNode.item );
         this.model.scale.addItem( itemNode.item );
+        this.model.numberLine.addItem( itemNode.item );
 
         // Fruit & candy bags should be expanded
         if( this.sceneModeProperty.value === SceneMode.CANDY ||
