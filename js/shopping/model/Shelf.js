@@ -99,12 +99,16 @@ define( function( require ) {
               this.createItem( itemData, 4 );
               this.createItem( itemData, 4 );
             break;
-          /*
           case ItemData.RED_CANDY.type:
-            break;
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+              this.createItem( itemData,  5);
+          break;
           case ItemData.YELLOW_CANDY.type:
-            break;
-          */
+              this.createItem( itemData, 5 );
+              this.createItem( itemData, 5 );
+              this.createItem( itemData,  5);
+          break;
           case ItemData.GREEN_CANDY.type:
               this.createItem( itemData, 5 );
               this.createItem( itemData, 5 );
