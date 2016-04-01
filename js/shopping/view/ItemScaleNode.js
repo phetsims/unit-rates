@@ -245,6 +245,14 @@ define( function( require ) {
      * Reset the scale node to its initial state
      * @public
      */
+    resetCurrentItem: function() {
+      this.scale.resetCurrentItem();
+    },
+
+    /**
+     * Reset the scale node to its initial state
+     * @public
+     */
     reset: function() {
       // FIXME
     }

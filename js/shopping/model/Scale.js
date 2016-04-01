@@ -99,10 +99,18 @@ define( function( require ) {
       else {
          ItemCollection.prototype.addItem.call( this, item );
       }
-
     },
 
     /**
+     *
+     * @public
+     */
+    resetCurrentItem: function() {
+      this.resetItemType( this.itemDataProperty.value.type );
+    },
+
+    /**
+     *
      * @public
      */
     reset: function() {

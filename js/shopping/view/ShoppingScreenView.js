@@ -19,6 +19,7 @@ define( function( require ) {
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
   var ItemShelfNode = require( 'UNIT_RATES/shopping/view/ItemShelfNode' );
   var ItemScaleNode = require( 'UNIT_RATES/shopping/view/ItemScaleNode' );
+  var CurvedArrowButton = require( 'UNIT_RATES/common/view/CurvedArrowButton' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Property = require( 'AXON/Property' );
@@ -93,6 +94,20 @@ define( function( require ) {
       bottom: this.itemShelfNode.top - 50
     } );
     this.addChild( this.itemScaleNode );
+
+    // remove button
+    var scaleRemoveButtonNode = new CurvedArrowButton( {
+      right:  this.itemScaleNode.left - PANEL_HORIZONTAL_SPACING,
+      bottom: this.itemScaleNode.bottom,
+       listener: function() {
+
+        // reset the current item type - remove scale items & re-populate shelf items
+        self.itemsLayer.removeAllChildren();
+        self.itemScaleNode.resetCurrentItem();
+        self.itemShelfNode.resetCurrentItem();
+      }
+    } );
+    this.addChild( scaleRemoveButtonNode );
 
     // challenges
     var challengesNode = new ChallengesNode( model, {

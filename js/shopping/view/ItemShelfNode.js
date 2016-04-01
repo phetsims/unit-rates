@@ -126,6 +126,15 @@ define( function( require ) {
     },
 
     /**
+     * Removes the current item type from the scale
+     * @public
+     */
+    resetCurrentItem: function() {
+        this.shelf.resetCurrentItem();
+        this.populate();
+    },
+
+    /**
      * Reset the shelf node to its initial state
      * @public
      */

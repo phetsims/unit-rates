@@ -88,9 +88,22 @@ define( function( require ) {
     },
 
     /**
+     * Gets the number of items in the type specific array
+     *
+     * @param {string} type
+     * @returns {ObservableArray}
+     * @protected
+     */
+    getNumberOfItemsWithType: function( type ) {
+      var itemArray = this.getItemsWithType( type );
+      return itemArray.length;
+    },
+
+    /**
      * Gets the collection for a specific type, or create an empty collection if none exists
      *
      * @param {string} type
+     * @returns {ObservableArray}
      * @protected
      */
     getItemsWithType: function( type ) {
@@ -100,6 +113,18 @@ define( function( require ) {
       }
 
       return this.itemsMap[ type ];
+    },
+
+    /**
+     * Resets the collection for a specific type
+     *
+     * @param {string} type
+     * @public
+     */
+    resetItemType: function( type ) {
+
+      var itemArray = this.getItemsWithType( type );
+      itemArray.reset();
     },
 
     /**

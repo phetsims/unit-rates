@@ -36,6 +36,7 @@ define( function( require ) {
       console.log( 'Shelf: ' + observableArray.length );
     } );
 
+    // Add initial items
     this.populate();
   }
 
@@ -49,10 +50,15 @@ define( function( require ) {
      */
     populate: function() {
 
-      // populate initial shelf ontent
+      // populate initial shelf content
       for (var key in ItemData) {
 
         var itemData = ItemData[ key ];
+
+        // Only populate empty shelves
+        if( this.getNumberOfItemsWithType( itemData.type ) > 0 ) {
+          continue;
+        }
 
         switch( itemData.type ) {
           case ItemData.APPLES.type:
@@ -127,6 +133,15 @@ define( function( require ) {
             }
         }
       }
+    },
+
+    /**
+     *
+     * @public
+     */
+    resetCurrentItem: function() {
+      this.resetItemType( this.itemDataProperty.value.type );
+      this.populate();
     },
 
     /**
