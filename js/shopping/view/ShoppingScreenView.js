@@ -73,11 +73,12 @@ define( function( require ) {
     this.addChild( this.candyItemsComboBox );
 
     // number line
-    var itemNumberLineNode = new ItemNumberLineNode( model, {
+    this.itemNumberLineNode = new ItemNumberLineNode( model.numberLine, {
       left:  sceneControlButtons.right + PANEL_HORIZONTAL_SPACING,
       top: this.layoutBounds.top + SCREEN_MARGIN } );
-    this.addChild( itemNumberLineNode );
+    this.addChild( this.itemNumberLineNode );
 
+    // layer for draggable shelf & scale item nodes
     this.itemsLayer = new Node();
     this.addChild( this.itemsLayer );
 
@@ -111,7 +112,7 @@ define( function( require ) {
 
     // challenges
     var challengesNode = new ChallengesNode( model, {
-      left:  itemNumberLineNode.right + PANEL_HORIZONTAL_SPACING,
+      left:  this.itemNumberLineNode.right + PANEL_HORIZONTAL_SPACING,
       top: this.layoutBounds.top + SCREEN_MARGIN } );
     this.addChild( challengesNode );
 
@@ -208,14 +209,10 @@ define( function( require ) {
 
       // Check node position - on scale, shelf or in no-man's land
       if( this.itemScaleNode.pointInDropArea( nodeCenterBottom ) ) {
-        console.log('on scale');
 
-        // Remove from shelf & add to scale/number line
-        this.model.shelf.removeItem( itemNode.item );
-        this.model.scale.addItem( itemNode.item );
-        this.model.numberLine.addItem( itemNode.item );
+        this.model.addShelfItemToScale( itemNode.item );
 
-        // Fruit & candy bags should be expanded
+        // Fruit (& candy?) bags should be expanded
         //if( this.sceneModeProperty.value === SceneMode.CANDY ||
         if( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) {
 
@@ -225,13 +222,16 @@ define( function( require ) {
           // populate new scale items
           this.itemScaleNode.populate();
         }
+
+        // populate nuber line
+        this.itemNumberLineNode.populate();
       }
       else if( this.itemShelfNode.pointInDropArea( nodeCenterBottom ) ) {
-        console.log('on shelf');
 
-        // Remove from scale & add to shelf
-        this.model.scale.removeItem( itemNode.item );
-        this.model.shelf.addItem( itemNode.item );
+        this.model.addScaleItemToShelf( itemNode.item );
+
+        // populate nuber line
+        this.itemNumberLineNode.populate();
       }
       else {
         // Send it back from whence it came

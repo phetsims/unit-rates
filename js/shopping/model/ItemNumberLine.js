@@ -17,7 +17,7 @@ define( function( require ) {
    *
    * @constructor
    */
-  function DoubleNumberLine( itemDataProperty ) {
+  function ItemNumberLine( itemDataProperty ) {
 
     // @public (all)
     ItemCollection.call( this, itemDataProperty, {
@@ -33,17 +33,17 @@ define( function( require ) {
 
     // refresh on item additions/removals
     this.addListeners( function( item, observableArray ) {
-      console.log( 'DoubleNumberLine: ' + observableArray.length );
+      //console.log( 'ItemNumberLine: ' + observableArray.length );
     },
     function( item, observableArray ) {
-      console.log( 'DoubleNumberLine: ' + observableArray.length );
+      //console.log( 'ItemNumberLine: ' + observableArray.length );
     } );
 
   }
 
-  unitRates.register( 'DoubleNumberLine', DoubleNumberLine );
+  unitRates.register( 'ItemNumberLine', ItemNumberLine );
 
-  return inherit( ItemCollection, DoubleNumberLine, {
+  return inherit( ItemCollection, ItemNumberLine, {
 
     /**
      * @public

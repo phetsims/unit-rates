@@ -13,7 +13,7 @@ define( function( require ) {
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
-  var CandyContainerNode = require( 'UNIT_RATES/shopping/view/CandyContainerNode' );
+  //var CandyContainerNode = require( 'UNIT_RATES/shopping/view/CandyContainerNode' ); // FIXME: container use still undecided
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );

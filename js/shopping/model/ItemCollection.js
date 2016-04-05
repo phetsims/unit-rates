@@ -43,10 +43,13 @@ define( function( require ) {
      * Creates a new item/adds it to the types specific array
      * @param {ItemData} data
      * @param {number} [count]
+     * @return  {Item}
      * @public
      */
     createItem: function( data, count ) {
-      this.addItem( new Item( data, count ) );
+      var item = new Item( data, count );
+      this.addItem( item );
+      return item;
     },
 
     /**
@@ -91,12 +94,18 @@ define( function( require ) {
      * Gets the number of items in the type specific array
      *
      * @param {string} type
-     * @returns {ObservableArray}
+     * @returns {number}
      * @protected
      */
     getNumberOfItemsWithType: function( type ) {
+
+      var count = 0;
       var itemArray = this.getItemsWithType( type );
-      return itemArray.length;
+      itemArray.forEach( function( item ) {
+        count += item.count;
+      } );
+
+      return count;
     },
 
     /**

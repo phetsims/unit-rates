@@ -10,7 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
+  var NumberLineNode = require( 'UNIT_RATES/common/view/NumberLineNode' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
 
   // strings
@@ -31,7 +31,7 @@ define( function( require ) {
 
 
   /**
-   * @param {NumberLine} numberLine
+   * @param {ItemNumberLine} numberLine
    * @param {Object} [options]
    * @constructor
     * @constructor
@@ -42,9 +42,9 @@ define( function( require ) {
 
     var self = this;
 
-    this.numberLine = numberLine;
+    NumberLineNode.call( this, numberLine, options );
 
-    DoubleNumberLineNode.call( this, numberLine, options );
+    this.maxValue = 1.0;
 
     // refresh on item change
     numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
@@ -52,39 +52,51 @@ define( function( require ) {
       // set labels
       switch( itemData.type ) {
           case ItemData.APPLES.type:
+            self.maxValue = 15.0;
             self.setLineLabels( costCurrencyString, applesString );
             break;
           case ItemData.LEMONS.type:
+            self.maxValue = 15.0;
             self.setLineLabels( costCurrencyString, lemonsString );
             break;
           case ItemData.ORANGES.type:
+            self.maxValue = 15.0;
             self.setLineLabels( costCurrencyString, orangesString );
             break;
           case ItemData.PEARS.type:
+            self.maxValue = 15.0;
             self.setLineLabels( costCurrencyString, pearsString );
             break;
           case ItemData.CARROTS.type:
+            self.maxValue = 15.0;
             self.setLineLabels( costCurrencyString, carrotsString );
             break;
           case ItemData.CUCUMBERS.type:
+            self.maxValue = 15.0;
             self.setLineLabels( costCurrencyString, cucumbersString );
             break;
           case ItemData.POTATOES.type:
+            self.maxValue = 15.0;
             self.setLineLabels( costCurrencyString, potatoesString );
             break;
           case ItemData.TOMATOES.type:
+            self.maxValue = 15.0;
             self.setLineLabels( costCurrencyString, tomatoesString );
             break;
           case ItemData.RED_CANDY.type:
+            self.maxValue = 1.5;
             self.setLineLabels( costCurrencyString, weightUnitString );
             break;
           case ItemData.YELLOW_CANDY.type:
+            self.maxValue = 1.5;
             self.setLineLabels( costCurrencyString, weightUnitString );
             break;
           case ItemData.GREEN_CANDY.type:
+            self.maxValue = 1.5;
             self.setLineLabels( costCurrencyString, weightUnitString );
             break;
           case ItemData.BLUE_CANDY.type:
+            self.maxValue = 1.5;
             self.setLineLabels( costCurrencyString, weightUnitString );
             break;
           default:
@@ -92,16 +104,61 @@ define( function( require ) {
         }
     } );
 
+    this.addCostButton.addListener( function() {
+      console.log('NumberLine: add cost');
+    } );
+
+    this.addUnitButton.addListener( function() {
+      console.log('NumberLine: add unit');
+    } );
+
   }
 
   unitRates.register( 'ItemNumberLineNode', ItemNumberLineNode );
 
-  return inherit( DoubleNumberLineNode, ItemNumberLineNode, {
+  return inherit( NumberLineNode, ItemNumberLineNode, {
 
-    addItem: function() {
+    /**
+     *
+     * @override @public
+     */
+    populate: function() {
+      console.log('NumberLine: populate');
 
+      var self = this;
+
+      // remove all existing markers
+      this.graphLayerNode.removeAllChildren();
+
+      // item count or item weight?
+      var type = this.numberLine.itemDataProperty.value.type;
+      var typeIsCandy = ( type === ItemData.RED_CANDY   || type === ItemData.YELLOW_CANDY ||
+                          type === ItemData.GREEN_CANDY || type === ItemData.BLUE_CANDY );
+
+      // get the current array for the item type
+      var itemArray = this.numberLine.getItemsWithType( this.numberLine.itemDataProperty.value.type );
+      itemArray.forEach( function( item ) {
+
+        var position = ( typeIsCandy ? item.weight : item.count ) / self.maxValue;
+        self.addMarker( position );
+      } );
     },
 
+    /**
+     *
+     * @override @public
+     */
+    removeAllMarkers: function() {
+
+      this.numberLine.resetItemType( this.numberLine.itemDataProperty.value.type );
+
+      NumberLineNode.prototype.removeAllMarkers.call( this );
+    },
+
+    /**
+     *
+     * @override @public
+     */
     reset: function() {
       this.expandedProperty.reset();
     }

@@ -39,62 +39,62 @@ define( function( require ) {
   var GRAPH_ARROW_LABEL_OPTIONS = { font: new PhetFont( 14 ), maxWidth: 100 };
 
   /**
-   * @param {Object} [options]
+    * @param {NumberLine} numberLine
+    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineNode( model, options ) {
+  function NumberLineNode( numberLine, options ) {
 
     options = options || {};
 
+    var self = this;
+
     this.expandedProperty = new Property( true );
+
+    this.numberLine = numberLine;
 
     var contentNode = new Node();
 
     // add buttons
-    var addCostButton = new RectangularPushButton( {
+    // @protected
+    this.addCostButton = new RectangularPushButton( {
       content:BUTTON_CONTENT,
-      baseColor: BUTTON_COLOR,
-      listener: function() {
-        console.log('add Cost');
-      }
+      baseColor: BUTTON_COLOR
     } );
-    contentNode.addChild( addCostButton );
+    contentNode.addChild( this.addCostButton );
 
-    var addUnitButton = new RectangularPushButton( {
+     // @protected
+    this.addUnitButton = new RectangularPushButton( {
       content: BUTTON_CONTENT,
       baseColor: BUTTON_COLOR,
-      left: addCostButton.left,
-      top: addCostButton.top + GRAPH_HEIGHT,
-      listener: function() {
-        console.log('add Unit');
-      }
+      left: this.addCostButton.left,
+      top: this.addCostButton.top + GRAPH_HEIGHT
     } );
-    contentNode.addChild( addUnitButton );
+    contentNode.addChild( this.addUnitButton );
 
     // graph bounds
     this.graphBounds = new Bounds2(
-      addUnitButton.right + GRAPH_BUTTON_SPACING,
-      addCostButton.top,
+      this.addUnitButton.right + GRAPH_BUTTON_SPACING,
+      this.addCostButton.top,
       GRAPH_WIDTH - GRAPH_ARROW_SIZE,
-      addUnitButton.right + GRAPH_BUTTON_SPACING + GRAPH_HEIGHT);
+      this.addUnitButton.right + GRAPH_BUTTON_SPACING + GRAPH_HEIGHT);
 
-    /* 4 debugging graphBounds
-    var graphBoundsNode = new Path( new Shape().rect(this.graphBounds.minX, this.graphBounds.minY,
-      this.graphBounds.maxX, this.graphBounds.maxY), {
-      fill: 'grey',
+    // layer holding all the markers
+    this.graphLayerNode = new Path( new Shape().rect( this.graphBounds.minX, this.graphBounds.minY,
+      this.graphBounds.maxX, this.graphBounds.maxY ), {
+      fill: 'lightgrey',
       stroke: 'red',
       lineWidth: 1
     } );
-    contentNode.addChild( graphBoundsNode );
-    */
+    contentNode.addChild( this.graphLayerNode );
 
     // lines
     var xOrigin = this.graphBounds.minX;
     var yOrigin = this.graphBounds.centerY;
 
     var xZeroLine = new Path( new Shape()
-        .moveTo( xOrigin, addCostButton.top )
-        .lineTo( xOrigin, addUnitButton.bottom ), {
+        .moveTo( xOrigin, this.addCostButton.top )
+        .lineTo( xOrigin, this.addUnitButton.bottom ), {
       stroke: 'black',
       lineWidth: 1.25
     } );
@@ -135,9 +135,9 @@ define( function( require ) {
     var eraserButton = new EraserButton( {
       baseColor: '#f2f2f2',
       left: this.bottomArrowLabel.right,
-      top: addUnitButton.bottom + 10,
+      top: this.addUnitButton.bottom + 10,
       listener: function() {
-        console.log('erase');
+        self.removeAllMarkers();
       }
     });
     contentNode.addChild( eraserButton );
@@ -160,9 +160,9 @@ define( function( require ) {
     this.mutate( options );
   }
 
-  unitRates.register( 'DoubleNumberLineNode', DoubleNumberLineNode );
+  unitRates.register( 'NumberLineNode', NumberLineNode );
 
-  return inherit( AccordionBox, DoubleNumberLineNode, {
+  return inherit( AccordionBox, NumberLineNode, {
 
     /**
      * @param {string} top
@@ -170,15 +170,37 @@ define( function( require ) {
      * @public
      */
     setLineLabels: function( top, bottom ) {
-
       this.topArrowLabel.setText( top );
       this.bottomArrowLabel.setText( bottom );
     },
 
     /**
+     * @param {number} position - [0 - 1]
+     * @param {Object} [options]
      * @public
      */
-    addItem: function() {
+    addMarker: function( position, options ) {
+
+      options = _.extend( {
+        markerHeight: 50,
+        stroke: 'purple',
+        lineWidth: 1.25
+      }, options || {} );
+
+      // new graph marker
+      var x = this.graphBounds.maxX * position + ( 1.0 - position ) * this.graphBounds.minX;
+      var y = this.graphBounds.centerY;
+      var markerLine = new Path( new Shape()
+        .moveTo( x, y - options.markerHeight / 2 )
+        .lineTo( x, y + options.markerHeight / 2 ), options );
+      this.graphLayerNode.addChild( markerLine );
+    },
+
+    /**
+     * @public
+     */
+    removeAllMarkers: function() {
+        this.graphLayerNode.removeAllChildren();
     },
 
     /**

@@ -14,7 +14,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
   var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
-  var NumberLine = require( 'UNIT_RATES/shopping/model/NumberLine' );
+  var ItemNumberLine = require( 'UNIT_RATES/shopping/model/ItemNumberLine' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
 
   /**
@@ -30,21 +30,62 @@ define( function( require ) {
     // @public
     this.shelf = new Shelf( this.itemDataProperty );
     this.scale = new Scale( this.itemDataProperty );
-    this.numberLine = new NumberLine( this.itemDataProperty );
+    this.numberLine = new ItemNumberLine( this.itemDataProperty );
 
     //
     this.itemDataProperty.link( function( data, oldData ) {
     } );
+
   }
 
   unitRates.register( 'UnitRatesModel', UnitRatesModel );
 
   return inherit( PropertySet, UnitRatesModel, {
 
+    /**
+     *
+     * @param {Item} item
+     * @public
+     */
+    addShelfItemToScale: function( item ) {
+
+      // Remove from shelf & add to scale
+      this.shelf.removeItem( item );
+      this.scale.addItem(item );
+
+      this.updateNumberLine();
+    },
+
+    /**
+     *
+     * @param {Item} item
+     * @public
+     */
+    addScaleItemToShelf: function( item ) {
+
+      // Remove from scale & add to shelf
+      this.scale.removeItem( item );
+      this.shelf.addItem( item );
+
+      this.updateNumberLine();
+    },
+
+    /**
+     *
+     * @protected
+     */
+    updateNumberLine: function() {
+
+      // create a new item on teh number line representing the total number of items currently on the scale
+      this.numberLine.createItem( this.itemDataProperty.value, this.scale.getItemCount() );
+    },
+
     // Resets all model elements
     reset: function() {
 
       this.shelf.reset();
+      this.scale.reset();
+      this.numberLine.reset();
 
       PropertySet.prototype.reset.call( this );
     }

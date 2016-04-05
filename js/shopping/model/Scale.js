@@ -29,6 +29,8 @@ define( function( require ) {
     var self = this;
 
     this.itemDataProperty = itemDataProperty;
+
+    // @protected
     this.costProperty     = new Property( 0.0 );
     this.weightProperty   = new Property( 0.0 );
 
@@ -72,14 +74,24 @@ define( function( require ) {
   return inherit( ItemCollection, Scale, {
 
     /**
+     * Returns the total nuber of items on the scale
+     *
+     * @return {number}
+     * @override @public
+     */
+    getItemCount: function() {
+      return this.getNumberOfItemsWithType( this.itemDataProperty.value.type );
+    },
+
+    /**
      * Adds an item to the types specific array - fruit types are a special case
      *
      * @param {Item} item
      * @override @public
      */
-     addItem: function( item ) {
+    addItem: function( item ) {
 
-      // expand fruit & candy bag types into individual items (note: produce types remain in bags)
+      // expand fruit (& candy?) bag types into individual items (note: produce types remain in bags)
       if ( item.count > 1 ) {
 
         var types = {};
