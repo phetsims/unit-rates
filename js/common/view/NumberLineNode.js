@@ -187,6 +187,8 @@ define( function( require ) {
         lineWidth: 1.25
       }, options || {} );
 
+      assert && assert( ( position >= 0 && position <= 1 ), 'Marker position off the number line.' );
+
       // new graph marker
       var x = this.graphBounds.maxX * position + ( 1.0 - position ) * this.graphBounds.minX;
       var y = this.graphBounds.centerY;

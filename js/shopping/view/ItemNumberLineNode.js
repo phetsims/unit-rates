@@ -102,6 +102,8 @@ define( function( require ) {
           default:
             assert && assert( true, 'Number line using unrecognized type' );
         }
+
+        self.populate();
     } );
 
     this.addCostButton.addListener( function() {
@@ -123,7 +125,6 @@ define( function( require ) {
      * @override @public
      */
     populate: function() {
-      console.log('NumberLine: populate');
 
       var self = this;
 
@@ -131,15 +132,16 @@ define( function( require ) {
       this.graphLayerNode.removeAllChildren();
 
       // item count or item weight?
-      var type = this.numberLine.itemDataProperty.value.type;
+      var type = this.numberLine.itemDataProperty.value;
       var typeIsCandy = ( type === ItemData.RED_CANDY   || type === ItemData.YELLOW_CANDY ||
                           type === ItemData.GREEN_CANDY || type === ItemData.BLUE_CANDY );
 
       // get the current array for the item type
       var itemArray = this.numberLine.getItemsWithType( this.numberLine.itemDataProperty.value.type );
+      console.log('NumberLine: ' + itemArray.length);
       itemArray.forEach( function( item ) {
 
-        var position = ( typeIsCandy ? item.weight : item.count ) / self.maxValue;
+        var position = ( typeIsCandy ? ( item.weight * item.count ) : item.count ) / self.maxValue;
         self.addMarker( position );
       } );
     },

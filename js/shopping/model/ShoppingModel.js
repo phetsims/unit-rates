@@ -76,8 +76,11 @@ define( function( require ) {
      */
     updateNumberLine: function() {
 
-      // create a new item on teh number line representing the total number of items currently on the scale
-      this.numberLine.createItem( this.itemDataProperty.value, this.scale.getItemCount() );
+      // create a new item on the number line representing the total number/weight of items currently on the scale
+      var count = this.scale.getItemCount() ;
+      if( count > 0 ) {
+        this.numberLine.createItem( this.itemDataProperty.value, count );
+      }
     },
 
     // Resets all model elements

@@ -45,6 +45,32 @@ define( function( require ) {
 
   return inherit( ItemCollection, ItemNumberLine, {
 
+
+
+    /**
+     * Adds an item to the types specific array
+     * Do not allow for new item which equal existing existing items
+     *
+     * @param {Item} item
+     * @override @public
+     */
+     addItem: function( item ) {
+      var itemArray = this.getItemsWithType( item.type );
+      if( !itemArray.contains( item ) ) {
+
+        var itemExists = false;
+        itemArray.forEach( function( existingItem ) {
+          if( item.isEqual( existingItem ) ) {
+            itemExists = true;
+          }
+        } );
+
+        if( !itemExists ) {
+          itemArray.add( item );
+        }
+      }
+    },
+
     /**
      * @public
      */

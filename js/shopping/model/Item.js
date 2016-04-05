@@ -25,20 +25,30 @@ define( function( require ) {
       position: new Vector2( 0, 0 ) // (0, 0) is considered an uninitialized position
     } );
 
-    // @public (readonly)
+    // @public (readwrite)
     this.type = data.type;
 
-    // @public (readonly)
+    // @public (readwrite)
     this.rate = data.rate;
 
-    // @public (readonly)
+    // @public (readwrite)
     this.weight = data.weight;
 
-    // @public (readonly)
+    // @public (readwrite)
     this.count = count || 1;
   }
 
   return inherit( PropertySet, Item, {
+
+  /**
+   * @param {Item} item
+   * @returns {boolean}
+   * @public
+   */
+  isEqual: function( item ) {
+       return ( item.type === this.type && item.rate === this.rate &&
+                item.weight === this.weight &&  item.count === this.count );
+    }
 
   } ); // inherit
 

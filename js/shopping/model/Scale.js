@@ -47,7 +47,7 @@ define( function( require ) {
       itemArray.forEach( function( item ) {
 
         cost += ( item.rate * item.count * item.weight );
-        weight += item.weight;
+        weight += item.weight * item.count;
       } );
 
       self.costProperty.value = cost;
@@ -59,13 +59,13 @@ define( function( require ) {
       console.log( 'Scale: ' + observableArray.length );
 
       self.costProperty.value += ( item.rate * item.count * item.weight );
-      self.weightProperty.value += item.weight;
+      self.weightProperty.value += item.weight * item.count;
     },
     function( item, observableArray ) {
       console.log( 'Scale: ' + observableArray.length );
 
       self.costProperty.value -= ( item.rate * item.count * item.weight );
-      self.weightProperty.value -= item.weight;
+      self.weightProperty.value -= item.weight * item.count;
     } );
   }
 
