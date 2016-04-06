@@ -14,11 +14,11 @@ define( function( require ) {
   var SceneMode = require( 'UNIT_RATES/shopping/enum/SceneMode' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var SceneControlButtons = require( 'UNIT_RATES/shopping/view/SceneControlButtons' );
-  var ItemNumberLineNode = require( 'UNIT_RATES/shopping/view/ItemNumberLineNode' );
+  var NumberLineNode = require( 'UNIT_RATES/shopping/view/NumberLineNode' );
   var ChallengesNode = require( 'UNIT_RATES/common/view/ChallengesNode' );
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
-  var ItemShelfNode = require( 'UNIT_RATES/shopping/view/ItemShelfNode' );
-  var ItemScaleNode = require( 'UNIT_RATES/shopping/view/ItemScaleNode' );
+  var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
+  var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
   var CurvedArrowButton = require( 'UNIT_RATES/common/view/CurvedArrowButton' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -73,46 +73,46 @@ define( function( require ) {
     this.addChild( this.candyItemsComboBox );
 
     // number line
-    this.itemNumberLineNode = new ItemNumberLineNode( model.numberLine, {
+    this.numberLineNode = new NumberLineNode( model.numberLine, {
       left:  sceneControlButtons.right + PANEL_HORIZONTAL_SPACING,
       top: this.layoutBounds.top + SCREEN_MARGIN } );
-    this.addChild( this.itemNumberLineNode );
+    this.addChild( this.numberLineNode );
 
     // layer for draggable shelf & scale item nodes
     this.itemsLayer = new Node();
     this.addChild( this.itemsLayer );
 
     // shelf
-    this.itemShelfNode = new ItemShelfNode( model.shelf, this.itemsLayer, this.itemMoved.bind( this ), {
+    this.shelfNode = new ShelfNode( model.shelf, this.itemsLayer, this.itemMoved.bind( this ), {
       centerX:  this.layoutBounds.centerX,
       bottom: this.layoutBounds.bottom - SCREEN_MARGIN
     } );
-    this.addChild( this.itemShelfNode );
+    this.addChild( this.shelfNode );
 
     // scale
-    this.itemScaleNode = new ItemScaleNode( model.scale, this.itemsLayer, this.itemMoved.bind( this ) , {
+    this.scaleNode = new ScaleNode( model.scale, this.itemsLayer, this.itemMoved.bind( this ) , {
       centerX:  this.layoutBounds.centerX,
-      bottom: this.itemShelfNode.top - 50
+      bottom: this.shelfNode.top - 50
     } );
-    this.addChild( this.itemScaleNode );
+    this.addChild( this.scaleNode );
 
     // remove button
     var scaleRemoveButtonNode = new CurvedArrowButton( {
-      right:  this.itemScaleNode.left - PANEL_HORIZONTAL_SPACING,
-      bottom: this.itemScaleNode.bottom,
+      right:  this.scaleNode.left - PANEL_HORIZONTAL_SPACING,
+      bottom: this.scaleNode.bottom,
        listener: function() {
 
         // reset the current item type - remove scale items & re-populate shelf items
         self.itemsLayer.removeAllChildren();
-        self.itemScaleNode.resetCurrentItem();
-        self.itemShelfNode.resetCurrentItem();
+        self.scaleNode.resetCurrentItem();
+        self.shelfNode.resetCurrentItem();
       }
     } );
     this.addChild( scaleRemoveButtonNode );
 
     // challenges
     var challengesNode = new ChallengesNode( model, {
-      left:  this.itemNumberLineNode.right + PANEL_HORIZONTAL_SPACING,
+      left:  this.numberLineNode.right + PANEL_HORIZONTAL_SPACING,
       top: this.layoutBounds.top + SCREEN_MARGIN } );
     this.addChild( challengesNode );
 
@@ -142,7 +142,7 @@ define( function( require ) {
     this.itemsLayer.moveToFront();
 
     // initialize shelf items
-    this.itemShelfNode.populate();
+    this.shelfNode.populate();
   }
 
   unitRates.register( 'ShoppingScreenView', ShoppingScreenView );
@@ -208,7 +208,7 @@ define( function( require ) {
       itemNode.item.positionProperty.value.y + itemNode.height / 2 );
 
       // Check node position - on scale, shelf or in no-man's land
-      if( this.itemScaleNode.pointInDropArea( nodeCenterBottom ) ) {
+      if( this.scaleNode.pointInDropArea( nodeCenterBottom ) ) {
 
         this.model.addShelfItemToScale( itemNode.item );
 
@@ -220,18 +220,18 @@ define( function( require ) {
           this.itemsLayer.removeChild( itemNode );
 
           // populate new scale items
-          this.itemScaleNode.populate();
+          this.scaleNode.populate();
         }
 
         // populate nuber line
-        this.itemNumberLineNode.populate();
+        this.numberLineNode.populate();
       }
-      else if( this.itemShelfNode.pointInDropArea( nodeCenterBottom ) ) {
+      else if( this.shelfNode.pointInDropArea( nodeCenterBottom ) ) {
 
         this.model.addScaleItemToShelf( itemNode.item );
 
         // populate nuber line
-        this.itemNumberLineNode.populate();
+        this.numberLineNode.populate();
       }
       else {
         // Send it back from whence it came

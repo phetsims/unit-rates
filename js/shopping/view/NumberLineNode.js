@@ -10,8 +10,9 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var NumberLineNode = require( 'UNIT_RATES/common/view/NumberLineNode' );
+  var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
+  var NumberLineMarkerNode = require( 'UNIT_RATES/shopping/view/NumberLineMarkerNode' );
 
   // strings
   var applesString = require( 'string!UNIT_RATES/Apples' );
@@ -29,20 +30,19 @@ define( function( require ) {
   var costCurrencyString = costString + ' (' + currencySymbolString + ')';
   var weightUnitString = weightString + ' (' + weightMassString + ')';
 
-
   /**
    * @param {ItemNumberLine} numberLine
    * @param {Object} [options]
    * @constructor
     * @constructor
    */
-  function ItemNumberLineNode( numberLine, options ) {
+  function NumberLineNode( numberLine, options ) {
 
     options = options || {};
 
     var self = this;
 
-    NumberLineNode.call( this, numberLine, options );
+    URNumberLineNode.call( this, numberLine, options );
 
     this.maxValue = 1.0;
 
@@ -116,9 +116,9 @@ define( function( require ) {
 
   }
 
-  unitRates.register( 'ItemNumberLineNode', ItemNumberLineNode );
+  unitRates.register( 'NumberLineNode', NumberLineNode );
 
-  return inherit( NumberLineNode, ItemNumberLineNode, {
+  return inherit( URNumberLineNode, NumberLineNode, {
 
     /**
      *
@@ -131,18 +131,28 @@ define( function( require ) {
       // remove all existing markers
       this.graphLayerNode.removeAllChildren();
 
-      // item count or item weight?
-      var type = this.numberLine.itemDataProperty.value;
-      var typeIsCandy = ( type === ItemData.RED_CANDY   || type === ItemData.YELLOW_CANDY ||
-                          type === ItemData.GREEN_CANDY || type === ItemData.BLUE_CANDY );
+      var itemData = this.numberLine.itemDataProperty.value;
+
+       var typeIsCandy = ( itemData.type === ItemData.RED_CANDY.type   || itemData.type === ItemData.YELLOW_CANDY.type ||
+                           itemData.type === ItemData.GREEN_CANDY.type || itemData.type === ItemData.BLUE_CANDY.type );
+
 
       // get the current array for the item type
-      var itemArray = this.numberLine.getItemsWithType( this.numberLine.itemDataProperty.value.type );
+      var itemArray = this.numberLine.getItemsWithType( itemData.type );
       console.log('NumberLine: ' + itemArray.length);
       itemArray.forEach( function( item ) {
 
+        // make marker node
+        var markerNode = new NumberLineMarkerNode( item, {
+          lineHeight: 75,
+          stroke: 'black',
+          lineWidth: 1.25
+        } );
+
+        // calc position
         var position = ( typeIsCandy ? ( item.weight * item.count ) : item.count ) / self.maxValue;
-        self.addMarker( position );
+
+        self.addMarker( markerNode, position );
       } );
     },
 
@@ -154,7 +164,7 @@ define( function( require ) {
 
       this.numberLine.resetItemType( this.numberLine.itemDataProperty.value.type );
 
-      NumberLineNode.prototype.removeAllMarkers.call( this );
+      URNumberLineNode.prototype.removeAllMarkers.call( this );
     },
 
     /**

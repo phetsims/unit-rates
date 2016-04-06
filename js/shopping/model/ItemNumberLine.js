@@ -49,7 +49,7 @@ define( function( require ) {
 
     /**
      * Adds an item to the types specific array
-     * Do not allow for new item which equal existing existing items
+     * Do not allow for new items which equal existing existing items
      *
      * @param {Item} item
      * @override @public

@@ -48,7 +48,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ItemScaleNode( scale, itemLayer, itemMovedCallback, options ) {
+  function ScaleNode( scale, itemLayer, itemMovedCallback, options ) {
 
     options = options || {};
 
@@ -101,8 +101,8 @@ define( function( require ) {
     scale.itemDataProperty.link( function( data, oldData ) {
 
       // Check data type
-      self.typeIsCandy = ( data === ItemData.RED_CANDY   || data === ItemData.YELLOW_CANDY ||
-                          data === ItemData.GREEN_CANDY || data === ItemData.BLUE_CANDY );
+      self.typeIsCandy = ( data.type === ItemData.RED_CANDY.type  || data.type === ItemData.YELLOW_CANDY.type ||
+                          data.type === ItemData.GREEN_CANDY.type || data.type === ItemData.BLUE_CANDY.type );
 
       // Show/hide candy specific UI elements
       //self.candyContainer.visible    = self.typeIsCandy;
@@ -166,9 +166,9 @@ define( function( require ) {
     return new Panel( valueText, options);
   }
 
-  unitRates.register( 'ItemScaleNode', ItemScaleNode );
+  unitRates.register( 'ScaleNode', ScaleNode );
 
-  return inherit( Node, ItemScaleNode, {
+  return inherit( Node, ScaleNode, {
 
     /**
      * Checks if a point is in a droppable location

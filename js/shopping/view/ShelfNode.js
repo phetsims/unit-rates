@@ -30,7 +30,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ItemShelfNode( shelf, itemLayer, itemMovedCallback, options ) {
+  function ShelfNode( shelf, itemLayer, itemMovedCallback, options ) {
 
     options = options || {};
 
@@ -74,9 +74,9 @@ define( function( require ) {
     Node.call( this, options );
   }
 
-  unitRates.register( 'ItemShelfNode', ItemShelfNode );
+  unitRates.register( 'ShelfNode', ShelfNode );
 
-  return inherit( Node, ItemShelfNode, {
+  return inherit( Node, ShelfNode, {
 
     /**
      * Checks if a point is in a droppable location

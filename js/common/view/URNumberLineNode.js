@@ -13,15 +13,15 @@ define( function( require ) {
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var AccordionBox = require( 'SUN/AccordionBox' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Shape = require( 'KITE/Shape' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Shape = require( 'KITE/Shape' );
 
   // strings
   var doubleNumberLineString = require( 'string!UNIT_RATES/DoubleNumberLine' );
@@ -34,16 +34,16 @@ define( function( require ) {
   var GRAPH_WIDTH = 525;
   var GRAPH_HEIGHT = 70;
   var GRAPH_X_AXIS_OFFSET = 10; // offset from origin for the two x-axes
-  var GRAPH_ARROW_SIZE = 3;
+  var GRAPH_ARROW_SIZE = 4;
   var GRAPH_ARROW_LABEL_MARGIN = 10;  // horizontal space from arrows to the labels
   var GRAPH_ARROW_LABEL_OPTIONS = { font: new PhetFont( 14 ), maxWidth: 100 };
 
   /**
-    * @param {NumberLine} numberLine
-    * @param {Object} [options]
+   * @param {NumberLine} numberLine
+   * @param {Object} [options]
    * @constructor
    */
-  function NumberLineNode( numberLine, options ) {
+  function URNumberLineNode( numberLine, options ) {
 
     options = options || {};
 
@@ -82,8 +82,8 @@ define( function( require ) {
     // layer holding all the markers
     this.graphLayerNode = new Path( new Shape().rect( this.graphBounds.minX, this.graphBounds.minY,
       this.graphBounds.maxX, this.graphBounds.maxY ), {
-      fill: 'lightgrey',
-      stroke: 'red',
+      //fill: 'lightgrey',
+      //stroke: 'red',
       lineWidth: 1
     } );
     contentNode.addChild( this.graphLayerNode );
@@ -160,9 +160,9 @@ define( function( require ) {
     this.mutate( options );
   }
 
-  unitRates.register( 'NumberLineNode', NumberLineNode );
+  unitRates.register( 'URNumberLineNode', URNumberLineNode );
 
-  return inherit( AccordionBox, NumberLineNode, {
+  return inherit( AccordionBox, URNumberLineNode, {
 
     /**
      * @param {string} top
@@ -175,27 +175,30 @@ define( function( require ) {
     },
 
     /**
+     * @param {Node} marker
      * @param {number} position - [0 - 1]
      * @param {Object} [options]
      * @public
      */
-    addMarker: function( position, options ) {
+    addMarker: function( marker, position, options ) {
 
       options = _.extend( {
-        markerHeight: 50,
-        stroke: 'purple',
-        lineWidth: 1.25
       }, options || {} );
 
       assert && assert( ( position >= 0 && position <= 1 ), 'Marker position off the number line.' );
 
-      // new graph marker
+      // local position
       var x = this.graphBounds.maxX * position + ( 1.0 - position ) * this.graphBounds.minX;
       var y = this.graphBounds.centerY;
-      var markerLine = new Path( new Shape()
-        .moveTo( x, y - options.markerHeight / 2 )
-        .lineTo( x, y + options.markerHeight / 2 ), options );
-      this.graphLayerNode.addChild( markerLine );
+
+      // new graph marker
+      var markerNode = new Node( {
+        centerX: x,
+        centerY: y,
+        children: [ marker ]
+      } );
+
+      this.graphLayerNode.addChild( markerNode );
     },
 
     /**
