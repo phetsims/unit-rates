@@ -10,7 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var AccordionBox = require( 'SUN/AccordionBox' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -28,11 +28,10 @@ define( function( require ) {
 
   // constants
   var BUTTON_CONTENT = new Text( '+', { font: new PhetFont( 18 ), fontWeight: 'bold', maxWidth: 30 } );
-  var BUTTON_COLOR = 'yellow';
 
   var GRAPH_BUTTON_SPACING = 10; // horizontal space from button to graph y-axis line
   var GRAPH_WIDTH = 525;
-  var GRAPH_HEIGHT = 70;
+  var GRAPH_HEIGHT = 75;
   var GRAPH_X_AXIS_OFFSET = 10; // offset from origin for the two x-axes
   var GRAPH_ARROW_SIZE = 4;
   var GRAPH_ARROW_LABEL_MARGIN = 10;  // horizontal space from arrows to the labels
@@ -49,30 +48,33 @@ define( function( require ) {
 
     var self = this;
 
+    // @protected
     this.expandedProperty = new Property( true );
 
     this.numberLine = numberLine;
 
+    // AccordionBox content
     var contentNode = new Node();
 
-    // add buttons
+    // manual add buttons
+
     // @protected
     this.addCostButton = new RectangularPushButton( {
       content:BUTTON_CONTENT,
-      baseColor: BUTTON_COLOR
+      baseColor: URConstants.EDIT_CONTROL_COLOR
     } );
     contentNode.addChild( this.addCostButton );
 
      // @protected
     this.addUnitButton = new RectangularPushButton( {
       content: BUTTON_CONTENT,
-      baseColor: BUTTON_COLOR,
+      baseColor: URConstants.EDIT_CONTROL_COLOR,
       left: this.addCostButton.left,
       top: this.addCostButton.top + GRAPH_HEIGHT
     } );
     contentNode.addChild( this.addUnitButton );
 
-    // graph bounds
+    // @protected graph bounds
     this.graphBounds = new Bounds2(
       this.addUnitButton.right + GRAPH_BUTTON_SPACING,
       this.addCostButton.top,
@@ -88,7 +90,7 @@ define( function( require ) {
     } );
     contentNode.addChild( this.graphLayerNode );
 
-    // lines
+    // axis lines
     var xOrigin = this.graphBounds.minX;
     var yOrigin = this.graphBounds.centerY;
 
@@ -149,7 +151,7 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 15,
       buttonYMargin: 15,
-      titleNode: new Text( doubleNumberLineString, { font: ShoppingConstants.PANEL_TITLE_FONT } ),
+      titleNode: new Text( doubleNumberLineString, { font: URConstants.PANEL_TITLE_FONT } ),
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       contentAlign: 'left',

@@ -49,7 +49,7 @@ define( function( require ) {
     // refresh on item change
     numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
 
-      // set labels
+      // set number line labels & maximum values
       switch( itemData.type ) {
           case ItemData.APPLES.type:
             self.maxValue = 15.0;
@@ -144,7 +144,7 @@ define( function( require ) {
 
         // make marker node
         var markerNode = new NumberLineMarkerNode( item, {
-          lineHeight: 75,
+          lineHeight: 50,
           stroke: 'black',
           lineWidth: 1.25
         } );
