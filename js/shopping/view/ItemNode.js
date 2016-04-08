@@ -13,6 +13,8 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Emitter = require( 'AXON/Emitter' );
+  var Vector2 = require( 'DOT/Vector2' );
+  var Bounds2 = require( 'DOT/Bounds2' );
 
   /**
    * @param {Item} item
@@ -23,7 +25,10 @@ define( function( require ) {
    */
   function ItemNode( item, position, movedCallback, options ) {
 
-    options = options || {};
+    options = _.extend( {
+      movable: true,
+      movementBounds: new Bounds2( 0, 0, 4096, 4096 )
+    }, options || {} );
 
     Node.call( this, options );
 
@@ -33,6 +38,7 @@ define( function( require ) {
     this.movedCallback = movedCallback;
     this.lastPosition = position;
     this.item.positionProperty.value = this.lastPosition;
+    this.movementBounds = options.movementBounds;
 
     // @protected - used to tell when an item node is moved
     this.dragEndEmitter = new Emitter();
@@ -45,24 +51,39 @@ define( function( require ) {
     this.item.positionProperty.link( this.positionListener );
 
     // add a drag listener
-    this.dragListener = new SimpleDragHandler( {
+    if( options.movable ) {
 
-      start: function( e ) {
-        self.moveToFront();
-        var clickOffset = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
-        self.lastPosition = self.globalToParentPoint( e.pointer.point ).subtract( clickOffset );
-      },
-      end: function( e ) {
-        // announce drag complete
-        self.dragEndEmitter.emit1( self );
-      },
+      this.dragListener = new SimpleDragHandler( {
 
-      translate: function( translation ) {
-        // update node position in screen coordinates
-        self.item.positionProperty.value = translation.position;
-      }
-    } );
-    this.addInputListener( this.dragListener );
+        start: function( e ) {
+          self.moveToFront();
+          var clickOffset = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
+          self.lastPosition = self.globalToParentPoint( e.pointer.point ).subtract( clickOffset );
+        },
+        end: function( e ) {
+          // announce drag complete
+          self.dragEndEmitter.emit1( self );
+        },
+
+        translate: function( translation ) {
+          // update node position in screen coordinates
+          var x = self.item.positionProperty.value.x;
+          if ( translation.position.x >= self.movementBounds.minX &&
+               translation.position.x <= self.movementBounds.maxX ) {
+            x = translation.position.x;
+          }
+          var y = self.item.positionProperty.value.y;
+          if ( translation.position.y >= self.movementBounds.minY &&
+               translation.position.y <= self.movementBounds.maxY ) {
+            y = translation.position.y;
+          }
+
+          self.item.positionProperty.value = new Vector2( x, y );
+        }
+      } );
+
+      this.addInputListener( this.dragListener );
+    }
   }
 
   unitRates.register( 'ItemNode', ItemNode );

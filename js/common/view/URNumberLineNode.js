@@ -178,29 +178,11 @@ define( function( require ) {
 
     /**
      * @param {Node} marker
-     * @param {number} position - [0 - 1]
-     * @param {Object} [options]
      * @public
      */
-    addMarker: function( marker, position, options ) {
+    addMarker: function( marker ) {
 
-      options = _.extend( {
-      }, options || {} );
-
-      assert && assert( ( position >= 0 && position <= 1 ), 'Marker position off the number line.' );
-
-      // local position
-      var x = this.graphBounds.maxX * position + ( 1.0 - position ) * this.graphBounds.minX;
-      var y = this.graphBounds.centerY;
-
-      // new graph marker
-      var markerNode = new Node( {
-        centerX: x,
-        centerY: y,
-        children: [ marker ]
-      } );
-
-      this.graphLayerNode.addChild( markerNode );
+      this.graphLayerNode.addChild( marker );
     },
 
     /**

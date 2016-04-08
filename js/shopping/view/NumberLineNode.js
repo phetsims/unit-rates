@@ -13,6 +13,8 @@ define( function( require ) {
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var NumberLineMarkerNode = require( 'UNIT_RATES/shopping/view/NumberLineMarkerNode' );
+  var Vector2 = require( 'DOT/Vector2' );
+  var Bounds2 = require( 'DOT/Bounds2' );
 
   // strings
   var applesString = require( 'string!UNIT_RATES/Apples' );
@@ -44,7 +46,10 @@ define( function( require ) {
 
     URNumberLineNode.call( this, numberLine, options );
 
+    this.tmpCounter = 1;
+
     this.maxValue = 1.0;
+    this.markerDragBounds = new Bounds2( this.graphBounds.minX, 0, this.graphBounds.maxX, 0 );
 
     // refresh on item change
     numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
@@ -107,11 +112,14 @@ define( function( require ) {
     } );
 
     this.addCostButton.addListener( function() {
-      console.log('NumberLine: add cost');
+      var item = self.createNextItem();
+      if( item !== null ) {
+        self.createItemMarker( item, true );
+      }
+
     } );
 
     this.addUnitButton.addListener( function() {
-      console.log('NumberLine: add unit');
     } );
 
   }
@@ -122,38 +130,86 @@ define( function( require ) {
 
     /**
      *
+     * @return {Item | null}
+     * @private
+     */
+    createNextItem: function() {
+
+      var itemData = this.numberLine.itemDataProperty.value;
+
+      // get the current array for the item type
+      var itemArray = this.numberLine.getItemsWithType( itemData.type );
+
+      // FIXME: find empty slot
+
+
+      var item = this.numberLine.createItem( this.numberLine.itemDataProperty.value, this.tmpCounter++ );
+
+      return item;
+    },
+
+    /*
+     *
      * @override @public
      */
     populate: function() {
 
       var self = this;
 
-      // remove all existing markers
+      // remove all existing markers - FIXME: only add new nodes??
       this.graphLayerNode.removeAllChildren();
 
       var itemData = this.numberLine.itemDataProperty.value;
-
-       var typeIsCandy = ( itemData.type === ItemData.RED_CANDY.type   || itemData.type === ItemData.YELLOW_CANDY.type ||
-                           itemData.type === ItemData.GREEN_CANDY.type || itemData.type === ItemData.BLUE_CANDY.type );
-
 
       // get the current array for the item type
       var itemArray = this.numberLine.getItemsWithType( itemData.type );
       console.log('NumberLine: ' + itemArray.length);
       itemArray.forEach( function( item ) {
+        self.createItemMarker( item, false ); // FIXME: need to keep track of editable
+      } );
+    },
+
+    /**
+     *
+     * @private
+     */
+    createItemMarker: function( item, editable ) {
+
+      var typeIsCandy = ( item.type === ItemData.RED_CANDY.type   || item.type === ItemData.YELLOW_CANDY.type ||
+                          item.type === ItemData.GREEN_CANDY.type || item.type === ItemData.BLUE_CANDY.type );
+
+      // calc position
+      var valuePercent = ( typeIsCandy ? ( item.weight * item.count ) : item.count ) / this.maxValue;
+      if ( valuePercent >= 0 && valuePercent <= 1.0 ) {
+
+        var x = this.markerDragBounds.maxX * valuePercent + ( 1.0 - valuePercent ) * this.markerDragBounds.minX;
+        var y = this.graphBounds.centerY;
+        var position = new Vector2( x, y );
 
         // make marker node
-        var markerNode = new NumberLineMarkerNode( item, {
+        var markerNode = new NumberLineMarkerNode( item, position, this.markerMoved, {
+          centerX: x,
+          centerY: y,
           lineHeight: 50,
           stroke: 'black',
-          lineWidth: 1.25
+          lineWidth: 1.25,
+          editable: editable,
+          movementBounds: this.markerDragBounds
         } );
 
-        // calc position
-        var position = ( typeIsCandy ? ( item.weight * item.count ) : item.count ) / self.maxValue;
+        this.addMarker( markerNode );
+      }
+    },
 
-        self.addMarker( markerNode, position );
-      } );
+    /**
+     * Called when an item's node is dragged to a new location
+     * @private
+     */
+    markerMoved: function( itemNode ) {
+
+      // Send it back from whence it came
+      //itemNode.restoreLastPosition();
+      console.log('itemMoved');
     },
 
     /**

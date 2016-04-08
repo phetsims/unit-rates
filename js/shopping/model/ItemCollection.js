@@ -43,11 +43,14 @@ define( function( require ) {
      * Creates a new item/adds it to the types specific array
      * @param {ItemData} data
      * @param {number} [count]
+     * @return {Item}
      * @public
      */
     createItem: function( data, count ) {
       assert && assert( count > 0, 'Item count equal 0.' );
-      this.addItem( new Item( data, count ) );
+      var item = new Item( data, count );
+      this.addItem( item );
+      return item;
     },
 
     /**
