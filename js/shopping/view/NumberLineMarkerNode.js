@@ -90,7 +90,7 @@ define( function( require ) {
     // bottom label - count | weight
     numberDisplayOptions.centerY = options.lineHeight / 2 + TEXT_MARGIN;
     numberDisplayOptions.decimalPlaces = 1;
-    var bottomNumberDisplay = new NumberDisplay( this.costProperty, new Range( 0, 20), '', '{0}',
+    var bottomNumberDisplay = new NumberDisplay( this.unitProperty, new Range( 0, 20), '', '{0}',
       numberDisplayOptions );
 
     assert && assert( !options.children, 'additional children not supported' );
@@ -141,7 +141,7 @@ define( function( require ) {
 
   unitRates.register( 'NumberLineMarkerNode', NumberLineMarkerNode );
 
-  return inherit( Node, NumberLineMarkerNode, {
+  return inherit( ItemNode, NumberLineMarkerNode, {
 
 
   } ); // inherit

@@ -125,7 +125,19 @@ define( function( require ) {
     },
 
     /**
-     * Resets the collection for a specific type
+     * Removes all items from the collection for a specific type
+     *
+     * @param {string} type
+     * @public
+     */
+    removeAllItemsWithType: function( type ) {
+
+      var itemArray = this.getItemsWithType( type );
+      itemArray.clear();
+    },
+
+    /**
+     * Resets the collection for a specific type to the original state
      *
      * @param {string} type
      * @public

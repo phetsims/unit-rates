@@ -59,27 +59,27 @@ define( function( require ) {
     // manual add buttons
 
     // @protected
-    this.addCostButton = new RectangularPushButton( {
+    this.topAddButton = new RectangularPushButton( {
       content:BUTTON_CONTENT,
       baseColor: URConstants.EDIT_CONTROL_COLOR
     } );
-    contentNode.addChild( this.addCostButton );
+    contentNode.addChild( this.topAddButton );
 
      // @protected
-    this.addUnitButton = new RectangularPushButton( {
+    this.bottomAddButton = new RectangularPushButton( {
       content: BUTTON_CONTENT,
       baseColor: URConstants.EDIT_CONTROL_COLOR,
-      left: this.addCostButton.left,
-      top: this.addCostButton.top + GRAPH_HEIGHT
+      left: this.topAddButton.left,
+      top: this.topAddButton.top + GRAPH_HEIGHT
     } );
-    contentNode.addChild( this.addUnitButton );
+    contentNode.addChild( this.bottomAddButton );
 
     // @protected graph bounds
     this.graphBounds = new Bounds2(
-      this.addUnitButton.right + GRAPH_BUTTON_SPACING,
-      this.addCostButton.top,
+      this.bottomAddButton.right + GRAPH_BUTTON_SPACING,
+      this.topAddButton.top,
       GRAPH_WIDTH - GRAPH_ARROW_SIZE,
-      this.addUnitButton.right + GRAPH_BUTTON_SPACING + GRAPH_HEIGHT);
+      this.bottomAddButton.right + GRAPH_BUTTON_SPACING + GRAPH_HEIGHT);
 
     // layer holding all the markers
     this.graphLayerNode = new Path( new Shape().rect( this.graphBounds.minX, this.graphBounds.minY,
@@ -95,8 +95,8 @@ define( function( require ) {
     var yOrigin = this.graphBounds.centerY;
 
     var xZeroLine = new Path( new Shape()
-        .moveTo( xOrigin, this.addCostButton.top )
-        .lineTo( xOrigin, this.addUnitButton.bottom ), {
+        .moveTo( xOrigin, this.topAddButton.top )
+        .lineTo( xOrigin, this.bottomAddButton.bottom ), {
       stroke: 'black',
       lineWidth: 1.25
     } );
@@ -137,7 +137,7 @@ define( function( require ) {
     var eraserButton = new EraserButton( {
       baseColor: '#f2f2f2',
       left: this.bottomArrowLabel.right,
-      top: this.addUnitButton.bottom + 10,
+      top: this.bottomAddButton.bottom + 10,
       listener: function() {
         self.removeAllMarkers();
       }
@@ -181,7 +181,6 @@ define( function( require ) {
      * @public
      */
     addMarker: function( marker ) {
-
       this.graphLayerNode.addChild( marker );
     },
 
@@ -189,7 +188,18 @@ define( function( require ) {
      * @public
      */
     removeAllMarkers: function() {
-        this.graphLayerNode.removeAllChildren();
+      this.graphLayerNode.removeAllChildren();
+    },
+
+    /**
+     * Applies a callback function to each marker in the number line
+     * Note: Adding | deleting markers here is not allowed!
+     *
+     * @param callback function(item)
+     * @public
+     */
+    forEachMarker: function( callback ) {
+      this.graphLayerNode.getChildren().forEach( callback );
     },
 
     /**

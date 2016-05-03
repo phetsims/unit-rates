@@ -29,20 +29,11 @@ define( function( require ) {
     itemDataProperty.link( function( value, oldValue ) {
     } );
 
-    // refresh on item additions/removals
-    this.addListeners( function( item, observableArray ) {
-      //console.log( 'ItemNumberLine: ' + observableArray.length );
-    },
-    function( item, observableArray ) {
-      //console.log( 'ItemNumberLine: ' + observableArray.length );
-    } );
-
   }
 
   unitRates.register( 'ItemNumberLine', ItemNumberLine );
 
   return inherit( ItemCollection, ItemNumberLine, {
-
 
 
     /**
@@ -67,6 +58,35 @@ define( function( require ) {
           itemArray.add( item );
         }
       }
+    },
+
+    /**
+     * Returns an array of available unused item count 'slots' on the numberline
+     * For example, if the number line is populated with 1,2,3,5,6,8 items, this
+     * will return [4,7, ..., maxCount]
+     *
+     * @param {Number} maxCount
+     * @returns {Array.<Number>}
+     * @protected
+     */
+     getAvailableCounts: function( maxCount ) {
+
+      var itemData = this.itemDataProperty.value;
+
+      // generate array of [1 .. maxCount]
+      var fullCounts =_.range(1, maxCount+1);
+
+      // get the current array for the item type
+      var itemArray = this.getItemsWithType( itemData.type );
+
+      // generate array of of all current counts
+      var itemCounts = [ ];
+      itemArray.forEach( function( item ) {
+        itemCounts.push( item.count );
+      } );
+
+      // return the available (unused) counts
+      return _.difference( fullCounts, itemCounts );
     },
 
     /**

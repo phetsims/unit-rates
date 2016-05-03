@@ -25,13 +25,13 @@ define( function( require ) {
       position: new Vector2( 0, 0 ) // (0, 0) is considered an uninitialized position
     } );
 
-    // @public (readwrite)
+    // @public (readonly)
     this.type = data.type;
 
-    // @public (readwrite)
+    // @public (readonly)
     this.rate = data.rate;
 
-    // @public (readwrite)
+    // @public (readonly)
     this.weight = data.weight;
 
     // @public (readwrite)

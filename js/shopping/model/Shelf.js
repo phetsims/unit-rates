@@ -108,20 +108,20 @@ define( function( require ) {
           case ItemData.RED_CANDY.type:
               this.createItem( itemData, 5 );
               this.createItem( itemData, 5 );
-              this.createItem( itemData,  5);
+              this.createItem( itemData, 5 );
           break;
           case ItemData.YELLOW_CANDY.type:
               this.createItem( itemData, 5 );
               this.createItem( itemData, 5 );
-              this.createItem( itemData,  5);
+              this.createItem( itemData, 5 );
           break;
           case ItemData.GREEN_CANDY.type:
               this.createItem( itemData, 5 );
               this.createItem( itemData, 5 );
-              this.createItem( itemData,  5);
+              this.createItem( itemData, 5 );
              break;
           case ItemData.BLUE_CANDY.type:
-              this.createItem( itemData, 5);
+              this.createItem( itemData, 5 );
               this.createItem( itemData, 5 );
               this.createItem( itemData, 5 );
              break;

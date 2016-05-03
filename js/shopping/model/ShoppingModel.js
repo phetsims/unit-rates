@@ -27,15 +27,25 @@ define( function( require ) {
       itemData: ItemData.APPLES
     } );
 
+    var self = this;
+
     // @public
     this.shelf = new Shelf( this.itemDataProperty );
     this.scale = new Scale( this.itemDataProperty );
     this.numberLine = new ItemNumberLine( this.itemDataProperty );
 
-    //
-    this.itemDataProperty.link( function( data, oldData ) {
-    } );
+    // item add/remove listeners
+    this.numberLine.addListeners(
+      function( item, observableArray ) {
 
+    },
+      function( item, observableArray ) {
+        // FIXME: need to rethink this - Node needs to get populated
+        // If the numberline is cleared, add back the current contents of the scale, if any
+        if( observableArray.length === 0 ) {
+          self.addScaleItemsToNumberline();
+        }
+    } );
   }
 
   unitRates.register( 'UnitRatesModel', UnitRatesModel );
@@ -53,7 +63,7 @@ define( function( require ) {
       this.shelf.removeItem( item );
       this.scale.addItem(item );
 
-      this.updateNumberLine();
+      this.addScaleItemsToNumberline();
     },
 
     /**
@@ -67,14 +77,14 @@ define( function( require ) {
       this.scale.removeItem( item );
       this.shelf.addItem( item );
 
-      this.updateNumberLine();
+      this.addScaleItemsToNumberline();
     },
 
     /**
      *
      * @protected
      */
-    updateNumberLine: function() {
+    addScaleItemsToNumberline: function() {
 
       // create a new item on the number line representing the total number/weight of items currently on the scale
       var count = this.scale.getItemCount() ;
