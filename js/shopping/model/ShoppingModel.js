@@ -89,7 +89,10 @@ define( function( require ) {
       // create a new item on the number line representing the total number/weight of items currently on the scale
       var count = this.scale.getItemCount() ;
       if( count > 0 ) {
-        this.numberLine.createItem( this.itemDataProperty.value, count );
+        var item = this.numberLine.createItem( this.itemDataProperty.value, count );
+
+        // these items are not dragable
+        item.dragable = false;
       }
     },
 

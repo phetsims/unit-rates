@@ -26,8 +26,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var SCREEN_MARGIN = 30;
-  var PANEL_HORIZONTAL_SPACING = 30; // space between scene buttons/numberline/challenges
+  var SCREEN_MARGIN = 20;
+  var PANEL_HORIZONTAL_SPACING = 15; // space between scene buttons/numberline/challenges
 
   /**
    * @param {ShoppingModel} model

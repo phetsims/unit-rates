@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var NumberLineMarkerNode = require( 'UNIT_RATES/shopping/view/NumberLineMarkerNode' );
@@ -104,18 +105,32 @@ define( function( require ) {
       var item = self.createNextItem();
       if( item !== null ) {
 
-        // turn of any existing editable markers
+        // turn of any existing dragable markers
         self.forEachMarker(  function( marker ) {
-          //console.log( "Editable: " + marker.editable);
+          marker.item.dragable = false;
         } );
 
         // Create new editable marker
-        self.createItemMarker( item, true );
+        item.dragable = true;
+        item.editable = ShoppingConstants.EditMode.TOP;
+        self.createItemMarker( item );
       }
-
     } );
 
     this.bottomAddButton.addListener( function() {
+      var item = self.createNextItem();
+      if( item !== null ) {
+
+        // turn of any existing dragable markers
+        self.forEachMarker(  function( marker ) {
+          marker.item.dragable = false;
+        } );
+
+        // Create new dragable/editable marker
+        item.dragable = true;
+        item.editable = ShoppingConstants.EditMode.BOTTOM;
+        self.createItemMarker( item );
+      }
     } );
 
   }
@@ -123,6 +138,26 @@ define( function( require ) {
   unitRates.register( 'NumberLineNode', NumberLineNode );
 
   return inherit( URNumberLineNode, NumberLineNode, {
+
+    /*
+     *
+     * @override @public
+     */
+    populate: function() {
+
+      var self = this;
+
+      // remove all existing markers
+      this.graphLayerNode.removeAllChildren();
+
+      var itemData = this.numberLine.itemDataProperty.value;
+
+      // get the current array for the item type
+      var itemArray = this.numberLine.getItemsWithType( itemData.type );
+      itemArray.forEach( function( item ) {
+        self.createItemMarker( item );
+      } );
+    },
 
     /**
      *
@@ -144,32 +179,11 @@ define( function( require ) {
       return item;
     },
 
-    /*
-     *
-     * @override @public
-     */
-    populate: function() {
-
-      var self = this;
-
-      // remove all existing markers
-      this.graphLayerNode.removeAllChildren();
-
-      var itemData = this.numberLine.itemDataProperty.value;
-
-      // get the current array for the item type
-      var itemArray = this.numberLine.getItemsWithType( itemData.type );
-      console.log('NumberLine: ' + itemArray.length);
-      itemArray.forEach( function( item ) {
-        self.createItemMarker( item, false ); // FIXME: need to keep track of editable
-      } );
-    },
-
     /**
      *
      * @private
      */
-    createItemMarker: function( item, editable ) {
+    createItemMarker: function( item ) {
 
       // calc position
       var countPercent = item.count / MAX_MARKER_COUNT;
@@ -180,14 +194,14 @@ define( function( require ) {
         var position = new Vector2( x, y );
 
         // make marker node
-        var markerNode = new NumberLineMarkerNode( item, position, this.markerMoved.bind( this ), {
+        var markerNode = new NumberLineMarkerNode( item, position, this.markerStartDrag.bind( this ),
+          this.markerEndDrag.bind( this ), {
           centerX: x,
           centerY: y,
           lineHeight: 50,
           stroke: 'black',
           lineWidth: 1.25,
-          editable: editable,
-          movementBounds: this.markerDragBounds
+          dragBounds: this.markerDragBounds
         } );
 
         this.addMarker( markerNode );
@@ -198,8 +212,22 @@ define( function( require ) {
      * Called when an item's node is dragged to a new location
      * @private
      */
-    markerMoved: function( markerNode ) {
+    markerStartDrag: function( markerNode ) {
 
+      // Hide number display & edit buttons
+      markerNode.hideDisplayNodes();
+    },
+
+    /**
+     * Called when an item's node is dragged to a new location
+     * @private
+     */
+    markerEndDrag: function( markerNode ) {
+
+      // Show number display & edit buttons
+      markerNode.showDisplayNodes();
+
+      // Snap to closest available slot
       var dragXPercent = ( markerNode.centerX - this.markerDragBounds.minX ) /
                          ( this.markerDragBounds.maxX - this.markerDragBounds.minX );
 
@@ -216,6 +244,7 @@ define( function( require ) {
         // Send it back from whence it came
         markerNode.restoreLastPosition();
       }
+
     },
 
     /**

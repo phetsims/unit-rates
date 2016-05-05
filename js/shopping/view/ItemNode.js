@@ -19,15 +19,14 @@ define( function( require ) {
   /**
    * @param {Item} item
    * @param {Vector2} position
-   * @param (function} movedCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
-  function ItemNode( item, position, movedCallback, options ) {
+  function ItemNode( item, position, options ) {
 
     options = _.extend( {
-      movable: true,
-      movementBounds: new Bounds2( 0, 0, 4096, 4096 )
+      dragArea: null,    // The portion of the node that is dragable (local coordinates)
+      dragBounds: new Bounds2( 0, 0, 4096, 4096 )   // The draggable area (screen coordinates)
     }, options || {} );
 
     Node.call( this, options );
@@ -35,14 +34,17 @@ define( function( require ) {
     var self = this;
 
     this.item = item;
-    this.movedCallback = movedCallback;
     this.lastPosition = position;
     this.item.positionProperty.value = this.lastPosition;
-    this.movementBounds = options.movementBounds;
 
-    // @protected - used to tell when an item node is moved
-    this.dragEndEmitter = new Emitter();
-    this.dragEndEmitter.addListener( movedCallback );
+    // @protected - used to tell when an item node is being moved
+    this.isDragging         = false;
+    this.dragArea           = ( options.dragArea !== null ? options.dragArea : null );
+    this.dragBounds         = options.dragBounds;
+    this.moveStartCallback  = null;
+    this.moveEndCallback    = null;
+    this.dragStartEmitter   = new Emitter();
+    this.dragEndEmitter     = new Emitter();
 
     // translate node according to item position property
     this.positionListener = function( position, oldPosition ) {
@@ -51,30 +53,53 @@ define( function( require ) {
     this.item.positionProperty.link( this.positionListener );
 
     // add a drag listener
-    if( options.movable ) {
+    if( item.dragable ) {
 
       this.dragListener = new SimpleDragHandler( {
 
         start: function( e ) {
           self.moveToFront();
+
+          self.isDragging = true;
+
+          // if a  specific dragArea has been defined, check is point is within the area.
+          if ( self.dragArea ) {
+            var globalArea = self.localToGlobalBounds( self.dragArea );
+            if ( !globalArea.containsPoint( e.pointer.point ) ) {
+              self.isDragging = false;
+              return;
+            }
+          }
+
           var clickOffset = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
           self.lastPosition = self.globalToParentPoint( e.pointer.point ).subtract( clickOffset );
+
+          // announce drag start
+          self.dragStartEmitter.emit1( self );
         },
         end: function( e ) {
-          // announce drag complete
+
+          self.isDragging = false;
+
+          // announce drag end
           self.dragEndEmitter.emit1( self );
         },
 
         translate: function( translation ) {
+
+          if( !self.isDragging ) {
+            return;
+          }
+
           // update node position in screen coordinates
           var x = self.item.positionProperty.value.x;
-          if ( translation.position.x >= self.movementBounds.minX &&
-               translation.position.x <= self.movementBounds.maxX ) {
+          if ( translation.position.x >= self.dragBounds.minX &&
+               translation.position.x <= self.dragBounds.maxX ) {
             x = translation.position.x;
           }
           var y = self.item.positionProperty.value.y;
-          if ( translation.position.y >= self.movementBounds.minY &&
-               translation.position.y <= self.movementBounds.maxY ) {
+          if ( translation.position.y >= self.dragBounds.minY &&
+               translation.position.y <= self.dragBounds.maxY ) {
             y = translation.position.y;
           }
 
@@ -90,14 +115,40 @@ define( function( require ) {
 
   return inherit( Node, ItemNode, {
 
+    /**
+     * Adds listeners for drag start & end
+     *
+     * @param (function} moveStartCallback - function called when item drag starts
+     * @param (function} moveEndCallback - function called when item drag ends
+     * @public
+     */
+    addDragListeners: function( moveStartCallback, moveEndCallback ) {
+      this.moveStartCallback = moveStartCallback;
+      this.moveEndCallback = moveEndCallback;
+
+      if( this.moveStartCallback ) {
+        this.dragStartEmitter.addListener( this.moveStartCallback );
+      }
+      if( this.moveEndCallback ) {
+        this.dragEndEmitter.addListener( this.moveEndCallback );
+      }
+    },
+
     // @public
     dispose: function() {
 
       // unlink position
       this.item.positionProperty.unlink( this.positionListener );
 
-      // remove emitter listener
-      this.dragEndEmitter.removeListener( this.movedCallback );
+      // remove start drag emitter listener
+      if( this.moveStartCallback ) {
+        this.dragEndEmitter.removeListener( this.moveStartCallback );
+      }
+
+      // remove end drag emitter listener
+      if( this.moveEndCallback ) {
+        this.dragEndEmitter.removeListener( this.moveEndCallback );
+      }
 
       // remove input listener
       this.removeInputListener( this.dragListener );

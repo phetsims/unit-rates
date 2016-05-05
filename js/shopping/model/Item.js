@@ -22,7 +22,9 @@ define( function( require ) {
 
     // @public (readwrite)
     PropertySet.call( this, {
-      position: new Vector2( 0, 0 ) // (0, 0) is considered an uninitialized position
+      position: new Vector2( 0, 0 ), // (0, 0) is considered an uninitialized position
+      dragable: true,
+      editable: false
     } );
 
     // @public (readonly)
@@ -40,12 +42,12 @@ define( function( require ) {
 
   return inherit( PropertySet, Item, {
 
-  /**
-   * @param {Item} item
-   * @returns {boolean}
-   * @public
-   */
-  isEqual: function( item ) {
+    /**
+     * @param {Item} item
+     * @returns {boolean}
+     * @public
+     */
+    isEqual: function( item ) {
        return ( item.type === this.type && item.rate === this.rate &&
                 item.weight === this.weight &&  item.count === this.count );
     }

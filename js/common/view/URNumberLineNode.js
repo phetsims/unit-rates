@@ -30,7 +30,7 @@ define( function( require ) {
   var BUTTON_CONTENT = new Text( '+', { font: new PhetFont( 18 ), fontWeight: 'bold', maxWidth: 30 } );
 
   var GRAPH_BUTTON_SPACING = 10; // horizontal space from button to graph y-axis line
-  var GRAPH_WIDTH = 525;
+  var GRAPH_WIDTH = 575;
   var GRAPH_HEIGHT = 75;
   var GRAPH_X_AXIS_OFFSET = 10; // offset from origin for the two x-axes
   var GRAPH_ARROW_SIZE = 4;
@@ -78,14 +78,13 @@ define( function( require ) {
     this.graphBounds = new Bounds2(
       this.bottomAddButton.right + GRAPH_BUTTON_SPACING,
       this.topAddButton.top,
-      GRAPH_WIDTH - GRAPH_ARROW_SIZE,
+      GRAPH_WIDTH,
       this.bottomAddButton.right + GRAPH_BUTTON_SPACING + GRAPH_HEIGHT);
 
     // layer holding all the markers
     this.graphLayerNode = new Path( new Shape().rect( this.graphBounds.minX, this.graphBounds.minY,
       this.graphBounds.maxX, this.graphBounds.maxY ), {
-      //fill: 'lightgrey',
-      //stroke: 'red',
+      //stroke: 'red',  // debugging
       lineWidth: 1
     } );
     contentNode.addChild( this.graphLayerNode );

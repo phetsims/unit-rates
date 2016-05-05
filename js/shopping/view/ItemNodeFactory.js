@@ -30,14 +30,16 @@ define( function( require ) {
      * @param {Item} item
      * @param {number} size
      * @param {Vector2} position
-     * @param (function(ItemNode)} movedCallback - function called when item drag ends
+     * @param (function(ItemNode)} moveStartCallback - function called when item drag starts
+     * @param (function(ItemNode)} moveEndCallback - function called when item drag ends
      * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createItem: function( item, size, position, movedCallback, options ) {
+    createItem: function( item, size, position, moveStartCallback, moveEndCallback, options ) {
 
-      var itemNode = new ItemNode( item, position, movedCallback, options );
+      var itemNode = new ItemNode( item, position, options );
+      itemNode.addDragListeners( moveStartCallback, moveEndCallback );
 
       for (var i = 0; i < item.count; i++) {
 

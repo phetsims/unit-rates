@@ -111,7 +111,7 @@ define( function( require ) {
         var position = item.positionProperty.value;
 
         // create new item node
-        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, self.itemMovedCallback );
+        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, null, self.itemMovedCallback );
 
         // init position - create a random position on the shelf
         if(position.x === 0 && position.y === 0) {
