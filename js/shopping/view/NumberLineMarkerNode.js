@@ -26,8 +26,6 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var Bounds2 = require( 'DOT/Bounds2' );
 
-  //var Emitter = require( 'AXON/Emitter' );
-
   // constants
   var TEXT_FONT                 = new PhetFont( 10 );
   var TEXT_MAX_WIDTH            = 75;
@@ -72,14 +70,15 @@ define( function( require ) {
 
     var isTypeCandy = ( item.type === ItemData.RED_CANDY.type   || item.type === ItemData.YELLOW_CANDY.type ||
                         item.type === ItemData.GREEN_CANDY.type || item.type === ItemData.BLUE_CANDY.type );
+
     this.correctCost = ( item.count * item.rate );
     this.correctUnit = ( item.count * ( isTypeCandy ? item.weight : 1 ) );
 
-    // properties
+    // @private - local properties used for NumberDisplay only
     this.costProperty = new Property( this.correctCost );
     this.unitProperty = new Property( this.correctUnit );
 
-    // Static representation
+    // common NumberDisplay options
     var numberDisplayOptions = {
       centerX: -2,
       centerY: -options.lineHeight / 2 - TEXT_MARGIN,
@@ -146,7 +145,7 @@ define( function( require ) {
       }
     } );
 
-    // -- Edit controls -- //
+    // -- Edit buttons -- //
 
     this.editCostButton = new RectangularPushButton( {
       centerX: 0,
@@ -174,7 +173,7 @@ define( function( require ) {
       }
     } );
 
-    // hide/show edit nodes, change color, etc.
+    // hide/show edit buttons, change text/border color, etc.
     item.editableProperty.link( function( state, oldState ) {
       self.updateEditState();
     } );
@@ -218,7 +217,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Makes the keypad visible and links up it's built-in property to the update function
      * @protected
      */
     showKeypadWithProperty: function( itemProperty ) {
@@ -238,7 +237,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Hides the keypad and unlinks
      * @protected
      */
     hideKeypad: function() {
@@ -248,7 +247,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Changes various color/draggable attributes based on whether the edited values are correct.
      * @protected
      */
     updateEditState: function( ) {
