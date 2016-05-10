@@ -29,23 +29,30 @@ define( function( require ) {
   //var Emitter = require( 'AXON/Emitter' );
 
   // constants
-  var TEXT_FONT = new PhetFont( 10 );
-  var TEXT_MAX_WIDTH = 75;
-  var TEXT_MARGIN = 8;
-  var DRAG_HANDLE_OFFSET = 10;
-  var TEMP_EDIT_BUTTON_CONTENT = new Text( 'E', { font: new PhetFont( 10 ), fontWeight: 'bold', maxWidth: 30 } );
+  var TEXT_FONT                 = new PhetFont( 10 );
+  var TEXT_MAX_WIDTH            = 75;
+  var TEXT_MARGIN               = 12;
+  var DRAG_HANDLE_OFFSET        = 10;
+  var EDIT_TEXT_DEFAULT_COLOR   = 'rgba(0,0,0,1)';
+  var EDIT_TEXT_INCORRECT_COLOR = 'rgba(255,0,0,1)';
+  var EDIT_TEXT_DEFAULT_STROKE  = 'rgba(0,0,0,0)';
+  var EDIT_TEXT_ACTIVE_STROKE   = 'rgba(0,0,0,1)';
+  var EDIT_BUTTON_MARGIN        = 2;
+  var TEMP_EDIT_BUTTON_CONTENT  = new Text( 'E', { font: new PhetFont( 10 ), fontWeight: 'bold', maxWidth: 30 } );
 
   // strings
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
 
   /**
    * @param {Item} item
+   * @param {Vector2} position - x,y position on teh number line
    * @param (function} moveStartCallback - function called when item drag starts
    * @param (function} moveEndCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
-  function NumberLineMarkerNode( item, position, moveStartCallback, moveEndCallback, options ) {
+  function NumberLineMarkerNode( item, position, keypad, moveStartCallback, moveEndCallback,
+    options ) {
 
     options = _.extend( {
       lineHeight: 50,
@@ -54,29 +61,34 @@ define( function( require ) {
       dragBounds: new Bounds2( 0, 0, 0, 0 )
     }, options || {} );
 
+    assert && assert( !options.children, 'additional children not supported' );
+
     var self = this;
 
     // @public (readwrite)
     this.item = item;
+    this.keypad = keypad;
 
     var isTypeCandy = ( item.type === ItemData.RED_CANDY.type   || item.type === ItemData.YELLOW_CANDY.type ||
                         item.type === ItemData.GREEN_CANDY.type || item.type === ItemData.BLUE_CANDY.type );
+    this.correctCost = ( item.count * item.rate );
+    this.correctUnit = ( item.count * ( isTypeCandy ? item.weight : 1 ) );
+
     // properties
     this.costProperty = new Property( ( item.count * item.rate ) );
     this.unitProperty = new Property( ( item.count * ( isTypeCandy ? item.weight : 1 ) ) );
 
     // Static representation
     var numberDisplayOptions = {
-      centerX: - TEXT_MARGIN / 2,
+      centerX: -2,
       centerY: -options.lineHeight / 2 - TEXT_MARGIN,
       font: TEXT_FONT,
-      xMargin: 2,
+      xMargin: 5,
       yMargin: 2,
       decimalPlaces: 2,
       maxWidth: TEXT_MAX_WIDTH,
-      numberFill: 'rgba(0,0,0,1)',
-      backgroundFill: 'rgba(255,255,255,0)',
-      backgroundStroke: 'rgba(0,0,0,0)',
+      numberFill: EDIT_TEXT_DEFAULT_COLOR,
+      backgroundStroke: EDIT_TEXT_DEFAULT_STROKE,
       pickable: false
     };
 
@@ -85,7 +97,7 @@ define( function( require ) {
     this.topNumberDisplay = new NumberDisplay( this.costProperty, new Range( 0, 10), '', currencySymbolString + '{0}',
       numberDisplayOptions );
 
-    // verticle line
+    // vertical line
     var markerLine = new Path( new Shape()
       .moveTo( 0, -options.lineHeight / 2 )
       .lineTo( 0,  options.lineHeight / 2 ), {
@@ -93,17 +105,14 @@ define( function( require ) {
         centerY: 0,
         stroke: options.stroke,
         lineWidth: options.lineWidth,
-         pickable: false
+        pickable: false
       } );
 
-    // bottom label - count | weight
+    // bottom label - unit
     numberDisplayOptions.centerY = options.lineHeight / 2 + TEXT_MARGIN;
     numberDisplayOptions.decimalPlaces = 1;
     this.bottomNumberDisplay = new NumberDisplay( this.unitProperty, new Range( 0, 20), '', '{0}',
       numberDisplayOptions );
-
-    assert && assert( !options.children, 'additional children not supported' );
-    options.children = [  this.topNumberDisplay,  markerLine,  this.bottomNumberDisplay ]; // static UI
 
     // -- Drag controls -- //
     this.dragHandle = new Node( { pickable: true });
@@ -128,42 +137,61 @@ define( function( require ) {
 
     options.dragArea = dragHandleCircle.bounds;
 
-    // Hide/show drag nodes
-    item.dragableProperty.link( function( itemState, oldItemState ) {
-      self.dragHandle.visible = itemState;
+    // hide/show drag nodes
+    item.dragableProperty.link( function( state, oldState ) {
+      self.dragHandle.visible = state;
     } );
 
     // -- Edit controls -- //
 
     this.editCostButton = new RectangularPushButton( {
       centerX: 0,
-      bottom: this.topNumberDisplay.top - TEXT_MARGIN,
+      bottom: this.topNumberDisplay.top - EDIT_BUTTON_MARGIN,
       content:TEMP_EDIT_BUTTON_CONTENT,
       baseColor: URConstants.EDIT_CONTROL_COLOR,
-      pickable: true
+      pickable: true,
+      visible: false,
+      listener: function() {
+        self.keypad.clear()
+        self.keypad.visible = true;
+        self.keypad.digitStringProperty.unlinkAll();
+        self.keypad.digitStringProperty.link( function( value, oldValue ) {
+          self.updateEditState();
+          console.log(value);
+        } );
+      }
     } );
 
     this.editUnitButton = new RectangularPushButton( {
       centerX: 0,
-      top: this.bottomNumberDisplay.bottom + TEXT_MARGIN,
+      top: this.bottomNumberDisplay.bottom + EDIT_BUTTON_MARGIN,
       content:TEMP_EDIT_BUTTON_CONTENT,
       baseColor: URConstants.EDIT_CONTROL_COLOR,
-      pickable: true
+      pickable: true,
+      visible: false,
+      listener: function() {
+        self.keypad.clear()
+        self.keypad.visible = true;
+        self.keypad.digitStringProperty.unlinkAll();
+        self.keypad.digitStringProperty.link( function( value, oldValue ) {
+          self.updateEditState();
+          console.log(value);
+        } );
+      }
     } );
 
-    // Hide/show edit nodes
-    item.editableProperty.link( function( itemState, oldItemState ) {
-      self.editCostButton.visible = ( itemState === ShoppingConstants.EditMode.BOTTOM );
-    } );
-    item.editableProperty.link( function( itemState, oldItemState ) {
-      self.editUnitButton.visible  = ( itemState === ShoppingConstants.EditMode.TOP );
+    // hide/show edit nodes, change color, etc.
+    item.editableProperty.link( function( state, oldState ) {
+      self.updateEditState();
     } );
 
-    options.children = options.children.concat( [ this.editCostButton, this.dragHandle, this.editUnitButton ] );
+    // add all child nodes
+    options.children = [ this.topNumberDisplay,  markerLine,  this.bottomNumberDisplay,
+                         this.editCostButton, this.dragHandle, this.editUnitButton ];
 
     ItemNode.call( this, item, position, options );
 
-     // Add drag handlers
+     // add drag handlers
     this.addDragListeners( moveStartCallback, moveEndCallback );
   }
 
@@ -175,7 +203,7 @@ define( function( require ) {
      * Called at start of drag
      * @public
      */
-    hideDisplayNodes: function( ) {
+    hideDragNodes: function( ) {
       // Hide number display & edit buttons
       this.topNumberDisplay.visible     = false;
       this.bottomNumberDisplay.visible  = false;
@@ -187,13 +215,70 @@ define( function( require ) {
      * Called at end of drag
      * @public
      */
-    showDisplayNodes: function( ) {
-
+    showDragNodes: function( ) {
       // Show number display & edit buttons
       this.topNumberDisplay.visible     = true;
       this.bottomNumberDisplay.visible  = true;
-      this.editCostButton.visible       = ( this.item.editable === ShoppingConstants.EditMode.BOTTOM );
-      this.editUnitButton.visible       = ( this.item.editable === ShoppingConstants.EditMode.TOP );
+      this.editCostButton.visible       = ( this.item.editable === ShoppingConstants.EditMode.COST );
+      this.editUnitButton.visible       = ( this.item.editable === ShoppingConstants.EditMode.UNIT );
+    },
+
+    /**
+     *
+     * @public
+     */
+    updateEditState: function( ) {
+
+      if( this.item.editable === ShoppingConstants.EditMode.NONE ) {
+        return;
+      }
+
+      // Check for correct answers
+      var costCorrect = true;
+      if( this.item.editable === ShoppingConstants.EditMode.COST ) {
+        costCorrect = Number( this.keypad.digitStringProperty.value ) === Number( this.costProperty.value );
+        if( costCorrect ) {
+        // set normal display attributes
+        this.editCostButton.visible = false;
+        this.topNumberDisplay.setNumberFill( EDIT_TEXT_DEFAULT_COLOR );
+        this.topNumberDisplay.setBackgroundStroke( EDIT_TEXT_DEFAULT_STROKE );
+        }
+        else {
+          // set 'incorrect' display attributes
+          this.editCostButton.visible = true;
+          this.topNumberDisplay.setNumberFill( EDIT_TEXT_INCORRECT_COLOR );
+          this.topNumberDisplay.setBackgroundStroke( EDIT_TEXT_ACTIVE_STROKE );
+        }
+      }
+
+      var unitCorrect = true;
+      if( this.item.editable === ShoppingConstants.EditMode.UNIT ) {
+        unitCorrect = Number( this.keypad.digitStringProperty.value ) === Number( this.unitProperty.value );
+        if( unitCorrect ) {
+          // set normal display attributes
+          this.editUnitButton.visible = false;
+          this.bottomNumberDisplay.setNumberFill( EDIT_TEXT_DEFAULT_COLOR );
+          this.bottomNumberDisplay.setBackgroundStroke( EDIT_TEXT_DEFAULT_STROKE );
+        }
+        else {
+          // set 'incorrect' display attributes
+          this.editUnitButton.visible = true;
+          this.bottomNumberDisplay.setNumberFill( EDIT_TEXT_INCORRECT_COLOR );
+          this.bottomNumberDisplay.setBackgroundStroke( EDIT_TEXT_ACTIVE_STROKE );
+        }
+      }
+
+      // if all is correct, clear the various edit attributes
+      if( costCorrect && unitCorrect ) {
+        this.item.dragableProperty.value = false;
+        this.item.dragableProperty.unlinkAll();
+
+        this.keypad.visible = false;
+        this.keypad.digitStringProperty.unlinkAll();
+        this.keypad.digitStringProperty.reset();
+
+        this.item.editable = ShoppingConstants.EditMode.NONE;
+      }
     },
 
     // @public

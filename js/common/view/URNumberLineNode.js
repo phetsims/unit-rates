@@ -29,12 +29,12 @@ define( function( require ) {
   // constants
   var BUTTON_CONTENT = new Text( '+', { font: new PhetFont( 18 ), fontWeight: 'bold', maxWidth: 30 } );
 
-  var GRAPH_BUTTON_SPACING = 10; // horizontal space from button to graph y-axis line
-  var GRAPH_WIDTH = 575;
-  var GRAPH_HEIGHT = 75;
-  var GRAPH_X_AXIS_OFFSET = 10; // offset from origin for the two x-axes
-  var GRAPH_ARROW_SIZE = 4;
-  var GRAPH_ARROW_LABEL_MARGIN = 10;  // horizontal space from arrows to the labels
+  var GRAPH_BUTTON_SPACING      = 10; // horizontal space from button to graph y-axis line
+  var GRAPH_WIDTH               = 575;
+  var GRAPH_HEIGHT              = 75;
+  var GRAPH_X_AXIS_OFFSET       = 10; // offset from origin for the two x-axes
+  var GRAPH_ARROW_SIZE          = 4;
+  var GRAPH_ARROW_LABEL_MARGIN  = 10;  // horizontal space from arrows to the labels
   var GRAPH_ARROW_LABEL_OPTIONS = { font: new PhetFont( 14 ), maxWidth: 100 };
 
   /**

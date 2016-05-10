@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -22,7 +23,7 @@ define( function( require ) {
 
     // @public (readwrite)
     PropertySet.call( this, {
-      position: new Vector2( 0, 0 ), // (0, 0) is considered an uninitialized position
+      position: new Vector2( 0, 0 ), // (0, 0) is considered an uninitialized position - FIXME: move up to ItemNode?
       dragable: true,
       editable: false
     } );
@@ -39,6 +40,8 @@ define( function( require ) {
     // @public (readwrite)
     this.count = count || 1;
   }
+
+  unitRates.register( 'Item', Item );
 
   return inherit( PropertySet, Item, {
 

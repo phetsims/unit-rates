@@ -10,10 +10,11 @@ define( function( require ) {
   // modules
   var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var CurvedArrowShape = require( 'SCENERY_PHET/CurvedArrowShape' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var sceneryPhet = require( 'SCENERY_PHET/sceneryPhet' );
+  //var sceneryPhet = require( 'SCENERY_PHET/sceneryPhet' );       // FIXME - add to scenery-phet?
   var Matrix3 = require( 'DOT/Matrix3' );
 
   /**
@@ -37,7 +38,8 @@ define( function( require ) {
     }, options ) );
   }
 
-  sceneryPhet.register( 'CurvedArrowButton', CurvedArrowButton );
+  // FIXME - add to scenery-phet?
+  unitRates.register( 'CurvedArrowButton', CurvedArrowButton );
 
   return inherit( RectangularPushButton, CurvedArrowButton );
 } );

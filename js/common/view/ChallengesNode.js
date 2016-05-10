@@ -9,7 +9,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  //var unitRates = require( 'UNIT_RATES/unitRates' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -56,6 +56,8 @@ define( function( require ) {
 
     this.mutate( options );
   }
+
+  unitRates.register( 'ChallengesNode', ChallengesNode );
 
   return inherit( AccordionBox, ChallengesNode, {
 

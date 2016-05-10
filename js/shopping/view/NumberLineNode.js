@@ -39,11 +39,11 @@ define( function( require ) {
 
   /**
    * @param {ItemNumberLine} numberLine
+   * @param {NumberKeypad} keypad
    * @param {Object} [options]
    * @constructor
-    * @constructor
    */
-  function NumberLineNode( numberLine, options ) {
+  function NumberLineNode( numberLine, keypad, options ) {
 
     options = options || {};
 
@@ -51,6 +51,7 @@ define( function( require ) {
 
     URNumberLineNode.call( this, numberLine, options );
 
+    this.keypad = keypad;
     this.markerDragBounds = new Bounds2( this.graphBounds.minX, 0, this.graphBounds.maxX, 0 );
 
     // refresh on item change
@@ -112,7 +113,7 @@ define( function( require ) {
 
         // Create new editable marker
         item.dragable = true;
-        item.editable = ShoppingConstants.EditMode.TOP;
+        item.editable = ShoppingConstants.EditMode.UNIT;
         self.createItemMarker( item );
       }
     } );
@@ -128,7 +129,7 @@ define( function( require ) {
 
         // Create new dragable/editable marker
         item.dragable = true;
-        item.editable = ShoppingConstants.EditMode.BOTTOM;
+        item.editable = ShoppingConstants.EditMode.COST;
         self.createItemMarker( item );
       }
     } );
@@ -194,8 +195,8 @@ define( function( require ) {
         var position = new Vector2( x, y );
 
         // make marker node
-        var markerNode = new NumberLineMarkerNode( item, position, this.markerStartDrag.bind( this ),
-          this.markerEndDrag.bind( this ), {
+        var markerNode = new NumberLineMarkerNode( item, position, this.keypad,
+          this.markerStartDrag.bind( this ), this.markerEndDrag.bind( this ), {
           centerX: x,
           centerY: y,
           lineHeight: 50,
@@ -214,8 +215,11 @@ define( function( require ) {
      */
     markerStartDrag: function( markerNode ) {
 
+      // Hide the keypad
+      this.keypad.visible = false;
+
       // Hide number display & edit buttons
-      markerNode.hideDisplayNodes();
+      markerNode.hideDragNodes();
     },
 
     /**
@@ -225,7 +229,7 @@ define( function( require ) {
     markerEndDrag: function( markerNode ) {
 
       // Show number display & edit buttons
-      markerNode.showDisplayNodes();
+      markerNode.showDragNodes();
 
       // Snap to closest available slot
       var dragXPercent = ( markerNode.centerX - this.markerDragBounds.minX ) /
@@ -252,6 +256,9 @@ define( function( require ) {
      * @override @public
      */
     removeAllMarkers: function() {
+
+      // Hide the keypad
+      this.keypad.visible = false;
 
       this.numberLine.removeAllItemsWithType( this.numberLine.itemDataProperty.value.type );
 

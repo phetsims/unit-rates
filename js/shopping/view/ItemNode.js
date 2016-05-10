@@ -62,7 +62,7 @@ define( function( require ) {
 
           self.isDragging = true;
 
-          // if a  specific dragArea has been defined, check is point is within the area.
+          // if a specific dragArea has been defined, check if the point is within the area.
           if ( self.dragArea ) {
             var globalArea = self.localToGlobalBounds( self.dragArea );
             if ( !globalArea.containsPoint( e.pointer.point ) ) {

@@ -15,6 +15,7 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var SceneControlButtons = require( 'UNIT_RATES/shopping/view/SceneControlButtons' );
   var NumberLineNode = require( 'UNIT_RATES/shopping/view/NumberLineNode' );
+  var NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
   var ChallengesNode = require( 'UNIT_RATES/common/view/ChallengesNode' );
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
@@ -72,12 +73,6 @@ define( function( require ) {
       this, itemComboBoxOptions);
     this.addChild( this.candyItemsComboBox );
 
-    // number line
-    this.numberLineNode = new NumberLineNode( model.numberLine, {
-      left:  sceneControlButtons.right + PANEL_HORIZONTAL_SPACING,
-      top: this.layoutBounds.top + SCREEN_MARGIN } );
-    this.addChild( this.numberLineNode );
-
     // layer for draggable shelf & scale item nodes
     this.itemsLayer = new Node();
     this.addChild( this.itemsLayer );
@@ -100,7 +95,7 @@ define( function( require ) {
     var scaleRemoveButtonNode = new CurvedArrowButton( {
       right:  this.scaleNode.left - PANEL_HORIZONTAL_SPACING,
       bottom: this.scaleNode.bottom,
-       listener: function() {
+      listener: function() {
 
         // reset the current item type - remove scale items & re-populate shelf items
         self.itemsLayer.removeAllChildren();
@@ -109,6 +104,28 @@ define( function( require ) {
       }
     } );
     this.addChild( scaleRemoveButtonNode );
+
+    var keypad = new NumberKeypad( {
+      left:  this.shelfNode.right + PANEL_HORIZONTAL_SPACING,
+      bottom: this.scaleNode.bottom - 60,   // FIXME - where should this go?
+      visible: false,
+      //buttonFont: new PhetFont( { size: 20 } ),
+      //minButtonWidth: 35,
+      //minButtonHeight: 35,
+      decimalPointKey: true
+      //xSpacing: 10,
+      //ySpacing: 10,
+      //keyColor: 'white',
+      //maxDigits: 4, // Maximum number of digits that the user may enter
+      //digitStringPro
+    } );
+    this.addChild( keypad );
+
+    // number line
+    this.numberLineNode = new NumberLineNode( model.numberLine, keypad, {
+      left:  sceneControlButtons.right + PANEL_HORIZONTAL_SPACING,
+      top: this.layoutBounds.top + SCREEN_MARGIN } );
+    this.addChild( this.numberLineNode );
 
     // challenges
     var challengesNode = new ChallengesNode( model, {

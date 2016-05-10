@@ -20,7 +20,7 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function UnitRatesModel() {
+  function ShoppingModel() {
 
     // @public (all)
     PropertySet.call( this, {
@@ -48,9 +48,9 @@ define( function( require ) {
     } );
   }
 
-  unitRates.register( 'UnitRatesModel', UnitRatesModel );
+  unitRates.register( 'ShoppingModel', ShoppingModel );
 
-  return inherit( PropertySet, UnitRatesModel, {
+  return inherit( PropertySet, ShoppingModel, {
 
     /**
      *

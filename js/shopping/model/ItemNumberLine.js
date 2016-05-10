@@ -23,6 +23,7 @@ define( function( require ) {
     ItemCollection.call( this, itemDataProperty, {
     } );
 
+    // @public
     this.itemDataProperty = itemDataProperty;
 
     // update value text

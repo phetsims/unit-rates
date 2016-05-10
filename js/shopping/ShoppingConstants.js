@@ -14,12 +14,12 @@
   //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   // constants
-  var ShoppingConstants = {
+ var ShoppingConstants = {
 
     EditMode: Object.freeze( {
-      TOP: 'top',
+      UNIT: 'unit',
       NONE: 'none',
-      BOTTOM: 'bottom'
+      COST: 'cost'
     } ),
 
     //----------------------------------------------------------------------------
