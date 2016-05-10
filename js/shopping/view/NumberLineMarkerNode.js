@@ -34,6 +34,7 @@ define( function( require ) {
   var TEXT_MARGIN               = 12;
   var DRAG_HANDLE_OFFSET        = 10;
   var EDIT_TEXT_DEFAULT_COLOR   = 'rgba(0,0,0,1)';
+  var EDIT_TEXT_BLANK_COLOR     = 'rgba(0,0,0,0)';
   var EDIT_TEXT_INCORRECT_COLOR = 'rgba(255,0,0,1)';
   var EDIT_TEXT_DEFAULT_STROKE  = 'rgba(0,0,0,0)';
   var EDIT_TEXT_ACTIVE_STROKE   = 'rgba(0,0,0,1)';
@@ -75,8 +76,8 @@ define( function( require ) {
     this.correctUnit = ( item.count * ( isTypeCandy ? item.weight : 1 ) );
 
     // properties
-    this.costProperty = new Property( ( item.count * item.rate ) );
-    this.unitProperty = new Property( ( item.count * ( isTypeCandy ? item.weight : 1 ) ) );
+    this.costProperty = new Property( this.correctCost );
+    this.unitProperty = new Property( this.correctUnit );
 
     // Static representation
     var numberDisplayOptions = {
@@ -140,6 +141,9 @@ define( function( require ) {
     // hide/show drag nodes
     item.dragableProperty.link( function( state, oldState ) {
       self.dragHandle.visible = state;
+      if( !state ) {
+        self.item.dragableProperty.unlinkAll();
+      }
     } );
 
     // -- Edit controls -- //
@@ -152,13 +156,8 @@ define( function( require ) {
       pickable: true,
       visible: false,
       listener: function() {
-        self.keypad.clear()
-        self.keypad.visible = true;
-        self.keypad.digitStringProperty.unlinkAll();
-        self.keypad.digitStringProperty.link( function( value, oldValue ) {
-          self.updateEditState();
-          console.log(value);
-        } );
+        self.showKeypadWithProperty( self.costProperty );
+        self.updateEditState();
       }
     } );
 
@@ -170,13 +169,8 @@ define( function( require ) {
       pickable: true,
       visible: false,
       listener: function() {
-        self.keypad.clear()
-        self.keypad.visible = true;
-        self.keypad.digitStringProperty.unlinkAll();
-        self.keypad.digitStringProperty.link( function( value, oldValue ) {
-          self.updateEditState();
-          console.log(value);
-        } );
+        self.showKeypadWithProperty( self.unitProperty );
+        self.updateEditState();
       }
     } );
 
@@ -225,18 +219,52 @@ define( function( require ) {
 
     /**
      *
-     * @public
+     * @protected
+     */
+    showKeypadWithProperty: function( itemProperty ) {
+      var self = this;
+
+      this.keypad.digitStringProperty.unlinkAll();
+      this.keypad.visible = true;
+      this.keypad.clear();
+      this.keypad.digitStringProperty.link( function( value, oldValue ) {
+        // check for bogus keypad values
+        if( isNaN( value ) || !isFinite( value ) ) {
+            value = 0;
+        }
+        itemProperty.value = value;
+        self.updateEditState();
+      } );
+    },
+
+    /**
+     *
+     * @protected
+     */
+    hideKeypad: function() {
+      this.keypad.visible = false;
+      this.keypad.digitStringProperty.unlinkAll();
+      this.keypad.digitStringProperty.value = 0;
+    },
+
+    /**
+     *
+     * @protected
      */
     updateEditState: function( ) {
 
       if( this.item.editable === ShoppingConstants.EditMode.NONE ) {
+        this.costProperty.value = this.correctCost;
+        this.unitProperty.value = this.correctUnit;
         return;
       }
+
+      var keypadValue = Number( this.keypad.digitStringProperty.value );
 
       // Check for correct answers
       var costCorrect = true;
       if( this.item.editable === ShoppingConstants.EditMode.COST ) {
-        costCorrect = Number( this.keypad.digitStringProperty.value ) === Number( this.costProperty.value );
+        costCorrect = ( keypadValue === this.correctCost );
         if( costCorrect ) {
         // set normal display attributes
         this.editCostButton.visible = false;
@@ -246,14 +274,14 @@ define( function( require ) {
         else {
           // set 'incorrect' display attributes
           this.editCostButton.visible = true;
-          this.topNumberDisplay.setNumberFill( EDIT_TEXT_INCORRECT_COLOR );
+          this.topNumberDisplay.setNumberFill( keypadValue === 0 ? EDIT_TEXT_BLANK_COLOR : EDIT_TEXT_INCORRECT_COLOR );
           this.topNumberDisplay.setBackgroundStroke( EDIT_TEXT_ACTIVE_STROKE );
         }
       }
 
       var unitCorrect = true;
       if( this.item.editable === ShoppingConstants.EditMode.UNIT ) {
-        unitCorrect = Number( this.keypad.digitStringProperty.value ) === Number( this.unitProperty.value );
+        unitCorrect = ( keypadValue === this.correctUnit );
         if( unitCorrect ) {
           // set normal display attributes
           this.editUnitButton.visible = false;
@@ -263,20 +291,21 @@ define( function( require ) {
         else {
           // set 'incorrect' display attributes
           this.editUnitButton.visible = true;
-          this.bottomNumberDisplay.setNumberFill( EDIT_TEXT_INCORRECT_COLOR );
+          this.bottomNumberDisplay.setNumberFill( keypadValue === 0 ? EDIT_TEXT_BLANK_COLOR : EDIT_TEXT_INCORRECT_COLOR );
           this.bottomNumberDisplay.setBackgroundStroke( EDIT_TEXT_ACTIVE_STROKE );
         }
       }
 
       // if all is correct, clear the various edit attributes
       if( costCorrect && unitCorrect ) {
+
+        // dismiss the keypad
+        this.hideKeypad();
+
+        // make item undraggable
         this.item.dragableProperty.value = false;
-        this.item.dragableProperty.unlinkAll();
 
-        this.keypad.visible = false;
-        this.keypad.digitStringProperty.unlinkAll();
-        this.keypad.digitStringProperty.reset();
-
+        // make the item uneditable
         this.item.editable = ShoppingConstants.EditMode.NONE;
       }
     },

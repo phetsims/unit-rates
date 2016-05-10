@@ -206,6 +206,7 @@ define( function( require ) {
      */
     reset: function() {
       this.expandedProperty.reset();
+      this.removeAllMarkers();
     }
 
   } );  // define

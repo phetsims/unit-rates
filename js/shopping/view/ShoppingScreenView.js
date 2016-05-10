@@ -105,24 +105,17 @@ define( function( require ) {
     } );
     this.addChild( scaleRemoveButtonNode );
 
-    var keypad = new NumberKeypad( {
+    this.keypad = new NumberKeypad( {
       left:  this.shelfNode.right + PANEL_HORIZONTAL_SPACING,
-      bottom: this.scaleNode.bottom - 60,   // FIXME - where should this go?
+      bottom: this.scaleNode.bottom - 60,   // FIXME - where should the numberpad be positioned?
       visible: false,
-      //buttonFont: new PhetFont( { size: 20 } ),
-      //minButtonWidth: 35,
-      //minButtonHeight: 35,
-      decimalPointKey: true
-      //xSpacing: 10,
-      //ySpacing: 10,
-      //keyColor: 'white',
-      //maxDigits: 4, // Maximum number of digits that the user may enter
-      //digitStringPro
+      decimalPointKey: true,
+      maxDigits: 3
     } );
-    this.addChild( keypad );
+    this.addChild( this.keypad );
 
     // number line
-    this.numberLineNode = new NumberLineNode( model.numberLine, keypad, {
+    this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
       left:  sceneControlButtons.right + PANEL_HORIZONTAL_SPACING,
       top: this.layoutBounds.top + SCREEN_MARGIN } );
     this.addChild( this.numberLineNode );
@@ -144,6 +137,10 @@ define( function( require ) {
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
+
+        self.hideKeypad();
+
+        self.numberLineNode.reset();
 
         self.fruitItemDataProperty.reset();
         self.produceItemDataProperty.reset();
@@ -169,6 +166,8 @@ define( function( require ) {
     // @private
     sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
 
+      this.hideKeypad();
+
       // hide/show different combo boxes based on scene selection
       switch( sceneMode ) {
         case SceneMode.FRUIT:
@@ -193,6 +192,8 @@ define( function( require ) {
 
     // @private
     itemSelectionChanged: function( sceneMode, fruitItemData, produceItemData, candyItemData ) {
+
+      this.hideKeypad();
 
       // dispose of children before calling removeAllChildren
       this.itemsLayer.getChildren().forEach( function( child ) {
@@ -254,6 +255,15 @@ define( function( require ) {
         // Send it back from whence it came
         itemNode.restoreLastPosition();
       }
+    },
+
+    /**
+     * @protected
+     */
+    hideKeypad: function() {
+      this.keypad.visible = false;
+      this.keypad.digitStringProperty.unlinkAll();
+      this.keypad.clear();
     }
 
   } ); // inherit

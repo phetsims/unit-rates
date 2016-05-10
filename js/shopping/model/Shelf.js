@@ -30,10 +30,10 @@ define( function( require ) {
 
     // refresh on item additions/removals
     this.addListeners( function( item, observableArray ) {
-      console.log( 'Shelf: ' + observableArray.length );
+      //console.log( 'Shelf: ' + observableArray.length );
     },
     function( item, observableArray ) {
-      console.log( 'Shelf: ' + observableArray.length );
+      //console.log( 'Shelf: ' + observableArray.length );
     } );
 
     // Add initial items

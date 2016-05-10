@@ -56,13 +56,13 @@ define( function( require ) {
 
     // refresh on item additions/removals
     this.addListeners( function( item, observableArray ) {
-      console.log( 'Scale: ' + observableArray.length );
+      //console.log( 'Scale: ' + observableArray.length );
 
       self.costProperty.value += ( item.rate * item.count );
       self.weightProperty.value += item.weight * item.count;
     },
     function( item, observableArray ) {
-      console.log( 'Scale: ' + observableArray.length );
+      //console.log( 'Scale: ' + observableArray.length );
 
       self.costProperty.value -= ( item.rate * item.count );
       self.weightProperty.value -= item.weight * item.count;
