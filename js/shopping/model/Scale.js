@@ -31,8 +31,8 @@ define( function( require ) {
     this.itemDataProperty = itemDataProperty;
 
     // @protected
-    this.costProperty     = new Property( 0.0 );
-    this.weightProperty   = new Property( 0.0 );
+    this.costProperty   = new Property( 0.0 );
+    this.weightProperty = new Property( 0.0 );
 
     // update value text
     itemDataProperty.link( function( value, oldValue ) {
@@ -58,13 +58,13 @@ define( function( require ) {
     this.addListeners( function( item, observableArray ) {
       //console.log( 'Scale: ' + observableArray.length );
 
-      self.costProperty.value += ( item.rate * item.count );
+      self.costProperty.value   += ( item.rate * item.count );
       self.weightProperty.value += item.weight * item.count;
     },
     function( item, observableArray ) {
       //console.log( 'Scale: ' + observableArray.length );
 
-      self.costProperty.value -= ( item.rate * item.count );
+      self.costProperty.value   -= ( item.rate * item.count );
       self.weightProperty.value -= item.weight * item.count;
     } );
   }
@@ -95,10 +95,10 @@ define( function( require ) {
       if ( item.count > 1 ) {
 
         var types = {};
-        types[ ItemData.APPLES.type ] = ItemData.APPLES;
-        types[ ItemData.LEMONS.type ] = ItemData.LEMONS;
+        types[ ItemData.APPLES.type ]  = ItemData.APPLES;
+        types[ ItemData.LEMONS.type ]  = ItemData.LEMONS;
         types[ ItemData.ORANGES.type ] = ItemData.ORANGES;
-        types[ ItemData.PEARS.type ] = ItemData.PEARS;
+        types[ ItemData.PEARS.type ]   = ItemData.PEARS;
         if ( types[ item.type ] ) {
           for ( var i = 0; i < item.count; i++ ) {
             ItemCollection.prototype.addItem.call( this, new Item( types[ item.type ], 1 ) );

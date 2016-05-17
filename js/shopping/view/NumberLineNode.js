@@ -29,16 +29,12 @@ define( function( require ) {
   var costString = require( 'string!UNIT_RATES/Cost' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
   var weightString = require( 'string!UNIT_RATES/Weight' );
-  var weightMassString = require( 'string!UNIT_RATES/weightMass' );
+  var lbsString = require( 'string!UNIT_RATES/lbs' );
   var costCurrencyString = costString + ' (' + currencySymbolString + ')';
-  var weightUnitString = weightString + ' (' + weightMassString + ')';
-
-  // constants
-  var MAX_MARKER_COUNT = 15;
-
+  var weightUnitString = weightString + ' (' + lbsString + ')';
 
   /**
-   * @param {ItemNumberLine} numberLine
+   * @param {NumberLine} numberLine
    * @param {NumberKeypad} keypad
    * @param {Object} [options]
    * @constructor
@@ -49,9 +45,10 @@ define( function( require ) {
 
     var self = this;
 
-    URNumberLineNode.call( this, numberLine, options );
+    URNumberLineNode.call( this, options );
 
-    this.keypad = keypad;
+    this.numberLine       = numberLine;
+    this.keypad           = keypad;
     this.markerDragBounds = new Bounds2( this.graphBounds.minX, 0, this.graphBounds.maxX, 0 );
 
     // refresh on item change
@@ -103,10 +100,10 @@ define( function( require ) {
     } );
 
     this.topAddButton.addListener( function() {
-      var item = self.createNextItem();
+      var item = self.numberLine.createNextItem();
       if( item !== null ) {
 
-        // turn of any existing dragable markers
+        // turn of any existing dragable markers - only 1 is allowed
         self.forEachMarker(  function( marker ) {
           marker.item.dragable = false;
         } );
@@ -119,10 +116,10 @@ define( function( require ) {
     } );
 
     this.bottomAddButton.addListener( function() {
-      var item = self.createNextItem();
+      var item = self.numberLine.createNextItem();
       if( item !== null ) {
 
-        // turn of any existing dragable markers
+        // turn of any existing dragable markers - only 1 is allowed
         self.forEachMarker(  function( marker ) {
           marker.item.dragable = false;
         } );
@@ -162,32 +159,12 @@ define( function( require ) {
 
     /**
      *
-     * @return {Item | null}
-     * @private
-     */
-    createNextItem: function() {
-
-      var self = this;
-
-      var availableCounts = self.numberLine.getAvailableCounts( MAX_MARKER_COUNT );
-
-      var item = null;
-      if( availableCounts.length > 0 ) {
-        // create a new item with the first available item count
-        item = self.numberLine.createItem( self.numberLine.itemDataProperty.value, availableCounts[0] );
-      }
-
-      return item;
-    },
-
-    /**
-     *
      * @private
      */
     createItemMarker: function( item ) {
 
       // calc position
-      var countPercent = item.count / MAX_MARKER_COUNT;
+      var countPercent = item.count / ShoppingConstants.MAX_ITEMS;
       if ( countPercent >= 0 && countPercent <= 1.0 ) {
 
         var x = this.markerDragBounds.maxX * countPercent + ( 1.0 - countPercent ) * this.markerDragBounds.minX;
@@ -235,9 +212,9 @@ define( function( require ) {
       var dragXPercent = ( markerNode.centerX - this.markerDragBounds.minX ) /
                          ( this.markerDragBounds.maxX - this.markerDragBounds.minX );
 
-      var newCount = Math.round( dragXPercent * MAX_MARKER_COUNT );
+      var newCount = Math.round( dragXPercent * ShoppingConstants.MAX_ITEMS );
 
-      var availableCounts = this.numberLine.getAvailableCounts( MAX_MARKER_COUNT );
+      var availableCounts = this.numberLine.getAvailableCounts( ShoppingConstants.MAX_ITEMS );
       if( availableCounts.indexOf( newCount ) >= 0 ) {
 
         // change the item's count to the new dragged count value

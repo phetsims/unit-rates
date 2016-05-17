@@ -15,6 +15,7 @@ define( function( require ) {
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
   var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
   var ItemNumberLine = require( 'UNIT_RATES/shopping/model/ItemNumberLine' );
+  var Challenges = require( 'UNIT_RATES/shopping/model/Challenges' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
 
   /**
@@ -33,11 +34,11 @@ define( function( require ) {
     this.shelf = new Shelf( this.itemDataProperty );
     this.scale = new Scale( this.itemDataProperty );
     this.numberLine = new ItemNumberLine( this.itemDataProperty );
+    this.challenges = new Challenges( this.itemDataProperty );
 
     // item add/remove listeners
     this.numberLine.addListeners(
       function( item, observableArray ) {
-
     },
       function( item, observableArray ) {
         // FIXME: need to rethink this - Node needs to get populated
@@ -102,6 +103,7 @@ define( function( require ) {
       this.shelf.reset();
       this.scale.reset();
       this.numberLine.reset();
+      this.challenges.reset();
 
       PropertySet.prototype.reset.call( this );
     }

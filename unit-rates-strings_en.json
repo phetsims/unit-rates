@@ -11,8 +11,14 @@
   "currencySymbol": {
     "value": "$"
   },
-  "weightMass": {
+  "lbs": {
     "value": "lbs"
+  },
+  "pound": {
+    "value": "pound"
+  },
+  "pounds": {
+    "value": "pounds"
   },
   "Cost": {
     "value": "Cost"
@@ -23,26 +29,50 @@
   "Apples": {
     "value": "Apples"
   },
+  "apples": {
+    "value": "apples"
+  },
   "Lemons": {
     "value": "Lemons"
+  },
+  "lemons": {
+    "value": "lemons"
   },
   "Oranges": {
     "value": "Oranges"
   },
+  "oranges": {
+    "value": "oranges"
+  },
   "Pears": {
     "value": "Pears"
+  },
+  "pears": {
+    "value": "pears"
   },
   "Carrots": {
     "value": "Carrots"
   },
+  "carrots": {
+    "value": "carrots"
+  },
   "Cucumbers": {
     "value": "Cucumbers"
+  },
+  "cucumbers": {
+    "value": "cucumbers"
   },
   "Potatoes": {
     "value": "Potatoes"
   },
+  "potatoes": {
+    "value": "potatoes"
+  },
   "Tomatoes": {
     "value": "Tomatoes"
+  },
+  "tomatoes": {
+    "value": "tomatoes"
   },
   "RedCandy": {
     "value": "Red Candy"
@@ -59,8 +89,14 @@
   "Challenges": {
     "value": "Challenges"
   },
-  "UnitRate": {
+  "UnitRateQuestion": {
     "value": "Unit Rate?"
+  },
+  "CostOfQuestion": {
+    "value": "Cost of {0} {1}?"
+  },
+  "forQuestion": {
+    "value": "{0} for ${1}?"
   },
   "Racing": {
     "value": "Racing"

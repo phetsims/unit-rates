@@ -16,7 +16,7 @@ define( function( require ) {
   var SceneControlButtons = require( 'UNIT_RATES/shopping/view/SceneControlButtons' );
   var NumberLineNode = require( 'UNIT_RATES/shopping/view/NumberLineNode' );
   var NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
-  var ChallengesNode = require( 'UNIT_RATES/common/view/ChallengesNode' );
+  var ChallengesNode = require( 'UNIT_RATES/shopping/view/ChallengesNode' );
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
@@ -121,7 +121,7 @@ define( function( require ) {
     this.addChild( this.numberLineNode );
 
     // challenges
-    var challengesNode = new ChallengesNode( model, {
+    var challengesNode = new ChallengesNode( model.challenges, this.keypad, {
       left:  this.numberLineNode.right + PANEL_HORIZONTAL_SPACING,
       top: this.layoutBounds.top + SCREEN_MARGIN } );
     this.addChild( challengesNode );
@@ -218,7 +218,7 @@ define( function( require ) {
       }
     },
 
-    // Called when an item's node is dragged to a new location
+    // Called when an item's node (i.e. individual items & bags) is dragged to a new location
     // @private
     itemMoved: function( itemNode ) {
 

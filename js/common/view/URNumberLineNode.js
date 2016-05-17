@@ -38,11 +38,10 @@ define( function( require ) {
   var GRAPH_ARROW_LABEL_OPTIONS = { font: new PhetFont( 14 ), maxWidth: 100 };
 
   /**
-   * @param {NumberLine} numberLine
    * @param {Object} [options]
    * @constructor
    */
-  function URNumberLineNode( numberLine, options ) {
+  function URNumberLineNode( options ) {
 
     options = options || {};
 
@@ -50,8 +49,6 @@ define( function( require ) {
 
     // @protected
     this.expandedProperty = new Property( true );
-
-    this.numberLine = numberLine;
 
     // AccordionBox content
     var contentNode = new Node();

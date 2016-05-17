@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -51,9 +52,19 @@ define( function( require ) {
      * @public
      */
     isEqual: function( item ) {
-       return ( item.type === this.type && item.rate === this.rate &&
-                item.weight === this.weight &&  item.count === this.count );
-    }
+       return( item.type === this.type && item.rate === this.rate &&
+               item.weight === this.weight &&  item.count === this.count );
+    },
+
+    /**
+     * Convenience function
+     * @returns {boolean}
+     * @public
+     */
+    isCandy: function() {
+      return( this.type === ItemData.RED_CANDY.type   || this.type === ItemData.YELLOW_CANDY.type ||
+              this.type === ItemData.GREEN_CANDY.type || this.type === ItemData.BLUE_CANDY.type );
+   }
 
   } ); // inherit
 

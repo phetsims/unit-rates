@@ -38,7 +38,7 @@ define( function( require ) {
 
   // strings
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
-  var weightMassString = require( 'string!UNIT_RATES/weightMass' );
+  var lbsString = require( 'string!UNIT_RATES/lbs' );
 
   /**
    *
@@ -92,7 +92,7 @@ define( function( require ) {
     // weight of items display, visibility changes
     // @private
     this.weightDisplayNode = new ValueDisplayNode( this.scale.weightProperty, {
-      postText: weightMassString,
+      postText: lbsString,
       centerX: this.scaleNode.centerX + ( DISPLAY_SIZE.width / 2 ) + DISPLAY_SPACING,
       centerY: this.scaleNode.bottom - DISPLAY_BOTTOM_OFFSET
     } );
@@ -102,7 +102,7 @@ define( function( require ) {
 
       // Check data type
       self.typeIsCandy = ( data.type === ItemData.RED_CANDY.type  || data.type === ItemData.YELLOW_CANDY.type ||
-                          data.type === ItemData.GREEN_CANDY.type || data.type === ItemData.BLUE_CANDY.type );
+                           data.type === ItemData.GREEN_CANDY.type || data.type === ItemData.BLUE_CANDY.type );
 
       // Show/hide candy specific UI elements
       //self.candyContainer.visible    = self.typeIsCandy;

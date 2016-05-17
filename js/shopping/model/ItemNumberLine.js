@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemCollection = require( 'UNIT_RATES/shopping/model/ItemCollection' );
 
   /**
@@ -37,7 +38,7 @@ define( function( require ) {
 
     /**
      * Adds an item to the types specific array
-     * Do not allow for new items which equal existing items
+     * Does not allow for new items which equal existing items
      *
      * @param {Item} item
      * @override @public
@@ -86,6 +87,24 @@ define( function( require ) {
 
       // return the available (unused) counts
       return _.difference( fullCounts, itemCounts );
+    },
+
+    /**
+     *
+     * @return {Item | null}
+     * @private
+     */
+    createNextItem: function() {
+
+      var availableCounts = this.getAvailableCounts( ShoppingConstants.MAX_ITEMS );
+
+      var item = null;
+      if( availableCounts.length > 0 ) {
+        // create a new item with the first available item count
+        item = this.createItem( this.itemDataProperty.value, availableCounts[0] );
+      }
+
+      return item;
     },
 
     /**

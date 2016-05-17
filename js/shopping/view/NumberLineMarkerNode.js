@@ -12,7 +12,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
-  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var ItemNode = require( 'UNIT_RATES/shopping/view/ItemNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -67,12 +66,8 @@ define( function( require ) {
     // @public (readwrite)
     this.item = item;
     this.keypad = keypad;
-
-    var isTypeCandy = ( item.type === ItemData.RED_CANDY.type   || item.type === ItemData.YELLOW_CANDY.type ||
-                        item.type === ItemData.GREEN_CANDY.type || item.type === ItemData.BLUE_CANDY.type );
-
     this.correctCost = ( item.count * item.rate );
-    this.correctUnit = ( item.count * ( isTypeCandy ? item.weight : 1 ) );
+    this.correctUnit = ( item.count * ( item.isCandy ? item.weight : 1 ) );
 
     // @private - local properties used for NumberDisplay only
     this.costProperty = new Property( this.correctCost );
@@ -193,7 +188,7 @@ define( function( require ) {
   return inherit( ItemNode, NumberLineMarkerNode, {
 
     /**
-     * Called at start of drag
+     * Simplify representation (when dragging)
      * @public
      */
     hideDragNodes: function( ) {
@@ -205,7 +200,7 @@ define( function( require ) {
     },
 
     /**
-     * Called at end of drag
+     * Restore node children (when not dragging)
      * @public
      */
     showDragNodes: function( ) {
@@ -250,17 +245,19 @@ define( function( require ) {
      * Changes various color/draggable attributes based on whether the edited values are correct.
      * @protected
      */
-    updateEditState: function( ) {
+    updateEditState: function() {
 
+      // non-editable markers are correct by default
       if( this.item.editable === ShoppingConstants.EditMode.NONE ) {
         this.costProperty.value = this.correctCost;
         this.unitProperty.value = this.correctUnit;
         return;
       }
 
+      // get the current keypad value
       var keypadValue = Number( this.keypad.digitStringProperty.value );
 
-      // Check for correct answers
+      // Check for correct cost answer
       var costCorrect = true;
       if( this.item.editable === ShoppingConstants.EditMode.COST ) {
         costCorrect = ( keypadValue === this.correctCost );
@@ -278,6 +275,7 @@ define( function( require ) {
         }
       }
 
+      // Check for correct unit answers
       var unitCorrect = true;
       if( this.item.editable === ShoppingConstants.EditMode.UNIT ) {
         unitCorrect = ( keypadValue === this.correctUnit );
@@ -295,7 +293,7 @@ define( function( require ) {
         }
       }
 
-      // if all is correct, clear the various edit attributes
+      // if all is correct, clear the various edit attributes & hide the keypad
       if( costCorrect && unitCorrect ) {
 
         // dismiss the keypad
