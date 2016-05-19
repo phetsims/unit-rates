@@ -16,7 +16,7 @@ define( function( require ) {
   var SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
-  var unitRatesTitleString = require( 'string!UNIT_RATES/Unit-Rates.title' );
+  var unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );
 
   var simOptions = {
     credits: {
