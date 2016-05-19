@@ -26,53 +26,101 @@
   "Weight": {
     "value": "Weight"
   },
-  "Apples": {
-    "value": "Apples"
+  "apple": {
+    "value": "apple"
+  },
+  "appleCap": {
+    "value": "Apple"
   },
   "apples": {
     "value": "apples"
   },
-  "Lemons": {
-    "value": "Lemons"
+  "applesCap": {
+    "value": "Apples"
+  },
+  "lemon": {
+    "value": "lemon"
+  },
+  "lemonCap": {
+    "value": "Lemon"
   },
   "lemons": {
     "value": "lemons"
   },
-  "Oranges": {
-    "value": "Oranges"
+  "lemonsCap": {
+    "value": "Lemons"
+  },
+  "orange": {
+    "value": "orange"
+  },
+  "orangeCap": {
+    "value": "Orange"
   },
   "oranges": {
     "value": "oranges"
   },
-  "Pears": {
-    "value": "Pears"
+  "orangesCap": {
+    "value": "Oranges"
+  },
+  "pear": {
+    "value": "pear"
+  },
+  "pearCap": {
+    "value": "Pear"
   },
   "pears": {
     "value": "pears"
   },
-  "Carrots": {
-    "value": "Carrots"
+  "pearsCap": {
+    "value": "Pears"
+  },
+  "carrot": {
+    "value": "carrot"
+  },
+  "carrotCap": {
+    "value": "Carrot"
   },
   "carrots": {
     "value": "carrots"
   },
-  "Cucumbers": {
-    "value": "Cucumbers"
+  "carrotsCap": {
+    "value": "Carrots"
+  },
+  "cucumber": {
+    "value": "cucumber"
+  },
+  "cucumberCap": {
+    "value": "Cucumber"
   },
   "cucumbers": {
     "value": "cucumbers"
   },
-  "Potatoes": {
-    "value": "Potatoes"
+  "cucumbersCap": {
+    "value": "Cucumbers"
+  },
+  "potatoe": {
+    "value": "potatoe"
+  },
+  "potatoeCap": {
+    "value": "Potatoe"
   },
   "potatoes": {
     "value": "potatoes"
   },
-  "Tomatoes": {
-    "value": "Tomatoes"
+  "potatoesCap": {
+    "value": "Potatoes"
+  },
+  "tomatoe": {
+    "value": "tomatoe"
+  },
+  "tomatoeCap": {
+    "value": "Tomatoe"
   },
   "tomatoes": {
     "value": "tomatoes"
+  },
+  "tomatoesCap": {
+    "value": "Tomatoes"
   },
   "RedCandy": {
     "value": "Red Candy"

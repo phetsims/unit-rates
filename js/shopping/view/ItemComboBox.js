@@ -20,14 +20,14 @@ define( function( require ) {
   var ComboBox = require( 'SUN/ComboBox' );
 
   // strings
-  var applesString = require( 'string!UNIT_RATES/Apples' );
-  var lemonsString = require( 'string!UNIT_RATES/Lemons' );
-  var orangesString = require( 'string!UNIT_RATES/Oranges' );
-  var pearsString = require( 'string!UNIT_RATES/Pears' );
-  var carrotsString = require( 'string!UNIT_RATES/Carrots' );
-  var cucumbersString = require( 'string!UNIT_RATES/Cucumbers' );
-  var potatoesString = require( 'string!UNIT_RATES/Potatoes' );
-  var tomatoesString = require( 'string!UNIT_RATES/Tomatoes' );
+  var applesCapString = require( 'string!UNIT_RATES/applesCap' );
+  var lemonsCapString = require( 'string!UNIT_RATES/lemonsCap' );
+  var orangesCapString = require( 'string!UNIT_RATES/orangesCap' );
+  var pearsCapString = require( 'string!UNIT_RATES/pearsCap' );
+  var carrotsCapString = require( 'string!UNIT_RATES/carrotsCap' );
+  var cucumbersCapString = require( 'string!UNIT_RATES/cucumbersCap' );
+  var potatoesCapString = require( 'string!UNIT_RATES/potatoesCap' );
+  var tomatoesCapString = require( 'string!UNIT_RATES/tomatoesCap' );
   var redCandyString = require( 'string!UNIT_RATES/RedCandy' );
   var yellowCandyString = require( 'string!UNIT_RATES/YellowCandy' );
   var greenCandyString = require( 'string!UNIT_RATES/GreenCandy' );
@@ -60,30 +60,30 @@ define( function( require ) {
     switch( sceneMode ) {
       case SceneMode.FRUIT:
         items.push( ComboBox.createItem(
-          this.createItemRow( applesString, ItemNodeFactory.createApple( ICON_SIZE ) ), ItemData.APPLES )
+          this.createItemRow( applesCapString, ItemNodeFactory.createApple( ICON_SIZE ) ), ItemData.APPLES )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( lemonsString, ItemNodeFactory.createLemon( ICON_SIZE ) ), ItemData.LEMONS )
+          this.createItemRow( lemonsCapString, ItemNodeFactory.createLemon( ICON_SIZE ) ), ItemData.LEMONS )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( orangesString, ItemNodeFactory.createOrange( ICON_SIZE ) ), ItemData.ORANGES )
+          this.createItemRow( orangesCapString, ItemNodeFactory.createOrange( ICON_SIZE ) ), ItemData.ORANGES )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( pearsString, ItemNodeFactory.createPear( ICON_SIZE ) ), ItemData.PEARS )
+          this.createItemRow( pearsCapString, ItemNodeFactory.createPear( ICON_SIZE ) ), ItemData.PEARS )
         );
         break;
       case SceneMode.PRODUCE:
         items.push( ComboBox.createItem(
-          this.createItemRow( carrotsString, ItemNodeFactory.createCarrot( ICON_SIZE ) ), ItemData.CARROTS )
+          this.createItemRow( carrotsCapString, ItemNodeFactory.createCarrot( ICON_SIZE ) ), ItemData.CARROTS )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( cucumbersString, ItemNodeFactory.createCucumber( ICON_SIZE ) ), ItemData.CUCUMBERS )
+          this.createItemRow( cucumbersCapString, ItemNodeFactory.createCucumber( ICON_SIZE ) ), ItemData.CUCUMBERS )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( potatoesString, ItemNodeFactory.createPotato( ICON_SIZE ) ), ItemData.POTATOES )
+          this.createItemRow( potatoesCapString, ItemNodeFactory.createPotato( ICON_SIZE ) ), ItemData.POTATOES )
         );
         items.push( ComboBox.createItem(
-          this.createItemRow( tomatoesString, ItemNodeFactory.createTomato( ICON_SIZE ) ), ItemData.TOMATOES )
+          this.createItemRow( tomatoesCapString, ItemNodeFactory.createTomato( ICON_SIZE ) ), ItemData.TOMATOES )
         );
         break;
       case SceneMode.CANDY:

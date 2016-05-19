@@ -15,11 +15,12 @@ define( function( require ) {
 
   /**
    * @param {string} question
+   * @param {string} showUnit
    * @param {number} answer
    * @param {Object} [options]
    * @constructor
    */
-  function ChallengeQuestionAnswer( question, answer, options ) {
+  function ChallengeQuestionAnswer( question, unit, answer, options ) {
 
     options = _.extend( {
       label1: '',
@@ -28,6 +29,7 @@ define( function( require ) {
 
     // @public
     this.question      = question;
+    this.unit          = unit;
     this.answer        = answer;
     this.valueProperty = new Property( 0 );
   }

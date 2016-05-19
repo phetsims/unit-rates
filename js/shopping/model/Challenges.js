@@ -22,6 +22,38 @@ define( function( require ) {
   var unitRateQuestionString = require( 'string!UNIT_RATES/UnitRateQuestion' );
   var costOfQuestionString = require( 'string!UNIT_RATES/CostOfQuestion' );
   var forQuestionString = require( 'string!UNIT_RATES/forQuestion' );
+  var appleString = require( 'string!UNIT_RATES/apple' );
+  var appleCapString = require( 'string!UNIT_RATES/appleCap' );
+  var applesString = require( 'string!UNIT_RATES/apples' );
+  var applesCapString = require( 'string!UNIT_RATES/applesCap' );
+  var lemonString = require( 'string!UNIT_RATES/lemon' );
+  var lemonCapString = require( 'string!UNIT_RATES/lemonCap' );
+  var lemonsString = require( 'string!UNIT_RATES/lemons' );
+  var lemonsCapString = require( 'string!UNIT_RATES/lemonsCap' );
+  var orangeString = require( 'string!UNIT_RATES/orange' );
+  var orangeCapString = require( 'string!UNIT_RATES/orangeCap' );
+  var orangesString = require( 'string!UNIT_RATES/oranges' );
+  var orangesCapString = require( 'string!UNIT_RATES/orangesCap' );
+  var pearString = require( 'string!UNIT_RATES/pear' );
+  var pearCapString = require( 'string!UNIT_RATES/pearCap' );
+  var pearsString = require( 'string!UNIT_RATES/pears' );
+  var pearsCapString = require( 'string!UNIT_RATES/pearsCap' );
+  var carrotString = require( 'string!UNIT_RATES/carrot' );
+  var carrotCapString = require( 'string!UNIT_RATES/carrotCap' );
+  var carrotsString = require( 'string!UNIT_RATES/carrots' );
+  var carrotsCapString = require( 'string!UNIT_RATES/carrotsCap' );
+  var cucumberString = require( 'string!UNIT_RATES/cucumber' );
+  var cucumberCapString = require( 'string!UNIT_RATES/cucumberCap' );
+  var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
+  var cucumbersCapString = require( 'string!UNIT_RATES/cucumbersCap' );
+  var potatoeString = require( 'string!UNIT_RATES/potatoe' );
+  var potatoeCapString = require( 'string!UNIT_RATES/potatoeCap' );
+  var potatoesString = require( 'string!UNIT_RATES/potatoes' );
+  var potatoesCapString = require( 'string!UNIT_RATES/potatoesCap' );
+  var tomatoeString = require( 'string!UNIT_RATES/tomatoe' );
+  var tomatoeCapString = require( 'string!UNIT_RATES/tomatoeCap' );
+  var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
+  var tomatoesCapString = require( 'string!UNIT_RATES/tomatoesCap' );
 
   // constants
   var RAND = new Random();
@@ -76,40 +108,101 @@ define( function( require ) {
      */
     generateQuestionsAnswersForItem: function( itemData ) {
 
-      var itemName = itemData.type;
-
       if ( itemData.type === ItemData.RED_CANDY.type   || itemData.type === ItemData.YELLOW_CANDY.type ||
            itemData.type === ItemData.GREEN_CANDY.type || itemData.type === ItemData.BLUE_CANDY.type )  {
         console.log('is candy');
       } else {
 
+        //var name          = this.getNameForItemType(itemData.type, false, false );
+        var nameCap       = this.getNameForItemType(itemData.type, false, true );
+        var namePlural    = this.getNameForItemType(itemData.type, true, false );
+        var namePluralCap = this.getNameForItemType(itemData.type, true, true );
+
         // Q: Unit rate
-        var q0 = new ChallengeQuestionAnswer( unitRateQuestionString, itemData.rate );
+        var q0 = new ChallengeQuestionAnswer( unitRateQuestionString, nameCap, itemData.rate );
 
         // Q: Cost of # <type>?
-        var itemCount1 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );
+        var itemCount1 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );      // FIXME: this will go away with real data
         var itemCost1 = itemCount1 * itemData.rate;
-        var CostOfQuestionString1 =  StringUtils.format( costOfQuestionString, itemCount1, itemName );
-        var q1 = new ChallengeQuestionAnswer( CostOfQuestionString1, itemCost1 );
+        var CostOfQuestionString1 =  StringUtils.format( costOfQuestionString, itemCount1, namePlural );
+        var q1 = new ChallengeQuestionAnswer( CostOfQuestionString1, null, itemCost1 );
 
         // Q: Cost of # <type>?
-        var itemCount2 =  this.getNextInt( ShoppingConstants.MAX_ITEMS, [ itemCount2 ] );
+        var itemCount2 =  this.getNextInt( ShoppingConstants.MAX_ITEMS, [ itemCount2 ] ); // FIXME: this will go away with real data
         var itemCost2 = itemCount2 * itemData.rate;
-        var CostOfQuestionString2=  StringUtils.format( costOfQuestionString, itemCount2, itemName );
-        var q2 = new ChallengeQuestionAnswer( CostOfQuestionString2, itemCost2 );
+        var CostOfQuestionString2=  StringUtils.format( costOfQuestionString, itemCount2, namePlural );
+        var q2 = new ChallengeQuestionAnswer( CostOfQuestionString2, null, itemCost2 );
 
         // Q: <type> for $?
-        var itemCount3 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );
+        var itemCount3 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );  // FIXME: this will go away with real data
         var itemCost3 = itemCount3 * itemData.rate;
-        var forQuestionString3 =  StringUtils.format( forQuestionString, itemName, Util.toFixed( itemCost3, 2 ) );
-        var q3 = new ChallengeQuestionAnswer( forQuestionString3, itemCount3 );
+        var forQuestionString3 =  StringUtils.format( forQuestionString, namePluralCap, Util.toFixed( itemCost3, 2 ) );
+        var q3 = new ChallengeQuestionAnswer( forQuestionString3, null, itemCount3 );
 
         this.challengeData[ itemData.type ] = [ q0, q1, q2, q3 ];
       }
     },
 
     /**
+     *
+     * @param {Item.type} type
+     * @param {boolean} plural
+     * @param {boolean} capitalize
+     * @return {string}
+     *
+     * @private
+     *
+     */
+    getNameForItemType: function( type, plural, capitalize ) {
+
+      var name = '';
+      switch( type ) {
+          case ItemData.APPLES.type:
+            name = ( plural ? ( capitalize ? applesCapString : applesString ) :
+                              ( capitalize ? appleCapString : appleString ) );
+            break;
+          case ItemData.LEMONS.type:
+            name = ( plural ? ( capitalize ? lemonsCapString : lemonsString ) :
+                              ( capitalize ? lemonCapString : lemonString ) );
+            break;
+          case ItemData.ORANGES.type:
+            name = ( plural ? ( capitalize ? orangesCapString : orangesString ) :
+                              ( capitalize ? orangeCapString : orangeString ) );
+            break;
+          case ItemData.PEARS.type:
+            name = ( plural ? ( capitalize ? pearsCapString : pearsString ) :
+                              ( capitalize ? pearCapString : pearString ) );
+            break;
+          case ItemData.CARROTS.type:
+            name = ( plural ? ( capitalize ? carrotsCapString : carrotsString ) :
+                              ( capitalize ? carrotCapString : carrotString ) );
+            break;
+          case ItemData.CUCUMBERS.type:
+            name = ( plural ? ( capitalize ? cucumbersCapString : cucumbersString ) :
+                              ( capitalize ? cucumberCapString : cucumberString ) );
+            break;
+          case ItemData.POTATOES.type:
+            name = ( plural ? ( capitalize ? potatoesCapString : potatoesString ) :
+                              ( capitalize ? potatoeCapString : potatoeString ) );
+            break;
+          case ItemData.TOMATOES.type:
+            name = ( plural ? ( capitalize ? tomatoesCapString : tomatoesString ) :
+                              ( capitalize ? tomatoeCapString : tomatoeString ) );
+            break;
+          case ItemData.RED_CANDY.type:
+          case ItemData.YELLOW_CANDY.type:
+          case ItemData.GREEN_CANDY.type:
+          case ItemData.BLUE_CANDY.type:
+          default:
+            assert && assert( true, 'Unrecognized item type' );
+        }
+
+      return name;
+    },
+
+    /**
      * Gets a random integer in the range [1 - max] not in the 'taken' list
+     * FIXME: this will go away with real data
      *
      * @param {number}
      * @return {number}

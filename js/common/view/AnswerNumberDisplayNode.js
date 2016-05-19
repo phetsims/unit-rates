@@ -21,11 +21,6 @@ define( function( require ) {
 
   // constants
   var TEXT_MAX_WIDTH            = 125;
-  var EDIT_TEXT_DEFAULT_COLOR   = 'rgba(0,0,0,1)';
-  var EDIT_TEXT_BLANK_COLOR     = 'rgba(0,0,0,0)';
-  var EDIT_TEXT_INCORRECT_COLOR = 'rgba(255,0,0,1)';
-  var EDIT_TEXT_DEFAULT_STROKE  = 'rgba(0,0,0,0)';
-  var EDIT_TEXT_ACTIVE_STROKE   = 'rgba(0,0,0,1)';
   var TEMP_EDIT_BUTTON_CONTENT  = new Text( 'E', { font: new PhetFont( 10 ), fontWeight: 'bold', maxWidth: 30 } );
 
   /**
@@ -37,36 +32,37 @@ define( function( require ) {
   function AnswerNumberDisplayNode( keypad, valueProperty, correctValue, pattern, options ) {
 
     options = _.extend( {
-      preNumberString:    '',
-      postPostString:     '',
-      numberRange:        new Range(0, 15),
-      font:               new PhetFont( 10 ),
-      decimalPlaces:      2,
-      buttonPosition:     'left',
-      buttonSpacing:      0,
-      defaultTextColor:   'rgba(0,0,0,0)',
-      correctTextColor:   'rgba(0,0,0,1)',
-      incorrectTextColor: 'rgba(255,0,0,1)',
-      defaultBorderColor: 'rgba(0,0,0,1)',
-      focusBorderColor:   'rgba(128,128,0,1)',
-      correctBorderColor: 'rgba(0,0,0,0)'
-
+      preNumberString:      '',
+      postPostString:       '',
+      numberRange:          new Range(0, 15),
+      font:                 new PhetFont( 12 ),
+      decimalPlaces:        2,
+      buttonPosition:       'left',
+      buttonSpacing:        0,
+      defaultTextColor:     'rgba(0,0,0,0)',
+      correctTextColor:     'rgba(0,0,0,1)',
+      incorrectTextColor:   'rgba(255,0,0,1)',
+      defaultBorderColor:   'rgba(0,0,0,0)',
+      correctBorderColor:   'rgba(0,0,0,0)',
+      incorrectBorderColor: 'rgba(0,0,0,1)',
+      focusBorderColor:     'rgba(0,0,0,1)'
     },  options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
     var self = this;
 
-    this.keypad = keypad;
-    this.valueProperty = valueProperty;
-    this.correctValue = correctValue;
+    this.keypad         = keypad;
+    this.valueProperty  = valueProperty;
+    this.correctValue   = correctValue;
 
     // colors
-    this.defaultTextColor   = options.defaultTextColor;
-    this.correctTextColor   = options.correctTextColor;
-    this.incorrectTextColor = options.incorrectTextColor;
-    this.defaultBorderColor = options.defaultBorderColor;
-    this.focusBorderColor   = options.focusBorderColor;
-    this.correctBorderColor = options.correctBorderColor;
+    this.defaultTextColor     = options.defaultTextColor;
+    this.correctTextColor     = options.correctTextColor;
+    this.incorrectTextColor   = options.incorrectTextColor;
+    this.defaultBorderColor   = options.defaultBorderColor;
+    this.focusBorderColor     = options.focusBorderColor;
+    this.correctBorderColor   = options.correctBorderColor;
+    this.incorrectBorderColor = options.incorrectBorderColor;
 
     //  NumberDisplay options
     var numberDisplayOptions = {
@@ -75,8 +71,8 @@ define( function( require ) {
       yMargin: 2,
       decimalPlaces: options.decimalPlaces,
       maxWidth: TEXT_MAX_WIDTH,
-      numberFill: EDIT_TEXT_DEFAULT_COLOR,
-      backgroundStroke: EDIT_TEXT_DEFAULT_COLOR,
+      numberFill: this.correctTextColor,
+      backgroundStroke: this.correctTextColor,
       pickable: false
     };
     this.numberDisplay = new NumberDisplay( this.valueProperty, options.numberRange, '', pattern, numberDisplayOptions );
@@ -172,8 +168,8 @@ define( function( require ) {
       if( userValue === this.correctValue ) {
         // set normal display attributes
         this.editButton.visible = false;
-        this.numberDisplay.setNumberFill( EDIT_TEXT_DEFAULT_COLOR );
-        this.numberDisplay.setBackgroundStroke( EDIT_TEXT_DEFAULT_STROKE );
+        this.numberDisplay.setNumberFill( this.correctTextColor );
+        this.numberDisplay.setBackgroundStroke( this.correctBorderColor );
 
         // dismiss the keypad
         this.hideKeypad();
@@ -181,8 +177,8 @@ define( function( require ) {
       else {
         // set 'incorrect' display attributes
         this.editButton.visible = true;
-        this.numberDisplay.setNumberFill( userValue === 0 ? EDIT_TEXT_BLANK_COLOR : EDIT_TEXT_INCORRECT_COLOR );
-        this.numberDisplay.setBackgroundStroke( EDIT_TEXT_ACTIVE_STROKE );
+        this.numberDisplay.setNumberFill( userValue === 0 ? this.defaultTextColor : this.incorrectTextColor );
+        this.numberDisplay.setBackgroundStroke( this.incorrectBorderColor );
       }
     }
 
