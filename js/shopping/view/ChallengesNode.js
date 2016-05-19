@@ -110,7 +110,7 @@ define( function( require ) {
       var questionNode3 = new ChallengeQuestionAnswerNode( qna3, this.keypad, {
         left: LEFT_MARGIN,
         top: questionNode2.bottom + VERTICAL_SPACING,
-        decimalPlaces: 0
+        decimalPlaces: 2
       } );
       this.contentNode.addChild( questionNode3  );
     },

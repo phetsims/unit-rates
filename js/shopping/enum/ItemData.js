@@ -54,17 +54,17 @@ define( function( require ) {
     RED_CANDY: {
       type: 'redCandy',
       rate: 0.2,
-      weight: 0.1
+      weight: 1.0
     },
     YELLOW_CANDY: {
       type: 'yellowCandy',
       rate: 0.3,
-      weight: 0.1
+      weight: 1.0
     },
     GREEN_CANDY: {
       type: 'greenCandy',
       rate: 0.3,
-      weight: 0.1
+      weight: 1.0
     },
     BLUE_CANDY: {
       type: 'blueCandy',
