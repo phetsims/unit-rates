@@ -15,7 +15,6 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var ChallengeQuestionAnswer = require( 'UNIT_RATES/common/model/ChallengeQuestionAnswer' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Property = require( 'AXON/Property' );
   var Random = require( 'DOT/Random' );
   var Util = require( 'DOT/Util' );
 
@@ -33,8 +32,6 @@ define( function( require ) {
    * @constructor
    */
   function Challenges( itemDataProperty ) {
-
-    var self = this;
 
     this.itemDataProperty = itemDataProperty;
     this.populate();
@@ -90,25 +87,44 @@ define( function( require ) {
         var q0 = new ChallengeQuestionAnswer( unitRateQuestionString, itemData.rate );
 
         // Q: Cost of # <type>?
-        var itemCount1 = RAND.nextInt( ShoppingConstants.MAX_ITEMS );
+        var itemCount1 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );
         var itemCost1 = itemCount1 * itemData.rate;
-        var CostOfString1 =  StringUtils.format( costOfQuestionString, itemCount1, itemName );
-        var q1 = new ChallengeQuestionAnswer( CostOfString1, itemCost1 );
+        var CostOfQuestionString1 =  StringUtils.format( costOfQuestionString, itemCount1, itemName );
+        var q1 = new ChallengeQuestionAnswer( CostOfQuestionString1, itemCost1 );
 
         // Q: Cost of # <type>?
-        var itemCount2 = RAND.nextInt( ShoppingConstants.MAX_ITEMS );
+        var itemCount2 =  this.getNextInt( ShoppingConstants.MAX_ITEMS, [ itemCount2 ] );
         var itemCost2 = itemCount2 * itemData.rate;
-        var CostOfString2=  StringUtils.format( costOfQuestionString, itemCount2, itemName );
-        var q2 = new ChallengeQuestionAnswer( CostOfString2, itemCost2 );
+        var CostOfQuestionString2=  StringUtils.format( costOfQuestionString, itemCount2, itemName );
+        var q2 = new ChallengeQuestionAnswer( CostOfQuestionString2, itemCost2 );
 
         // Q: <type> for $?
-        var itemCount3 = RAND.nextInt( ShoppingConstants.MAX_ITEMS );
+        var itemCount3 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );
         var itemCost3 = itemCount3 * itemData.rate;
-        var forString3 =  StringUtils.format( forQuestionString, itemName, Util.toFixed( itemCost3, 2 ) );
-        var q3 = new ChallengeQuestionAnswer( forString3, itemCount3 );
+        var forQuestionString3 =  StringUtils.format( forQuestionString, itemName, Util.toFixed( itemCost3, 2 ) );
+        var q3 = new ChallengeQuestionAnswer( forQuestionString3, itemCount3 );
 
         this.challengeData[ itemData.type ] = [ q0, q1, q2, q3 ];
       }
+    },
+
+    /**
+     * Gets a random integer in the range [1 - max] not in the 'taken' list
+     *
+     * @param {number}
+     * @return {number}
+     *
+     * @private
+     *
+     */
+    getNextInt: function( max, takenList ) {
+
+      var value = 0;
+      while( value === 0 || takenList.indexOf( value ) >= 0 ) {
+        value = RAND.nextInt( max );
+      }
+
+      return value;
     },
 
     /**

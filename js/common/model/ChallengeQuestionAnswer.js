@@ -26,8 +26,6 @@ define( function( require ) {
       label2: ''
     },  options || {} );
 
-    var self = this;
-
     // @public
     this.question      = question;
     this.answer        = answer;

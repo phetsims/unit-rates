@@ -146,7 +146,7 @@ define( function( require ) {
       var self = this;
 
       // remove all existing markers
-      this.graphLayerNode.removeAllChildren();
+      this.graphMarkerLayerNode.removeAllChildren();
 
       var itemData = this.numberLine.itemDataProperty.value;
 
@@ -167,7 +167,7 @@ define( function( require ) {
       var countPercent = item.count / ShoppingConstants.MAX_ITEMS;
       if ( countPercent >= 0 && countPercent <= 1.0 ) {
 
-        var x = this.markerDragBounds.maxX * countPercent + ( 1.0 - countPercent ) * this.markerDragBounds.minX;
+        var x = ( this.markerDragBounds.maxX * countPercent ) + ( ( 1.0 - countPercent ) * this.markerDragBounds.minX );
         var y = this.graphBounds.centerY;
         var position = new Vector2( x, y );
 

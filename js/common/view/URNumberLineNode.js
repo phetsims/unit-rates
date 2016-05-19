@@ -79,12 +79,12 @@ define( function( require ) {
       this.bottomAddButton.right + GRAPH_BUTTON_SPACING + GRAPH_HEIGHT);
 
     // layer holding all the markers
-    this.graphLayerNode = new Path( new Shape().rect( this.graphBounds.minX, this.graphBounds.minY,
+    this.graphMarkerLayerNode = new Path( new Shape().rect( this.graphBounds.minX, this.graphBounds.minY,
       this.graphBounds.maxX, this.graphBounds.maxY ), {
       //stroke: 'red',  // debugging
       lineWidth: 1
     } );
-    contentNode.addChild( this.graphLayerNode );
+    contentNode.addChild( this.graphMarkerLayerNode );
 
     // axis lines
     var xOrigin = this.graphBounds.minX;
@@ -177,14 +177,14 @@ define( function( require ) {
      * @public
      */
     addMarker: function( marker ) {
-      this.graphLayerNode.addChild( marker );
+      this.graphMarkerLayerNode.addChild( marker );
     },
 
     /**
      * @public
      */
     removeAllMarkers: function() {
-      this.graphLayerNode.removeAllChildren();
+      this.graphMarkerLayerNode.removeAllChildren();
     },
 
     /**
@@ -195,7 +195,7 @@ define( function( require ) {
      * @public
      */
     forEachMarker: function( callback ) {
-      this.graphLayerNode.getChildren().forEach( callback );
+      this.graphMarkerLayerNode.getChildren().forEach( callback );
     },
 
     /**

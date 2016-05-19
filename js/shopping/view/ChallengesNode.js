@@ -23,7 +23,8 @@ define( function( require ) {
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
 
   // constants
-  var SPACING = 20;
+  var LEFT_MARGIN       = 50;
+  var VERTICAL_SPACING  = 20;
 
   /**
    * @param {Challenges} challenges
@@ -61,8 +62,8 @@ define( function( require ) {
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       contentAlign: 'left',
-      contentXMargin: 25,
-      contentYMargin: 5
+      contentXMargin: 15,
+      contentYMargin: 15
     } );
 
     this.mutate( options );
@@ -78,27 +79,38 @@ define( function( require ) {
      */
     populate: function() {
 
-      var self = this;
-
       var qna0 = this.challenges.getQuestionAnswer( 0 );
-      var questionNode0 = new ChallengeQuestionAnswerNode( qna0, this.keypad, { } );
+      var questionNode0 = new ChallengeQuestionAnswerNode( qna0, this.keypad, {
+        left: LEFT_MARGIN,
+        top: VERTICAL_SPACING,
+        preValueString: currencySymbolString,
+        decimalPlaces: 2
+      } );
       this.contentNode.addChild( questionNode0  );
 
       var qna1 = this.challenges.getQuestionAnswer( 1 );
       var questionNode1 = new ChallengeQuestionAnswerNode( qna1, this.keypad, {
-        top: questionNode0.bottom + SPACING
+        left: LEFT_MARGIN,
+        top: questionNode0.bottom + VERTICAL_SPACING,
+        preValueString: currencySymbolString,
+        decimalPlaces: 2
       } );
       this.contentNode.addChild( questionNode1  );
 
       var qna2 = this.challenges.getQuestionAnswer( 2 );
       var questionNode2 = new ChallengeQuestionAnswerNode( qna2, this.keypad, {
-        top: questionNode1.bottom + SPACING
+        left: LEFT_MARGIN,
+        top: questionNode1.bottom + VERTICAL_SPACING,
+        preValueString: currencySymbolString,
+        decimalPlaces: 2
       } );
       this.contentNode.addChild( questionNode2  );
 
       var qna3 = this.challenges.getQuestionAnswer( 3 );
       var questionNode3 = new ChallengeQuestionAnswerNode( qna3, this.keypad, {
-        top: questionNode2.bottom + SPACING
+        left: LEFT_MARGIN,
+        top: questionNode2.bottom + VERTICAL_SPACING,
+        decimalPlaces: 0
       } );
       this.contentNode.addChild( questionNode3  );
     },

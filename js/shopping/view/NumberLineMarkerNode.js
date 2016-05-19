@@ -12,38 +12,25 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
+  var AnswerNumberDisplayNode = require( 'UNIT_RATES/common/view/AnswerNumberDisplayNode' );
   var ItemNode = require( 'UNIT_RATES/shopping/view/ItemNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var NumberDisplay = require( 'SCENERY_PHET/NumberDisplay' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Shape = require( 'KITE/Shape' );
   var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
   var Bounds2 = require( 'DOT/Bounds2' );
 
   // constants
-  var TEXT_FONT                 = new PhetFont( 10 );
-  var TEXT_MAX_WIDTH            = 75;
-  var TEXT_MARGIN               = 12;
   var DRAG_HANDLE_OFFSET        = 10;
-  var EDIT_TEXT_DEFAULT_COLOR   = 'rgba(0,0,0,1)';
-  var EDIT_TEXT_BLANK_COLOR     = 'rgba(0,0,0,0)';
-  var EDIT_TEXT_INCORRECT_COLOR = 'rgba(255,0,0,1)';
-  var EDIT_TEXT_DEFAULT_STROKE  = 'rgba(0,0,0,0)';
-  var EDIT_TEXT_ACTIVE_STROKE   = 'rgba(0,0,0,1)';
-  var EDIT_BUTTON_MARGIN        = 2;
-  var TEMP_EDIT_BUTTON_CONTENT  = new Text( 'E', { font: new PhetFont( 10 ), fontWeight: 'bold', maxWidth: 30 } );
+  var EDIT_TEXT_MARGIN          = 5;
 
   // strings
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
 
   /**
    * @param {Item} item
-   * @param {Vector2} position - x,y position on teh number line
+   * @param {Vector2} position - x,y position on the number line
    * @param (function} moveStartCallback - function called when item drag starts
    * @param (function} moveEndCallback - function called when item drag ends
    * @param {Object} [options]
@@ -66,31 +53,28 @@ define( function( require ) {
     // @public (readwrite)
     this.item = item;
     this.keypad = keypad;
+
     this.correctCost = ( item.count * item.rate );
     this.correctUnit = ( item.count * ( item.isCandy ? item.weight : 1 ) );
+    var initialCost = ( this.item.editable === ShoppingConstants.EditMode.COST ? 0 : this.correctCost );
+    var initialUnit = ( this.item.editable === ShoppingConstants.EditMode.UNIT ? 0 : this.correctUnit );
 
-    // @private - local properties used for NumberDisplay only
-    this.costProperty = new Property( this.correctCost );
-    this.unitProperty = new Property( this.correctUnit );
+    // @private
+    this.costProperty = new Property( initialCost );
+    this.unitProperty = new Property( initialUnit );
 
-    // common NumberDisplay options
-    var numberDisplayOptions = {
-      centerX: -2,
-      centerY: -options.lineHeight / 2 - TEXT_MARGIN,
-      font: TEXT_FONT,
-      xMargin: 5,
-      yMargin: 2,
-      decimalPlaces: 2,
-      maxWidth: TEXT_MAX_WIDTH,
-      numberFill: EDIT_TEXT_DEFAULT_COLOR,
-      backgroundStroke: EDIT_TEXT_DEFAULT_STROKE,
-      pickable: false
-    };
+    this.costProperty.link( this.updateEditState.bind( this ) );
+    this.unitProperty.link( this.updateEditState.bind( this ) );
 
     // top label - cost
-    numberDisplayOptions.centerY = -options.lineHeight / 2 - TEXT_MARGIN;
-    this.topNumberDisplay = new NumberDisplay( this.costProperty, new Range( 0, 10), '', currencySymbolString + '{0}',
-      numberDisplayOptions );
+    var topPattern =  currencySymbolString + '{0}';
+    this.topNumberDisplay = new AnswerNumberDisplayNode( keypad, this.costProperty, this.correctCost, topPattern, {
+        centerX: -2,
+        bottom: -options.lineHeight / 2 - EDIT_TEXT_MARGIN,
+        decimalPlaces: 2,
+        buttonPosition: 'top',
+        buttonSpacing: EDIT_TEXT_MARGIN
+    } );
 
     // vertical line
     var markerLine = new Path( new Shape()
@@ -104,10 +88,14 @@ define( function( require ) {
       } );
 
     // bottom label - unit
-    numberDisplayOptions.centerY = options.lineHeight / 2 + TEXT_MARGIN;
-    numberDisplayOptions.decimalPlaces = 1;
-    this.bottomNumberDisplay = new NumberDisplay( this.unitProperty, new Range( 0, 20), '', '{0}',
-      numberDisplayOptions );
+    var bottomPattern =  '{0}';
+    this.bottomNumberDisplay = new AnswerNumberDisplayNode( keypad, this.unitProperty, this.correctUnit, bottomPattern, {
+        centerX: -2,
+        top: options.lineHeight / 2 + EDIT_TEXT_MARGIN,
+        decimalPlaces: 1,
+        buttonPosition: 'bottom',
+        buttonSpacing: EDIT_TEXT_MARGIN
+    } );
 
     // -- Drag controls -- //
     this.dragHandle = new Node( { pickable: true });
@@ -140,42 +128,13 @@ define( function( require ) {
       }
     } );
 
-    // -- Edit buttons -- //
-
-    this.editCostButton = new RectangularPushButton( {
-      centerX: 0,
-      bottom: this.topNumberDisplay.top - EDIT_BUTTON_MARGIN,
-      content:TEMP_EDIT_BUTTON_CONTENT,
-      baseColor: URConstants.EDIT_CONTROL_COLOR,
-      pickable: true,
-      visible: false,
-      listener: function() {
-        self.showKeypadWithProperty( self.costProperty );
-        self.updateEditState();
-      }
-    } );
-
-    this.editUnitButton = new RectangularPushButton( {
-      centerX: 0,
-      top: this.bottomNumberDisplay.bottom + EDIT_BUTTON_MARGIN,
-      content:TEMP_EDIT_BUTTON_CONTENT,
-      baseColor: URConstants.EDIT_CONTROL_COLOR,
-      pickable: true,
-      visible: false,
-      listener: function() {
-        self.showKeypadWithProperty( self.unitProperty );
-        self.updateEditState();
-      }
-    } );
-
     // hide/show edit buttons, change text/border color, etc.
     item.editableProperty.link( function( state, oldState ) {
-      self.updateEditState();
+      //self.updateEditState();
     } );
 
     // add all child nodes
-    options.children = [ this.topNumberDisplay,  markerLine,  this.bottomNumberDisplay,
-                         this.editCostButton, this.dragHandle, this.editUnitButton ];
+    options.children = [ this.topNumberDisplay,  markerLine,  this.bottomNumberDisplay, this.dragHandle ];
 
     ItemNode.call( this, item, position, options );
 
@@ -195,8 +154,6 @@ define( function( require ) {
       // Hide number display & edit buttons
       this.topNumberDisplay.visible     = false;
       this.bottomNumberDisplay.visible  = false;
-      this.editCostButton.visible       = false;
-      this.editUnitButton.visible       = false;
     },
 
     /**
@@ -207,98 +164,14 @@ define( function( require ) {
       // Show number display & edit buttons
       this.topNumberDisplay.visible     = true;
       this.bottomNumberDisplay.visible  = true;
-      this.editCostButton.visible       = ( this.item.editable === ShoppingConstants.EditMode.COST );
-      this.editUnitButton.visible       = ( this.item.editable === ShoppingConstants.EditMode.UNIT );
     },
 
     /**
-     * Makes the keypad visible and links up it's built-in property to the update function
-     * @protected
-     */
-    showKeypadWithProperty: function( itemProperty ) {
-      var self = this;
-
-      this.keypad.digitStringProperty.unlinkAll();
-      this.keypad.visible = true;
-      this.keypad.clear();
-      this.keypad.digitStringProperty.link( function( value, oldValue ) {
-        // check for bogus keypad values
-        if( isNaN( value ) || !isFinite( value ) ) {
-            value = 0;
-        }
-        itemProperty.value = value;
-        self.updateEditState();
-      } );
-    },
-
-    /**
-     * Hides the keypad and unlinks
-     * @protected
-     */
-    hideKeypad: function() {
-      this.keypad.visible = false;
-      this.keypad.digitStringProperty.unlinkAll();
-      this.keypad.digitStringProperty.value = 0;
-    },
-
-    /**
-     * Changes various color/draggable attributes based on whether the edited values are correct.
-     * @protected
+     *
+     * @public
      */
     updateEditState: function() {
-
-      // non-editable markers are correct by default
-      if( this.item.editable === ShoppingConstants.EditMode.NONE ) {
-        this.costProperty.value = this.correctCost;
-        this.unitProperty.value = this.correctUnit;
-        return;
-      }
-
-      // get the current keypad value
-      var keypadValue = Number( this.keypad.digitStringProperty.value );
-
-      // Check for correct cost answer
-      var costCorrect = true;
-      if( this.item.editable === ShoppingConstants.EditMode.COST ) {
-        costCorrect = ( keypadValue === this.correctCost );
-        if( costCorrect ) {
-        // set normal display attributes
-        this.editCostButton.visible = false;
-        this.topNumberDisplay.setNumberFill( EDIT_TEXT_DEFAULT_COLOR );
-        this.topNumberDisplay.setBackgroundStroke( EDIT_TEXT_DEFAULT_STROKE );
-        }
-        else {
-          // set 'incorrect' display attributes
-          this.editCostButton.visible = true;
-          this.topNumberDisplay.setNumberFill( keypadValue === 0 ? EDIT_TEXT_BLANK_COLOR : EDIT_TEXT_INCORRECT_COLOR );
-          this.topNumberDisplay.setBackgroundStroke( EDIT_TEXT_ACTIVE_STROKE );
-        }
-      }
-
-      // Check for correct unit answers
-      var unitCorrect = true;
-      if( this.item.editable === ShoppingConstants.EditMode.UNIT ) {
-        unitCorrect = ( keypadValue === this.correctUnit );
-        if( unitCorrect ) {
-          // set normal display attributes
-          this.editUnitButton.visible = false;
-          this.bottomNumberDisplay.setNumberFill( EDIT_TEXT_DEFAULT_COLOR );
-          this.bottomNumberDisplay.setBackgroundStroke( EDIT_TEXT_DEFAULT_STROKE );
-        }
-        else {
-          // set 'incorrect' display attributes
-          this.editUnitButton.visible = true;
-          this.bottomNumberDisplay.setNumberFill( keypadValue === 0 ? EDIT_TEXT_BLANK_COLOR : EDIT_TEXT_INCORRECT_COLOR );
-          this.bottomNumberDisplay.setBackgroundStroke( EDIT_TEXT_ACTIVE_STROKE );
-        }
-      }
-
-      // if all is correct, clear the various edit attributes & hide the keypad
-      if( costCorrect && unitCorrect ) {
-
-        // dismiss the keypad
-        this.hideKeypad();
-
+      if( this.costProperty.value === this.correctCost && this.unitProperty.value === this.correctUnit ) {
         // make item undraggable
         this.item.dragableProperty.value = false;
 

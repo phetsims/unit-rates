@@ -27,8 +27,9 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var SCREEN_MARGIN = 20;
-  var PANEL_HORIZONTAL_SPACING = 15; // space between scene buttons/numberline/challenges
+  var SCREEN_HORIZONTAL_MARGIN = 12;
+  var SCREEN_VERTICAL_MARGIN = 20;
+  var PANEL_HORIZONTAL_SPACING = 12; // space between scene buttons/numberline/challenges
 
   /**
    * @param {ShoppingModel} model
@@ -51,15 +52,15 @@ define( function( require ) {
 
     // scene buttons
     var sceneControlButtons = new SceneControlButtons( model, this.sceneModeProperty, {
-      left:  this.layoutBounds.left + SCREEN_MARGIN,
-      top: this.layoutBounds.top + SCREEN_MARGIN
+      left:  this.layoutBounds.left + SCREEN_HORIZONTAL_MARGIN,
+      top: this.layoutBounds.top + SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( sceneControlButtons );
 
     // item selection - 1 combo boxe for each scene, hidden and shown based on sceneModeProperty
     var itemComboBoxOptions = {
-      left:  this.layoutBounds.left + SCREEN_MARGIN,
-      bottom: this.layoutBounds.bottom - SCREEN_MARGIN
+      left:  this.layoutBounds.left + SCREEN_HORIZONTAL_MARGIN,
+      bottom: this.layoutBounds.bottom - SCREEN_VERTICAL_MARGIN
     };
     this.fruitItemsComboBox = new ItemComboBox( model, SceneMode.FRUIT, this.fruitItemDataProperty,
       this, itemComboBoxOptions);
@@ -80,7 +81,7 @@ define( function( require ) {
     // shelf
     this.shelfNode = new ShelfNode( model.shelf, this.itemsLayer, this.itemMoved.bind( this ), {
       centerX:  this.layoutBounds.centerX,
-      bottom: this.layoutBounds.bottom - SCREEN_MARGIN
+      bottom: this.layoutBounds.bottom - SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( this.shelfNode );
 
@@ -117,13 +118,13 @@ define( function( require ) {
     // number line
     this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
       left:  sceneControlButtons.right + PANEL_HORIZONTAL_SPACING,
-      top: this.layoutBounds.top + SCREEN_MARGIN } );
+      top: this.layoutBounds.top + SCREEN_VERTICAL_MARGIN } );
     this.addChild( this.numberLineNode );
 
     // challenges
     var challengesNode = new ChallengesNode( model.challenges, this.keypad, {
       left:  this.numberLineNode.right + PANEL_HORIZONTAL_SPACING,
-      top: this.layoutBounds.top + SCREEN_MARGIN } );
+      top: this.layoutBounds.top + SCREEN_VERTICAL_MARGIN } );
     this.addChild( challengesNode );
 
     // select the scene
