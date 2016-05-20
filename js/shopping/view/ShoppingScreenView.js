@@ -27,7 +27,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var SCREEN_HORIZONTAL_MARGIN = 12;
+  var SCREEN_HORIZONTAL_MARGIN = 15;
   var SCREEN_VERTICAL_MARGIN = 20;
   var PANEL_HORIZONTAL_SPACING = 12; // space between scene buttons/numberline/challenges
 
@@ -122,9 +122,11 @@ define( function( require ) {
     this.addChild( this.numberLineNode );
 
     // challenges
-    var challengesNode = new ChallengesNode( model.challenges, this.keypad, {
+    var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + PANEL_HORIZONTAL_SPACING + SCREEN_HORIZONTAL_MARGIN );
+    var challengesNode = new ChallengesNode( model.challenges, this.keypad, challengeWidth, {
       left:  this.numberLineNode.right + PANEL_HORIZONTAL_SPACING,
-      top: this.layoutBounds.top + SCREEN_VERTICAL_MARGIN } );
+      top: this.layoutBounds.top + SCREEN_VERTICAL_MARGIN
+    } );
     this.addChild( challengesNode );
 
     // select the scene

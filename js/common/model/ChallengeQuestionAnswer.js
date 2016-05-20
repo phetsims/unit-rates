@@ -15,17 +15,11 @@ define( function( require ) {
 
   /**
    * @param {string} question
-   * @param {string} showUnit
+   * @param {string} unit
    * @param {number} answer
-   * @param {Object} [options]
    * @constructor
    */
-  function ChallengeQuestionAnswer( question, unit, answer, options ) {
-
-    options = _.extend( {
-      label1: '',
-      label2: ''
-    },  options || {} );
+  function ChallengeQuestionAnswer( question, unit, answer ) {
 
     // @public
     this.question      = question;

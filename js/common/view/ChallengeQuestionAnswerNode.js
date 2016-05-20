@@ -19,6 +19,7 @@ define( function( require ) {
 
   // constants
   var VERICAL_SPACING = 5;
+  var HORIZONTAL_SPACING = 25;
   var TEXT_FONT       = new PhetFont( 12 );
   var TEXT_MAX_WIDTH  = 125;
 
@@ -42,6 +43,7 @@ define( function( require ) {
     this.keypad = keypad;
 
     var challengeText = new Text( this.qna.question, {
+      left: 0,
       font: TEXT_FONT,
       maxWidth: TEXT_MAX_WIDTH
     } );
@@ -49,10 +51,10 @@ define( function( require ) {
     var pattern = options.preValueString + '{0}' + options.postValueString;
     this.editNumberDisplay = new AnswerNumberDisplayNode( keypad, this.qna.valueProperty,
       this.qna.answer, pattern, {
-        centerX: challengeText.centerX,
+        centerX: challengeText.centerX - HORIZONTAL_SPACING,
         top: challengeText.bottom + VERICAL_SPACING,
         decimalPlaces: options.decimalPlaces,
-        buttonSpacing: 25
+        buttonSpacing: HORIZONTAL_SPACING
     } );
 
    var children = [ challengeText, this.editNumberDisplay ];
@@ -61,8 +63,8 @@ define( function( require ) {
 
       // line
       var divisorLine = new Path( new Shape()
-          .moveTo( this.editNumberDisplay.left, this.editNumberDisplay.bottom + VERICAL_SPACING )
-          .lineTo( this.editNumberDisplay.right, this.editNumberDisplay.bottom + VERICAL_SPACING ), {
+          .moveTo( this.editNumberDisplay.numberDisplay.left - 10, this.editNumberDisplay.bottom + VERICAL_SPACING )
+          .lineTo( this.editNumberDisplay.numberDisplay.right + 10, this.editNumberDisplay.bottom + VERICAL_SPACING ), {
         stroke: 'black',
         lineWidth: 1.25
       } );
@@ -70,7 +72,7 @@ define( function( require ) {
 
       // unit label
       var unitText = new Text( this.qna.unit, {
-        centerX: this.editNumberDisplay.centerX,
+        centerX: this.editNumberDisplay.numberDisplay.centerX,
         top: divisorLine.bottom + VERICAL_SPACING,
         font: TEXT_FONT,
         maxWidth: TEXT_MAX_WIDTH

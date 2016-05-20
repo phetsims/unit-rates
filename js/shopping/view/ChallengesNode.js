@@ -16,6 +16,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var Property = require( 'AXON/Property' );
 
   // strings
@@ -23,8 +24,7 @@ define( function( require ) {
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
 
   // constants
-  var LEFT_MARGIN       = 50;
-  var VERTICAL_SPACING  = 20;
+  var VERTICAL_SPACING  = 15;
 
   /**
    * @param {Challenges} challenges
@@ -32,15 +32,16 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ChallengesNode( challenges, keypad, options ) {
+  function ChallengesNode( challenges, keypad, width, options ) {
 
-    //
-    options = options || {};
+    options = _.extend( {
+    },  options || {} );
 
     var self = this;
 
     this.challenges = challenges;
     this.keypad = keypad;
+    this.minWidth = width;
 
     this.contentNode = new Node();
 
@@ -61,9 +62,9 @@ define( function( require ) {
       titleNode: new Text( challengesString, { font: URConstants.PANEL_TITLE_FONT, maxWidth: 100 } ),
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
-      contentAlign: 'left',
-      contentXMargin: 15,
-      contentYMargin: 15
+      contentAlign: 'center',
+      contentXMargin: 0,
+      contentYMargin: 20
     } );
 
     this.mutate( options );
@@ -79,9 +80,12 @@ define( function( require ) {
      */
     populate: function() {
 
+      var strut = new HStrut( this.minWidth );
+      this.contentNode.addChild( strut );
+
       var qna0 = this.challenges.getQuestionAnswer( 0 );
       var questionNode0 = new ChallengeQuestionAnswerNode( qna0, this.keypad, {
-        left: LEFT_MARGIN,
+        centerX: strut.centerX - 11, // FIXME: why is this needed?
         top: VERTICAL_SPACING,
         preValueString: currencySymbolString,
         decimalPlaces: 2
@@ -90,7 +94,7 @@ define( function( require ) {
 
       var qna1 = this.challenges.getQuestionAnswer( 1 );
       var questionNode1 = new ChallengeQuestionAnswerNode( qna1, this.keypad, {
-        left: LEFT_MARGIN,
+        centerX: strut.centerX,
         top: questionNode0.bottom + VERTICAL_SPACING,
         preValueString: currencySymbolString,
         decimalPlaces: 2
@@ -99,7 +103,7 @@ define( function( require ) {
 
       var qna2 = this.challenges.getQuestionAnswer( 2 );
       var questionNode2 = new ChallengeQuestionAnswerNode( qna2, this.keypad, {
-        left: LEFT_MARGIN,
+        centerX: strut.centerX,
         top: questionNode1.bottom + VERTICAL_SPACING,
         preValueString: currencySymbolString,
         decimalPlaces: 2
@@ -108,9 +112,11 @@ define( function( require ) {
 
       var qna3 = this.challenges.getQuestionAnswer( 3 );
       var questionNode3 = new ChallengeQuestionAnswerNode( qna3, this.keypad, {
-        left: LEFT_MARGIN,
+        centerX: strut.centerX,
         top: questionNode2.bottom + VERTICAL_SPACING,
-        decimalPlaces: 2
+        preValueString: '   ',
+        decimalPlaces: 0,
+        postValueString: '   ',
       } );
       this.contentNode.addChild( questionNode3  );
     },

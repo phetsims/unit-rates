@@ -151,7 +151,7 @@ define( function( require ) {
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       contentAlign: 'left',
-      contentXMargin: 25,
+      contentXMargin: 15,
       contentYMargin: 5
     } );
 
