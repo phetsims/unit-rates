@@ -85,7 +85,7 @@ define( function( require ) {
 
       var qna0 = this.challenges.getQuestionAnswer( 0 );
       var questionNode0 = new ChallengeQuestionAnswerNode( qna0, this.keypad, {
-        centerX: strut.centerX - 5, // FIXME: why is this needed?
+        centerX: strut.centerX, // FIXME: why is this needed?
         top: VERTICAL_SPACING,
         preValueString: currencySymbolString,
         decimalPlaces: 2,

@@ -14,12 +14,13 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Shape = require( 'KITE/Shape' );
 
   // constants
   var VERICAL_SPACING     = 5;
-  var HORIZONTAL_SPACING  = 25;
+  var HORIZONTAL_SPACING  = 30;
   var TEXT_FONT           = new PhetFont( 12 );
   var TEXT_MAX_WIDTH      = 125;
   var DIVISOR_WIDTH       = 75;
@@ -61,6 +62,13 @@ define( function( require ) {
         buttonSpacing: HORIZONTAL_SPACING
     } );
 
+    this.faceNode = new FaceNode( 18, {
+      left: this.editNumberDisplay.right + HORIZONTAL_SPACING,
+      centerY: this.editNumberDisplay.centerY,
+      headLineWidth: 1,
+      visible: false
+    } );
+
     // unit line
     this.unitLine = new Path( new Shape()
         .moveTo( challengeText.centerX - DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERICAL_SPACING )
@@ -79,15 +87,24 @@ define( function( require ) {
       visible: options.showUnitText
     } );
 
-    // show unit text on correct value
+    // show unit text & smile on correct value
     this.qna.valueProperty.link( function( value, oldValue ) {
       if( value === self.qna.answerValue ) {
         self.unitLine.visible = true;
         self.unitText.visible = true;
+        self.faceNode.visible = true;
+        self.faceNode.smile();
+      }
+      else if( value !== 0 ){
+        self.faceNode.visible = true;
+        self.faceNode.frown();
+      }
+      else {
+        self.faceNode.visible = false;
       }
     } );
 
-    options.children = [ challengeText, this.editNumberDisplay, this.unitLine, this.unitText ];
+    options.children = [ challengeText, this.editNumberDisplay, this.faceNode, this.unitLine, this.unitText ];
 
     Node.call( this, options );
   }
