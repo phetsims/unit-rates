@@ -107,7 +107,7 @@ define( function( require ) {
     this.addChild( scaleRemoveButtonNode );
 
     this.keypad = new NumberKeypad( {
-      left:  this.shelfNode.right + PANEL_HORIZONTAL_SPACING,
+      left:  this.shelfNode.right,
       bottom: this.scaleNode.bottom - 60,   // FIXME - where should the numberpad be positioned?
       visible: false,
       decimalPointKey: true,

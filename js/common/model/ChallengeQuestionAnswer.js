@@ -14,18 +14,18 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   /**
-   * @param {string} question
-   * @param {string} unit
-   * @param {number} answer
+   * @param {string} questionString
+   * @param {string} unitString
+   * @param {number} answerValue
    * @constructor
    */
-  function ChallengeQuestionAnswer( question, unit, answer ) {
+  function ChallengeQuestionAnswer( questionString, unitString, answerValue ) {
 
     // @public
-    this.question      = question;
-    this.unit          = unit;
-    this.answer        = answer;
-    this.valueProperty = new Property( 0 );
+    this.questionString = questionString;
+    this.unitString     = unitString;
+    this.answerValue    = answerValue;
+    this.valueProperty  = new Property( 0 );
   }
 
   unitRates.register( 'ChallengeQuestionAnswer', ChallengeQuestionAnswer );

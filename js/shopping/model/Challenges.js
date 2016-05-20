@@ -149,20 +149,23 @@ define( function( require ) {
         // Q: Cost of # <type>?
         var itemCount2 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );      // FIXME: this will go away with real data
         var itemCost2 =  Util.toFixedNumber( itemCount2 * itemData.rate, 2 );
+        var itemUnitString2 = itemCount2 + ' ' + namePluralCap;
         var costOfItemQuestionString2 =  StringUtils.format( costOfQuestionString, itemCount2, namePlural );
-        var i2 = new ChallengeQuestionAnswer( costOfItemQuestionString2, null, itemCost2 );
+        var i2 = new ChallengeQuestionAnswer( costOfItemQuestionString2, itemUnitString2, itemCost2 );
 
         // Q: Cost of # <type>?
         var itemCount3 =  this.getNextInt( ShoppingConstants.MAX_ITEMS, [ itemCount2 ] ); // FIXME: this will go away with real data
         var itemCost3 =  Util.toFixedNumber( itemCount3 * itemData.rate, 2 );
+        var itemUnitString3 = itemCount3 + ' ' + namePluralCap;
         var costOfItemQuestionString3 =  StringUtils.format( costOfQuestionString, itemCount3, namePlural );
-        var i3 = new ChallengeQuestionAnswer( costOfItemQuestionString3, null, itemCost3 );
+        var i3 = new ChallengeQuestionAnswer( costOfItemQuestionString3, itemUnitString3, itemCost3 );
 
         // Q: <type> for $?
         var itemCount4 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );  // FIXME: this will go away with real data
         var itemCost4 =  Util.toFixedNumber( itemCount4 * itemData.rate, 2 );
+        var itemUnitString4 = itemCount4 + ' ' + namePluralCap;
         var itemForQuestionString4 =  StringUtils.format( forQuestionString, namePluralCap, Util.toFixed( itemCost4, 2 ) );
-        var i4 = new ChallengeQuestionAnswer( itemForQuestionString4, null, itemCount4 );
+        var i4 = new ChallengeQuestionAnswer( itemForQuestionString4, itemUnitString4, itemCount4 );
 
         this.challengeData[ itemData.type ] = [ i1, i2, i3, i4 ];
       }

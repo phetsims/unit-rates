@@ -85,10 +85,11 @@ define( function( require ) {
 
       var qna0 = this.challenges.getQuestionAnswer( 0 );
       var questionNode0 = new ChallengeQuestionAnswerNode( qna0, this.keypad, {
-        centerX: strut.centerX - 11, // FIXME: why is this needed?
+        centerX: strut.centerX - 5, // FIXME: why is this needed?
         top: VERTICAL_SPACING,
         preValueString: currencySymbolString,
-        decimalPlaces: 2
+        decimalPlaces: 2,
+        showUnitText: true
       } );
       this.contentNode.addChild( questionNode0  );
 
@@ -114,9 +115,9 @@ define( function( require ) {
       var questionNode3 = new ChallengeQuestionAnswerNode( qna3, this.keypad, {
         centerX: strut.centerX,
         top: questionNode2.bottom + VERTICAL_SPACING,
-        preValueString: '   ',
+        preValueString: '   ',  // padding
         decimalPlaces: 0,
-        postValueString: '   ',
+        postValueString: '   ' // padding
       } );
       this.contentNode.addChild( questionNode3  );
     },
