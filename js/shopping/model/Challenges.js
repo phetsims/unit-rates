@@ -23,6 +23,7 @@ define( function( require ) {
   var costOfQuestionString = require( 'string!UNIT_RATES/CostOfQuestion' );
   var forQuestionString = require( 'string!UNIT_RATES/forQuestion' );
   var poundString = require( 'string!UNIT_RATES/pound' );
+  var poundsString = require( 'string!UNIT_RATES/pounds' );
   var lbsString = require( 'string!UNIT_RATES/lbs' );
   var appleString = require( 'string!UNIT_RATES/apple' );
   var appleCapString = require( 'string!UNIT_RATES/appleCap' );
@@ -119,20 +120,23 @@ define( function( require ) {
         // Q: Cost of # <type>?
         var candyCount2 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );      // FIXME: this will go away with real data
         var candyCost2 = Util.toFixedNumber( candyCount2 * itemData.rate, 2 );
+        var candyUnitString2 = candyCount2 + ' ' + poundsString;
         var costOfCandyQuestionString2 =  StringUtils.format( costOfQuestionString, candyCount2, lbsString );
-        var c2 = new ChallengeQuestionAnswer( costOfCandyQuestionString2, null, candyCost2 );
+        var c2 = new ChallengeQuestionAnswer( costOfCandyQuestionString2, candyUnitString2, candyCost2 );
 
         // Q: Cost of # <type>?
         var candyCount3 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );      // FIXME: this will go away with real data
         var candyCost3 =  Util.toFixedNumber( candyCount3 * itemData.rate, 2 );
+        var candyUnitString3 = candyCount3 + ' ' + poundsString;
         var costOfCandyQuestionString3 =  StringUtils.format( costOfQuestionString, candyCount3, lbsString );
-        var c3 = new ChallengeQuestionAnswer( costOfCandyQuestionString3, null, candyCost3 );
+        var c3 = new ChallengeQuestionAnswer( costOfCandyQuestionString3, candyUnitString3, candyCost3 );
 
         // Q: Cost of # <type>?
         var candyCount4 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );      // FIXME: this will go away with real data
         var candyCost4 =  Util.toFixedNumber( candyCount4 * itemData.rate, 2 );
+        var candyUnitString4 = candyCount4 + ' ' + poundsString;
         var costOfCandyQuestionString4 =  StringUtils.format( costOfQuestionString, candyCount4, lbsString );
-        var c4 = new ChallengeQuestionAnswer( costOfCandyQuestionString4, null, candyCost4 );
+        var c4 = new ChallengeQuestionAnswer( costOfCandyQuestionString4, candyUnitString4, candyCost4 );
 
         this.challengeData[ itemData.type ] = [ c1, c2, c3, c4 ];
 
