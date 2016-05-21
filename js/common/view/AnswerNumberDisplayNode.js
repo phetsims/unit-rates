@@ -35,7 +35,7 @@ define( function( require ) {
       preNumberString:      '',
       postPostString:       '',
       numberRange:          new Range(0, 15),
-      font:                 new PhetFont( 12 ),
+      font:                 new PhetFont( 10 ),
       decimalPlaces:        2,
       buttonPosition:       'left',
       buttonSpacing:        0,
@@ -67,12 +67,13 @@ define( function( require ) {
     //  NumberDisplay options
     var numberDisplayOptions = {
       font: options.font,
-      xMargin: 5,
+      xMargin: 1,
       yMargin: 2,
       decimalPlaces: options.decimalPlaces,
       maxWidth: TEXT_MAX_WIDTH,
       numberFill: this.correctTextColor,
       backgroundStroke: this.correctTextColor,
+      backgroundFill: 'rgba(0,0,0,0)',
       pickable: false
     };
     this.numberDisplay = new NumberDisplay( this.valueProperty, options.numberRange, '', pattern, numberDisplayOptions );

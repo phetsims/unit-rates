@@ -59,6 +59,7 @@ define( function( require ) {
         centerX: challengeText.centerX - HORIZONTAL_SPACING,
         top: challengeText.bottom + VERICAL_SPACING,
         decimalPlaces: options.decimalPlaces,
+        font: new PhetFont( 14 ),
         buttonSpacing: HORIZONTAL_SPACING
     } );
 
