@@ -2,8 +2,14 @@
   "unit-rates.title": {
     "value": "Unit Rates"
   },
-  "Shopping": {
+  "screen.shopping": {
     "value": "Shopping"
+  },
+  "screen.racing": {
+    "value": "Racing"
+  },
+  "screen.lab": {
+    "value": "Lab"
   },
   "DoubleNumberLine": {
     "value": "Double Number Line"
@@ -110,11 +116,11 @@
   "potatoesCap": {
     "value": "Potatoes"
   },
-  "tomatoe": {
-    "value": "tomatoe"
+  "tomato": {
+    "value": "tomato"
   },
-  "tomatoeCap": {
-    "value": "Tomatoe"
+  "tomatoCap": {
+    "value": "Tomato"
   },
   "tomatoes": {
     "value": "tomatoes"
@@ -122,34 +128,28 @@
   "tomatoesCap": {
     "value": "Tomatoes"
   },
-  "RedCandy": {
+  "redCandy": {
     "value": "Red Candy"
   },
-  "YellowCandy": {
+  "yellowCandy": {
     "value": "Yellow Candy"
   },
-  "GreenCandy": {
+  "greenCandy": {
     "value": "Green Candy"
   },
-  "BlueCandy": {
+  "blueCandy": {
     "value": "Blue Candy"
   },
-  "Challenges": {
+  "challenges": {
     "value": "Challenges"
   },
-  "UnitRateQuestion": {
+  "unitRateQuestion": {
     "value": "Unit Rate?"
   },
-  "CostOfQuestion": {
+  "costOfQuestion": {
     "value": "Cost of {0} {1}?"
   },
   "forQuestion": {
     "value": "{0} for ${1}?"
-  },
-  "Racing": {
-    "value": "Racing"
-  },
-  "Lab": {
-    "value": "Lab"
   }
 }

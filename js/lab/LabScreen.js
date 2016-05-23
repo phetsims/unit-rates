@@ -16,7 +16,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
-  var labString = require( 'string!UNIT_RATES/Lab' );
+  var screenLabString = require( 'string!UNIT_RATES/screen.lab' );
 
   // images
   var screenIcon = require( 'image!UNIT_RATES/Lab-screen-icon.png' );
@@ -27,7 +27,7 @@ define( function( require ) {
   function LabScreen() {
 
     Screen.call( this,
-      labString,
+      screenLabString,
       new Image( screenIcon ),
       function() { return new LabModel(); },
       function( model ) { return new LabScreenView( model ); },

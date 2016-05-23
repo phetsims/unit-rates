@@ -16,7 +16,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
-  var racingString = require( 'string!UNIT_RATES/Racing' );
+  var screenRacingString = require( 'string!UNIT_RATES/screen.racing' );
 
   // images
   var screenIcon = require( 'image!UNIT_RATES/Racing-screen-icon.png' );
@@ -27,7 +27,7 @@ define( function( require ) {
   function RacingScreen() {
 
     Screen.call( this,
-      racingString,
+      screenRacingString,
       new Image( screenIcon ),
       function() { return new RacingModel(); },
       function( model ) { return new RacingScreenView( model ); },

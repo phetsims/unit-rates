@@ -19,8 +19,8 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // strings
-  var unitRateQuestionString = require( 'string!UNIT_RATES/UnitRateQuestion' );
-  var costOfQuestionString = require( 'string!UNIT_RATES/CostOfQuestion' );
+  var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
+  var costOfQuestionString = require( 'string!UNIT_RATES/costOfQuestion' );
   var forQuestionString = require( 'string!UNIT_RATES/forQuestion' );
   var poundString = require( 'string!UNIT_RATES/pound' );
   var poundsString = require( 'string!UNIT_RATES/pounds' );
@@ -53,8 +53,8 @@ define( function( require ) {
   var potatoeCapString = require( 'string!UNIT_RATES/potatoeCap' );
   var potatoesString = require( 'string!UNIT_RATES/potatoes' );
   var potatoesCapString = require( 'string!UNIT_RATES/potatoesCap' );
-  var tomatoeString = require( 'string!UNIT_RATES/tomatoe' );
-  var tomatoeCapString = require( 'string!UNIT_RATES/tomatoeCap' );
+  var tomatoString = require( 'string!UNIT_RATES/tomato' );
+  var tomatoCapString = require( 'string!UNIT_RATES/tomatoCap' );
   var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
   var tomatoesCapString = require( 'string!UNIT_RATES/tomatoesCap' );
 
@@ -219,7 +219,7 @@ define( function( require ) {
             break;
           case ItemData.TOMATOES.type:
             name = ( plural ? ( capitalize ? tomatoesCapString : tomatoesString ) :
-                              ( capitalize ? tomatoeCapString : tomatoeString ) );
+                              ( capitalize ? tomatoCapString : tomatoString ) );
             break;
           case ItemData.RED_CANDY.type:
           case ItemData.YELLOW_CANDY.type:

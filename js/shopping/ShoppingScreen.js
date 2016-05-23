@@ -16,7 +16,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
-  var shoppingString = require( 'string!UNIT_RATES/Shopping' );
+  var screenShoppingString = require( 'string!UNIT_RATES/screen.shopping' );
 
   // images
   var screenIcon = require( 'image!UNIT_RATES/Shopping-screen-icon.png' );
@@ -27,7 +27,7 @@ define( function( require ) {
   function ShoppingScreen() {
 
     Screen.call( this,
-      shoppingString,
+      screenShoppingString,
       new Image( screenIcon ),
       function() { return new ShoppingModel(); },
       function( model ) { return new ShoppingScreenView( model ); },

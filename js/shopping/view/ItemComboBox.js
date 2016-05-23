@@ -28,10 +28,10 @@ define( function( require ) {
   var cucumbersCapString = require( 'string!UNIT_RATES/cucumbersCap' );
   var potatoesCapString = require( 'string!UNIT_RATES/potatoesCap' );
   var tomatoesCapString = require( 'string!UNIT_RATES/tomatoesCap' );
-  var redCandyString = require( 'string!UNIT_RATES/RedCandy' );
-  var yellowCandyString = require( 'string!UNIT_RATES/YellowCandy' );
-  var greenCandyString = require( 'string!UNIT_RATES/GreenCandy' );
-  var blueCandyString = require( 'string!UNIT_RATES/BlueCandy' );
+  var redCandyString = require( 'string!UNIT_RATES/redCandy' );
+  var yellowCandyString = require( 'string!UNIT_RATES/yellowCandy' );
+  var greenCandyString = require( 'string!UNIT_RATES/greenCandy' );
+  var blueCandyString = require( 'string!UNIT_RATES/blueCandy' );
 
   // constants
   var ICON_SIZE = 20;

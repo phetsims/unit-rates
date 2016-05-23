@@ -20,7 +20,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // strings
-  var challengesString = require( 'string!UNIT_RATES/Challenges' );
+  var challengesString = require( 'string!UNIT_RATES/challenges' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
 
   // constants
