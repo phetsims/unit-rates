@@ -173,23 +173,53 @@ define( function( require ) {
     /**
      * Checks if a point is in a droppable location
      *
-     * @param {Vector2} point - parent (layer) coordinates
+     * @param {Vector2} bounds - parent (layer) coordinates
      * @return {boolean}
      * @public
      */
-    pointInDropArea: function( point ) {
-      var scalePoint = this.parentToLocalPoint( point );
+    intersectsDropArea: function( bounds ) {
+      var scaleBounds = this.parentToLocalBounds( bounds );
+      return this.scaleDropNode.intersectsBoundsSelf( scaleBounds );
+    },
 
-      var inDropArea = false;
-      if ( this.typeIsCandy ) {
-        //inDropArea = this.candyContainer.containsPoint( scalePoint ); // FIXME: container still undecided
-        inDropArea = this.scaleDropNode.containsPoint( scalePoint );
-      }
-      else {
-        inDropArea = this.scaleDropNode.containsPoint( scalePoint );
-      }
+    /**
+     * Adjusts item nodes bottom center coordinate to be in the drop area, basically so items appear
+     * to be on the scale.
+     * @public
+     */
+     adjustItemPositions: function() {
 
-      return inDropArea;
+      var globalDropBounds = this.scaleDropNode.getGlobalBounds();
+      var localDropBounds = this.itemLayer.globalToParentBounds( globalDropBounds );
+
+      // get the current array for the item type
+      var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
+
+      // Make sure bottoms of all itemNodes are on the scale
+      this.itemLayer.getChildren().forEach( function( itemNode ) {
+
+        if ( itemArray.contains( itemNode.item ) ) {
+          var x = itemNode.item.positionProperty.value.x;
+          var y = itemNode.item.positionProperty.value.y;
+
+          if( x < localDropBounds.minX ) {
+            x = localDropBounds.minX;
+          }
+          else if( x > localDropBounds.maxX ) {
+            x = localDropBounds.maxX;
+          }
+
+          var bottomY = y + itemNode.height / 2;
+          if( bottomY < localDropBounds.minY ) {
+              y  = ( localDropBounds.maxY + localDropBounds.minY ) / 2 + ( itemNode.height / 2 );
+          }
+          else if( bottomY > localDropBounds.maxY ) {
+              y  = ( localDropBounds.maxY + localDropBounds.minY ) / 2 - ( itemNode.height / 2 );
+          }
+
+          itemNode.item.positionProperty.value = new Vector2( x, y );
+        }
+      } );
     },
 
     /**
@@ -203,41 +233,33 @@ define( function( require ) {
       // get the current array for the item type
       var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
 
-      // FIXME: candy container design under review
-      //if ( this.typeIsCandy ) {
-      //  // let the candy container render the items as it sees fit
-      //  this.candyContainer.populate( itemArray );
-      //}
-      //else {
+      // calc the drop zone center (for positioning new items)
+      var dropCenter = this.scaleDropNode.getGlobalBounds().getCenter();
+      var layerDropCenter = this.itemLayer.globalToParentPoint( dropCenter );
 
-        // calc the drop zone center (for positioning new items)
-        var dropCenter = this.scaleDropNode.getGlobalBounds().getCenter();
-        var layerDropCenter = this.itemLayer.globalToParentPoint( dropCenter );
+      // create nodes for all items of type (fruit | produce)
+      itemArray.forEach( function( item ) {
 
-        // create nodes for all items of type (fruit | produce)
-        itemArray.forEach( function( item ) {
+      var position = item.positionProperty.value;
 
-        var position = item.positionProperty.value;
+      // create new item node
+      var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, null, self.itemMovedCallback );
 
-        // create new item node
-        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, null, self.itemMovedCallback );
+      // initial position - create a random position on the shelf
+      if(position.x === 0 && position.y === 0) {
 
-        // initial position - create a random position on the shelf
-        if(position.x === 0 && position.y === 0) {
+        // jitter the initial positions
+        var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.width * 0.8 ) );
+        var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.height * 0.25 ) );
+        item.positionProperty.value = new Vector2(
+          layerDropCenter.x + jitterX,
+          layerDropCenter.y + jitterY - itemNode.height / 2
+        );
+      }
 
-          // jitter the initial positions
-          var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.width * 0.8 ) );
-          var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.height * 0.25 ) );
-          item.positionProperty.value = new Vector2(
-            layerDropCenter.x + jitterX,
-            layerDropCenter.y + jitterY - itemNode.height / 2
-          );
-        }
-
-        // add to the screen for layering purposes
-        self.itemLayer.addChild( itemNode );
-      } );
-      //}
+      // add to the screen for layering purposes
+      self.itemLayer.addChild( itemNode );
+    } );
 
     },
 

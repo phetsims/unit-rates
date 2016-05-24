@@ -24,7 +24,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Property = require( 'AXON/Property' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var SCREEN_HORIZONTAL_MARGIN = 15;
@@ -225,16 +224,12 @@ define( function( require ) {
     // @private
     itemMoved: function( itemNode ) {
 
-      var nodeCenterBottom = new Vector2( itemNode.item.positionProperty.value.x,
-      itemNode.item.positionProperty.value.y + itemNode.height / 2 );
-
       // Check node position - on scale, shelf or in no-man's land
-      if( this.scaleNode.pointInDropArea( nodeCenterBottom ) ) {
+      if( this.scaleNode.intersectsDropArea( itemNode.bounds ) ) {
 
         this.model.addShelfItemToScale( itemNode.item );
 
-        // Fruit (& candy?) bags should be expanded
-        //if( this.sceneModeProperty.value === SceneMode.CANDY ||
+        // Fruit bags should be expanded
         if( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) {
 
           // remove the bag node
@@ -244,12 +239,18 @@ define( function( require ) {
           this.scaleNode.populate();
         }
 
+        // make sure bottom of items are actually on the scale
+        this.scaleNode.adjustItemPositions();
+
         // populate nuber line
         this.numberLineNode.populate();
       }
-      else if( this.shelfNode.pointInDropArea( nodeCenterBottom ) ) {
+      else if( this.shelfNode.intersectsDropArea( itemNode.bounds ) ) {
 
         this.model.addScaleItemToShelf( itemNode.item );
+
+        // make sure bottom of items are actually on the shelf
+        this.shelfNode.adjustItemPositions();
 
         // populate nuber line
         this.numberLineNode.populate();

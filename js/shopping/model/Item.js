@@ -29,16 +29,16 @@ define( function( require ) {
       editable: false
     } );
 
-    // @public (readonly)
+    // @public (read-only)
     this.type = data.type;
 
-    // @public (readonly)
+    // @public (read-only)
     this.rate = data.rate;
 
-    // @public (readonly)
+    // @public (read-only)
     this.weight = data.weight;
 
-    // @public (readwrite)
+    // @public (read-write)
     this.count = count || 1;
   }
 

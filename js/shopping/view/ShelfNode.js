@@ -81,13 +81,53 @@ define( function( require ) {
     /**
      * Checks if a point is in a droppable location
      *
-     * @param {Vector2} point - parent (layer) coordinates
+     * @param {Vector2} bounds - parent (layer) coordinates
      * @return {boolean}
      * @public
      */
-    pointInDropArea: function( point ) {
-      var localPoint = this.parentToLocalPoint( point );
-      return this.topNode.containsPoint( localPoint );
+    intersectsDropArea: function( bounds ) {
+      var localBounds = this.parentToLocalBounds( bounds );
+      return this.topNode.intersectsBoundsSelf( localBounds );
+    },
+
+    /**
+     * Adjusts item nodes bottom center coordinate to be in the drop area, basically so items appear
+     * to be on the shelf.
+     * @public
+     */
+     adjustItemPositions: function() {
+
+      var globalDropBounds = this.topNode.getGlobalBounds();
+      var localDropBounds = this.itemLayer.globalToParentBounds( globalDropBounds );
+
+      // get the current array for the item type
+      var itemArray = this.shelf.getItemsWithType( this.shelf.itemDataProperty.value.type );
+
+      // Make sure bottoms of all itemNodes are on the scale
+      this.itemLayer.getChildren().forEach( function( itemNode ) {
+
+        if ( itemArray.contains( itemNode.item ) ) {
+          var x = itemNode.item.positionProperty.value.x;
+          var y = itemNode.item.positionProperty.value.y;
+
+          if( x < localDropBounds.minX ) {
+            x = localDropBounds.minX;
+          }
+          else if( x > localDropBounds.maxX ) {
+            x = localDropBounds.maxX;
+          }
+
+          var bottomY = y + itemNode.height / 2;
+          if( bottomY < localDropBounds.minY ) {
+              y  = ( localDropBounds.maxY + localDropBounds.minY ) / 2 + ( itemNode.height / 2 );
+          }
+          else if( bottomY > localDropBounds.maxY ) {
+              y  = ( localDropBounds.maxY + localDropBounds.minY ) / 2 - ( itemNode.height / 2 );
+          }
+
+          itemNode.item.positionProperty.value = new Vector2( x, y );
+        }
+      } );
     },
 
     /**
