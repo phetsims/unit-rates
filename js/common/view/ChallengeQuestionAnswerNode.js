@@ -38,7 +38,8 @@ define( function( require ) {
       showUnitText: false,
       preValueString: '',
       postValueString: '',
-      decimalPlaces: 2
+      decimalPlaces: 2,
+      correctTextColor: 'rgb(0,0,0,1)'
     },  options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
@@ -46,8 +47,9 @@ define( function( require ) {
 
     this.qna = qna;
     this.keypad = keypad;
+    this.correctTextColor = options.correctTextColor;
 
-    var challengeText = new Text( this.qna.questionString, {
+    this.challengeText = new Text( this.qna.questionString, {
       left: 0,
       font: TEXT_FONT,
       maxWidth: TEXT_MAX_WIDTH
@@ -56,11 +58,12 @@ define( function( require ) {
     var pattern = options.preValueString + '{0}' + options.postValueString;
     this.editNumberDisplay = new AnswerNumberDisplayNode( keypad, this.qna.valueProperty,
       this.qna.answerValue, pattern, {
-        centerX: challengeText.centerX - HORIZONTAL_SPACING,
-        top: challengeText.bottom + VERICAL_SPACING,
-        decimalPlaces: options.decimalPlaces,
+        centerX: this.challengeText.centerX - HORIZONTAL_SPACING,
+        top: this.challengeText.bottom + VERICAL_SPACING,
+        buttonSpacing: HORIZONTAL_SPACING,
         font: new PhetFont( 14 ),
-        buttonSpacing: HORIZONTAL_SPACING
+        decimalPlaces: options.decimalPlaces,
+        correctTextColor: options.correctTextColor
     } );
 
     this.faceNode = new FaceNode( 18, {
@@ -72,8 +75,8 @@ define( function( require ) {
 
     // unit line
     this.unitLine = new Path( new Shape()
-        .moveTo( challengeText.centerX - DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERICAL_SPACING )
-        .lineTo( challengeText.centerX + DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERICAL_SPACING ), {
+        .moveTo( this.challengeText.centerX - DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERICAL_SPACING )
+        .lineTo( this.challengeText.centerX + DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERICAL_SPACING ), {
       stroke: 'black',
       lineWidth: 1.25,
       visible: options.showUnitText
@@ -81,19 +84,22 @@ define( function( require ) {
 
     // unit label
     this.unitText = new Text( this.qna.unitString, {
-      centerX: challengeText.centerX,
+      centerX: this.challengeText.centerX,
       top: this.unitLine.bottom + 2,
       font: TEXT_FONT,
       maxWidth: TEXT_MAX_WIDTH,
       visible: options.showUnitText
     } );
 
-    // show unit text & smile on correct value
+    // show unit text, change color & smile on correct value
     this.qna.valueProperty.link( function( value, oldValue ) {
       if( value === self.qna.answerValue ) {
         self.unitLine.visible = true;
         self.unitText.visible = true;
         self.faceNode.visible = true;
+        self.challengeText.setFill( self.correctTextColor );
+        self.unitText.setFill( self.correctTextColor );
+        self.unitLine.setStroke( self.correctTextColor );
         self.faceNode.smile();
       }
       else if( value !== 0 ){
@@ -105,7 +111,7 @@ define( function( require ) {
       }
     } );
 
-    options.children = [ challengeText, this.editNumberDisplay, this.faceNode, this.unitLine, this.unitText ];
+    options.children = [ this.challengeText, this.editNumberDisplay, this.faceNode, this.unitLine, this.unitText ];
 
     Node.call( this, options );
   }

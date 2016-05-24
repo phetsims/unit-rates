@@ -24,7 +24,7 @@ define( function( require ) {
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
 
   // constants
-  var VERTICAL_SPACING  = 15;
+  var VERTICAL_SPACING  = 20;
 
   /**
    * @param {Challenges} challenges
@@ -85,11 +85,12 @@ define( function( require ) {
 
       var qna0 = this.challenges.getQuestionAnswer( 0 );
       var questionNode0 = new ChallengeQuestionAnswerNode( qna0, this.keypad, {
-        centerX: strut.centerX, // FIXME: why is this needed?
+        centerX: strut.centerX,
         top: VERTICAL_SPACING,
         preValueString: currencySymbolString,
         decimalPlaces: 2,
-        showUnitText: true
+        showUnitText: true,
+        correctTextColor:  'rgba(0,192,0,1)'
       } );
       this.contentNode.addChild( questionNode0  );
 
