@@ -31,7 +31,7 @@ define( function( require ) {
       new Image( screenIcon ),
       function() { return new ShoppingModel(); },
       function( model ) { return new ShoppingScreenView( model ); },
-      { backgroundColor: 'rgb(226,255,249)' }
+      { backgroundColor: 'rgb(226,255,249)', pickable: true }
     );
   }
 

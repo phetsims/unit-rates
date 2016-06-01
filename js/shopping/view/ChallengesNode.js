@@ -90,7 +90,7 @@ define( function( require ) {
         preValueString: currencySymbolString,
         decimalPlaces: 2,
         showUnitText: true,
-        correctTextColor:  'rgba(0,192,0,1)'
+        correctTextColor:  'rgba(0,192,0,1)'  // Unit rate correct answer is always green.
       } );
       this.contentNode.addChild( questionNode0  );
 
@@ -118,7 +118,7 @@ define( function( require ) {
         top: questionNode2.bottom + VERTICAL_SPACING,
         preValueString: '   ',  // padding
         decimalPlaces: 0,
-        postValueString: '   ' // padding
+        postValueString: '   '  // padding
       } );
       this.contentNode.addChild( questionNode3  );
     },

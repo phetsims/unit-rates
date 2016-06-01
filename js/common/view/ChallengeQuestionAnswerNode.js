@@ -19,7 +19,7 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   // constants
-  var VERICAL_SPACING     = 5;
+  var VERICAL_SPACING     = 4;
   var HORIZONTAL_SPACING  = 30;
   var TEXT_FONT           = new PhetFont( 12 );
   var TEXT_MAX_WIDTH      = 125;
@@ -56,8 +56,7 @@ define( function( require ) {
     } );
 
     var pattern = options.preValueString + '{0}' + options.postValueString;
-    this.editNumberDisplay = new AnswerNumberDisplayNode( keypad, this.qna.valueProperty,
-      this.qna.answerValue, pattern, {
+    this.editNumberDisplay = new AnswerNumberDisplayNode( keypad, qna, pattern, {
         centerX: this.challengeText.centerX - HORIZONTAL_SPACING,
         top: this.challengeText.bottom + VERICAL_SPACING,
         buttonSpacing: HORIZONTAL_SPACING,
@@ -93,7 +92,7 @@ define( function( require ) {
 
     // show unit text, change color & smile on correct value
     this.qna.valueProperty.link( function( value, oldValue ) {
-      if( value === self.qna.answerValue ) {
+      if( self.qna.isAnswerCorrect() ) {
         self.unitLine.visible = true;
         self.unitText.visible = true;
         self.faceNode.visible = true;
@@ -102,7 +101,7 @@ define( function( require ) {
         self.unitLine.setStroke( self.correctTextColor );
         self.faceNode.smile();
       }
-      else if( value !== 0 ){
+      else if( !self.qna.isAnswerZero() ){
         self.faceNode.visible = true;
         self.faceNode.frown();
       }

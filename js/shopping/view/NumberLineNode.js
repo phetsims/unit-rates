@@ -26,9 +26,9 @@ define( function( require ) {
   var cucumbersCapString = require( 'string!UNIT_RATES/cucumbersCap' );
   var potatoesCapString = require( 'string!UNIT_RATES/potatoesCap' );
   var tomatoesCapString = require( 'string!UNIT_RATES/tomatoesCap' );
-  var costString = require( 'string!UNIT_RATES/Cost' );
+  var costString = require( 'string!UNIT_RATES/cost' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
-  var weightString = require( 'string!UNIT_RATES/Weight' );
+  var weightString = require( 'string!UNIT_RATES/weight' );
   var lbsString = require( 'string!UNIT_RATES/lbs' );
   var costCurrencyString = costString + ' (' + currencySymbolString + ')';
   var weightUnitString = weightString + ' (' + lbsString + ')';

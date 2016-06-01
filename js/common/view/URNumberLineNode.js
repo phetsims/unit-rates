@@ -24,7 +24,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
 
   // strings
-  var doubleNumberLineString = require( 'string!UNIT_RATES/DoubleNumberLine' );
+  var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
 
   // constants
   var BUTTON_CONTENT = new Text( '+', { font: new PhetFont( 18 ), fontWeight: 'bold', maxWidth: 30 } );

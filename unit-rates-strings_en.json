@@ -11,7 +11,7 @@
   "screen.lab": {
     "value": "Lab"
   },
-  "DoubleNumberLine": {
+  "doubleNumberLine": {
     "value": "Double Number Line"
   },
   "currencySymbol": {
@@ -26,11 +26,14 @@
   "pounds": {
     "value": "pounds"
   },
-  "Cost": {
+  "cost": {
     "value": "Cost"
   },
-  "Weight": {
+  "weight": {
     "value": "Weight"
+  },
+  "enter": {
+    "value": "Enter"
   },
   "apple": {
     "value": "apple"

@@ -15,7 +15,7 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var SceneControlButtons = require( 'UNIT_RATES/shopping/view/SceneControlButtons' );
   var NumberLineNode = require( 'UNIT_RATES/shopping/view/NumberLineNode' );
-  var NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
+  var KeypadPanel = require( 'UNIT_RATES/common/view/KeypadPanel' );
   var ChallengesNode = require( 'UNIT_RATES/shopping/view/ChallengesNode' );
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
@@ -105,12 +105,11 @@ define( function( require ) {
     } );
     this.addChild( scaleRemoveButtonNode );
 
-    this.keypad = new NumberKeypad( {
-      left:  this.shelfNode.right,
-      bottom: this.scaleNode.bottom - 60,   // FIXME - where should the numberpad be positioned?
-      visible: false,
-      decimalPointKey: true,
-      maxDigits: 3
+    this.keypad = new KeypadPanel( {
+      left:  this.scaleNode.right + PANEL_HORIZONTAL_SPACING,
+      bottom: this.scaleNode.bottom + 2*PANEL_HORIZONTAL_SPACING,
+      maxDigits: 4,
+      visible: false
     } );
     this.addChild( this.keypad );
 
@@ -156,6 +155,14 @@ define( function( require ) {
 
     // move items layer on top of all other nodes
     this.itemsLayer.moveToFront();
+
+    // FIXME: figure out how to get click on screen to close keypad
+    //this.addInputListener( {
+    //  down: function( event ) {
+    //    console.log('click');
+    //    event.handle();
+    //  }
+    //} );
 
     // initialize shelf items
     this.shelfNode.populate();
@@ -265,9 +272,9 @@ define( function( require ) {
      * @protected
      */
     hideKeypad: function() {
-      this.keypad.visible = false;
-      this.keypad.digitStringProperty.unlinkAll();
-      this.keypad.clear();
+      //this.keypad.visible = false;
+      //this.keypad.digitStringProperty.unlinkAll();
+      //this.keypad.clear();
     }
 
   } ); // inherit

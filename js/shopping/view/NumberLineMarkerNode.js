@@ -12,13 +12,13 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
+  var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
   var AnswerNumberDisplayNode = require( 'UNIT_RATES/common/view/AnswerNumberDisplayNode' );
   var ItemNode = require( 'UNIT_RATES/shopping/view/ItemNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var Shape = require( 'KITE/Shape' );
-  var Property = require( 'AXON/Property' );
   var Bounds2 = require( 'DOT/Bounds2' );
 
   // constants
@@ -56,19 +56,23 @@ define( function( require ) {
 
     this.correctCost = ( item.count * item.rate );
     this.correctUnit = ( item.count * ( item.isCandy ? item.weight : 1 ) );
-    var initialCost = ( this.item.editable === ShoppingConstants.EditMode.COST ? 0 : this.correctCost );
-    var initialUnit = ( this.item.editable === ShoppingConstants.EditMode.UNIT ? 0 : this.correctUnit );
+    //var initialCost = ( this.item.editable === ShoppingConstants.EditMode.COST ? 0 : this.correctCost );
+    //var initialUnit = ( this.item.editable === ShoppingConstants.EditMode.UNIT ? 0 : this.correctUnit );
 
     // @private
-    this.costProperty = new Property( initialCost );
-    this.unitProperty = new Property( initialUnit );
+    this.costQnA = new QuestionAnswer( this.correctCost );
+    this.costQnA.valueProperty.link( function( value, oldValue ) {
+      self.updateEditState.bind( self );
+    } );
 
-    this.costProperty.link( this.updateEditState.bind( this ) );
-    this.unitProperty.link( this.updateEditState.bind( this ) );
+    this.unitQnA = new QuestionAnswer( this.correctUnit );
+    this.unitQnA.valueProperty.link( function( value, oldValue ) {
+      self.updateEditState.bind( self );
+    } );
 
     // top label - cost
     var topPattern =  currencySymbolString + '{0}';
-    this.topNumberDisplay = new AnswerNumberDisplayNode( keypad, this.costProperty, this.correctCost, topPattern, {
+    this.topNumberDisplay = new AnswerNumberDisplayNode( keypad, this.costQnA, topPattern, {
         centerX: -2,
         bottom: -options.lineHeight / 2 - EDIT_TEXT_MARGIN,
         decimalPlaces: 2,
@@ -76,7 +80,6 @@ define( function( require ) {
         buttonSpacing: EDIT_TEXT_MARGIN
     } );
 
-    // vertical line
     var markerLine = new Path( new Shape()
       .moveTo( 0, -options.lineHeight / 2 )
       .lineTo( 0,  options.lineHeight / 2 ), {
@@ -89,7 +92,7 @@ define( function( require ) {
 
     // bottom label - unit
     var bottomPattern =  '{0}';
-    this.bottomNumberDisplay = new AnswerNumberDisplayNode( keypad, this.unitProperty, this.correctUnit, bottomPattern, {
+    this.bottomNumberDisplay = new AnswerNumberDisplayNode( keypad, this.unitQnA, bottomPattern, {
         centerX: -2,
         top: options.lineHeight / 2 + EDIT_TEXT_MARGIN,
         decimalPlaces: 1,
@@ -171,8 +174,9 @@ define( function( require ) {
      * @public
      */
     updateEditState: function() {
-      if( this.costProperty.value === this.correctCost && this.unitProperty.value === this.correctUnit ) {
-        // make item undraggable
+
+      if( this.costQnA.isCorrectAnswer() && this.unitQnA.isCorrectAnswer() ) {
+         // make item undraggable
         this.item.dragableProperty.value = false;
 
         // make the item uneditable
