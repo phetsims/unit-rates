@@ -52,7 +52,7 @@ define( function( require ) {
       listCornerRadius: 5,
       itemYMargin: 0,
       itemXMargin: 3,
-      maxWidth: 250
+      maxWidth: 200
     }, options );
 
     // populate based on which scene

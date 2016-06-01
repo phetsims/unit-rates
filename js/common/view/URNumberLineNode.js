@@ -29,8 +29,9 @@ define( function( require ) {
   // constants
   var BUTTON_CONTENT = new Text( '+', { font: new PhetFont( 18 ), fontWeight: 'bold', maxWidth: 30 } );
 
+  // FIXME: these should probably all be in opions
   var GRAPH_BUTTON_SPACING      = 10; // horizontal space from button to graph y-axis line
-  var GRAPH_WIDTH               = 575;
+  var GRAPH_WIDTH               = 625;
   var GRAPH_HEIGHT              = 75;
   var GRAPH_X_AXIS_OFFSET       = 10; // offset from origin for the two x-axes
   var GRAPH_ARROW_SIZE          = 4;

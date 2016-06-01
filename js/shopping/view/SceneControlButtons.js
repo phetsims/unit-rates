@@ -29,10 +29,10 @@ define( function( require ) {
     options = options || {};
 
     options = _.extend( {
-      orientation: 'vertical',
+      orientation: 'horizontal',
       baseColor: 'white',
       spacing: 15,
-      buttonContentXMargin: 18
+      buttonContentXMargin: 20
     }, options );
 
     // FIXME: move number strings to strings file?

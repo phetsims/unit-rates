@@ -28,7 +28,7 @@ define( function( require ) {
   // constants
   var SCREEN_HORIZONTAL_MARGIN = 15;
   var SCREEN_VERTICAL_MARGIN = 20;
-  var PANEL_HORIZONTAL_SPACING = 12; // space between scene buttons/numberline/challenges
+  var PANEL_SPACING = 12; // space between panels - i.e numberline/challenges/keypad
 
   /**
    * @param {ShoppingModel} model
@@ -44,56 +44,56 @@ define( function( require ) {
 
     // properties
     // FIXME: scene & item randomly choosen @ startup
-    this.sceneModeProperty = new Property( SceneMode.FRUIT );
-    this.fruitItemDataProperty = new Property( ItemData.APPLES );
+    this.sceneModeProperty       = new Property( SceneMode.FRUIT );
+    this.fruitItemDataProperty   = new Property( ItemData.APPLES );
     this.produceItemDataProperty = new Property( ItemData.CARROTS );
-    this.candyItemDataProperty = new Property( ItemData.RED_CANDY );
+    this.candyItemDataProperty   = new Property( ItemData.RED_CANDY );
 
-    // scene buttons
-    var sceneControlButtons = new SceneControlButtons( model, this.sceneModeProperty, {
-      left:  this.layoutBounds.left + SCREEN_HORIZONTAL_MARGIN,
-      top: this.layoutBounds.top + SCREEN_VERTICAL_MARGIN
+    this.keypad = new KeypadPanel( {
+      maxDigits: 4,
+      visible: false
     } );
-    this.addChild( sceneControlButtons );
+    this.addChild( this.keypad );
 
-    // item selection - 1 combo boxe for each scene, hidden and shown based on sceneModeProperty
-    var itemComboBoxOptions = {
-      left:  this.layoutBounds.left + SCREEN_HORIZONTAL_MARGIN,
-      bottom: this.layoutBounds.bottom - SCREEN_VERTICAL_MARGIN
-    };
-    this.fruitItemsComboBox = new ItemComboBox( model, SceneMode.FRUIT, this.fruitItemDataProperty,
-      this, itemComboBoxOptions);
-    this.addChild( this.fruitItemsComboBox );
+    // number line
+    this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
+      left: this.layoutBounds.left + PANEL_SPACING,
+      top:  this.layoutBounds.top + SCREEN_VERTICAL_MARGIN } );
+    this.addChild( this.numberLineNode );
 
-    this.produceItemsComboBox = new ItemComboBox( model, SceneMode.PRODUCE, this.produceItemDataProperty,
-      this, itemComboBoxOptions);
-    this.addChild( this.produceItemsComboBox );
+    // challenges
+    var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + PANEL_SPACING + SCREEN_HORIZONTAL_MARGIN );
+    var challengesNode = new ChallengesNode( model.challenges, this.keypad, challengeWidth, {
+      left: this.numberLineNode.right + PANEL_SPACING,
+      top:  this.layoutBounds.top + SCREEN_VERTICAL_MARGIN
+    } );
+    this.addChild( challengesNode );
 
-    this.candyItemsComboBox = new ItemComboBox( model, SceneMode.CANDY, this.candyItemDataProperty,
-      this, itemComboBoxOptions);
-    this.addChild( this.candyItemsComboBox );
+    // keypad layout
+    this.keypad.right = this.numberLineNode.right - 30;
+    this.keypad.top   = this.numberLineNode.bottom + 2*PANEL_SPACING;
 
-    // layer for draggable shelf & scale item nodes
+     // layer for draggable shelf & scale item nodes
     this.itemsLayer = new Node();
     this.addChild( this.itemsLayer );
 
     // shelf
     this.shelfNode = new ShelfNode( model.shelf, this.itemsLayer, this.itemMoved.bind( this ), {
-      centerX:  this.layoutBounds.centerX,
-      bottom: this.layoutBounds.bottom - SCREEN_VERTICAL_MARGIN
+      centerX: this.numberLineNode.centerX + 15,
+      bottom:  this.layoutBounds.bottom - SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( this.shelfNode );
 
     // scale
     this.scaleNode = new ScaleNode( model.scale, this.itemsLayer, this.itemMoved.bind( this ) , {
-      centerX:  this.layoutBounds.centerX,
-      bottom: this.shelfNode.top - 50
+      centerX: this.shelfNode.centerX,
+      bottom:  this.shelfNode.top - 75
     } );
     this.addChild( this.scaleNode );
 
     // remove button
     var scaleRemoveButtonNode = new CurvedArrowButton( {
-      right:  this.scaleNode.left - PANEL_HORIZONTAL_SPACING,
+      right:  this.scaleNode.left - PANEL_SPACING,
       bottom: this.scaleNode.bottom,
       listener: function() {
 
@@ -104,35 +104,6 @@ define( function( require ) {
       }
     } );
     this.addChild( scaleRemoveButtonNode );
-
-    this.keypad = new KeypadPanel( {
-      left:  this.scaleNode.right + PANEL_HORIZONTAL_SPACING,
-      bottom: this.scaleNode.bottom + 2*PANEL_HORIZONTAL_SPACING,
-      maxDigits: 4,
-      visible: false
-    } );
-    this.addChild( this.keypad );
-
-    // number line
-    this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
-      left:  sceneControlButtons.right + PANEL_HORIZONTAL_SPACING,
-      top: this.layoutBounds.top + SCREEN_VERTICAL_MARGIN } );
-    this.addChild( this.numberLineNode );
-
-    // challenges
-    var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + PANEL_HORIZONTAL_SPACING + SCREEN_HORIZONTAL_MARGIN );
-    var challengesNode = new ChallengesNode( model.challenges, this.keypad, challengeWidth, {
-      left:  this.numberLineNode.right + PANEL_HORIZONTAL_SPACING,
-      top: this.layoutBounds.top + SCREEN_VERTICAL_MARGIN
-    } );
-    this.addChild( challengesNode );
-
-    // select the scene
-    this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this) );
-
-    // select the item based on scene & item selection
-    Property.multilink( [ this.sceneModeProperty, this.fruitItemDataProperty, this.produceItemDataProperty,
-      this.candyItemDataProperty ], this.itemSelectionChanged.bind( this ) );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
@@ -148,10 +119,42 @@ define( function( require ) {
         self.candyItemDataProperty.reset();
         self.sceneModeProperty.reset();
       },
-      right:  this.layoutBounds.maxX - 10,
-      bottom: this.layoutBounds.maxY - 10
+      right:  this.layoutBounds.maxX - SCREEN_HORIZONTAL_MARGIN,
+      bottom: this.layoutBounds.maxY - SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( resetAllButton );
+
+    // item selection - 1 combo boxe for each scene, hidden and shown based on sceneModeProperty
+    var itemComboBoxOptions = {
+      left:   this.layoutBounds.left   + SCREEN_HORIZONTAL_MARGIN,
+      bottom: this.layoutBounds.bottom - SCREEN_VERTICAL_MARGIN
+    };
+    this.fruitItemsComboBox = new ItemComboBox( model, SceneMode.FRUIT, this.fruitItemDataProperty,
+      this, itemComboBoxOptions);
+    this.addChild( this.fruitItemsComboBox );
+
+    this.produceItemsComboBox = new ItemComboBox( model, SceneMode.PRODUCE, this.produceItemDataProperty,
+      this, itemComboBoxOptions);
+    this.addChild( this.produceItemsComboBox );
+
+    this.candyItemsComboBox = new ItemComboBox( model, SceneMode.CANDY, this.candyItemDataProperty,
+      this, itemComboBoxOptions);
+    this.addChild( this.candyItemsComboBox );
+
+    // scene buttons
+    var sceneControlButtons = new SceneControlButtons( model, this.sceneModeProperty, {
+      right:  this.layoutBounds.right - SCREEN_HORIZONTAL_MARGIN,
+      //centerX:  challengesNode.centerX,
+      bottom: resetAllButton.top - SCREEN_VERTICAL_MARGIN
+    } );
+    this.addChild( sceneControlButtons );
+
+    // select the scene
+    this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this) );
+
+    // select the item based on scene & item selection
+    Property.multilink( [ this.sceneModeProperty, this.fruitItemDataProperty, this.produceItemDataProperty,
+      this.candyItemDataProperty ], this.itemSelectionChanged.bind( this ) );
 
     // move items layer on top of all other nodes
     this.itemsLayer.moveToFront();

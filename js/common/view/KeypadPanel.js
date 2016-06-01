@@ -88,7 +88,7 @@ define( function( require ) {
     Panel.call( this, numberControlGroup, {
       xMargin: SPACING,
       yMargin: SPACING,
-      fill: 'rgba(240,240,240,1)',
+      fill: 'rgba(0,0,0,0.05)',
       stroke: 'gray',
       lineWidth: 1,
       resize: false,

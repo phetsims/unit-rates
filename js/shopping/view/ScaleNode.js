@@ -31,7 +31,7 @@ define( function( require ) {
 
   // constants
   var RAND = new Random();
-  var DISPLAY_SIZE = new Dimension2( 80, 50 );
+  var DISPLAY_SIZE = new Dimension2( 70, 40 );
   var DISPLAY_BOTTOM_OFFSET = 32;
   var DISPLAY_SPACING = 10;  // space beteen mutliple displays
   var DISPLAY_FONT = new PhetFont( 20 );
