@@ -45,14 +45,14 @@ define( function( require ) {
       defaultBorderColor:   'rgba(0,0,0,0)',
       correctBorderColor:   'rgba(0,0,0,0)',
       incorrectBorderColor: 'rgba(0,0,0,1)',
-      focusBorderColor:     'rgba(240,240,35,1)'
+      focusBorderColor:     'rgba(230,132,5,1)'
     },  options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
     var self = this;
 
     this.keypad      = keypad;
-    this.keypadFocus = false;
+    this.hasKeypadFocus = false;
     this.qna         = qna;
 
     // colors
@@ -134,7 +134,7 @@ define( function( require ) {
 
       var self = this;
 
-      this.keypadFocus = true;
+      this.hasKeypadFocus = true;
 
       this.numberDisplay.setBackgroundStroke( this.focusBorderColor );
 
@@ -145,7 +145,7 @@ define( function( require ) {
           self.updateEditState();
         }, function() {
           // onListenerChanged
-          self.keypadFocus = false;
+          self.hasKeypadFocus = false;
           self.updateEditState();
         }
       );
@@ -183,7 +183,7 @@ define( function( require ) {
 
         // set 'incorrect' display attributes
         this.numberDisplay.setNumberFill( this.qna.isAnswerZero() ? this.defaultTextColor : this.incorrectTextColor );
-        this.numberDisplay.setBackgroundStroke( this.keypadFocus ? this.focusBorderColor : this.incorrectBorderColor );
+        this.numberDisplay.setBackgroundStroke( this.hasKeypadFocus ? this.focusBorderColor : this.incorrectBorderColor );
       }
     }
 
