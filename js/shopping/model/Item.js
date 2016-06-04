@@ -25,7 +25,6 @@ define( function( require ) {
     // @public (readwrite)
     PropertySet.call( this, {
       position: new Vector2( 0, 0 ), // (0, 0) is considered an uninitialized position - FIXME: move up to ItemNode?
-      dragable: true,
       editable: false
     } );
 
@@ -47,6 +46,7 @@ define( function( require ) {
   return inherit( PropertySet, Item, {
 
     /**
+     * Convenience function
      * @param {Item} item
      * @returns {boolean}
      * @public

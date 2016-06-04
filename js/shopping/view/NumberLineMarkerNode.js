@@ -10,20 +10,16 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
+  //var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  //var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
   var AnswerNumberDisplayNode = require( 'UNIT_RATES/common/view/AnswerNumberDisplayNode' );
   var ItemNode = require( 'UNIT_RATES/shopping/view/ItemNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
   var Shape = require( 'KITE/Shape' );
-  var Bounds2 = require( 'DOT/Bounds2' );
 
   // constants
-  var DRAG_HANDLE_OFFSET        = 10;
-  var EDIT_TEXT_MARGIN          = 5;
+  var EDIT_TEXT_MARGIN  = 5;
 
   // strings
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
@@ -31,19 +27,15 @@ define( function( require ) {
   /**
    * @param {Item} item
    * @param {Vector2} position - x,y position on the number line
-   * @param (function} moveStartCallback - function called when item drag starts
-   * @param (function} moveEndCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
-  function NumberLineMarkerNode( item, position, keypad, moveStartCallback, moveEndCallback,
-    options ) {
+  function NumberLineMarkerNode( item, position, keypad, options ) {
 
     options = _.extend( {
       lineHeight: 50,
       stroke: 'black',
-      lineWidth: 1.25,
-      dragBounds: new Bounds2( 0, 0, 0, 0 )
+      lineWidth: 1.25
     }, options || {} );
 
     assert && assert( !options.children, 'additional children not supported' );
@@ -56,19 +48,10 @@ define( function( require ) {
 
     this.correctCost = ( item.count * item.rate );
     this.correctUnit = ( item.count * ( item.isCandy ? item.weight : 1 ) );
-    //var initialCost = ( this.item.editable === ShoppingConstants.EditMode.COST ? 0 : this.correctCost );
-    //var initialUnit = ( this.item.editable === ShoppingConstants.EditMode.UNIT ? 0 : this.correctUnit );
 
     // @private
     this.costQnA = new QuestionAnswer( this.correctCost );
-    this.costQnA.valueProperty.link( function( value, oldValue ) {
-      self.updateEditState.bind( self );
-    } );
-
     this.unitQnA = new QuestionAnswer( this.correctUnit );
-    this.unitQnA.valueProperty.link( function( value, oldValue ) {
-      self.updateEditState.bind( self );
-    } );
 
     // top label - cost
     var topPattern =  currencySymbolString + '{0}';
@@ -100,74 +83,33 @@ define( function( require ) {
         buttonSpacing: EDIT_TEXT_MARGIN
     } );
 
-    // -- Drag controls -- //
-    this.dragHandle = new Node( { pickable: true });
-
-    var dragHandleLine = new Path( new Shape()
-      .moveTo( 0, 0 )
-      .lineTo( DRAG_HANDLE_OFFSET, 0 ), {
-        stroke: 'black',
-        lineWidth: 0.5
+    // check answers on user input
+    this.costQnA.valueProperty.link( function( value, oldValue ) {
+      self.updateEditState.bind( self );
     } );
-    this.dragHandle.addChild( dragHandleLine );
-
-    var dragHandleCircle = new Circle( options.lineHeight * 0.1, {
-      centerX: DRAG_HANDLE_OFFSET,
-      centerY: 0,
-      fill: URConstants.EDIT_CONTROL_COLOR,
-      stroke: 'black',
-      lineWidth: 0.5,
-      pickable: true
-    } );
-    this.dragHandle.addChild( dragHandleCircle );
-
-    options.dragArea = dragHandleCircle.bounds;
-
-    // hide/show drag nodes
-    item.dragableProperty.link( function( state, oldState ) {
-      self.dragHandle.visible = state;
-      if( !state ) {
-        self.item.dragableProperty.unlinkAll();
-      }
+    this.unitQnA.valueProperty.link( function( value, oldValue ) {
+      self.updateEditState.bind( self );
     } );
 
     // hide/show edit buttons, change text/border color, etc.
     item.editableProperty.link( function( state, oldState ) {
-      //self.updateEditState();
+      //self.updateEditState.bind( self );
     } );
 
+    if ( !item.editable ) {
+      this.costQnA.valueProperty.value = this.correctCost;
+      this.unitQnA.valueProperty.value = this.correctUnit;
+    }
+
     // add all child nodes
-    options.children = [ this.topNumberDisplay,  markerLine,  this.bottomNumberDisplay, this.dragHandle ];
+    options.children = [ this.topNumberDisplay,  markerLine,  this.bottomNumberDisplay ]; //, this.dragHandle ];
 
     ItemNode.call( this, item, position, options );
-
-     // add drag handlers
-    this.addDragListeners( moveStartCallback, moveEndCallback );
-  }
+ }
 
   unitRates.register( 'NumberLineMarkerNode', NumberLineMarkerNode );
 
   return inherit( ItemNode, NumberLineMarkerNode, {
-
-    /**
-     * Simplify representation (when dragging)
-     * @public
-     */
-    hideDragNodes: function( ) {
-      // Hide number display & edit buttons
-      this.topNumberDisplay.visible     = false;
-      this.bottomNumberDisplay.visible  = false;
-    },
-
-    /**
-     * Restore node children (when not dragging)
-     * @public
-     */
-    showDragNodes: function( ) {
-      // Show number display & edit buttons
-      this.topNumberDisplay.visible     = true;
-      this.bottomNumberDisplay.visible  = true;
-    },
 
     /**
      *
@@ -176,11 +118,9 @@ define( function( require ) {
     updateEditState: function() {
 
       if( this.costQnA.isCorrectAnswer() && this.unitQnA.isCorrectAnswer() ) {
-         // make item undraggable
-        this.item.dragableProperty.value = false;
 
         // make the item uneditable
-        this.item.editable = ShoppingConstants.EditMode.NONE;
+        this.item.editable = false;
       }
     },
 

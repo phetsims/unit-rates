@@ -16,27 +16,15 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // strings
   var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
-
-  // constants
-  var BUTTON_CONTENT = new Text( '+', { font: new PhetFont( 18 ), fontWeight: 'bold', maxWidth: 30 } );
-
-  // FIXME: these should probably all be in opions
-  var GRAPH_BUTTON_SPACING      = 10; // horizontal space from button to graph y-axis line
-  var GRAPH_WIDTH               = 625;
-  var GRAPH_HEIGHT              = 75;
-  var GRAPH_X_AXIS_OFFSET       = 10; // offset from origin for the two x-axes
-  var GRAPH_ARROW_SIZE          = 4;
-  var GRAPH_ARROW_LABEL_MARGIN  = 10;  // horizontal space from arrows to the labels
-  var GRAPH_ARROW_LABEL_OPTIONS = { font: new PhetFont( 14 ), maxWidth: 100 };
 
   /**
    * @param {Object} [options]
@@ -44,7 +32,16 @@ define( function( require ) {
    */
   function URNumberLineNode( options ) {
 
-    options = options || {};
+     options = _.extend( {
+      graphWidth:         675,
+      graphHeight:        165,
+      xAxisOffset:        10,
+      yAxisOffset:        50,
+      axisArrowSize:      5,
+      axisLabelSpacing:   10,
+      axisLabelFont:      new PhetFont( 14 ),
+      axisLabelMaxWidth:  100
+    }, options || {} );
 
     var self = this;
 
@@ -54,77 +51,59 @@ define( function( require ) {
     // AccordionBox content
     var contentNode = new Node();
 
-    // manual add buttons
-
-    // @protected
-    this.topAddButton = new RectangularPushButton( {
-      content:BUTTON_CONTENT,
-      baseColor: URConstants.EDIT_CONTROL_COLOR
-    } );
-    contentNode.addChild( this.topAddButton );
-
-     // @protected
-    this.bottomAddButton = new RectangularPushButton( {
-      content: BUTTON_CONTENT,
-      baseColor: URConstants.EDIT_CONTROL_COLOR,
-      left: this.topAddButton.left,
-      top: this.topAddButton.top + GRAPH_HEIGHT
-    } );
-    contentNode.addChild( this.bottomAddButton );
-
-    // @protected graph bounds
-    this.graphBounds = new Bounds2(
-      this.bottomAddButton.right + GRAPH_BUTTON_SPACING,
-      this.topAddButton.top,
-      GRAPH_WIDTH,
-      this.bottomAddButton.right + GRAPH_BUTTON_SPACING + GRAPH_HEIGHT);
+    // @protected graph origin/bounds
+    this.origin      = new Vector2( options.yAxisOffset, options.graphHeight / 2 );
+    this.graphBounds = new Bounds2( -options.yAxisOffset, 0, options.graphWidth - options.yAxisOffset , options.graphHeight );
 
     // layer holding all the markers
-    this.graphMarkerLayerNode = new Path( new Shape().rect( this.graphBounds.minX, this.graphBounds.minY,
-      this.graphBounds.maxX, this.graphBounds.maxY ), {
-      //stroke: 'red',  // debugging
+    this.graphMarkerLayerNode = new Path( new Shape().rect(
+      0, 0, options.graphWidth, options.graphHeight ), {
+      stroke: 'red',  // debugging
       lineWidth: 1
     } );
     contentNode.addChild( this.graphMarkerLayerNode );
 
     // axis lines
-    var xOrigin = this.graphBounds.minX;
-    var yOrigin = this.graphBounds.centerY;
-
     var xZeroLine = new Path( new Shape()
-        .moveTo( xOrigin, this.topAddButton.top )
-        .lineTo( xOrigin, this.bottomAddButton.bottom ), {
+        .moveTo( options.yAxisOffset, this.origin.y + options.graphHeight / 4 )
+        .lineTo( options.yAxisOffset, this.origin.y - options.graphHeight / 4 ), {
       stroke: 'black',
       lineWidth: 1.25
     } );
     contentNode.addChild( xZeroLine );
 
     var arrowOptions =  {
-        headHeight:GRAPH_ARROW_SIZE,
-        headWidth: GRAPH_ARROW_SIZE,
-        tailWidth: .1,
-        fill: 'black'
+        headHeight: options.axisArrowSize,
+        headWidth:  options.axisArrowSize,
+        tailWidth:  .1,
+        fill:       'black'
       };
-    var topArrowNode = new ArrowNode( xOrigin, yOrigin - GRAPH_X_AXIS_OFFSET,
-      xOrigin + GRAPH_WIDTH, yOrigin - GRAPH_X_AXIS_OFFSET, arrowOptions);
+    var topArrowNode = new ArrowNode( options.yAxisOffset,
+                                      this.origin.y - options.xAxisOffset,
+                                      options.graphWidth + options.axisArrowSize,
+                                      this.origin.y - options.xAxisOffset, arrowOptions);
     contentNode.addChild( topArrowNode );
 
-    var bottomArrowNode = new ArrowNode( xOrigin, yOrigin + GRAPH_X_AXIS_OFFSET,
-      xOrigin + GRAPH_WIDTH, yOrigin + GRAPH_X_AXIS_OFFSET, arrowOptions);
+    var bottomArrowNode = new ArrowNode( options.yAxisOffset,
+                                         this.origin.y + options.xAxisOffset,
+                                         options.graphWidth + options.axisArrowSize,
+                                         this.origin.y + options.xAxisOffset, arrowOptions);
     contentNode.addChild( bottomArrowNode );
 
     // arrow labels
+    var labelOptions =  { font:options.axisLabelFont, maxWidth: options.axisLabelMaxWidth };
+
     // @protected
-    this.topArrowLabel = new Text( 'top', _.extend( {}, GRAPH_ARROW_LABEL_OPTIONS, {
-        left: topArrowNode.right + GRAPH_ARROW_LABEL_MARGIN,
+    this.topArrowLabel = new Text( 'top', _.extend( {}, labelOptions, {
+        left: topArrowNode.right + options.axisLabelSpacing,
         centerY: topArrowNode.centerY
       } )
      );
     contentNode.addChild( this.topArrowLabel );
 
     // @protected
-    this.bottomArrowLabel = new Text( 'bottom', _.extend( {}, GRAPH_ARROW_LABEL_OPTIONS, {
-        left: bottomArrowNode.right + GRAPH_ARROW_LABEL_MARGIN,
+    this.bottomArrowLabel = new Text( 'bottom', _.extend( {}, labelOptions, {
+        left: bottomArrowNode.right + options.axisLabelSpacing,
         centerY: bottomArrowNode.centerY
       } )
      );
@@ -134,7 +113,7 @@ define( function( require ) {
     var eraserButton = new EraserButton( {
       baseColor: '#f2f2f2',
       left: this.bottomArrowLabel.right,
-      top: this.bottomAddButton.bottom + 10,
+      top: options.graphHeight,
       listener: function() {
         self.removeAllMarkers();
       }
@@ -152,8 +131,9 @@ define( function( require ) {
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       contentAlign: 'left',
-      contentXMargin: 15,
-      contentYMargin: 5
+      contentXMargin: 5,
+      contentYMargin: 5,
+      contentYSpacing: 5
     } );
 
     this.mutate( options );

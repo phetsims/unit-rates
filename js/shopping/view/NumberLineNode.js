@@ -15,7 +15,6 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var NumberLineMarkerNode = require( 'UNIT_RATES/shopping/view/NumberLineMarkerNode' );
   var Vector2 = require( 'DOT/Vector2' );
-  var Bounds2 = require( 'DOT/Bounds2' );
 
   // strings
   var applesCapString = require( 'string!UNIT_RATES/applesCap' );
@@ -44,12 +43,10 @@ define( function( require ) {
     options = options || {};
 
     var self = this;
+    this.numberLine = numberLine;
+    this.keypad     = keypad;
 
     URNumberLineNode.call( this, options );
-
-    this.numberLine       = numberLine;
-    this.keypad           = keypad;
-    this.markerDragBounds = new Bounds2( this.graphBounds.minX, 0, this.graphBounds.maxX, 0 );
 
     // refresh on item change
     numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
@@ -99,37 +96,7 @@ define( function( require ) {
         self.populate();
     } );
 
-    this.topAddButton.addListener( function() {
-      var item = self.numberLine.createNextItem();
-      if( item !== null ) {
-
-        // turn of any existing dragable markers - only 1 is allowed
-        self.forEachMarker(  function( marker ) {
-          marker.item.dragable = false;
-        } );
-
-        // Create new editable marker
-        item.dragable = true;
-        item.editable = ShoppingConstants.EditMode.UNIT;
-        self.createItemMarker( item );
-      }
-    } );
-
-    this.bottomAddButton.addListener( function() {
-      var item = self.numberLine.createNextItem();
-      if( item !== null ) {
-
-        // turn of any existing dragable markers - only 1 is allowed
-        self.forEachMarker(  function( marker ) {
-          marker.item.dragable = false;
-        } );
-
-        // Create new dragable/editable marker
-        item.dragable = true;
-        item.editable = ShoppingConstants.EditMode.COST;
-        self.createItemMarker( item );
-      }
-    } );
+    // self.createItemMarker( item );
 
   }
 
@@ -151,10 +118,21 @@ define( function( require ) {
       var itemData = this.numberLine.itemDataProperty.value;
 
       // get the current array for the item type
+      var editableItemExists = false;
       var itemArray = this.numberLine.getItemsWithType( itemData.type );
       itemArray.forEach( function( item ) {
+        if( item.editable ) {
+          editableItemExists = true;
+        }
         self.createItemMarker( item );
       } );
+
+      // create an editable marker
+      if( !editableItemExists ) {
+        var editItem = this.numberLine.createItem( this.numberLine.itemDataProperty.value, -1 );
+        editItem.editable = true;
+        self.createItemMarker( editItem );
+      }
     },
 
     /**
@@ -163,69 +141,27 @@ define( function( require ) {
      */
     createItemMarker: function( item ) {
 
+      var x = this.origin.x;
+      var y = this.origin.y;
+
       // calc position
-      var countPercent = item.count / ShoppingConstants.MAX_ITEMS;
-      if ( countPercent >= 0 && countPercent <= 1.0 ) {
-
-        var x = ( this.markerDragBounds.maxX * countPercent ) + ( ( 1.0 - countPercent ) * this.markerDragBounds.minX );
-        var y = this.graphBounds.centerY;
-        var position = new Vector2( x, y );
-
-        // make marker node
-        var markerNode = new NumberLineMarkerNode( item, position, this.keypad,
-          this.markerStartDrag.bind( this ), this.markerEndDrag.bind( this ), {
-          centerX: x,
-          centerY: y,
-          lineHeight: 50,
-          stroke: 'black',
-          lineWidth: 1.25,
-          dragBounds: this.markerDragBounds
-        } );
-
-        this.addMarker( markerNode );
-      }
-    },
-
-    /**
-     * Called when an item's node is dragged to a new location
-     * @private
-     */
-    markerStartDrag: function( markerNode ) {
-
-      // Hide the keypad
-      this.keypad.visible = false;
-
-      // Hide number display & edit buttons
-      markerNode.hideDragNodes();
-    },
-
-    /**
-     * Called when an item's node is dragged to a new location
-     * @private
-     */
-    markerEndDrag: function( markerNode ) {
-
-      // Show number display & edit buttons
-      markerNode.showDragNodes();
-
-      // Snap to closest available slot
-      var dragXPercent = ( markerNode.centerX - this.markerDragBounds.minX ) /
-                         ( this.markerDragBounds.maxX - this.markerDragBounds.minX );
-
-      var newCount = Math.round( dragXPercent * ShoppingConstants.MAX_ITEMS );
-
-      var availableCounts = this.numberLine.getAvailableCounts( ShoppingConstants.MAX_ITEMS );
-      if( availableCounts.indexOf( newCount ) >= 0 ) {
-
-        // change the item's count to the new dragged count value
-        markerNode.item.count = newCount;
-        this.populate();
-      }
-      else {
-        // Send it back from whence it came
-        markerNode.restoreLastPosition();
+      if( item.count > 0  ) {
+        var countPercent = item.count / ( ShoppingConstants.MAX_ITEMS );
+        if ( countPercent >= 0 && countPercent <= 1.0 ) {
+          x =  ( ( 1.0 - countPercent ) * this.origin.x ) + ( this.graphBounds.maxX * countPercent );
+        }
       }
 
+      // make marker node
+      var markerNode = new NumberLineMarkerNode( item, new Vector2( x, y ), this.keypad, {
+        centerX: x,
+        centerY: y,
+        lineHeight: 40,
+        stroke: 'black',
+        lineWidth: 1.25
+      } );
+
+      this.addMarker( markerNode );
     },
 
     /**
@@ -240,6 +176,9 @@ define( function( require ) {
       this.numberLine.removeAllItemsWithType( this.numberLine.itemDataProperty.value.type );
 
       URNumberLineNode.prototype.removeAllMarkers.call( this );
+
+      // add an editable marker
+      this.populate();
     },
 
     /**

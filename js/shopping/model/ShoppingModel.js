@@ -91,9 +91,7 @@ define( function( require ) {
       var count = this.scale.getItemCount() ;
       if( count > 0 ) {
         var item = this.numberLine.createItem( this.itemDataProperty.value, count );
-
-        // these items are not dragable
-        item.dragable = false;
+        item.editable = false;
       }
     },
 

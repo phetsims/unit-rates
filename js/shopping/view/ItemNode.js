@@ -14,7 +14,6 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Emitter = require( 'AXON/Emitter' );
   var Vector2 = require( 'DOT/Vector2' );
-  var Bounds2 = require( 'DOT/Bounds2' );
 
   /**
    * @param {Item} item
@@ -25,8 +24,7 @@ define( function( require ) {
   function ItemNode( item, position, options ) {
 
     options = _.extend( {
-      dragArea: null,    // The portion of the node that is dragable (local coordinates)
-      dragBounds: new Bounds2( 0, 0, 4096, 4096 )   // The draggable area (screen coordinates)
+      dragHandle: null    // Bounds2 - the portion of the node that serves as a drag handle (local coordinates)
     }, options || {} );
 
     Node.call( this, options );
@@ -39,8 +37,7 @@ define( function( require ) {
 
     // @protected - used to tell when an item node is being moved
     this.isDragging         = false;
-    this.dragArea           = ( options.dragArea !== null ? options.dragArea : null );
-    this.dragBounds         = options.dragBounds;
+    this.dragHandle           = ( options.dragHandle !== null ? options.dragHandle : null );
     this.moveStartCallback  = null;
     this.moveEndCallback    = null;
     this.dragStartEmitter   = new Emitter();
@@ -53,62 +50,48 @@ define( function( require ) {
     this.item.positionProperty.link( this.positionListener );
 
     // add a drag listener
-    if( item.dragable ) {
+    this.dragListener = new SimpleDragHandler( {
 
-      this.dragListener = new SimpleDragHandler( {
+      start: function( e ) {
+        self.moveToFront();
 
-        start: function( e ) {
-          self.moveToFront();
+        self.isDragging = true;
 
-          self.isDragging = true;
-
-          // if a specific dragArea has been defined, check if the point is within the area.
-          if ( self.dragArea ) {
-            var globalArea = self.localToGlobalBounds( self.dragArea );
-            if ( !globalArea.containsPoint( e.pointer.point ) ) {
-              self.isDragging = false;
-              return;
-            }
-          }
-
-          var clickOffset = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
-          self.lastPosition = self.globalToParentPoint( e.pointer.point ).subtract( clickOffset );
-
-          // announce drag start
-          self.dragStartEmitter.emit1( self );
-        },
-        end: function( e ) {
-
-          self.isDragging = false;
-
-          // announce drag end
-          self.dragEndEmitter.emit1( self );
-        },
-
-        translate: function( translation ) {
-
-          if( !self.isDragging ) {
+        // if a specific dragHandle has been defined, check if the point is within the area.
+        if ( self.dragHandle ) {
+          var globalArea = self.localToGlobalBounds( self.dragHandle );
+          if ( !globalArea.containsPoint( e.pointer.point ) ) {
+            self.isDragging = false;
             return;
           }
-
-          // update node position in screen coordinates
-          var x = self.item.positionProperty.value.x;
-          if ( translation.position.x >= self.dragBounds.minX &&
-               translation.position.x <= self.dragBounds.maxX ) {
-            x = translation.position.x;
-          }
-          var y = self.item.positionProperty.value.y;
-          if ( translation.position.y >= self.dragBounds.minY &&
-               translation.position.y <= self.dragBounds.maxY ) {
-            y = translation.position.y;
-          }
-
-          self.item.positionProperty.value = new Vector2( x, y );
         }
-      } );
 
-      this.addInputListener( this.dragListener );
-    }
+        var clickOffset = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
+        self.lastPosition = self.globalToParentPoint( e.pointer.point ).subtract( clickOffset );
+
+        // announce drag start
+        self.dragStartEmitter.emit1( self );
+      },
+      end: function( e ) {
+
+        self.isDragging = false;
+
+        // announce drag end
+        self.dragEndEmitter.emit1( self );
+      },
+
+      translate: function( translation ) {
+
+        if( !self.isDragging ) {
+          return;
+        }
+
+        // update node position in screen coordinates
+        self.item.positionProperty.value = new Vector2( translation.position.x, translation.position.y );
+      }
+    } );
+
+    this.addInputListener( this.dragListener );
   }
 
   unitRates.register( 'ItemNode', ItemNode );

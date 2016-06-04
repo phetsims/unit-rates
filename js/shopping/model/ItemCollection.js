@@ -47,7 +47,7 @@ define( function( require ) {
      * @public
      */
     createItem: function( data, count ) {
-      assert && assert( count > 0, 'Item count equal 0.' );
+      //assert && assert( count > 0, 'Item count equal 0.' );
       var item = new Item( data, count );
       this.addItem( item );
       return item;

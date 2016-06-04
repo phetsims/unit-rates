@@ -240,26 +240,26 @@ define( function( require ) {
       // create nodes for all items of type (fruit | produce)
       itemArray.forEach( function( item ) {
 
-      var position = item.positionProperty.value;
+        var position = item.positionProperty.value;
 
-      // create new item node
-      var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, null, self.itemMovedCallback );
+        // create new item node
+        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, null, self.itemMovedCallback );
 
-      // initial position - create a random position on the shelf
-      if(position.x === 0 && position.y === 0) {
+        // initial position - create a random position on the shelf
+        if(position.x === 0 && position.y === 0) {
 
-        // jitter the initial positions
-        var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.width * 0.8 ) );
-        var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.height * 0.25 ) );
-        item.positionProperty.value = new Vector2(
-          layerDropCenter.x + jitterX,
-          layerDropCenter.y + jitterY - itemNode.height / 2
-        );
-      }
+          // jitter the initial positions
+          var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.width * 0.8 ) );
+          var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.height * 0.25 ) );
+          item.positionProperty.value = new Vector2(
+            layerDropCenter.x + jitterX,
+            layerDropCenter.y + jitterY - itemNode.height / 2
+          );
+        }
 
-      // add to the screen for layering purposes
-      self.itemLayer.addChild( itemNode );
-    } );
+        // add to the screen for layering purposes
+        self.itemLayer.addChild( itemNode );
+      } );
 
     },
 

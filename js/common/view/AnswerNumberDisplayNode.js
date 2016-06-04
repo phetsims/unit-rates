@@ -51,9 +51,9 @@ define( function( require ) {
 
     var self = this;
 
-    this.keypad      = keypad;
+    this.keypad         = keypad;
     this.hasKeypadFocus = false;
-    this.qna         = qna;
+    this.qna            = qna;
 
     // colors
     this.defaultTextColor     = options.defaultTextColor;
@@ -119,7 +119,10 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    this.updateEditState();
+    // check answers on user input
+    this.qna.valueProperty.link( function( value, oldValue ) {
+      self.updateEditState();
+    } );
   }
 
   unitRates.register( 'AnswerNumberDisplayNode', AnswerNumberDisplayNode );

@@ -26,9 +26,9 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // constants
-  var SCREEN_HORIZONTAL_MARGIN = 15;
-  var SCREEN_VERTICAL_MARGIN = 20;
-  var PANEL_SPACING = 12; // space between panels - i.e numberline/challenges/keypad
+  var SCREEN_HORIZONTAL_MARGIN  = 15;
+  var SCREEN_VERTICAL_MARGIN    = 20;
+  var PANEL_SPACING             = 12; // space between panels - i.e numberline/challenges/keypad
 
   /**
    * @param {ShoppingModel} model
@@ -58,7 +58,7 @@ define( function( require ) {
     // number line
     this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
       left: this.layoutBounds.left + PANEL_SPACING,
-      top:  this.layoutBounds.top + SCREEN_VERTICAL_MARGIN } );
+      top:  this.layoutBounds.top  + SCREEN_VERTICAL_MARGIN } );
     this.addChild( this.numberLineNode );
 
     // challenges
@@ -275,9 +275,8 @@ define( function( require ) {
      * @protected
      */
     hideKeypad: function() {
-      //this.keypad.visible = false;
-      //this.keypad.digitStringProperty.unlinkAll();
-      //this.keypad.clear();
+      this.keypad.visible = false;
+      this.keypad.clear();
     }
 
   } ); // inherit
