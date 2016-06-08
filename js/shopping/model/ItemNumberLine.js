@@ -11,8 +11,9 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
+  //var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemCollection = require( 'UNIT_RATES/shopping/model/ItemCollection' );
+  var ItemMarker = require( 'UNIT_RATES/shopping/model/ItemMarker' );
 
   /**
    *
@@ -37,6 +38,19 @@ define( function( require ) {
   return inherit( ItemCollection, ItemNumberLine, {
 
     /**
+     * Creates a new item/adds it to the types specific array
+     * @param {ItemData} data
+     * @param {number} [count]
+     * @return {Item}
+     * @public @override
+     */
+    createItem: function( data, count, editable ) {
+      var item = new ItemMarker( data, count, editable );
+      this.addItem( item );
+      return item;
+    },
+
+    /**
      * Adds an item to the types specific array
      * Does not allow for new items which equal existing items
      *
@@ -58,53 +72,6 @@ define( function( require ) {
           itemArray.add( item );
         }
       }
-    },
-
-    /**
-     * Returns an array of available unused item count 'slots' on the numberline
-     * For example, if the number line is populated with 1,2,3,5,6,8 items, this
-     * will return [4,7, ..., maxCount]
-     *
-     * @param {Number} maxCount
-     * @returns {Array.<Number>}
-     * @protected
-     */
-     getAvailableCounts: function( maxCount ) {
-
-      var itemData = this.itemDataProperty.value;
-
-      // generate array of [1 .. maxCount]
-      var fullCounts =_.range(1, maxCount+1);
-
-      // get the current array for the item type
-      var itemArray = this.getItemsWithType( itemData.type );
-
-      // generate array of of all current counts
-      var itemCounts = [ ];
-      itemArray.forEach( function( item ) {
-        itemCounts.push( item.count );
-      } );
-
-      // return the available (unused) counts
-      return _.difference( fullCounts, itemCounts );
-    },
-
-    /**
-     *
-     * @return {Item | null}
-     * @private
-     */
-    createNextItem: function() {
-
-      var availableCounts = this.getAvailableCounts( ShoppingConstants.MAX_ITEMS );
-
-      var item = null;
-      if( availableCounts.length > 0 ) {
-        // create a new item with the first available item count
-        item = this.createItem( this.itemDataProperty.value, availableCounts[0] );
-      }
-
-      return item;
     },
 
     /**

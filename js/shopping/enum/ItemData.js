@@ -69,7 +69,7 @@ define( function( require ) {
     BLUE_CANDY: {
       type: 'blueCandy',
       rate: 0.7,
-      weight: 0.1
+      weight: 1.0
     }
   } );
 

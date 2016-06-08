@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * All the challenge information for all items
+ * A container for a 'question' & answer
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -23,15 +23,15 @@ define( function( require ) {
 
     options = _.extend( {
       questionString: '',
-      unitString: ''
+      unitString:     ''
     },  options || {} );
 
 
     // @public
     this.questionString = options.questionString;
     this.unitString     = options.unitString;
-    this.answerValue    = answerValue;
-    this.valueProperty  = new Property( 0 );
+    this.answerValue    = answerValue;              // the correct answer value
+    this.valueProperty  = new Property( 0 );        // user's answer input property
   }
 
   unitRates.register( 'QuestionAnswer', QuestionAnswer );

@@ -24,21 +24,20 @@ define( function( require ) {
 
     // @public (readwrite)
     PropertySet.call( this, {
-      position: new Vector2( 0, 0 ), // (0, 0) is considered an uninitialized position - FIXME: move up to ItemNode?
-      editable: false
+      position: new Vector2( 0, 0 ) // (0, 0) is considered an uninitialized position - FIXME: move up to ItemNode?
     } );
 
     // @public (read-only)
-    this.type = data.type;
+    this.type   = data.type;
 
     // @public (read-only)
-    this.rate = data.rate;
+    this.rate   = data.rate;
 
     // @public (read-only)
     this.weight = data.weight;
 
     // @public (read-write)
-    this.count = count || 1;
+    this.count  = count || 1;
   }
 
   unitRates.register( 'Item', Item );
@@ -52,7 +51,7 @@ define( function( require ) {
      * @public
      */
     isEqual: function( item ) {
-       return( item.type === this.type && item.rate === this.rate &&
+       return( item.type   === this.type   && item.rate   === this.rate &&
                item.weight === this.weight &&  item.count === this.count );
     },
 

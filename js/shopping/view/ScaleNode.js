@@ -13,7 +13,6 @@ define( function( require ) {
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
-  //var CandyContainerNode = require( 'UNIT_RATES/shopping/view/CandyContainerNode' ); // FIXME: container use still undecided
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
@@ -70,11 +69,6 @@ define( function( require ) {
       lineWidth: 0,
       pickable: true
     } );
-
-    //this.candyContainer = new CandyContainerNode( 75, 100, {
-    //  centerX: this.scaleNode.centerX,
-    //  bottom: this.scaleNode.top - this.scaleNode.top + 15
-    //} );
 
     // @private
     this.costOnlyDisplayX = this.scaleNode.centerX;

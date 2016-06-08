@@ -36,7 +36,7 @@ define( function( require ) {
       graphWidth:         675,
       graphHeight:        165,
       xAxisOffset:        10,
-      yAxisOffset:        50,
+      yAxisOffset:        0,
       axisArrowSize:      5,
       axisLabelSpacing:   10,
       axisLabelFont:      new PhetFont( 14 ),

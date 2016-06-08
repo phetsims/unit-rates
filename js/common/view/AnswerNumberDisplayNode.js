@@ -25,7 +25,9 @@ define( function( require ) {
 
   /**
    *
+   * @param {KeypadPanel} keypad
    * @param {ChallengeQuestionAnswer} qna
+   * @param {string} pattern
    * @param {Object} [options]
    * @constructor
    */
@@ -166,7 +168,8 @@ define( function( require ) {
     },
 
     /**
-     * Changes various color/draggable attributes based on whether the edited values are correct.
+     * Changes various color/draggable attributes based on whether the display has keyboard focus
+     * and if edited values are correct or.
      * @protected
      */
     updateEditState: function() {
@@ -182,9 +185,8 @@ define( function( require ) {
         this.hideKeypad();
       }
       else {
-        this.editButton.visible = true;
-
         // set 'incorrect' display attributes
+        this.editButton.visible = true;
         this.numberDisplay.setNumberFill( this.qna.isAnswerZero() ? this.defaultTextColor : this.incorrectTextColor );
         this.numberDisplay.setBackgroundStroke( this.hasKeypadFocus ? this.focusBorderColor : this.incorrectBorderColor );
       }

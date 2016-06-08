@@ -24,6 +24,7 @@ define( function( require ) {
   function ItemNode( item, position, options ) {
 
     options = _.extend( {
+      draggable:  true,
       dragHandle: null    // Bounds2 - the portion of the node that serves as a drag handle (local coordinates)
     }, options || {} );
 
@@ -36,8 +37,9 @@ define( function( require ) {
     this.item.positionProperty.value = this.lastPosition;
 
     // @protected - used to tell when an item node is being moved
+    this.draggable          = options.draggable;
     this.isDragging         = false;
-    this.dragHandle           = ( options.dragHandle !== null ? options.dragHandle : null );
+    this.dragHandle         = ( options.dragHandle !== null ? options.dragHandle : null );
     this.moveStartCallback  = null;
     this.moveEndCallback    = null;
     this.dragStartEmitter   = new Emitter();
@@ -50,48 +52,50 @@ define( function( require ) {
     this.item.positionProperty.link( this.positionListener );
 
     // add a drag listener
-    this.dragListener = new SimpleDragHandler( {
+    if( this.draggable ) {
+      this.dragListener = new SimpleDragHandler( {
 
-      start: function( e ) {
-        self.moveToFront();
+        start: function( e ) {
+          self.moveToFront();
 
-        self.isDragging = true;
+          self.isDragging = true;
 
-        // if a specific dragHandle has been defined, check if the point is within the area.
-        if ( self.dragHandle ) {
-          var globalArea = self.localToGlobalBounds( self.dragHandle );
-          if ( !globalArea.containsPoint( e.pointer.point ) ) {
-            self.isDragging = false;
+          // if a specific dragHandle has been defined, check if the point is within the area.
+          if ( self.dragHandle ) {
+            var globalArea = self.localToGlobalBounds( self.dragHandle );
+            if ( !globalArea.containsPoint( e.pointer.point ) ) {
+              self.isDragging = false;
+              return;
+            }
+          }
+
+          var clickOffset = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
+          self.lastPosition = self.globalToParentPoint( e.pointer.point ).subtract( clickOffset );
+
+          // announce drag start
+          self.dragStartEmitter.emit1( self );
+        },
+        end: function( e ) {
+
+          self.isDragging = false;
+
+          // announce drag end
+          self.dragEndEmitter.emit1( self );
+        },
+
+        translate: function( translation ) {
+
+          if( !self.isDragging ) {
             return;
           }
+
+          // update node position in screen coordinates
+          self.item.positionProperty.value = new Vector2( translation.position.x, translation.position.y );
         }
+      } );
 
-        var clickOffset = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
-        self.lastPosition = self.globalToParentPoint( e.pointer.point ).subtract( clickOffset );
-
-        // announce drag start
-        self.dragStartEmitter.emit1( self );
-      },
-      end: function( e ) {
-
-        self.isDragging = false;
-
-        // announce drag end
-        self.dragEndEmitter.emit1( self );
-      },
-
-      translate: function( translation ) {
-
-        if( !self.isDragging ) {
-          return;
-        }
-
-        // update node position in screen coordinates
-        self.item.positionProperty.value = new Vector2( translation.position.x, translation.position.y );
-      }
-    } );
-
-    this.addInputListener( this.dragListener );
+      this.addInputListener( this.dragListener );
+    }
   }
 
   unitRates.register( 'ItemNode', ItemNode );

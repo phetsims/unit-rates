@@ -12,9 +12,14 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
+  var CurvedArrowButton = require( 'UNIT_RATES/common/view/CurvedArrowButton' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var NumberLineMarkerNode = require( 'UNIT_RATES/shopping/view/NumberLineMarkerNode' );
+  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
+
+  // constants
+  var EDITABLE_MARKER_X = 25;
 
   // strings
   var applesCapString = require( 'string!UNIT_RATES/applesCap' );
@@ -40,13 +45,32 @@ define( function( require ) {
    */
   function NumberLineNode( numberLine, keypad, options ) {
 
-    options = options || {};
+    options = _.extend( {
+      yAxisOffset:  45
+    }, options || {} );
 
-    var self = this;
-    this.numberLine = numberLine;
-    this.keypad     = keypad;
+    var self          = this;
+    this.numberLine   = numberLine;
+    this.keypad       = keypad;
 
     URNumberLineNode.call( this, options );
+
+    // undo button
+    this.undoEditButtonNode = new CurvedArrowButton( {
+      visible: false,
+      headWidth: 8,
+      headHeight: 8,
+      tailWidth: 5,
+      left: 8,
+      centerY: this.centerY - 8,
+      listener: function() {
+        self.removeEditMarker();
+        self.populate();
+        self.undoEditButtonNode.visible = false;
+      }
+    } );
+    this.addChild( this.undoEditButtonNode );
+
 
     // refresh on item change
     numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
@@ -96,8 +120,6 @@ define( function( require ) {
         self.populate();
     } );
 
-    // self.createItemMarker( item );
-
   }
 
   unitRates.register( 'NumberLineNode', NumberLineNode );
@@ -115,24 +137,14 @@ define( function( require ) {
       // remove all existing markers
       this.graphMarkerLayerNode.removeAllChildren();
 
-      var itemData = this.numberLine.itemDataProperty.value;
-
       // get the current array for the item type
-      var editableItemExists = false;
-      var itemArray = this.numberLine.getItemsWithType( itemData.type );
+      var itemArray = this.getItemArray();
       itemArray.forEach( function( item ) {
-        if( item.editable ) {
-          editableItemExists = true;
-        }
         self.createItemMarker( item );
       } );
 
-      // create an editable marker
-      if( !editableItemExists ) {
-        var editItem = this.numberLine.createItem( this.numberLine.itemDataProperty.value, -1 );
-        editItem.editable = true;
-        self.createItemMarker( editItem );
-      }
+      // Create an editable marker (if needed)
+      this.createEditMarker();
     },
 
     /**
@@ -141,27 +153,138 @@ define( function( require ) {
      */
     createItemMarker: function( item ) {
 
+      var self = this;
+
       var x = this.origin.x;
       var y = this.origin.y;
 
-      // calc position
-      if( item.count > 0  ) {
-        var countPercent = item.count / ( ShoppingConstants.MAX_ITEMS );
+      // make marker node
+      var markerNode = new NumberLineMarkerNode( item, new Vector2( x, y ), this.keypad, {
+        draggable:  false,
+        centerX:    x,
+        centerY:    y,
+        lineHeight: 40,
+        stroke:     'black',
+        lineWidth:  1.25
+      } );
+
+      // check answers on user input
+      Property.multilink( [ markerNode.item.costQnA.valueProperty, markerNode.item.unitQnA.valueProperty ],
+        function( costProperty, unitProperty ) {
+          self.updateItemMarkerPosition( markerNode );
+          self.createEditMarker();
+      } );
+
+      this.addMarker( markerNode );
+    },
+
+    /**
+     *
+     * @private
+     */
+    createEditMarker: function( ) {
+
+      // get the current array for the item type
+      var itemArray = this.getItemArray();
+
+      // get the editable marker
+      var editableItems = itemArray.filter( function( item ) {
+          return item.editable;
+      } );
+
+      // create an editable marker
+      if( editableItems.length === 0 ) {
+        var editItem = this.numberLine.createItem( this.numberLine.itemDataProperty.value, -1, true );
+        this.createItemMarker( editItem );
+      }
+
+      // update undo button visibility
+      this.updateUndoVisibility();
+    },
+
+    /**
+     *
+     * @private
+     */
+    removeEditMarker: function( ) {
+
+      var editMarker = this.getEditMarker();
+
+      // get the current array for the item type
+      var itemArray = this.getItemArray();
+
+      itemArray.remove( editMarker );
+    },
+
+    /**
+     *
+     * @private
+     */
+    getEditMarker: function( ) {
+
+      // get the current array for the item type
+      var itemArray = this.getItemArray();
+      var editableItems = itemArray.filter( function( item ) {
+          return item.editable;
+      } );
+      assert && assert( (editableItems.length === 1 ), 'multiple editable number line markers' );
+
+      var editMarker = editableItems.pop();
+
+      return editMarker;
+    },
+
+    /**
+     *
+     * @private
+     */
+    updateUndoVisibility: function( ) {
+
+      // If the editable marker is on the number line show the undo button
+      var editMarker = this.getEditMarker();
+      this.undoEditButtonNode.visible = ( editMarker.count > 0 );
+    },
+
+    /**
+     *
+     * @private
+     */
+    updateItemMarkerPosition: function( markerNode ) {
+      console.log('updateItemEditableMarker: ' + markerNode.item.count);
+
+      var x     = markerNode.item.positionProperty.value.x;
+      var y     = markerNode.item.positionProperty.value.y;
+      var count = markerNode.item.count;
+
+      // calc X position based on the item count
+      if( count > 0 ) {
+        var countPercent =  count / ShoppingConstants.MAX_ITEMS;
         if ( countPercent >= 0 && countPercent <= 1.0 ) {
           x =  ( ( 1.0 - countPercent ) * this.origin.x ) + ( this.graphBounds.maxX * countPercent );
         }
       }
+      //
+      else if ( markerNode.item.editable &&  markerNode.item.positionProperty.value.x === this.origin.x ) {
+        x = EDITABLE_MARKER_X;
+      }
 
-      // make marker node
-      var markerNode = new NumberLineMarkerNode( item, new Vector2( x, y ), this.keypad, {
-        centerX: x,
-        centerY: y,
-        lineHeight: 40,
-        stroke: 'black',
-        lineWidth: 1.25
-      } );
+      markerNode.item.positionProperty.value = new Vector2( x, y );
+    },
 
-      this.addMarker( markerNode );
+    /**
+     *
+     * @private
+     */
+    getItemArray: function( ) {
+
+      // get the current item type
+      var itemData = this.numberLine.itemDataProperty.value;
+
+      // get the current array for the item type
+      var itemArray = this.numberLine.getItemsWithType( itemData.type );
+      assert && assert( (itemArray !== null ), 'multiple editable number line markers' );
+
+      return itemArray;
     },
 
     /**
@@ -177,7 +300,7 @@ define( function( require ) {
 
       URNumberLineNode.prototype.removeAllMarkers.call( this );
 
-      // add an editable marker
+      // add back an editable marker
       this.populate();
     },
 
