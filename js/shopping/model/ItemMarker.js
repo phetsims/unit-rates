@@ -28,6 +28,7 @@ define( function( require ) {
     var correctCost = ( count * data.rate );
     var correctUnit = ( count * ( data.isCandy ? data.weight : 1 ) );
 
+    // @public
     this.costQnA = new QuestionAnswer( correctCost );
     this.unitQnA = new QuestionAnswer( correctUnit );
 
@@ -40,9 +41,9 @@ define( function( require ) {
     this.costQnA.valueProperty.lazyLink( function( value, oldValue ) {
       var allCorrect = self.checkCorrectAnswers();
       if( !allCorrect && value > 0 ) {
-        self.costQnA.answerValue = value;
+        self.costQnA.answerValue = Number( value );
         self.unitQnA.answerValue = value / self.rate;
-        self.unitQnA.valueProperty.set( 0 );
+        self.unitQnA.valueProperty.set( Number( 0 ) );
         self.count = value / self.rate;
       }
     } );
@@ -50,10 +51,10 @@ define( function( require ) {
     this.unitQnA.valueProperty.lazyLink( function( value, oldValue ) {
       var allCorrect = self.checkCorrectAnswers();
       if( !allCorrect && value > 0 ) {
-        self.unitQnA.answerValue = value;
+        self.unitQnA.answerValue = Number( value );
         self.costQnA.answerValue = value * self.rate;
-        self.costQnA.valueProperty.set( 0 );
-        self.count = value;
+        self.costQnA.valueProperty.set( Number( 0 ) );
+        self.count = Number( value );
       }
     } );
   }
@@ -62,9 +63,29 @@ define( function( require ) {
 
   return inherit( Item, ItemMarker, {
 
+    /**
+     * Changes various color/visibility attributes based on the users answer
+     * @public
+     */
+    reset: function() {
+
+      self.count = Number( -1 );
+
+      self.costQnA.answerValue = Number( 0 );
+      self.costQnA.valueProperty.value = Number( 0 );
+
+      self.unitQnA.answerValue = Number( 0 );
+      self.unitQnA.valueProperty.value = Number( 0 );
+    },
+
+    /**
+     * Changes various color/visibility attributes based on the users answer
+     * @protected
+     */
     checkCorrectAnswers: function() {
 
       var allCorrect = ( this.costQnA.isAnswerCorrect() && this.unitQnA.isAnswerCorrect() );
+
       this.editable = !allCorrect;
 
       return allCorrect;

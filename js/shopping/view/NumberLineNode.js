@@ -46,7 +46,7 @@ define( function( require ) {
   function NumberLineNode( numberLine, keypad, options ) {
 
     options = _.extend( {
-      yAxisOffset:  45
+      yAxisOffset:  50
     }, options || {} );
 
     var self          = this;
@@ -58,6 +58,7 @@ define( function( require ) {
     // undo button
     this.undoEditButtonNode = new CurvedArrowButton( {
       visible: false,
+      baseColor: '#f2f2f2',
       headWidth: 8,
       headHeight: 8,
       tailWidth: 5,
@@ -163,16 +164,15 @@ define( function( require ) {
         draggable:  false,
         centerX:    x,
         centerY:    y,
-        lineHeight: 40,
         stroke:     'black',
         lineWidth:  1.25
       } );
 
-      // check answers on user input
+      // update on top/bottom values changes
       Property.multilink( [ markerNode.item.costQnA.valueProperty, markerNode.item.unitQnA.valueProperty ],
         function( costProperty, unitProperty ) {
           self.updateItemMarkerPosition( markerNode );
-          self.createEditMarker();
+          self.createEditMarker();  // if needed
       } );
 
       this.addMarker( markerNode );
@@ -184,18 +184,11 @@ define( function( require ) {
      */
     createEditMarker: function( ) {
 
-      // get the current array for the item type
-      var itemArray = this.getItemArray();
-
-      // get the editable marker
-      var editableItems = itemArray.filter( function( item ) {
-          return item.editable;
-      } );
-
-      // create an editable marker
-      if( editableItems.length === 0 ) {
+      var editMarker = this.getEditMarker();
+      if( editMarker === null ) {
         var editItem = this.numberLine.createItem( this.numberLine.itemDataProperty.value, -1, true );
         this.createItemMarker( editItem );
+        this.keypad.clear();
       }
 
       // update undo button visibility
@@ -209,11 +202,11 @@ define( function( require ) {
     removeEditMarker: function( ) {
 
       var editMarker = this.getEditMarker();
-
-      // get the current array for the item type
-      var itemArray = this.getItemArray();
-
-      itemArray.remove( editMarker );
+      if ( editMarker !== null ) {
+        // get the current array for the item type
+        var itemArray = this.getItemArray();
+        itemArray.remove( editMarker );
+      }
     },
 
     /**
@@ -222,14 +215,19 @@ define( function( require ) {
      */
     getEditMarker: function( ) {
 
+      var editMarker = null;
+
       // get the current array for the item type
       var itemArray = this.getItemArray();
       var editableItems = itemArray.filter( function( item ) {
           return item.editable;
       } );
-      assert && assert( (editableItems.length === 1 ), 'multiple editable number line markers' );
+      assert && assert( (editableItems.length <= 1 ), 'multiple editable number line markers' );
 
-      var editMarker = editableItems.pop();
+      // if there's an editMarker (which there always should be) return it
+      if( editableItems.length > 0 ) {
+        editMarker = editableItems.pop();
+      }
 
       return editMarker;
     },
@@ -250,7 +248,6 @@ define( function( require ) {
      * @private
      */
     updateItemMarkerPosition: function( markerNode ) {
-      console.log('updateItemEditableMarker: ' + markerNode.item.count);
 
       var x     = markerNode.item.positionProperty.value.x;
       var y     = markerNode.item.positionProperty.value.y;

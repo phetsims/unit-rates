@@ -95,6 +95,7 @@ define( function( require ) {
     var scaleRemoveButtonNode = new CurvedArrowButton( {
       right:  this.scaleNode.left - PANEL_SPACING,
       bottom: this.scaleNode.bottom,
+      baseColor: '#f2f2f2',
       listener: function() {
 
         // reset the current item type - remove scale items & re-populate shelf items

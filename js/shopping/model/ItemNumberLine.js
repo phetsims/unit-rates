@@ -58,20 +58,36 @@ define( function( require ) {
      * @override @public
      */
      addItem: function( item ) {
-      var itemArray = this.getItemsWithType( item.type );
-      if( !itemArray.contains( item ) ) {
 
-        var itemExists = false;
+      var itemArray = this.getItemsWithType( item.type );
+      if( !this.containsItem( item ) ) {
+        itemArray.add( item );
+      }
+    },
+
+    /**
+     *
+     * @param {Item} item
+     * @return {boolean}
+     * @public
+     */
+    containsItem: function( item ) {
+
+      var itemArray = this.getItemsWithType( item.type );
+
+      var itemExists = false;
+      if( itemArray.contains( item ) ) {
+        itemExists = true;
+      }
+      else {
         itemArray.forEach( function( existingItem ) {
           if( item.isEqual( existingItem ) ) {
             itemExists = true;
           }
         } );
-
-        if( !itemExists ) {
-          itemArray.add( item );
-        }
       }
+
+      return itemExists;
     },
 
     /**

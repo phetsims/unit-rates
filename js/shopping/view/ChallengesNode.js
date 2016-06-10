@@ -90,7 +90,7 @@ define( function( require ) {
         preValueString: currencySymbolString,
         decimalPlaces: 2,
         showUnitText: true,
-        correctTextColor:  'rgba(0,192,0,1)'  // Unit rate correct answer is always green.
+        correctTextColor:  'rgba(0,192,0,1)'   // Unit rate correct answer is always green.
       } );
       this.contentNode.addChild( questionNode0  );
 

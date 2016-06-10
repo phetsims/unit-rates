@@ -34,7 +34,7 @@ define( function( require ) {
 
      options = _.extend( {
       graphWidth:         675,
-      graphHeight:        165,
+      graphHeight:        160,
       xAxisOffset:        10,
       yAxisOffset:        0,
       axisArrowSize:      5,
@@ -58,15 +58,15 @@ define( function( require ) {
     // layer holding all the markers
     this.graphMarkerLayerNode = new Path( new Shape().rect(
       0, 0, options.graphWidth, options.graphHeight ), {
-      stroke: 'red',  // debugging
+      //stroke: 'red',  // debugging
       lineWidth: 1
     } );
     contentNode.addChild( this.graphMarkerLayerNode );
 
     // axis lines
     var xZeroLine = new Path( new Shape()
-        .moveTo( options.yAxisOffset, this.origin.y + options.graphHeight / 4 )
-        .lineTo( options.yAxisOffset, this.origin.y - options.graphHeight / 4 ), {
+        .moveTo( options.yAxisOffset, this.origin.y + options.graphHeight / 5 )
+        .lineTo( options.yAxisOffset, this.origin.y - options.graphHeight / 5 ), {
       stroke: 'black',
       lineWidth: 1.25
     } );

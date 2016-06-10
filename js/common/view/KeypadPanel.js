@@ -110,6 +110,8 @@ define( function( require ) {
      */
     setListeners: function( onSubmit, onListenerChanged) {
 
+      this.clear();
+
       if( this.onSubmit ) {
         this.checkButton.removeListener( this.onSubmit );
       }

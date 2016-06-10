@@ -26,12 +26,12 @@ define( function( require ) {
   /**
    *
    * @param {KeypadPanel} keypad
-   * @param {ChallengeQuestionAnswer} qna
+   * @param {Property} valueProperty
    * @param {string} pattern
    * @param {Object} [options]
    * @constructor
    */
-  function AnswerNumberDisplayNode( keypad, qna, pattern, options ) {
+  function EditNumberDisplayNode( keypad, valueProperty, pattern, options ) {
 
     options = _.extend( {
       preNumberString:      '',
@@ -41,12 +41,9 @@ define( function( require ) {
       decimalPlaces:        2,
       buttonPosition:       'left',
       buttonSpacing:        0,
-      defaultTextColor:     'rgba(0,0,0,0)',
-      correctTextColor:     'rgba(0,0,0,1)',
-      incorrectTextColor:   'rgba(255,0,0,1)',
-      defaultBorderColor:   'rgba(0,0,0,0)',
-      correctBorderColor:   'rgba(0,0,0,0)',
-      incorrectBorderColor: 'rgba(0,0,0,1)',
+      textColor:            'rgba(0,0,0,1)',
+      borderColor:          'rgba(0,0,0,1)',
+      backgroundColor:      'rgba(255,255,255,1)',
       focusBorderColor:     'rgba(230,132,5,1)'
     },  options || {} );
     assert && assert( !options.children, 'additional children not supported' );
@@ -55,16 +52,13 @@ define( function( require ) {
 
     this.keypad         = keypad;
     this.hasKeypadFocus = false;
-    this.qna            = qna;
+    this.valueProperty  = valueProperty;
 
     // colors
-    this.defaultTextColor     = options.defaultTextColor;
-    this.correctTextColor     = options.correctTextColor;
-    this.incorrectTextColor   = options.incorrectTextColor;
-    this.defaultBorderColor   = options.defaultBorderColor;
-    this.focusBorderColor     = options.focusBorderColor;
-    this.correctBorderColor   = options.correctBorderColor;
-    this.incorrectBorderColor = options.incorrectBorderColor;
+    this.textColor        = options.textColor;
+    this.borderColor      = options.borderColor;
+    this.backgroundColor  = options.backgroundColor;
+    this.focusBorderColor = options.focusBorderColor;
 
     //  NumberDisplay options
     var numberDisplayOptions = {
@@ -73,12 +67,12 @@ define( function( require ) {
       yMargin: 2,
       decimalPlaces: options.decimalPlaces,
       maxWidth: TEXT_MAX_WIDTH,
-      numberFill: this.correctTextColor,
-      backgroundStroke: this.correctTextColor,
-      backgroundFill: 'rgba(0,0,0,0)',
+      numberFill: this.textColor,
+      backgroundStroke: this.borderColor,
+      backgroundFill: this.backgroundColor,
       pickable: false
     };
-    this.numberDisplay = new NumberDisplay( this.qna.valueProperty, options.numberRange, '', pattern, numberDisplayOptions );
+    this.numberDisplay = new NumberDisplay( valueProperty, options.numberRange, '', pattern, numberDisplayOptions );
 
     var editButtonOptions = {
       content:TEMP_EDIT_BUTTON_CONTENT,
@@ -88,52 +82,90 @@ define( function( require ) {
         self.showKeypad();
     } };
 
-    if( options.buttonPosition === 'left') {
+    if( options.buttonPosition === 'left' ) {
       editButtonOptions = _.extend( {
         right: this.numberDisplay.left - options.buttonSpacing,
         centerY: this.numberDisplay.centerY
       }, editButtonOptions );
     }
-    else if( options.buttonPosition === 'right') {
+    else if( options.buttonPosition === 'right' ) {
       editButtonOptions = _.extend( {
         left: this.numberDisplay.right + options.buttonSpacing,
         centerY: this.numberDisplay.centerY
       }, editButtonOptions );
     }
-    else if( options.buttonPosition === 'top') {
+    else if( options.buttonPosition === 'top' ) {
       editButtonOptions = _.extend( {
         centerX: this.numberDisplay.centerX,
         bottom: this.numberDisplay.top - options.buttonSpacing
       }, editButtonOptions );
     }
-    else if( options.buttonPosition === 'bottom') {
+    else if( options.buttonPosition === 'bottom' ) {
       editButtonOptions = _.extend( {
         centerX: this.numberDisplay.centerX,
         top: this.numberDisplay.bottom + options.buttonSpacing
       }, editButtonOptions );
     }
     else {
-      assert && assert( true, 'invalid buttonPosition for AnswerNumberDisplayNode' );
+      assert && assert( true, 'invalid buttonPosition for EditNumberDisplayNode' );
     }
 
     this.editButton = new RectangularPushButton( editButtonOptions );
     options.children = [ this.editButton, this.numberDisplay ];
 
     Node.call( this, options );
-
-    // check answers on user input
-    this.qna.valueProperty.link( function( value, oldValue ) {
-      self.updateEditState();
-    } );
   }
 
-  unitRates.register( 'AnswerNumberDisplayNode', AnswerNumberDisplayNode );
+  unitRates.register( 'EditNumberDisplayNode', EditNumberDisplayNode );
 
-  return inherit( Node, AnswerNumberDisplayNode, {
+  return inherit( Node, EditNumberDisplayNode, {
+
+    /**
+     *
+     * @public
+     */
+    setTextColor: function( color ) {
+      this.textColor = color;
+      this.numberDisplay.setNumberFill( this.textColor );
+    },
+
+    /**
+     *
+     * @public
+     */
+    setBorderColor: function( color ) {
+      this.borderColor = color;
+      this.numberDisplay.setBackgroundStroke( this.borderColor );
+    },
+
+     /**
+     *
+     * @public
+     */
+    setBackgroundColor: function( color ) {
+      this.backgroundColor = color;
+      this.numberDisplay.setBackgroundFill( this.backgroundColor );
+    },
 
     /**
      * Makes the keypad visible and links up it's listeners
-     * @protected
+     * @public
+     */
+    showEditButton: function() {
+      this.editButton.visible = true;
+    },
+
+    /**
+     * Makes the keypad visible and links up it's listeners
+     * @public
+     */
+    hideEditButton: function() {
+      this.editButton.visible = false;
+    },
+
+    /**
+     * Makes the keypad visible and links up it's listeners
+     * @public
      */
     showKeypad: function() {
 
@@ -146,12 +178,12 @@ define( function( require ) {
       // FIXME:
       this.keypad.setListeners( function() {
           // onSubmit
-          self.qna.valueProperty.value = self.keypad.getValue();
-          self.updateEditState();
+          self.valueProperty.value = self.keypad.getValue();
+          self.keypad.clear();
         }, function() {
           // onListenerChanged
           self.hasKeypadFocus = false;
-          self.updateEditState();
+          self.numberDisplay.setBackgroundStroke( self.borderColor );
         }
       );
 
@@ -161,35 +193,18 @@ define( function( require ) {
 
     /**
      * Hides the keypad and unlinks
-     * @protected
+     * @public
      */
     hideKeypad: function() {
       this.keypad.visible = false;
     },
 
     /**
-     * Changes various color/draggable attributes based on whether the display has keyboard focus
-     * and if edited values are correct or.
-     * @protected
+     *
+     * @public
      */
-    updateEditState: function() {
-
-      // Check for correct answer
-      if( this.qna.isAnswerCorrect() ) {
-        // set correct display attributes
-        this.editButton.visible = false;
-        this.numberDisplay.setNumberFill( this.correctTextColor );
-        this.numberDisplay.setBackgroundStroke( this.correctBorderColor );
-
-        // dismiss the keypad
-        this.hideKeypad();
-      }
-      else {
-        // set 'incorrect' display attributes
-        this.editButton.visible = true;
-        this.numberDisplay.setNumberFill( this.qna.isAnswerZero() ? this.defaultTextColor : this.incorrectTextColor );
-        this.numberDisplay.setBackgroundStroke( this.hasKeypadFocus ? this.focusBorderColor : this.incorrectBorderColor );
-      }
+    hasKeypadFocus: function() {
+      return this.hasKeypadFocus;
     }
 
   } );  // define
