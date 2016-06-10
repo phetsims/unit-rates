@@ -133,6 +133,10 @@ define( function( require ) {
         this.challengeText.setFill( this.correctTextColor );
         this.unitText.setFill( this.correctTextColor );
         this.unitLine.setStroke( this.correctTextColor );
+
+        // reset the keypad
+        this.keypad.visible = false;
+        this.keypad.clear();
       }
       else if( !this.qna.isAnswerZero() ) {
         this.faceNode.frown();

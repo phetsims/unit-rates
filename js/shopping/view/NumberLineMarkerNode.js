@@ -13,17 +13,21 @@ define( function( require ) {
   var EditNumberDisplayNode = require( 'UNIT_RATES/common/view/EditNumberDisplayNode' );
   var ItemNode = require( 'UNIT_RATES/shopping/view/ItemNode' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Shape = require( 'KITE/Shape' );
   var Property = require( 'AXON/Property' );
 
   // constants
-  var LINE_HEIGHT           = 35;
-  var EDIT_LINE_HEIGHT      = 18;
+  var LARGE_LINE_HEIGHT     = 35;
+  var SMALL_LINE_HEIGHT     = 18;
   var EDIT_BUTTON_MARGIN    = 5;
+  var EDIT_BORDER_COLOR     = 'rgba(0,0,0,1)';
+  var PRECISION_TEXT_COLOR  = 'rgba(128,128,128,1)';
   var DEFAULT_TEXT_COLOR    = 'rgba(0,0,0,1)';
   var DEFAULT_BORDER_COLOR  = 'rgba(0,0,0,0)';
-  var ZERO_TEXT_COLOR       = 'rgba(0,0,0,0)';
-  var EDIT_BORDER_COLOR     = 'rgba(0,0,0,1)';
+  var TRANSPARENT_COLOR     = 'rgba(0,0,0,0)';
+  var LARGE_FONT            = new PhetFont( 11 );
+  var SMALL_FONT            = new PhetFont( 9 );
 
   // strings
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
@@ -37,7 +41,9 @@ define( function( require ) {
   function NumberLineMarkerNode( item, position, keypad, options ) {
 
     options = _.extend( {
-      lineWidth: 1.25
+      topDecimalPlaces:     2,
+      bottomDecimalPlaces:  1,
+      lineWidth:            1.25
     }, options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
@@ -48,28 +54,29 @@ define( function( require ) {
     this.keypad = keypad;
 
     // top label - cost
-    var topPattern =  currencySymbolString + '{0}';
+    var topPattern =  currencySymbolString + '{0} ';
     this.topNumberDisplay = new EditNumberDisplayNode( keypad, this.item.costQnA.valueProperty, topPattern, {
         centerX: -2,
-        bottom: -EDIT_LINE_HEIGHT,
-        decimalPlaces: 2,
+        bottom: -SMALL_LINE_HEIGHT,
+        decimalPlaces: options.topDecimalPlaces,
         buttonPosition: 'top',
         buttonSpacing: EDIT_BUTTON_MARGIN,
         textColor: DEFAULT_TEXT_COLOR,
-        borderColor: DEFAULT_BORDER_COLOR
+        borderColor: EDIT_BORDER_COLOR,
+        font: SMALL_FONT
     } );
 
     this.smallLineShape = new Shape()
-      .moveTo( 0, -EDIT_LINE_HEIGHT )
-      .lineTo( 0,  EDIT_LINE_HEIGHT );
+      .moveTo( 0, -SMALL_LINE_HEIGHT )
+      .lineTo( 0,  SMALL_LINE_HEIGHT );
     this.largeLineShape = new Shape()
-      .moveTo( 0, -LINE_HEIGHT )
-      .lineTo( 0,  LINE_HEIGHT );
+      .moveTo( 0, -LARGE_LINE_HEIGHT )
+      .lineTo( 0,  LARGE_LINE_HEIGHT );
 
     this.markerLine = new Path( this.smallLineShape, {
         centerX: 0,
         centerY: 0,
-        stroke: 'black',
+        stroke: DEFAULT_TEXT_COLOR,
         lineWidth: options.lineWidth,
         pickable: false
       } );
@@ -78,12 +85,13 @@ define( function( require ) {
     var bottomPattern =  ' {0}  ';
     this.bottomNumberDisplay = new EditNumberDisplayNode( keypad, this.item.unitQnA.valueProperty, bottomPattern, {
         centerX: -2,
-        top: EDIT_LINE_HEIGHT,
-        decimalPlaces: 1,
+        top: SMALL_LINE_HEIGHT,
+        decimalPlaces: options.bottomDecimalPlaces,
         buttonPosition: 'bottom',
         buttonSpacing: EDIT_BUTTON_MARGIN,
         textColor: DEFAULT_TEXT_COLOR,
-        borderColor: DEFAULT_BORDER_COLOR
+        borderColor: EDIT_BORDER_COLOR,
+        font: SMALL_FONT
     } );
 
     // add all child nodes
@@ -111,21 +119,37 @@ define( function( require ) {
 
       if( !this.item.editable ) {
 
-        //var countPrecision = this.getPrecision( this.item.count );
-        //this.markerLine.stroke = 'gray';
+        var countPrecision = this.getPrecision( this.item.count );
+        var isCandy = this.item.isCandy();
+        if( ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) ) {
 
-        // layout
-        this.markerLine.setShape(this.largeLineShape);
-        this.topNumberDisplay.bottom  = -LINE_HEIGHT;
-        this.bottomNumberDisplay.top  =  LINE_HEIGHT;
+          // text/line color
+          this.markerLine.stroke = PRECISION_TEXT_COLOR;
+          this.topNumberDisplay.setTextColor( PRECISION_TEXT_COLOR );
+          this.bottomNumberDisplay.setTextColor( PRECISION_TEXT_COLOR );
+
+          this.topNumberDisplay.setBackgroundColor( TRANSPARENT_COLOR );
+          this.bottomNumberDisplay.setBackgroundColor( TRANSPARENT_COLOR );
+        }
+        else {
+
+          // layout
+          this.markerLine.setShape(this.largeLineShape);
+          this.topNumberDisplay.bottom  = -LARGE_LINE_HEIGHT;
+          this.bottomNumberDisplay.top  =  LARGE_LINE_HEIGHT;
+
+          // text color
+          this.topNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
+          this.bottomNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
+
+          // font
+          this.topNumberDisplay.setFont( LARGE_FONT );
+          this.bottomNumberDisplay.setFont( LARGE_FONT );
+        }
 
         // edit button
         this.topNumberDisplay.hideEditButton();
         this.bottomNumberDisplay.hideEditButton();
-
-        // text color
-        this.topNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
-        this.bottomNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
 
         // border color
         this.topNumberDisplay.setBorderColor( DEFAULT_BORDER_COLOR );
@@ -138,14 +162,14 @@ define( function( require ) {
 
         // text color
         if( this.item.costQnA.isAnswerZero() ) {
-          this.topNumberDisplay.setTextColor( ZERO_TEXT_COLOR );
+          this.topNumberDisplay.setTextColor( TRANSPARENT_COLOR );
         }
         else {
           this.topNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
         }
 
         if( this.item.unitQnA.isAnswerZero() ) {
-          this.bottomNumberDisplay.setTextColor( ZERO_TEXT_COLOR );
+          this.bottomNumberDisplay.setTextColor( TRANSPARENT_COLOR );
         }
         else {
           this.bottomNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
@@ -163,6 +187,7 @@ define( function( require ) {
 
     /**
      *
+     * @return {number}
      * @protected
      */
     getPrecision: function( value ) {

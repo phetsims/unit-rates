@@ -66,7 +66,6 @@ define( function( require ) {
       centerY: this.centerY - 8,
       listener: function() {
         self.removeEditMarker();
-        self.populate();
         self.undoEditButtonNode.visible = false;
       }
     } );
@@ -141,7 +140,7 @@ define( function( require ) {
       // get the current array for the item type
       var itemArray = this.getItemArray();
       itemArray.forEach( function( item ) {
-        self.createItemMarker( item );
+        self.createItemMarkerNode( item );
       } );
 
       // Create an editable marker (if needed)
@@ -150,9 +149,10 @@ define( function( require ) {
 
     /**
      *
+     * @return {NumberLineMarkerNode}
      * @private
      */
-    createItemMarker: function( item ) {
+    createItemMarkerNode: function( item ) {
 
       var self = this;
 
@@ -165,8 +165,10 @@ define( function( require ) {
         centerX:    x,
         centerY:    y,
         stroke:     'black',
-        lineWidth:  1.25
+        lineWidth:  1.25,
+        bottomDecimalPlaces: ( item.isCandy() ? 2 : 1 )
       } );
+      this.addMarker( markerNode );
 
       // update on top/bottom values changes
       Property.multilink( [ markerNode.item.costQnA.valueProperty, markerNode.item.unitQnA.valueProperty ],
@@ -175,7 +177,12 @@ define( function( require ) {
           self.createEditMarker();  // if needed
       } );
 
-      this.addMarker( markerNode );
+      // make edit markers always on top: FIXME: this doesn't do anything
+      if( item.editable ) {
+        markerNode.moveToBack();
+      }
+
+      return markerNode;
     },
 
     /**
@@ -187,7 +194,10 @@ define( function( require ) {
       var editMarker = this.getEditMarker();
       if( editMarker === null ) {
         var editItem = this.numberLine.createItem( this.numberLine.itemDataProperty.value, -1, true );
-        this.createItemMarker( editItem );
+        this.createItemMarkerNode( editItem );
+
+        // reset the kepad
+        this.keypad.visible = false;
         this.keypad.clear();
       }
 
@@ -207,10 +217,13 @@ define( function( require ) {
         var itemArray = this.getItemArray();
         itemArray.remove( editMarker );
       }
+
+      this.populate();
     },
 
     /**
      *
+     * @return {ItemMarker}
      * @private
      */
     getEditMarker: function( ) {

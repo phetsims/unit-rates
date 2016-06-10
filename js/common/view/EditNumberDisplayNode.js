@@ -124,6 +124,14 @@ define( function( require ) {
      *
      * @public
      */
+    setFont: function( font ) {
+      this.numberDisplay.setNumberFont( font );
+    },
+
+    /**
+     *
+     * @public
+     */
     setTextColor: function( color ) {
       this.textColor = color;
       this.numberDisplay.setNumberFill( this.textColor );
