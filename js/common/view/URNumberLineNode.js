@@ -34,7 +34,7 @@ define( function( require ) {
 
      options = _.extend( {
       graphWidth:         675,
-      graphHeight:        160,
+      graphHeight:        130,
       xAxisOffset:        10,
       yAxisOffset:        0,
       axisArrowSize:      5,
@@ -49,7 +49,7 @@ define( function( require ) {
     this.expandedProperty = new Property( true );
 
     // AccordionBox content
-    var contentNode = new Node();
+    this.contentNode = new Node();
 
     // @protected graph origin/bounds
     this.origin      = new Vector2( options.yAxisOffset, options.graphHeight / 2 );
@@ -61,7 +61,7 @@ define( function( require ) {
       //stroke: 'red',  // debugging
       lineWidth: 1
     } );
-    contentNode.addChild( this.graphMarkerLayerNode );
+    this.contentNode.addChild( this.graphMarkerLayerNode );
 
     // axis lines
     var xZeroLine = new Path( new Shape()
@@ -70,7 +70,7 @@ define( function( require ) {
       stroke: 'black',
       lineWidth: 1.25
     } );
-    contentNode.addChild( xZeroLine );
+    this.contentNode.addChild( xZeroLine );
 
     var arrowOptions =  {
         headHeight: options.axisArrowSize,
@@ -82,13 +82,13 @@ define( function( require ) {
                                       this.origin.y - options.xAxisOffset,
                                       options.graphWidth + options.axisArrowSize,
                                       this.origin.y - options.xAxisOffset, arrowOptions);
-    contentNode.addChild( topArrowNode );
+    this.contentNode.addChild( topArrowNode );
 
     var bottomArrowNode = new ArrowNode( options.yAxisOffset,
                                          this.origin.y + options.xAxisOffset,
                                          options.graphWidth + options.axisArrowSize,
                                          this.origin.y + options.xAxisOffset, arrowOptions);
-    contentNode.addChild( bottomArrowNode );
+    this.contentNode.addChild( bottomArrowNode );
 
     // arrow labels
     var labelOptions =  { font:options.axisLabelFont, maxWidth: options.axisLabelMaxWidth };
@@ -99,7 +99,7 @@ define( function( require ) {
         centerY: topArrowNode.centerY
       } )
      );
-    contentNode.addChild( this.topArrowLabel );
+    this.contentNode.addChild( this.topArrowLabel );
 
     // @protected
     this.bottomArrowLabel = new Text( 'bottom', _.extend( {}, labelOptions, {
@@ -107,7 +107,7 @@ define( function( require ) {
         centerY: bottomArrowNode.centerY
       } )
      );
-    contentNode.addChild( this.bottomArrowLabel );
+    this.contentNode.addChild( this.bottomArrowLabel );
 
     // erase
     var eraserButton = new EraserButton( {
@@ -118,9 +118,9 @@ define( function( require ) {
         self.removeAllMarkers();
       }
     });
-    contentNode.addChild( eraserButton );
+    this.contentNode.addChild( eraserButton );
 
-    AccordionBox.call( this, contentNode, {
+    AccordionBox.call( this, this.contentNode, {
       expandedProperty: this.expandedProperty,
       fill: 'white',
       cornerRadius: 10,

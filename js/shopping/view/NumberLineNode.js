@@ -63,17 +63,36 @@ define( function( require ) {
       headHeight: 8,
       tailWidth: 5,
       left: 8,
-      centerY: this.centerY - 8,
+      centerY: this.graphBounds.centerY,
       listener: function() {
         self.removeEditMarker();
         self.undoEditButtonNode.visible = false;
       }
     } );
-    this.addChild( this.undoEditButtonNode );
+    this.contentNode.addChild( this.undoEditButtonNode );
+
+    // undo button
+    this.fractionalMarker = null;
+    this.undoFractionalButtonNode = new CurvedArrowButton( {
+      visible: false,
+      baseColor: '#f2f2f2',
+      headWidth: 6,
+      headHeight: 6,
+      tailWidth: 2,
+      left: 5,
+      top: this.graphBounds.maxY,
+      listener: function() {
+        self.removeFractionalMarker();
+        self.undoFractionalButtonNode.visible = false;
+      }
+    } );
+    this.contentNode.addChild( this.undoFractionalButtonNode );
 
 
     // refresh on item change
     numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
+
+      self.undoFractionalButtonNode.visible = false;
 
       // set number line labels
       switch( itemData.type ) {
@@ -249,6 +268,23 @@ define( function( require ) {
      *
      * @private
      */
+    removeFractionalMarker: function( ) {
+
+      if( this.fractionalMarker !== null ) {
+
+        // get the current array for the item type
+        var itemArray = this.getItemArray();
+        itemArray.remove( this.fractionalMarker );
+        this.fractionalMarker = null;
+
+        this.populate();
+      }
+    },
+
+    /**
+     *
+     * @private
+     */
     updateUndoVisibility: function( ) {
 
       // If the editable marker is on the number line show the undo button
@@ -279,6 +315,14 @@ define( function( require ) {
       }
 
       markerNode.item.positionProperty.value = new Vector2( x, y );
+
+      var countPrecision = markerNode.item.getCountPrecision();
+      var isCandy = markerNode.item.isCandy();
+      if( !markerNode.item.editable && ( ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) ) ) {
+        this.undoFractionalButtonNode.visible = true;
+        this.undoFractionalButtonNode.centerX = markerNode.centerX;
+        this.fractionalMarker = markerNode.item;
+      }
     },
 
     /**
@@ -305,6 +349,8 @@ define( function( require ) {
 
       // Hide the keypad
       this.keypad.visible = false;
+
+      this.undoFractionalButtonNode.visible = false;
 
       this.numberLine.removeAllItemsWithType( this.numberLine.itemDataProperty.value.type );
 

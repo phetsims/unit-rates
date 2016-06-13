@@ -119,7 +119,7 @@ define( function( require ) {
 
       if( !this.item.editable ) {
 
-        var countPrecision = this.getPrecision( this.item.count );
+        var countPrecision = this.item.getCountPrecision();
         var isCandy = this.item.isCandy();
         if( ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) ) {
 
@@ -183,25 +183,6 @@ define( function( require ) {
           this.bottomNumberDisplay.setBorderColor( EDIT_BORDER_COLOR );
         }
       }
-    },
-
-    /**
-     *
-     * @return {number}
-     * @protected
-     */
-    getPrecision: function( value ) {
-
-      if ( !isFinite( value ) ) {
-        return 0;
-      }
-
-      var e = 1;
-      var p = 0;
-      while ( Math.round( value * e ) / e !== value ) {
-        e *= 10; p++;
-      }
-      return p;
     },
 
     // @public

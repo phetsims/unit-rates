@@ -89,6 +89,25 @@ define( function( require ) {
       this.editable = !allCorrect;
 
       return allCorrect;
+    },
+
+    /**
+     *
+     * @return {number}
+     * @protected
+     */
+    getCountPrecision: function() {
+
+      if ( !isFinite( this.count ) ) {
+        return 0;
+      }
+
+      var e = 1;
+      var p = 0;
+      while ( Math.round( this.count * e ) / e !== this.count ) {
+        e *= 10; p++;
+      }
+      return p;
     }
 
   } ); // inherit
