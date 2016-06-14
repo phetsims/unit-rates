@@ -72,7 +72,7 @@ define( function( require ) {
     this.contentNode.addChild( this.undoEditButtonNode );
 
     // undo button
-    this.fractionalMarker = null;
+    this.fractionalItemList = [];
     this.undoFractionalButtonNode = new CurvedArrowButton( {
       visible: false,
       baseColor: '#f2f2f2',
@@ -83,7 +83,7 @@ define( function( require ) {
       top: this.graphBounds.maxY,
       listener: function() {
         self.removeFractionalMarker();
-        self.undoFractionalButtonNode.visible = false;
+        self.undoFractionalButtonNode.visible = ( self.fractionalItemList.length > 0 );
       }
     } );
     this.contentNode.addChild( this.undoFractionalButtonNode );
@@ -270,12 +270,14 @@ define( function( require ) {
      */
     removeFractionalMarker: function( ) {
 
-      if( this.fractionalMarker !== null ) {
+      if( this.fractionalItemList.length > 0 ) {
+
+        // get the last item added
+        var fractionalItem = this.fractionalItemList.pop();
 
         // get the current array for the item type
         var itemArray = this.getItemArray();
-        itemArray.remove( this.fractionalMarker );
-        this.fractionalMarker = null;
+        itemArray.remove( fractionalItem );
 
         this.populate();
       }
@@ -321,7 +323,11 @@ define( function( require ) {
       if( !markerNode.item.editable && ( ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) ) ) {
         this.undoFractionalButtonNode.visible = true;
         this.undoFractionalButtonNode.centerX = markerNode.centerX;
-        this.fractionalMarker = markerNode.item;
+
+        // add new fractional item to list
+        if( this.fractionalItemList.indexOf( markerNode.item ) < 0 ) {
+          this.fractionalItemList.push( markerNode.item );
+        }
       }
     },
 
@@ -351,6 +357,7 @@ define( function( require ) {
       this.keypad.visible = false;
 
       this.undoFractionalButtonNode.visible = false;
+      this.fractionalItemList.length = 0;
 
       this.numberLine.removeAllItemsWithType( this.numberLine.itemDataProperty.value.type );
 
