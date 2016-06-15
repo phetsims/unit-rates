@@ -20,6 +20,7 @@ define( function( require ) {
 
   // constants
   var EDITABLE_MARKER_X = 25;
+  var UNDO_BUTTON_X     = 5;
 
   // strings
   var applesCapString = require( 'string!UNIT_RATES/applesCap' );
@@ -55,6 +56,8 @@ define( function( require ) {
 
     URNumberLineNode.call( this, options );
 
+    this.outOfRangeMarkerX = ( this.topArrowNode.right + this.topArrowLabel.left ) / 2;
+
     // undo button
     this.undoEditButtonNode = new CurvedArrowButton( {
       visible: false,
@@ -62,37 +65,18 @@ define( function( require ) {
       headWidth: 8,
       headHeight: 8,
       tailWidth: 5,
-      left: 8,
+      left: UNDO_BUTTON_X,
       centerY: this.graphBounds.centerY,
       listener: function() {
         self.removeEditMarker();
-        self.undoEditButtonNode.visible = false;
       }
     } );
     this.contentNode.addChild( this.undoEditButtonNode );
 
-    // undo button
-    this.fractionalItemList = [];
-    this.undoFractionalButtonNode = new CurvedArrowButton( {
-      visible: false,
-      baseColor: '#f2f2f2',
-      headWidth: 6,
-      headHeight: 6,
-      tailWidth: 2,
-      left: 5,
-      top: this.graphBounds.maxY,
-      listener: function() {
-        self.removeFractionalMarker();
-        self.undoFractionalButtonNode.visible = ( self.fractionalItemList.length > 0 );
-      }
-    } );
-    this.contentNode.addChild( this.undoFractionalButtonNode );
-
-
     // refresh on item change
     numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
 
-      self.undoFractionalButtonNode.visible = false;
+      self.undoItemNodeList = [];
 
       // set number line labels
       switch( itemData.type ) {
@@ -137,6 +121,8 @@ define( function( require ) {
         }
 
         self.populate();
+
+        // FIXME: rebuild undo stack?
     } );
 
   }
@@ -156,6 +142,9 @@ define( function( require ) {
       // remove all existing markers
       this.graphMarkerLayerNode.removeAllChildren();
 
+      // reset the undo stack
+      this.undoItemNodeList.length = 0;
+
       // get the current array for the item type
       var itemArray = this.getItemArray();
       itemArray.forEach( function( item ) {
@@ -163,7 +152,7 @@ define( function( require ) {
       } );
 
       // Create an editable marker (if needed)
-      this.createEditMarker();
+      this.addEditMarker();
     },
 
     /**
@@ -192,14 +181,16 @@ define( function( require ) {
       // update on top/bottom values changes
       Property.multilink( [ markerNode.item.costQnA.valueProperty, markerNode.item.unitQnA.valueProperty ],
         function( costProperty, unitProperty ) {
-          self.updateItemMarkerPosition( markerNode );
-          self.createEditMarker();  // if needed
+          self.updateItemMarker( markerNode );
+          self.addEditMarker();  // if needed
       } );
 
       // make edit markers always on top: FIXME: this doesn't do anything
       if( item.editable ) {
         markerNode.moveToBack();
       }
+
+      this.updateItemMarker( markerNode );
 
       return markerNode;
     },
@@ -208,11 +199,14 @@ define( function( require ) {
      *
      * @private
      */
-    createEditMarker: function( ) {
+    addEditMarker: function( ) {
 
       var editMarker = this.getEditMarker();
       if( editMarker === null ) {
+        // create a new editable item
         var editItem = this.numberLine.createItem( this.numberLine.itemDataProperty.value, -1, true );
+
+        // create a matching item marker node
         this.createItemMarkerNode( editItem );
 
         // reset the kepad
@@ -220,8 +214,7 @@ define( function( require ) {
         this.keypad.clear();
       }
 
-      // update undo button visibility
-      this.updateUndoVisibility();
+      this.updateUndoButton();
     },
 
     /**
@@ -230,14 +223,17 @@ define( function( require ) {
      */
     removeEditMarker: function( ) {
 
-      var editMarker = this.getEditMarker();
-      if ( editMarker !== null ) {
+      if( this.undoItemNodeList.length > 0 ) {
+
+        // get the last item added
+        var itemNode = this.undoItemNodeList.pop();
+
         // get the current array for the item type
         var itemArray = this.getItemArray();
-        itemArray.remove( editMarker );
-      }
+        itemArray.remove( itemNode.item );
 
-      this.populate();
+        this.populate();
+      }
     },
 
     /**
@@ -268,67 +264,85 @@ define( function( require ) {
      *
      * @private
      */
-    removeFractionalMarker: function( ) {
+    updateItemMarker: function( markerNode ) {
 
-      if( this.fractionalItemList.length > 0 ) {
+      var x           = markerNode.item.positionProperty.value.x;
+      var y           = markerNode.item.positionProperty.value.y;
+      var count       = markerNode.item.count;
+      var inUndoList  = ( this.undoItemNodeList.indexOf( markerNode ) >= 0 );
+      var isRemovable = this.isMarkerRemovable( markerNode );
 
-        // get the last item added
-        var fractionalItem = this.fractionalItemList.pop();
-
-        // get the current array for the item type
-        var itemArray = this.getItemArray();
-        itemArray.remove( fractionalItem );
-
-        this.populate();
-      }
-    },
-
-    /**
-     *
-     * @private
-     */
-    updateUndoVisibility: function( ) {
-
-      // If the editable marker is on the number line show the undo button
-      var editMarker = this.getEditMarker();
-      this.undoEditButtonNode.visible = ( editMarker.count > 0 );
-    },
-
-    /**
-     *
-     * @private
-     */
-    updateItemMarkerPosition: function( markerNode ) {
-
-      var x     = markerNode.item.positionProperty.value.x;
-      var y     = markerNode.item.positionProperty.value.y;
-      var count = markerNode.item.count;
-
-      // calc X position based on the item count
-      if( count > 0 ) {
-        var countPercent =  count / ShoppingConstants.MAX_ITEMS;
-        if ( countPercent >= 0 && countPercent <= 1.0 ) {
-          x =  ( ( 1.0 - countPercent ) * this.origin.x ) + ( this.graphBounds.maxX * countPercent );
-        }
-      }
-      //
-      else if ( markerNode.item.editable &&  markerNode.item.positionProperty.value.x === this.origin.x ) {
+      // new edit marker?
+      if ( markerNode.item.editable && markerNode.item.positionProperty.value.x === this.origin.x ) {
         x = EDITABLE_MARKER_X;
       }
+      else if( count > 0 ) {
 
-      markerNode.item.positionProperty.value = new Vector2( x, y );
+        // manage undo stack
+        if( !inUndoList && isRemovable ) {
+          this.undoItemNodeList.push( markerNode );
+        }
+        else if( inUndoList && !isRemovable ) {
+          this.undoItemNodeList.splice( this.undoItemNodeList.indexOf( markerNode ), 1 );
+        }
 
-      var countPrecision = markerNode.item.getCountPrecision();
-      var isCandy = markerNode.item.isCandy();
-      if( !markerNode.item.editable && ( ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) ) ) {
-        this.undoFractionalButtonNode.visible = true;
-        this.undoFractionalButtonNode.centerX = markerNode.centerX;
+        // calc X position based on the item count
+        var countPercent = count / ShoppingConstants.MAX_ITEMS;
 
-        // add new fractional item to list
-        if( this.fractionalItemList.indexOf( markerNode.item ) < 0 ) {
-          this.fractionalItemList.push( markerNode.item );
+        // off the number line?
+        if( countPercent > 1.0 ) {
+          x = this.outOfRangeMarkerX;
+          markerNode.outOfRangeProperty.set( true );
+        }
+        else if ( countPercent >= 0 ) {
+          x = ( ( 1.0 - countPercent ) * this.origin.x ) + ( this.graphBounds.maxX * countPercent );
+          markerNode.outOfRangeProperty.set( false );
         }
       }
+      markerNode.item.positionProperty.value = new Vector2( x, y );
+
+      this.updateUndoButton();
+    },
+
+    /**
+     *
+     * @private
+     */
+    updateUndoButton: function() {
+
+      // update undo button visibility
+      this.undoEditButtonNode.visible = ( this.undoItemNodeList.length > 0 );
+
+      if( this.undoEditButtonNode.visible ) {
+
+        // get the top marker on the undo stack
+        var markerNode = this.undoItemNodeList[ this.undoItemNodeList.length-1 ];
+
+        // move the undo button based on the marker's 'editability'
+        if( markerNode.item.editable ) {
+          // edit marker
+          this.undoEditButtonNode.left    = UNDO_BUTTON_X;
+          this.undoEditButtonNode.centerY = this.graphBounds.centerY;
+        }
+        else {
+          // position under marker node
+          this.undoEditButtonNode.centerX = markerNode.centerX;
+          this.undoEditButtonNode.top     = markerNode.bottom;
+        }
+
+      }
+    },
+
+    /**
+     *
+     * @private
+     */
+    isMarkerRemovable: function( markerNode ) {
+      var isCandy   = markerNode.item.isCandy();
+      var countPrecision = markerNode.item.getCountPrecision();
+      //console.log( ' E: ' + markerNode.item.editable + ' P: ' +  countPrecision );
+
+      return ( markerNode.item.editable || ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) );
     },
 
     /**
@@ -356,8 +370,7 @@ define( function( require ) {
       // Hide the keypad
       this.keypad.visible = false;
 
-      this.undoFractionalButtonNode.visible = false;
-      this.fractionalItemList.length = 0;
+      this.undoItemNodeList.length = 0;
 
       this.numberLine.removeAllItemsWithType( this.numberLine.itemDataProperty.value.type );
 
@@ -372,6 +385,7 @@ define( function( require ) {
      * @override @public
      */
     reset: function() {
+      this.removeAllMarkers();
       this.expandedProperty.reset();
     }
 

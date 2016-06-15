@@ -25,6 +25,7 @@ define( function( require ) {
   var PRECISION_TEXT_COLOR  = 'rgba(128,128,128,1)';
   var DEFAULT_TEXT_COLOR    = 'rgba(0,0,0,1)';
   var DEFAULT_BORDER_COLOR  = 'rgba(0,0,0,0)';
+  var RANGE_TEXT_COLOR      = 'rgba(255,0,0,1)';
   var TRANSPARENT_COLOR     = 'rgba(0,0,0,0)';
   var LARGE_FONT            = new PhetFont( 11 );
   var SMALL_FONT            = new PhetFont( 9 );
@@ -50,8 +51,9 @@ define( function( require ) {
     var self = this;
 
     // @public (readwrite)
-    this.item   = item;
-    this.keypad = keypad;
+    this.item       = item;
+    this.keypad     = keypad;
+    this.outOfRangeProperty = new Property( false );
 
     // top label - cost
     var topPattern =  currencySymbolString + '{0} ';
@@ -99,6 +101,10 @@ define( function( require ) {
 
     ItemNode.call( this, item, position, options );
 
+    this.outOfRangeProperty.link( function( value, oldValue ) {
+      self.checkEditable();
+    } );
+
     // check answers on user input
     Property.multilink( [ this.item.costQnA.valueProperty, this.item.unitQnA.valueProperty ],
       function( costProperty, unitProperty ) {
@@ -117,10 +123,13 @@ define( function( require ) {
      */
     checkEditable: function() {
 
+      // non-editable/locked marker
       if( !this.item.editable ) {
 
         var countPrecision = this.item.getCountPrecision();
         var isCandy = this.item.isCandy();
+
+        // fractional counts have different represenation than whole counts.
         if( ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) ) {
 
           // text/line color
@@ -135,8 +144,8 @@ define( function( require ) {
 
           // layout
           this.markerLine.setShape(this.largeLineShape);
-          this.topNumberDisplay.bottom  = -LARGE_LINE_HEIGHT;
-          this.bottomNumberDisplay.top  =  LARGE_LINE_HEIGHT;
+          this.topNumberDisplay.bottom = -LARGE_LINE_HEIGHT;
+          this.bottomNumberDisplay.top =  LARGE_LINE_HEIGHT;
 
           // text color
           this.topNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
@@ -156,6 +165,8 @@ define( function( require ) {
         this.bottomNumberDisplay.setBorderColor( DEFAULT_BORDER_COLOR );
       }
       else {
+        // editable marker
+
         // edit button
         this.topNumberDisplay.showEditButton();
         this.bottomNumberDisplay.showEditButton();
@@ -165,14 +176,14 @@ define( function( require ) {
           this.topNumberDisplay.setTextColor( TRANSPARENT_COLOR );
         }
         else {
-          this.topNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
+          this.topNumberDisplay.setTextColor( this.outOfRangeProperty.value ? RANGE_TEXT_COLOR : DEFAULT_TEXT_COLOR );
         }
 
         if( this.item.unitQnA.isAnswerZero() ) {
           this.bottomNumberDisplay.setTextColor( TRANSPARENT_COLOR );
         }
         else {
-          this.bottomNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
+          this.bottomNumberDisplay.setTextColor( this.outOfRangeProperty.value ? RANGE_TEXT_COLOR : DEFAULT_TEXT_COLOR );
         }
 
         // border color

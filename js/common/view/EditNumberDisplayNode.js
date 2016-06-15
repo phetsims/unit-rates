@@ -179,6 +179,10 @@ define( function( require ) {
 
       var self = this;
 
+      if( this.hasKeypadFocus ) {
+        return;
+      }
+
       this.hasKeypadFocus = true;
 
       this.numberDisplay.setBackgroundStroke( this.focusBorderColor );

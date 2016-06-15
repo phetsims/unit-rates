@@ -78,33 +78,33 @@ define( function( require ) {
         tailWidth:  .1,
         fill:       'black'
       };
-    var topArrowNode = new ArrowNode( options.yAxisOffset,
+    this.topArrowNode = new ArrowNode( options.yAxisOffset,
                                       this.origin.y - options.xAxisOffset,
                                       options.graphWidth + options.axisArrowSize,
                                       this.origin.y - options.xAxisOffset, arrowOptions);
-    this.contentNode.addChild( topArrowNode );
+    this.contentNode.addChild( this.topArrowNode );
 
-    var bottomArrowNode = new ArrowNode( options.yAxisOffset,
+    this.bottomArrowNode = new ArrowNode( options.yAxisOffset,
                                          this.origin.y + options.xAxisOffset,
                                          options.graphWidth + options.axisArrowSize,
                                          this.origin.y + options.xAxisOffset, arrowOptions);
-    this.contentNode.addChild( bottomArrowNode );
+    this.contentNode.addChild( this.bottomArrowNode );
 
     // arrow labels
-    var labelOptions =  { font:options.axisLabelFont, maxWidth: options.axisLabelMaxWidth };
+    var labelOptions = { font:options.axisLabelFont, maxWidth: options.axisLabelMaxWidth };
 
     // @protected
     this.topArrowLabel = new Text( 'top', _.extend( {}, labelOptions, {
-        left: topArrowNode.right + options.axisLabelSpacing,
-        centerY: topArrowNode.centerY
+        left: this.topArrowNode.right + options.axisLabelSpacing,
+        centerY: this.topArrowNode.centerY
       } )
      );
     this.contentNode.addChild( this.topArrowLabel );
 
     // @protected
     this.bottomArrowLabel = new Text( 'bottom', _.extend( {}, labelOptions, {
-        left: bottomArrowNode.right + options.axisLabelSpacing,
-        centerY: bottomArrowNode.centerY
+        left: this.bottomArrowNode.right + options.axisLabelSpacing,
+        centerY: this.bottomArrowNode.centerY
       } )
      );
     this.contentNode.addChild( this.bottomArrowLabel );

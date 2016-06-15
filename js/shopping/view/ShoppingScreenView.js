@@ -63,11 +63,11 @@ define( function( require ) {
 
     // challenges
     var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + PANEL_SPACING + SCREEN_HORIZONTAL_MARGIN );
-    var challengesNode = new ChallengesNode( model.challenges, this.keypad, challengeWidth, {
+    this.challengesNode = new ChallengesNode( model.challenges, this.keypad, challengeWidth, {
       left: this.numberLineNode.right + PANEL_SPACING,
       top:  this.layoutBounds.top + SCREEN_VERTICAL_MARGIN
     } );
-    this.addChild( challengesNode );
+    this.addChild( this.challengesNode );
 
     // keypad layout
     this.keypad.right = this.numberLineNode.right - 30;
@@ -114,6 +114,9 @@ define( function( require ) {
         self.hideKeypad();
 
         self.numberLineNode.reset();
+        self.scaleNode.reset();
+        self.shelfNode.reset();
+        self.challengesNode.reset();
 
         self.fruitItemDataProperty.reset();
         self.produceItemDataProperty.reset();
@@ -145,7 +148,7 @@ define( function( require ) {
     // scene buttons
     var sceneControlButtons = new SceneControlButtons( model, this.sceneModeProperty, {
       right:  this.layoutBounds.right - SCREEN_HORIZONTAL_MARGIN,
-      //centerX:  challengesNode.centerX,
+      //centerX:  this.challengesNode.centerX,
       bottom: resetAllButton.top - SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( sceneControlButtons );

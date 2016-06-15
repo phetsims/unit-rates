@@ -63,6 +63,16 @@ define( function( require ) {
 
   return inherit( Item, ItemMarker, {
 
+     /**
+     * Convenience function
+     * @param {Item} item
+     * @returns {boolean}
+     * @override @public
+     */
+    //isEqual: function( item ) {
+    //  return ( Item.prototype.isEqual.call( this, item ) && this.editable === item.editable );
+    //},
+
     /**
      * Changes various color/visibility attributes based on the users answer
      * @public
