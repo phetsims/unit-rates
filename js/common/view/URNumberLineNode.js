@@ -169,6 +169,13 @@ define( function( require ) {
     },
 
     /**
+     * @public
+     */
+    getAllMarkers: function() {
+      return this.graphMarkerLayerNode.getChildren();
+    },
+
+    /**
      * Applies a callback function to each marker in the number line
      * Note: Adding | deleting markers here is not allowed!
      *

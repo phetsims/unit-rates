@@ -20,8 +20,9 @@ define( function( require ) {
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
-  var CurvedArrowButton = require( 'UNIT_RATES/common/view/CurvedArrowButton' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Image = require( 'SCENERY/nodes/Image' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Property = require( 'AXON/Property' );
 
@@ -29,6 +30,9 @@ define( function( require ) {
   var SCREEN_HORIZONTAL_MARGIN  = 15;
   var SCREEN_VERTICAL_MARGIN    = 20;
   var PANEL_SPACING             = 12; // space between panels - i.e numberline/challenges/keypad
+
+  // images
+  var removeButtonImage = require( 'image!UNIT_RATES/remove-button.png' );
 
   /**
    * @param {ShoppingModel} model
@@ -73,7 +77,7 @@ define( function( require ) {
     this.keypad.right = this.numberLineNode.right - 30;
     this.keypad.top   = this.numberLineNode.bottom + 2*PANEL_SPACING;
 
-     // layer for draggable shelf & scale item nodes
+    // layer for draggable shelf & scale item nodes
     this.itemsLayer = new Node();
     this.addChild( this.itemsLayer );
 
@@ -92,10 +96,11 @@ define( function( require ) {
     this.addChild( this.scaleNode );
 
     // remove button
-    var scaleRemoveButtonNode = new CurvedArrowButton( {
+    var scaleRemoveButtonNode = new RectangularPushButton( {
       right:  this.scaleNode.left - PANEL_SPACING,
       bottom: this.scaleNode.bottom,
       baseColor: '#f2f2f2',
+      content: new Image( removeButtonImage, { scale: 0.25 } ),
       listener: function() {
 
         // reset the current item type - remove scale items & re-populate shelf items
@@ -164,10 +169,10 @@ define( function( require ) {
     this.itemsLayer.moveToFront();
 
     // FIXME: figure out how to get click on screen to close keypad
-    //this.addInputListener( {
+    //this.itemsLayer.addInputListener( {
     //  down: function( event ) {
     //    console.log('click');
-    //    event.handle();
+    //   //event.handle();
     //  }
     //} );
 

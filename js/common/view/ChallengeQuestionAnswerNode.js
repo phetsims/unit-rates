@@ -121,7 +121,13 @@ define( function( require ) {
      * @protected
      */
     checkAnswer: function() {
-      if( this.qna.isAnswerCorrect() ) {
+
+      if( !this.qna.isAnswerValid() ) {
+        this.faceNode.visible = false;
+        this.editNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
+        this.editNumberDisplay.setBorderColor( DEFAULT_BORDER_COLOR );
+      }
+      else if( this.qna.isAnswerCorrect() ) {
         this.faceNode.smile();
         this.faceNode.visible = true;
         this.unitLine.visible = true;
@@ -138,18 +144,13 @@ define( function( require ) {
         this.keypad.visible = false;
         this.keypad.clear();
       }
-      else if( !this.qna.isAnswerZero() ) {
+      else {
         this.faceNode.frown();
         this.faceNode.visible = true;
         this.editNumberDisplay.setTextColor( this.incorrectTextColor );
         if( !this.editNumberDisplay.hasKeypadFocus ) {
           this.editNumberDisplay.setBorderColor( this.incorrectBorderColor );
         }
-      }
-      else {
-        this.faceNode.visible = false;
-        this.editNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
-        this.editNumberDisplay.setBorderColor( DEFAULT_BORDER_COLOR );
       }
     }
 

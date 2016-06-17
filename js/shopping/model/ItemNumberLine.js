@@ -11,9 +11,8 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  //var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemCollection = require( 'UNIT_RATES/shopping/model/ItemCollection' );
-  var ItemMarker = require( 'UNIT_RATES/shopping/model/ItemMarker' );
+  var ItemQuestionAnswer = require( 'UNIT_RATES/shopping/model/ItemQuestionAnswer' );
 
   /**
    *
@@ -27,10 +26,6 @@ define( function( require ) {
 
     // @public
     this.itemDataProperty = itemDataProperty;
-
-    // update value text
-    itemDataProperty.link( function( value, oldValue ) {
-    } );
   }
 
   unitRates.register( 'ItemNumberLine', ItemNumberLine );
@@ -44,8 +39,8 @@ define( function( require ) {
      * @return {Item}
      * @public @override
      */
-    createItem: function( data, count, editable ) {
-      var item = new ItemMarker( data, count, editable );
+    createItem: function( data, count ) {
+      var item = new ItemQuestionAnswer( data, count );
       this.addItem( item );
       return item;
     },

@@ -31,7 +31,7 @@ define( function( require ) {
     this.questionString = options.questionString;
     this.unitString     = options.unitString;
     this.answerValue    = answerValue;              // the correct answer value
-    this.valueProperty  = new Property( 0 );        // user's answer input property
+    this.valueProperty  = new Property( -1 );        // user's answer input property
   }
 
   unitRates.register( 'QuestionAnswer', QuestionAnswer );
@@ -42,8 +42,8 @@ define( function( require ) {
      *
      * @public
      */
-    isAnswerZero: function() {
-      return( this.valueProperty.value === 0 );
+    isAnswerValid: function() {
+      return( this.valueProperty.value >= 0 );
     },
 
     /**

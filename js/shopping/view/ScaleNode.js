@@ -21,12 +21,11 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Panel = require( 'SUN/Panel' );
   var Util = require( 'DOT/Util' );
-  var Vector2 = require( 'DOT/Vector2' );
   var Random = require( 'DOT/Random' );
   var Dimension2 = require( 'DOT/Dimension2' );
 
   // images
-  var scaleImage = require( 'mipmap!UNIT_RATES/scale.png' );
+  var scaleImage = require( 'image!UNIT_RATES/scale.png' );
 
   // constants
   var RAND = new Random();
@@ -211,7 +210,7 @@ define( function( require ) {
               y  = ( localDropBounds.maxY + localDropBounds.minY ) / 2 - ( itemNode.height / 2 );
           }
 
-          itemNode.item.positionProperty.value = new Vector2( x, y );
+          itemNode.item.setPosition( x, y, false );
         }
       } );
     },
@@ -245,10 +244,9 @@ define( function( require ) {
           // jitter the initial positions
           var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.width * 0.8 ) );
           var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.height * 0.25 ) );
-          item.positionProperty.value = new Vector2(
-            layerDropCenter.x + jitterX,
-            layerDropCenter.y + jitterY - itemNode.height / 2
-          );
+          var x = layerDropCenter.x + jitterX;
+          var y = layerDropCenter.y + jitterY - itemNode.height / 2;
+          item.setPosition( x, y, false );
         }
 
         // add to the screen for layering purposes

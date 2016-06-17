@@ -13,15 +13,17 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var NumberDisplay = require( 'SCENERY_PHET/NumberDisplay' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Range = require( 'DOT/Range' );
 
   // constants
-  var TEXT_MAX_WIDTH            = 125;
-  var TEMP_EDIT_BUTTON_CONTENT  = new Text( 'E', { font: new PhetFont( 10 ), fontWeight: 'bold', maxWidth: 30 } );
+  var TEXT_MAX_WIDTH  = 125;
+
+  // images
+  var editButtonImage = require( 'image!UNIT_RATES/edit-button.png' );
 
   /**
    *
@@ -75,7 +77,7 @@ define( function( require ) {
     this.numberDisplay = new NumberDisplay( valueProperty, options.numberRange, '', pattern, numberDisplayOptions );
 
     var editButtonOptions = {
-      content:TEMP_EDIT_BUTTON_CONTENT,
+      content: new Image( editButtonImage, { scale: 0.2 } ),
       baseColor: URConstants.EDIT_CONTROL_COLOR,
       pickable: true,
       listener: function() {

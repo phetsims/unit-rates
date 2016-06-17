@@ -12,15 +12,18 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
-  var CurvedArrowButton = require( 'UNIT_RATES/common/view/CurvedArrowButton' );
+  var Image = require( 'SCENERY/nodes/Image' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var NumberLineMarkerNode = require( 'UNIT_RATES/shopping/view/NumberLineMarkerNode' );
   var Property = require( 'AXON/Property' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var EDITABLE_MARKER_X = 25;
   var UNDO_BUTTON_X     = 5;
+
+  // images
+  var undoButtonImage = require( 'image!UNIT_RATES/undo-button.png' );
 
   // strings
   var applesCapString = require( 'string!UNIT_RATES/applesCap' );
@@ -59,7 +62,7 @@ define( function( require ) {
     this.outOfRangeMarkerX = ( this.topArrowNode.right + this.topArrowLabel.left ) / 2;
 
     // undo button
-    this.undoEditButtonNode = new CurvedArrowButton( {
+    this.undoEditButtonNode = new RectangularPushButton( {
       visible: false,
       baseColor: '#f2f2f2',
       headWidth: 8,
@@ -67,6 +70,7 @@ define( function( require ) {
       tailWidth: 5,
       left: UNDO_BUTTON_X,
       centerY: this.graphBounds.centerY,
+      content: new Image( undoButtonImage, { scale: 0.25 }),
       listener: function() {
         self.removeEditMarker();
       }
@@ -76,6 +80,7 @@ define( function( require ) {
     // refresh on item change
     numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
 
+      // clear the undo stack on an item change (it gets rebuilt automatically)
       self.undoItemNodeList = [];
 
       // set number line labels
@@ -121,8 +126,6 @@ define( function( require ) {
         }
 
         self.populate();
-
-        // FIXME: rebuild undo stack?
     } );
 
   }
@@ -131,7 +134,7 @@ define( function( require ) {
 
   return inherit( URNumberLineNode, NumberLineNode, {
 
-    /*
+    /**
      *
      * @override @public
      */
@@ -155,58 +158,20 @@ define( function( require ) {
       this.addEditMarker();
     },
 
-    /**
-     *
-     * @return {NumberLineMarkerNode}
-     * @private
-     */
-    createItemMarkerNode: function( item ) {
-
-      var self = this;
-
-      var x = this.origin.x;
-      var y = this.origin.y;
-
-      // make marker node
-      var markerNode = new NumberLineMarkerNode( item, new Vector2( x, y ), this.keypad, {
-        draggable:  false,
-        centerX:    x,
-        centerY:    y,
-        stroke:     'black',
-        lineWidth:  1.25,
-        bottomDecimalPlaces: ( item.isCandy() ? 2 : 1 )
-      } );
-      this.addMarker( markerNode );
-
-      // update on top/bottom values changes
-      Property.multilink( [ markerNode.item.costQnA.valueProperty, markerNode.item.unitQnA.valueProperty ],
-        function( costProperty, unitProperty ) {
-          self.updateItemMarker( markerNode );
-          self.addEditMarker();  // if needed
-      } );
-
-      // make edit markers always on top: FIXME: this doesn't do anything
-      if( item.editable ) {
-        markerNode.moveToBack();
-      }
-
-      this.updateItemMarker( markerNode );
-
-      return markerNode;
-    },
-
-    /**
+     /**
      *
      * @private
      */
     addEditMarker: function( ) {
 
-      var editMarker = this.getEditMarker();
-      if( editMarker === null ) {
-        // create a new editable item
-        var editItem = this.numberLine.createItem( this.numberLine.itemDataProperty.value, -1, true );
+      // create one if there is none
+      if( !this.editMarkerExists() ) {
 
-        // create a matching item marker node
+        // create a new editable item
+        var editItem = this.numberLine.createItem( this.numberLine.itemDataProperty.value, -1 );
+        editItem.setPosition( EDITABLE_MARKER_X, this.origin.y, false );
+
+        // create a matching item marker node for the item
         this.createItemMarkerNode( editItem );
 
         // reset the kepad
@@ -226,59 +191,77 @@ define( function( require ) {
       if( this.undoItemNodeList.length > 0 ) {
 
         // get the last item added
-        var itemNode = this.undoItemNodeList.pop();
+        var itemMarkerNode = this.undoItemNodeList.pop();
 
-        // get the current array for the item type
+        // precision marker? remove it completly
         var itemArray = this.getItemArray();
-        itemArray.remove( itemNode.item );
-
+        itemArray.remove( itemMarkerNode.item );
         this.populate();
       }
     },
 
-    /**
+     /**
      *
-     * @return {ItemMarker}
      * @private
      */
-    getEditMarker: function( ) {
+    editMarkerExists: function( ) {
 
-      var editMarker = null;
-
-      // get the current array for the item type
+      // look for an existing editable item
       var itemArray = this.getItemArray();
       var editableItems = itemArray.filter( function( item ) {
-          return item.editable;
+          return item.editableProperty.value;
       } );
-      assert && assert( (editableItems.length <= 1 ), 'multiple editable number line markers' );
 
-      // if there's an editMarker (which there always should be) return it
-      if( editableItems.length > 0 ) {
-        editMarker = editableItems.pop();
-      }
+      return ( editableItems.length > 0 );
+    },
 
-      return editMarker;
+    /**
+     *
+     * @return {NumberLineMarkerNode}
+     * @private
+     */
+    createItemMarkerNode: function( item ) {
+
+      var self = this;
+
+      // make marker node
+      var position = item.positionProperty.value;
+      var markerNode = new NumberLineMarkerNode( item, position, this.keypad, {
+        draggable:  false,
+        centerX:    position.x,
+        centerY:    position.y,
+        stroke:     'black',
+        lineWidth:  1.25,
+        bottomDecimalPlaces: ( item.isCandy() ? 2 : 1 )
+      } );
+      this.addMarker( markerNode );
+
+      // update on top/bottom values changes
+      Property.multilink( [ markerNode.item.costQnA.valueProperty, markerNode.item.unitQnA.valueProperty ],
+        function( costProperty, unitProperty ) {
+          self.updateItemMarkerNode( markerNode );
+          self.addEditMarker();  // if needed
+      } );
+
+      return markerNode;
     },
 
     /**
      *
      * @private
      */
-    updateItemMarker: function( markerNode ) {
+    updateItemMarkerNode: function( markerNode ) {
 
       var x           = markerNode.item.positionProperty.value.x;
-      var y           = markerNode.item.positionProperty.value.y;
+      var y           = this.origin.y;
       var count       = markerNode.item.count;
       var inUndoList  = ( this.undoItemNodeList.indexOf( markerNode ) >= 0 );
       var isRemovable = this.isMarkerRemovable( markerNode );
 
-      // new edit marker?
-      if ( markerNode.item.editable && markerNode.item.positionProperty.value.x === this.origin.x ) {
-        x = EDITABLE_MARKER_X;
-      }
-      else if( count > 0 ) {
+      //
+      if( count >= 0 ) {
 
-        // manage undo stack
+        // undo stack managment
         if( !inUndoList && isRemovable ) {
           this.undoItemNodeList.push( markerNode );
         }
@@ -292,16 +275,34 @@ define( function( require ) {
         // off the number line?
         if( countPercent > 1.0 ) {
           x = this.outOfRangeMarkerX;
-          markerNode.outOfRangeProperty.set( true );
+          markerNode.item.outOfRangeProperty.set( true );
         }
         else if ( countPercent >= 0 ) {
           x = ( ( 1.0 - countPercent ) * this.origin.x ) + ( this.graphBounds.maxX * countPercent );
-          markerNode.outOfRangeProperty.set( false );
+          markerNode.item.outOfRangeProperty.set( false );
         }
       }
-      markerNode.item.positionProperty.value = new Vector2( x, y );
 
-      this.updateUndoButton();
+      // edit marker checks
+      if( markerNode.item.editableProperty.value ) {
+
+        // make sure the edit marker is on top of all other markers
+        markerNode.moveToFront();
+
+        // check edit marker for existing markers with same count
+        var itemArray = this.getItemArray();
+        var dupItemArray = itemArray.filter( function( item ) {
+          return ( item.isEqual( markerNode.item ) && item !== markerNode.item );
+        } );
+
+        // if teh edit marker is a dup, remove it
+        if( dupItemArray.length > 0 ) {
+          this.removeEditMarker();
+        }
+      }
+
+      // update the position on the number line
+      markerNode.item.setPosition( x, y, markerNode.item.editableProperty.value );
     },
 
     /**
@@ -319,7 +320,7 @@ define( function( require ) {
         var markerNode = this.undoItemNodeList[ this.undoItemNodeList.length-1 ];
 
         // move the undo button based on the marker's 'editability'
-        if( markerNode.item.editable ) {
+        if( markerNode.item.editableProperty.value ) {
           // edit marker
           this.undoEditButtonNode.left    = UNDO_BUTTON_X;
           this.undoEditButtonNode.centerY = this.graphBounds.centerY;
@@ -338,15 +339,15 @@ define( function( require ) {
      * @private
      */
     isMarkerRemovable: function( markerNode ) {
-      var isCandy   = markerNode.item.isCandy();
+      var isEditable     = markerNode.item.editableProperty.value;
+      var isCandy        = markerNode.item.isCandy();
       var countPrecision = markerNode.item.getCountPrecision();
-      //console.log( ' E: ' + markerNode.item.editable + ' P: ' +  countPrecision );
-
-      return ( markerNode.item.editable || ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) );
+      return ( isEditable || ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) );
     },
 
     /**
      *
+     * @returns {ObservableArray}
      * @private
      */
     getItemArray: function( ) {

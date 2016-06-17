@@ -22,6 +22,7 @@ define( function( require ) {
   var SMALL_LINE_HEIGHT     = 18;
   var EDIT_BUTTON_MARGIN    = 5;
   var EDIT_BORDER_COLOR     = 'rgba(0,0,0,1)';
+  var EDIT_BG_COLOR         = 'rgba(255,255,255,1)';
   var PRECISION_TEXT_COLOR  = 'rgba(128,128,128,1)';
   var DEFAULT_TEXT_COLOR    = 'rgba(0,0,0,1)';
   var DEFAULT_BORDER_COLOR  = 'rgba(0,0,0,0)';
@@ -64,6 +65,7 @@ define( function( require ) {
         buttonPosition: 'top',
         buttonSpacing: EDIT_BUTTON_MARGIN,
         textColor: DEFAULT_TEXT_COLOR,
+        backgroundColor: TRANSPARENT_COLOR,
         borderColor: EDIT_BORDER_COLOR,
         font: SMALL_FONT
     } );
@@ -92,6 +94,7 @@ define( function( require ) {
         buttonPosition: 'bottom',
         buttonSpacing: EDIT_BUTTON_MARGIN,
         textColor: DEFAULT_TEXT_COLOR,
+        backgroundColor: TRANSPARENT_COLOR,
         borderColor: EDIT_BORDER_COLOR,
         font: SMALL_FONT
     } );
@@ -101,16 +104,15 @@ define( function( require ) {
 
     ItemNode.call( this, item, position, options );
 
-    this.outOfRangeProperty.link( function( value, oldValue ) {
-      self.checkEditable();
-    } );
+    //this.outOfRangeProperty.link( function( value, oldValue ) {
+    //  self.checkEditable();
+    //} );
 
     // check answers on user input
-    Property.multilink( [ this.item.costQnA.valueProperty, this.item.unitQnA.valueProperty ],
-      function( costProperty, unitProperty ) {
+    Property.multilink( [ this.item.costQnA.valueProperty, this.item.unitQnA.valueProperty, this.item.outOfRangeProperty ],
+      function( costProperty, unitProperty, outOfRangeProperty ) {
         self.checkEditable();
     } );
-
  }
 
   unitRates.register( 'NumberLineMarkerNode', NumberLineMarkerNode );
@@ -124,7 +126,7 @@ define( function( require ) {
     checkEditable: function() {
 
       // non-editable/locked marker
-      if( !this.item.editable ) {
+      if( !this.item.editableProperty.value ) {
 
         var countPrecision = this.item.getCountPrecision();
         var isCandy = this.item.isCandy();
@@ -160,6 +162,10 @@ define( function( require ) {
         this.topNumberDisplay.hideEditButton();
         this.bottomNumberDisplay.hideEditButton();
 
+        // background color
+        this.topNumberDisplay.setBackgroundColor( TRANSPARENT_COLOR );
+        this.bottomNumberDisplay.setBackgroundColor( TRANSPARENT_COLOR );
+
         // border color
         this.topNumberDisplay.setBorderColor( DEFAULT_BORDER_COLOR );
         this.bottomNumberDisplay.setBorderColor( DEFAULT_BORDER_COLOR );
@@ -167,24 +173,33 @@ define( function( require ) {
       else {
         // editable marker
 
+        // layout
+        this.markerLine.setShape(this.smallLineShape);
+        this.topNumberDisplay.bottom = -SMALL_LINE_HEIGHT;
+        this.bottomNumberDisplay.top =  SMALL_LINE_HEIGHT;
+
         // edit button
         this.topNumberDisplay.showEditButton();
         this.bottomNumberDisplay.showEditButton();
 
         // text color
-        if( this.item.costQnA.isAnswerZero() ) {
+        if( this.item.costQnA.isAnswerValid() ) {
+           this.topNumberDisplay.setTextColor( this.item.outOfRangeProperty.value ? RANGE_TEXT_COLOR : DEFAULT_TEXT_COLOR );
+        }
+        else {
           this.topNumberDisplay.setTextColor( TRANSPARENT_COLOR );
         }
-        else {
-          this.topNumberDisplay.setTextColor( this.outOfRangeProperty.value ? RANGE_TEXT_COLOR : DEFAULT_TEXT_COLOR );
-        }
 
-        if( this.item.unitQnA.isAnswerZero() ) {
+        if( this.item.unitQnA.isAnswerValid() ) {
+          this.bottomNumberDisplay.setTextColor( this.item.outOfRangeProperty.value ? RANGE_TEXT_COLOR : DEFAULT_TEXT_COLOR );
+        }
+        else {
           this.bottomNumberDisplay.setTextColor( TRANSPARENT_COLOR );
         }
-        else {
-          this.bottomNumberDisplay.setTextColor( this.outOfRangeProperty.value ? RANGE_TEXT_COLOR : DEFAULT_TEXT_COLOR );
-        }
+
+        // background color
+        this.topNumberDisplay.setBackgroundColor( EDIT_BG_COLOR );
+        this.bottomNumberDisplay.setBackgroundColor( EDIT_BG_COLOR );
 
         // border color
         if( !this.topNumberDisplay.hasKeypadFocus ) {

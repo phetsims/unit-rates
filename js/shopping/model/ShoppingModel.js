@@ -94,6 +94,13 @@ define( function( require ) {
       }
     },
 
+    /**
+     *
+     * @public
+     */
+    //step: function( dt ) {
+    //},
+
     // Resets all model elements
     reset: function() {
 

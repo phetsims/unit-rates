@@ -16,7 +16,6 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var BACK_DEPTH = 35;
@@ -125,7 +124,7 @@ define( function( require ) {
               y  = ( localDropBounds.maxY + localDropBounds.minY ) / 2 - ( itemNode.height / 2 );
           }
 
-          itemNode.item.positionProperty.value = new Vector2( x, y );
+          itemNode.item.setPosition( x, y, false );
         }
       } );
     },
@@ -155,7 +154,7 @@ define( function( require ) {
 
         // init position - create a random position on the shelf
         if(position.x === 0 && position.y === 0) {
-          item.positionProperty.value = new Vector2( initialX, initialY );
+          item.setPosition( initialX, initialY, false );
         }
 
         // add to the screen for layering purposes

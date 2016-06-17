@@ -13,7 +13,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Emitter = require( 'AXON/Emitter' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @param {Item} item
@@ -34,7 +33,7 @@ define( function( require ) {
 
     this.item = item;
     this.lastPosition = position;
-    this.item.positionProperty.value = this.lastPosition;
+    this.item.setPosition( position.x, position.y, false );
 
     // @protected - used to tell when an item node is being moved
     this.draggable          = options.draggable;
@@ -69,7 +68,7 @@ define( function( require ) {
             }
           }
 
-          var clickOffset = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
+          var clickOffset   = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
           self.lastPosition = self.globalToParentPoint( e.pointer.point ).subtract( clickOffset );
 
           // announce drag start
@@ -90,7 +89,7 @@ define( function( require ) {
           }
 
           // update node position in screen coordinates
-          self.item.positionProperty.value = new Vector2( translation.position.x, translation.position.y );
+          self.item.setPosition( translation.position.x, translation.position.y, false );
         }
       } );
 
@@ -146,7 +145,7 @@ define( function( require ) {
      * @public
      */
     restoreLastPosition: function() {
-       this.item.positionProperty.value = this.lastPosition;
+       this.item.setPosition( this.lastPosition.x, this.lastPosition.y, true );
     }
 
   } ); // inherit

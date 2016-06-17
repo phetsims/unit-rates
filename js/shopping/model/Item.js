@@ -15,6 +15,8 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  // constants
+
   /**
    * @param {ItemData} data
    * @param {number} [count]
@@ -24,7 +26,7 @@ define( function( require ) {
 
     // @public (readwrite)
     PropertySet.call( this, {
-      position: new Vector2( 0, 0 ) // (0, 0) is considered an uninitialized position - FIXME: move up to ItemNode?
+      position: new Vector2( 0, 0 )
     } );
 
     // @public (read-only)
@@ -34,7 +36,7 @@ define( function( require ) {
     this.rate   = data.rate;
 
     // @public (read-only)
-    this.weight = data.weight;
+    this.weight = data.weight;  // FIXME: probably not needed any more.
 
     // @public (read-write)
     this.count  = count || 1;
@@ -45,14 +47,51 @@ define( function( require ) {
   return inherit( PropertySet, Item, {
 
     /**
+     *
+     * @param {number} x
+     * @param {number} y
+     * @param {boolean} animate
+     * @public
+     */
+    setPosition: function( x, y, animate ) {
+
+      var self = this;
+
+      if( animate ) {
+
+        var position = {
+          x: this.positionProperty.value.x,
+          y: this.positionProperty.value.y
+        };
+
+        var animationTween = new TWEEN.Tween( position ).
+          to( {
+            x: x,
+            y: y
+          }, 1000 ).
+          easing( TWEEN.Easing.Cubic.InOut ).
+          onUpdate( function() {
+            self.setPosition( position.x, position.y, false );
+          } ).
+          onComplete( function() {
+          } );
+
+        animationTween.start();
+      }
+      else {
+        this.positionProperty.value = new Vector2( x, y );
+      }
+    },
+
+    /**
      * Convenience function
      * @param {Item} item
      * @returns {boolean}
      * @public
      */
     isEqual: function( item ) {
-       return( item.type   === this.type   && item.rate   === this.rate &&
-               item.weight === this.weight &&  item.count === this.count );
+       return( item.type   === this.type   && item.rate  === this.rate &&
+               item.weight === this.weight && item.count === this.count );
     },
 
     /**
@@ -63,7 +102,17 @@ define( function( require ) {
     isCandy: function() {
       return( this.type === ItemData.RED_CANDY.type   || this.type === ItemData.YELLOW_CANDY.type ||
               this.type === ItemData.GREEN_CANDY.type || this.type === ItemData.BLUE_CANDY.type );
-   }
+   },
+
+   /**
+     *
+     * @public
+     */
+    reset: function() {
+
+    }
+
+   // FIXME: add position animation
 
   } ); // inherit
 
