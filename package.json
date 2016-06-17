@@ -14,6 +14,9 @@
     "requirejs": "~2.1.8"
   },
   "phet": {
-    "requirejsNamespace": "UNIT_RATES"
+    "requirejsNamespace": "UNIT_RATES",
+    "preload": [
+      "../sherpa/lib/Tween-r12.js"
+    ]
   }
 }
