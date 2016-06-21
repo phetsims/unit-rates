@@ -69,7 +69,7 @@ define( function( require ) {
             x: x,
             y: y
           }, 1000 ).
-          easing( TWEEN.Easing.Cubic.InOut ).
+          easing( TWEEN.Easing.Cubic.Out ).
           onUpdate( function() {
             self.setPosition( position.x, position.y, false );
           } ).

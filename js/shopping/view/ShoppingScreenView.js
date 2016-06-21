@@ -20,11 +20,12 @@ define( function( require ) {
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Image = require( 'SCENERY/nodes/Image' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var Property = require( 'AXON/Property' );
+  var Bounds2 = require( 'DOT/Bounds2' );
 
   // constants
   var SCREEN_HORIZONTAL_MARGIN  = 15;
@@ -75,10 +76,10 @@ define( function( require ) {
 
     // keypad layout
     this.keypad.right = this.numberLineNode.right - 30;
-    this.keypad.top   = this.numberLineNode.bottom + 2*PANEL_SPACING;
+    this.keypad.top   = this.numberLineNode.bottom + 2 * PANEL_SPACING;
 
     // layer for draggable shelf & scale item nodes
-    this.itemsLayer = new Node();
+    this.itemsLayer = new Rectangle( 0, 0, this.width, this.height );
     this.addChild( this.itemsLayer );
 
     // shelf
@@ -116,17 +117,18 @@ define( function( require ) {
       listener: function() {
         model.reset();
 
+        self.fruitItemDataProperty.reset();
+        self.produceItemDataProperty.reset();
+        self.candyItemDataProperty.reset();
+        self.sceneModeProperty.reset();
         self.hideKeypad();
+
+        self.itemsLayer.removeAllChildren();
 
         self.numberLineNode.reset();
         self.scaleNode.reset();
         self.shelfNode.reset();
         self.challengesNode.reset();
-
-        self.fruitItemDataProperty.reset();
-        self.produceItemDataProperty.reset();
-        self.candyItemDataProperty.reset();
-        self.sceneModeProperty.reset();
       },
       right:  this.layoutBounds.maxX - SCREEN_HORIZONTAL_MARGIN,
       bottom: this.layoutBounds.maxY - SCREEN_VERTICAL_MARGIN
@@ -165,16 +167,20 @@ define( function( require ) {
     Property.multilink( [ this.sceneModeProperty, this.fruitItemDataProperty, this.produceItemDataProperty,
       this.candyItemDataProperty ], this.itemSelectionChanged.bind( this ) );
 
-    // move items layer on top of all other nodes
-    this.itemsLayer.moveToFront();
+    // Layer the draggable/clickable nodes for proper rendering/interaction
+    this.itemsLayer.moveToBack();
+    this.scaleNode.moveToBack();
+    this.shelfNode.moveToBack();
 
     // FIXME: figure out how to get click on screen to close keypad
-    //this.itemsLayer.addInputListener( {
-    //  down: function( event ) {
-    //    console.log('click');
-    //   //event.handle();
-    //  }
-    //} );
+    this.itemsLayer.addInputListener( {
+      down: function( event ) {
+        self.hideKeypad();
+      }
+    } );
+
+    this.onResize();
+    this.addEventListener( 'bounds', this.onResize.bind( this ) );
 
     // initialize shelf items
     this.shelfNode.populate();
@@ -286,7 +292,17 @@ define( function( require ) {
     hideKeypad: function() {
       this.keypad.visible = false;
       this.keypad.clear();
+      this.keypad.clearListeners();
+    },
+
+    /**
+     * @protected
+     */
+    onResize: function() {
+      // resize the items layer to match the screen
+      this.itemsLayer.setRectBounds( new Bounds2( 0, 0,  window.innerWidth, window.innerHeight ) );
     }
+
 
   } ); // inherit
 

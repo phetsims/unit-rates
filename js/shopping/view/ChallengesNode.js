@@ -125,6 +125,8 @@ define( function( require ) {
 
     reset: function() {
       this.expandedProperty.reset();
+      this.contentNode.removeAllChildren();
+      this.populate();
     }
 
   } );  // define

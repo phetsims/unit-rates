@@ -52,6 +52,14 @@ define( function( require ) {
      */
     isAnswerCorrect: function() {
       return( Number( this.answerValue ) === Number( this.valueProperty.value ) );
+    },
+
+    /**
+     *
+     * @public
+     */
+    reset: function() {
+      this.valueProperty.reset();;
     }
 
   } );

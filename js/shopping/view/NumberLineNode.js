@@ -379,15 +379,6 @@ define( function( require ) {
 
       // add back an editable marker
       this.populate();
-    },
-
-    /**
-     *
-     * @override @public
-     */
-    reset: function() {
-      this.removeAllMarkers();
-      this.expandedProperty.reset();
     }
 
   } );  // define

@@ -41,10 +41,10 @@ define( function( require ) {
       function( item, observableArray ) {
     },
       function( item, observableArray ) {
-        // FIXME: need to rethink this - Node needs to get populated
-        // If the numberline is cleared, add back the current contents of the scale, if any
+        // If the numberline is cleared, add back the scale contents and correct challenge questions answered
         if( observableArray.length === 0 ) {
           self.addScaleItemsToNumberline();
+          self.addChallengeItemsToNumberline();
         }
     } );
   }
@@ -96,10 +96,13 @@ define( function( require ) {
 
     /**
      *
-     * @public
+     * @protected
      */
-    //step: function( dt ) {
-    //},
+    addChallengeItemsToNumberline: function() {
+
+      // create a new item on the number line representing the correctly answered challenge questions
+      this.challenges.getItemsForCorrectAnswers();
+    },
 
     // Resets all model elements
     reset: function() {

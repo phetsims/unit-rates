@@ -108,7 +108,7 @@ define( function( require ) {
      *
      * @public
      */
-    setListeners: function( onSubmit, onListenerChanged) {
+    setListeners: function( onSubmit, onListenerChanged ) {
 
       this.clear();
 
@@ -124,6 +124,24 @@ define( function( require ) {
       this.onListenerChanged = onListenerChanged;
 
       this.checkButton.addListener( onSubmit );
+    },
+
+    /**
+     *
+     * @public
+     */
+    clearListeners: function() {
+
+      if( this.onSubmit ) {
+        this.checkButton.removeListener( this.onSubmit );
+      }
+
+      if( this.onListenerChanged ) {
+        this.onListenerChanged.call();
+      }
+
+      this.onSubmit          = null;
+      this.onListenerChanged = null;
     },
 
     /**

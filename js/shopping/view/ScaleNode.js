@@ -268,7 +268,7 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      // FIXME
+      this.populate();
     }
 
 

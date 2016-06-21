@@ -13,6 +13,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
+  var Item = require( 'UNIT_RATES/shopping/model/Item' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Random = require( 'DOT/Random' );
@@ -250,10 +251,31 @@ define( function( require ) {
           case ItemData.GREEN_CANDY.type:
           case ItemData.BLUE_CANDY.type:
           default:
-            assert && assert( true, 'Unrecognized item type' );
+            assert && assert( true, 'no name available for item type' );
         }
 
       return name;
+    },
+
+    /**
+     *
+     * @return {number}
+     *
+     * @public
+     *
+     */
+    getItemsForCorrectAnswers: function( itemData ) {
+
+      var correctItems = [];
+
+      var qnaArray = this.challengeData[ itemData.type ];
+      qnaArray.forEach( function( qna ) {
+        if( qna.isAnswerValid() && qna.isAnswerCorrect() ) {
+          // generate item representations for correct answers
+          //var item = new Item( itemData, qna.count );
+
+        }
+      } );
     },
 
     /**
@@ -281,9 +303,16 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      this.populate();
+
+      for (var key in ItemData) {
+        var itemData = ItemData[ key ];
+        var qnaArray = this.challengeData[ itemData.type ];
+        qnaArray.forEach( function( qna ) {
+          qna.reset();
+        } );
+      }
     }
 
-  } );
+  } ); // inherit
 
-} );
+} );  // define

@@ -120,6 +120,8 @@ define( function( require ) {
     });
     this.contentNode.addChild( eraserButton );
 
+    this.graphMarkerLayerNode.moveToFront();
+
     AccordionBox.call( this, this.contentNode, {
       expandedProperty: this.expandedProperty,
       fill: 'white',
