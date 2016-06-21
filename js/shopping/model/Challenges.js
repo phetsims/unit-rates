@@ -86,7 +86,7 @@ define( function( require ) {
       var itemData = this.itemDataProperty.value;
       var challengeData = this.challengeData[ itemData.type ];
 
-      // FIME: check bounds
+      // FIXME: check bounds
 
       return challengeData[ index ];
     },
@@ -272,8 +272,8 @@ define( function( require ) {
       qnaArray.forEach( function( qna ) {
         if( qna.isAnswerValid() && qna.isAnswerCorrect() ) {
           // generate item representations for correct answers
-          //var item = new Item( itemData, qna.count );
-
+          var item = new Item( itemData, qna.count );
+          correctItems.push( item );
         }
       } );
     },

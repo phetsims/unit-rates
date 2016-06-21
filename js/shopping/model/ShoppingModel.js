@@ -14,7 +14,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
   var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
-  var ItemNumberLine = require( 'UNIT_RATES/shopping/model/ItemNumberLine' );
+  var NumberLine = require( 'UNIT_RATES/shopping/model/NumberLine' );
   var Challenges = require( 'UNIT_RATES/shopping/model/Challenges' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
 
@@ -33,7 +33,7 @@ define( function( require ) {
     // @public
     this.shelf = new Shelf( this.itemDataProperty );
     this.scale = new Scale( this.itemDataProperty );
-    this.numberLine = new ItemNumberLine( this.itemDataProperty );
+    this.numberLine = new NumberLine( this.itemDataProperty );
     this.challenges = new Challenges( this.itemDataProperty );
 
     // item add/remove listeners
@@ -63,8 +63,6 @@ define( function( require ) {
       // Remove from shelf & add to scale
       this.shelf.removeItem( item );
       this.scale.addItem(item );
-
-      this.addScaleItemsToNumberline();
     },
 
     /**
@@ -77,8 +75,6 @@ define( function( require ) {
       // Remove from scale & add to shelf
       this.scale.removeItem( item );
       this.shelf.addItem( item );
-
-      this.addScaleItemsToNumberline();
     },
 
     /**

@@ -19,7 +19,7 @@ define( function( require ) {
    * @param {number} [count]
    * @constructor
    */
-  function ItemQuestionAnswer( data, count ) {
+  function CostUnitQuestionAnswer( data, count ) {
 
     var self = this;
 
@@ -60,9 +60,9 @@ define( function( require ) {
     } );
   }
 
-  unitRates.register( 'ItemQuestionAnswer', ItemQuestionAnswer );
+  unitRates.register( 'CostUnitQuestionAnswer', CostUnitQuestionAnswer );
 
-  return inherit( Item, ItemQuestionAnswer, {
+  return inherit( Item, CostUnitQuestionAnswer, {
 
     /**
      * Changes various color/visibility attributes based on the users answer

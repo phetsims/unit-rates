@@ -12,13 +12,13 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ItemCollection = require( 'UNIT_RATES/shopping/model/ItemCollection' );
-  var ItemQuestionAnswer = require( 'UNIT_RATES/shopping/model/ItemQuestionAnswer' );
+  var CostUnitQuestionAnswer = require( 'UNIT_RATES/shopping/model/CostUnitQuestionAnswer' );
 
   /**
    *
    * @constructor
    */
-  function ItemNumberLine( itemDataProperty ) {
+  function NumberLine( itemDataProperty ) {
 
     // @public (all)
     ItemCollection.call( this, itemDataProperty, {
@@ -28,9 +28,9 @@ define( function( require ) {
     this.itemDataProperty = itemDataProperty;
   }
 
-  unitRates.register( 'ItemNumberLine', ItemNumberLine );
+  unitRates.register( 'NumberLine', NumberLine );
 
-  return inherit( ItemCollection, ItemNumberLine, {
+  return inherit( ItemCollection, NumberLine, {
 
     /**
      * Creates a new item/adds it to the types specific array
@@ -40,7 +40,7 @@ define( function( require ) {
      * @public @override
      */
     createItem: function( data, count ) {
-      var item = new ItemQuestionAnswer( data, count );
+      var item = new CostUnitQuestionAnswer( data, count );
       this.addItem( item );
       return item;
     },

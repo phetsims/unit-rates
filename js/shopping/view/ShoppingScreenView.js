@@ -253,6 +253,7 @@ define( function( require ) {
       if( this.scaleNode.intersectsDropArea( itemNode.bounds ) ) {
 
         this.model.addShelfItemToScale( itemNode.item );
+        this.model.addScaleItemsToNumberline();
 
         // Fruit bags should be expanded
         if( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) {
@@ -273,6 +274,7 @@ define( function( require ) {
       else if( this.shelfNode.intersectsDropArea( itemNode.bounds ) ) {
 
         this.model.addScaleItemToShelf( itemNode.item );
+        this.model.addScaleItemsToNumberline();
 
         // make sure bottom of items are actually on the shelf
         this.shelfNode.adjustItemPositions();
