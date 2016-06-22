@@ -34,7 +34,7 @@ define( function( require ) {
     this.shelf = new Shelf( this.itemDataProperty );
     this.scale = new Scale( this.itemDataProperty );
     this.numberLine = new NumberLine( this.itemDataProperty );
-    this.challenges = new Challenges( this.itemDataProperty );
+    this.challenges = new Challenges( this.itemDataProperty, this.addChallengeItemsToNumberline.bind( this ) );
 
     // item add/remove listeners
     this.numberLine.addListeners(
@@ -96,8 +96,13 @@ define( function( require ) {
      */
     addChallengeItemsToNumberline: function() {
 
+      var self = this;
+
       // create a new item on the number line representing the correctly answered challenge questions
-      this.challenges.getItemsForCorrectAnswers();
+      var itemArray = this.challenges.getCorrectAnswerItems( this.itemDataProperty.value );
+      itemArray.forEach( function( item ) {
+        self.numberLine.createItem( self.itemDataProperty.value, item.count, false );
+      } );
     },
 
     // Resets all model elements

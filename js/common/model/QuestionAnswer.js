@@ -14,24 +14,38 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   /**
-   * @param {string} questionString
-   * @param {string | number} unitString
+   * @param {Item} item
    * @param {number} answerValue
+   * @param {Object} [options]
    * @constructor
    */
-  function QuestionAnswer( answerValue, options ) {
+  function QuestionAnswer( item, answerValue, options ) {
 
     options = _.extend( {
       questionString: '',
-      unitString:     ''
+      unitString:     '',
+      onCorrectAnswerCallback: null
     },  options || {} );
 
+    var self = this;
 
     // @public
+    this.item           = item;
     this.questionString = options.questionString;
     this.unitString     = options.unitString;
     this.answerValue    = answerValue;              // the correct answer value
     this.valueProperty  = new Property( -1 );       // user's answer input property
+
+    // @protected
+    this.onCorrectAnswerCallback = options.onCorrectAnswerCallback;
+
+    if( options.onCorrectAnswerCallback ) {
+      this.valueProperty.link( function( value, oldValue ) {
+        if( self.isAnswerCorrect() ) {
+          self.onCorrectAnswerCallback();
+        }
+      } );
+    }
   }
 
   unitRates.register( 'QuestionAnswer', QuestionAnswer );
@@ -59,7 +73,7 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      this.valueProperty.reset();;
+      this.valueProperty.reset();
     }
 
   } );

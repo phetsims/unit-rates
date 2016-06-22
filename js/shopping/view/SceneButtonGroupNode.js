@@ -24,7 +24,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function SceneControlButtons( model, sceneModeProperty, options ) {
+  function SceneButtonGroupNode( model, sceneModeProperty, options ) {
 
     options = options || {};
 
@@ -43,9 +43,9 @@ define( function( require ) {
     ], options );
   }
 
-  unitRates.register( 'SceneControlButtons', SceneControlButtons );
+  unitRates.register( 'SceneButtonGroupNode', SceneButtonGroupNode );
 
-  return inherit( RadioButtonGroup, SceneControlButtons, {
+  return inherit( RadioButtonGroup, SceneButtonGroupNode, {
 
   } ); // define
 

@@ -67,9 +67,10 @@ define( function( require ) {
    *
    * @constructor
    */
-  function Challenges( itemDataProperty ) {
+  function Challenges( itemDataProperty, onCorrectAnswer ) {
 
     this.itemDataProperty = itemDataProperty;
+    this.onCorrectAnswer  = onCorrectAnswer;
     this.populate();
   }
 
@@ -116,39 +117,43 @@ define( function( require ) {
            itemData.type === ItemData.GREEN_CANDY.type || itemData.type === ItemData.BLUE_CANDY.type )  {
 
         // Q: Unit rate
-        var c1 = new QuestionAnswer( itemData.rate, {
+        var candyItem1 = new Item( itemData, 1 );
+        var c1 = new QuestionAnswer( candyItem1, itemData.rate, {
           questionString: unitRateQuestionString,
           unitString: poundString
         } );
 
         // Q: Cost of # <type>?
-        var candyCount2 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );      // FIXME: this will go away with real data
-        var candyCost2 = Util.toFixedNumber( candyCount2 * itemData.rate, 2 );
-        var candyUnitString2 = candyCount2 + ' ' + poundsString;
-        var costOfCandyQuestionString2 =  StringUtils.format( costOfQuestionString, candyCount2, lbsString );
-        var c2 = new QuestionAnswer( candyCost2, {
+        var candyItem2 = this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [] );
+        var candyCost2 = Util.toFixedNumber( candyItem2.count * itemData.rate, 2 );
+        var candyUnitString2 = candyItem2.count + ' ' + poundsString;
+        var costOfCandyQuestionString2 =  StringUtils.format( costOfQuestionString, candyItem2.count, lbsString );
+        var c2 = new QuestionAnswer( candyItem2, candyCost2, {
           questionString: costOfCandyQuestionString2,
-          unitString: candyUnitString2
+          unitString: candyUnitString2,
+          onCorrectAnswerCallback: this.onCorrectAnswer
         }  );
 
         // Q: Cost of # <type>?
-        var candyCount3 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );      // FIXME: this will go away with real data
-        var candyCost3 =  Util.toFixedNumber( candyCount3 * itemData.rate, 2 );
-        var candyUnitString3 = candyCount3 + ' ' + poundsString;
-        var costOfCandyQuestionString3 =  StringUtils.format( costOfQuestionString, candyCount3, lbsString );
-        var c3 = new QuestionAnswer( candyCost3, {
+        var candyItem3 = this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [] );
+        var candyCost3 =  Util.toFixedNumber( candyItem3.count * itemData.rate, 2 );
+        var candyUnitString3 = candyItem3.count + ' ' + poundsString;
+        var costOfCandyQuestionString3 =  StringUtils.format( costOfQuestionString, candyItem3.count, lbsString );
+        var c3 = new QuestionAnswer( candyItem3, candyCost3, {
           questionString: costOfCandyQuestionString3,
-          unitString: candyUnitString3
+          unitString: candyUnitString3,
+          onCorrectAnswerCallback: this.onCorrectAnswer
         }  );
 
         // Q: Cost of # <type>?
-        var candyCount4 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );      // FIXME: this will go away with real data
-        var candyCost4 =  Util.toFixedNumber( candyCount4 * itemData.rate, 2 );
-        var candyUnitString4 = candyCount4 + ' ' + poundsString;
-        var costOfCandyQuestionString4 =  StringUtils.format( costOfQuestionString, candyCount4, lbsString );
-        var c4 = new QuestionAnswer( candyCost4, {
+        var candyItem4 = this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [] );
+        var candyCost4 =  Util.toFixedNumber( candyItem4.count * itemData.rate, 2 );
+        var candyUnitString4 = candyItem4.count + ' ' + poundsString;
+        var costOfCandyQuestionString4 =  StringUtils.format( costOfQuestionString, candyItem4.count, lbsString );
+        var c4 = new QuestionAnswer( candyItem4, candyCost4, {
           questionString: costOfCandyQuestionString4,
-          unitString: candyUnitString4
+          unitString: candyUnitString4,
+          onCorrectAnswerCallback: this.onCorrectAnswer
         }  );
 
         this.challengeData[ itemData.type ] = [ c1, c2, c3, c4 ];
@@ -161,39 +166,44 @@ define( function( require ) {
         var namePluralCap = this.getNameForItemType(itemData.type, true, true );
 
         // Q: Unit rate
-        var i1 = new QuestionAnswer( itemData.rate, {
+        var item1 = new Item( itemData, 1 );
+        var i1 = new QuestionAnswer( item1, itemData.rate, {
           questionString: unitRateQuestionString,
-          unitString: nameCap
+          unitString: nameCap,
+           onCorrectAnswerCallback: this.onCorrectAnswer
         }  );
 
         // Q: Cost of # <type>?
-        var itemCount2 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );      // FIXME: this will go away with real data
-        var itemCost2 =  Util.toFixedNumber( itemCount2 * itemData.rate, 2 );
-        var itemUnitString2 = itemCount2 + ' ' + namePluralCap;
-        var costOfItemQuestionString2 =  StringUtils.format( costOfQuestionString, itemCount2, namePlural );
-        var i2 = new QuestionAnswer( itemCost2, {
+        var item2 = this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [] );
+        var itemCost2 =  Util.toFixedNumber( item2.count * itemData.rate, 2 );
+        var itemUnitString2 = item2.count + ' ' + namePluralCap;
+        var costOfItemQuestionString2 =  StringUtils.format( costOfQuestionString, item2.count, namePlural );
+        var i2 = new QuestionAnswer( item2, itemCost2, {
           questionString: costOfItemQuestionString2,
-          unitString: itemUnitString2
+          unitString: itemUnitString2,
+          onCorrectAnswerCallback: this.onCorrectAnswer
         }  );
 
         // Q: Cost of # <type>?
-        var itemCount3 =  this.getNextInt( ShoppingConstants.MAX_ITEMS, [ itemCount2 ] ); // FIXME: this will go away with real data
-        var itemCost3 =  Util.toFixedNumber( itemCount3 * itemData.rate, 2 );
-        var itemUnitString3 = itemCount3 + ' ' + namePluralCap;
-        var costOfItemQuestionString3 =  StringUtils.format( costOfQuestionString, itemCount3, namePlural );
-        var i3 = new QuestionAnswer( itemCost3, {
+        var item3 =  this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [ item2.count ] );
+        var itemCost3 =  Util.toFixedNumber( item3.count * itemData.rate, 2 );
+        var itemUnitString3 = item3.count + ' ' + namePluralCap;
+        var costOfItemQuestionString3 =  StringUtils.format( costOfQuestionString, item3.count, namePlural );
+        var i3 = new QuestionAnswer( item3, itemCost3, {
           questionString: costOfItemQuestionString3,
-          unitString: itemUnitString3
+          unitString: itemUnitString3,
+          onCorrectAnswerCallback: this.onCorrectAnswer
         }  );
 
         // Q: <type> for $?
-        var itemCount4 = this.getNextInt( ShoppingConstants.MAX_ITEMS, [] );  // FIXME: this will go away with real data
-        var itemCost4 =  Util.toFixedNumber( itemCount4 * itemData.rate, 2 );
-        var itemUnitString4 = itemCount4 + ' ' + namePluralCap;
+        var item4 = this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [] );
+        var itemCost4 =  Util.toFixedNumber( item4.count * itemData.rate, 2 );
+        var itemUnitString4 = item4.count + ' ' + namePluralCap;
         var itemForQuestionString4 =  StringUtils.format( forQuestionString, namePluralCap, Util.toFixed( itemCost4, 2 ) );
-        var i4 = new QuestionAnswer( itemCount4, {
+        var i4 = new QuestionAnswer( item4, item4.count, {
           questionString: itemForQuestionString4,
-          unitString: itemUnitString4
+          unitString: itemUnitString4,
+          onCorrectAnswerCallback: this.onCorrectAnswer
         }  );
 
         this.challengeData[ itemData.type ] = [ i1, i2, i3, i4 ];
@@ -261,41 +271,42 @@ define( function( require ) {
      *
      * @return {number}
      *
+     * @return {Array}.<Item>
      * @public
      *
      */
-    getItemsForCorrectAnswers: function( itemData ) {
+    getCorrectAnswerItems: function( itemData ) {
 
       var correctItems = [];
 
       var qnaArray = this.challengeData[ itemData.type ];
       qnaArray.forEach( function( qna ) {
         if( qna.isAnswerValid() && qna.isAnswerCorrect() ) {
-          // generate item representations for correct answers
-          var item = new Item( itemData, qna.count );
-          correctItems.push( item );
+          correctItems.push( qna.item );
         }
       } );
+
+      return correctItems;
     },
 
     /**
-     * Gets a random integer in the range [1 - max] not in the 'taken' list
-     * FIXME: this will go away with real data
+     * Generate an item with a random count in the range [1 - max] not in the 'taken' list
+     * FIXME: when available, use design document Challengen prompt data based on itemData.type
      *
-     * @param {number}
-     * @return {number}
-     *
+     * @return {Item}
      * @private
      *
      */
-    getNextInt: function( max, takenList ) {
+    getPromptItem: function( itemData, max, takenList ) {
 
-      var value = 0;
-      while( value === 0 || takenList.indexOf( value ) >= 0 ) {
-        value = RAND.nextInt( max );
+      var count = 0;
+      while( count === 0 || takenList.indexOf( count ) >= 0 ) {
+        count = RAND.nextInt( max );
       }
 
-      return value;
+      var item = new Item( itemData, count );
+
+      return item;
     },
 
     /**

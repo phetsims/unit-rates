@@ -29,8 +29,8 @@ define( function( require ) {
     var correctUnit = ( count * ( data.isCandy ? data.weight : 1 ) );
 
     // @public
-    this.costQnA = new QuestionAnswer( correctCost );
-    this.unitQnA = new QuestionAnswer( correctUnit );
+    this.costQnA = new QuestionAnswer( this, correctCost );
+    this.unitQnA = new QuestionAnswer( this, correctUnit );
 
     this.addProperty( 'outOfRange', false );
     this.addProperty( 'editable', ( count < 0 ) );

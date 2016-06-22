@@ -77,6 +77,8 @@ define( function( require ) {
     } );
     this.contentNode.addChild( this.undoEditButtonNode );
 
+    this.addPopulateListener();
+
     // refresh on item change
     numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
 
@@ -133,6 +135,23 @@ define( function( require ) {
   unitRates.register( 'NumberLineNode', NumberLineNode );
 
   return inherit( URNumberLineNode, NumberLineNode, {
+
+    /**
+     *
+     * @protected
+     */
+    addPopulateListener: function() {
+
+      var self = this;
+
+      // refresh on item additions/removals
+      this.numberLine.addListeners( function( item, observableArray ) {
+        //onAddCallback
+        self.populate();
+      },
+      function( item, observableArray ) {
+      } );
+    },
 
     /**
      *
@@ -379,6 +398,16 @@ define( function( require ) {
 
       // add back an editable marker
       this.populate();
+    },
+
+    /**
+     * @public
+     */
+    reset: function() {
+
+      URNumberLineNode.prototype.reset.call( this );
+
+      this.addPopulateListener();
     }
 
   } );  // define

@@ -13,7 +13,7 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var SceneMode = require( 'UNIT_RATES/shopping/enum/SceneMode' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
-  var SceneControlButtons = require( 'UNIT_RATES/shopping/view/SceneControlButtons' );
+  var SceneButtonGroupNode = require( 'UNIT_RATES/shopping/view/SceneButtonGroupNode' );
   var NumberLineNode = require( 'UNIT_RATES/shopping/view/NumberLineNode' );
   var KeypadPanel = require( 'UNIT_RATES/common/view/KeypadPanel' );
   var ChallengesNode = require( 'UNIT_RATES/shopping/view/ChallengesNode' );
@@ -153,7 +153,7 @@ define( function( require ) {
     this.addChild( this.candyItemsComboBox );
 
     // scene buttons
-    var sceneControlButtons = new SceneControlButtons( model, this.sceneModeProperty, {
+    var sceneControlButtons = new SceneButtonGroupNode( model, this.sceneModeProperty, {
       right:  this.layoutBounds.right - SCREEN_HORIZONTAL_MARGIN,
       //centerX:  this.challengesNode.centerX,
       bottom: resetAllButton.top - SCREEN_VERTICAL_MARGIN
@@ -268,7 +268,7 @@ define( function( require ) {
         // make sure bottom of items are actually on the scale
         this.scaleNode.adjustItemPositions();
 
-        // populate nuber line
+        // populate number line
         this.numberLineNode.populate();
       }
       else if( this.shelfNode.intersectsDropArea( itemNode.bounds ) ) {
@@ -279,7 +279,7 @@ define( function( require ) {
         // make sure bottom of items are actually on the shelf
         this.shelfNode.adjustItemPositions();
 
-        // populate nuber line
+        // populate number line
         this.numberLineNode.populate();
       }
       else {
