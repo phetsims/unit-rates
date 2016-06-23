@@ -54,6 +54,9 @@ define( function( require ) {
     if( this.draggable ) {
       this.dragListener = new SimpleDragHandler( {
 
+        // Allow moving a finger (touch) across a node to pick it up.
+        allowTouchSnag: true,
+
         start: function( e ) {
           self.moveToFront();
 

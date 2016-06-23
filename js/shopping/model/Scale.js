@@ -54,24 +54,35 @@ define( function( require ) {
       self.weightProperty.value = weight;
     } );
 
-    // refresh on item additions/removals
-    this.addListeners( function( item, observableArray ) {
-      //console.log( 'Scale: ' + observableArray.length );
-
-      self.costProperty.value   += ( item.rate * item.count );
-      self.weightProperty.value += item.weight * item.count;
-    },
-    function( item, observableArray ) {
-      //console.log( 'Scale: ' + observableArray.length );
-
-      self.costProperty.value   -= ( item.rate * item.count );
-      self.weightProperty.value -= item.weight * item.count;
-    } );
+    this.addArrayListeners();
   }
 
   unitRates.register( 'Scale', Scale );
 
   return inherit( ItemCollection, Scale, {
+
+    /**
+     *
+     * @protected
+     */
+    addArrayListeners: function() {
+
+      var self = this;
+
+      // refresh on item additions/removals
+      this.addListeners( function( item, observableArray ) {
+        console.log( 'Scale: ' + observableArray.length );
+
+        self.costProperty.value   += ( item.rate * item.count );
+        self.weightProperty.value += item.weight * item.count;
+      },
+      function( item, observableArray ) {
+        console.log( 'Scale: ' + observableArray.length );
+
+        self.costProperty.value   -= ( item.rate * item.count );
+        self.weightProperty.value -= item.weight * item.count;
+      } );
+    },
 
     /**
      * Returns the total nuber of items on the scale
@@ -129,6 +140,7 @@ define( function( require ) {
       this.costProperty.reset();
       this.weightProperty.reset();
       ItemCollection.prototype.reset.call( this );
+      this.addArrayListeners();
     }
 
   } );

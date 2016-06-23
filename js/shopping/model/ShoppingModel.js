@@ -28,30 +28,39 @@ define( function( require ) {
       itemData: ItemData.APPLES
     } );
 
-    var self = this;
-
     // @public
     this.shelf = new Shelf( this.itemDataProperty );
     this.scale = new Scale( this.itemDataProperty );
     this.numberLine = new NumberLine( this.itemDataProperty );
     this.challenges = new Challenges( this.itemDataProperty, this.addChallengeItemsToNumberline.bind( this ) );
 
-    // item add/remove listeners
-    this.numberLine.addListeners(
-      function( item, observableArray ) {
-    },
-      function( item, observableArray ) {
-        // If the numberline is cleared, add back the scale contents and correct challenge questions answered
-        if( observableArray.length === 0 ) {
-          self.addScaleItemsToNumberline();
-          self.addChallengeItemsToNumberline();
-        }
-    } );
+    this.addArrayListeners();
   }
 
   unitRates.register( 'ShoppingModel', ShoppingModel );
 
   return inherit( PropertySet, ShoppingModel, {
+
+    /**
+     *
+     * @protected
+     */
+    addArrayListeners: function() {
+
+      var self = this;
+
+      // item add/remove listeners
+      this.numberLine.addListeners(
+        function( item, observableArray ) {
+      },
+        function( item, observableArray ) {
+          // If the numberline is cleared, add back the scale contents and correct challenge questions answered
+          if( observableArray.length === 0 ) {
+            self.addScaleItemsToNumberline();
+            self.addChallengeItemsToNumberline();
+          }
+      } );
+    },
 
     /**
      *
@@ -112,8 +121,8 @@ define( function( require ) {
       this.scale.reset();
       this.numberLine.reset();
       this.challenges.reset();
-
       PropertySet.prototype.reset.call( this );
+      this.addArrayListeners();
     }
 
   } ); // inherit

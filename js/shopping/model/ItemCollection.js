@@ -27,10 +27,7 @@ define( function( require ) {
     this.itemsMap = {};
 
     // create empty item arrays
-    for (var key in ItemData) {
-      var itemData = ItemData[ key ];
-      this.getItemsWithType( itemData.type );
-    }
+    this.initializeArrays();
 
     Object.call( this );
   }
@@ -38,6 +35,16 @@ define( function( require ) {
   unitRates.register( 'ItemCollection', ItemCollection );
 
   return inherit( PropertySet, ItemCollection, {
+
+    /**
+     * @public
+     */
+    initializeArrays: function() {
+      for (var key in ItemData) {
+        var itemData = ItemData[ key ];
+        this.getItemsWithType( itemData.type );
+      }
+    },
 
     /**
      * Creates a new item/adds it to the types specific array
@@ -153,6 +160,8 @@ define( function( require ) {
      */
     reset: function() {
       this.itemsMap = {};
+      // create empty item arrays
+      this.initializeArrays();
     }
 
   } );
