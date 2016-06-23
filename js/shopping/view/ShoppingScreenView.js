@@ -15,7 +15,7 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var SceneButtonGroupNode = require( 'UNIT_RATES/shopping/view/SceneButtonGroupNode' );
   var NumberLineNode = require( 'UNIT_RATES/shopping/view/NumberLineNode' );
-  var KeypadPanel = require( 'UNIT_RATES/common/view/KeypadPanel' );
+  var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
   var ChallengesNode = require( 'UNIT_RATES/shopping/view/ChallengesNode' );
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
@@ -54,7 +54,7 @@ define( function( require ) {
     this.produceItemDataProperty = new Property( ItemData.CARROTS );
     this.candyItemDataProperty   = new Property( ItemData.RED_CANDY );
 
-    this.keypad = new KeypadPanel( {
+    this.keypad = new KeypadPanelNode( {
       maxDigits: 4,
       visible: false
     } );

@@ -1,7 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ * A Node representation managing all the UI for an individual Challenge question & answer. These exist for the duration
+ * of the simulation.
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -19,28 +20,28 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   // constants
-  var VERICAL_SPACING       = 4;
-  var HORIZONTAL_SPACING    = 30;
-  var TEXT_FONT             = new PhetFont( 12 );
+  var VERICAL_SPACING       = 4;                  // vertical space between UI components
+  var HORIZONTAL_SPACING    = 30;                 // horizontal space between UI components
+  var TEXT_FONT             = new PhetFont( 12 ); // Font to use for all text
   var TEXT_MAX_WIDTH        = 125;
-  var DIVISOR_WIDTH         = 75;
+  var DIVISOR_WIDTH         = 75;                 // width of the horizonal line between the number entry & unit text
   var DEFAULT_TEXT_COLOR    = 'rgba(0,0,0,0)';
   var DEFAULT_BORDER_COLOR  = 'rgba(0,0,0,1)';
 
   /**
    *
    * @param {ChallengeQuestionAnswer} qna
-   * @param {NumberKeypad} keypad
+   * @param {NumberKeypad} keypad - shared keypad node
    * @param {Object} [options]
    * @constructor
    */
   function ChallengeQuestionAnswerNode( qna, keypad, options ) {
 
     options = _.extend( {
-      showUnitText:         false,
-      preValueString:       '',
-      postValueString:      '',
-      decimalPlaces:        2,
+      showUnitText:         false,              // is the unit text string displayed or not
+      preValueString:       '',                 // text shown before the value in the number display node
+      postValueString:      '',                 // text shown after the value in the number display node
+      decimalPlaces:        2,                  // # of decimal places to use in the number display node
       defaultTextColor:     'rgba(0,0,0,0)',
       correctTextColor:     'rgba(0,0,0,1)',
       incorrectTextColor:   'rgba(255,0,0,1)',
@@ -61,6 +62,7 @@ define( function( require ) {
     this.correctBorderColor   = options.correctBorderColor;
     this.incorrectBorderColor = options.incorrectBorderColor;
 
+    // the Challenge question
     this.challengeText = new Text( this.qna.questionString, {
       left: 0,
       font: TEXT_FONT,
@@ -77,6 +79,7 @@ define( function( require ) {
         textColor: this.defaultTextColor
     } );
 
+    // smile or frown image corresponding to correct/incorrect answers
     this.faceNode = new FaceNode( 18, {
       left: this.editNumberDisplay.right + HORIZONTAL_SPACING,
       centerY: this.editNumberDisplay.centerY,
@@ -102,7 +105,7 @@ define( function( require ) {
       visible: options.showUnitText
     } );
 
-    // show unit text, change color & smile on correct value
+    // check the answer on user value input
     this.qna.valueProperty.link( function( value, oldValue ) {
       self.checkAnswer();
     } );
@@ -122,12 +125,12 @@ define( function( require ) {
      */
     checkAnswer: function() {
 
-      if( !this.qna.isAnswerValid() ) {
+      if( !this.qna.isAnswerValid() ) {         // invalid = a simple default state, before the user input any answers
         this.faceNode.visible = false;
         this.editNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
         this.editNumberDisplay.setBorderColor( DEFAULT_BORDER_COLOR );
       }
-      else if( this.qna.isAnswerCorrect() ) {
+      else if( this.qna.isAnswerCorrect() ) {   // correct answers
         this.faceNode.smile();
         this.faceNode.visible = true;
         this.unitLine.visible = true;
@@ -144,7 +147,7 @@ define( function( require ) {
         this.keypad.visible = false;
         this.keypad.clear();
       }
-      else {
+      else {                                     // incorrect answers
         this.faceNode.frown();
         this.faceNode.visible = true;
         this.editNumberDisplay.setTextColor( this.incorrectTextColor );

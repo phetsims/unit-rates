@@ -10,65 +10,67 @@ define( function( require ) {
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
+  // FIXME: weight may be removed - waiting for design document clearifications
+
   var ItemData = Object.freeze( {
     APPLES: {
-      type: 'apple',
-      rate: 0.5,
+      type:   'apple',
+      rate:   0.5,
       weight: 1.0
     },
     LEMONS: {
-      type: 'lemon',
-      rate: 0.25,
+      type:   'lemon',
+      rate:   0.25,
       weight: 1.0
     },
     ORANGES: {
-      type: 'orange',
-      rate: 0.75,
+      type:   'orange',
+      rate:   0.75,
       weight: 1.0
     },
     PEARS: {
-      type: 'pear',
-      rate: 0.4,
+      type:   'pear',
+      rate:   0.4,
       weight: 1.0
     },
     CARROTS:{
-      type: 'carrot',
-      rate: 0.15,
+      type:   'carrot',
+      rate:   0.15,
       weight: 1.0
     },
     CUCUMBERS: {
-      type: 'cucumber',
-      rate: 0.22,
+      type:   'cucumber',
+      rate:   0.22,
       weight: 1.0
     },
     POTATOES: {
-      type: 'potato',
-      rate: 0.45,
+      type:   'potato',
+      rate:   0.45,
       weight: 1.0
     },
     TOMATOES: {
-      type: 'tomato',
-      rate: 0.3,
+      type:   'tomato',
+      rate:   0.3,
       weight: 1.0
     },
     RED_CANDY: {
-      type: 'redCandy',
-      rate: 0.2,
+      type:   'redCandy',
+      rate:   0.2,
       weight: 1.0
     },
     YELLOW_CANDY: {
-      type: 'yellowCandy',
-      rate: 0.3,
+      type:   'yellowCandy',
+      rate:   0.3,
       weight: 1.0
     },
     GREEN_CANDY: {
-      type: 'greenCandy',
-      rate: 0.3,
+      type:   'greenCandy',
+      rate:   0.3,
       weight: 1.0
     },
     BLUE_CANDY: {
-      type: 'blueCandy',
-      rate: 0.7,
+      type:   'blueCandy',
+      rate:   0.7,
       weight: 1.0
     }
   } );

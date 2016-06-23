@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ * Base class for all number line nodes in the simulation
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -45,17 +45,17 @@ define( function( require ) {
 
     var self = this;
 
-    // @protected
+    // @protected - controls the accordian box expansion
     this.expandedProperty = new Property( true );
 
-    // AccordionBox content
+    // the accordian box content
     this.contentNode = new Node();
 
     // @protected graph origin/bounds
     this.origin      = new Vector2( options.yAxisOffset, options.graphHeight / 2 );
     this.graphBounds = new Bounds2( -options.yAxisOffset, 0, options.graphWidth - options.yAxisOffset , options.graphHeight );
 
-    // layer holding all the markers
+    // layer holding all the number line markers
     this.graphMarkerLayerNode = new Path( new Shape().rect(
       0, 0, options.graphWidth, options.graphHeight ), {
       //stroke: 'red',  // debugging
@@ -72,18 +72,22 @@ define( function( require ) {
     } );
     this.contentNode.addChild( xZeroLine );
 
+    // arrow options
     var arrowOptions =  {
         headHeight: options.axisArrowSize,
         headWidth:  options.axisArrowSize,
         tailWidth:  .1,
         fill:       'black'
       };
+
+    // @protected
     this.topArrowNode = new ArrowNode( options.yAxisOffset,
                                       this.origin.y - options.xAxisOffset,
                                       options.graphWidth + options.axisArrowSize,
                                       this.origin.y - options.xAxisOffset, arrowOptions);
     this.contentNode.addChild( this.topArrowNode );
 
+    // @protected
     this.bottomArrowNode = new ArrowNode( options.yAxisOffset,
                                          this.origin.y + options.xAxisOffset,
                                          options.graphWidth + options.axisArrowSize,
@@ -146,16 +150,18 @@ define( function( require ) {
   return inherit( AccordionBox, URNumberLineNode, {
 
     /**
-     * @param {string} top
-     * @param {string} bottom
+     * Sets the top & bottom axis labels (on the far right of the number line)
+     * @param {string} topLabel
+     * @param {string} bottomLabel
      * @public
      */
-    setLineLabels: function( top, bottom ) {
-      this.topArrowLabel.setText( top );
-      this.bottomArrowLabel.setText( bottom );
+    setLineLabels: function( topLabel, bottomLabel ) {
+      this.topArrowLabel.setText( topLabel );
+      this.bottomArrowLabel.setText( bottomLabel );
     },
 
     /**
+     * Adds a marker to the number line
      * @param {Node} marker
      * @public
      */
@@ -164,6 +170,7 @@ define( function( require ) {
     },
 
     /**
+     * Removes all markers from the number line
      * @public
      */
     removeAllMarkers: function() {
@@ -171,6 +178,8 @@ define( function( require ) {
     },
 
     /**
+     * Gets all the markers that are currently on the number line
+     * @returns {Array}.<Node>
      * @public
      */
     getAllMarkers: function() {
@@ -189,6 +198,7 @@ define( function( require ) {
     },
 
     /**
+     * Resets the number line to the defautl state
      * @public
      */
     reset: function() {

@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * All the challenge information for all items
+ * All the challenge questions for all items
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -62,9 +62,9 @@ define( function( require ) {
   // constants
   var RAND = new Random();
 
-
   /**
-   *
+   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
+   * @param {function} onCorrectAnswer - function to call when the correct answer is input
    * @constructor
    */
   function Challenges( itemDataProperty, onCorrectAnswer ) {
@@ -79,21 +79,21 @@ define( function( require ) {
   return inherit( Object, Challenges, {
 
     /**
-     * Populates the initial questions/values for all item types
-     * @private
+     * Retrieves the question for a specific index of the current item type
+     * @returns {QuestionAnswer}
+     * @public
      */
     getQuestionAnswer: function( index ) {
+      assert && assert( index < challengeData.length, 'invalid question index' );
 
       var itemData = this.itemDataProperty.value;
       var challengeData = this.challengeData[ itemData.type ];
-
-      // FIXME: check bounds
 
       return challengeData[ index ];
     },
 
     /**
-     * Populates the initial questions/values for all item types
+     * Populates the initial questions/values for all item types (i.e. apples, carrots, red candy)
      * @private
      */
     populate: function() {
@@ -108,7 +108,8 @@ define( function( require ) {
     },
 
     /**
-     * Populates the initial questions/values for item types
+     * Generates a set (currently 4) of challenge questions for a specific item type.
+     * @param {ItemData} - itemData
      * @private
      */
     generateQuestionsAnswersForItem: function( itemData ) {
@@ -211,12 +212,11 @@ define( function( require ) {
     },
 
     /**
-     *
-     * @param {Item.type} type
+     * Retrives the name of an item from it's type
+     * @param {Item.type} type - the item type (i.e. apples, carrots, red candy)
      * @param {boolean} plural
      * @param {boolean} capitalize
-     * @return {string}
-     *
+     * @returns {string}
      * @private
      *
      */
@@ -268,9 +268,7 @@ define( function( require ) {
     },
 
     /**
-     *
-     * @return {number}
-     *
+     * Gets the items assocaited with all the correctly answered challenge questions
      * @return {Array}.<Item>
      * @public
      *
@@ -291,7 +289,7 @@ define( function( require ) {
 
     /**
      * Generate an item with a random count in the range [1 - max] not in the 'taken' list
-     * FIXME: when available, use design document Challengen prompt data based on itemData.type
+     * FIXME: when available, use design document Challenge prompt data based on itemData.type
      *
      * @return {Item}
      * @private
@@ -310,7 +308,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Resets the challenge data to the default state (all unanswered)
      * @public
      */
     reset: function() {

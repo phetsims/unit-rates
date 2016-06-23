@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A phet-scenery/NumberDisplay w/ an edit button and external keypad integration
+ * An phet-scenery/NumberDisplay w/ an edit button and external/shared keypad integration
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberDisplay = require( 'SCENERY_PHET/NumberDisplay' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -20,29 +21,27 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
 
   // constants
-  var TEXT_MAX_WIDTH  = 125;
+  var TEXT_MAX_WIDTH  = 75;
 
   // images
   var editButtonImage = require( 'image!UNIT_RATES/edit-button.png' );
 
   /**
    *
-   * @param {KeypadPanel} keypad
-   * @param {Property} valueProperty
-   * @param {string} pattern
+   * @param {KeypadPanelNode} keypad
+   * @param {Property}.<Number> valueProperty - used to receive input from the keypad
+   * @param {string} pattern - the text pattern to display in the NumberDisplay
    * @param {Object} [options]
    * @constructor
    */
   function EditNumberDisplayNode( keypad, valueProperty, pattern, options ) {
 
     options = _.extend( {
-      preNumberString:      '',
-      postPostString:       '',
-      numberRange:          new Range(0, 15),
-      font:                 new PhetFont( 10 ),
-      decimalPlaces:        2,
-      buttonPosition:       'left',
-      buttonSpacing:        0,
+      numberRange:          new Range( 0, ShoppingConstants.MAX_ITEMS ),  // valid range for the number display
+      font:                 new PhetFont( 10 ),                           // font used for the number display
+      decimalPlaces:        2,                                            // # decimal places for the number display
+      buttonPosition:       'left',                                       // edit button position (left|right|top|bottom|)
+      buttonSpacing:        0,                                            // space between the edit button & number display
       textColor:            'rgba(0,0,0,1)',
       borderColor:          'rgba(0,0,0,1)',
       backgroundColor:      'rgba(255,255,255,1)',
@@ -53,7 +52,7 @@ define( function( require ) {
     var self = this;
 
     this.keypad         = keypad;
-    this.hasKeypadFocus = false;
+    this.hasKeypadFocus = false;                    // state used to indicate the shared kaypad focus on this node
     this.valueProperty  = valueProperty;
 
     // colors
@@ -84,6 +83,7 @@ define( function( require ) {
         self.showKeypad();
     } };
 
+    // positioning the edit button
     if( options.buttonPosition === 'left' ) {
       editButtonOptions = _.extend( {
         right: this.numberDisplay.left - options.buttonSpacing,
@@ -123,7 +123,8 @@ define( function( require ) {
   return inherit( Node, EditNumberDisplayNode, {
 
     /**
-     *
+     * Sets the font for the number display
+     * @param {Font} font
      * @public
      */
     setFont: function( font ) {
@@ -131,7 +132,8 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Sets the current text color
+     * @param {Color|String} color
      * @public
      */
     setTextColor: function( color ) {
@@ -140,7 +142,8 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Sets the current border color
+     * @param {Color|String} color
      * @public
      */
     setBorderColor: function( color ) {
@@ -148,8 +151,9 @@ define( function( require ) {
       this.numberDisplay.setBackgroundStroke( this.borderColor );
     },
 
-     /**
-     *
+    /**
+     * Sets the current background color
+     * @param {Color|String} color
      * @public
      */
     setBackgroundColor: function( color ) {
@@ -158,7 +162,7 @@ define( function( require ) {
     },
 
     /**
-     * Makes the keypad visible and links up it's listeners
+     * Shows the edit button
      * @public
      */
     showEditButton: function() {
@@ -166,7 +170,7 @@ define( function( require ) {
     },
 
     /**
-     * Makes the keypad visible and links up it's listeners
+     * Hides the edit button
      * @public
      */
     hideEditButton: function() {
@@ -206,7 +210,7 @@ define( function( require ) {
     },
 
     /**
-     * Hides the keypad and unlinks
+     * Hides the keypad
      * @public
      */
     hideKeypad: function() {
@@ -214,7 +218,8 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Returns the current keypad focus state
+     * @returns {boolean}
      * @public
      */
     hasKeypadFocus: function() {

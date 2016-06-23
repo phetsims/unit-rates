@@ -1,9 +1,9 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * A scenery node that looks like a calculator and allows the user to enter digits.
+ * A node that looks like a calculator (w/ decimal key) and allows the user to enter digits.
  *
- * @author
+ * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
   'use strict';
@@ -23,14 +23,15 @@ define( function( require ) {
   var enterString = require( 'string!UNIT_RATES/enter' );
 
   // constants
-  var READOUT_FONT = new PhetFont( 25 );
-  var SPACING = 10;
+  var READOUT_FONT = new PhetFont( 25 );    // Font used for the numeric display
+  var SPACING = 10;                         // Spacing between all nodes
+  var TEXT_MAX_WIDTH  = 150;
 
   /**
-   * @param {Function} onSubmit
+   * @param {Object} [options]
    * @constructor
    */
-  function KeypadPanel( options ) {
+  function KeypadPanelNode( options ) {
 
     options = _.extend( {
       maxDigits: 4
@@ -39,8 +40,8 @@ define( function( require ) {
 
     var self = this;
 
-    this.onSubmit = null;
-    this.onListenerChanged = null;
+    this.onSubmit = null;             // {function} to call when the enter/check button is pressed
+    this.onListenerChanged = null;    // {funtcion} to call when the keypad listener changes
 
     // Add the keypad.
     this.keypad = new NumberKeypad( {
@@ -75,12 +76,14 @@ define( function( require ) {
     this.checkButton = new TextPushButton( enterString, {
       font: new PhetFont( 18 ),
       baseColor: '#F2E916',
+      maxWidth: TEXT_MAX_WIDTH,
       cornerRadius: 4
     });
 
     this.checkButton.top  = this.keypad.bottom + SPACING;
     this.checkButton.left = (this.keypad.bounds.width - this.checkButton.bounds.width) / 2;
 
+    // Group all nodes
     var numberControlGroup = new Node( {
       children: [ this.keypad, readoutBackground, readoutText, this.checkButton ]
     } );
@@ -100,12 +103,14 @@ define( function( require ) {
     this.mutate( options );
   }
 
-  unitRates.register( 'KeypadPanel', KeypadPanel );
+  unitRates.register( 'KeypadPanelNode', KeypadPanelNode );
 
-  return inherit( Panel, KeypadPanel, {
+  return inherit( Panel, KeypadPanelNode, {
 
     /**
-     *
+     * Assigns a set of listeners to the keypad, there is only on listener assigned at any given time.
+     * @param {function} onSubmit - called when the enter/check button is pressed
+     * @param {function} onListenerChanged - called when the keypad listener changes
      * @public
      */
     setListeners: function( onSubmit, onListenerChanged ) {
@@ -127,7 +132,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Removes the currently set listener
      * @public
      */
     clearListeners: function() {
@@ -145,15 +150,8 @@ define( function( require ) {
     },
 
     /**
-     *
-     * @public
-     */
-    getValue: function() {
-      return this.value;
-    },
-
-    /**
-     *
+     * Sets the current keypad value
+     * @param {Number} value - the value to set the keypad to
      * @public
      */
     setValue: function( value ) {
@@ -161,13 +159,22 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Gets the current keypad value
+     * @returns {Number}
+     * @public
+     */
+    getValue: function() {
+      return this.value;
+    },
+
+    /**
+     * Clear the keypad value
      * @public
      */
     clear: function() {
       this.keypad.clear();
     }
 
-  } );
+  } ); // inherit
 
-} );
+} ); // define
