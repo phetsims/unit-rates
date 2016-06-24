@@ -87,7 +87,7 @@ define( function( require ) {
 
       var itemData = this.itemDataProperty.value;
       var challengeData = this.challengeData[ itemData.type ];
-      assert && assert( challengeData.length, 'invalid question index' );
+      assert && assert( index < challengeData.length, 'invalid question index' );
 
       return challengeData[ index ];
     },
