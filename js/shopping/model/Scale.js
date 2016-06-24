@@ -17,24 +17,24 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   /**
-   *
+   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
    * @constructor
    */
   function Scale( itemDataProperty ) {
 
     // @public (all)
-    ItemCollection.call( this, itemDataProperty, {
+    ItemCollection.call( this, {
     } );
 
     var self = this;
 
     this.itemDataProperty = itemDataProperty;
 
-    // @protected
+    // @protected - the current cost and weight of all items on the scale
     this.costProperty   = new Property( 0.0 );
     this.weightProperty = new Property( 0.0 );
 
-    // update value text
+    // update value text on cost/weight change
     itemDataProperty.link( function( value, oldValue ) {
 
       self.costProperty.reset();
@@ -62,7 +62,7 @@ define( function( require ) {
   return inherit( ItemCollection, Scale, {
 
     /**
-     *
+     * Add local listener for item additions/removals. This is needed on initialization and on a reset all
      * @protected
      */
     addArrayListeners: function() {
@@ -71,13 +71,13 @@ define( function( require ) {
 
       // refresh on item additions/removals
       this.addListeners( function( item, observableArray ) {
-        console.log( 'Scale: ' + observableArray.length );
+        //console.log( 'Scale: ' + observableArray.length );
 
         self.costProperty.value   += ( item.rate * item.count );
         self.weightProperty.value += item.weight * item.count;
       },
       function( item, observableArray ) {
-        console.log( 'Scale: ' + observableArray.length );
+        //console.log( 'Scale: ' + observableArray.length );
 
         self.costProperty.value   -= ( item.rate * item.count );
         self.weightProperty.value -= item.weight * item.count;
@@ -86,7 +86,6 @@ define( function( require ) {
 
     /**
      * Returns the total nuber of items on the scale
-     *
      * @return {number}
      * @override @public
      */
@@ -95,8 +94,8 @@ define( function( require ) {
     },
 
     /**
-     * Adds an item to the types specific array - fruit types are a special case
-     *
+     * Adds an item to the types specific array
+     * Note: fruit types are a special case, tehy get expanded into indivdual items
      * @param {Item} item
      * @override @public
      */
@@ -125,7 +124,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Resets the current item type - basically removing all items of teh current type from the scale
      * @public
      */
     resetCurrentItem: function() {
@@ -133,7 +132,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Reset the scale to the default state.
      * @public
      */
     reset: function() {

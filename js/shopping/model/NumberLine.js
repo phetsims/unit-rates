@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * All the items currently on the number line
+ * Holds the items currently on the number line
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -15,13 +15,13 @@ define( function( require ) {
   var CostUnitQuestionAnswer = require( 'UNIT_RATES/shopping/model/CostUnitQuestionAnswer' );
 
   /**
-   *
+   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
    * @constructor
    */
   function NumberLine( itemDataProperty ) {
 
     // @public (all)
-    ItemCollection.call( this, itemDataProperty, {
+    ItemCollection.call( this, {
     } );
 
     // @public
@@ -50,7 +50,7 @@ define( function( require ) {
      * Does not allow for new items which equal existing items
      *
      * @param {Item} item
-     * @override @public
+     * @public @override
      */
      addItem: function( item ) {
 
@@ -61,37 +61,12 @@ define( function( require ) {
     },
 
     /**
-     *
-     * @param {Item} item
-     * @return {boolean}
-     * @public
-     */
-    containsItem: function( item ) {
-
-      var itemArray = this.getItemsWithType( item.type );
-
-      var itemExists = false;
-      if( itemArray.contains( item ) ) {
-        itemExists = true;
-      }
-      else {
-        itemArray.forEach( function( existingItem ) {
-          if( item.isEqual( existingItem ) ) {
-            itemExists = true;
-          }
-        } );
-      }
-
-      return itemExists;
-    },
-
-    /**
      * @public
      */
     reset: function() {
       ItemCollection.prototype.reset.call( this );
     }
 
-  } );
+  } ); // inherit
 
-} );
+} ); // define

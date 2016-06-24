@@ -40,10 +40,11 @@ define( function( require ) {
 
     var self = this;
 
+    // @protected - all
     this.onSubmit = null;             // {function} to call when the enter/check button is pressed
     this.onListenerChanged = null;    // {funtcion} to call when the keypad listener changes
 
-    // Add the keypad.
+    // @protected
     this.keypad = new NumberKeypad( {
       maxDigits: options.maxDigits,
       decimalPointKey: true
@@ -73,6 +74,7 @@ define( function( require ) {
     // Layout
     this.keypad.top = readoutBackground.bottom + SPACING;
 
+    // @protected
     this.checkButton = new TextPushButton( enterString, {
       font: new PhetFont( 18 ),
       baseColor: '#F2E916',

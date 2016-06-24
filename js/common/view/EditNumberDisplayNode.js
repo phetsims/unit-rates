@@ -51,11 +51,12 @@ define( function( require ) {
 
     var self = this;
 
+    // @protected - all
     this.keypad         = keypad;
     this.hasKeypadFocus = false;                    // state used to indicate the shared kaypad focus on this node
     this.valueProperty  = valueProperty;
 
-    // colors
+    // @protected - all colors
     this.textColor        = options.textColor;
     this.borderColor      = options.borderColor;
     this.backgroundColor  = options.backgroundColor;
@@ -73,6 +74,7 @@ define( function( require ) {
       backgroundFill: this.backgroundColor,
       pickable: false
     };
+    // @protected
     this.numberDisplay = new NumberDisplay( valueProperty, options.numberRange, '', pattern, numberDisplayOptions );
 
     var editButtonOptions = {
@@ -112,7 +114,9 @@ define( function( require ) {
       assert && assert( true, 'invalid buttonPosition for EditNumberDisplayNode' );
     }
 
+    // @protected
     this.editButton = new RectangularPushButton( editButtonOptions );
+
     options.children = [ this.editButton, this.numberDisplay ];
 
     Node.call( this, options );

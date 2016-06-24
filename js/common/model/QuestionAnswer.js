@@ -29,7 +29,7 @@ define( function( require ) {
 
     var self = this;
 
-    // @public
+    // @public (read-only) - all
     this.item           = item;                     // {Item} associated with this question
     this.questionString = options.questionString;   // {string} question to be asked
     this.unitString     = options.unitString;       // {string} unit

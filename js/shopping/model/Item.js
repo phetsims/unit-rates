@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A specific instance of an item (i.e. apple, cucumbers, blue candy) with it's attributes
+ * A specific instance of an item (i.e. apple, cucumber, blue candy) with it's dynamic attributes
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -35,8 +35,8 @@ define( function( require ) {
     // @public (read-only)
     this.rate   = data.rate;
 
-    // @public (read-only)
-    this.weight = data.weight;  // FIXME: probably not needed any more.
+    // @public (read-only) - FIXME: probably not needed any more. Waiting on final design doc revisions
+    this.weight = data.weight;
 
     // @public (read-write)
     this.count  = count || 1;
@@ -47,10 +47,10 @@ define( function( require ) {
   return inherit( PropertySet, Item, {
 
     /**
-     *
+     * Update the item position property, tween if specified
      * @param {number} x
      * @param {number} y
-     * @param {boolean} animate
+     * @param {boolean} animate - preforms a tween between the old position and the new
      * @public
      */
     setPosition: function( x, y, animate ) {
@@ -102,17 +102,7 @@ define( function( require ) {
     isCandy: function() {
       return( this.type === ItemData.RED_CANDY.type   || this.type === ItemData.YELLOW_CANDY.type ||
               this.type === ItemData.GREEN_CANDY.type || this.type === ItemData.BLUE_CANDY.type );
-   },
-
-   /**
-     *
-     * @public
-     */
-    reset: function() {
-
-    }
-
-   // FIXME: add position animation
+   }
 
   } ); // inherit
 

@@ -25,12 +25,12 @@ define( function( require ) {
 
     // @public (all)
     PropertySet.call( this, {
-      itemData: ItemData.APPLES
+      itemData: ItemData.APPLES   // the currently selected item type (& teh associated static attributes)
     } );
 
     // @public
-    this.shelf = new Shelf( this.itemDataProperty );
-    this.scale = new Scale( this.itemDataProperty );
+    this.shelf      = new Shelf( this.itemDataProperty );
+    this.scale      = new Scale( this.itemDataProperty );
     this.numberLine = new NumberLine( this.itemDataProperty );
     this.challenges = new Challenges( this.itemDataProperty, this.addChallengeItemsToNumberline.bind( this ) );
 
@@ -42,7 +42,7 @@ define( function( require ) {
   return inherit( PropertySet, ShoppingModel, {
 
     /**
-     *
+     * Add local listener for item additions/removals. This is needed on initialization and on a reset all
      * @protected
      */
     addArrayListeners: function() {
@@ -63,7 +63,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Removes an item from the shelf and adds it to the scale
      * @param {Item} item
      * @public
      */
@@ -75,7 +75,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Removes an item from the scale and adds it to the shelf
      * @param {Item} item
      * @public
      */
@@ -87,7 +87,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Adds all items on the scale to the numberline (Note: the number line will ignore duplicates)
      * @protected
      */
     addScaleItemsToNumberline: function() {
@@ -100,7 +100,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Adds all correctly answered challenge questions to the numberline as items (Note: the number line will ignore duplicates)
      * @protected
      */
     addChallengeItemsToNumberline: function() {

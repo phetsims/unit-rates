@@ -37,17 +37,18 @@ define( function( require ) {
   return inherit( PropertySet, ItemCollection, {
 
     /**
-     * @public
+     * Creates empty arrays for all item types (i.e. apples, carrots, red candy, etc..)
+     * @protected
      */
     initializeArrays: function() {
       for (var key in ItemData) {
         var itemData = ItemData[ key ];
-        this.getItemsWithType( itemData.type );
+        this.getItemsWithType( itemData.type ); // creates a new array if it doesn't already exist
       }
     },
 
     /**
-     * Creates a new item/adds it to the types specific array
+     * Creates a new item & adds it to the types specific array
      * @param {ItemData} data
      * @param {number} [count]
      * @return {Item}
@@ -60,8 +61,7 @@ define( function( require ) {
     },
 
     /**
-     * Adds an item to the types specific array
-     *
+     * Adds an existing item to the types specific array
      * @param {Item} item
      * @public
      */
@@ -83,8 +83,32 @@ define( function( require ) {
     },
 
     /**
-     * Adds addition/removal listeners to all type specific arrays
      *
+     * @param {Item} item
+     * @return {boolean}
+     * @public
+     */
+    containsItem: function( item ) {
+
+      var itemArray = this.getItemsWithType( item.type );
+
+      var itemExists = false;
+      if( itemArray.contains( item ) ) {
+        itemExists = true;
+      }
+      else {
+        itemArray.forEach( function( existingItem ) {
+          if( item.isEqual( existingItem ) ) {
+            itemExists = true;
+          }
+        } );
+      }
+
+      return itemExists;
+    },
+
+    /**
+     * Adds addition/removal listeners to all type specific arrays
      * @param {function( Item, ObservableArray )} itemAddedListener
      * @param {function( Item, ObservableArray )} itemRemovedListener
      * @public
@@ -98,7 +122,6 @@ define( function( require ) {
 
     /**
      * Gets the number of items in the type specific array
-     *
      * @param {string} type
      * @returns {number}
      * @protected
@@ -116,7 +139,6 @@ define( function( require ) {
 
     /**
      * Gets the collection for a specific type, or create an empty collection if none exists
-     *
      * @param {string} type
      * @returns {ObservableArray}
      * @protected
@@ -132,7 +154,6 @@ define( function( require ) {
 
     /**
      * Removes all items from the collection for a specific type
-     *
      * @param {string} type
      * @public
      */
@@ -144,7 +165,6 @@ define( function( require ) {
 
     /**
      * Resets the collection for a specific type to the original state
-     *
      * @param {string} type
      * @public
      */
@@ -155,14 +175,14 @@ define( function( require ) {
     },
 
     /**
-     * Resets all model elements
+     * Resets the collecction to the default state
      * @public
      */
     reset: function() {
       this.itemsMap = {};
-      // create empty item arrays
       this.initializeArrays();
     }
 
-  } );
-} );
+  } ); // inherit
+
+} ); // define

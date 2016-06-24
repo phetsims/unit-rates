@@ -19,7 +19,7 @@ define( function( require ) {
   var RAND = new Random();
 
   /**
-   *
+   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
    * @constructor
    */
   function Shelf( itemDataProperty ) {
@@ -37,12 +37,12 @@ define( function( require ) {
   return inherit( ItemCollection, Shelf, {
 
     /**
-     * Populates the initial for item types for the shelf
+     * Populates teh shelf with the initial items counts for all item types
      * @private
      */
     populate: function() {
 
-      // populate initial shelf content
+      // Iterate over all the different item types
       for (var key in ItemData) {
 
         var itemData = ItemData[ key ];
@@ -128,7 +128,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Reset the current item to it's default - basically repopulating the shelf with the original item counts
      * @public
      */
     resetCurrentItem: function() {
@@ -137,8 +137,8 @@ define( function( require ) {
     },
 
     /**
-     * Resets all model elements
-     * @private
+     * Resets the self to it's default state - repopulating all items
+     * @public
      */
    reset: function() {
       ItemCollection.prototype.reset.call( this );

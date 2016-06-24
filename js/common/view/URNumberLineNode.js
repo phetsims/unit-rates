@@ -48,14 +48,14 @@ define( function( require ) {
     // @protected - controls the accordian box expansion
     this.expandedProperty = new Property( true );
 
-    // the accordian box content
+    // @protected - the accordian box content
     this.contentNode = new Node();
 
-    // @protected graph origin/bounds
+    // @public (read-only) graph origin & bounds
     this.origin      = new Vector2( options.yAxisOffset, options.graphHeight / 2 );
     this.graphBounds = new Bounds2( -options.yAxisOffset, 0, options.graphWidth - options.yAxisOffset , options.graphHeight );
 
-    // layer holding all the number line markers
+    // @protected - layer holding all the number line markers
     this.graphMarkerLayerNode = new Path( new Shape().rect(
       0, 0, options.graphWidth, options.graphHeight ), {
       //stroke: 'red',  // debugging

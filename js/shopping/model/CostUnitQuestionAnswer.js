@@ -32,6 +32,7 @@ define( function( require ) {
     this.costQnA = new QuestionAnswer( this, correctCost );
     this.unitQnA = new QuestionAnswer( this, correctUnit );
 
+    // @public (read-only) - all
     this.addProperty( 'outOfRange', false );
     this.addProperty( 'editable', ( count < 0 ) );
     if( !this.editableProperty.value ) {
@@ -117,4 +118,4 @@ define( function( require ) {
 
   } ); // inherit
 
-} ); //define
+} ); // define

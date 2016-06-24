@@ -53,7 +53,10 @@ define( function( require ) {
 
     var self = this;
 
+    // @public (read-only)
     this.qna = qna;
+
+    // @protected - all
     this.keypad = keypad;
     this.defaultTextColor     = options.defaultTextColor;
     this.correctTextColor     = options.correctTextColor;
@@ -62,7 +65,7 @@ define( function( require ) {
     this.correctBorderColor   = options.correctBorderColor;
     this.incorrectBorderColor = options.incorrectBorderColor;
 
-    // the Challenge question
+    // @protected - the challenge question
     this.challengeText = new Text( this.qna.questionString, {
       left: 0,
       font: TEXT_FONT,
@@ -79,7 +82,7 @@ define( function( require ) {
         textColor: this.defaultTextColor
     } );
 
-    // smile or frown image corresponding to correct/incorrect answers
+    // @protected - smile or frown image corresponding to correct/incorrect answers
     this.faceNode = new FaceNode( 18, {
       left: this.editNumberDisplay.right + HORIZONTAL_SPACING,
       centerY: this.editNumberDisplay.centerY,
@@ -87,7 +90,7 @@ define( function( require ) {
       visible: false
     } );
 
-    // unit line
+    // @protected - unit divider line
     this.unitLine = new Path( new Shape()
         .moveTo( this.challengeText.centerX - DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERICAL_SPACING )
         .lineTo( this.challengeText.centerX + DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERICAL_SPACING ), {
@@ -96,7 +99,7 @@ define( function( require ) {
       visible: options.showUnitText
     } );
 
-    // unit label
+    // @protected - unit label
     this.unitText = new Text( this.qna.unitString, {
       centerX: this.challengeText.centerX,
       top: this.unitLine.bottom + 2,
