@@ -84,10 +84,10 @@ define( function( require ) {
      * @public
      */
     getQuestionAnswer: function( index ) {
-      assert && assert( index < challengeData.length, 'invalid question index' );
 
       var itemData = this.itemDataProperty.value;
       var challengeData = this.challengeData[ itemData.type ];
+      assert && assert( challengeData.length, 'invalid question index' );
 
       return challengeData[ index ];
     },
@@ -101,7 +101,7 @@ define( function( require ) {
       this.challengeData = {};
 
       // create questions & answers
-      for (var key in ItemData) {
+      for( var key in ItemData ) {
         var itemData = ItemData[ key ];
         this.generateQuestionsAnswersForItem( itemData );
       }
