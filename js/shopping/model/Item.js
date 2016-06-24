@@ -54,7 +54,6 @@ define( function( require ) {
      * @public
      */
     setPosition: function( x, y, animate ) {
-
       var self = this;
 
       if( animate ) {

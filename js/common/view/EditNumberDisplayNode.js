@@ -186,7 +186,6 @@ define( function( require ) {
      * @public
      */
     showKeypad: function() {
-
       var self = this;
 
       if( this.hasKeypadFocus ) {

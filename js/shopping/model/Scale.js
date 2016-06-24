@@ -66,7 +66,6 @@ define( function( require ) {
      * @protected
      */
     addArrayListeners: function() {
-
       var self = this;
 
       // refresh on item additions/removals

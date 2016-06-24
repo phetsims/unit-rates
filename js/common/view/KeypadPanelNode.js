@@ -37,7 +37,6 @@ define( function( require ) {
       maxDigits: 4
     },  options || {} );
 
-
     var self = this;
 
     // @protected - all
@@ -139,10 +138,12 @@ define( function( require ) {
      */
     clearListeners: function() {
 
+      // remove the listener
       if( this.onSubmit ) {
         this.checkButton.removeListener( this.onSubmit );
       }
 
+      // call the currently listener before removing it.
       if( this.onListenerChanged ) {
         this.onListenerChanged.call();
       }

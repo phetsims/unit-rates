@@ -128,7 +128,7 @@ define( function( require ) {
      */
     checkAnswer: function() {
 
-      if( !this.qna.isAnswerValid() ) {         // invalid = a simple default state, before the user input any answers
+      if( !this.qna.isAnswerValid() ) {         // invalid = aka. a default state, before the user has input any answers
         this.faceNode.visible = false;
         this.editNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
         this.editNumberDisplay.setBorderColor( DEFAULT_BORDER_COLOR );

@@ -46,7 +46,6 @@ define( function( require ) {
      * @protected
      */
     addArrayListeners: function() {
-
       var self = this;
 
       // item add/remove listeners
@@ -104,7 +103,6 @@ define( function( require ) {
      * @protected
      */
     addChallengeItemsToNumberline: function() {
-
       var self = this;
 
       // create a new item on the number line representing the correctly answered challenge questions
@@ -116,7 +114,6 @@ define( function( require ) {
 
     // Resets all model elements
     reset: function() {
-
       this.shelf.reset();
       this.scale.reset();
       this.numberLine.reset();

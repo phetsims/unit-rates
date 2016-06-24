@@ -53,7 +53,6 @@ define( function( require ) {
      * @public @override
      */
      addItem: function( item ) {
-
       var itemArray = this.getItemsWithType( item.type );
       if( !this.containsItem( item ) ) {
         itemArray.add( item );

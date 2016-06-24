@@ -27,6 +27,10 @@ define( function( require ) {
   var BLUE_CANDY_COLOR = 'blue';
   var PERSPECTIVE_RADIUS = 0.10;
 
+  // ****
+  // NOTE: THIS IS CURRENTLY UNUSED - however, the design has not been finialized,
+  // ****
+
   /**
    * @param {number} radius
    * @param {number} height
@@ -38,28 +42,28 @@ define( function( require ) {
     options = _.extend( {
       pickable: true
     },  options || {} );
+    assert && assert( !options.children, 'additional children not supported' );
 
-    this.containerRadius = radius;
-    this.containerHeight = height;
-    this.containerRect = new Bounds2( -this.containerRadius, 0, this.containerRadius, this.containerHeight );
-    this.perspectiveRadius = PERSPECTIVE_RADIUS * this.containerRadius;
-    this.candyItemHeight = this.containerHeight * 0.05;
+    // @private - all
+    this.containerRadius    = radius;
+    this.containerHeight    = height;
+    this.containerRect      = new Bounds2( -this.containerRadius, 0, this.containerRadius, this.containerHeight );
+    this.perspectiveRadius  = PERSPECTIVE_RADIUS * this.containerRadius;
+    this.candyItemHeight    = this.containerHeight * 0.05;
 
-    var containerOptions = { pickable: true, lineWidth: CONTAINER_LINE_WIDTH, stroke: CONTAINER_LINE_COLOR, fill: CONTAINER_FILL };
+    var containerOptions    = { pickable: true, lineWidth: CONTAINER_LINE_WIDTH, stroke: CONTAINER_LINE_COLOR, fill: CONTAINER_FILL };
 
-    var containerTopNode = new Path( this.getTopShape( this.containerRect.minY ), containerOptions );
-    var containerBodyNode = new Path( this.getBodyShape(  this.containerRect.minY ), containerOptions );
+    var containerTopNode    = new Path( this.getTopShape( this.containerRect.minY ), containerOptions );
+    var containerBodyNode   = new Path( this.getBodyShape(  this.containerRect.minY ), containerOptions );
     var containerBottomNode = new Path( this.getBottomShape(), { lineWidth: CONTAINER_LINE_WIDTH, stroke: CONTAINER_LINE_COLOR,
       lineDash: CONTAINER_LINE_DASH } );
 
     var candyOptions = { pickable: true, visible: false, lineWidth: CONTAINER_LINE_WIDTH, stroke: CONTAINER_LINE_COLOR,
       fill: 'black' };
-    this.candyTopNode = new Path( null, candyOptions );
-    this.candyBodyNode = new Path( null, candyOptions );
+    this.candyTopNode   = new Path( null, candyOptions );
+    this.candyBodyNode  = new Path( null, candyOptions );
 
-    assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ containerBodyNode, containerTopNode, containerBottomNode,
-                         this.candyTopNode, this.candyBodyNode ];
+    options.children = [ containerBodyNode, containerTopNode, containerBottomNode, this.candyTopNode, this.candyBodyNode ];
 
     Node.call( this, options );
   }
@@ -69,7 +73,7 @@ define( function( require ) {
   return inherit( Node, CandyContainerNode, {
 
     /**
-     *
+     * Generate the top ellipse of the candy container at a specific Y location.
      * @param {number} y
      * @private
      */
@@ -79,7 +83,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Generate the main body of the candy container for a specific height.
      * @param {number} height
      * @private
      */
@@ -93,6 +97,7 @@ define( function( require ) {
     },
 
     /**
+     * Generate the bottom portion of the candy container
      * @private
      */
     getBottomShape: function() {
@@ -103,23 +108,21 @@ define( function( require ) {
 
     /**
      * Fill the container with candy
-     *
-     * @param {Color} itemArray
+     * @param {Array}.<Item> itemArray
      * @public
      */
     populate: function( itemArray ) {
-
       var self = this;
 
       // set visibility
       if( itemArray.length === 0 ) {
-        this.candyTopNode.visible = false;
-        this.candyBodyNode.visible = false;
+        this.candyTopNode.visible   = false;
+        this.candyBodyNode.visible  = false;
         return;
       }
 
-      this.candyTopNode.visible = true;
-      this.candyBodyNode.visible = true;
+      this.candyTopNode.visible   = true;
+      this.candyBodyNode.visible  = true;
 
       // set color
       var itemColor = 'black';
@@ -140,14 +143,13 @@ define( function( require ) {
           default:
             assert && assert( true, 'Candy container is populating non-candy types' );
       }
-      this.candyTopNode.fill = itemColor;
+      this.candyTopNode.fill  = itemColor;
       this.candyBodyNode.fill = itemColor;
 
       // calc the height of the candy items
       var candyHeight = this.containerRect.maxY;
       itemArray.forEach( function( item ) {
         candyHeight -= ( item.count * self.candyItemHeight );
-
         itemColor = item.containerColor;
       } );
 
@@ -161,7 +163,7 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      // FIXME
+      // FIXME:
     }
 
   } ); // inherit
