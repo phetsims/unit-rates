@@ -40,7 +40,7 @@ define( function( require ) {
       axisArrowSize:      5,
       axisLabelSpacing:   10,
       axisLabelFont:      new PhetFont( 14 ),
-      axisLabelMaxWidth:  100
+      axisLabelMaxWidth:  75
     }, options || {} );
 
     var self = this;
@@ -95,7 +95,7 @@ define( function( require ) {
     this.contentNode.addChild( this.bottomArrowNode );
 
     // arrow labels
-    var labelOptions = { font:options.axisLabelFont, maxWidth: options.axisLabelMaxWidth };
+    var labelOptions = { font:options.axisLabelFont, maxWidth:options.axisLabelMaxWidth };
 
     // @protected
     this.topArrowLabel = new Text( 'top', _.extend( {}, labelOptions, {

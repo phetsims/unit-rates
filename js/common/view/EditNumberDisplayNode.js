@@ -20,15 +20,12 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Range = require( 'DOT/Range' );
 
-  // constants
-  var TEXT_MAX_WIDTH  = 75;
-
   // images
   var editButtonImage = require( 'image!UNIT_RATES/edit-button.png' );
 
   /**
    *
-   * @param {KeypadPanelNode} keypad
+   * @param {KeypadPanelNode} keypad - shared keypad
    * @param {Property}.<Number> valueProperty - used to receive input from the keypad
    * @param {string} pattern - the text pattern to display in the NumberDisplay
    * @param {Object} [options]
@@ -42,6 +39,7 @@ define( function( require ) {
       decimalPlaces:        2,                                            // # decimal places for the number display
       buttonPosition:       'left',                                       // edit button position (left|right|top|bottom|)
       buttonSpacing:        0,                                            // space between the edit button & number display
+      textMaxWidth:         30,
       textColor:            'rgba(0,0,0,1)',
       borderColor:          'rgba(0,0,0,1)',
       backgroundColor:      'rgba(255,255,255,1)',
@@ -68,8 +66,8 @@ define( function( require ) {
       xMargin: 2,
       yMargin: 2,
       decimalPlaces: options.decimalPlaces,
-      maxWidth: TEXT_MAX_WIDTH,
       numberFill: this.textColor,
+      numberMaxWidth: options.textMaxWidth,
       backgroundStroke: this.borderColor,
       backgroundFill: this.backgroundColor,
       pickable: false

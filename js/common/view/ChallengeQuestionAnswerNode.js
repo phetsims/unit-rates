@@ -72,13 +72,14 @@ define( function( require ) {
       maxWidth: TEXT_MAX_WIDTH
     } );
 
-    var pattern = options.preValueString + '{0}' + options.postValueString;
+    var pattern = options.preValueString + '{0}' + options.postValueString;   // FIXME: see stringTest=long
     this.editNumberDisplay = new EditNumberDisplayNode( keypad, qna.valueProperty, pattern, {
         centerX: this.challengeText.centerX - HORIZONTAL_SPACING,
         top: this.challengeText.bottom + VERICAL_SPACING,
         buttonSpacing: HORIZONTAL_SPACING,
         font: new PhetFont( 14 ),
         decimalPlaces: options.decimalPlaces,
+        textMaxWidth: 75,
         textColor: this.defaultTextColor
     } );
 

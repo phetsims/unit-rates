@@ -52,12 +52,12 @@ define( function( require ) {
     var self = this;
 
     // @public (readwrite)
-    this.item       = item;
-    this.keypad     = keypad;
+    this.item   = item;
+    this.keypad = keypad;
     this.outOfRangeProperty = new Property( false );
 
     // top label - cost
-    var topPattern =  currencySymbolString + '{0} ';
+    var topPattern =  currencySymbolString + '{0} ';  // FIXME: see stringTest=long
     this.topNumberDisplay = new EditNumberDisplayNode( keypad, this.item.costQnA.valueProperty, topPattern, {
         centerX: -2,
         bottom: -SMALL_LINE_HEIGHT,

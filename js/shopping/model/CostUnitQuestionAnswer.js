@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A specific instance of an item (i.e. apple, cucumbers, blue candy) with it's attributes
+ * A cost & unit duo of questions and answers. Instances are mainly used the number line model.
  *
  * @author Dave Schmitz (Schmitzware)
  */
