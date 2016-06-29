@@ -39,12 +39,13 @@ define( function( require ) {
 
   /**
    *
-   * @param {Property.<ItemData>} itemDataProperty
-   * @param {Node}
+   * @param {SceneMode} parentNode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
+   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
+   * @param {Node} parentNode - the parent node of the combobox
    * @param {Object} [options]
    * @constructor
    */
-  function ItemComboBox( model, sceneMode, itemDataProperty, parentNode, options ) {
+  function ItemComboBox( sceneMode, itemDataProperty, parentNode, options ) {
 
     options = _.extend( {
       listPosition: 'above',
@@ -55,7 +56,7 @@ define( function( require ) {
       maxWidth: 200
     }, options );
 
-    // populate based on which scene
+    // populate the menu based on which scene
     var items  = [];
     switch( sceneMode ) {
       case SceneMode.FRUIT:
@@ -113,8 +114,11 @@ define( function( require ) {
 
   return inherit( ComboBox, ItemComboBox, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
-     * @param {SceneMode} itemNode
+     * Selects the current scene
+     * @param {SceneMode} sceneMode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
      */
     setSceneMode: function( sceneMode ) {
       switch( sceneMode ) {
@@ -134,8 +138,9 @@ define( function( require ) {
     },
 
     /**
-     * @param {string} titleString
-     * @param {Node} itemNode
+     * Creates one row or entry in the menu consisting of an icon and a label
+     * @param {string} itemString - the item name
+     * @param {Node} itemNode - the item icon
      * @returns {HBox}
      */
     createItemRow: function( itemString, itemNode ) {

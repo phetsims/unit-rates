@@ -15,8 +15,8 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
 
   /**
-   * @param {Item} item
-   * @param {Vector2} position
+   * @param {Item} item - the underlying item (type, counts, etc.)
+   * @param {Vector2} position - a X,Y position property
    * @param {Object} [options]
    * @constructor
    */
@@ -24,7 +24,7 @@ define( function( require ) {
 
     options = _.extend( {
       draggable:  true,
-      dragHandle: null    // Bounds2 - the portion of the node that serves as a drag handle (local coordinates)
+      dragHandle: null    // Bounds2 - the portion of the node that serves as a drag handle (local coordinates, unused)
     }, options || {} );
 
     Node.call( this, options );
@@ -35,7 +35,7 @@ define( function( require ) {
     this.lastPosition = position;
     this.item.setPosition( position.x, position.y, false );
 
-    // @protected - used to tell when an item node is being moved
+    // @protected - all used to track item movement (i.e. dragging, animation)
     this.draggable          = options.draggable;
     this.isDragging         = false;
     this.dragHandle         = ( options.dragHandle !== null ? options.dragHandle : null );
@@ -78,7 +78,6 @@ define( function( require ) {
           self.dragStartEmitter.emit1( self );
         },
         end: function( e ) {
-
           self.isDragging = false;
 
           // announce drag end
@@ -86,7 +85,6 @@ define( function( require ) {
         },
 
         translate: function( translation ) {
-
           if( !self.isDragging ) {
             return;
           }
@@ -106,7 +104,6 @@ define( function( require ) {
 
     /**
      * Adds listeners for drag start & end
-     *
      * @param (function} moveStartCallback - function called when item drag starts
      * @param (function} moveEndCallback - function called when item drag ends
      * @public
@@ -121,6 +118,14 @@ define( function( require ) {
       if( this.moveEndCallback ) {
         this.dragEndEmitter.addListener( this.moveEndCallback );
       }
+    },
+
+    /**
+     * Moves the node back to the position before the last drag
+     * @public
+     */
+    restoreLastPosition: function() {
+       this.item.setPosition( this.lastPosition.x, this.lastPosition.y, true );
     },
 
     // @public
@@ -141,14 +146,6 @@ define( function( require ) {
 
       // remove input listener
       this.removeInputListener( this.dragListener );
-    },
-
-    /**
-     * Moves the node to the position before the last drag
-     * @public
-     */
-    restoreLastPosition: function() {
-       this.item.setPosition( this.lastPosition.x, this.lastPosition.y, true );
     }
 
   } ); // inherit

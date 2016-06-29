@@ -57,13 +57,6 @@ define( function( require ) {
       if( !this.containsItem( item ) ) {
         itemArray.add( item );
       }
-    },
-
-    /**
-     * @public
-     */
-    reset: function() {
-      ItemCollection.prototype.reset.call( this );
     }
 
   } ); // inherit

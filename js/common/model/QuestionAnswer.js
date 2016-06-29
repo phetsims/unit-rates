@@ -77,6 +77,11 @@ define( function( require ) {
      */
     reset: function() {
       this.valueProperty.reset();
+    },
+
+    // @public
+    dispose: function() {
+      this.valueProperty.unlinkAll();
     }
 
   } );  // inherit

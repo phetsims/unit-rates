@@ -50,9 +50,9 @@ define( function( require ) {
     var self = this;
 
     // @protected - all
-    this.keypad         = keypad;
-    this.hasKeypadFocus = false;                    // state used to indicate the shared kaypad focus on this node
-    this.valueProperty  = valueProperty;
+    this.keypad           = keypad;
+    this.hasKeypadFocus   = false;                    // state used to indicate the shared kaypad focus on this node
+    this.valueProperty    = valueProperty;
 
     // @protected - all colors
     this.textColor        = options.textColor;

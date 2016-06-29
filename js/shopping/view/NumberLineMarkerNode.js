@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ * A parent node (of baically two editable number displays) which represents a spot on the double number line.
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -104,10 +104,6 @@ define( function( require ) {
 
     ItemNode.call( this, item, position, options );
 
-    //this.outOfRangeProperty.link( function( value, oldValue ) {
-    //  self.checkEditable();
-    //} );
-
     // check answers on user input
     Property.multilink( [ this.item.costQnA.valueProperty, this.item.unitQnA.valueProperty, this.item.outOfRangeProperty ],
       function( costProperty, unitProperty, outOfRangeProperty ) {
@@ -120,7 +116,7 @@ define( function( require ) {
   return inherit( ItemNode, NumberLineMarkerNode, {
 
     /**
-     * Changes various color/visibility attributes based on edit state
+     * Changes various color/visibility attributes based on the edit state
      * @protected
      */
     checkEditable: function() {
@@ -128,8 +124,8 @@ define( function( require ) {
       // non-editable/locked marker
       if( !this.item.editableProperty.value ) {
 
+        var isCandy = this.item.isCandy(); // candy precision is treated differently than fruit & produce
         var countPrecision = this.item.getCountPrecision();
-        var isCandy = this.item.isCandy();
 
         // fractional counts have different represenation than whole counts.
         if( ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) ) {
@@ -213,6 +209,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
+      Property.unlinkAll();
     }
 
   } ); // inherit

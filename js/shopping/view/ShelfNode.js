@@ -1,7 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ * Displays the shelf and any items that were added to it. The 'top' portion of the shelf is also considered a
+ * drop-zone' for items being dragged from the scale
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -23,8 +24,8 @@ define( function( require ) {
   var SHELF_SIZE = new Dimension2( 340, 20 );
 
   /**
-   * @param {Shelf} shelf
-   * @param {Node} itemLayer
+   * @param {Shelf} shelf - model
+   * @param {Node} itemLayer - a container node which holds the item nodes. Used here for local posiitoning of items
    * @param (function} itemMovedCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
@@ -49,15 +50,17 @@ define( function( require ) {
     this.backEdgeMinX = BACK_OFFSET * SHELF_SIZE.width;
     this.backEdgeMaxX = ( 1 - BACK_OFFSET ) * SHELF_SIZE.width;
 
+    // @private - top facce
     this.topNode =  new Path( new Shape()
-      .moveTo( 0, 0 )                                                  // Top face
+      .moveTo( 0, 0 )
       .lineTo( SHELF_SIZE.width, 0)
       .lineTo( this.backEdgeMaxX, -BACK_DEPTH )
       .lineTo( this.backEdgeMinX, -BACK_DEPTH )
       .lineTo( 0, 0 ), pathOptions );
 
+    // @private - front facce
     var frontShape = new Shape()
-      .moveTo( 0, 0 )                                                  // Front face
+      .moveTo( 0, 0 )
       .lineTo( 0, SHELF_SIZE.height )
       .lineTo( SHELF_SIZE.width, SHELF_SIZE.height)
       .lineTo( SHELF_SIZE.width, 0);
@@ -77,9 +80,10 @@ define( function( require ) {
 
   return inherit( Node, ShelfNode, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
      * Checks if a point is in a droppable location
-     *
      * @param {Vector2} bounds - parent (layer) coordinates
      * @return {boolean}
      * @public
@@ -90,8 +94,8 @@ define( function( require ) {
     },
 
     /**
-     * Adjusts item nodes bottom center coordinate to be in the drop area, basically so items appear
-     * to be on the shelf.
+     * Adjusts item nodes bottom center coordinate to be in the drop area, basically so items always appear
+     * to be on the shelf not just covering it.
      * @public
      */
      adjustItemPositions: function() {
@@ -165,7 +169,7 @@ define( function( require ) {
     },
 
     /**
-     * Removes the current item type from the scale
+     * Basically repopulates the current item type.
      * @public
      */
     resetCurrentItem: function() {
@@ -174,7 +178,7 @@ define( function( require ) {
     },
 
     /**
-     * Reset the shelf node to its initial state
+     * Reset the shelf node to its initial state (all item types)
      * @public
      */
     reset: function() {

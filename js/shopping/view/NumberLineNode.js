@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ * A derived, shopping-specific, double number line. Basically handles adding/removing marker nodes.
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -19,8 +19,8 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // constants
-  var EDITABLE_MARKER_X = 25;
-  var UNDO_BUTTON_X     = 5;
+  var EDITABLE_MARKER_X = 25; // the defualt X position of an editable marker
+  var UNDO_BUTTON_X     = 5;  // the default X position of the undo/remove button
 
   // images
   var undoButtonImage = require( 'image!UNIT_RATES/undo-button.png' );
@@ -42,8 +42,8 @@ define( function( require ) {
   var weightUnitString = weightString + ' (' + lbsString + ')';
 
   /**
-   * @param {NumberLine} numberLine
-   * @param {NumberKeypad} keypad
+   * @param {NumberLine} numberLine - the model
+   * @param {NumberKeypad} keypad - shared keypad
    * @param {Object} [options]
    * @constructor
    */
@@ -59,9 +59,17 @@ define( function( require ) {
 
     URNumberLineNode.call( this, options );
 
+    // @private - the fixed X location for ALL markers which are off the end of the nuber line
     this.outOfRangeMarkerX = ( this.topArrowNode.right + this.topArrowLabel.left ) / 2;
 
-    // undo button
+    // Array.<NumberLineMarkerNode> - The undo/remove stack of markers which keeps track of the order of
+    // marker removals for the undo button.
+    // @private
+    this.undoItemNodeList = [];
+
+    // undo button - it's position will change based on the marker beign edited. Incorrectly/unanswered editable markers
+    // will position the button ont eh far left side of the number line, while correct/fractional 'count' markers will
+    // reposition the undo button directly under the marker.
     this.undoEditButtonNode = new RectangularPushButton( {
       visible: false,
       baseColor: '#f2f2f2',
@@ -83,7 +91,7 @@ define( function( require ) {
     numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
 
       // clear the undo stack on an item change (it gets rebuilt automatically)
-      self.undoItemNodeList = [];
+      self.undoItemNodeList.length = 0;
 
       // set number line labels
       switch( itemData.type ) {
@@ -137,7 +145,9 @@ define( function( require ) {
   return inherit( URNumberLineNode, NumberLineNode, {
 
     /**
-     *
+     * Adds the local callback for when a new item/marker is added to the number line. This gets called any time
+     * the number line gets rebuilt (i.e. on a item type change - apples -> pears ), as the NumberLine model/ObservableArray
+     * removes the listeners when cleared.
      * @protected
      */
     addPopulateListener: function() {
@@ -145,16 +155,18 @@ define( function( require ) {
       var self = this;
 
       // refresh on item additions/removals
-      this.numberLine.addListeners( function( item, observableArray ) {
-        //onAddCallback
-        self.populate();
-      },
-      function( item, observableArray ) {
+      this.numberLine.addListeners(
+        // onAddCallback
+        function( item, observableArray ) {
+          self.populate();
+        },
+        // onRemoveCallback - no/op
+        function( item, observableArray ) {
       } );
     },
 
     /**
-     *
+     * Creates marker node for every item in the model
      * @override @public
      */
     populate: function() {
@@ -167,7 +179,7 @@ define( function( require ) {
       // reset the undo stack
       this.undoItemNodeList.length = 0;
 
-      // get the current array for the item type
+      // get the current item array for the item type
       var itemArray = this.getItemArray();
       itemArray.forEach( function( item ) {
         self.createItemMarkerNode( item );
@@ -177,8 +189,8 @@ define( function( require ) {
       this.addEditMarker();
     },
 
-     /**
-     *
+    /**
+     * Adds a new editable marker to the number line (if one doesn't already exist)
      * @private
      */
     addEditMarker: function( ) {
@@ -202,7 +214,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Removes the top marker in the undo stack from the number line.
      * @private
      */
     removeEditMarker: function( ) {
@@ -219,8 +231,9 @@ define( function( require ) {
       }
     },
 
-     /**
-     *
+    /**
+     * Tells whether there is an existin editable marker on the number line
+     * @returns {boolean}
      * @private
      */
     editMarkerExists: function( ) {
@@ -235,7 +248,8 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Creates a new marker node based on the specified item attiributes
+     * @param {Item} - the item (type, count, cost, etc..)
      * @return {NumberLineMarkerNode}
      * @private
      */
@@ -243,7 +257,7 @@ define( function( require ) {
 
       var self = this;
 
-      // make marker node
+      // make marker node at a specific location
       var position = item.positionProperty.value;
       var markerNode = new NumberLineMarkerNode( item, position, this.keypad, {
         draggable:  false,
@@ -251,7 +265,7 @@ define( function( require ) {
         centerY:    position.y,
         stroke:     'black',
         lineWidth:  1.25,
-        bottomDecimalPlaces: ( item.isCandy() ? 2 : 1 )
+        bottomDecimalPlaces: ( item.isCandy() ? 2 : 1 ) // Candy count values are 2 decimal places
       } );
       this.addMarker( markerNode );
 
@@ -314,7 +328,7 @@ define( function( require ) {
           return ( item.isEqual( markerNode.item ) && item !== markerNode.item );
         } );
 
-        // if teh edit marker is a dup, remove it
+        // if the edit marker is a dup, remove it
         if( dupItemArray.length > 0 ) {
           this.removeEditMarker();
         }
@@ -354,7 +368,9 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Tells whether a marker is 'removable'. Markers which are 'removable' are those which
+     * are either still editable (i.e. not locked in) or those which have fractional 'count' values.
+     * @returns {boolean}
      * @private
      */
     isMarkerRemovable: function( markerNode ) {
@@ -365,8 +381,8 @@ define( function( require ) {
     },
 
     /**
-     *
-     * @returns {ObservableArray}
+     * Fetches the item array for the current item type.
+     * @returns {Array}.<Item>
      * @private
      */
     getItemArray: function( ) {
@@ -382,7 +398,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Removes all the markers
      * @override @public
      */
     removeAllMarkers: function() {
@@ -401,13 +417,19 @@ define( function( require ) {
     },
 
     /**
+     * Resets the node to it's default state
      * @public
      */
     reset: function() {
-
       URNumberLineNode.prototype.reset.call( this );
 
+      // re-add the local listener
       this.addPopulateListener();
+    },
+
+    // @public
+    dispose: function() {
+      Property.unlinkAll();
     }
 
   } );  // define

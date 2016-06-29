@@ -78,6 +78,8 @@ define( function( require ) {
 
   return inherit( Object, Challenges, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
      * Retrieves the question for a specific index of the current item type
      * @returns {QuestionAnswer}

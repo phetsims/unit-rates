@@ -140,20 +140,20 @@ define( function( require ) {
       left:   this.layoutBounds.left   + SCREEN_HORIZONTAL_MARGIN,
       bottom: this.layoutBounds.bottom - SCREEN_VERTICAL_MARGIN
     };
-    this.fruitItemsComboBox = new ItemComboBox( model, SceneMode.FRUIT, this.fruitItemDataProperty,
+    this.fruitItemsComboBox = new ItemComboBox( SceneMode.FRUIT, this.fruitItemDataProperty,
       this, itemComboBoxOptions);
     this.addChild( this.fruitItemsComboBox );
 
-    this.produceItemsComboBox = new ItemComboBox( model, SceneMode.PRODUCE, this.produceItemDataProperty,
+    this.produceItemsComboBox = new ItemComboBox( SceneMode.PRODUCE, this.produceItemDataProperty,
       this, itemComboBoxOptions);
     this.addChild( this.produceItemsComboBox );
 
-    this.candyItemsComboBox = new ItemComboBox( model, SceneMode.CANDY, this.candyItemDataProperty,
+    this.candyItemsComboBox = new ItemComboBox( SceneMode.CANDY, this.candyItemDataProperty,
       this, itemComboBoxOptions);
     this.addChild( this.candyItemsComboBox );
 
     // scene buttons
-    var sceneControlButtons = new SceneButtonGroupNode( model, this.sceneModeProperty, {
+    var sceneControlButtons = new SceneButtonGroupNode( this.sceneModeProperty, {
       right:  this.layoutBounds.right - SCREEN_HORIZONTAL_MARGIN,
       //centerX:  this.challengesNode.centerX,
       bottom: resetAllButton.top - SCREEN_VERTICAL_MARGIN

@@ -37,8 +37,6 @@ define( function( require ) {
       maxDigits: 4
     },  options || {} );
 
-    var self = this;
-
     // @protected - all
     this.onSubmit = null;             // {function} to call when the enter/check button is pressed
     this.onListenerChanged = null;    // {funtcion} to call when the keypad listener changes
@@ -54,24 +52,23 @@ define( function( require ) {
     _.times( options.maxDigits, function() {
       testString.text += '9';
     } );
-    var readoutBackground = new Rectangle( 0, 0, testString.width * 1.2, testString.height * 1.2, 4, 4, {
+
+    // @protected
+    this.readoutBackground = new Rectangle( 0, 0, testString.width * 1.2, testString.height * 1.2, 4, 4, {
       fill: 'white',
       stroke: '#777777',
       lineWidth: 1.5,
       centerX: this.keypad.width / 2
     } );
 
-    // Add the readout text.
-    var readoutText = new Text( '', { font: READOUT_FONT } );
-    this.value = '0'; // @private
-    this.keypad.digitStringProperty.link( function( digitString ) {
-      readoutText.text = digitString;
-      readoutText.center = readoutBackground.center;
-      self.value = digitString;
-    } );
+    // @protected - add the readout text.
+    this.readoutText = new Text( '', { font: READOUT_FONT } );
+
+    // update the value on keypad user interaction
+    this.keypad.digitStringProperty.link( this.onKeypadDigitStringChange.bind( this ) );
 
     // Layout
-    this.keypad.top = readoutBackground.bottom + SPACING;
+    this.keypad.top = this.readoutBackground.bottom + SPACING;
 
     // @protected
     this.checkButton = new TextPushButton( enterString, {
@@ -86,18 +83,18 @@ define( function( require ) {
 
     // Group all nodes
     var numberControlGroup = new Node( {
-      children: [ this.keypad, readoutBackground, readoutText, this.checkButton ]
+      children: [ this.keypad, this.readoutBackground, this.readoutText, this.checkButton ]
     } );
 
     Panel.call( this, numberControlGroup, {
-      xMargin: SPACING,
-      yMargin: SPACING,
-      fill: 'rgba(0,0,0,0.05)',
-      stroke: 'gray',
-      lineWidth: 1,
-      resize: false,
+      xMargin:            SPACING,
+      yMargin:            SPACING,
+      fill:               'rgba(0,0,0,0.05)',
+      stroke:             'gray',
+      lineWidth:          1,
+      resize:             false,
       backgroundPickable: true,
-      visible: false
+      visible:            false
     } );
 
     // Pass options through to parent class.
@@ -107,6 +104,16 @@ define( function( require ) {
   unitRates.register( 'KeypadPanelNode', KeypadPanelNode );
 
   return inherit( Panel, KeypadPanelNode, {
+
+    /**
+     * Callback for the keypad string change
+     * @param {string} digitString - called when the keypad listener changes
+     * @public
+     */
+    onKeypadDigitStringChange: function( digitString ) {
+      this.readoutText.text   = digitString;
+      this.readoutText.center = this.readoutBackground.center;
+     },
 
     /**
      * Assigns a set of listeners to the keypad, there is only on listener assigned at any given time.
@@ -167,7 +174,7 @@ define( function( require ) {
      * @public
      */
     getValue: function() {
-      return this.value;
+      return Number( this.keypad.digitStringProperty.value );
     },
 
     /**
@@ -176,6 +183,11 @@ define( function( require ) {
      */
     clear: function() {
       this.keypad.clear();
+    },
+
+    // @public
+    dispose: function() {
+      this.keypad.digitStringProperty.unlink( this.onKeypadDigitStringChange );
     }
 
   } ); // inherit

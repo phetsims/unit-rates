@@ -51,8 +51,6 @@ define( function( require ) {
     },  options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
-    var self = this;
-
     // @public (read-only)
     this.qna = qna;
 
@@ -110,9 +108,7 @@ define( function( require ) {
     } );
 
     // check the answer on user value input
-    this.qna.valueProperty.link( function( value, oldValue ) {
-      self.checkAnswer();
-    } );
+    this.qna.valueProperty.link( this.checkAnswer.bind( this ) );
 
     options.children = [ this.challengeText, this.editNumberDisplay, this.faceNode, this.unitLine, this.unitText ];
 
@@ -159,6 +155,11 @@ define( function( require ) {
           this.editNumberDisplay.setBorderColor( this.incorrectBorderColor );
         }
       }
+    },
+
+    // @public
+    dispose: function() {
+      this.qna.valueProperty.unlink( this.checkAnswer );
     }
 
   } );  // define

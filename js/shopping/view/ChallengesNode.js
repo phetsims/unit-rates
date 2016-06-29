@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ * A node containing all the challenge Q&A's nodes in a collapsable box
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -11,7 +11,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  //var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ChallengeQuestionAnswerNode = require( 'UNIT_RATES/common/view/ChallengeQuestionAnswerNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -27,12 +26,13 @@ define( function( require ) {
   var VERTICAL_SPACING  = 20;
 
   /**
-   * @param {Challenges} challenges
-   * @param {NumberKeypad} keypad
+   * @param {Challenges} challenges - the challenges model
+   * @param {NumberKeypad} keypad - shared keypad
+   * @param {number} fixedWidth - the fixed width of the node
    * @param {Object} [options]
    * @constructor
    */
-  function ChallengesNode( challenges, keypad, width, options ) {
+  function ChallengesNode( challenges, keypad, fixedWidth, options ) {
 
     options = _.extend( {
     },  options || {} );
@@ -41,7 +41,7 @@ define( function( require ) {
 
     this.challenges = challenges;
     this.keypad = keypad;
-    this.minWidth = width;
+    this.fixedWidth = fixedWidth;
 
     this.contentNode = new Node();
 
@@ -74,15 +74,19 @@ define( function( require ) {
 
   return inherit( AccordionBox, ChallengesNode, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
-     * Creates nodes for each item
+     * Creates the questions and answer nodes for all challenge questions
      * @public
      */
     populate: function() {
 
-      var strut = new HStrut( this.minWidth );
+      // layout adjustment
+      var strut = new HStrut( this.fixedWidth );
       this.contentNode.addChild( strut );
 
+      // Create the 1st question (which is always what is the Unit Rate?)
       var qna0 = this.challenges.getQuestionAnswer( 0 );
       var questionNode0 = new ChallengeQuestionAnswerNode( qna0, this.keypad, {
         centerX: strut.centerX,
@@ -94,6 +98,7 @@ define( function( require ) {
       } );
       this.contentNode.addChild( questionNode0  );
 
+      // 2nd question
       var qna1 = this.challenges.getQuestionAnswer( 1 );
       var questionNode1 = new ChallengeQuestionAnswerNode( qna1, this.keypad, {
         centerX: strut.centerX,
@@ -103,6 +108,7 @@ define( function( require ) {
       } );
       this.contentNode.addChild( questionNode1  );
 
+      // 3rd question
       var qna2 = this.challenges.getQuestionAnswer( 2 );
       var questionNode2 = new ChallengeQuestionAnswerNode( qna2, this.keypad, {
         centerX: strut.centerX,
@@ -112,6 +118,7 @@ define( function( require ) {
       } );
       this.contentNode.addChild( questionNode2  );
 
+      // 4th question
       var qna3 = this.challenges.getQuestionAnswer( 3 );
       var questionNode3 = new ChallengeQuestionAnswerNode( qna3, this.keypad, {
         centerX: strut.centerX,
@@ -123,6 +130,10 @@ define( function( require ) {
       this.contentNode.addChild( questionNode3  );
     },
 
+    /**
+     * Resets the challenges questions to all unanswered
+     * @public
+     */
     reset: function() {
       this.expandedProperty.reset();
       this.contentNode.removeAllChildren();

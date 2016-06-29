@@ -36,6 +36,8 @@ define( function( require ) {
 
   return inherit( ItemCollection, Shelf, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
      * Populates teh shelf with the initial items counts for all item types
      * @private

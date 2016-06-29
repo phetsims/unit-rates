@@ -1,7 +1,9 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ ***
+ * NOTE: THIS IS CURRENTLY UNUSED - however, the design has not been finialized,
+ ****
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -27,9 +29,6 @@ define( function( require ) {
   var BLUE_CANDY_COLOR = 'blue';
   var PERSPECTIVE_RADIUS = 0.10;
 
-  // ****
-  // NOTE: THIS IS CURRENTLY UNUSED - however, the design has not been finialized,
-  // ****
 
   /**
    * @param {number} radius
@@ -71,6 +70,8 @@ define( function( require ) {
   unitRates.register( 'CandyContainerNode', CandyContainerNode );
 
   return inherit( Node, CandyContainerNode, {
+
+    // no dispose, persists for the lifetime of the sim.
 
     /**
      * Generate the top ellipse of the candy container at a specific Y location.

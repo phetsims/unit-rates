@@ -1,7 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * Factory for creating the various item nodes (fruit, produce, candy, bags).
+ * Factory for creating the various item nodes (fruit, produce, candy, bags). These are generic for now and may be
+ * replaced with static artwork at a later time.
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -25,11 +26,10 @@ define( function( require ) {
   var ItemNodeFactory = {
 
      /**
-     * Creates an node of size for specified item
-     *
-     * @param {Item} item
-     * @param {number} size
-     * @param {Vector2} position
+     * Creates a node of a specified size for specified item
+     * @param {Item} item - the item to create (i.e. type, count)
+     * @param {number} size - the width & height (all items are square)
+     * @param {Vector2} position - default X/Y location
      * @param (function(ItemNode)} moveStartCallback - function called when item drag starts
      * @param (function(ItemNode)} moveEndCallback - function called when item drag ends
      * @param {Object} [options]
@@ -110,8 +110,7 @@ define( function( require ) {
     // ----------------------------- Fruit ----------------------------- //
 
     /**
-     * Creates a apple
-     *
+     * Creates a apple represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -126,8 +125,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a lemon
-     *
+     * Creates a lemon represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -142,8 +140,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a orange
-     *
+     * Creates a orange represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -158,8 +155,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a pear
-     *
+     * Creates a pear represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -176,8 +172,7 @@ define( function( require ) {
     // ----------------------------- Produce ----------------------------- //
 
     /**
-     * Creates a carrot
-     *
+     * Creates a carrot represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -192,7 +187,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a cucumber
+     * Creates a cucumber represenation
      * @param {Object} [options]
      * @returns {Node}
      * @public
@@ -206,8 +201,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a potato
-     *
+     * Creates a potato represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -222,8 +216,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a tomato
-     *
+     * Creates a tomato represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -240,8 +233,7 @@ define( function( require ) {
     // ----------------------------- Candy ----------------------------- //
 
     /**
-     * Creates a red candy
-     *
+     * Creates a red candy represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -256,8 +248,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a yellow candy
-     *
+     * Creates a yellow candy represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -272,8 +263,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a green candy
-     *
+     * Creates a green candy represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -288,8 +278,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a blue candy
-     *
+     * Creates a blue candy represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}
@@ -306,8 +295,7 @@ define( function( require ) {
     // ----------------------------- Bags ----------------------------- //
 
     /**
-     * Creates a blue candy
-     *
+     * Creates an empty bag represenation
      * @param {number} size in pixels
      * @param {Object} [options]
      * @returns {Node}

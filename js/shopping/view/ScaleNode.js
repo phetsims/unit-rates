@@ -1,7 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ * Displays the scale and any items that were added to it. Also displays the cost for all items (& weight for candy).
+ * The 'top' portion of the scale is also considered a 'drop-zone' for items being dragged from the shelf.
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -28,11 +29,11 @@ define( function( require ) {
   var scaleImage = require( 'image!UNIT_RATES/scale.png' );
 
   // constants
-  var RAND = new Random();
-  var DISPLAY_SIZE = new Dimension2( 70, 40 );
   var DISPLAY_BOTTOM_OFFSET = 32;
-  var DISPLAY_SPACING = 10;  // space beteen mutliple displays
-  var DISPLAY_FONT = new PhetFont( 20 );
+  var DISPLAY_SPACING       = 10;  // space beteen mutliple displays
+  var DISPLAY_FONT          = new PhetFont( 20 );
+  var DISPLAY_SIZE          = new Dimension2( 70, 40 );
+  var RAND                  = new Random();
 
   // strings
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
@@ -40,8 +41,8 @@ define( function( require ) {
 
   /**
    *
-   * @param {Scale} scale
-   * @param {Node} itemLayer
+   * @param {Scale} scale - model
+   * @param {Node} itemLayer - a container node which holds the item nodes. Used here for local posiitoning of items
    * @param (function} itemMovedCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
@@ -61,6 +62,7 @@ define( function( require ) {
     this.scaleNode = new Image( scaleImage, { pickable: true } );
 
     // a transparant node with the approximate shape of the top of the scale - defines a drop location
+    // @private
     this.scaleDropNode = new Path( new Shape()
        .ellipse( this.scaleNode.centerX, this.scaleNode.top + 12,
         this.scaleNode.width * 0.47, this.scaleNode.height * 0.13, 0 ), {
@@ -113,7 +115,6 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
-    //options.children = [ this.scaleNode, this.scaleDropNode, this.candyContainer, this.costDisplayNode, this.weightDisplayNode ];
     options.children = [ this.scaleNode, this.scaleDropNode, this.costDisplayNode, this.weightDisplayNode ];
 
     Node.call( this, options );
@@ -121,7 +122,7 @@ define( function( require ) {
   }
 
   /**
-   *
+   * Node used to display a numeric value associated with the items on the scale (i.e. cost, weight)
    * @param {Property} property
    * @param {Object} [options]
    * @returns {Panel}
@@ -134,9 +135,9 @@ define( function( require ) {
     options = _.extend( {
       minWidth: DISPLAY_SIZE.width,
       minHeight: DISPLAY_SIZE.height,
-      preText: '',
-      decimalPlaces: 1,
-      postText: '',
+      preText: '',                      // optional text before the value (i.e. '$')
+      decimalPlaces: 1,                 // decimal plce to show for the scale value
+      postText: '',                     // optional text after the value (i.e. 'lbs')
       resize: false,
       cornerRadius: 5,
       lineWidth: 0,
@@ -163,9 +164,10 @@ define( function( require ) {
 
   return inherit( Node, ScaleNode, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
-     * Checks if a point is in a droppable location
-     *
+     * Checks if a point is in a droppable location on the scale
      * @param {Vector2} bounds - parent (layer) coordinates
      * @return {boolean}
      * @public
@@ -177,7 +179,7 @@ define( function( require ) {
 
     /**
      * Adjusts item nodes bottom center coordinate to be in the drop area, basically so items appear
-     * to be on the scale.
+     * to be on the scale all the time.
      * @public
      */
      adjustItemPositions: function() {
@@ -216,7 +218,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates nodes for each item
+     * Creates nodes for each item in the model
      * @public
      */
     populate: function() {
@@ -241,7 +243,7 @@ define( function( require ) {
         // initial position - create a random position on the shelf
         if(position.x === 0 && position.y === 0) {
 
-          // jitter the initial positions
+          // jitter the initial positions a bit
           var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.width * 0.8 ) );
           var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.height * 0.25 ) );
           var x = layerDropCenter.x + jitterX;
@@ -249,14 +251,14 @@ define( function( require ) {
           item.setPosition( x, y, false );
         }
 
-        // add to the screen for layering purposes
+        // add to the screen layer for correct rendering
         self.itemLayer.addChild( itemNode );
       } );
 
     },
 
     /**
-     * Reset the scale node to its initial state
+     * Reset the scale node to its initial state (for the currently selected item type
      * @public
      */
     resetCurrentItem: function() {
@@ -264,13 +266,12 @@ define( function( require ) {
     },
 
     /**
-     * Reset the scale node to its initial state
+     * Reset the scale node to its initial state (all item types)
      * @public
      */
     reset: function() {
       this.populate();
     }
-
 
   } ); // inherit
 

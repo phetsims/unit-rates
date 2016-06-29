@@ -24,7 +24,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function SceneButtonGroupNode( model, sceneModeProperty, options ) {
+  function SceneButtonGroupNode( sceneModeProperty, options ) {
 
     options = options || {};
 
@@ -35,17 +35,18 @@ define( function( require ) {
       buttonContentXMargin: 20
     }, options );
 
-    // FIXME: move number strings to strings file?
     RadioButtonGroup.call( this, sceneModeProperty, [
-      { value: SceneMode.FRUIT, node: new Text( '1', { font: SCENE_BUTTON_FONT, maxWidth: 25 } ) },
+      { value: SceneMode.FRUIT,   node: new Text( '1', { font: SCENE_BUTTON_FONT, maxWidth: 25 } ) },
       { value: SceneMode.PRODUCE, node: new Text( '2', { font: SCENE_BUTTON_FONT, maxWidth: 25 } ) },
-      { value: SceneMode.CANDY, node: new Text( '3', { font: SCENE_BUTTON_FONT, maxWidth: 25 } ) }
+      { value: SceneMode.CANDY,   node: new Text( '3', { font: SCENE_BUTTON_FONT, maxWidth: 25 } ) }
     ], options );
   }
 
   unitRates.register( 'SceneButtonGroupNode', SceneButtonGroupNode );
 
   return inherit( RadioButtonGroup, SceneButtonGroupNode, {
+
+    // no dispose, persists for the lifetime of the sim.
 
   } ); // define
 

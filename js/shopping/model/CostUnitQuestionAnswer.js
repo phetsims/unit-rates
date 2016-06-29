@@ -1,7 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A cost & unit duo of questions and answers. Instances are mainly used the number line model.
+ * A cost & unit duo of questions and answers. This QuestionAnswer isn't considered 'correct' until the
+ * cost & unit answers are both correct. Instances are mainly used the number line model.
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -25,6 +26,7 @@ define( function( require ) {
 
     Item.call( this, data, count );
 
+    // The correct answers
     var correctCost = ( count * data.rate );
     var correctUnit = ( count * ( data.isCandy ? data.weight : 1 ) );
 
@@ -40,6 +42,7 @@ define( function( require ) {
       this.unitQnA.valueProperty.value = correctUnit;
     }
 
+    // Clear unit on incorrect cost answers
     this.costQnA.valueProperty.lazyLink( function( value, oldValue ) {
       var allCorrect = self.checkCorrectAnswers();
       if( !allCorrect && value >= 0 ) {
@@ -50,6 +53,7 @@ define( function( require ) {
       }
     } );
 
+     // Clear sost on incorrect unit answers
     this.unitQnA.valueProperty.lazyLink( function( value, oldValue ) {
       var allCorrect = self.checkCorrectAnswers();
       if( !allCorrect && value >= 0 ) {
@@ -66,7 +70,7 @@ define( function( require ) {
   return inherit( Item, CostUnitQuestionAnswer, {
 
     /**
-     * Changes various color/visibility attributes based on the users answer
+     * Resets the properties and answer to the default (unanswered) state
      * @public
      */
     reset: function() {
@@ -85,8 +89,9 @@ define( function( require ) {
     },
 
     /**
-     * Changes various color/visibility attributes based on the users answer
-     * @protected
+     * Checks both the cost & units answers
+     * @returns {boolean}
+     * @public
      */
     checkCorrectAnswers: function() {
 
@@ -98,9 +103,9 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Returns the number of decimal places in the 'count' (i.e. 1.1 = 1, 1.33 = 2, 1.234 = 3)
      * @return {number}
-     * @protected
+     * @public
      */
     getCountPrecision: function() {
 

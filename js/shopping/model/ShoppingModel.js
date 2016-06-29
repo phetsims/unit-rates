@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * The whole enchilada - shelf, scale, number line & challenges
+ * The whole enchilada - shelf, scale, number line & challenge models
  *
  * @author Dave Schmitz (Schmitzware)
  */

@@ -61,6 +61,8 @@ define( function( require ) {
 
   return inherit( ItemCollection, Scale, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
      * Add local listener for item additions/removals. This is needed on initialization and on a reset all
      * @protected

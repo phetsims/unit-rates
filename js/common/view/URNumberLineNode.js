@@ -1,7 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * Base class for all number line nodes in the simulation
+ * Base class for all number line nodes in the simulation. Base functionality includes, drawing and labeling the
+ * double axes managing a current list of number line markers.
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -148,6 +149,8 @@ define( function( require ) {
   unitRates.register( 'URNumberLineNode', URNumberLineNode );
 
   return inherit( AccordionBox, URNumberLineNode, {
+
+    // no dispose, persists for the lifetime of the sim.
 
     /**
      * Sets the top & bottom axis labels (on the far right of the number line)
