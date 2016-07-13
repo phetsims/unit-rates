@@ -145,7 +145,9 @@ define( function( require ) {
       }
 
       // remove input listener
-      this.removeInputListener( this.dragListener );
+      if( this.dragListener ) {
+        this.removeInputListener( this.dragListener );
+      }
     }
 
   } ); // inherit

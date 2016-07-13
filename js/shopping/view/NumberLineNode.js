@@ -68,7 +68,7 @@ define( function( require ) {
     this.undoItemNodeList = [];
 
     // undo button - it's position will change based on the marker beign edited. Incorrectly/unanswered editable markers
-    // will position the button ont eh far left side of the number line, while correct/fractional 'count' markers will
+    // will position the button on the far left side of the number line, while correct/fractional 'count' markers will
     // reposition the undo button directly under the marker.
     this.undoEditButtonNode = new RectangularPushButton( {
       visible: false,
@@ -190,7 +190,8 @@ define( function( require ) {
     },
 
     /**
-     * Adds a new editable marker to the number line (if one doesn't already exist)
+     * Adds a new editable marker to the number line (if one doesn't already exist). Editable markers have buttons
+     * which allow the edit boxes to be linked to the shared keypad.
      * @private
      */
     addEditMarker: function( ) {
@@ -232,7 +233,7 @@ define( function( require ) {
     },
 
     /**
-     * Tells whether there is an existin editable marker on the number line
+     * Tells whether there is an existing editable marker on the number line
      * @returns {boolean}
      * @private
      */
@@ -280,7 +281,9 @@ define( function( require ) {
     },
 
     /**
-     *
+     * This does a few things - mainly updating the marker's position on the number line. It also may add the
+     * marker to the undo stack if it's an 'editable' marker.
+     * @param {NumberLineMarkerNode}
      * @private
      */
     updateItemMarkerNode: function( markerNode ) {
@@ -339,7 +342,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Handles the undo button visibility as well as it's location - to the far left or under a specific marker.
      * @private
      */
     updateUndoButton: function() {

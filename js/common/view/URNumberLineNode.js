@@ -177,6 +177,9 @@ define( function( require ) {
      * @public
      */
     removeAllMarkers: function() {
+      this.graphMarkerLayerNode.getChildren().forEach( function( node ) {
+        node.dispose();
+      } );
       this.graphMarkerLayerNode.removeAllChildren();
     },
 

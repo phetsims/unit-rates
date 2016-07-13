@@ -119,6 +119,15 @@ define( function( require ) {
         e *= 10; p++;
       }
       return p;
+    },
+
+    // @public
+    dispose: function() {
+      console.log('CostUnitQuestionAnswer dispose');
+      this.costQnA.dispose();
+      this.unitQnA.dispose();
+      this.outOfRangeProperty.unlinkAll();
+      this.editableProperty.unlinkAll();
     }
 
   } ); // inherit

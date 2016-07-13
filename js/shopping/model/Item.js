@@ -101,7 +101,13 @@ define( function( require ) {
     isCandy: function() {
       return( this.type === ItemData.RED_CANDY.type   || this.type === ItemData.YELLOW_CANDY.type ||
               this.type === ItemData.GREEN_CANDY.type || this.type === ItemData.BLUE_CANDY.type );
-   }
+    },
+
+    //
+    dispose: function() {
+      console.log('Item dispose');
+      this.positionProperty.unlinkAll();
+    }
 
   } ); // inherit
 

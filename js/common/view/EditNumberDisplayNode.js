@@ -225,6 +225,12 @@ define( function( require ) {
      */
     hasKeypadFocus: function() {
       return this.hasKeypadFocus;
+    },
+
+    // @public
+    dispose: function() {
+      console.log('EditNumberDisplayNode dispose');
+      this.numberDisplay.dispose();
     }
 
   } );  // define

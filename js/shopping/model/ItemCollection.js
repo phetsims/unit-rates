@@ -160,6 +160,9 @@ define( function( require ) {
     removeAllItemsWithType: function( type ) {
 
       var itemArray = this.getItemsWithType( type );
+      itemArray.forEach( function( item ) {
+        //item.dispose();
+      } );
       itemArray.clear();
     },
 
@@ -171,14 +174,21 @@ define( function( require ) {
     resetItemType: function( type ) {
 
       var itemArray = this.getItemsWithType( type );
+      itemArray.forEach( function( item ) {
+        item.dispose();
+      } );
       itemArray.reset();
     },
 
     /**
-     * Resets the collecction to the default state
+     * Resets the collection to the default state
      * @public
      */
     reset: function() {
+      for (var key in ItemData) {
+        var itemData = ItemData[ key ];
+        //this.resetItemType( itemData.type );
+      }
       this.itemsMap = {};
       this.initializeArrays();
     }

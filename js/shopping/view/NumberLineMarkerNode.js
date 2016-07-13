@@ -209,7 +209,10 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      Property.unlinkAll();
+      console.log('NumberLineMarkerNode dispose');
+      this.topNumberDisplay.dispose();
+      this.bottomNumberDisplay.dispose();
+      ItemNode.prototype.dispose.call( this );
     }
 
   } ); // inherit

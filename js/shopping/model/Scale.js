@@ -125,7 +125,7 @@ define( function( require ) {
     },
 
     /**
-     * Resets the current item type - basically removing all items of teh current type from the scale
+     * Resets the current item type - basically removing all items of the current type from the scale
      * @public
      */
     resetCurrentItem: function() {
