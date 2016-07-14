@@ -110,7 +110,7 @@ define( function( require ) {
      */
     addDragListeners: function( moveStartCallback, moveEndCallback ) {
       this.moveStartCallback = moveStartCallback;
-      this.moveEndCallback = moveEndCallback;
+      this.moveEndCallback   = moveEndCallback;
 
       if( this.moveStartCallback ) {
         this.dragStartEmitter.addListener( this.moveStartCallback );

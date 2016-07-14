@@ -271,7 +271,7 @@ define( function( require ) {
       this.addMarker( markerNode );
 
       // update on top/bottom values changes
-      Property.multilink( [ markerNode.item.costQnA.valueProperty, markerNode.item.unitQnA.valueProperty ],
+      this.qnaMultilink = Property.multilink( [ markerNode.item.costQnA.valueProperty, markerNode.item.unitQnA.valueProperty ],
         function( costProperty, unitProperty ) {
           self.updateItemMarkerNode( markerNode );
           self.addEditMarker();  // if needed
@@ -432,7 +432,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      Property.unlinkAll();
+      this.qnaMultilink.dispose();
     }
 
   } );  // define

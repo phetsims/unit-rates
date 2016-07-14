@@ -116,7 +116,7 @@ define( function( require ) {
      },
 
     /**
-     * Assigns a set of listeners to the keypad, there is only on listener assigned at any given time.
+     * Assigns a set of listeners to the keypad, there is only one listener assigned at any given time.
      * @param {function} onSubmit - called when the enter/check button is pressed
      * @param {function} onListenerChanged - called when the keypad listener changes
      * @public
@@ -150,7 +150,7 @@ define( function( require ) {
         this.checkButton.removeListener( this.onSubmit );
       }
 
-      // call the currently listener before removing it.
+      // call the currentl listener before removing it.
       if( this.onListenerChanged ) {
         this.onListenerChanged.call();
       }

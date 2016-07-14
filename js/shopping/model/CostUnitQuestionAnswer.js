@@ -123,7 +123,6 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      console.log('CostUnitQuestionAnswer dispose');
       this.costQnA.dispose();
       this.unitQnA.dispose();
       this.outOfRangeProperty.unlinkAll();

@@ -51,7 +51,7 @@ define( function( require ) {
     this.backEdgeMaxX = ( 1 - BACK_OFFSET ) * SHELF_SIZE.width;
 
     // @private - top facce
-    this.topNode =  new Path( new Shape()
+    this.topNode = new Path( new Shape()
       .moveTo( 0, 0 )
       .lineTo( SHELF_SIZE.width, 0)
       .lineTo( this.backEdgeMaxX, -BACK_DEPTH )

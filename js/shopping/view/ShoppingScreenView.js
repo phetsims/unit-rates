@@ -1,7 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ * The main shopping screen layout and top level behaviors
+ * (i.e. scene selection, moving items between shelf/scale, reset, etc.)
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -28,9 +29,9 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
 
   // constants
-  var SCREEN_HORIZONTAL_MARGIN  = 15;
-  var SCREEN_VERTICAL_MARGIN    = 20;
-  var PANEL_SPACING             = 12; // space between panels - i.e numberline/challenges/keypad
+  var SCREEN_HORIZONTAL_MARGIN  = 15; // screen top/bottom margin for panels (i.e numberline/challenges/shelf)
+  var SCREEN_VERTICAL_MARGIN    = 20; // screen left/right panel margin
+  var PANEL_SPACING             = 12; // space between major panels (i.e. numberline/challenges/keypad)
 
   // images
   var removeButtonImage = require( 'image!UNIT_RATES/remove-button.png' );
@@ -48,12 +49,13 @@ define( function( require ) {
     this.model = model;
 
     // properties
-    // FIXME: scene & item randomly choosen @ startup
+    // FIXME: scene & item randomly choosen @ startup (TBD as per current design document)
     this.sceneModeProperty       = new Property( SceneMode.FRUIT );
     this.fruitItemDataProperty   = new Property( ItemData.APPLES );
     this.produceItemDataProperty = new Property( ItemData.CARROTS );
     this.candyItemDataProperty   = new Property( ItemData.RED_CANDY );
 
+    // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {
       maxDigits: 4,
       visible: false
@@ -78,7 +80,7 @@ define( function( require ) {
     this.keypad.right = this.numberLineNode.right - 30;
     this.keypad.top   = this.numberLineNode.bottom + 2 * PANEL_SPACING;
 
-    // layer for draggable shelf & scale item nodes
+    // transparent layer holding draggable shelf & scale item nodes
     this.itemsLayer = new Rectangle( 0, 0, this.width, this.height );
     this.addChild( this.itemsLayer );
 
@@ -104,15 +106,15 @@ define( function( require ) {
       content: new Image( removeButtonImage, { scale: 0.25 } ),
       listener: function() {
 
-        // reset the current item type - remove scale items & re-populate shelf items
-        self.itemsLayer.removeAllChildren();
+        // reset the current item type - remove scale items & re-populates shelf items
+        self.removeAllItems();
         self.scaleNode.resetCurrentItem();
         self.shelfNode.resetCurrentItem();
       }
     } );
     this.addChild( scaleRemoveButtonNode );
 
-    // Reset All button
+    // Reset All button - resets the sim to it's initial state
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
@@ -123,7 +125,7 @@ define( function( require ) {
         self.sceneModeProperty.reset();
         self.hideKeypad();
 
-        self.itemsLayer.removeAllChildren();
+        self.removeAllItems();
 
         self.numberLineNode.reset();
         self.scaleNode.reset();
@@ -135,7 +137,7 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    // item selection - 1 combo boxe for each scene, hidden and shown based on sceneModeProperty
+    // item selection - 1 combo box for each scene, hidden and shown based on sceneModeProperty
     var itemComboBoxOptions = {
       left:   this.layoutBounds.left   + SCREEN_HORIZONTAL_MARGIN,
       bottom: this.layoutBounds.bottom - SCREEN_VERTICAL_MARGIN
@@ -163,7 +165,7 @@ define( function( require ) {
     // select the scene
     this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this) );
 
-    // select the item based on scene & item selection
+    // select the item based on scene & item selection - no dispose as this never goes away
     Property.multilink( [ this.sceneModeProperty, this.fruitItemDataProperty, this.produceItemDataProperty,
       this.candyItemDataProperty ], this.itemSelectionChanged.bind( this ) );
 
@@ -172,13 +174,14 @@ define( function( require ) {
     this.scaleNode.moveToBack();
     this.shelfNode.moveToBack();
 
-    // FIXME: figure out how to get click on screen to close keypad
+    // Click on screen to close keypad
     this.itemsLayer.addInputListener( {
       down: function( event ) {
         self.hideKeypad();
       }
     } );
 
+    // resize the items layer on a browser size change
     this.onResize();
     this.addEventListener( 'bounds', this.onResize.bind( this ) );
 
@@ -190,7 +193,12 @@ define( function( require ) {
 
   return inherit( ScreenView, ShoppingScreenView, {
 
-    // @private
+    /**
+     * Call when the user selected a new scene (i.e. "1", "2", "3")
+     * @param {Property}.<SceneMode> sceneMode - indicates the new scene type
+     * @param {Property}.<SceneMode> oldSceneMode - indicates the previous scene type
+     * @private
+     */
     sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
 
       this.hideKeypad();
@@ -217,18 +225,19 @@ define( function( require ) {
       }
     },
 
-    // @private
+    /**
+     * Called when the user selected a new item type (i.e. "apples", "carrots", "red candy")
+     * @param {Property}.<SceneMode> sceneMode - indicates the scene type
+     * @param {Property}.<ItemData> fruitItemData - the item data for the selected fruit item
+     * @param {Property}.<ItemData> produceItemData - the item data for the selected produce item
+     * @param {Property}.<ItemData> candyItemData - the item data for the selected candy item
+     * @private
+     */
     itemSelectionChanged: function( sceneMode, fruitItemData, produceItemData, candyItemData ) {
 
       this.hideKeypad();
 
-      // dispose of children before calling removeAllChildren
-      this.itemsLayer.getChildren().forEach( function( child ) {
-        if ( child.dispose ) {
-          child.dispose();
-        }
-      } );
-      this.itemsLayer.removeAllChildren();
+      this.removeAllItems();
 
       switch( sceneMode ) {
         case SceneMode.FRUIT:
@@ -245,13 +254,17 @@ define( function( require ) {
       }
     },
 
-    // Called when an item's node (i.e. individual items & bags) is dragged to a new location
-    // @private
+    /*
+     * Called when an item's node (i.e. individual items or bags) is dragged to a new location
+     * @param {Node} itemNode - the item being moved.
+     * @private
+     */
     itemMoved: function( itemNode ) {
 
       // Check node position - on scale, shelf or in no-man's land
       if( this.scaleNode.intersectsDropArea( itemNode.bounds ) ) {
 
+        // Dropped on the scale
         this.model.addShelfItemToScale( itemNode.item );
         this.model.addScaleItemsToNumberline();
 
@@ -260,6 +273,7 @@ define( function( require ) {
 
           // remove the bag node
           this.itemsLayer.removeChild( itemNode );
+          itemNode.dispose();
 
           // populate new scale items
           this.scaleNode.populate();
@@ -273,6 +287,7 @@ define( function( require ) {
       }
       else if( this.shelfNode.intersectsDropArea( itemNode.bounds ) ) {
 
+        // Dropped back on the shelf
         this.model.addScaleItemToShelf( itemNode.item );
         this.model.addScaleItemsToNumberline();
 
@@ -283,13 +298,13 @@ define( function( require ) {
         this.numberLineNode.populate();
       }
       else {
-        // Send it back from whence it came
+        // In no-man's land, send it back from whence it came
         itemNode.restoreLastPosition();
       }
     },
 
     /**
-     * @protected
+     * @private
      */
     hideKeypad: function() {
       this.keypad.visible = false;
@@ -298,13 +313,25 @@ define( function( require ) {
     },
 
     /**
-     * @protected
+     * @private
+     */
+    removeAllItems: function() {
+      // dispose of children before calling removeAllChildren
+      this.itemsLayer.getChildren().forEach( function( child ) {
+        if ( child.dispose ) {
+          child.dispose();
+        }
+      } );
+      this.itemsLayer.removeAllChildren();
+    },
+
+    /**
+     * @private
      */
     onResize: function() {
       // resize the items layer to match the screen
       this.itemsLayer.setRectBounds( new Bounds2( 0, 0,  window.innerWidth, window.innerHeight ) );
     }
-
 
   } ); // inherit
 

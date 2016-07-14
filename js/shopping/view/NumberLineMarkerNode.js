@@ -105,7 +105,7 @@ define( function( require ) {
     ItemNode.call( this, item, position, options );
 
     // check answers on user input
-    Property.multilink( [ this.item.costQnA.valueProperty, this.item.unitQnA.valueProperty, this.item.outOfRangeProperty ],
+    this.qnaMultilink = Property.multilink( [ this.item.costQnA.valueProperty, this.item.unitQnA.valueProperty, this.item.outOfRangeProperty ],
       function( costProperty, unitProperty, outOfRangeProperty ) {
         self.checkEditable();
     } );
@@ -127,7 +127,7 @@ define( function( require ) {
         var isCandy = this.item.isCandy(); // candy precision is treated differently than fruit & produce
         var countPrecision = this.item.getCountPrecision();
 
-        // fractional counts have different represenation than whole counts.
+        // fractional counts have different visual represenation than whole counts.
         if( ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) ) {
 
           // text/line color
@@ -210,6 +210,7 @@ define( function( require ) {
     // @public
     dispose: function() {
       console.log('NumberLineMarkerNode dispose');
+      this.qnaMultilink.dispose();
       this.topNumberDisplay.dispose();
       this.bottomNumberDisplay.dispose();
       ItemNode.prototype.dispose.call( this );

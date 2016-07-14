@@ -81,7 +81,6 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      console.log('QuestionAnswer dispose');
       this.valueProperty.unlinkAll();
     }
 

@@ -47,7 +47,7 @@ define( function( require ) {
 
     // refresh on item change
     this.challenges.itemDataProperty.link( function( itemData, oldItemData ) {
-        self.contentNode.removeAllChildren();
+        self.removeAllContent();
         self.populate();
     } );
 
@@ -131,12 +131,24 @@ define( function( require ) {
     },
 
     /**
+     * @protected
+     */
+    removeAllContent: function() {
+      this.contentNode.getChildren().forEach( function( child ) {
+        if ( child.dispose ) {
+          child.dispose();
+        }
+      } );
+      this.contentNode.removeAllChildren();
+    },
+
+    /**
      * Resets the challenges questions to all unanswered
      * @public
      */
     reset: function() {
       this.expandedProperty.reset();
-      this.contentNode.removeAllChildren();
+      this.removeAllContent();
       this.populate();
     }
 

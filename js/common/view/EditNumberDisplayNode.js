@@ -47,8 +47,6 @@ define( function( require ) {
     },  options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
-    var self = this;
-
     // @protected - all
     this.keypad           = keypad;
     this.hasKeypadFocus   = false;                    // state used to indicate the shared kaypad focus on this node
@@ -78,10 +76,8 @@ define( function( require ) {
     var editButtonOptions = {
       content: new Image( editButtonImage, { scale: 0.2 } ),
       baseColor: URConstants.EDIT_CONTROL_COLOR,
-      pickable: true,
-      listener: function() {
-        self.showKeypad();
-    } };
+      pickable: true
+      };
 
     // positioning the edit button
     if( options.buttonPosition === 'left' ) {
@@ -114,6 +110,8 @@ define( function( require ) {
 
     // @protected
     this.editButton = new RectangularPushButton( editButtonOptions );
+    this.editButtonListener = this.showKeypad.bind( this );
+    this.editButton.addListener( this.editButtonListener );
 
     options.children = [ this.editButton, this.numberDisplay ];
 
@@ -229,7 +227,9 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      console.log('EditNumberDisplayNode dispose');
+      this.keypad.clearListeners();
+      this.editButton.removeListener( this.editButtonListener );
+      !assert && this.editButton.dispose();  // fails when assertions are enabled - see sun/#212
       this.numberDisplay.dispose();
     }
 

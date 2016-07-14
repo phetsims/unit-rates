@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- *
+ * Group of radio buttons used to toggle between the various groups of item types (i.e. fruit, produce, candy)
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

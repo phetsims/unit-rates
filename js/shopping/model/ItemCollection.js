@@ -161,7 +161,7 @@ define( function( require ) {
 
       var itemArray = this.getItemsWithType( type );
       itemArray.forEach( function( item ) {
-        //item.dispose();
+        item.dispose();
       } );
       itemArray.clear();
     },
@@ -185,10 +185,10 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      for (var key in ItemData) {
-        var itemData = ItemData[ key ];
+      //for (var key in ItemData) {
+      //  var itemData = ItemData[ key ];
         //this.resetItemType( itemData.type );
-      }
+      //}
       this.itemsMap = {};
       this.initializeArrays();
     }

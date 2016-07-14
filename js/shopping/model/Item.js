@@ -105,7 +105,6 @@ define( function( require ) {
 
     //
     dispose: function() {
-      console.log('Item dispose');
       this.positionProperty.unlinkAll();
     }
 
