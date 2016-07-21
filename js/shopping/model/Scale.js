@@ -82,7 +82,7 @@ define( function( require ) {
     },
 
     /**
-     * Returns the total nuber of items on the scale
+     * Returns the total number of items on the scale
      * @return {number}
      * @override @public
      */

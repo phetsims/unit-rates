@@ -59,7 +59,7 @@ define( function( require ) {
 
     URNumberLineNode.call( this, options );
 
-    // @private - the fixed X location for ALL markers which are off the end of the nuber line
+    // @private - the fixed X location for ALL markers which are off the end of the number line
     this.outOfRangeMarkerX = ( this.topArrowNode.right + this.topArrowLabel.left ) / 2;
 
     // Array.<NumberLineMarkerNode> - The undo/remove stack of markers which keeps track of the order of
