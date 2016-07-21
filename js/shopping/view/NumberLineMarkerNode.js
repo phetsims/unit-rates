@@ -209,7 +209,6 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      console.log('NumberLineMarkerNode dispose');
       this.qnaMultilink.dispose();
       this.topNumberDisplay.dispose();
       this.bottomNumberDisplay.dispose();

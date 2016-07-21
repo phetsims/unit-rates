@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * An phet-scenery/NumberDisplay w/ an edit button and external/shared keypad integration
+ * A phet-scenery/NumberDisplay w/ an edit button and external/shared keypad integration
  *
  * @author Dave Schmitz (Schmitzware)
  */
