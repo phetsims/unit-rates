@@ -1,11 +1,11 @@
 {
-  "comment": "# unit-rates 1.0.0-dev.9 Fri Jun 24 2016 13:14:14 GMT-0700 (PDT)",
+  "comment": "# unit-rates 1.0.0-dev.10 Thu Jul 21 2016 10:04:54 GMT-0700 (PDT)",
   "assert": {
     "sha": "7d27130a4d27da15aa7f8a21bbfb9245288c1b44",
     "branch": "master"
   },
   "axon": {
-    "sha": "1f8073474acc627fb24ff7766cb837928cfb374c",
+    "sha": "9a0e2f3a61a2416edf8247c6ccdb262195b2f420",
     "branch": "master"
   },
   "brand": {
@@ -13,19 +13,19 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "1586048b377e990902b405d0e0016e7cc5149dd8",
+    "sha": "eaee6dbfbbfbbf0d2cb1c7f0cba5ddbe3a227720",
     "branch": "master"
   },
   "dot": {
-    "sha": "9b554e82b9ec7b5173859acd32e70a35024a6aaf",
+    "sha": "6ee3c51e61c78acd6d31a831c060d4f30fa82770",
     "branch": "master"
   },
   "joist": {
-    "sha": "83de2b95ca56685f3134a6360a8a684d5bec5b02",
+    "sha": "ab7223adc22b6f7e28d01a938a93fd87588affde",
     "branch": "master"
   },
   "kite": {
-    "sha": "dce9765e6fcb535970ef17c1a1bcb8db95599b08",
+    "sha": "88f0c3a051a24f71a6465641badeccab1246820a",
     "branch": "master"
   },
   "phet-core": {
@@ -33,31 +33,31 @@
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "35ef94ad2852b567a056b5f3b8c1e3906b8da7c1",
+    "sha": "83ea84c8d9fc089e8d8ad139874366c868404152",
     "branch": "master"
   },
   "scenery": {
-    "sha": "00bd89f45956aa5202d0647bd0026d7edf9d8d8d",
+    "sha": "942889ad7b16f527d86a81bb1f2d219835671771",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "822e3d6d3b6087052a8591632fd274401cb8a740",
+    "sha": "acf94bc0350c2ad813400d2212f08b90820122e8",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "e1b3c84b4f51328893008890fc462c32b8ec9278",
+    "sha": "0f4d5f25eff41bdb0a0a4f1da451049f22ac3357",
     "branch": "master"
   },
   "sun": {
-    "sha": "f2631eeacc795a415cc2ebf5eb297c4691c51721",
+    "sha": "c7b647dd8a493d96ed31678598ecafac2338b848",
     "branch": "master"
   },
   "tandem": {
-    "sha": "b3c68afaf8511b008b264a5829a40711c753b629",
+    "sha": "a8ac284b9dc4fa6a9e1e3ca039b594126c4de1f5",
     "branch": "master"
   },
   "unit-rates": {
-    "sha": "1d7f91cab610c11f0beed83bf6b324cdb7cfc92e",
+    "sha": "a2e4d8435744543c1985b673dcb80f8cea87b832",
     "branch": "master"
   }
 }
