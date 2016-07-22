@@ -160,9 +160,7 @@ define( function( require ) {
     // @public
     dispose: function() {
       this.editNumberDisplay.dispose();
-      this.qna.valueProperty.unlinkAll();
-      this.qna = null;
-      this.keypad = null;
+      this.qna.valueProperty.unlink( this.checkAnswer.bind( this ) );
     }
 
   } );  // define
