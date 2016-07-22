@@ -39,19 +39,28 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
-     * Populates teh shelf with the initial items counts for all item types
+     * Populates the shelf with the initial items counts for all item types
      * @private
      */
     populate: function() {
 
       // Iterate over all the different item types
       for (var key in ItemData) {
-
         var itemData = ItemData[ key ];
+        this.populateItemData( itemData );
+      }
+    },
+
+    /**
+     * Populates the shelf with the initial items counts for the specified item type
+     * @param {ItemData} itemData
+     * @private
+     */
+    populateItemData: function( itemData ) {
 
         // Only populate empty shelves
         if( this.getNumberOfItemsWithType( itemData.type ) > 0 ) {
-          continue;
+          return;
         }
 
         switch( itemData.type ) {
@@ -126,7 +135,6 @@ define( function( require ) {
               this.createItem( itemData, 1 );
             }
         }
-      }
     },
 
     /**
@@ -135,7 +143,7 @@ define( function( require ) {
      */
     resetCurrentItem: function() {
       this.resetItemType( this.itemDataProperty.value.type );
-      this.populate();
+      this.populateItemData( this.itemDataProperty.value );
     },
 
     /**

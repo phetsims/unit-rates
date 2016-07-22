@@ -25,7 +25,7 @@ define( function( require ) {
 
     // @public (all)
     PropertySet.call( this, {
-      itemData: ItemData.APPLES   // the currently selected item type (& teh associated static attributes)
+      itemData: ItemData.APPLES   // the currently selected item type (& the associated static attributes)
     } );
 
     // @public
