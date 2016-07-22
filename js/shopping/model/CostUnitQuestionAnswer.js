@@ -14,6 +14,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Item = require( 'UNIT_RATES/shopping/model/Item' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {ItemData} data
@@ -47,7 +48,7 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if( !allCorrect && value >= 0 ) {
         self.costQnA.answerValue = Number( value );
-        self.unitQnA.answerValue = value / self.rate;
+        self.unitQnA.answerValue = Util.toFixedNumber( ( value / self.rate ), 2 );
         self.unitQnA.valueProperty.set( Number( -1 ) );
         self.count = value / self.rate;
       }
@@ -58,7 +59,7 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if( !allCorrect && value >= 0 ) {
         self.unitQnA.answerValue = Number( value );
-        self.costQnA.answerValue = value * self.rate;
+        self.costQnA.answerValue = Util.toFixedNumber( ( value * self.rate ), 2 );
         self.costQnA.valueProperty.set( Number( -1 ) );
         self.count = Number( value );
       }

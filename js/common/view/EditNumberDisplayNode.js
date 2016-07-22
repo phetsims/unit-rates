@@ -42,7 +42,7 @@ define( function( require ) {
       textMaxWidth:         30,
       textColor:            'rgba(0,0,0,1)',
       borderColor:          'rgba(0,0,0,1)',
-      backgroundColor:      'rgba(255,255,255,1)',
+      backgroundColor:      'rgba(0,0,0,0)',
       focusBorderColor:     'rgba(230,132,5,1)'
     },  options || {} );
     assert && assert( !options.children, 'additional children not supported' );
