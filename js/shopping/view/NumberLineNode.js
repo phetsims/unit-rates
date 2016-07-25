@@ -281,7 +281,7 @@ define( function( require ) {
     },
 
     /**
-     * This does a few things - mainly updating the marker's position on the number line. It also may add the
+     * This does a few things but mainly updating the marker's position on the number line. It also may add the
      * marker to the undo stack if it's an 'editable' marker.
      * @param {NumberLineMarkerNode}
      * @private
@@ -314,7 +314,7 @@ define( function( require ) {
           markerNode.item.outOfRangeProperty.set( true );
         }
         else if ( countPercent >= 0 ) {
-          x = ( ( 1.0 - countPercent ) * this.origin.x ) + ( this.graphBounds.maxX * countPercent );
+          x = ( ( 1.0 - countPercent ) * this.origin.x ) + ( ( this.graphBounds.maxX + this.origin.x ) * countPercent );
           markerNode.item.outOfRangeProperty.set( false );
         }
       }
