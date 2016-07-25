@@ -32,8 +32,8 @@ define( function( require ) {
     var correctUnit = ( count * ( data.isCandy ? data.weight : 1 ) );
 
     // @public
-    this.costQnA = new QuestionAnswer( this, correctCost );
-    this.unitQnA = new QuestionAnswer( this, correctUnit );
+    this.costQnA = new QuestionAnswer( this, correctCost, correctCost );
+    this.unitQnA = new QuestionAnswer( this, correctUnit, correctCost );
 
     // @public (read-only) - all
     this.addProperty( 'outOfRange', false );

@@ -56,12 +56,12 @@ define( function( require ) {
 
     // @protected - all
     this.keypad = keypad;
-    this.defaultTextColor     = options.defaultTextColor;
-    this.correctTextColor     = options.correctTextColor;
-    this.incorrectTextColor   = options.incorrectTextColor;
-    this.defaultBorderColor   = options.defaultBorderColor;
-    this.correctBorderColor   = options.correctBorderColor;
-    this.incorrectBorderColor = options.incorrectBorderColor;
+    this.defaultTextColor      = options.defaultTextColor;
+    this.correctTextColor      = options.correctTextColor;
+    this.incorrectTextColor    = options.incorrectTextColor;
+    this.defaultBorderColor    = options.defaultBorderColor;
+    this.correctBorderColor    = options.correctBorderColor;
+    this.incorrectBorderColor  = options.incorrectBorderColor;
 
     // @protected - the challenge question
     this.challengeText = new Text( this.qna.questionString, {
@@ -70,7 +70,7 @@ define( function( require ) {
       maxWidth: TEXT_MAX_WIDTH
     } );
 
-    var pattern = options.preValueString + '{0}' + options.postValueString;   // FIXME: see stringTest=long
+    var pattern = options.preValueString + '{0}' + options.postValueString;
     this.editNumberDisplay = new EditNumberDisplayNode( keypad, qna.valueProperty, pattern, {
         centerX: this.challengeText.centerX - HORIZONTAL_SPACING,
         top: this.challengeText.bottom + VERICAL_SPACING,
@@ -79,6 +79,16 @@ define( function( require ) {
         decimalPlaces: options.decimalPlaces,
         textMaxWidth: 75,
         textColor: this.defaultTextColor
+    } );
+
+    // @protected - alternate correct label
+    this.correctTextDisplay = new Text( this.qna.answerText , {
+      centerX: this.challengeText.centerX,
+      top: this.challengeText.bottom + 2 * VERICAL_SPACING,
+      font: TEXT_FONT,
+      maxWidth: TEXT_MAX_WIDTH,
+      fill: this.correctTextColor,
+      visible: false
     } );
 
     // @protected - smile or frown image corresponding to correct/incorrect answers
@@ -110,7 +120,8 @@ define( function( require ) {
     // check the answer on user value input
     this.qna.valueProperty.link( this.checkAnswer.bind( this ) );
 
-    options.children = [ this.challengeText, this.editNumberDisplay, this.faceNode, this.unitLine, this.unitText ];
+    options.children = [ this.challengeText, this.editNumberDisplay, this.correctTextDisplay, this.faceNode,
+                         this.unitLine, this.unitText ];
 
     Node.call( this, options );
   }
@@ -142,6 +153,9 @@ define( function( require ) {
         this.challengeText.setFill( this.correctTextColor );
         this.unitText.setFill( this.correctTextColor );
         this.unitLine.setStroke( this.correctTextColor );
+
+        this.editNumberDisplay.setVisible( false );
+        this.correctTextDisplay.visible = true;
 
         // reset the keypad
         this.keypad.visible = false;

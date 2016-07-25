@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var ChallengeQuestionAnswerNode = require( 'UNIT_RATES/common/view/ChallengeQuestionAnswerNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -23,7 +24,7 @@ define( function( require ) {
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
 
   // constants
-  var VERTICAL_SPACING  = 20;
+  var VERTICAL_SPACING = 20;
 
   /**
    * @param {Challenges} challenges - the challenges model
@@ -118,14 +119,21 @@ define( function( require ) {
       } );
       this.contentNode.addChild( questionNode2  );
 
-      // 4th question
+      // 4th. question - note: this question is formatted differently if the item type is candy.
+      var itemType = this.challenges.itemDataProperty.value.type;
+      var isCandy  =  ( itemType === ItemData.RED_CANDY.type   || itemType === ItemData.YELLOW_CANDY.type ||
+                        itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type );
+      var preValueString  = ( isCandy ? currencySymbolString : '  ' );
+      var postValueString = ( isCandy ? '' : '    ' );
+      var decimalPlaces   = ( isCandy ? 2 :  0 );
+
       var qna3 = this.challenges.getQuestionAnswer( 3 );
       var questionNode3 = new ChallengeQuestionAnswerNode( qna3, this.keypad, {
         centerX: strut.centerX,
         top: questionNode2.bottom + VERTICAL_SPACING,
-        preValueString: '   ',  // padding
-        decimalPlaces: 0,
-        postValueString: '   '  // padding
+        preValueString: preValueString,
+        decimalPlaces: decimalPlaces,
+        postValueString: postValueString
       } );
       this.contentNode.addChild( questionNode3  );
     },

@@ -164,7 +164,6 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      // FIXME:
     }
 
   } ); // inherit

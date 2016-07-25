@@ -16,10 +16,11 @@ define( function( require ) {
   /**
    * @param {Item} item - the item associated with this question
    * @param {number} answerValue - the correct answer value
+   * @param {number} answerText - the text to display on a correct answer value
    * @param {Object} [options]
    * @constructor
    */
-  function QuestionAnswer( item, answerValue, options ) {
+  function QuestionAnswer( item, answerValue, answerText, options ) {
 
     options = _.extend( {
       questionString: '',
@@ -34,6 +35,7 @@ define( function( require ) {
     this.questionString = options.questionString;   // {string} question to be asked
     this.unitString     = options.unitString;       // {string} unit
     this.answerValue    = answerValue;              // {number} the correct answer value
+    this.answerText     = answerText;               // {Text} the correct answer text
     this.valueProperty  = new Property( -1 );       // user's answer input property
 
     // @protected - {function}

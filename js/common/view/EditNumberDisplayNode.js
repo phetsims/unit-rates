@@ -127,6 +127,16 @@ define( function( require ) {
      * @param {Font} font
      * @public
      */
+    setVisible: function( visible ) {
+      this.numberDisplay.visible = visible;
+      this.editButton.visible = visible;
+    },
+
+    /**
+     * Sets the font for the number display
+     * @param {Font} font
+     * @public
+     */
     setFont: function( font ) {
       this.numberDisplay.setNumberFont( font );
     },
@@ -192,7 +202,7 @@ define( function( require ) {
 
       this.numberDisplay.setBackgroundStroke( this.focusBorderColor );
 
-      // FIXME:
+      // Set keypad listeners
       this.keypad.setListeners( function() {
           // onSubmit
           self.valueProperty.value = self.keypad.getValue();

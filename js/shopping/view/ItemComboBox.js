@@ -146,7 +146,7 @@ define( function( require ) {
     createItemRow: function( itemString, itemNode ) {
 
       var itemText = new Text( itemString, { font: FONT, maxWidth: 150 } );
-      var hStrut = new HStrut( 175 - itemText.width - itemNode.width ); // FIXME: how to justify entries?
+      var hStrut = new HStrut( 175 - itemText.width - itemNode.width );
 
       // container for one row in the legend
       return new HBox( {
