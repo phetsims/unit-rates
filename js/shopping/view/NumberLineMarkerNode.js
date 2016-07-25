@@ -51,7 +51,7 @@ define( function( require ) {
 
     var self = this;
 
-    // @public (readwrite)
+    // @public (read-write)
     this.item   = item;
     this.keypad = keypad;
     this.outOfRangeProperty = new Property( false );

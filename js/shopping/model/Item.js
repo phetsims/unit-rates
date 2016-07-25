@@ -24,7 +24,7 @@ define( function( require ) {
    */
   function Item( data, count ) {
 
-    // @public (readwrite)
+    // @public (read-write)
     PropertySet.call( this, {
       position: new Vector2( 0, 0 )
     } );
