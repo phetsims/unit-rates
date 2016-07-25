@@ -48,20 +48,20 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if( !allCorrect && value >= 0 ) {
         self.costQnA.answerValue = Number( value );
-        self.unitQnA.answerValue = Util.toFixedNumber( ( value / self.rate ), 2 );
+        self.unitQnA.answerValue = Util.toFixedNumber( ( value / self.rate ), 1 );
         self.unitQnA.valueProperty.set( Number( -1 ) );
-        self.count = value / self.rate;
+        self.count = self.unitQnA.answerValue;
       }
     } );
 
-     // Clear sost on incorrect unit answers
+     // Clear cost on incorrect unit answers
     this.unitQnA.valueProperty.lazyLink( function( value, oldValue ) {
       var allCorrect = self.checkCorrectAnswers();
       if( !allCorrect && value >= 0 ) {
         self.unitQnA.answerValue = Number( value );
         self.costQnA.answerValue = Util.toFixedNumber( ( value * self.rate ), 2 );
         self.costQnA.valueProperty.set( Number( -1 ) );
-        self.count = Number( value );
+        self.count = self.unitQnA.answerValue;
       }
     } );
   }
