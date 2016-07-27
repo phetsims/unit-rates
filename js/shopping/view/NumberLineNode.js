@@ -314,7 +314,7 @@ define( function( require ) {
           markerNode.item.outOfRangeProperty.set( true );
         }
         else if ( countPercent >= 0 ) {
-          x = ( ( 1.0 - countPercent ) * this.origin.x ) + ( ( this.graphBounds.maxX + this.origin.x ) * countPercent );
+          x = ( ( 1.0 - countPercent ) * this.origin.x ) + ( this.graphBounds.maxX * countPercent );
           markerNode.item.outOfRangeProperty.set( false );
         }
       }
