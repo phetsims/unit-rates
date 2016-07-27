@@ -92,7 +92,7 @@ define( function( require ) {
 
     /**
      * Adds an item to the types specific array
-     * Note: fruit types are a special case, tehy get expanded into indivdual items
+     * Note: fruit types are a special case, they get expanded into indivdual items
      * @param {Item} item
      * @override @public
      */

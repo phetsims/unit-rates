@@ -85,14 +85,14 @@ define( function( require ) {
     this.addChild( this.itemsLayer );
 
     // shelf
-    this.shelfNode = new ShelfNode( model.shelf, this.itemsLayer, this.itemMoved.bind( this ), {
+    this.shelfNode = new ShelfNode( model.shelf, this.itemsLayer, this.updateItem.bind( this ), {
       centerX: this.numberLineNode.centerX + 15,
       bottom:  this.layoutBounds.bottom - SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( this.shelfNode );
 
     // scale
-    this.scaleNode = new ScaleNode( model.scale, this.itemsLayer, this.itemMoved.bind( this ) , {
+    this.scaleNode = new ScaleNode( model.scale, this.itemsLayer, this.updateItem.bind( this ) , {
       centerX: this.shelfNode.centerX,
       bottom:  this.shelfNode.top - 75
     } );
@@ -252,14 +252,21 @@ define( function( require ) {
         default:
           assert && assert( true, 'Unrecognized scene' );
       }
+
+      //
+      var self = this;
+      this.itemsLayer.getChildren().forEach( function( child ) {
+        self.updateItem( child );
+      } );
     },
 
     /*
-     * Called when an item's node (i.e. individual items or bags) is dragged to a new location
+     * Updates the model based on where the item is on on the screen - i.e. on the scale or shelf or in no-man's land.
+     * Called on scene changes or when an item's node (i.e. individual items or bags) is moved to a new location
      * @param {Node} itemNode - the item being moved.
      * @private
      */
-    itemMoved: function( itemNode ) {
+    updateItem: function( itemNode ) {
 
       // Check node position - on scale, shelf or in no-man's land
       if( this.scaleNode.intersectsDropArea( itemNode.bounds ) ) {
@@ -285,21 +292,15 @@ define( function( require ) {
         // populate number line
         this.numberLineNode.populate();
       }
-      else if( this.shelfNode.intersectsDropArea( itemNode.bounds ) ) {
+      else if ( !this.shelfNode.intersectsDropArea( itemNode.bounds ) ) {
 
-        // Dropped back on the shelf
+        // Item has not been moved to the scale, place it back on the shelf.
+        var point = this.shelfNode.getClosePoint( itemNode.item.position );
+        itemNode.item.setPosition( point.x, point.y, true );
+
+        // Move back to the shelf
         this.model.addScaleItemToShelf( itemNode.item );
         this.model.addScaleItemsToNumberline();
-
-        // make sure bottom of items are actually on the shelf
-        this.shelfNode.adjustItemPositions();
-
-        // populate number line
-        this.numberLineNode.populate();
-      }
-      else {
-        // In no-man's land, send it back from whence it came
-        itemNode.restoreLastPosition();
       }
     },
 

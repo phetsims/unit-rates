@@ -29,8 +29,10 @@ define( function( require ) {
   var scaleImage = require( 'image!UNIT_RATES/scale.png' );
 
   // constants
+  var DROP_ZONE_X_SCALE     = 1.05;                     // How much bigger the drop zone width is from the image
+  var DROP_ZONE_Y_SCALE     = 2.25;                     // How much bigger the drop zone height is from the image
   var DISPLAY_BOTTOM_OFFSET = 32;
-  var DISPLAY_SPACING       = 10;  // space beteen mutliple displays
+  var DISPLAY_SPACING       = 10;                       // space beteen mutliple displays
   var DISPLAY_FONT          = new PhetFont( 20 );
   var DISPLAY_SIZE          = new Dimension2( 70, 40 );
   var RAND                  = new Random();
@@ -61,12 +63,25 @@ define( function( require ) {
     // load the scale image
     this.scaleNode = new Image( scaleImage, { pickable: true } );
 
-    // a transparant node with the approximate shape of the top of the scale - defines a drop location
+    // a transparant node with the approximate shape of the top of the scale - used for positioning dropped items
     // @private
-    this.scaleDropNode = new Path( new Shape()
+    this.scaleTopNode = new Path( new Shape()
        .ellipse( this.scaleNode.centerX, this.scaleNode.top + 12,
         this.scaleNode.width * 0.47, this.scaleNode.height * 0.13, 0 ), {
-      //fill: 'orange', // uncomment to see drop zone
+      //fill: 'rgba(0,255,0,0.5)', // uncomment to see top zone
+      lineWidth: 0,
+      pickable: false
+    } );
+
+    // a transparant node overlaying the scale - defines a drop location
+    var dropWidth  = this.scaleNode.width  * DROP_ZONE_X_SCALE;
+    var dropHeight = this.scaleNode.height * DROP_ZONE_Y_SCALE;
+    // @private
+    this.scaleDropNode = new Path( new Shape()
+        .rect( this.scaleNode.left - ( dropWidth  - this.scaleNode.width ) / 2,
+               this.scaleNode.top  - ( dropHeight - this.scaleNode.height ),
+               dropWidth, dropHeight - DISPLAY_BOTTOM_OFFSET ), {
+      //fill: 'rgba(255,255,0,0.5)', // uncomment to see drop zone
       lineWidth: 0,
       pickable: true
     } );
@@ -115,7 +130,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ this.scaleNode, this.scaleDropNode, this.costDisplayNode, this.weightDisplayNode ];
+    options.children = [ this.scaleNode, this.scaleTopNode, this.scaleDropNode, this.costDisplayNode, this.weightDisplayNode ];
 
     Node.call( this, options );
 
@@ -167,24 +182,24 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
-     * Checks if a point is in a droppable location on the scale
-     * @param {Vector2} bounds - parent (layer) coordinates
+     * Checks if an area (bounds) is in/intersects a droppable location on the scale
+     * @param {Bounds2} bounds - parent (layer) coordinates
      * @return {boolean}
      * @public
      */
     intersectsDropArea: function( bounds ) {
       var scaleBounds = this.parentToLocalBounds( bounds );
-      return this.scaleDropNode.intersectsBoundsSelf( scaleBounds );
+      return ( this.scaleDropNode.intersectsBoundsSelf( scaleBounds ) ||
+               this.scaleDropNode.bounds.containsBounds( scaleBounds ) );
     },
 
     /**
-     * Adjusts item nodes bottom center coordinate to be in the drop area, basically so items appear
-     * to be on the scale all the time.
+     * Adjusts item nodes bottom center coordinate to be on the top of the scale all the time.
      * @public
      */
      adjustItemPositions: function() {
 
-      var globalDropBounds = this.scaleDropNode.getGlobalBounds();
+      var globalDropBounds = this.scaleTopNode.getGlobalBounds();
       var localDropBounds = this.itemLayer.globalToParentBounds( globalDropBounds );
 
       // get the current array for the item type
@@ -198,21 +213,21 @@ define( function( require ) {
           var y = itemNode.item.positionProperty.value.y;
 
           if( x < localDropBounds.minX ) {
-            x = localDropBounds.minX;
+            x = localDropBounds.minX + itemNode.width / 2;
           }
           else if( x > localDropBounds.maxX ) {
-            x = localDropBounds.maxX;
+            x = localDropBounds.maxX - itemNode.width / 2;
           }
 
           var bottomY = y + itemNode.height / 2;
-          if( bottomY < localDropBounds.minY ) {
-              y  = ( localDropBounds.maxY + localDropBounds.minY ) / 2 + ( itemNode.height / 2 );
-          }
-          else if( bottomY > localDropBounds.maxY ) {
-              y  = ( localDropBounds.maxY + localDropBounds.minY ) / 2 - ( itemNode.height / 2 );
+          if( bottomY < localDropBounds.minY || bottomY > localDropBounds.maxY ) {
+              y  = localDropBounds.centerY - itemNode.height / 2;
           }
 
-          itemNode.item.setPosition( x, y, false );
+          if( x !== itemNode.item.positionProperty.value.x || y !== itemNode.item.positionProperty.value.y ) {
+            console.log('Scale adjustItemPositions');
+            itemNode.item.setPosition( x, y, true );
+          }
         }
       } );
     },
@@ -229,8 +244,8 @@ define( function( require ) {
       var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
 
       // calc the drop zone center (for positioning new items)
-      var dropCenter = this.scaleDropNode.getGlobalBounds().getCenter();
-      var layerDropCenter = this.itemLayer.globalToParentPoint( dropCenter );
+      var topCenter = this.scaleTopNode.getGlobalBounds().getCenter();
+      var layerDropCenter = this.itemLayer.globalToParentPoint( topCenter );
 
       // create nodes for all items of type (fruit | produce)
       itemArray.forEach( function( item ) {
@@ -244,8 +259,8 @@ define( function( require ) {
         if(position.x === 0 && position.y === 0) {
 
           // jitter the initial positions a bit
-          var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.width * 0.8 ) );
-          var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.scaleDropNode.height * 0.25 ) );
+          var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.scaleTopNode.width * 0.8 ) );
+          var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.scaleTopNode.height * 0.25 ) );
           var x = layerDropCenter.x + jitterX;
           var y = layerDropCenter.y + jitterY - itemNode.height / 2;
           item.setPosition( x, y, false );
