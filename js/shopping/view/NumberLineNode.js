@@ -179,7 +179,7 @@ define( function( require ) {
       // reset the undo stack
       this.undoItemNodeList.length = 0;
 
-      // get the current item array for the item type
+      // get the current item array for the item type (array of NumberLineItem)
       var itemArray = this.getItemArray();
       itemArray.forEach( function( item ) {
         self.createItemMarkerNode( item );
@@ -250,7 +250,7 @@ define( function( require ) {
 
     /**
      * Creates a new marker node based on the specified item attiributes
-     * @param {Item} - the item (type, count, cost, etc..)
+     * @param {NumberLineItem} - the item (type, count, cost, etc..)
      * @return {NumberLineMarkerNode}
      * @private
      */
@@ -258,14 +258,26 @@ define( function( require ) {
 
       var self = this;
 
+      // Color the marker based on Challange prompts
+      var markerColor = 'black';
+      if( item.isChallenge ) {
+        if( item.isChallengeUnitRate ) {
+          markerColor = ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR;
+        }
+        else {
+          markerColor = ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR;
+        }
+      }
+
       // make marker node at a specific location
       var position = item.positionProperty.value;
       var markerNode = new NumberLineMarkerNode( item, position, this.keypad, {
-        draggable:  false,
-        centerX:    position.x,
-        centerY:    position.y,
-        stroke:     'black',
-        lineWidth:  1.25,
+        draggable:    false,
+        centerX:      position.x,
+        centerY:      position.y,
+        stroke:       'black',
+        lineWidth:    1.25,
+        markerColor:  markerColor,
         bottomDecimalPlaces: ( item.isCandy() ? 2 : 1 ) // Candy count values are 2 decimal places
       } );
       this.addMarker( markerNode );
@@ -314,7 +326,7 @@ define( function( require ) {
           markerNode.item.outOfRangeProperty.set( true );
         }
         else if ( countPercent >= 0 ) {
-          x = ( ( 1.0 - countPercent ) * this.origin.x ) + ( this.graphBounds.maxX * countPercent );
+          x = ( ( 1.0 - countPercent ) * this.origin.x ) + ( ( this.graphBounds.maxX + this.origin.x / 1.5 ) * countPercent );
           markerNode.item.outOfRangeProperty.set( false );
         }
       }

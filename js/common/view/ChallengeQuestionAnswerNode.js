@@ -150,7 +150,7 @@ define( function( require ) {
         this.editNumberDisplay.hideEditButton();
         this.editNumberDisplay.setTextColor( this.correctTextColor );
         this.editNumberDisplay.setBorderColor( this.correctBorderColor );
-        this.challengeText.setFill( this.correctTextColor );
+        //this.challengeText.setFill( this.correctTextColor );
         this.unitText.setFill( this.correctTextColor );
         this.unitLine.setStroke( this.correctTextColor );
 

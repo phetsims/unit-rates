@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A cost & unit duo of questions and answers. This QuestionAnswer isn't considered 'correct' until the
+ * A derivied Item which has a cost & unit duo of questions and answers. This QuestionAnswer isn't considered 'correct' until the
  * cost & unit answers are both correct. Instances are mainly used the number line model.
  *
  * @author Dave Schmitz (Schmitzware)
@@ -18,20 +18,30 @@ define( function( require ) {
 
   /**
    * @param {ItemData} data
-   * @param {number} [count]
+   * @param {number} count
+   * @param {Object} [options]
    * @constructor
    */
-  function CostUnitQuestionAnswer( data, count ) {
+  function NumberLineItem( data, count, options ) {
 
     var self = this;
 
+    options = _.extend( {
+      isChallenge:          false,    // is this QnA associated with a Challenge prompt
+      isChallengeUnitRate:  false     // is this QnA associated with the Unit Rate Challenge prompt
+    }, options || {} );
+
     Item.call( this, data, count );
+
+    // @public - all
+    this.isChallenge          = options.isChallenge;
+    this.isChallengeUnitRate  = options.isChallengeUnitRate;
 
     // The correct answers
     var correctCost = ( count * data.rate );
     var correctUnit = ( count * ( data.isCandy ? data.weight : 1 ) );
 
-    // @public
+    // @public - all
     this.costQnA = new QuestionAnswer( this, correctCost, correctCost );
     this.unitQnA = new QuestionAnswer( this, correctUnit, correctCost );
 
@@ -66,9 +76,9 @@ define( function( require ) {
     } );
   }
 
-  unitRates.register( 'CostUnitQuestionAnswer', CostUnitQuestionAnswer );
+  unitRates.register( 'NumberLineItem', NumberLineItem );
 
-  return inherit( Item, CostUnitQuestionAnswer, {
+  return inherit( Item, NumberLineItem, {
 
     /**
      * Resets the properties and answer to the default (unanswered) state

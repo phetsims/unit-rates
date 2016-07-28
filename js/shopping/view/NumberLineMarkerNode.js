@@ -25,6 +25,7 @@ define( function( require ) {
   var EDIT_BG_COLOR         = 'rgba(255,255,255,1)';
   var PRECISION_TEXT_COLOR  = 'rgba(128,128,128,1)';
   var DEFAULT_TEXT_COLOR    = 'rgba(0,0,0,1)';
+  var DEFAULT_LINE_COLOR    = 'rgba(0,0,0,1)';
   var DEFAULT_BORDER_COLOR  = 'rgba(0,0,0,0)';
   var RANGE_TEXT_COLOR      = 'rgba(255,0,0,1)';
   var TRANSPARENT_COLOR     = 'rgba(0,0,0,0)';
@@ -35,7 +36,7 @@ define( function( require ) {
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
 
   /**
-   * @param {Item} item
+   * @param {NumberLineItem} item
    * @param {Vector2} position - x,y position on the number line
    * @param {Object} [options]
    * @constructor
@@ -45,7 +46,8 @@ define( function( require ) {
     options = _.extend( {
       topDecimalPlaces:     2,
       bottomDecimalPlaces:  1,
-      lineWidth:            1.25
+      lineWidth:            1.25,
+      markerColor:          DEFAULT_LINE_COLOR
     }, options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
@@ -54,20 +56,21 @@ define( function( require ) {
     // @public (read-write)
     this.item   = item;
     this.keypad = keypad;
+    this.markerColor = options.markerColor;
     this.outOfRangeProperty = new Property( false );
 
     // top label - cost
     var topPattern =  currencySymbolString + '{0} ';  // FIXME: see stringTest=long
     this.topNumberDisplay = new EditNumberDisplayNode( keypad, this.item.costQnA.valueProperty, topPattern, {
-        centerX: -2,
-        bottom: -SMALL_LINE_HEIGHT,
-        decimalPlaces: options.topDecimalPlaces,
-        buttonPosition: 'top',
-        buttonSpacing: EDIT_BUTTON_MARGIN,
-        textColor: DEFAULT_TEXT_COLOR,
-        backgroundColor: TRANSPARENT_COLOR,
-        borderColor: EDIT_BORDER_COLOR,
-        font: SMALL_FONT
+        centerX:          -2,
+        bottom:           -SMALL_LINE_HEIGHT,
+        decimalPlaces:    options.topDecimalPlaces,
+        buttonPosition:   'top',
+        buttonSpacing:    EDIT_BUTTON_MARGIN,
+        textColor:        DEFAULT_TEXT_COLOR,
+        backgroundColor:  TRANSPARENT_COLOR,
+        borderColor:      EDIT_BORDER_COLOR,
+        font:             SMALL_FONT
     } );
 
     this.smallLineShape = new Shape()
@@ -78,25 +81,25 @@ define( function( require ) {
       .lineTo( 0,  LARGE_LINE_HEIGHT );
 
     this.markerLine = new Path( this.smallLineShape, {
-        centerX: 0,
-        centerY: 0,
-        stroke: DEFAULT_TEXT_COLOR,
-        lineWidth: options.lineWidth,
-        pickable: false
+        centerX:    0,
+        centerY:    0,
+        lineWidth:  options.lineWidth,
+        stroke:     options.markerColor,
+        pickable:   false
       } );
 
     // bottom label - unit
     var bottomPattern =  ' {0}  ';
     this.bottomNumberDisplay = new EditNumberDisplayNode( keypad, this.item.unitQnA.valueProperty, bottomPattern, {
-        centerX: -2,
-        top: SMALL_LINE_HEIGHT,
-        decimalPlaces: options.bottomDecimalPlaces,
-        buttonPosition: 'bottom',
-        buttonSpacing: EDIT_BUTTON_MARGIN,
-        textColor: DEFAULT_TEXT_COLOR,
-        backgroundColor: TRANSPARENT_COLOR,
-        borderColor: EDIT_BORDER_COLOR,
-        font: SMALL_FONT
+        centerX:          -2,
+        top:              SMALL_LINE_HEIGHT,
+        decimalPlaces:    options.bottomDecimalPlaces,
+        buttonPosition:   'bottom',
+        buttonSpacing:    EDIT_BUTTON_MARGIN,
+        textColor:        DEFAULT_TEXT_COLOR,
+        backgroundColor:  TRANSPARENT_COLOR,
+        borderColor:      EDIT_BORDER_COLOR,
+        font:             SMALL_FONT
     } );
 
     // add all child nodes
@@ -146,8 +149,8 @@ define( function( require ) {
           this.bottomNumberDisplay.top =  LARGE_LINE_HEIGHT;
 
           // text color
-          this.topNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
-          this.bottomNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
+          this.topNumberDisplay.setTextColor( this.markerColor );
+          this.bottomNumberDisplay.setTextColor( this.markerColor );
 
           // font
           this.topNumberDisplay.setFont( LARGE_FONT );

@@ -94,7 +94,7 @@ define( function( require ) {
       // create a new item on the number line representing the total number/weight of items currently on the scale
       var count = this.scale.getItemCount() ;
       if( count > 0 ) {
-        this.numberLine.createItem( this.itemDataProperty.value, count, false );
+        this.numberLine.createItem( this.itemDataProperty.value, count );
       }
     },
 
@@ -108,7 +108,10 @@ define( function( require ) {
       // create a new item on the number line representing the correctly answered challenge questions
       var itemArray = this.challenges.getCorrectAnswerItems( this.itemDataProperty.value );
       itemArray.forEach( function( item ) {
-        self.numberLine.createItem( self.itemDataProperty.value, item.count, false );
+        self.numberLine.createItem( self.itemDataProperty.value, item.count, {
+          isChallenge: true,
+          isChallengeUnitRate: ( item.count === 1 )
+        } );
       } );
     },
 

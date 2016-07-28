@@ -13,6 +13,7 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var ChallengeQuestionAnswerNode = require( 'UNIT_RATES/common/view/ChallengeQuestionAnswerNode' );
+  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var AccordionBox = require( 'SUN/AccordionBox' );
@@ -95,7 +96,7 @@ define( function( require ) {
         preValueString: currencySymbolString,
         decimalPlaces: 2,
         showUnitText: true,
-        correctTextColor:  'rgba(0,192,0,1)'   // Unit rate correct answer is always green.
+        correctTextColor:  ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR
       } );
       this.contentNode.addChild( questionNode0  );
 
@@ -105,7 +106,8 @@ define( function( require ) {
         centerX: strut.centerX,
         top: questionNode0.bottom + VERTICAL_SPACING,
         preValueString: currencySymbolString,
-        decimalPlaces: 2
+        decimalPlaces: 2,
+        correctTextColor:  ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
       } );
       this.contentNode.addChild( questionNode1  );
 
@@ -115,7 +117,8 @@ define( function( require ) {
         centerX: strut.centerX,
         top: questionNode1.bottom + VERTICAL_SPACING,
         preValueString: currencySymbolString,
-        decimalPlaces: 2
+        decimalPlaces: 2,
+        correctTextColor:  ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
       } );
       this.contentNode.addChild( questionNode2  );
 
@@ -133,7 +136,8 @@ define( function( require ) {
         top: questionNode2.bottom + VERTICAL_SPACING,
         preValueString: preValueString,
         decimalPlaces: decimalPlaces,
-        postValueString: postValueString
+        postValueString: postValueString,
+        correctTextColor:  ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
       } );
       this.contentNode.addChild( questionNode3  );
     },

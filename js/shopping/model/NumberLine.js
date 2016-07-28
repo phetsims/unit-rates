@@ -12,7 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ItemCollection = require( 'UNIT_RATES/shopping/model/ItemCollection' );
-  var CostUnitQuestionAnswer = require( 'UNIT_RATES/shopping/model/CostUnitQuestionAnswer' );
+  var NumberLineItem = require( 'UNIT_RATES/shopping/model/NumberLineItem' );
 
   /**
    * @param {Property}.<ItemData> itemDataProperty - the curently selected item
@@ -36,11 +36,12 @@ define( function( require ) {
      * Creates a new item/adds it to the types specific array
      * @param {ItemData} data
      * @param {number} [count]
+     * @param {Object} [options]
      * @return {Item}
      * @public @override
      */
-    createItem: function( data, count ) {
-      var item = new CostUnitQuestionAnswer( data, count );
+    createItem: function( data, count, options ) {
+      var item = new NumberLineItem( data, count, options );
       this.addItem( item );
       return item;
     },
