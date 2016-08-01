@@ -75,7 +75,7 @@ define( function( require ) {
 
     var editButtonOptions = {
       content: new Image( editButtonImage, { scale: 0.2 } ),
-      baseColor: URConstants.EDIT_CONTROL_COLOR,
+      baseColor: URConstants.EDIT_BUTTON_COLOR,
       pickable: true
       };
 
@@ -239,7 +239,7 @@ define( function( require ) {
     dispose: function() {
       this.keypad.clearListeners();
       this.editButton.removeListener( this.editButtonListener );
-      !assert && this.editButton.dispose();  // fails when assertions are enabled - see sun/#212
+      !assert && this.editButton.dispose();  // SUN buttons dispose fails when assertions are enabled - see sun/#212
       this.numberDisplay.dispose();
     }
 

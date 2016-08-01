@@ -115,6 +115,14 @@ define( function( require ) {
       } );
     },
 
+    /**
+     * Remove all items representing Challenge answers from the number line.
+     * @protected
+     */
+    removeChallengeItemsFromNumberline: function() {
+        this.numberLine.removeAllChallengeItems();
+    },
+
     // Resets all model elements
     reset: function() {
       this.shelf.reset();

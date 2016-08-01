@@ -48,16 +48,42 @@ define( function( require ) {
 
     /**
      * Adds an item to the types specific array
-     * Does not allow for new items which equal existing items
+     * Does not allow for new items which equal existing items but will replace existing items with challenge items
+     * as these take precendence over standard items.
      *
-     * @param {Item} item
+     * @param {NumberLineItem} item
+     * @param {boolean} [replace]
      * @public @override
      */
      addItem: function( item ) {
+      var self = this;
+
       var itemArray = this.getItemsWithType( item.type );
-      if( !this.containsItem( item ) ) {
+      var existingItem = this.containsItem( item );
+      if( existingItem === null ) {
         itemArray.add( item );
       }
+      else if( item.isChallenge ) {
+        self.removeItem( existingItem );
+        item.dispose();
+        itemArray.add( item );
+      }
+    },
+
+    /**
+     * Remove all items representing Challenge answers from the number line.
+     * @public
+     */
+     removeAllChallengeItems: function() {
+      var self = this;
+
+      var itemArray = this.getItemsWithType( this.itemDataProperty.value.type );
+      itemArray.forEach( function( item ) {
+        if( item.isChallenge ) {
+          self.removeItem( item );
+          item.dispose();
+        }
+      } );
     }
 
   } ); // inherit

@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SceneMode = require( 'UNIT_RATES/shopping/enum/SceneMode' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
@@ -69,8 +70,12 @@ define( function( require ) {
     this.addChild( this.numberLineNode );
 
     // challenges
+    var onChallengePopulate = function() {
+      self.model.removeChallengeItemsFromNumberline();
+      self.numberLineNode.populate();
+    };
     var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + PANEL_SPACING + SCREEN_HORIZONTAL_MARGIN );
-    this.challengesNode = new ChallengesNode( model.challenges, this.keypad, challengeWidth, {
+    this.challengesNode = new ChallengesNode( model.challenges, this.keypad, challengeWidth, onChallengePopulate, {
       left: this.numberLineNode.right + PANEL_SPACING,
       top:  this.layoutBounds.top + SCREEN_VERTICAL_MARGIN
     } );
@@ -102,7 +107,7 @@ define( function( require ) {
     var scaleRemoveButtonNode = new RectangularPushButton( {
       right:  this.scaleNode.left - PANEL_SPACING,
       bottom: this.scaleNode.bottom,
-      baseColor: '#f2f2f2',
+      baseColor: URConstants.DEFAULT_BUTTON_COLOR,
       content: new Image( removeButtonImage, { scale: 0.25 } ),
       listener: function() {
 
@@ -253,7 +258,9 @@ define( function( require ) {
           assert && assert( true, 'Unrecognized scene' );
       }
 
-      //
+      this.model.addChallengeItemsToNumberline();
+
+      // This fixes an issue with items hanging in space when the item type selection changes. (see. issue #21, #18)
       var self = this;
       this.itemsLayer.getChildren().forEach( function( child ) {
         self.updateItem( child );
@@ -292,7 +299,7 @@ define( function( require ) {
         // populate number line
         this.numberLineNode.populate();
       }
-      else if ( !this.shelfNode.intersectsDropArea( itemNode.bounds ) ) {
+      else { //if ( !this.shelfNode.intersectsDropArea( itemNode.bounds ) ) {
 
         // Item has not been moved to the scale, place it back on the shelf.
         var point = this.shelfNode.getClosePoint( itemNode.item.position );

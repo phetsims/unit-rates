@@ -225,7 +225,6 @@ define( function( require ) {
           }
 
           if( x !== itemNode.item.positionProperty.value.x || y !== itemNode.item.positionProperty.value.y ) {
-            console.log('Scale adjustItemPositions');
             itemNode.item.setPosition( x, y, true );
           }
         }

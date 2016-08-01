@@ -16,6 +16,8 @@ define( function( require ) {
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Image = require( 'SCENERY/nodes/Image' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var AccordionBox = require( 'SUN/AccordionBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var Property = require( 'AXON/Property' );
@@ -24,17 +26,21 @@ define( function( require ) {
   var challengesString = require( 'string!UNIT_RATES/challenges' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
 
+  // images
+  var refreshButtonImage = require( 'image!UNIT_RATES/refresh-button.png' );
+
   // constants
-  var VERTICAL_SPACING = 20;
+  var VERTICAL_SPACING    = 20;
 
   /**
    * @param {Challenges} challenges - the challenges model
    * @param {NumberKeypad} keypad - shared keypad
    * @param {number} fixedWidth - the fixed width of the node
+   * @param {function} onPopulateCallback - called everytime the Node is populated
    * @param {Object} [options]
    * @constructor
    */
-  function ChallengesNode( challenges, keypad, fixedWidth, options ) {
+  function ChallengesNode( challenges, keypad, fixedWidth, onPopulateCallback, options ) {
 
     options = _.extend( {
     },  options || {} );
@@ -44,6 +50,7 @@ define( function( require ) {
     this.challenges = challenges;
     this.keypad = keypad;
     this.fixedWidth = fixedWidth;
+    this.onPopulateCallback = onPopulateCallback;
 
     this.contentNode = new Node();
 
@@ -66,7 +73,7 @@ define( function( require ) {
       showTitleWhenExpanded: true,
       contentAlign: 'center',
       contentXMargin: 0,
-      contentYMargin: 20
+      contentYMargin: 10
     } );
 
     this.mutate( options );
@@ -83,6 +90,8 @@ define( function( require ) {
      * @public
      */
     populate: function() {
+
+      var self = this;
 
       // layout adjustment
       var strut = new HStrut( this.fixedWidth );
@@ -140,6 +149,24 @@ define( function( require ) {
         correctTextColor:  ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
       } );
       this.contentNode.addChild( questionNode3  );
+
+      // @private - refresh all questions button
+      var refreshButtonNode = new RectangularPushButton( {
+        right:  this.contentNode.right - 8,
+        top: questionNode3.bottom + 2,
+        baseColor: URConstants.DEFAULT_BUTTON_COLOR,
+        content: new Image( refreshButtonImage, { scale: 0.25 } ),
+        listener: function() {
+          self.removeAllContent();
+          self.challenges.populate();
+          self.populate();
+        }
+      } );
+      this.contentNode.addChild( refreshButtonNode );
+
+      if( this.onPopulateCallback ) {
+        this.onPopulateCallback.call();
+      }
     },
 
     /**
@@ -148,7 +175,12 @@ define( function( require ) {
     removeAllContent: function() {
       this.contentNode.getChildren().forEach( function( child ) {
         if ( child.dispose ) {
-          child.dispose();
+          if( child instanceof RectangularPushButton ) {
+            !assert && child.dispose();  // SUN buttons dispose fails when assertions are enabled - see sun/#212
+          }
+          else {
+            child.dispose();
+          }
         }
       } );
       this.contentNode.removeAllChildren();

@@ -116,7 +116,7 @@ define( function( require ) {
 
     // erase
     var eraserButton = new EraserButton( {
-      baseColor: '#f2f2f2',
+      baseColor: URConstants.DEFAULT_BUTTON_COLOR,
       left: this.bottomArrowLabel.right,
       top: options.graphHeight,
       listener: function() {

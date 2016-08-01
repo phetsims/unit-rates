@@ -83,28 +83,23 @@ define( function( require ) {
     },
 
     /**
-     *
+     * Searches the type specific array for a matching item.
      * @param {Item} item
-     * @return {boolean}
+     * @return {Item} - returns the matching item or null
      * @public
      */
     containsItem: function( item ) {
 
       var itemArray = this.getItemsWithType( item.type );
 
-      var itemExists = false;
-      if( itemArray.contains( item ) ) {
-        itemExists = true;
-      }
-      else {
-        itemArray.forEach( function( existingItem ) {
-          if( item.isEqual( existingItem ) ) {
-            itemExists = true;
-          }
-        } );
-      }
+      var existingItem = null;
+      itemArray.forEach( function( arrayItem ) {
+        if( item.isEqual( arrayItem ) ) {
+            existingItem = arrayItem;
+        }
+      } );
 
-      return itemExists;
+      return existingItem;
     },
 
     /**

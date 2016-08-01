@@ -97,7 +97,7 @@ define( function( require ) {
 
     /**
      * Populates the initial questions/values for all item types (i.e. apples, carrots, red candy)
-     * @private
+     * @public
      */
     populate: function() {
 

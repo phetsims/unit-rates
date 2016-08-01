@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var Image = require( 'SCENERY/nodes/Image' );
@@ -72,7 +73,7 @@ define( function( require ) {
     // reposition the undo button directly under the marker.
     this.undoEditButtonNode = new RectangularPushButton( {
       visible: false,
-      baseColor: '#f2f2f2',
+      baseColor: URConstants.DEFAULT_BUTTON_COLOR,
       headWidth: 8,
       headHeight: 8,
       tailWidth: 5,
