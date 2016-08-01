@@ -71,7 +71,8 @@ define( function( require ) {
 
     // challenges
     var onChallengePopulate = function() {
-      self.model.removeChallengeItemsFromNumberline();
+      self.model.removeChallengeItemsFromNumberline();  // remove old
+      self.model.addChallengeItemsToNumberline();       // add new (i.e. unit rate)
       self.numberLineNode.populate();
     };
     var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + PANEL_SPACING + SCREEN_HORIZONTAL_MARGIN );

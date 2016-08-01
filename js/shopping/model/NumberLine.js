@@ -48,8 +48,8 @@ define( function( require ) {
 
     /**
      * Adds an item to the types specific array
-     * Does not allow for new items which equal existing items but will replace existing items with challenge items
-     * as these take precendence over standard items.
+     * Does not allow for new items which equal existing items but will replace existing items with challenge items,
+     * as these take precendence over standard/non-challenge items.
      *
      * @param {NumberLineItem} item
      * @param {boolean} [replace]

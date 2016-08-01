@@ -150,7 +150,7 @@ define( function( require ) {
       } );
       this.contentNode.addChild( questionNode3  );
 
-      // @private - refresh all questions button
+      // @private - refresh questions button
       var refreshButtonNode = new RectangularPushButton( {
         right:  this.contentNode.right - 8,
         top: questionNode3.bottom + 2,
@@ -158,7 +158,7 @@ define( function( require ) {
         content: new Image( refreshButtonImage, { scale: 0.25 } ),
         listener: function() {
           self.removeAllContent();
-          self.challenges.populate();
+          self.challenges.refresh(); // update the model
           self.populate();
         }
       } );

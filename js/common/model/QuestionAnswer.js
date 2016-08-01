@@ -13,6 +13,9 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Property = require( 'AXON/Property' );
 
+  // constants
+  var DEFAULT_ANSWER_VALUE = -1;
+
   /**
    * @param {Item} item - the item associated with this question
    * @param {number} answerValue - the correct answer value
@@ -36,7 +39,7 @@ define( function( require ) {
     this.unitString     = options.unitString;       // {string} unit
     this.answerValue    = answerValue;              // {number} the correct answer value
     this.answerText     = answerText;               // {Text} the correct answer text
-    this.valueProperty  = new Property( -1 );       // user's answer input property
+    this.valueProperty  = new Property( DEFAULT_ANSWER_VALUE );       // user's answer input property
 
     // @protected - {function}
     this.onCorrectAnswerCallback = options.onCorrectAnswerCallback;
@@ -54,6 +57,15 @@ define( function( require ) {
   unitRates.register( 'QuestionAnswer', QuestionAnswer );
 
   return inherit( Object, QuestionAnswer, {
+
+    /**
+     * Sets the answer to correct or not
+     * @param {boolean} state
+     * @public
+     */
+    setCorrect: function( state ) {
+      this.valueProperty.value = ( state ? this.answerValue : DEFAULT_ANSWER_VALUE);
+    },
 
     /**
      * Convenience function telling if the current user input is a valid value

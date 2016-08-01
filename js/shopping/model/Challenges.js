@@ -111,6 +111,39 @@ define( function( require ) {
     },
 
     /**
+     * Re-populates the initial questions/values for the current item type (i.e. apples, carrots, red candy)
+     * @public
+     */
+    refresh: function() {
+
+      var itemData = this.itemDataProperty.value;
+
+      // get the current set of questions for the item type
+      var oldQnAArray = this.challengeData[ itemData.type ];
+
+      // get the first question correctness
+      var oldQ1 = oldQnAArray.shift();
+      var oldQ1Correct = oldQ1.isAnswerCorrect();
+
+      // dispose of old questions
+      oldQnAArray.forEach( function( qna ) {
+        qna.dispose();
+      } );
+      this.challengeData[ itemData.type ] = [];
+
+      // generate new question
+      this.generateQuestionsAnswersForItem( itemData );
+
+      // set the unit rate question to correct?
+      if( oldQ1Correct ) {
+        // get the new set of questions for the item type
+        var newQnAArray = this.challengeData[ itemData.type ];
+        var newQ1 = newQnAArray[0];
+        newQ1.setCorrect( true );
+      }
+    },
+
+    /**
      * Generates a set (currently 4) of challenge questions for a specific item type.
      * @param {ItemData} - itemData
      * @private
