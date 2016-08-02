@@ -116,11 +116,11 @@ define( function( require ) {
     },
 
     /**
-     * Remove all items representing Challenge answers from the number line.
+     * Resets all items representing Challenge answers from the number line. Makes them regular/black markers
      * @protected
      */
-    removeChallengeItemsFromNumberline: function() {
-        this.numberLine.removeAllChallengeItems();
+    resetChallengeNumberlineItems: function() {
+        this.numberLine.resetChallengeItems();
     },
 
     // Resets all model elements

@@ -71,17 +71,16 @@ define( function( require ) {
     },
 
     /**
-     * Remove all items representing Challenge answers from the number line.
+     * Changes all items representing Challenge answers to regluar/black markers on the number line.
      * @public
      */
-     removeAllChallengeItems: function() {
-      var self = this;
+     resetChallengeItems: function() {
 
       var itemArray = this.getItemsWithType( this.itemDataProperty.value.type );
       itemArray.forEach( function( item ) {
         if( item.isChallenge ) {
-          self.removeItem( item );
-          item.dispose();
+          item.isChallenge  = false;
+          item.isChallengeUnitRate = false;
         }
       } );
     }

@@ -111,7 +111,7 @@ define( function( require ) {
     },
 
     /**
-     * Re-populates the initial questions/values for the current item type (i.e. apples, carrots, red candy)
+     * Re-populates the initial questions/values for the current item type (i.e. apples, carrots, red candy).
      * @public
      */
     refresh: function() {
@@ -138,6 +138,8 @@ define( function( require ) {
       if( oldQ1Correct ) {
         // get the new set of questions for the item type
         var newQnAArray = this.challengeData[ itemData.type ];
+
+        // set unit rate question to correct
         var newQ1 = newQnAArray[0];
         newQ1.setCorrect( true );
       }
