@@ -11,7 +11,6 @@
 
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   // constants
  var ShoppingConstants = {

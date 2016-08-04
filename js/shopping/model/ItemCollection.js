@@ -180,10 +180,6 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      //for (var key in ItemData) {
-      //  var itemData = ItemData[ key ];
-        //this.resetItemType( itemData.type );
-      //}
       this.itemsMap = {};
       this.initializeArrays();
     }
