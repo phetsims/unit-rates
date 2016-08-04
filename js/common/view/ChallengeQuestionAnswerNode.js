@@ -136,12 +136,12 @@ define( function( require ) {
      */
     checkAnswer: function() {
 
-      if( !this.qna.isAnswerValid() ) {         // invalid = aka. a default state, before the user has input any answers
+      if ( !this.qna.isAnswerValid() ) {         // invalid = aka. a default state, before the user has input any answers
         this.faceNode.visible = false;
         this.editNumberDisplay.setTextColor( DEFAULT_TEXT_COLOR );
         this.editNumberDisplay.setBorderColor( DEFAULT_BORDER_COLOR );
       }
-      else if( this.qna.isAnswerCorrect() ) {   // correct answers
+      else if ( this.qna.isAnswerCorrect() ) {   // correct answers
         this.faceNode.smile();
         this.faceNode.visible = true;
         this.unitLine.visible = true;
@@ -165,7 +165,7 @@ define( function( require ) {
         this.faceNode.frown();
         this.faceNode.visible = true;
         this.editNumberDisplay.setTextColor( this.incorrectTextColor );
-        if( !this.editNumberDisplay.hasKeypadFocus ) {
+        if ( !this.editNumberDisplay.hasKeypadFocus ) {
           this.editNumberDisplay.setBorderColor( this.incorrectBorderColor );
         }
       }

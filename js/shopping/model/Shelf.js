@@ -59,7 +59,7 @@ define( function( require ) {
     populateItemData: function( itemData ) {
 
         // Only populate empty shelves
-        if( this.getNumberOfItemsWithType( itemData.type ) > 0 ) {
+        if ( this.getNumberOfItemsWithType( itemData.type ) > 0 ) {
           return;
         }
 

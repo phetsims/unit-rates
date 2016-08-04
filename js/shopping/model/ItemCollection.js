@@ -67,7 +67,7 @@ define( function( require ) {
      */
      addItem: function( item ) {
       var itemArray = this.getItemsWithType( item.type );
-      if( !itemArray.contains( item ) ) {
+      if ( !itemArray.contains( item ) ) {
         itemArray.add( item );
       }
     },
@@ -94,7 +94,7 @@ define( function( require ) {
 
       var existingItem = null;
       itemArray.forEach( function( arrayItem ) {
-        if( item.isEqual( arrayItem ) ) {
+        if ( item.isEqual( arrayItem ) ) {
             existingItem = arrayItem;
         }
       } );

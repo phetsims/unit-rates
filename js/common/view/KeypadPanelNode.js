@@ -125,11 +125,11 @@ define( function( require ) {
 
       this.clear();
 
-      if( this.onSubmit ) {
+      if ( this.onSubmit ) {
         this.checkButton.removeListener( this.onSubmit );
       }
 
-      if( this.onListenerChanged ) {
+      if ( this.onListenerChanged ) {
         this.onListenerChanged.call();
       }
 
@@ -146,12 +146,12 @@ define( function( require ) {
     clearListeners: function() {
 
       // remove the listener
-      if( this.onSubmit ) {
+      if ( this.onSubmit ) {
         this.checkButton.removeListener( this.onSubmit );
       }
 
       // call the currentl listener before removing it.
-      if( this.onListenerChanged ) {
+      if ( this.onListenerChanged ) {
         this.onListenerChanged.call();
       }
 

@@ -60,10 +60,10 @@ define( function( require ) {
 
       var itemArray = this.getItemsWithType( item.type );
       var existingItem = this.containsItem( item );
-      if( existingItem === null ) {
+      if ( existingItem === null ) {
         itemArray.add( item );
       }
-      else if( item.isChallenge ) {
+      else if ( item.isChallenge ) {
         self.removeItem( existingItem );
         item.dispose();
         itemArray.add( item );
@@ -78,7 +78,7 @@ define( function( require ) {
 
       var itemArray = this.getItemsWithType( this.itemDataProperty.value.type );
       itemArray.forEach( function( item ) {
-        if( item.isChallenge ) {
+        if ( item.isChallenge ) {
           item.isChallenge  = false;
           item.isChallengeUnitRate = false;
         }

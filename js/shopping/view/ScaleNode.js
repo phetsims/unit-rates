@@ -216,7 +216,7 @@ define( function( require ) {
           var y = nodeY - ( itemNode.height / 2 ) + NODE_Y_SPACING;
           itemNode.item.setPosition( x, y, animate ); // positions are item center
           nodeX += itemNode.width + NODE_X_SPACING;
-          if( nodeX >= localDropBounds.maxX ) {
+          if ( nodeX >= localDropBounds.maxX ) {
             nodeX = localDropBounds.minX + itemNode.width / 2 + NODE_X_SPACING;
             nodeY += itemNode.height / 2 - NODE_Y_SPACING;
           }
@@ -244,7 +244,7 @@ define( function( require ) {
         var itemNodeArray = self.itemLayer.getChildren();
 
         for (var i = 0; i < itemNodeArray.length; i++) {
-          if( itemNodeArray[i].item === item ) {
+          if ( itemNodeArray[i].item === item ) {
             exists = true;
             break;
           }

@@ -89,7 +89,7 @@ define( function( require ) {
         assert && assert( imageNode !== null, 'Unable to create item node of type:' + item.type );
 
         // in the case of multiple count, jitter the positions for placement in a bag.
-        if( item.count > 1 ) {
+        if ( item.count > 1 ) {
           imageNode.center = new Vector2( ( RAND.random() - 0.5 ) * imageNode.width,
           ( RAND.random() - 0.5 ) * imageNode.height );
         }
@@ -98,7 +98,7 @@ define( function( require ) {
       }
 
       // If multiple count, create a larger bage to hold typed nodes
-      if( item.count > 1 ) {
+      if ( item.count > 1 ) {
         var bagNode = this.createBag( 2 * size, options );
         itemNode.addChild( bagNode );
       }

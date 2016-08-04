@@ -54,7 +54,7 @@ define( function( require ) {
       },
         function( item, observableArray ) {
           // If the numberline is cleared, add back the scale contents and correct challenge questions answered
-          if( observableArray.length === 0 ) {
+          if ( observableArray.length === 0 ) {
             self.addScaleItemsToNumberline();
             self.addChallengeItemsToNumberline();
           }
@@ -93,7 +93,7 @@ define( function( require ) {
 
       // create a new item on the number line representing the total number/weight of items currently on the scale
       var count = this.scale.getItemCount() ;
-      if( count > 0 ) {
+      if ( count > 0 ) {
         this.numberLine.createItem( this.itemDataProperty.value, count );
       }
     },

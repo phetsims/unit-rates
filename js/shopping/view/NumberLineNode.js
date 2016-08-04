@@ -198,7 +198,7 @@ define( function( require ) {
     addEditMarker: function( ) {
 
       // create one if there is none
-      if( !this.editMarkerExists() ) {
+      if ( !this.editMarkerExists() ) {
 
         // create a new editable item
         var editItem = this.numberLine.createItem( this.numberLine.itemDataProperty.value, -1 );
@@ -221,7 +221,7 @@ define( function( require ) {
      */
     removeEditMarker: function( ) {
 
-      if( this.undoItemNodeList.length > 0 ) {
+      if ( this.undoItemNodeList.length > 0 ) {
 
         // get the last item added
         var itemMarkerNode = this.undoItemNodeList.pop();
@@ -261,8 +261,8 @@ define( function( require ) {
 
       // Color the marker based on Challange prompts
       var markerColor = 'black';
-      if( item.isChallenge ) {
-        if( item.isChallengeUnitRate ) {
+      if ( item.isChallenge ) {
+        if ( item.isChallengeUnitRate ) {
           markerColor = ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR;
         }
         else {
@@ -308,13 +308,13 @@ define( function( require ) {
       var isRemovable = this.isMarkerRemovable( markerNode );
 
       //
-      if( count >= 0 ) {
+      if ( count >= 0 ) {
 
         // undo stack managment
-        if( !inUndoList && isRemovable ) {
+        if ( !inUndoList && isRemovable ) {
           this.undoItemNodeList.push( markerNode );
         }
-        else if( inUndoList && !isRemovable ) {
+        else if ( inUndoList && !isRemovable ) {
           this.undoItemNodeList.splice( this.undoItemNodeList.indexOf( markerNode ), 1 );
         }
 
@@ -322,7 +322,7 @@ define( function( require ) {
         var countPercent = count / ShoppingConstants.MAX_ITEMS;
 
         // off the number line?
-        if( countPercent > 1.0 ) {
+        if ( countPercent > 1.0 ) {
           x = this.outOfRangeMarkerX;
           markerNode.item.outOfRangeProperty.set( true );
         }
@@ -333,7 +333,7 @@ define( function( require ) {
       }
 
       // edit marker checks
-      if( markerNode.item.editableProperty.value ) {
+      if ( markerNode.item.editableProperty.value ) {
 
         // make sure the edit marker is on top of all other markers
         markerNode.moveToFront();
@@ -345,7 +345,7 @@ define( function( require ) {
         } );
 
         // if the edit marker is a dup, remove it
-        if( dupItemArray.length > 0 ) {
+        if ( dupItemArray.length > 0 ) {
           this.removeEditMarker();
         }
       }
@@ -363,13 +363,13 @@ define( function( require ) {
       // update undo button visibility
       this.undoEditButtonNode.visible = ( this.undoItemNodeList.length > 0 );
 
-      if( this.undoEditButtonNode.visible ) {
+      if ( this.undoEditButtonNode.visible ) {
 
         // get the top marker on the undo stack
         var markerNode = this.undoItemNodeList[ this.undoItemNodeList.length-1 ];
 
         // move the undo button based on the marker's 'editability'
-        if( markerNode.item.editableProperty.value ) {
+        if ( markerNode.item.editableProperty.value ) {
           // edit marker
           this.undoEditButtonNode.left    = UNDO_BUTTON_X;
           this.undoEditButtonNode.centerY = this.graphBounds.centerY;

@@ -45,9 +45,9 @@ define( function( require ) {
     this.onCorrectAnswerCallback = options.onCorrectAnswerCallback;
 
     // make callback on correct answer
-    if( this.onCorrectAnswerCallback ) {
+    if ( this.onCorrectAnswerCallback ) {
       this.valueProperty.link( function( value, oldValue ) {
-        if( self.isAnswerCorrect() ) {
+        if ( self.isAnswerCorrect() ) {
           self.onCorrectAnswerCallback();
         }
       } );

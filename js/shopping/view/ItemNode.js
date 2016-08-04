@@ -51,7 +51,7 @@ define( function( require ) {
     this.item.positionProperty.link( this.positionListener );
 
     // add a drag listener
-    if( this.draggable ) {
+    if ( this.draggable ) {
       this.dragListener = new SimpleDragHandler( {
 
         // Allow moving a finger (touch) across a node to pick it up.
@@ -85,7 +85,7 @@ define( function( require ) {
         },
 
         translate: function( translation ) {
-          if( !self.isDragging ) {
+          if ( !self.isDragging ) {
             return;
           }
 
@@ -112,10 +112,10 @@ define( function( require ) {
       this.moveStartCallback = moveStartCallback;
       this.moveEndCallback   = moveEndCallback;
 
-      if( this.moveStartCallback ) {
+      if ( this.moveStartCallback ) {
         this.dragStartEmitter.addListener( this.moveStartCallback );
       }
-      if( this.moveEndCallback ) {
+      if ( this.moveEndCallback ) {
         this.dragEndEmitter.addListener( this.moveEndCallback );
       }
     },
@@ -135,17 +135,17 @@ define( function( require ) {
       this.item.positionProperty.unlink( this.positionListener );
 
       // remove start drag emitter listener
-      if( this.moveStartCallback ) {
+      if ( this.moveStartCallback ) {
         this.dragEndEmitter.removeListener( this.moveStartCallback );
       }
 
       // remove end drag emitter listener
-      if( this.moveEndCallback ) {
+      if ( this.moveEndCallback ) {
         this.dragEndEmitter.removeListener( this.moveEndCallback );
       }
 
       // remove input listener
-      if( this.dragListener ) {
+      if ( this.dragListener ) {
         this.removeInputListener( this.dragListener );
       }
     }

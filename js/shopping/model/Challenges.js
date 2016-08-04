@@ -135,7 +135,7 @@ define( function( require ) {
       this.generateQuestionsAnswersForItem( itemData );
 
       // set the unit rate question to correct?
-      if( oldQ1Correct ) {
+      if ( oldQ1Correct ) {
         // get the new set of questions for the item type
         var newQnAArray = this.challengeData[ itemData.type ];
 
@@ -325,7 +325,7 @@ define( function( require ) {
 
       var qnaArray = this.challengeData[ itemData.type ];
       qnaArray.forEach( function( qna ) {
-        if( qna.isAnswerValid() && qna.isAnswerCorrect() ) {
+        if ( qna.isAnswerValid() && qna.isAnswerCorrect() ) {
           correctItems.push( qna.item );
         }
       } );

@@ -116,7 +116,7 @@ define( function( require ) {
       var self = this;
 
       // set visibility
-      if( itemArray.length === 0 ) {
+      if ( itemArray.length === 0 ) {
         this.candyTopNode.visible   = false;
         this.candyBodyNode.visible  = false;
         return;

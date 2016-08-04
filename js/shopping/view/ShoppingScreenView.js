@@ -277,14 +277,14 @@ define( function( require ) {
     updateItem: function( itemNode ) {
 
       // Check node position - on scale, shelf or in no-man's land
-      if( this.scaleNode.intersectsDropArea( itemNode.bounds ) ) {
+      if ( this.scaleNode.intersectsDropArea( itemNode.bounds ) ) {
 
         // Dropped on the scale
         this.model.addShelfItemToScale( itemNode.item );
         this.model.addScaleItemsToNumberline();
 
         // Fruit bags should be expanded
-        if( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) {
+        if ( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) {
 
           // remove the bag node & children nodes
           this.itemsLayer.removeChild( itemNode );

@@ -80,25 +80,25 @@ define( function( require ) {
       };
 
     // positioning the edit button
-    if( options.buttonPosition === 'left' ) {
+    if ( options.buttonPosition === 'left' ) {
       editButtonOptions = _.extend( {
         right: this.numberDisplay.left - options.buttonSpacing,
         centerY: this.numberDisplay.centerY
       }, editButtonOptions );
     }
-    else if( options.buttonPosition === 'right' ) {
+    else if ( options.buttonPosition === 'right' ) {
       editButtonOptions = _.extend( {
         left: this.numberDisplay.right + options.buttonSpacing,
         centerY: this.numberDisplay.centerY
       }, editButtonOptions );
     }
-    else if( options.buttonPosition === 'top' ) {
+    else if ( options.buttonPosition === 'top' ) {
       editButtonOptions = _.extend( {
         centerX: this.numberDisplay.centerX,
         bottom: this.numberDisplay.top - options.buttonSpacing
       }, editButtonOptions );
     }
-    else if( options.buttonPosition === 'bottom' ) {
+    else if ( options.buttonPosition === 'bottom' ) {
       editButtonOptions = _.extend( {
         centerX: this.numberDisplay.centerX,
         top: this.numberDisplay.bottom + options.buttonSpacing
@@ -194,7 +194,7 @@ define( function( require ) {
     showKeypad: function() {
       var self = this;
 
-      if( this.hasKeypadFocus ) {
+      if ( this.hasKeypadFocus ) {
         return;
       }
 

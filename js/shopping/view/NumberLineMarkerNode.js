@@ -126,13 +126,13 @@ define( function( require ) {
     checkEditable: function() {
 
       // non-editable/locked marker
-      if( !this.item.editableProperty.value ) {
+      if ( !this.item.editableProperty.value ) {
 
         var isCandy = this.item.isCandy(); // candy precision is treated differently than fruit & produce
         var countPrecision = this.item.getCountPrecision();
 
         // fractional counts have different visual represenation than whole counts.
-        if( ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) ) {
+        if ( ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) ) {
 
           // text/line color
           this.markerLine.stroke = PRECISION_TEXT_COLOR;
@@ -183,14 +183,14 @@ define( function( require ) {
         this.bottomNumberDisplay.showEditButton();
 
         // text color
-        if( this.item.costQnA.isAnswerValid() ) {
+        if ( this.item.costQnA.isAnswerValid() ) {
            this.topNumberDisplay.setTextColor( this.item.outOfRangeProperty.value ? RANGE_TEXT_COLOR : DEFAULT_TEXT_COLOR );
         }
         else {
           this.topNumberDisplay.setTextColor( TRANSPARENT_COLOR );
         }
 
-        if( this.item.unitQnA.isAnswerValid() ) {
+        if ( this.item.unitQnA.isAnswerValid() ) {
           this.bottomNumberDisplay.setTextColor( this.item.outOfRangeProperty.value ? RANGE_TEXT_COLOR : DEFAULT_TEXT_COLOR );
         }
         else {
@@ -202,10 +202,10 @@ define( function( require ) {
         this.bottomNumberDisplay.setBackgroundColor( EDIT_BG_COLOR );
 
         // border color
-        if( !this.topNumberDisplay.hasKeypadFocus ) {
+        if ( !this.topNumberDisplay.hasKeypadFocus ) {
           this.topNumberDisplay.setBorderColor( EDIT_BORDER_COLOR );
         }
-        if( !this.bottomNumberDisplay.hasKeypadFocus ) {
+        if ( !this.bottomNumberDisplay.hasKeypadFocus ) {
           this.bottomNumberDisplay.setBorderColor( EDIT_BORDER_COLOR );
         }
       }

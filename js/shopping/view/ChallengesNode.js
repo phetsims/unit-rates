@@ -164,7 +164,7 @@ define( function( require ) {
       } );
       this.contentNode.addChild( refreshButtonNode );
 
-      if( this.onPopulateCallback ) {
+      if ( this.onPopulateCallback ) {
         this.onPopulateCallback.call();
       }
     },
@@ -175,7 +175,7 @@ define( function( require ) {
     removeAllContent: function() {
       this.contentNode.getChildren().forEach( function( child ) {
         if ( child.dispose ) {
-          if( child instanceof RectangularPushButton ) {
+          if ( child instanceof RectangularPushButton ) {
             !assert && child.dispose();  // SUN buttons dispose fails when assertions are enabled - see sun/#212
           }
           else {

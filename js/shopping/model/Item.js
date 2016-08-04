@@ -56,7 +56,7 @@ define( function( require ) {
     setPosition: function( x, y, animate ) {
       var self = this;
 
-      if( animate ) {
+      if ( animate ) {
 
         var position = {
           x: this.positionProperty.value.x,

@@ -48,7 +48,7 @@ define( function( require ) {
     // @public (read-only) - all
     this.addProperty( 'outOfRange', false );
     this.addProperty( 'editable', ( count < 0 ) );
-    if( !this.editableProperty.value ) {
+    if ( !this.editableProperty.value ) {
       this.costQnA.valueProperty.value = correctCost;
       this.unitQnA.valueProperty.value = correctUnit;
     }
@@ -56,7 +56,7 @@ define( function( require ) {
     // Clear unit on incorrect cost answers
     this.costQnA.valueProperty.lazyLink( function( value, oldValue ) {
       var allCorrect = self.checkCorrectAnswers();
-      if( !allCorrect && value >= 0 ) {
+      if ( !allCorrect && value >= 0 ) {
         self.costQnA.answerValue = Number( value );
         self.unitQnA.answerValue = Util.toFixedNumber( ( value / self.rate ), 1 );
         self.unitQnA.valueProperty.set( Number( -1 ) );
@@ -67,7 +67,7 @@ define( function( require ) {
      // Clear cost on incorrect unit answers
     this.unitQnA.valueProperty.lazyLink( function( value, oldValue ) {
       var allCorrect = self.checkCorrectAnswers();
-      if( !allCorrect && value >= 0 ) {
+      if ( !allCorrect && value >= 0 ) {
         self.unitQnA.answerValue = Number( value );
         self.costQnA.answerValue = Util.toFixedNumber( ( value * self.rate ), 2 );
         self.costQnA.valueProperty.set( Number( -1 ) );
@@ -88,12 +88,12 @@ define( function( require ) {
 
       this.count = Number( -1 );
 
-      if( this.costQnA ) {
+      if ( this.costQnA ) {
         this.costQnA.answerValue = Number( 0 );
         this.costQnA.valueProperty.value = Number( 0 );
       }
 
-      if( this.unitQnA ) {
+      if ( this.unitQnA ) {
         this.unitQnA.answerValue = Number( 0 );
         this.unitQnA.valueProperty.value = Number( 0 );
       }
