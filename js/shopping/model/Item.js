@@ -89,7 +89,7 @@ define( function( require ) {
      * @public
      */
     isEqual: function( item ) {
-       return( item.type   === this.type   && item.rate  === this.rate &&
+       return ( item.type   === this.type   && item.rate  === this.rate &&
                item.weight === this.weight && item.count === this.count );
     },
 
@@ -99,7 +99,7 @@ define( function( require ) {
      * @public
      */
     isCandy: function() {
-      return( this.type === ItemData.RED_CANDY.type   || this.type === ItemData.YELLOW_CANDY.type ||
+      return ( this.type === ItemData.RED_CANDY.type   || this.type === ItemData.YELLOW_CANDY.type ||
               this.type === ItemData.GREEN_CANDY.type || this.type === ItemData.BLUE_CANDY.type );
     },
 

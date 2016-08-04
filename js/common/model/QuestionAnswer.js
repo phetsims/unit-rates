@@ -73,7 +73,7 @@ define( function( require ) {
      * @public
      */
     isAnswerValid: function() {
-      return( this.valueProperty.value >= 0 );
+      return ( this.valueProperty.value >= 0 );
     },
 
     /**
@@ -82,7 +82,7 @@ define( function( require ) {
      * @public
      */
     isAnswerCorrect: function() {
-      return( Number( this.answerValue ) === Number( this.valueProperty.value ) );
+      return ( Number( this.answerValue ) === Number( this.valueProperty.value ) );
     },
 
     /**
