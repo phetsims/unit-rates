@@ -126,7 +126,7 @@ define( function( require ) {
 
       var e = 1;
       var p = 0;
-      while ( Math.round( this.count * e ) / e !== this.count ) {
+      while ( Util.roundSymmetric( this.count * e ) / e !== this.count ) {
         e *= 10; p++;
       }
       return p;
