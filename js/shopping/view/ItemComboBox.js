@@ -102,7 +102,7 @@ define( function( require ) {
         );
         break;
       default:
-        assert && assert( true, 'Combo box using unrecognized type' );
+        assert && assert( false, 'Combo box using unrecognized type' );
     }
 
     assert && assert( items.length > 0, 'Item list is empty' );
@@ -132,7 +132,7 @@ define( function( require ) {
           console.log( 'Scene candy' );
           break;
       default:
-        assert && assert( true, 'Combo box using unrecognized scene' );
+        assert && assert( false, 'Combo box using unrecognized scene' );
       }
 
     },

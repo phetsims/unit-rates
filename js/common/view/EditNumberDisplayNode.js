@@ -105,7 +105,7 @@ define( function( require ) {
       }, editButtonOptions );
     }
     else {
-      assert && assert( true, 'invalid buttonPosition for EditNumberDisplayNode' );
+      assert && assert( false, 'invalid buttonPosition for EditNumberDisplayNode' );
     }
 
     // @protected

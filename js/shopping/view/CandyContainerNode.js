@@ -142,7 +142,7 @@ define( function( require ) {
             itemColor = BLUE_CANDY_COLOR;
             break;
           default:
-            assert && assert( true, 'Candy container is populating non-candy types' );
+            assert && assert( false, 'Candy container is populating non-candy types' );
       }
       this.candyTopNode.fill  = itemColor;
       this.candyBodyNode.fill = itemColor;

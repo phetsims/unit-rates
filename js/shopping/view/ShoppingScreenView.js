@@ -227,7 +227,7 @@ define( function( require ) {
           this.candyItemsComboBox.visible   = true;
           break;
         default:
-          assert && assert( true, 'Unrecognized scene' );
+          assert && assert( false, 'Unrecognized scene' );
       }
     },
 
@@ -256,7 +256,7 @@ define( function( require ) {
             this.model.itemData = candyItemData;
           break;
         default:
-          assert && assert( true, 'Unrecognized scene' );
+          assert && assert( false, 'Unrecognized scene' );
       }
 
       this.model.addChallengeItemsToNumberline();

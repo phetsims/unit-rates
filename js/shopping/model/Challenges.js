@@ -307,7 +307,7 @@ define( function( require ) {
           case ItemData.GREEN_CANDY.type:
           case ItemData.BLUE_CANDY.type:
           default:
-            assert && assert( true, 'no name available for item type' );
+            assert && assert( false, 'no name available for item type' );
         }
 
       return name;

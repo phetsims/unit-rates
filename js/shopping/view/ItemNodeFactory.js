@@ -83,7 +83,7 @@ define( function( require ) {
             imageNode = this.createBlueCandy( size, options );
             break;
           default:
-            assert && assert( true, 'Node factory cannot create item of unrecognized type' );
+            assert && assert( false, 'Node factory cannot create item of unrecognized type' );
         }
 
         assert && assert( imageNode !== null, 'Unable to create item node of type:' + item.type );

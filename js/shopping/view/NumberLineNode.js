@@ -133,7 +133,7 @@ define( function( require ) {
             self.setLineLabels( costCurrencyString, weightUnitString );
             break;
           default:
-            assert && assert( true, 'Number line using unrecognized type' );
+            assert && assert( false, 'Number line using unrecognized type' );
         }
 
         self.populate();
