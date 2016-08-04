@@ -18,13 +18,13 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Random = require( 'DOT/Random' );
 
   // constants
-  var BACK_DEPTH  = 35;
-  var BACK_OFFSET = 0.15;
-  var SHELF_SIZE  = new Dimension2( 340, 20 );
-  var RAND        = new Random();
+  var BACK_DEPTH      = 35;
+  var BACK_OFFSET     = 0.15;
+  var SHELF_SIZE      = new Dimension2( 340, 20 );
+  var NODE_X_SPACING  = 2;
+  var NODE_Y_SPACING  = 5;
 
   /**
    * @param {Shelf} shelf - model
@@ -70,15 +70,15 @@ define( function( require ) {
       .lineTo( SHELF_SIZE.width, 0);
 
     // @private
-    this.shelfDropNode = new Path( new Shape()
-        .rect( this.backEdgeMinX, ( -BACK_DEPTH * 1.25 ), ( this.backEdgeMaxX - this.backEdgeMinX), ( BACK_DEPTH * 0.6 ) ), {
+    this.dropNode = new Path( new Shape()
+        .rect( this.backEdgeMinX, ( -BACK_DEPTH ), ( this.backEdgeMaxX - this.backEdgeMinX), BACK_DEPTH ), {
       //fill: 'rgba(255,255,0,0.5)', // uncomment to see drop zone
       lineWidth: 0,
       pickable: false
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ this.topNode, new Path( frontShape, pathOptions ), this.shelfDropNode ];
+    options.children = [ this.topNode, new Path( frontShape, pathOptions ), this.dropNode ];
 
     // refresh on item change
     shelf.itemDataProperty.lazyLink( function( itemData, oldItemData ) {
@@ -106,33 +106,34 @@ define( function( require ) {
     },
 
     /**
-     * Returns a point on the shelf which is close to the specified point. The return point is randomly jittered
-     * a bit so that multiple calls do not cause nodes to perfectly overlap.
-     * @param {Vector2} point
+     * Adjusts item nodes bottom center coordinate to be on the top of the shelf all the time.
      * @public
-     * @return {Vector2}
      */
-    getClosePoint: function( point ) {
+    adjustItemPositions: function( animate ) {
 
-      var globalDropBounds = this.shelfDropNode.getGlobalBounds();
+      var globalDropBounds = this.dropNode.getGlobalBounds();
       var localDropBounds  = this.itemLayer.globalToParentBounds( globalDropBounds );
-      var closestPoint     = localDropBounds.closestPointTo( point );
 
-      // don't pile items up on the edges - randomly distribute X positions
-      var jitterX = 0;
-      if( closestPoint.x === localDropBounds.minX ) {
-        jitterX = RAND.random() * localDropBounds.width / 3;
-      }
-      if( closestPoint.x === localDropBounds.maxX ) {
-        jitterX = -RAND.random() * localDropBounds.width / 3;
-      }
+      // get the current array for the item type
+      var itemArray = this.shelf.getItemsWithType( this.shelf.itemDataProperty.value.type );
 
-      // jitter the closest positions a bit
-      var jitterY = ( ( RAND.random() - 0.5 ) * ShoppingConstants.ITEM_SIZE / 3 );
-      closestPoint.x += jitterX;
-      closestPoint.y = localDropBounds.centerY + jitterY;
+      var nodeX = localDropBounds.minX;
+      var nodeY = localDropBounds.centerY - NODE_Y_SPACING;
 
-      return closestPoint;
+      // layout the nodes so they're not hidden behind one another.
+      this.itemLayer.getChildren().forEach( function( itemNode ) {
+
+        if ( itemArray.contains( itemNode.item ) ) {
+          var x = nodeX + NODE_X_SPACING;
+          var y = nodeY - ( itemNode.height / 2 ) + NODE_Y_SPACING;
+          itemNode.item.setPosition( x, y, animate ); // positions are item center
+          nodeX += itemNode.width + NODE_X_SPACING;
+          if( nodeX >= localDropBounds.maxX ) {
+            nodeX = localDropBounds.minX + itemNode.width / 2 + NODE_X_SPACING;
+            nodeY += itemNode.height / 2 - NODE_Y_SPACING;
+          }
+        }
+      } );
     },
 
     /**
@@ -143,15 +144,10 @@ define( function( require ) {
 
       var self = this;
 
-      var globalDropBounds = this.topNode.getGlobalBounds();
-      var bounds = this.itemLayer.globalToParentBounds( globalDropBounds );
-
       // get the current array for the item type
       var itemArray = this.shelf.getItemsWithType( this.shelf.itemDataProperty.value.type );
 
       // create nodes for all items of type
-      var initialX = bounds.minX + self.backEdgeMinX;
-      var initialY = bounds.minY;
       itemArray.forEach( function( item ) {
 
         var position = item.positionProperty.value;
@@ -159,16 +155,11 @@ define( function( require ) {
         // create new item node
         var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, null, self.itemMovedCallback );
 
-        // init position - create a random position on the shelf
-        if(position.x === 0 && position.y === 0) {
-          item.setPosition( initialX, initialY, false );
-        }
-
-        // add to the screen for layering purposes
+        // add to the screen item layer
         self.itemLayer.addChild( itemNode );
-
-        initialX += itemNode.width + 2;
       } );
+
+      this.adjustItemPositions( false );
     },
 
     /**

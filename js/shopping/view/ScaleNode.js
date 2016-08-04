@@ -22,7 +22,6 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Panel = require( 'SUN/Panel' );
   var Util = require( 'DOT/Util' );
-  var Random = require( 'DOT/Random' );
   var Dimension2 = require( 'DOT/Dimension2' );
 
   // images
@@ -31,11 +30,12 @@ define( function( require ) {
   // constants
   var DROP_ZONE_X_SCALE     = 1.05;                     // How much bigger the drop zone width is from the image
   var DROP_ZONE_Y_SCALE     = 2.25;                     // How much bigger the drop zone height is from the image
+  var NODE_X_SPACING        = 3;
+  var NODE_Y_SPACING        = 10;
   var DISPLAY_BOTTOM_OFFSET = 32;
   var DISPLAY_SPACING       = 10;                       // space beteen mutliple displays
   var DISPLAY_FONT          = new PhetFont( 20 );
   var DISPLAY_SIZE          = new Dimension2( 70, 40 );
-  var RAND                  = new Random();
 
   // strings
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
@@ -77,7 +77,7 @@ define( function( require ) {
     var dropWidth  = this.scaleNode.width  * DROP_ZONE_X_SCALE;
     var dropHeight = this.scaleNode.height * DROP_ZONE_Y_SCALE;
     // @private
-    this.scaleDropNode = new Path( new Shape()
+    this.dropNode = new Path( new Shape()
         .rect( this.scaleNode.left - ( dropWidth  - this.scaleNode.width ) / 2,
                this.scaleNode.top  - ( dropHeight - this.scaleNode.height ),
                dropWidth, dropHeight - DISPLAY_BOTTOM_OFFSET ), {
@@ -130,7 +130,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ this.scaleNode, this.scaleTopNode, this.scaleDropNode, this.costDisplayNode, this.weightDisplayNode ];
+    options.children = [ this.scaleNode, this.scaleTopNode, this.dropNode, this.costDisplayNode, this.weightDisplayNode ];
 
     Node.call( this, options );
 
@@ -189,43 +189,36 @@ define( function( require ) {
      */
     intersectsDropArea: function( bounds ) {
       var scaleBounds = this.parentToLocalBounds( bounds );
-      return ( this.scaleDropNode.intersectsBoundsSelf( scaleBounds ) ||
-               this.scaleDropNode.bounds.containsBounds( scaleBounds ) );
+      return ( this.dropNode.intersectsBoundsSelf( scaleBounds ) ||
+               this.dropNode.bounds.containsBounds( scaleBounds ) );
     },
 
     /**
-     * Adjusts item nodes bottom center coordinate to be on the top of the scale all the time.
+     * Adjusts item nodes bottom center coordinate to be on the top of the shelf all the time.
      * @public
      */
-     adjustItemPositions: function() {
+    adjustItemPositions: function( animate ) {
 
       var globalDropBounds = this.scaleTopNode.getGlobalBounds();
-      var localDropBounds = this.itemLayer.globalToParentBounds( globalDropBounds );
+      var localDropBounds  = this.itemLayer.globalToParentBounds( globalDropBounds );
 
       // get the current array for the item type
       var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
 
-      // Make sure bottoms of all itemNodes are on the scale
+      var nodeX = localDropBounds.minX + NODE_X_SPACING;
+      var nodeY = localDropBounds.centerY - NODE_Y_SPACING;
+
+      // layout the nodes so they're not hidden behind one another.
       this.itemLayer.getChildren().forEach( function( itemNode ) {
 
         if ( itemArray.contains( itemNode.item ) ) {
-          var x = itemNode.item.positionProperty.value.x;
-          var y = itemNode.item.positionProperty.value.y;
-
-          if( x < localDropBounds.minX ) {
-            x = localDropBounds.minX + itemNode.width / 2;
-          }
-          else if( x > localDropBounds.maxX ) {
-            x = localDropBounds.maxX - itemNode.width / 2;
-          }
-
-          var bottomY = y + itemNode.height / 2;
-          if( bottomY < localDropBounds.minY || bottomY > localDropBounds.maxY ) {
-              y  = localDropBounds.centerY - itemNode.height / 2;
-          }
-
-          if( x !== itemNode.item.positionProperty.value.x || y !== itemNode.item.positionProperty.value.y ) {
-            itemNode.item.setPosition( x, y, true );
+          var x = nodeX + NODE_X_SPACING;
+          var y = nodeY - ( itemNode.height / 2 ) + NODE_Y_SPACING;
+          itemNode.item.setPosition( x, y, animate ); // positions are item center
+          nodeX += itemNode.width + NODE_X_SPACING;
+          if( nodeX >= localDropBounds.maxX ) {
+            nodeX = localDropBounds.minX + itemNode.width / 2 + NODE_X_SPACING;
+            nodeY += itemNode.height / 2 - NODE_Y_SPACING;
           }
         }
       } );
@@ -242,33 +235,40 @@ define( function( require ) {
       // get the current array for the item type
       var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
 
-      // calc the drop zone center (for positioning new items)
-      var topCenter = this.scaleTopNode.getGlobalBounds().getCenter();
-      var layerDropCenter = this.itemLayer.globalToParentPoint( topCenter );
+      // checks the item layer to see if there is already a node for the item
+      // @param {Item}
+      // @returns {boolean}
+      function itemNodeExists( item ) {
+        var exists = false;
+
+        var itemNodeArray = self.itemLayer.getChildren();
+
+        for (var i = 0; i < itemNodeArray.length; i++) {
+          if( itemNodeArray[i].item === item ) {
+            exists = true;
+            break;
+          }
+        }
+        return exists;
+      }
 
       // create nodes for all items of type (fruit | produce)
       itemArray.forEach( function( item ) {
 
-        var position = item.positionProperty.value;
+        // only populate/create nodes for new items
+        if ( !itemNodeExists( item ) ) {
 
-        // create new item node
-        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, null, self.itemMovedCallback );
+          var position = item.positionProperty.value;
 
-        // initial position - create a random position on the shelf
-        if(position.x === 0 && position.y === 0) {
+          // create new item node
+          var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, null, self.itemMovedCallback );
 
-          // jitter the initial positions a bit
-          var jitterX =  ( ( RAND.random() - 0.5 ) * ( self.scaleTopNode.width * 0.8 ) );
-          var jitterY =  ( ( RAND.random() - 0.5 ) * ( self.scaleTopNode.height * 0.25 ) );
-          var x = layerDropCenter.x + jitterX;
-          var y = layerDropCenter.y + jitterY - itemNode.height / 2;
-          item.setPosition( x, y, false );
+          // add to the screen layer for correct rendering
+          self.itemLayer.addChild( itemNode );
         }
-
-        // add to the screen layer for correct rendering
-        self.itemLayer.addChild( itemNode );
       } );
 
+      this.adjustItemPositions( false );
     },
 
     /**

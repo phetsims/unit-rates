@@ -38,6 +38,7 @@ define( function( require ) {
   /**
    * @param {NumberLineItem} item
    * @param {Vector2} position - x,y position on the number line
+   * @param {KeypadPanelNode} keypad - shared keypad
    * @param {Object} [options]
    * @constructor
    */

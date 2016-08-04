@@ -286,7 +286,7 @@ define( function( require ) {
         // Fruit bags should be expanded
         if( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) {
 
-          // remove the bag node
+          // remove the bag node & children nodes
           this.itemsLayer.removeChild( itemNode );
           itemNode.dispose();
 
@@ -294,21 +294,22 @@ define( function( require ) {
           this.scaleNode.populate();
         }
 
-        // make sure bottom of items are actually on the scale
-        this.scaleNode.adjustItemPositions();
+        // make sure items are stacked on the scale
+        this.scaleNode.adjustItemPositions( true );
 
         // populate number line
         this.numberLineNode.populate();
       }
-      else { //if ( !this.shelfNode.intersectsDropArea( itemNode.bounds ) ) {
+      else {
 
-        // Item has not been moved to the scale, place it back on the shelf.
-        var point = this.shelfNode.getClosePoint( itemNode.item.position );
-        itemNode.item.setPosition( point.x, point.y, true );
-
-        // Move back to the shelf
+        // Move item back to the shelf
         this.model.addScaleItemToShelf( itemNode.item );
+
+        // Update the number line
         this.model.addScaleItemsToNumberline();
+
+        // make sure items are stacked on the scale
+        this.shelfNode.adjustItemPositions( true );
       }
     },
 
