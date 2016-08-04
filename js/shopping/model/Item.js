@@ -67,12 +67,12 @@ define( function( require ) {
           to( {
             x: x,
             y: y
-          }, 1000 ).
-          easing( TWEEN.Easing.Cubic.Out ).
-          onUpdate( function() {
+          }, 1000 )
+          .easing( TWEEN.Easing.Cubic.Out )
+          .onUpdate( function() {
             self.setPosition( position.x, position.y, false );
-          } ).
-          onComplete( function() {
+          } )
+          .onComplete( function() {
           } );
 
         animationTween.start();
