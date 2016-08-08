@@ -58,8 +58,9 @@ define( function( require ) {
     this.backgroundColor  = options.backgroundColor;
     this.focusBorderColor = options.focusBorderColor;
 
-    //  NumberDisplay options
+    // NumberDisplay options
     var numberDisplayOptions = {
+      valuePattern: pattern,
       font: options.font,
       xMargin: 2,
       yMargin: 2,
@@ -71,7 +72,7 @@ define( function( require ) {
       pickable: false
     };
     // @protected
-    this.numberDisplay = new NumberDisplay( valueProperty, options.numberRange, '', pattern, numberDisplayOptions );
+    this.numberDisplay = new NumberDisplay( valueProperty, options.numberRange, numberDisplayOptions );
 
     var editButtonOptions = {
       content: new Image( editButtonImage, { scale: 0.2 } ),
