@@ -22,6 +22,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Panel = require( 'SUN/Panel' );
   var Util = require( 'DOT/Util' );
+  var Vector2 = require( 'DOT/Vector2' );
   var Dimension2 = require( 'DOT/Dimension2' );
 
   // images
@@ -30,8 +31,8 @@ define( function( require ) {
   // constants
   var DROP_ZONE_X_SCALE     = 1.05;                     // How much bigger the drop zone width is from the image
   var DROP_ZONE_Y_SCALE     = 2.25;                     // How much bigger the drop zone height is from the image
-  var NODE_X_SPACING        = 3;
-  var NODE_Y_SPACING        = 10;
+  var NODE_X_SPACING        = 1;
+  var NODE_Y_SPACING        = 3;
   var DISPLAY_BOTTOM_OFFSET = 32;
   var DISPLAY_SPACING       = 10;                       // space beteen mutliple displays
   var DISPLAY_FONT          = new PhetFont( 20 );
@@ -45,20 +46,21 @@ define( function( require ) {
    *
    * @param {Scale} scale - model
    * @param {Node} itemLayer - a container node which holds the item nodes. Used here for local posiitoning of items
-   * @param (function} itemMovedCallback - function called when item drag ends
+   * @param (function} startMoveCallback - function called when item drag starts
+   * @param (function} endMoveCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
-  function ScaleNode( scale, itemLayer, itemMovedCallback, options ) {
+  function ScaleNode( scale, itemLayer, startMoveCallback, endMoveCallback, options ) {
 
     options = options || {};
 
     var self = this;
 
-    this.scale = scale;
-    this.itemLayer = itemLayer;
-    this.itemMovedCallback = itemMovedCallback;
-    this.typeIsCandy = false;
+    this.scale              = scale;
+    this.itemLayer          = itemLayer;
+    this.startMoveCallback  = startMoveCallback;
+    this.endMoveCallback    = endMoveCallback;
 
     // load the scale image
     this.scaleNode = new Image( scaleImage, { pickable: true } );
@@ -67,7 +69,7 @@ define( function( require ) {
     // @private
     this.scaleTopNode = new Path( new Shape()
        .ellipse( this.scaleNode.centerX, this.scaleNode.top + 12,
-        this.scaleNode.width * 0.47, this.scaleNode.height * 0.13, 0 ), {
+        this.scaleNode.width * 0.4, this.scaleNode.height * 0.1, 0 ), {
       //fill: 'rgba(0,255,0,0.5)', // uncomment to see top zone
       lineWidth: 0,
       pickable: false
@@ -107,16 +109,17 @@ define( function( require ) {
       centerY: this.scaleNode.bottom - DISPLAY_BOTTOM_OFFSET
     } );
 
+    assert && assert( !options.children, 'additional children not supported' );
+    options.children = [ this.scaleNode, this.scaleTopNode, this.dropNode, this.costDisplayNode, this.weightDisplayNode ];
+
+    Node.call( this, options );
+
     // refresh on item change
     scale.itemDataProperty.link( function( data, oldData ) {
 
-      // Check data type
-      self.typeIsCandy = ( data.type === ItemData.RED_CANDY.type  || data.type === ItemData.YELLOW_CANDY.type ||
-                           data.type === ItemData.GREEN_CANDY.type || data.type === ItemData.BLUE_CANDY.type );
-
-      // Show/hide candy specific UI elements
-      //self.candyContainer.visible    = self.typeIsCandy;
-      self.weightDisplayNode.visible = self.typeIsCandy;
+      // show/hide weight display
+      self.weightDisplayNode.visible = ( data.type === ItemData.RED_CANDY.type   || data.type === ItemData.YELLOW_CANDY.type ||
+                                         data.type === ItemData.GREEN_CANDY.type || data.type === ItemData.BLUE_CANDY.type );
 
       // move cost display
       if ( self.weightDisplayNode.visible ) {
@@ -126,14 +129,41 @@ define( function( require ) {
         self.costDisplayNode.centerX = self.costOnlyDisplayX;
       }
 
+      // pre-calc all available item locations
+      var itemType = self.scale.itemDataProperty.value.type;
+
+      var isFruit = ( itemType === ItemData.APPLES.type  || itemType === ItemData.LEMONS.type ||
+                      itemType === ItemData.ORANGES.type || itemType === ItemData.PEARS.type );
+      var itemSize = ( isFruit ? ShoppingConstants.ITEM_SIZE : ShoppingConstants.ITEM_SIZE * 2 );
+
+      // pre-compute stacked item positions
+      var globalDropBounds = self.scaleTopNode.getGlobalBounds();
+      var localDropBounds  = self.itemLayer.globalToParentBounds( globalDropBounds );
+      var itemX = localDropBounds.minX + NODE_X_SPACING;
+      var itemY = localDropBounds.centerY - itemSize / 2 + NODE_Y_SPACING;
+
+      // save pre-colmputed staked positions (array of Vector2)
+      self.stackedPositions = [];
+
+      // save the Y coordinate for moving higher items to lower positions
+      self.stackedYPositions = [ itemY ];
+
+      for (var i = 0; i < ShoppingConstants.MAX_ITEMS-1; i++) {
+
+        self.stackedPositions.push( new Vector2( itemX, itemY ) );
+
+        itemX += itemSize + NODE_X_SPACING;
+
+        if ( itemX >= localDropBounds.maxX ) {
+          itemX = localDropBounds.minX + itemSize / 2 + NODE_X_SPACING;
+          itemY -= itemSize - NODE_Y_SPACING;
+
+          self.stackedYPositions.push( itemY );
+        }
+      }
+
       self.populate();
     } );
-
-    assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ this.scaleNode, this.scaleTopNode, this.dropNode, this.costDisplayNode, this.weightDisplayNode ];
-
-    Node.call( this, options );
-
   }
 
   /**
@@ -194,34 +224,80 @@ define( function( require ) {
     },
 
     /**
-     * Adjusts item nodes bottom center coordinate to be on the top of the shelf all the time.
+     * Moves any out of place nodes back into a stacked position.
      * @public
      */
     adjustItemPositions: function( animate ) {
-
-      var globalDropBounds = this.scaleTopNode.getGlobalBounds();
-      var localDropBounds  = this.itemLayer.globalToParentBounds( globalDropBounds );
+      var self = this;
 
       // get the current array for the item type
       var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
 
-      var nodeX = localDropBounds.minX + NODE_X_SPACING;
-      var nodeY = localDropBounds.centerY - NODE_Y_SPACING;
+      var allNodes = [];
+      var updateNodes = [];
+      var availablePositions = self.stackedPositions.slice( 0 );
 
-      // layout the nodes so they're not hidden behind one another.
+      // Filter out nodes that need to be repositioned, at the sme time figure out the available positions in the stack.
       this.itemLayer.getChildren().forEach( function( itemNode ) {
 
         if ( itemArray.contains( itemNode.item ) ) {
-          var x = nodeX + NODE_X_SPACING;
-          var y = nodeY - ( itemNode.height / 2 ) + NODE_Y_SPACING;
-          itemNode.item.setPosition( x, y, animate ); // positions are item center
-          nodeX += itemNode.width + NODE_X_SPACING;
-          if ( nodeX >= localDropBounds.maxX ) {
-            nodeX = localDropBounds.minX + itemNode.width / 2 + NODE_X_SPACING;
-            nodeY += itemNode.height / 2 - NODE_Y_SPACING;
+
+          allNodes.push( itemNode );
+
+          // check if the node is in a correct position
+          var index = availablePositions.findIndex( function( element, index, array ) {
+              return element.equals( itemNode.item.position );
+            }, this );
+
+          if ( index < 0 ) {
+            // not in correct position, add the node to the update list
+            updateNodes.push( itemNode );
+          }
+          else {
+            // in correct position, remove this position from the available list
+            availablePositions.splice( index, 1 );
           }
         }
       } );
+
+      // reposition those nodes not stacked correctly - these will automatically go to the bottom first
+      updateNodes.forEach( function( itemNode ) {
+        if ( availablePositions.length ) {
+          var position = availablePositions.shift();
+          itemNode.item.setPosition( position.x, position.y, animate );
+        }
+      } );
+
+      // now move higher nodes to lower positions - for every open bottom spot see if there's a nearby node to fill it
+      for (var i = 0; i < availablePositions.length; i++) {
+
+        var position = availablePositions[i];
+
+        // only consider bottom positions
+        if( position.y !== self.stackedYPositions[0] ) {
+          continue;
+        }
+
+        for (var j = 0; j < allNodes.length; j++) {
+          var itemNode = allNodes[j];
+
+          // only consider nodes that are not on teh bottom
+          if( Util.roundSymmetric( itemNode.item.position.y ) < self.stackedYPositions[0] ) {
+
+
+          var nodeDistance = itemNode.item.position.distance( position );
+          if ( nodeDistance < 1.5 * ShoppingConstants.ITEM_SIZE) {
+            // move the node
+            itemNode.item.setPosition( position.x, position.y, animate );
+
+            // remove the position from the availble list
+            availablePositions.splice( i, 1);
+            break;
+          }
+          }
+
+        }
+      }
     },
 
     /**
@@ -258,10 +334,9 @@ define( function( require ) {
         // only populate/create nodes for new items
         if ( !itemNodeExists( item ) ) {
 
-          var position = item.positionProperty.value;
-
           // create new item node
-          var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, null, self.itemMovedCallback );
+          var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, new Vector2( 0, 0 ),
+                                                     self.startMoveCallback, self.endMoveCallback );
 
           // add to the screen layer for correct rendering
           self.itemLayer.addChild( itemNode );

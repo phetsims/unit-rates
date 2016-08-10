@@ -91,14 +91,16 @@ define( function( require ) {
     this.addChild( this.itemsLayer );
 
     // shelf
-    this.shelfNode = new ShelfNode( model.shelf, this.itemsLayer, this.updateItem.bind( this ), {
+    this.shelfNode = new ShelfNode( model.shelf, this.itemsLayer,
+                                    this.startUpdateItem.bind( this ), this.endUpdateItem.bind( this ), {
       centerX: this.numberLineNode.centerX + 15,
       bottom:  this.layoutBounds.bottom - SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( this.shelfNode );
 
     // scale
-    this.scaleNode = new ScaleNode( model.scale, this.itemsLayer, this.updateItem.bind( this ) , {
+    this.scaleNode = new ScaleNode( model.scale, this.itemsLayer,
+                                    this.startUpdateItem.bind( this ), this.endUpdateItem.bind( this ) , {
       centerX: this.shelfNode.centerX,
       bottom:  this.shelfNode.top - 75
     } );
@@ -264,7 +266,7 @@ define( function( require ) {
       // This fixes an issue with items hanging in space when the item type selection changes. (see. issue #21, #18)
       var self = this;
       this.itemsLayer.getChildren().forEach( function( child ) {
-        self.updateItem( child );
+        self.endUpdateItem( child );
       } );
     },
 
@@ -274,7 +276,21 @@ define( function( require ) {
      * @param {Node} itemNode - the item being moved.
      * @private
      */
-    updateItem: function( itemNode ) {
+    startUpdateItem: function( itemNode ) {
+      // Move item back to the shelf
+      this.model.addScaleItemToShelf( itemNode.item );
+      this.scaleNode.adjustItemPositions( true );
+    },
+
+    /*
+     * Updates the model based on where the item is on on the screen - i.e. on the scale or shelf or in no-man's land.
+     * Called on scene changes or when an item's node (i.e. individual items or bags) is moved to a new location
+     * @param {Node} itemNode - the item being moved.
+     * @private
+     */
+    endUpdateItem: function( itemNode ) {
+
+      var animate = true;
 
       // Check node position - on scale, shelf or in no-man's land
       if ( this.scaleNode.intersectsDropArea( itemNode.bounds ) ) {
@@ -292,10 +308,12 @@ define( function( require ) {
 
           // populate new scale items
           this.scaleNode.populate();
+
+          animate = false;
         }
 
         // make sure items are stacked on the scale
-        this.scaleNode.adjustItemPositions( true );
+        this.scaleNode.adjustItemPositions( animate );
 
         // populate number line
         this.numberLineNode.populate();
@@ -309,7 +327,10 @@ define( function( require ) {
         this.model.addScaleItemsToNumberline();
 
         // make sure items are stacked on the scale
-        this.shelfNode.adjustItemPositions( true );
+        this.scaleNode.adjustItemPositions( animate );
+
+        // make sure items are stacked on the scale
+        this.shelfNode.adjustItemPositions( animate );
       }
     },
 

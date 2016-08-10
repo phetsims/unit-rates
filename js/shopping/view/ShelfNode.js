@@ -29,11 +29,12 @@ define( function( require ) {
   /**
    * @param {Shelf} shelf - model
    * @param {Node} itemLayer - a container node which holds the item nodes. Used here for local posiitoning of items
-   * @param (function} itemMovedCallback - function called when item drag ends
+   * @param (function} startMoveCallback - function called when item drag starts
+   * @param (function} endMoveCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
-  function ShelfNode( shelf, itemLayer, itemMovedCallback, options ) {
+  function ShelfNode( shelf, itemLayer, startMoveCallback, endMoveCallback, options ) {
 
     options = options || {};
 
@@ -41,7 +42,8 @@ define( function( require ) {
 
     this.shelf = shelf;
     this.itemLayer = itemLayer;
-    this.itemMovedCallback = itemMovedCallback;
+    this.startMoveCallback = startMoveCallback;
+    this.endMoveCallback = endMoveCallback;
 
     var pathOptions = {
       fill: 'white',
@@ -153,7 +155,7 @@ define( function( require ) {
         var position = item.positionProperty.value;
 
         // create new item node
-        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, null, self.itemMovedCallback );
+        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, self.startMoveCallback, self.endMoveCallback );
 
         // add to the screen item layer
         self.itemLayer.addChild( itemNode );

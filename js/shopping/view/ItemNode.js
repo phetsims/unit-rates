@@ -136,7 +136,7 @@ define( function( require ) {
 
       // remove start drag emitter listener
       if ( this.moveStartCallback ) {
-        this.dragEndEmitter.removeListener( this.moveStartCallback );
+        this.dragStartEmitter.removeListener( this.moveStartCallback );
       }
 
       // remove end drag emitter listener
