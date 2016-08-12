@@ -24,7 +24,7 @@ define( function( require ) {
   var CONTAINER_LINE_DASH = [ 5, 5 ];
   var CONTAINER_FILL = 'rgba( 255, 255, 255, .75 )';
   var RED_CANDY_COLOR = 'red';
-  var YELLOW_CANDY_COLOR = 'yellow';
+  var PURPLE_CANDY_COLOR = 'yellow';
   var GREEN_CANDY_COLOR = 'green';
   var BLUE_CANDY_COLOR = 'blue';
   var PERSPECTIVE_RADIUS = 0.10;
@@ -132,8 +132,8 @@ define( function( require ) {
           case ItemData.RED_CANDY.type:
             itemColor = RED_CANDY_COLOR;
             break;
-          case ItemData.YELLOW_CANDY.type:
-            itemColor = YELLOW_CANDY_COLOR;
+          case ItemData.PURPLE_CANDY.type:
+            itemColor = PURPLE_CANDY_COLOR;
             break;
           case ItemData.GREEN_CANDY.type:
             itemColor = GREEN_CANDY_COLOR;

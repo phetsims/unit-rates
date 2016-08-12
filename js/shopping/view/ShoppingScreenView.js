@@ -54,7 +54,7 @@ define( function( require ) {
     this.sceneModeProperty       = new Property( SceneMode.FRUIT );
     this.fruitItemDataProperty   = new Property( ItemData.APPLES );
     this.produceItemDataProperty = new Property( ItemData.CARROTS );
-    this.candyItemDataProperty   = new Property( ItemData.RED_CANDY );
+    this.candyItemDataProperty   = new Property( ItemData.PURPLE_CANDY );
 
     // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {

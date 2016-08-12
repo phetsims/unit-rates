@@ -113,7 +113,7 @@ define( function( require ) {
             this.createItem( itemData, 5 );
             this.createItem( itemData, 5 );
           break;
-          case ItemData.YELLOW_CANDY.type:
+          case ItemData.PURPLE_CANDY.type:
             this.createItem( itemData, 5 );
             this.createItem( itemData, 5 );
             this.createItem( itemData, 5 );

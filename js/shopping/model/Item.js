@@ -99,7 +99,7 @@ define( function( require ) {
      * @public
      */
     isCandy: function() {
-      return ( this.type === ItemData.RED_CANDY.type   || this.type === ItemData.YELLOW_CANDY.type ||
+      return ( this.type === ItemData.RED_CANDY.type   || this.type === ItemData.PURPLE_CANDY.type ||
               this.type === ItemData.GREEN_CANDY.type || this.type === ItemData.BLUE_CANDY.type );
     },
 

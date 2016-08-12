@@ -123,7 +123,7 @@ define( function( require ) {
           case ItemData.RED_CANDY.type:
             self.setLineLabels( costCurrencyString, weightUnitString );
             break;
-          case ItemData.YELLOW_CANDY.type:
+          case ItemData.PURPLE_CANDY.type:
             self.setLineLabels( costCurrencyString, weightUnitString );
             break;
           case ItemData.GREEN_CANDY.type:

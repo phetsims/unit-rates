@@ -16,297 +16,130 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var Vector2 = require( 'DOT/Vector2' );
   var Random = require( 'DOT/Random' );
 
   // contants
   var RAND = new Random();
+  var BACKGROUND_COLOR = 'rgba(0,0,0,0)';
 
+  // images
+  var appleImage        = require( 'image!UNIT_RATES/apple.png' );
+  var lemonImage        = require( 'image!UNIT_RATES/lemon.png' );
+  var orangeImage       = require( 'image!UNIT_RATES/orange.png' );
+  var pearImage         = require( 'image!UNIT_RATES/pear.png' );
+  var carrotImage       = require( 'image!UNIT_RATES/carrot.png' );
+  var cucumberImage     = require( 'image!UNIT_RATES/cucumber.png' );
+  var potatoImage       = require( 'image!UNIT_RATES/potato.png' );
+  var tomatoImage       = require( 'image!UNIT_RATES/tomato.png' );
+  var blueCandyImage    = require( 'image!UNIT_RATES/blue_candy.png' );
+  var greenCandyImage   = require( 'image!UNIT_RATES/green_candy.png' );
+  var purpleCandyImage  = require( 'image!UNIT_RATES/purple_candy.png' );
+  var redCandyImage     = require( 'image!UNIT_RATES/red_candy.png' );
+
+  var appleBagImage        = require( 'image!UNIT_RATES/apple_bag.png' );
+  var lemonBagImage        = require( 'image!UNIT_RATES/lemon_bag.png' );
+  var orangeBagImage       = require( 'image!UNIT_RATES/orange_bag.png' );
+  var pearBagImage         = require( 'image!UNIT_RATES/pear_bag.png' );
+  var carrotBagImage       = require( 'image!UNIT_RATES/carrot_bag.png' );
+  var cucumberBagImage     = require( 'image!UNIT_RATES/cucumber_bag.png' );
+  var potatoBagImage       = require( 'image!UNIT_RATES/potato_bag.png' );
+  var tomatoBagImage       = require( 'image!UNIT_RATES/tomato_bag.png' );
+  var blueCandyBagImage    = require( 'image!UNIT_RATES/blue_candy_bag.png' );
+  var greenCandyBagImage   = require( 'image!UNIT_RATES/green_candy_bag.png' );
+  var purpleCandyBagImage  = require( 'image!UNIT_RATES/purple_candy_bag.png' );
+  var redCandyBagImage     = require( 'image!UNIT_RATES/red_candy_bag.png' );
 
   var ItemNodeFactory = {
 
      /**
      * Creates a node of a specified size for specified item
-     * @param {Item} item - the item to create (i.e. type, count)
+     * @param {ItemData} item - the item to create (i.e. apple, carrot)
      * @param {number} size - the width & height (all items are square)
-     * @param {Vector2} position - default X/Y location
-     * @param (function(ItemNode)} moveStartCallback - function called when item drag starts
-     * @param (function(ItemNode)} moveEndCallback - function called when item drag ends
+     * @param (function(ItemNode)} [moveStartCallback] - function called when item drag starts
+     * @param (function(ItemNode)} [moveEndCallback] - function called when item drag ends
      * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createItem: function( item, size, position, moveStartCallback, moveEndCallback, options ) {
+    createItem: function( item, size, moveStartCallback, moveEndCallback, options ) {
 
-      var itemNode = new ItemNode( item, position, options );
+      var itemNode = new ItemNode( item, new Vector2( 0, 0 ), options );
       itemNode.addDragListeners( moveStartCallback, moveEndCallback );
 
-      for (var i = 0; i < item.count; i++) {
+      var imageNode = null;
 
-        var imageNode = null;
-
-        switch( item.type ) {
-          case ItemData.APPLES.type:
-            imageNode = this.createApple( size, options );
-            break;
-          case ItemData.LEMONS.type:
-            imageNode = this.createLemon( size, options );
-            break;
-          case ItemData.ORANGES.type:
-            imageNode = this.createOrange( size, options );
-            break;
-          case ItemData.PEARS.type:
-            imageNode = this.createPear( size, options );
-            break;
-          case ItemData.CARROTS.type:
-            imageNode = this.createCarrot( size, options );
-            break;
-          case ItemData.CUCUMBERS.type:
-            imageNode = this.createCucumber( size, options );
-            break;
-          case ItemData.POTATOES.type:
-            imageNode = this.createPotato( size, options );
-            break;
-          case ItemData.TOMATOES.type:
-            imageNode = this.createTomato( size, options );
-            break;
-          case ItemData.RED_CANDY.type:
-            imageNode = this.createRedCandy( size, options );
-            break;
-          case ItemData.YELLOW_CANDY.type:
-            imageNode = this.createYellowCandy( size, options );
-            break;
-          case ItemData.GREEN_CANDY.type:
-            imageNode = this.createGreenCandy( size, options );
-            break;
-          case ItemData.BLUE_CANDY.type:
-            imageNode = this.createBlueCandy( size, options );
-            break;
-          default:
-            assert && assert( false, 'Node factory cannot create item of unrecognized type' );
-        }
-
-        assert && assert( imageNode !== null, 'Unable to create item node of type:' + item.type );
-
-        // in the case of multiple count, jitter the positions for placement in a bag.
-        if ( item.count > 1 ) {
-          imageNode.center = new Vector2( ( RAND.random() - 0.5 ) * imageNode.width,
-          ( RAND.random() - 0.5 ) * imageNode.height );
-        }
-
-        itemNode.addChild( imageNode );
+      switch( item.type ) {
+        case ItemData.APPLES.type:
+          imageNode = ( item.count === 1 ?
+            new Image( appleImage,    { scale: 0.025 } ) :
+            new Image( appleBagImage, { scale: 0.045 } ) );
+          break;
+        case ItemData.LEMONS.type:
+          imageNode = ( item.count === 1 ?
+            new Image( lemonImage,    { scale: 0.025 } ) :
+            new Image( lemonBagImage, { scale: 0.045 } ) );
+          break;
+        case ItemData.ORANGES.type:
+          imageNode = ( item.count === 1 ?
+            new Image( orangeImage,    { scale: 0.025 } ) :
+            new Image( orangeBagImage, { scale: 0.045 } ) );
+          break;
+        case ItemData.PEARS.type:
+          imageNode = ( item.count === 1 ?
+            new Image( pearImage,    { scale: 0.025 } ) :
+            new Image( pearBagImage, { scale: 0.045 } ) );
+          break;
+        case ItemData.CARROTS.type:
+          imageNode = ( item.count === 1 ?
+            new Image( carrotImage,    { scale: 0.025 } ) :
+            new Image( carrotBagImage, { scale: 0.045 } ) );
+          break;
+        case ItemData.CUCUMBERS.type:
+          imageNode = ( item.count === 1 ?
+            new Image( cucumberImage,    { scale: 0.025 } ) :
+            new Image( cucumberBagImage, { scale: 0.045 } ) );
+          break;
+        case ItemData.POTATOES.type:
+          imageNode = ( item.count === 1 ?
+            new Image( potatoImage,    { scale: 0.025 } ) :
+            new Image( potatoBagImage, { scale: 0.045 } ) );
+          break;
+        case ItemData.TOMATOES.type:
+          imageNode = ( item.count === 1 ?
+            new Image( tomatoImage,    { scale: 0.025 } ) :
+            new Image( tomatoBagImage, { scale: 0.045 } ) );
+          break;
+        case ItemData.PURPLE_CANDY.type:
+          imageNode = ( item.count === 1 ?
+            new Image( purpleCandyImage,    { scale: 0.025 } ) :
+            new Image( purpleCandyBagImage, { scale: 0.030 } ) );
+          break;
+        case ItemData.RED_CANDY.type:
+          imageNode = ( item.count === 1 ?
+            new Image( redCandyImage,    { scale: 0.025 } ) :
+            new Image( redCandyBagImage, { scale: 0.030 } ) );
+          break;
+        case ItemData.GREEN_CANDY.type:
+          imageNode = ( item.count === 1 ?
+            new Image( greenCandyImage,    { scale: 0.025 } ) :
+            new Image( greenCandyBagImage, { scale: 0.030 } ) );
+          break;
+        case ItemData.BLUE_CANDY.type:
+          imageNode = ( item.count === 1 ?
+            new Image( blueCandyImage,    { scale: 0.025 } ) :
+            new Image( blueCandyBagImage, { scale: 0.030 } ) );
+          break;
+        default:
+          assert && assert( false, 'Node factory cannot create item of unrecognized type' );
       }
 
-      // If multiple count, create a larger bage to hold typed nodes
-      if ( item.count > 1 ) {
-        var bagNode = this.createBag( 2 * size, options );
-        itemNode.addChild( bagNode );
-      }
+      assert && assert( imageNode !== null, 'Unable to create item node of type:' + item.type );
+
+      itemNode.addChild( imageNode );
 
       return itemNode;
-
-    },
-
-    // ----------------------------- Fruit ----------------------------- //
-
-    /**
-     * Creates a apple represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createApple: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'crimson', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    /**
-     * Creates a lemon represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createLemon: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'gold', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    /**
-     * Creates a orange represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createOrange: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'darkorange', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    /**
-     * Creates a pear represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createPear: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'lime', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    // ----------------------------- Produce ----------------------------- //
-
-    /**
-     * Creates a carrot represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createCarrot: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'orange', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    /**
-     * Creates a cucumber represenation
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createCucumber: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'darkgreen', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    /**
-     * Creates a potato represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createPotato: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'sienna', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    /**
-     * Creates a tomato represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createTomato: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'firebrick', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    // ----------------------------- Candy ----------------------------- //
-
-    /**
-     * Creates a red candy represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createRedCandy: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'red', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    /**
-     * Creates a yellow candy represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createYellowCandy: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'yellow', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    /**
-     * Creates a green candy represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createGreenCandy: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'green', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    /**
-     * Creates a blue candy represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createBlueCandy: function( size, options ) {
-      return new Node( {
-        children: [
-          new Circle( size / 2, { fill: 'blue', stroke: 'black' } )
-        ]
-      }, options );
-    },
-
-    // ----------------------------- Bags ----------------------------- //
-
-    /**
-     * Creates an empty bag represenation
-     * @param {number} size in pixels
-     * @param {Object} [options]
-     * @returns {Node}
-     * @public
-     */
-    createBag: function( size, options ) {
-      return new Node( {
-        children: [
-          new Rectangle( -size / 2, -size / 2, size, size, { fill: 'rgba(128, 128, 128, 0.3)', stroke: 'black' } )
-        ]
-      }, options );
     }
 
   }; // ItemNodeFactory

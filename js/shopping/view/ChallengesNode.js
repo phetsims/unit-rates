@@ -133,7 +133,7 @@ define( function( require ) {
 
       // 4th. question - note: this question is formatted differently if the item type is candy.
       var itemType = this.challenges.itemDataProperty.value.type;
-      var isCandy  =  ( itemType === ItemData.RED_CANDY.type   || itemType === ItemData.YELLOW_CANDY.type ||
+      var isCandy  =  ( itemType === ItemData.RED_CANDY.type   || itemType === ItemData.PURPLE_CANDY.type ||
                         itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type );
       var preValueString  = ( isCandy ? currencySymbolString : '  ' );
       var postValueString = ( isCandy ? '' : '    ' );

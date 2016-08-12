@@ -118,7 +118,7 @@ define( function( require ) {
     scale.itemDataProperty.link( function( data, oldData ) {
 
       // show/hide weight display
-      self.weightDisplayNode.visible = ( data.type === ItemData.RED_CANDY.type   || data.type === ItemData.YELLOW_CANDY.type ||
+      self.weightDisplayNode.visible = ( data.type === ItemData.RED_CANDY.type   || data.type === ItemData.PURPLE_CANDY.type ||
                                          data.type === ItemData.GREEN_CANDY.type || data.type === ItemData.BLUE_CANDY.type );
 
       // move cost display
@@ -139,8 +139,8 @@ define( function( require ) {
       // pre-compute stacked item positions
       var globalDropBounds = self.scaleTopNode.getGlobalBounds();
       var localDropBounds  = self.itemLayer.globalToParentBounds( globalDropBounds );
-      var itemX = localDropBounds.minX + NODE_X_SPACING;
-      var itemY = localDropBounds.centerY - itemSize / 2 + NODE_Y_SPACING;
+      var itemX = localDropBounds.minX - itemSize / 2 + NODE_X_SPACING;
+      var itemY = localDropBounds.centerY - itemSize -  NODE_Y_SPACING;
 
       // save pre-colmputed staked positions (array of Vector2)
       self.stackedPositions = [];
@@ -155,7 +155,7 @@ define( function( require ) {
         itemX += itemSize + NODE_X_SPACING;
 
         if ( itemX >= localDropBounds.maxX ) {
-          itemX = localDropBounds.minX + itemSize / 2 + NODE_X_SPACING;
+          itemX = localDropBounds.minX + NODE_X_SPACING;
           itemY -= itemSize - NODE_Y_SPACING;
 
           self.stackedYPositions.push( itemY );
@@ -260,7 +260,7 @@ define( function( require ) {
         }
       } );
 
-      // reposition those nodes not stacked correctly - these will automatically go to the bottom first
+      // next reposition those nodes not stacked correctly - these will automatically go to the bottom first
       updateNodes.forEach( function( itemNode ) {
         if ( availablePositions.length ) {
           var position = availablePositions.shift();
@@ -284,18 +284,16 @@ define( function( require ) {
           // only consider nodes that are not on teh bottom
           if( Util.roundSymmetric( itemNode.item.position.y ) < self.stackedYPositions[0] ) {
 
+            var nodeDistance = itemNode.item.position.distance( position );
+            if ( nodeDistance < 1.5 * ShoppingConstants.ITEM_SIZE) {
+              // move the node
+              itemNode.item.setPosition( position.x, position.y, animate );
 
-          var nodeDistance = itemNode.item.position.distance( position );
-          if ( nodeDistance < 1.5 * ShoppingConstants.ITEM_SIZE) {
-            // move the node
-            itemNode.item.setPosition( position.x, position.y, animate );
-
-            // remove the position from the availble list
-            availablePositions.splice( i, 1);
-            break;
+              // remove the position from the availble list
+              availablePositions.splice( i, 1);
+              break;
+            }
           }
-          }
-
         }
       }
     },
@@ -335,8 +333,8 @@ define( function( require ) {
         if ( !itemNodeExists( item ) ) {
 
           // create new item node
-          var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, new Vector2( 0, 0 ),
-                                                     self.startMoveCallback, self.endMoveCallback );
+          var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE,
+                                                    self.startMoveCallback, self.endMoveCallback );
 
           // add to the screen layer for correct rendering
           self.itemLayer.addChild( itemNode );

@@ -131,17 +131,17 @@
   "tomatoesCap": {
     "value": "Tomatoes"
   },
-  "redCandy": {
-    "value": "Red Candy"
+  "blueCandy": {
+    "value": "Blue Candy"
   },
-  "yellowCandy": {
-    "value": "Yellow Candy"
+  "purpleCandy": {
+    "value": "Purple Candy"
   },
   "greenCandy": {
     "value": "Green Candy"
   },
-  "blueCandy": {
-    "value": "Blue Candy"
+  "redCandy": {
+    "value": "Red Candy"
   },
   "challenges": {
     "value": "Challenges"

@@ -152,7 +152,7 @@ define( function( require ) {
      */
     generateQuestionsAnswersForItem: function( itemData ) {
 
-      if ( itemData.type === ItemData.RED_CANDY.type   || itemData.type === ItemData.YELLOW_CANDY.type ||
+      if ( itemData.type === ItemData.RED_CANDY.type   || itemData.type === ItemData.PURPLE_CANDY.type ||
            itemData.type === ItemData.GREEN_CANDY.type || itemData.type === ItemData.BLUE_CANDY.type )  {
 
         // Q: Unit rate
@@ -303,7 +303,7 @@ define( function( require ) {
                               ( capitalize ? tomatoCapString : tomatoString ) );
             break;
           case ItemData.RED_CANDY.type:
-          case ItemData.YELLOW_CANDY.type:
+          case ItemData.PURPLE_CANDY.type:
           case ItemData.GREEN_CANDY.type:
           case ItemData.BLUE_CANDY.type:
           default:

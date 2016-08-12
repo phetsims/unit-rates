@@ -73,7 +73,7 @@ define( function( require ) {
 
     // @private
     this.dropNode = new Path( new Shape()
-        .rect( this.backEdgeMinX, ( -BACK_DEPTH ), ( this.backEdgeMaxX - this.backEdgeMinX), BACK_DEPTH ), {
+        .rect( this.backEdgeMinX - 15, ( -BACK_DEPTH ), ( this.backEdgeMaxX - this.backEdgeMinX + 20), BACK_DEPTH ), {
       //fill: 'rgba(255,255,0,0.5)', // uncomment to see drop zone
       lineWidth: 0,
       pickable: false
@@ -127,7 +127,7 @@ define( function( require ) {
 
         if ( itemArray.contains( itemNode.item ) ) {
           var x = nodeX + NODE_X_SPACING;
-          var y = nodeY - ( itemNode.height / 2 ) + NODE_Y_SPACING;
+          var y = nodeY - ( itemNode.height ) + NODE_Y_SPACING;
           itemNode.item.setPosition( x, y, animate ); // positions are item center
           nodeX += itemNode.width + NODE_X_SPACING;
           if ( nodeX >= localDropBounds.maxX ) {
@@ -152,10 +152,9 @@ define( function( require ) {
       // create nodes for all items of type
       itemArray.forEach( function( item ) {
 
-        var position = item.positionProperty.value;
-
         // create new item node
-        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE, position, self.startMoveCallback, self.endMoveCallback );
+        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE,
+          self.startMoveCallback, self.endMoveCallback );
 
         // add to the screen item layer
         self.itemLayer.addChild( itemNode );
