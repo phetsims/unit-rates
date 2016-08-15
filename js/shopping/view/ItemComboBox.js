@@ -35,7 +35,6 @@ define( function( require ) {
   var redCandyString = require( 'string!UNIT_RATES/redCandy' );
 
   // constants
-  var ICON_SIZE = 20;
   var FONT = new PhetFont( 18 );
 
   /**
@@ -62,33 +61,45 @@ define( function( require ) {
     switch( sceneMode ) {
       case SceneMode.FRUIT:
         items.push( ComboBox.createItem(
-          this.createItemRow( applesCapString, ItemNodeFactory.createItem( new Item( ItemData.APPLES, 1 ), ICON_SIZE ) ), ItemData.APPLES ) );
+          this.createItemRow( applesCapString, ItemNodeFactory.createItem( new Item( ItemData.APPLES, 1 ) ) ),
+          ItemData.APPLES ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( lemonsCapString, ItemNodeFactory.createItem( new Item( ItemData.LEMONS, 1 ), ICON_SIZE ) ), ItemData.LEMONS ) );
+          this.createItemRow( lemonsCapString, ItemNodeFactory.createItem( new Item( ItemData.LEMONS, 1 ) ) ),
+          ItemData.LEMONS ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( orangesCapString, ItemNodeFactory.createItem( new Item( ItemData.ORANGES, 1 ), ICON_SIZE ) ), ItemData.ORANGES ) );
+          this.createItemRow( orangesCapString, ItemNodeFactory.createItem( new Item( ItemData.ORANGES, 1 ) ) ),
+          ItemData.ORANGES ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( pearsCapString, ItemNodeFactory.createItem( new Item( ItemData.PEARS, 1 ), ICON_SIZE ) ), ItemData.PEARS ) );
+          this.createItemRow( pearsCapString, ItemNodeFactory.createItem( new Item( ItemData.PEARS, 1 ) ) ),
+          ItemData.PEARS ) );
         break;
       case SceneMode.PRODUCE:
         items.push( ComboBox.createItem(
-          this.createItemRow( carrotsCapString, ItemNodeFactory.createItem( new Item( ItemData.CARROTS, 1 ), ICON_SIZE ) ), ItemData.CARROTS ) );
+          this.createItemRow( carrotsCapString, ItemNodeFactory.createItem( new Item( ItemData.CARROTS, 1 ) ) ),
+          ItemData.CARROTS ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( cucumbersCapString, ItemNodeFactory.createItem( new Item( ItemData.CUCUMBERS, 1 ), ICON_SIZE ) ), ItemData.CUCUMBERS ) );
+          this.createItemRow( cucumbersCapString, ItemNodeFactory.createItem( new Item( ItemData.CUCUMBERS, 1 ) ) ),
+          ItemData.CUCUMBERS ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( potatoesCapString, ItemNodeFactory.createItem( new Item( ItemData.POTATOES, 1 ), ICON_SIZE ) ), ItemData.POTATOES ) );
+          this.createItemRow( potatoesCapString, ItemNodeFactory.createItem( new Item( ItemData.POTATOES, 1 ) ) ),
+          ItemData.POTATOES ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( tomatoesCapString, ItemNodeFactory.createItem( new Item( ItemData.TOMATOES, 1 ), ICON_SIZE ) ), ItemData.TOMATOES ) );
+          this.createItemRow( tomatoesCapString, ItemNodeFactory.createItem( new Item( ItemData.TOMATOES, 1 ) ) ),
+          ItemData.TOMATOES ) );
         break;
       case SceneMode.CANDY:
         items.push( ComboBox.createItem(
-          this.createItemRow( purpleCandyString, ItemNodeFactory.createItem( new Item( ItemData.PURPLE_CANDY, 1 ), ICON_SIZE ) ), ItemData.PURPLE_CANDY ) );
+          this.createItemRow( purpleCandyString, ItemNodeFactory.createItem( new Item( ItemData.PURPLE_CANDY, 1 ),
+            { imageScale: 0.035 } ) ), ItemData.PURPLE_CANDY ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( redCandyString, ItemNodeFactory.createItem( new Item( ItemData.RED_CANDY, 1 ), ICON_SIZE ) ), ItemData.RED_CANDY ) );
+          this.createItemRow( redCandyString, ItemNodeFactory.createItem( new Item( ItemData.RED_CANDY, 1 ),
+            { imageScale: 0.035 } ) ), ItemData.RED_CANDY ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( greenCandyString, ItemNodeFactory.createItem( new Item( ItemData.GREEN_CANDY, 1 ), ICON_SIZE ) ), ItemData.GREEN_CANDY ) );
+          this.createItemRow( greenCandyString, ItemNodeFactory.createItem( new Item( ItemData.GREEN_CANDY, 1 ),
+            { imageScale: 0.035 } ) ), ItemData.GREEN_CANDY ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( blueCandyString, ItemNodeFactory.createItem( new Item( ItemData.BLUE_CANDY, 1 ), ICON_SIZE ) ), ItemData.BLUE_CANDY ) );
+          this.createItemRow( blueCandyString, ItemNodeFactory.createItem( new Item( ItemData.BLUE_CANDY, 1 ),
+            { imageScale: 0.035 } ) ), ItemData.BLUE_CANDY ) );
         break;
       default:
         assert && assert( false, 'Combo box using unrecognized type' );

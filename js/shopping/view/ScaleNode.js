@@ -13,6 +13,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
+  var Item = require( 'UNIT_RATES/shopping/model/Item' );
   var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -31,8 +32,8 @@ define( function( require ) {
   // constants
   var DROP_ZONE_X_SCALE     = 1.05;                     // How much bigger the drop zone width is from the image
   var DROP_ZONE_Y_SCALE     = 2.25;                     // How much bigger the drop zone height is from the image
-  var NODE_X_SPACING        = 1;
-  var NODE_Y_SPACING        = 3;
+  var NODE_X_SPACING        = 0;
+  var NODE_Y_SPACING        = 5;
   var DISPLAY_BOTTOM_OFFSET = 32;
   var DISPLAY_SPACING       = 10;                       // space beteen mutliple displays
   var DISPLAY_FONT          = new PhetFont( 20 );
@@ -115,11 +116,17 @@ define( function( require ) {
     Node.call( this, options );
 
     // refresh on item change
-    scale.itemDataProperty.link( function( data, oldData ) {
+    scale.itemDataProperty.link( function( itemData, oldData ) {
 
-      // show/hide weight display
-      self.weightDisplayNode.visible = ( data.type === ItemData.RED_CANDY.type   || data.type === ItemData.PURPLE_CANDY.type ||
-                                         data.type === ItemData.GREEN_CANDY.type || data.type === ItemData.BLUE_CANDY.type );
+      var itemType = itemData.type;
+
+      var isFruit = ( itemType === ItemData.APPLES.type  || itemType === ItemData.LEMONS.type ||
+                      itemType === ItemData.ORANGES.type || itemType === ItemData.PEARS.type );
+      var isCandy = ( itemType === ItemData.RED_CANDY.type   || itemType === ItemData.PURPLE_CANDY.type ||
+                      itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type );
+
+      // show/hide weight display for candy only
+      self.weightDisplayNode.visible = isCandy;
 
       // move cost display
       if ( self.weightDisplayNode.visible ) {
@@ -129,36 +136,31 @@ define( function( require ) {
         self.costDisplayNode.centerX = self.costOnlyDisplayX;
       }
 
-      // pre-calc all available item locations
-      var itemType = self.scale.itemDataProperty.value.type;
-
-      var isFruit = ( itemType === ItemData.APPLES.type  || itemType === ItemData.LEMONS.type ||
-                      itemType === ItemData.ORANGES.type || itemType === ItemData.PEARS.type );
-      var itemSize = ( isFruit ? ShoppingConstants.ITEM_SIZE : ShoppingConstants.ITEM_SIZE * 2 );
+      var itemNode = ItemNodeFactory.createItem( new Item( itemData, ( isFruit ? 1 : 2 ) ) );
 
       // pre-compute stacked item positions
       var globalDropBounds = self.scaleTopNode.getGlobalBounds();
       var localDropBounds  = self.itemLayer.globalToParentBounds( globalDropBounds );
-      var itemX = localDropBounds.minX - itemSize / 2 + NODE_X_SPACING;
-      var itemY = localDropBounds.centerY - itemSize -  NODE_Y_SPACING;
+      var itemX = localDropBounds.minX - itemNode.width / 2 + NODE_X_SPACING;
+      var itemY = localDropBounds.centerY - itemNode.height + 2;
 
       // save pre-colmputed staked positions (array of Vector2)
       self.stackedPositions = [];
 
-      // save the Y coordinate for moving higher items to lower positions
-      self.stackedYPositions = [ itemY ];
+      // save the Y coordinate for moving higher items to lower positions - use a .XX string
+      self.stackedYPositions = [  itemY.toFixed( 2 ) ];
 
       for (var i = 0; i < ShoppingConstants.MAX_ITEMS-1; i++) {
 
         self.stackedPositions.push( new Vector2( itemX, itemY ) );
 
-        itemX += itemSize + NODE_X_SPACING;
+        itemX += itemNode.width + NODE_X_SPACING;
 
         if ( itemX >= localDropBounds.maxX ) {
           itemX = localDropBounds.minX + NODE_X_SPACING;
-          itemY -= itemSize - NODE_Y_SPACING;
+          itemY -= itemNode.height - NODE_Y_SPACING;
 
-          self.stackedYPositions.push( itemY );
+          self.stackedYPositions.push( itemY.toFixed( 2 ) );
         }
       }
 
@@ -268,24 +270,25 @@ define( function( require ) {
         }
       } );
 
-      // now move higher nodes to lower positions - for every open bottom spot see if there's a nearby node to fill it
+      // for remaining available positions, move higher nodes to lower positions
+      // for every open bottom spot see if there's a nearby node to fill it
       for (var i = 0; i < availablePositions.length; i++) {
 
         var position = availablePositions[i];
 
         // only consider bottom positions
-        if( position.y !== self.stackedYPositions[0] ) {
+        if( position.y.toFixed( 2 ) !== self.stackedYPositions[0] ) {
           continue;
         }
 
         for (var j = 0; j < allNodes.length; j++) {
           var itemNode = allNodes[j];
 
-          // only consider nodes that are not on teh bottom
-          if( Util.roundSymmetric( itemNode.item.position.y ) < self.stackedYPositions[0] ) {
+          // only consider nodes that are not on the bottom
+          if( itemNode.item.position.y.toFixed( 2 ) !== self.stackedYPositions[0] ) {
 
             var nodeDistance = itemNode.item.position.distance( position );
-            if ( nodeDistance < 1.5 * ShoppingConstants.ITEM_SIZE) {
+            if ( nodeDistance < 1.5 * itemNode.width ) {
               // move the node
               itemNode.item.setPosition( position.x, position.y, animate );
 
@@ -333,8 +336,10 @@ define( function( require ) {
         if ( !itemNodeExists( item ) ) {
 
           // create new item node
-          var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE,
-                                                    self.startMoveCallback, self.endMoveCallback );
+          var itemNode = ItemNodeFactory.createItem( item, {
+            moveStartCallback: self.startMoveCallback,
+            moveEndCallback: self.endMoveCallback
+          } );
 
           // add to the screen layer for correct rendering
           self.itemLayer.addChild( itemNode );

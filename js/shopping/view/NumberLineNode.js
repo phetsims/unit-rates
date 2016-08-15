@@ -319,7 +319,10 @@ define( function( require ) {
         }
 
         // calc X position based on the item count
-        var countPercent = count / ShoppingConstants.MAX_ITEMS;
+        var countPercent = ( count / ShoppingConstants.MAX_ITEMS );
+        if ( markerNode.item.isCandy() ) {
+          countPercent *= 10.0;
+        }
 
         // off the number line?
         if ( countPercent > 1.0 ) {

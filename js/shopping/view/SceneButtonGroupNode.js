@@ -16,16 +16,6 @@ define( function( require ) {
   var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
   var SceneMode = require( 'UNIT_RATES/shopping/enum/SceneMode' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-
-  // images
-  var appleImage        = require( 'image!UNIT_RATES/apple.png' );
-  var carrotImage       = require( 'image!UNIT_RATES/carrot.png' );
-  var purpleCandyImage  = require( 'image!UNIT_RATES/purple_candy.png' );
-
-  // constants
-  var SCENE_BUTTON_FONT = new PhetFont( 24 );
 
   /**
    * @param {Property.<SceneMode>} itemTypeProperty
@@ -40,13 +30,16 @@ define( function( require ) {
       orientation: 'horizontal',
       baseColor: 'white',
       spacing: 15,
-      buttonContentXMargin: 20
+      buttonContentXMargin: 4
     }, options );
 
     RadioButtonGroup.call( this, sceneModeProperty, [
-      { value: SceneMode.FRUIT,   node: ItemNodeFactory.createItem( new Item( ItemData.APPLES, 1 ) ) },
-      { value: SceneMode.PRODUCE, node: ItemNodeFactory.createItem( new Item( ItemData.CARROTS, 1 ) ) },
-      { value: SceneMode.CANDY,   node: ItemNodeFactory.createItem( new Item( ItemData.PURPLE_CANDY, 1 ) ) }
+      { value: SceneMode.FRUIT,   node: ItemNodeFactory.createItem( new Item( ItemData.APPLES, 1  ),
+        { imageScale: 0.025 } ) },
+      { value: SceneMode.PRODUCE, node: ItemNodeFactory.createItem( new Item( ItemData.CARROTS, 1 ),
+        { imageScale: 0.025 } ) },
+      { value: SceneMode.CANDY,   node: ItemNodeFactory.createItem( new Item( ItemData.PURPLE_CANDY, 1 ),
+        { imageScale: 0.035 } ) }
     ], options );
   }
 

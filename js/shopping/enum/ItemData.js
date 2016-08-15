@@ -53,16 +53,6 @@ define( function( require ) {
       rate:   0.3,
       weight: 1.0
     },
-    BLUE_CANDY: {
-      type:   'blueCandy',
-      rate:   1.30,
-      weight: 1.0
-    },
-    GREEN_CANDY: {
-      type:   'greenCandy',
-      rate:   8.20,
-      weight: 1.0
-    },
     PURPLE_CANDY: {
       type:   'purpleCandy',
       rate:   5.40,
@@ -71,6 +61,16 @@ define( function( require ) {
     RED_CANDY: {
       type:   'redCandy',
       rate:   3.80,
+      weight: 1.0
+    },
+    GREEN_CANDY: {
+      type:   'greenCandy',
+      rate:   8.20,
+      weight: 1.0
+    },
+    BLUE_CANDY: {
+      type:   'blueCandy',
+      rate:   1.30,
       weight: 1.0
     }
   } );

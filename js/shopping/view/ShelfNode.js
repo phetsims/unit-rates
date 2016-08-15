@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
   var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -153,8 +152,10 @@ define( function( require ) {
       itemArray.forEach( function( item ) {
 
         // create new item node
-        var itemNode = ItemNodeFactory.createItem( item, ShoppingConstants.ITEM_SIZE,
-          self.startMoveCallback, self.endMoveCallback );
+        var itemNode = ItemNodeFactory.createItem( item, {
+          moveStartCallback: self.startMoveCallback,
+          moveEndCallback: self.endMoveCallback
+        } );
 
         // add to the screen item layer
         self.itemLayer.addChild( itemNode );

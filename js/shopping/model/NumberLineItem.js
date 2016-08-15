@@ -120,13 +120,15 @@ define( function( require ) {
      */
     getCountPrecision: function() {
 
-      if ( !isFinite( this.count ) ) {
+      var count = Util.roundSymmetric( this.count );
+
+      if ( !isFinite( count ) ) {
         return 0;
       }
 
       var e = 1;
       var p = 0;
-      while ( Util.roundSymmetric( this.count * e ) / e !== this.count ) {
+      while ( Util.roundSymmetric( count * e ) / e !== count ) {
         e *= 10; p++;
       }
       return p;

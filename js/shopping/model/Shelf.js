@@ -108,25 +108,29 @@ define( function( require ) {
             this.createItem( itemData, 4 );
             this.createItem( itemData, 4 );
           break;
-          case ItemData.RED_CANDY.type:
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
-          break;
           case ItemData.PURPLE_CANDY.type:
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
+            this.createItem( itemData, .4 );
+            this.createItem( itemData, .4 );
+            this.createItem( itemData, .4 );
+            this.createItem( itemData, .4 );
+          break;
+          case ItemData.RED_CANDY.type:
+            this.createItem( itemData, .3 );
+            this.createItem( itemData, .3 );
+            this.createItem( itemData, .3 );
+            this.createItem( itemData, .3 );
           break;
           case ItemData.GREEN_CANDY.type:
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
+            this.createItem( itemData, .3 );
+            this.createItem( itemData, .3 );
+            this.createItem( itemData, .3 );
+            this.createItem( itemData, .3 );
           break;
           case ItemData.BLUE_CANDY.type:
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
+            this.createItem( itemData, .4 );
+            this.createItem( itemData, .4 );
+            this.createItem( itemData, .4 );
+            this.createItem( itemData, .4 );
           break;
 
           default:

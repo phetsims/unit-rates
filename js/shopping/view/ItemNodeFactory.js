@@ -13,16 +13,8 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ItemNode = require( 'UNIT_RATES/shopping/view/ItemNode' );
   var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Image = require( 'SCENERY/nodes/Image' );
   var Vector2 = require( 'DOT/Vector2' );
-  var Random = require( 'DOT/Random' );
-
-  // contants
-  var RAND = new Random();
-  var BACKGROUND_COLOR = 'rgba(0,0,0,0)';
 
   // images
   var appleImage        = require( 'image!UNIT_RATES/apple.png' );
@@ -56,86 +48,153 @@ define( function( require ) {
      /**
      * Creates a node of a specified size for specified item
      * @param {ItemData} item - the item to create (i.e. apple, carrot)
-     * @param {number} size - the width & height (all items are square)
-     * @param (function(ItemNode)} [moveStartCallback] - function called when item drag starts
-     * @param (function(ItemNode)} [moveEndCallback] - function called when item drag ends
      * @param {Object} [options]
      * @returns {Node}
      * @public
      */
-    createItem: function( item, size, moveStartCallback, moveEndCallback, options ) {
+    createItem: function( item, options ) {
+
+      options = _.extend( {
+        imageScale: -1,
+        moveStartCallback: null,  // function called when item drag starts
+        moveEndCallback: null     // function called when item drag ends
+     }, options || {} );
 
       var itemNode = new ItemNode( item, new Vector2( 0, 0 ), options );
-      itemNode.addDragListeners( moveStartCallback, moveEndCallback );
+      itemNode.addDragListeners( options.moveStartCallback, options.moveEndCallback );
 
-      var imageNode = null;
+      var imageName  = null;
+      var imageScale = null;
 
+      // Get the item image name & scaling based on the Item type & count
       switch( item.type ) {
         case ItemData.APPLES.type:
-          imageNode = ( item.count === 1 ?
-            new Image( appleImage,    { scale: 0.025 } ) :
-            new Image( appleBagImage, { scale: 0.045 } ) );
+          if( item.count === 1 ) {
+            imageName  = appleImage;
+            imageScale = 0.024;
+          }
+          else {
+            imageName  = appleBagImage;
+            imageScale = 0.045;
+          }
           break;
         case ItemData.LEMONS.type:
-          imageNode = ( item.count === 1 ?
-            new Image( lemonImage,    { scale: 0.025 } ) :
-            new Image( lemonBagImage, { scale: 0.045 } ) );
+          if( item.count === 1 ) {
+            imageName  = lemonImage;
+            imageScale = 0.020;
+          }
+          else {
+            imageName  = lemonBagImage;
+            imageScale = 0.045;
+          }
           break;
         case ItemData.ORANGES.type:
-          imageNode = ( item.count === 1 ?
-            new Image( orangeImage,    { scale: 0.025 } ) :
-            new Image( orangeBagImage, { scale: 0.045 } ) );
+          if( item.count === 1 ) {
+            imageName  = orangeImage;
+            imageScale = 0.022;
+          }
+          else {
+            imageName  = orangeBagImage;
+            imageScale = 0.045;
+          }
           break;
         case ItemData.PEARS.type:
-          imageNode = ( item.count === 1 ?
-            new Image( pearImage,    { scale: 0.025 } ) :
-            new Image( pearBagImage, { scale: 0.045 } ) );
+          if( item.count === 1 ) {
+            imageName  = pearImage;
+            imageScale = 0.026;
+          }
+          else {
+            imageName  = pearBagImage;
+            imageScale = 0.045;
+          }
           break;
         case ItemData.CARROTS.type:
-          imageNode = ( item.count === 1 ?
-            new Image( carrotImage,    { scale: 0.025 } ) :
-            new Image( carrotBagImage, { scale: 0.045 } ) );
+          if( item.count === 1 ) {
+            imageName  = carrotImage;
+            imageScale = 0.025;
+          }
+          else {
+            imageName  = carrotBagImage;
+            imageScale = 0.045;
+          }
           break;
         case ItemData.CUCUMBERS.type:
-          imageNode = ( item.count === 1 ?
-            new Image( cucumberImage,    { scale: 0.025 } ) :
-            new Image( cucumberBagImage, { scale: 0.045 } ) );
+          if( item.count === 1 ) {
+            imageName  = cucumberImage;
+            imageScale = 0.025;
+          }
+          else {
+            imageName  = cucumberBagImage;
+            imageScale = 0.045;
+          }
           break;
         case ItemData.POTATOES.type:
-          imageNode = ( item.count === 1 ?
-            new Image( potatoImage,    { scale: 0.025 } ) :
-            new Image( potatoBagImage, { scale: 0.045 } ) );
+          if( item.count === 1 ) {
+            imageName  = potatoImage;
+            imageScale = 0.025;
+          }
+          else {
+            imageName  = potatoBagImage;
+            imageScale = 0.045;
+          }
           break;
         case ItemData.TOMATOES.type:
-          imageNode = ( item.count === 1 ?
-            new Image( tomatoImage,    { scale: 0.025 } ) :
-            new Image( tomatoBagImage, { scale: 0.045 } ) );
+          if( item.count === 1 ) {
+            imageName  = tomatoImage;
+            imageScale = 0.025;
+          }
+          else {
+            imageName  = tomatoBagImage;
+            imageScale = 0.045;
+          }
           break;
         case ItemData.PURPLE_CANDY.type:
-          imageNode = ( item.count === 1 ?
-            new Image( purpleCandyImage,    { scale: 0.025 } ) :
-            new Image( purpleCandyBagImage, { scale: 0.030 } ) );
+          if( item.count === 1 ) {
+            imageName  = purpleCandyImage;
+            imageScale = 0.025;
+          }
+          else {
+            imageName  = purpleCandyBagImage;
+            imageScale = 0.025;
+          }
           break;
         case ItemData.RED_CANDY.type:
-          imageNode = ( item.count === 1 ?
-            new Image( redCandyImage,    { scale: 0.025 } ) :
-            new Image( redCandyBagImage, { scale: 0.030 } ) );
+          if( item.count === 1 ) {
+            imageName  = redCandyImage;
+            imageScale = 0.025;
+          }
+          else {
+            imageName  = redCandyBagImage;
+            imageScale = 0.025;
+          }
           break;
         case ItemData.GREEN_CANDY.type:
-          imageNode = ( item.count === 1 ?
-            new Image( greenCandyImage,    { scale: 0.025 } ) :
-            new Image( greenCandyBagImage, { scale: 0.030 } ) );
+          if( item.count === 1 ) {
+            imageName  = greenCandyImage;
+            imageScale = 0.025;
+          }
+          else {
+            imageName  = greenCandyBagImage;
+            imageScale = 0.025;
+          }
           break;
         case ItemData.BLUE_CANDY.type:
-          imageNode = ( item.count === 1 ?
-            new Image( blueCandyImage,    { scale: 0.025 } ) :
-            new Image( blueCandyBagImage, { scale: 0.030 } ) );
+          if( item.count === 1 ) {
+            imageName  = blueCandyImage;
+            imageScale = 0.025;
+          }
+          else {
+            imageName  = blueCandyBagImage;
+            imageScale = 0.025;
+          }
           break;
         default:
           assert && assert( false, 'Node factory cannot create item of unrecognized type' );
       }
 
-      assert && assert( imageNode !== null, 'Unable to create item node of type:' + item.type );
+      assert && assert( imageName !== null, 'Unable to create item node of type:' + item.type );
+
+      var imageNode = new Image( imageName, { scale: ( options.imageScale > 0 ? options.imageScale : imageScale ) } );
 
       itemNode.addChild( imageNode );
 
