@@ -14,10 +14,10 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {LabModel} model
+   * @param {RacingLabModel} model
    * @constructor
    */
-  function LabScreenView( model ) {
+  function RacingLabScreenView( model ) {
 
     ScreenView.call( this );
 
@@ -32,14 +32,10 @@ define( function( require ) {
     this.addChild( resetAllButton );
   }
 
-  unitRates.register( 'LabScreenView', LabScreenView );
+  unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
 
-  return inherit( ScreenView, LabScreenView, {
+  return inherit( ScreenView, RacingLabScreenView, {
 
-    //TODO Called by the animation loop. Optional, so if your view has no animation, please delete this.
-    // @public
-    step: function( dt ) {
-      //TODO Handle view animation here.
-    }
-  } );
-} );
+  } ); // inherit
+
+} ); // define

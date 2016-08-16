@@ -11,10 +11,10 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
-  var Item = require( 'UNIT_RATES/shopping/model/Item' );
-  var ItemNodeFactory = require( 'UNIT_RATES/shopping/view/ItemNodeFactory' );
-  var SceneMode = require( 'UNIT_RATES/shopping/enum/SceneMode' );
+  var ItemData = require( 'UNIT_RATES/common/enum/ItemData' );
+  var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
+  var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
+  var SceneMode = require( 'UNIT_RATES/common/enum/SceneMode' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
 
   /**

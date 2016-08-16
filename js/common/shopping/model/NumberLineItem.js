@@ -12,7 +12,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Item = require( 'UNIT_RATES/shopping/model/Item' );
+  var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
   var Util = require( 'DOT/Util' );
 
@@ -39,7 +39,7 @@ define( function( require ) {
 
     // The correct answers
     var correctCost = ( count * data.rate );
-    var correctUnit = ( count * ( data.isCandy ? data.weight : 1 ) );
+    var correctUnit = ( count );
 
     // @public - all
     this.costQnA = new QuestionAnswer( this, correctCost, correctCost );

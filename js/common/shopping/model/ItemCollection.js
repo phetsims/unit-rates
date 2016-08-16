@@ -13,8 +13,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Item = require( 'UNIT_RATES/shopping/model/Item' );
-  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
+  var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
+  var ItemData = require( 'UNIT_RATES/common/enum/ItemData' );
   var ObservableArray = require( 'AXON/ObservableArray' );
 
   /**

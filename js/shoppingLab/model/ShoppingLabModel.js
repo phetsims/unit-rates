@@ -11,25 +11,23 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var ItemData = require( 'UNIT_RATES/common/enum/ItemData' );
 
   /**
    * @constructor
    */
-  function LabModel() {
+  function ShoppingLabModel() {
 
     PropertySet.call( this, {
-      //TODO
+      itemData: ItemData.APPLES   // the currently selected item type (& the associated static attributes)
     } );
   }
 
-  unitRates.register( 'LabModel', LabModel );
+  unitRates.register( 'ShoppingLabModel', ShoppingLabModel );
 
-  return inherit( PropertySet, LabModel, {
+  return inherit( PropertySet, ShoppingLabModel, {
 
-    //TODO Called by the animation loop. Optional, so if your model has no animation, please delete this.
-    // @public
-    step: function( dt ) {
-      //TODO Handle model animation here.
-    }
-  } );
-} );
+
+  } ); // inherit
+
+} ); // define

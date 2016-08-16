@@ -15,8 +15,8 @@ define( function( require ) {
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var Image = require( 'SCENERY/nodes/Image' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
-  var NumberLineMarkerNode = require( 'UNIT_RATES/shopping/view/NumberLineMarkerNode' );
+  var ItemData = require( 'UNIT_RATES/common/enum/ItemData' );
+  var NumberLineMarkerNode = require( 'UNIT_RATES/common/shopping/view/NumberLineMarkerNode' );
   var Property = require( 'AXON/Property' );
 
   // constants

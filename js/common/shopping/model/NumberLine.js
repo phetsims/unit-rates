@@ -11,8 +11,8 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemCollection = require( 'UNIT_RATES/shopping/model/ItemCollection' );
-  var NumberLineItem = require( 'UNIT_RATES/shopping/model/NumberLineItem' );
+  var ItemCollection = require( 'UNIT_RATES/common/shopping/model/ItemCollection' );
+  var NumberLineItem = require( 'UNIT_RATES/common/shopping/model/NumberLineItem' );
 
   /**
    * @param {Property}.<ItemData> itemDataProperty - the curently selected item

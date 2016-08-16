@@ -5,11 +5,14 @@
   "screen.shopping": {
     "value": "Shopping"
   },
+  "screen.shoppingLab": {
+    "value": "Shopping Lab"
+  },
   "screen.racing": {
     "value": "Racing"
   },
-  "screen.lab": {
-    "value": "Lab"
+  "screen.racingLab": {
+    "value": "Racing Lab"
   },
   "doubleNumberLine": {
     "value": "Double Number Line"

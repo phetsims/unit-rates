@@ -11,8 +11,8 @@ define( function( require ) {
 
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemNode = require( 'UNIT_RATES/shopping/view/ItemNode' );
-  var ItemData = require( 'UNIT_RATES/shopping/enum/ItemData' );
+  var ItemNode = require( 'UNIT_RATES/common/shopping/view/ItemNode' );
+  var ItemData = require( 'UNIT_RATES/common/enum/ItemData' );
   var Image = require( 'SCENERY/nodes/Image' );
   var Vector2 = require( 'DOT/Vector2' );
 

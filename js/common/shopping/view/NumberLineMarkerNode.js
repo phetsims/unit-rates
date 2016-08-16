@@ -11,7 +11,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var EditNumberDisplayNode = require( 'UNIT_RATES/common/view/EditNumberDisplayNode' );
-  var ItemNode = require( 'UNIT_RATES/shopping/view/ItemNode' );
+  var ItemNode = require( 'UNIT_RATES/common/shopping/view/ItemNode' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Shape = require( 'KITE/Shape' );
