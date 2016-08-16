@@ -13,8 +13,8 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var SceneMode = require( 'UNIT_RATES/common/enum/SceneMode' );
-  var ItemData = require( 'UNIT_RATES/common/enum/ItemData' );
+  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var SceneButtonGroupNode = require( 'UNIT_RATES/common/shopping/view/SceneButtonGroupNode' );
   var NumberLineNode = require( 'UNIT_RATES/common/shopping/view/NumberLineNode' );
   var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );

@@ -12,8 +12,8 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var SceneMode = require( 'UNIT_RATES/common/enum/SceneMode' );
-  var ItemData = require( 'UNIT_RATES/common/enum/ItemData' );
+  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var SceneButtonGroupNode = require( 'UNIT_RATES/common/shopping/view/SceneButtonGroupNode' );
   var Property = require( 'AXON/Property' );
 

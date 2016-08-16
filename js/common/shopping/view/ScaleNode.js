@@ -12,7 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
-  var ItemData = require( 'UNIT_RATES/common/enum/ItemData' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
   var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
   var Node = require( 'SCENERY/nodes/Node' );

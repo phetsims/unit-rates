@@ -11,7 +11,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemData = require( 'UNIT_RATES/common/enum/ItemData' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
 
   /**
    * @constructor

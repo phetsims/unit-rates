@@ -16,7 +16,7 @@ define( function( require ) {
   var Scale = require( 'UNIT_RATES/common/shopping/model/Scale' );
   var NumberLine = require( 'UNIT_RATES/common/shopping/model/NumberLine' );
   var Challenges = require( 'UNIT_RATES/shopping/model/Challenges' );
-  var ItemData = require( 'UNIT_RATES/common/enum/ItemData' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
 
   /**
    * @constructor
