@@ -38,8 +38,8 @@ define( function( require ) {
     },  options || {} );
 
     // @protected - all
-    this.onSubmit = null;             // {function} to call when the enter/check button is pressed
-    this.onListenerChanged = null;    // {funtcion} to call when the keypad listener changes
+    this.onSubmit = null;             // {function}() to call when the enter/check button is pressed
+    this.onListenerChanged = null;    // {funtcion}() to call when the keypad listener changes
 
     // @protected
     this.keypad = new NumberKeypad( {
@@ -71,19 +71,19 @@ define( function( require ) {
     this.keypad.top = this.readoutBackground.bottom + SPACING;
 
     // @protected
-    this.checkButton = new TextPushButton( enterString, {
+    this.enterButton = new TextPushButton( enterString, {
       font: new PhetFont( 18 ),
       baseColor: '#F2E916',
       maxWidth: TEXT_MAX_WIDTH,
       cornerRadius: 4
     });
 
-    this.checkButton.top  = this.keypad.bottom + SPACING;
-    this.checkButton.left = (this.keypad.bounds.width - this.checkButton.bounds.width) / 2;
+    this.enterButton.top  = this.keypad.bottom + SPACING;
+    this.enterButton.left = (this.keypad.bounds.width - this.enterButton.bounds.width) / 2;
 
     // Group all nodes
     var numberControlGroup = new Node( {
-      children: [ this.keypad, this.readoutBackground, this.readoutText, this.checkButton ]
+      children: [ this.keypad, this.readoutBackground, this.readoutText, this.enterButton ]
     } );
 
     Panel.call( this, numberControlGroup, {
@@ -117,16 +117,18 @@ define( function( require ) {
 
     /**
      * Assigns a set of listeners to the keypad, there is only one listener assigned at any given time.
-     * @param {function} onSubmit - called when the enter/check button is pressed
-     * @param {function} onListenerChanged - called when the keypad listener changes
+     * @param {function}() onSubmit - called when the enter/check button is pressed
+     * @param {function}() onListenerChanged - called when the keypad listener changes
      * @public
      */
     setListeners: function( onSubmit, onListenerChanged ) {
 
+      var self = this;
+
       this.clear();
 
       if ( this.onSubmit ) {
-        this.checkButton.removeListener( this.onSubmit );
+        this.enterButton.removeListener( this.onSubmit );
       }
 
       if ( this.onListenerChanged ) {
@@ -136,7 +138,15 @@ define( function( require ) {
       this.onSubmit          = onSubmit;
       this.onListenerChanged = onListenerChanged;
 
-      this.checkButton.addListener( onSubmit );
+      // when the enter button is pressed, call the submit callback and close/clear the keypad
+      this.enterButton.addListener( function() {
+        if ( self.onSubmit ) {
+          self.onSubmit.call();
+        }
+        self.visible = false;
+        self.clear();
+        self.clearListeners();
+      });
     },
 
     /**
@@ -147,10 +157,10 @@ define( function( require ) {
 
       // remove the listener
       if ( this.onSubmit ) {
-        this.checkButton.removeListener( this.onSubmit );
+        this.enterButton.removeListener( this.onSubmit );
       }
 
-      // call the currentl listener before removing it.
+      // call the current listener before removing it.
       if ( this.onListenerChanged ) {
         this.onListenerChanged.call();
       }

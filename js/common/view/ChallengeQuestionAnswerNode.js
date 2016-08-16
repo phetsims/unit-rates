@@ -156,10 +156,6 @@ define( function( require ) {
 
         this.editNumberDisplay.setVisible( false );
         this.correctTextDisplay.visible = true;
-
-        // reset the keypad
-        this.keypad.visible = false;
-        this.keypad.clear();
       }
       else {                                     // incorrect answers
         this.faceNode.frown();
