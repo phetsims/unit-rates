@@ -37,5 +37,8 @@ define( function( require ) {
 
   unitRates.register( 'ShoppingLabScreen', ShoppingLabScreen );
 
-  return inherit( Screen, ShoppingLabScreen );
-} );
+  return inherit( Screen, ShoppingLabScreen, {
+
+    } ); // inherit
+
+} ); // define

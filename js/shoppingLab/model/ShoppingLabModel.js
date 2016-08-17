@@ -9,23 +9,20 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var URShoppingModel = require( 'UNIT_RATES/common/shopping/model/URShoppingModel' );
 
   /**
    * @constructor
    */
   function ShoppingLabModel() {
 
-    PropertySet.call( this, {
-      itemData: ItemData.APPLES   // the currently selected item type (& the associated static attributes)
-    } );
+    URShoppingModel.call( this );
   }
 
   unitRates.register( 'ShoppingLabModel', ShoppingLabModel );
 
-  return inherit( PropertySet, ShoppingLabModel, {
+  return inherit( URShoppingModel, ShoppingLabModel, {
 
 
   } ); // inherit

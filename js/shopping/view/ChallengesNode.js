@@ -13,7 +13,7 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var ChallengeQuestionAnswerNode = require( 'UNIT_RATES/common/view/ChallengeQuestionAnswerNode' );
-  var ShoppingConstants = require( 'UNIT_RATES/shopping/ShoppingConstants' );
+  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Image = require( 'SCENERY/nodes/Image' );

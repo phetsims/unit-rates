@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * Container for all supported items & assocaited static attributes (type,unit,rate)
+ * Container for all supported items & assocaited attributes (type & rate)
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -10,7 +10,7 @@ define( function( require ) {
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
-  var ItemData = Object.freeze( {
+  var ItemData = Object( {
     APPLES: {
       type:   'apple',
       rate:   0.5

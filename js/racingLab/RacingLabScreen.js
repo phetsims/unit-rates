@@ -31,7 +31,7 @@ define( function( require ) {
       new Image( screenIcon ),
       function() { return new RacingLabModel(); },
       function( model ) { return new RacingLabScreenView( model ); },
-      { backgroundColor: 'white' }
+      { backgroundColor: 'rgb(233,242,254)', pickable: true }
     );
   }
 

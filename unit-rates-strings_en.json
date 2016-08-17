@@ -17,8 +17,14 @@
   "doubleNumberLine": {
     "value": "Double Number Line"
   },
+  "rate": {
+    "value": "Rate"
+  },
   "currencySymbol": {
     "value": "$"
+  },
+  "dollars": {
+    "value": "dollars"
   },
   "lbs": {
     "value": "lbs"

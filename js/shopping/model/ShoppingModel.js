@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * The whole enchilada - shelf, scale, number line & challenge models
+ * The shopping-only (no lab) model specifics - basically, challenge prompts interaction
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -10,40 +10,27 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Shelf = require( 'UNIT_RATES/common/shopping/model/Shelf' );
-  var Scale = require( 'UNIT_RATES/common/shopping/model/Scale' );
-  var NumberLine = require( 'UNIT_RATES/common/shopping/model/NumberLine' );
+  var URShoppingModel = require( 'UNIT_RATES/common/shopping/model/URShoppingModel' );
   var Challenges = require( 'UNIT_RATES/shopping/model/Challenges' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
 
   /**
    * @constructor
    */
   function ShoppingModel() {
 
-    // @public (all)
-    PropertySet.call( this, {
-      itemData: ItemData.APPLES   // the currently selected item type (& the associated static attributes)
-    } );
+    URShoppingModel.call( this );
 
-    // @public
-    this.shelf      = new Shelf( this.itemDataProperty );
-    this.scale      = new Scale( this.itemDataProperty );
-    this.numberLine = new NumberLine( this.itemDataProperty );
     this.challenges = new Challenges( this.itemDataProperty, this.addChallengeItemsToNumberline.bind( this ) );
-
-    this.addArrayListeners();
   }
 
   unitRates.register( 'ShoppingModel', ShoppingModel );
 
-  return inherit( PropertySet, ShoppingModel, {
+  return inherit( URShoppingModel, ShoppingModel, {
 
     /**
      * Add local listener for item additions/removals. This is needed on initialization and on a reset all
-     * @protected
+     * @override @protected
      */
     addArrayListeners: function() {
       var self = this;
@@ -59,43 +46,6 @@ define( function( require ) {
             self.addChallengeItemsToNumberline();
           }
       } );
-    },
-
-    /**
-     * Removes an item from the shelf and adds it to the scale
-     * @param {Item} item
-     * @public
-     */
-    addShelfItemToScale: function( item ) {
-
-      // Remove from shelf & add to scale
-      this.shelf.removeItem( item );
-      this.scale.addItem(item );
-    },
-
-    /**
-     * Removes an item from the scale and adds it to the shelf
-     * @param {Item} item
-     * @public
-     */
-    addScaleItemToShelf: function( item ) {
-
-      // Remove from scale & add to shelf
-      this.scale.removeItem( item );
-      this.shelf.addItem( item );
-    },
-
-    /**
-     * Adds all items on the scale to the numberline (Note: the number line will ignore duplicates)
-     * @protected
-     */
-    addScaleItemsToNumberline: function() {
-
-      // create a new item on the number line representing the total number/weight of items currently on the scale
-      var count = this.scale.getItemCount() ;
-      if ( count > 0 ) {
-        this.numberLine.createItem( this.itemDataProperty.value, count );
-      }
     },
 
     /**
@@ -125,12 +75,8 @@ define( function( require ) {
 
     // Resets all model elements
     reset: function() {
-      this.shelf.reset();
-      this.scale.reset();
-      this.numberLine.reset();
       this.challenges.reset();
-      PropertySet.prototype.reset.call( this );
-      this.addArrayListeners();
+      URShoppingModel.prototype.reset.call( this );
     }
 
   } ); // inherit
