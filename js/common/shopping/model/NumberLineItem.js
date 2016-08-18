@@ -120,7 +120,11 @@ define( function( require ) {
      */
     getCountPrecision: function() {
 
-      var count = Util.roundSymmetric( this.count );
+      function roundDecimals(value, decimals) {
+        return Number(Util.roundSymmetric(value+'e'+decimals)+'e-'+decimals);
+      }
+
+      var count = roundDecimals( this.count, 2 );
 
       if ( !isFinite( count ) ) {
         return 0;

@@ -12,10 +12,10 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URShoppingScreenView = require( 'UNIT_RATES/common/shopping/view/URShoppingScreenView' );
-  //var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
+ // var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
   var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
-  //var RateAdjustNode = require( 'UNIT_RATES/shoppingLab/view/RateAdjustNode' );
+ // var RateAdjustNode = require( 'UNIT_RATES/shoppingLab/view/RateAdjustNode' );
   //var Property = require( 'AXON/Property' );
 
   /**
@@ -37,6 +37,13 @@ define( function( require ) {
      * @protected
      */
     addSubclassScreenNodes: function() {
+
+      //this.adjustRateNode = new RateAdjustNode( {
+      //  left: this.numberLineNode.right + ShoppingConstants.SCREEN_PANEL_SPACING,
+      //  top:  this.layoutBounds.top + ShoppingConstants.SCREEN_VERTICAL_MARGIN
+      //} );
+      //this.addChild( this.adjustRateNode );
+
     },
 
     /**
@@ -49,7 +56,7 @@ define( function( require ) {
     },
 
     /**
-     * Call when the user selected a new scene
+     * Call when the user selects a new scene
      * @param {Property}.<SceneMode> sceneMode - indicates the new scene type
      * @param {Property}.<SceneMode> oldSceneMode - indicates the previous scene type
      * @override @protected
