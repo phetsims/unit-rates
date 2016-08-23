@@ -69,7 +69,7 @@ define( function( require ) {
       // Get the item image name & scaling based on the Item type & count
       switch( item.type ) {
         case ItemData.APPLES.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = appleImage;
             imageScale = 0.024;
           }
@@ -79,7 +79,7 @@ define( function( require ) {
           }
           break;
         case ItemData.LEMONS.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = lemonImage;
             imageScale = 0.020;
           }
@@ -89,7 +89,7 @@ define( function( require ) {
           }
           break;
         case ItemData.ORANGES.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = orangeImage;
             imageScale = 0.022;
           }
@@ -99,7 +99,7 @@ define( function( require ) {
           }
           break;
         case ItemData.PEARS.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = pearImage;
             imageScale = 0.026;
           }
@@ -109,7 +109,7 @@ define( function( require ) {
           }
           break;
         case ItemData.CARROTS.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = carrotImage;
             imageScale = 0.025;
           }
@@ -119,7 +119,7 @@ define( function( require ) {
           }
           break;
         case ItemData.CUCUMBERS.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = cucumberImage;
             imageScale = 0.025;
           }
@@ -129,7 +129,7 @@ define( function( require ) {
           }
           break;
         case ItemData.POTATOES.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = potatoImage;
             imageScale = 0.025;
           }
@@ -139,7 +139,7 @@ define( function( require ) {
           }
           break;
         case ItemData.TOMATOES.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = tomatoImage;
             imageScale = 0.025;
           }
@@ -149,7 +149,7 @@ define( function( require ) {
           }
           break;
         case ItemData.PURPLE_CANDY.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = purpleCandyImage;
             imageScale = 0.025;
           }
@@ -159,7 +159,7 @@ define( function( require ) {
           }
           break;
         case ItemData.RED_CANDY.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = redCandyImage;
             imageScale = 0.025;
           }
@@ -169,7 +169,7 @@ define( function( require ) {
           }
           break;
         case ItemData.GREEN_CANDY.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = greenCandyImage;
             imageScale = 0.025;
           }
@@ -179,7 +179,7 @@ define( function( require ) {
           }
           break;
         case ItemData.BLUE_CANDY.type:
-          if( item.count === 1 ) {
+          if( item.countProperty.value === 1 ) {
             imageName  = blueCandyImage;
             imageScale = 0.025;
           }

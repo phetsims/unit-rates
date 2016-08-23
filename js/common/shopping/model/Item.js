@@ -26,17 +26,12 @@ define( function( require ) {
 
     // @public (read-write)
     PropertySet.call( this, {
+      count:    count || 1,
       position: new Vector2( 0, 0 )
     } );
 
     // @public (read-only)
     this.type   = data.type;
-
-    // @public (read-only)
-    this.rate   = data.rate;
-
-    // @public (read-write)
-    this.count  = count || 1;
   }
 
   unitRates.register( 'Item', Item );
@@ -86,7 +81,7 @@ define( function( require ) {
      * @public
      */
     isEqual: function( item ) {
-       return ( item.type  === this.type   && item.rate  === this.rate && item.count === this.count );
+       return ( item.type  === this.type && item.countProperty.value === this.countProperty.value );
     },
 
     /**

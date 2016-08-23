@@ -35,23 +35,13 @@ define( function( require ) {
     this.weightProperty = new Property( 0.0 );
 
     // update value text on cost/weight change
-    itemDataProperty.link( function( value, oldValue ) {
+    this.itemDataProperty.link( function( value, oldValue ) {
 
-      self.costProperty.reset();
-      self.weightProperty.reset();
-
-      // get the current array for the item type
-      var cost = 0;
-      var weight = 0;
-      var itemArray = self.getItemsWithType( value.type );
-      itemArray.forEach( function( item ) {
-
-        cost   += ( item.rate * item.count );
-        weight += item.count;
-      } );
-
-      self.costProperty.value   = cost;
-      self.weightProperty.value = weight;
+      // reassign the rate update function to the current item type
+      if( oldValue ) {
+        oldValue.rate.unlink( self.updateScaleItemRate );
+      }
+      value.rate.link( self.updateScaleItemRate.bind( self ) );
     } );
 
     this.addArrayListeners();
@@ -72,12 +62,12 @@ define( function( require ) {
 
       // refresh on item additions/removals
       this.addListeners( function( item, observableArray ) {
-        self.costProperty.value   += ( item.rate * item.count );
-        self.weightProperty.value += item.count;
+        self.costProperty.value   += ( self.itemDataProperty.value.rate.value * item.countProperty.value );
+        self.weightProperty.value += item.countProperty.value;
       },
       function( item, observableArray ) {
-        self.costProperty.value   -= ( item.rate * item.count );
-        self.weightProperty.value -= item.count;
+        self.costProperty.value   -= ( self.itemDataProperty.value.rate.value * item.countProperty.value );
+        self.weightProperty.value -= item.countProperty.value;
       } );
     },
 
@@ -99,7 +89,7 @@ define( function( require ) {
     addItem: function( item ) {
 
       // expand fruit (& candy?) bag types into individual items (note: produce types remain in bags)
-      if ( item.count > 1 ) {
+      if ( item.countProperty.value > 1 ) {
 
         var types = {};
         types[ ItemData.APPLES.type ]  = ItemData.APPLES;
@@ -107,7 +97,7 @@ define( function( require ) {
         types[ ItemData.ORANGES.type ] = ItemData.ORANGES;
         types[ ItemData.PEARS.type ]   = ItemData.PEARS;
         if ( types[ item.type ] ) {
-          for ( var i = 0; i < item.count; i++ ) {
+          for ( var i = 0; i < item.countProperty.value; i++ ) {
             ItemCollection.prototype.addItem.call( this, new Item( types[ item.type ], 1 ) );
           }
         }
@@ -126,6 +116,30 @@ define( function( require ) {
      */
     resetCurrentItem: function() {
       this.resetItemType( this.itemDataProperty.value.type );
+    },
+
+    /**
+     * Updates the rate of the items on currently on the scale
+     * @protected
+     */
+    updateScaleItemRate: function() {
+      var self = this;
+
+      self.costProperty.reset();
+      self.weightProperty.reset();
+
+      // get the current array for the item type
+      var cost = 0;
+      var weight = 0;
+      var itemArray = self.getItemsWithType( this.itemDataProperty.value.type );
+      itemArray.forEach( function( item ) {
+
+        cost   += ( self.itemDataProperty.value.rate.value * item.countProperty.value );
+        weight += item.countProperty.value; // since candy is in bulk we just use fractional counts to represent weight
+      } );
+
+      self.costProperty.value   = cost;
+      self.weightProperty.value = weight;
     },
 
     /**

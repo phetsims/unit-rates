@@ -126,7 +126,7 @@ define( function( require ) {
       var count = 0;
       var itemArray = this.getItemsWithType( type );
       itemArray.forEach( function( item ) {
-        count += item.count;
+        count += item.countProperty.value;
       } );
 
       return count;

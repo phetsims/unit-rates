@@ -303,7 +303,7 @@ define( function( require ) {
 
       var x           = markerNode.item.positionProperty.value.x;
       var y           = this.origin.y;
-      var count       = markerNode.item.count;
+      var count       = markerNode.item.countProperty.value;
       var inUndoList  = ( this.undoItemNodeList.indexOf( markerNode ) >= 0 );
       var isRemovable = this.isMarkerRemovable( markerNode );
 

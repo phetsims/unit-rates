@@ -9,55 +9,56 @@ define( function( require ) {
 
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var Property = require( 'AXON/Property' );
 
   var ItemData = Object( {
     APPLES: {
       type:   'apple',
-      rate:   0.5
+      rate:   new Property( 0.5 )
     },
     LEMONS: {
       type:   'lemon',
-      rate:   0.25
+      rate:   new Property( 0.25 )
     },
     ORANGES: {
       type:   'orange',
-      rate:   0.75
+      rate:   new Property( 0.75 )
     },
     PEARS: {
       type:   'pear',
-      rate:   0.4
+      rate:   new Property( 0.4 )
     },
     CARROTS:{
       type:   'carrot',
-      rate:   0.15
+      rate:   new Property( 0.15 )
     },
     CUCUMBERS: {
       type:   'cucumber',
-      rate:   0.22
+      rate:   new Property( 0.22 )
     },
     POTATOES: {
       type:   'potato',
-      rate:   0.45
+      rate:   new Property( 0.45 )
     },
     TOMATOES: {
       type:   'tomato',
-      rate:   0.3
+      rate:   new Property( 0.3 )
     },
     PURPLE_CANDY: {
       type:   'purpleCandy',
-      rate:   5.40
+      rate:   new Property( 5.40 )
     },
     RED_CANDY: {
       type:   'redCandy',
-      rate:   3.80
+      rate:   new Property( 3.80 )
     },
     GREEN_CANDY: {
       type:   'greenCandy',
-      rate:   8.20
+      rate:   new Property( 8.20 )
     },
     BLUE_CANDY: {
       type:   'blueCandy',
-      rate:   1.30
+      rate:   new Property( 1.30 )
     }
   } );
 

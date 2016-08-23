@@ -12,18 +12,23 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URShoppingScreenView = require( 'UNIT_RATES/common/shopping/view/URShoppingScreenView' );
- // var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
+  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
   var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
- // var RateAdjustNode = require( 'UNIT_RATES/shoppingLab/view/RateAdjustNode' );
+  var RateAdjustNode = require( 'UNIT_RATES/shoppingLab/view/RateAdjustNode' );
   //var Property = require( 'AXON/Property' );
 
   /**
-   * @param {ShoppingModel} model
+   * @param {ShoppingLabModel} model
    * @param {boolean} labFlag
    * @constructor
    */
   function ShoppingLabScreenView( model ) {
+
+    this.sceneItemData = [];
+    this.sceneItemData[ SceneMode.FRUIT ]   = ItemData.APPLES;
+    this.sceneItemData[ SceneMode.PRODUCE ] = ItemData.CARROTS;
+    this.sceneItemData[ SceneMode.CANDY ]   = ItemData.PURPLE_CANDY;
 
     URShoppingScreenView.call( this, model );
   }
@@ -38,12 +43,11 @@ define( function( require ) {
      */
     addSubclassScreenNodes: function() {
 
-      //this.adjustRateNode = new RateAdjustNode( {
-      //  left: this.numberLineNode.right + ShoppingConstants.SCREEN_PANEL_SPACING,
-      //  top:  this.layoutBounds.top + ShoppingConstants.SCREEN_VERTICAL_MARGIN
-      //} );
-      //this.addChild( this.adjustRateNode );
-
+      this.adjustRateNode = new RateAdjustNode( this.model.itemDataProperty, {
+        left: this.layoutBounds.left + ShoppingConstants.SCREEN_PANEL_SPACING,
+        top:  this.numberLineNode.bottom + 2 * ShoppingConstants.SCREEN_PANEL_SPACING
+      } );
+      this.addChild( this.adjustRateNode );
     },
 
     /**
@@ -52,11 +56,13 @@ define( function( require ) {
      */
     resetAll: function() {
 
+      this.adjustRateNode.reset();
+
       URShoppingScreenView.prototype.resetAll.call( this );
     },
 
     /**
-     * Call when the user selects a new scene
+     * Called when the user selects a new scene
      * @param {Property}.<SceneMode> sceneMode - indicates the new scene type
      * @param {Property}.<SceneMode> oldSceneMode - indicates the previous scene type
      * @override @protected
@@ -68,19 +74,11 @@ define( function( require ) {
 
       this.removeAllItems();
 
-      switch( sceneMode ) {
-        case SceneMode.FRUIT:
-            this.model.itemData = ItemData.APPLES;
-          break;
-        case SceneMode.PRODUCE:
-            this.model.itemData = ItemData.CARROTS;
-          break;
-        case SceneMode.CANDY:
-            this.model.itemData = ItemData.PURPLE_CANDY;
-          break;
-        default:
-          assert && assert( false, 'Unrecognized scene' );
-      }
+      assert && assert( ( sceneMode !== SceneMode.FRUIT || sceneMode !== SceneMode.PRODUCE || sceneMode !== SceneMode.CANDY),
+        'Unrecognized scene' );
+
+      // change the item type
+      this.model.itemDataProperty.value= this.sceneItemData[ sceneMode ];
 
       // This fixes an issue with items hanging in space when the item type selection changes. (see. issue #21, #18)
       this.itemsLayer.getChildren().forEach( function( child ) {

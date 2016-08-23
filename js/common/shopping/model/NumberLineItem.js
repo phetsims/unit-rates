@@ -37,8 +37,11 @@ define( function( require ) {
     this.isChallenge          = options.isChallenge;
     this.isChallengeUnitRate  = options.isChallengeUnitRate;
 
+    // @protected
+    this.rate = data.rate.value;
+
     // The correct answers
-    var correctCost = ( count * data.rate );
+    var correctCost = ( count * this.rate );
     var correctUnit = ( count );
 
     // @public - all
@@ -60,7 +63,7 @@ define( function( require ) {
         self.costQnA.answerValue = Number( value );
         self.unitQnA.answerValue = Util.toFixedNumber( ( value / self.rate ), 1 );
         self.unitQnA.valueProperty.set( Number( -1 ) );
-        self.count = self.unitQnA.answerValue;
+        self.countProperty.value = self.unitQnA.answerValue;
       }
     } );
 
@@ -71,7 +74,7 @@ define( function( require ) {
         self.unitQnA.answerValue = Number( value );
         self.costQnA.answerValue = Util.toFixedNumber( ( value * self.rate ), 2 );
         self.costQnA.valueProperty.set( Number( -1 ) );
-        self.count = self.unitQnA.answerValue;
+        self.countProperty.value = self.unitQnA.answerValue;
       }
     } );
   }
@@ -86,7 +89,7 @@ define( function( require ) {
      */
     reset: function() {
 
-      this.count = Number( -1 );
+      this.countProperty.value = Number( -1 );
 
       if ( this.costQnA ) {
         this.costQnA.answerValue = Number( 0 );
@@ -114,6 +117,23 @@ define( function( require ) {
     },
 
     /**
+     * Changes the current rate for the number line item
+     * @param {number} rate
+     * @public
+     */
+    setRate: function( rate ) {
+
+      this.rate = rate;
+
+      // calc the new correct cost
+      var correctCost = ( this.countProperty.value * this.rate );
+      this.costQnA.setAnswerValue( correctCost );
+
+      // keep non-editable items as correct
+      this.costQnA.setCorrect( !this.editableProperty.value );
+    },
+
+    /**
      * Returns the number of decimal places in the 'count' (i.e. 1.1 = 1, 1.33 = 2, 1.234 = 3)
      * @return {number}
      * @public
@@ -124,7 +144,7 @@ define( function( require ) {
         return Number(Util.roundSymmetric(value+'e'+decimals)+'e-'+decimals);
       }
 
-      var count = roundDecimals( this.count, 2 );
+      var count = roundDecimals( this.countProperty.value, 2 );
 
       if ( !isFinite( count ) ) {
         return 0;

@@ -45,7 +45,7 @@ define( function( require ) {
 
     // properties
     // FIXME: scene & item randomly choosen @ startup (TBD as per current design document)
-    this.sceneModeProperty       = new Property( SceneMode.FRUIT );
+    this.sceneModeProperty = new Property( SceneMode.FRUIT );
 
     // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {
@@ -218,7 +218,7 @@ define( function( require ) {
         this.model.addScaleItemsToNumberline();
 
         // Fruit bags should be expanded
-        if ( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.count > 1 ) {
+        if ( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.countProperty.value > 1 ) {
 
           // remove the bag node & children nodes
           this.itemsLayer.removeChild( itemNode );

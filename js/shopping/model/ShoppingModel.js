@@ -58,9 +58,9 @@ define( function( require ) {
       // create a new item on the number line representing the correctly answered challenge questions
       var itemArray = this.challenges.getCorrectAnswerItems( this.itemDataProperty.value );
       itemArray.forEach( function( item ) {
-        self.numberLine.createItem( self.itemDataProperty.value, item.count, {
+        self.numberLine.createItem( self.itemDataProperty.value, item.countProperty.value, {
           isChallenge: true,
-          isChallengeUnitRate: ( item.count === 1 )
+          isChallengeUnitRate: ( item.countProperty.value === 1 )
         } );
       } );
     },

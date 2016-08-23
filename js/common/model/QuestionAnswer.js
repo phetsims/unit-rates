@@ -34,12 +34,12 @@ define( function( require ) {
     var self = this;
 
     // @public (read-only) - all
-    this.item           = item;                     // {Item} associated with this question
-    this.questionString = options.questionString;   // {string} question to be asked
-    this.unitString     = options.unitString;       // {string} unit
-    this.answerValue    = answerValue;              // {number} the correct answer value
-    this.answerText     = answerText;               // {Text} the correct answer text
-    this.valueProperty  = new Property( DEFAULT_ANSWER_VALUE );       // user's answer input property
+    this.item           = item;                                 // {Item} associated with this question
+    this.questionString = options.questionString;               // {string} question to be asked
+    this.unitString     = options.unitString;                   // {string} unit
+    this.answerValue    = answerValue;                          // {number} the correct answer value
+    this.answerText     = answerText;                           // {Text} the correct answer text
+    this.valueProperty  = new Property( DEFAULT_ANSWER_VALUE ); // user's answer input property
 
     // @protected - {function}
     this.onCorrectAnswerCallback = options.onCorrectAnswerCallback;
@@ -57,6 +57,15 @@ define( function( require ) {
   unitRates.register( 'QuestionAnswer', QuestionAnswer );
 
   return inherit( Object, QuestionAnswer, {
+
+    /**
+     * Sets the answer to correct or not
+     * @param {number} answerValue - the correct answer value
+     * @public
+     */
+    setAnswerValue: function( answerValue ) {
+      this.answerValue = answerValue;              // {number} the correct answer value
+    },
 
     /**
      * Sets the answer to correct or not

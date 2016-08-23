@@ -19,6 +19,7 @@ define( function( require ) {
    * @constructor
    */
   function NumberLine( itemDataProperty ) {
+    var self = this;
 
     // @public (all)
     ItemCollection.call( this, {
@@ -26,6 +27,17 @@ define( function( require ) {
 
     // @public
     this.itemDataProperty = itemDataProperty;
+
+    // update value text on cost/weight change
+    this.itemDataProperty.link( function( value, oldValue ) {
+
+      // reassign the rate update function to the current item type
+      if( oldValue ) {
+        oldValue.rate.unlink( self.updateNumberLineItemRate );
+      }
+      value.rate.link( self.updateNumberLineItemRate.bind( self ) );
+    } );
+
   }
 
   unitRates.register( 'NumberLine', NumberLine );
@@ -71,12 +83,25 @@ define( function( require ) {
     },
 
     /**
+     * Updates the rate of the items  on currently on the number line (except editable items)
+     * @protected
+     */
+    updateNumberLineItemRate: function() {
+      var self = this;
+
+      var itemArray = this.getItemsWithType( this.itemDataProperty.value.type ); // NumberLineItems
+      itemArray.forEach( function( item ) {
+        item.setRate( self.itemDataProperty.value.rate.value );
+      } );
+    },
+
+    /**
      * Changes all items representing Challenge answers to regluar/black markers on the number line.
      * @public
      */
      resetChallengeItems: function() {
 
-      var itemArray = this.getItemsWithType( this.itemDataProperty.value.type );
+      var itemArray = this.getItemsWithType( this.itemDataProperty.value.type ); // NumberLineItems
       itemArray.forEach( function( item ) {
         if ( item.isChallenge ) {
           item.isChallenge  = false;
