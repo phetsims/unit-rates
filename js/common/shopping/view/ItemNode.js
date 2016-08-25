@@ -24,7 +24,8 @@ define( function( require ) {
 
     options = _.extend( {
       draggable:  true,
-      dragHandle: null    // Bounds2 - the portion of the node that serves as a drag handle (local coordinates, unused)
+      dragHandle: null,    // Bounds2 - the portion of the node that serves as a drag handle (local coordinates, unused)
+      pickable: true
     }, options || {} );
 
     Node.call( this, options );

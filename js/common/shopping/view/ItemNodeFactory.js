@@ -57,7 +57,8 @@ define( function( require ) {
       options = _.extend( {
         imageScale: -1,
         moveStartCallback: null,  // function called when item drag starts
-        moveEndCallback: null     // function called when item drag ends
+        moveEndCallback: null,    // function called when item drag ends
+        pickable: true
      }, options || {} );
 
       var itemNode = new ItemNode( item, new Vector2( 0, 0 ), options );

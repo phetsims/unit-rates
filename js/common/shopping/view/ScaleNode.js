@@ -22,9 +22,11 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Panel = require( 'SUN/Panel' );
+  var AccordionBox = require( 'SUN/AccordionBox' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
   var Dimension2 = require( 'DOT/Dimension2' );
+  var Property = require( 'AXON/Property' );
 
   // images
   var scaleImage = require( 'image!UNIT_RATES/scale.png' );
@@ -64,7 +66,7 @@ define( function( require ) {
     this.endMoveCallback    = endMoveCallback;
 
     // load the scale image
-    this.scaleNode = new Image( scaleImage, { pickable: true } );
+    this.scaleNode = new Image( scaleImage );
 
     // a transparant node with the approximate shape of the top of the scale - used for positioning dropped items
     // @private
@@ -72,8 +74,7 @@ define( function( require ) {
        .ellipse( this.scaleNode.centerX, this.scaleNode.top + 12,
         this.scaleNode.width * 0.4, this.scaleNode.height * 0.1, 0 ), {
       //fill: 'rgba(0,255,0,0.5)', // uncomment to see top zone
-      lineWidth: 0,
-      pickable: false
+      lineWidth: 0
     } );
 
     // a transparant node overlaying the scale - defines a drop location
@@ -85,22 +86,41 @@ define( function( require ) {
                this.scaleNode.top  - ( dropHeight - this.scaleNode.height ),
                dropWidth, dropHeight - DISPLAY_BOTTOM_OFFSET ), {
       //fill: 'rgba(255,255,0,0.5)', // uncomment to see drop zone
-      lineWidth: 0,
-      pickable: true
+      lineWidth: 0
     } );
 
     // @private
     this.costOnlyDisplayX = this.scaleNode.centerX;
     this.costUnitDisplayX = this.scaleNode.centerX - ( DISPLAY_SIZE.width / 2 ) - DISPLAY_SPACING;
 
+    this.costBoxContentNode = new Node();
+
     // cost of items display, always visible
     // @private
     this.costDisplayNode = new ValueDisplayNode( this.scale.costProperty, {
       preText: currencySymbolString,
-      decimalPlaces: 2,
-      centerX: this.costUnitDisplayX,
-      centerY: this.scaleNode.bottom - DISPLAY_BOTTOM_OFFSET
+      decimalPlaces: 2
     } );
+    this.costBoxContentNode.addChild( this.costDisplayNode );
+
+    this.expandedProperty = new Property( true );
+    this.costBoxNode = new AccordionBox( this.costBoxContentNode, {
+      centerX: this.costOnlyDisplayX,
+      centerY: this.scaleNode.bottom - DISPLAY_BOTTOM_OFFSET,
+      expandedProperty: this.expandedProperty,
+      fill: 'white',
+      cornerRadius: 5,
+      buttonLength: 15,
+      buttonXMargin: 5,
+      buttonYMargin: 3,
+      showTitleWhenExpanded: false,
+      contentAlign: 'center',
+      contentXMargin: 0,
+      contentYMargin: 0,
+      buttonTouchAreaXDilation: 8,
+      buttonTouchAreaYDilation: 8
+    } );
+    //this.costBoxNode.expandCollapseButton.visible = false;
 
     // weight of items display, visibility changes
     // @private
@@ -111,7 +131,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ this.scaleNode, this.scaleTopNode, this.dropNode, this.costDisplayNode, this.weightDisplayNode ];
+    options.children = [ this.scaleNode, this.scaleTopNode, this.dropNode, this.costBoxNode, this.weightDisplayNode ];
 
     Node.call( this, options );
 
@@ -130,10 +150,10 @@ define( function( require ) {
 
       // move cost display
       if ( self.weightDisplayNode.visible ) {
-        self.costDisplayNode.centerX = self.costUnitDisplayX;
+        self.costBoxNode.centerX = self.costUnitDisplayX;
       }
       else {
-        self.costDisplayNode.centerX = self.costOnlyDisplayX;
+        self.costBoxNode.centerX = self.costOnlyDisplayX;
       }
 
       var itemNode = ItemNodeFactory.createItem( new Item( itemData, ( isFruit ? 1 : 2 ) ) );

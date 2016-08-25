@@ -25,6 +25,7 @@ define( function( require ) {
    */
   function ShoppingLabScreenView( model ) {
 
+    // @private - mapping from scene to item type
     this.sceneItemData = [];
     this.sceneItemData[ SceneMode.FRUIT ]   = ItemData.APPLES;
     this.sceneItemData[ SceneMode.PRODUCE ] = ItemData.CARROTS;
@@ -45,7 +46,7 @@ define( function( require ) {
 
       this.adjustRateNode = new RateAdjustNode( this.model.itemDataProperty, {
         left: this.layoutBounds.left + ShoppingConstants.SCREEN_PANEL_SPACING,
-        top:  this.numberLineNode.bottom + 2 * ShoppingConstants.SCREEN_PANEL_SPACING
+        bottom:  this.scaleNode.bottom
       } );
       this.addChild( this.adjustRateNode );
     },

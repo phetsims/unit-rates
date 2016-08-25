@@ -65,7 +65,7 @@ define( function( require ) {
     this.keypad.top   = this.numberLineNode.bottom + 2 * ShoppingConstants.SCREEN_PANEL_SPACING;
 
     // transparent layer holding draggable shelf & scale item nodes
-    this.itemsLayer = new Rectangle( 0, 0, this.width, this.height );
+    this.itemsLayer = new Rectangle( 0, 0, this.width, this.height); //, { pickable: false } );
     this.addChild( this.itemsLayer );
 
     // shelf
@@ -124,16 +124,16 @@ define( function( require ) {
     this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this) );
 
     // Layer the draggable/clickable nodes for proper rendering/interaction
-    this.itemsLayer.moveToBack();
-    this.scaleNode.moveToBack();
-    this.shelfNode.moveToBack();
+    this.itemsLayer.moveToFront();
+    //this.scaleNode.moveToBack();
+    //this.shelfNode.moveToBack();
 
     // Click on screen to close keypad
-    this.itemsLayer.addInputListener( {
-      down: function( event ) {
-        self.hideKeypad();
-      }
-    } );
+    //this.itemsLayer.addInputListener( {
+    //  down: function( event ) {
+    //    self.hideKeypad();
+    //  }
+    //} );
 
     // resize the items layer on a browser size change
     this.onResize();

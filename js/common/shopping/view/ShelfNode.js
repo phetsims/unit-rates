@@ -47,8 +47,7 @@ define( function( require ) {
     var pathOptions = {
       fill: 'white',
       stroke: 'black',
-      lineWidth: 1,
-      pickable: true
+      lineWidth: 1
     };
 
     this.backEdgeMinX = BACK_OFFSET * SHELF_SIZE.width;
@@ -74,8 +73,7 @@ define( function( require ) {
     this.dropNode = new Path( new Shape()
         .rect( this.backEdgeMinX - 15, ( -BACK_DEPTH ), ( this.backEdgeMaxX - this.backEdgeMinX + 20), BACK_DEPTH ), {
       //fill: 'rgba(255,255,0,0.5)', // uncomment to see drop zone
-      lineWidth: 0,
-      pickable: false
+      lineWidth: 0
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
@@ -125,10 +123,14 @@ define( function( require ) {
       this.itemLayer.getChildren().forEach( function( itemNode ) {
 
         if ( itemArray.contains( itemNode.item ) ) {
+
           var x = nodeX + NODE_X_SPACING;
           var y = nodeY - ( itemNode.height ) + NODE_Y_SPACING;
+
           itemNode.item.setPosition( x, y, animate ); // positions are item center
+
           nodeX += itemNode.width + NODE_X_SPACING;
+
           if ( nodeX >= localDropBounds.maxX ) {
             nodeX = localDropBounds.minX + itemNode.width / 2 + NODE_X_SPACING;
             nodeY += itemNode.height / 2 - NODE_Y_SPACING;
