@@ -165,7 +165,7 @@ define( function( require ) {
         if ( self.onSubmit ) {
           self.onSubmit.call();
         }
-        self.visible = false;
+        self.hide();
         self.clear();
         self.clearListeners();
       });
