@@ -17,7 +17,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   /**
-   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
+   * @param {Property.<ItemData>} itemDataProperty - the curently selected item
    * @constructor
    */
   function Scale( itemDataProperty ) {

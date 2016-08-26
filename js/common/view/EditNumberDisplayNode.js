@@ -26,7 +26,7 @@ define( function( require ) {
   /**
    *
    * @param {KeypadPanelNode} keypad - shared keypad
-   * @param {Property}.<Number> valueProperty - used to receive input from the keypad
+   * @param {Property.<Number>} valueProperty - used to receive input from the keypad
    * @param {string} pattern - the text pattern to display in the NumberDisplay
    * @param {Object} [options]
    * @constructor

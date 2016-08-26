@@ -63,8 +63,8 @@ define( function( require ) {
 
     /**
      * Called when the user selects a new scene
-     * @param {Property}.<SceneMode> sceneMode - indicates the new scene type
-     * @param {Property}.<SceneMode> oldSceneMode - indicates the previous scene type
+     * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
+     * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
      * @override @protected
      */
     sceneSelectionChanged: function( sceneMode, oldSceneMode ) {

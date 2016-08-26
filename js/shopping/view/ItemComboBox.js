@@ -40,7 +40,7 @@ define( function( require ) {
   /**
    *
    * @param {SceneMode} parentNode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
-   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
+   * @param {Property.<ItemData>} itemDataProperty - the curently selected item
    * @param {Node} parentNode - the parent node of the combobox
    * @param {Object} [options]
    * @constructor

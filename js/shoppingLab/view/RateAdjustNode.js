@@ -44,7 +44,7 @@ define( function( require ) {
   var CANDY_INDEX     = 2;
 
   /**
-   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
+   * @param {Property.<ItemData>} itemDataProperty - the curently selected item
    * @param {Object} [options]
    * @constructor
    */
@@ -189,8 +189,8 @@ define( function( require ) {
 
     /**
      * Called when the user selected a new item type (i.e. "apples", "carrots", "red candy")
-     * @param {Property}.<ItemData> itemData - the item data for the selected item
-     * @param {Property}.<ItemData> itemData - the item data for the previously item
+     * @param {Property.<ItemData>} itemData - the item data for the selected item
+     * @param {Property.<ItemData>} itemData - the item data for the previously item
      * @private
      */
     itemSelectionChanged: function( itemData, oldItemData ) {
@@ -225,8 +225,8 @@ define( function( require ) {
     /**
      * Called when the user changes the total cost or item count
      * Changes the unit rate for the item currently used in the sim
-     * @param {Property}.<number> cost - total cost
-     * @param {Property}.<number> count - number of items
+     * @param {Property.<number>} cost - total cost
+     * @param {Property.<number> }count - number of items
      * @private
      */
     rateChanged: function( cost, count ) {

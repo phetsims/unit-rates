@@ -19,7 +19,7 @@ define( function( require ) {
   var RAND = new Random();
 
   /**
-   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
+   * @param {Property.<ItemData>} itemDataProperty - the curently selected item
    * @constructor
    */
   function Shelf( itemDataProperty ) {

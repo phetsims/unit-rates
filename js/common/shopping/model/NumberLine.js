@@ -15,7 +15,7 @@ define( function( require ) {
   var NumberLineItem = require( 'UNIT_RATES/common/shopping/model/NumberLineItem' );
 
   /**
-   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
+   * @param {Property.<ItemData>} itemDataProperty - the curently selected item
    * @constructor
    */
   function NumberLine( itemDataProperty ) {

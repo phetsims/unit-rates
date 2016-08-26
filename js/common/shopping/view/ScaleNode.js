@@ -178,7 +178,7 @@ define( function( require ) {
 
   /**
    * Node used to display a numeric value associated with the items on the scale (i.e. cost, weight)
-   * @param {Property} valueProperty
+   * @param {Property.<number>} valueProperty
    * @param {Object} [options]
    * @returns {Panel}
    * @private

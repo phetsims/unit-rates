@@ -168,7 +168,7 @@ define( function( require ) {
 
     /**
      * Called when the user selects the sim reset button
-     * @private
+     * @protected
      */
     resetAll: function() {
         this.model.reset();
@@ -185,9 +185,9 @@ define( function( require ) {
 
     /**
      * Call when the user selected a new scene
-     * @param {Property}.<SceneMode> sceneMode - indicates the new scene type
-     * @param {Property}.<SceneMode> oldSceneMode - indicates the previous scene type
-     * @private
+     * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
+     * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
+     * @protected
      */
     sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
 
@@ -203,7 +203,7 @@ define( function( require ) {
      * Updates the model based on where the item is on on the screen - i.e. on the scale or shelf or in no-man's land.
      * Called on scene changes or when an item's node (i.e. individual items or bags) is moved to a new location
      * @param {Node} itemNode - the item being moved.
-     * @private
+     * @protected
      */
     startUpdateItem: function( itemNode ) {
       // Move item back to the shelf
@@ -215,7 +215,7 @@ define( function( require ) {
      * Updates the model based on where the item is on on the screen - i.e. on the scale or shelf or in no-man's land.
      * Called on scene changes or when an item's node (i.e. individual items or bags) is moved to a new location
      * @param {Node} itemNode - the item being moved.
-     * @private
+     * @protected
      */
     endUpdateItem: function( itemNode ) {
 
@@ -264,7 +264,7 @@ define( function( require ) {
     },
 
     /**
-     * @private
+     * @protected
      */
     hideKeypad: function() {
       this.keypad.hide();
@@ -273,7 +273,7 @@ define( function( require ) {
     },
 
     /**
-     * @private
+     * @protected
      */
     removeAllItems: function() {
       // dispose of children before calling removeAllChildren
@@ -286,7 +286,7 @@ define( function( require ) {
     },
 
     /**
-     * @private
+     * @protected
      */
     onResize: function() {
       // resize the pick area to match the screen

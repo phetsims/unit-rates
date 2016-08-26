@@ -64,7 +64,7 @@ define( function( require ) {
   var RAND = new Random();
 
   /**
-   * @param {Property}.<ItemData> itemDataProperty - the curently selected item
+   * @param {Property.<ItemData>} itemDataProperty - the curently selected item
    * @param {function} onCorrectAnswer - function to call when the correct answer is input
    * @constructor
    */
