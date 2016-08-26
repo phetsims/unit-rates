@@ -215,7 +215,7 @@ define( function( require ) {
         }
       );
 
-      this.keypad.visible = true;
+      this.keypad.show();
       this.keypad.clear();
     },
 
@@ -224,7 +224,7 @@ define( function( require ) {
      * @public
      */
     hideKeypad: function() {
-      this.keypad.visible = false;
+      this.keypad.hide();
     },
 
     /**

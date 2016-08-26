@@ -22,7 +22,7 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Panel = require( 'SUN/Panel' );
-  var AccordionBox = require( 'SUN/AccordionBox' );
+  var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
   var Dimension2 = require( 'DOT/Dimension2' );
@@ -42,6 +42,7 @@ define( function( require ) {
   var DISPLAY_SIZE          = new Dimension2( 70, 40 );
 
   // strings
+  var costString = require( 'string!UNIT_RATES/cost' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
   var lbsString = require( 'string!UNIT_RATES/lbs' );
 
@@ -56,7 +57,9 @@ define( function( require ) {
    */
   function ScaleNode( scale, itemLayer, startMoveCallback, endMoveCallback, options ) {
 
-    options = options || {};
+    options = options || {
+      enableHideCost: false
+    };
 
     var self = this;
 
@@ -93,34 +96,19 @@ define( function( require ) {
     this.costOnlyDisplayX = this.scaleNode.centerX;
     this.costUnitDisplayX = this.scaleNode.centerX - ( DISPLAY_SIZE.width / 2 ) - DISPLAY_SPACING;
 
-    this.costBoxContentNode = new Node();
+    this.showCostProperty = new Property( true );
 
     // cost of items display, always visible
     // @private
     this.costDisplayNode = new ValueDisplayNode( this.scale.costProperty, {
-      preText: currencySymbolString,
-      decimalPlaces: 2
-    } );
-    this.costBoxContentNode.addChild( this.costDisplayNode );
-
-    this.expandedProperty = new Property( true );
-    this.costBoxNode = new AccordionBox( this.costBoxContentNode, {
       centerX: this.costOnlyDisplayX,
       centerY: this.scaleNode.bottom - DISPLAY_BOTTOM_OFFSET,
-      expandedProperty: this.expandedProperty,
-      fill: 'white',
-      cornerRadius: 5,
-      buttonLength: 15,
-      buttonXMargin: 5,
-      buttonYMargin: 3,
-      showTitleWhenExpanded: false,
-      contentAlign: 'center',
-      contentXMargin: 0,
-      contentYMargin: 0,
-      buttonTouchAreaXDilation: 8,
-      buttonTouchAreaYDilation: 8
+      preText: currencySymbolString,
+      decimalPlaces: 2,
+      enableHideValue: options.enableHideCost,
+      hideValueProperty: this.showCostProperty,
+      hiddenValueText: costString
     } );
-    //this.costBoxNode.expandCollapseButton.visible = false;
 
     // weight of items display, visibility changes
     // @private
@@ -131,7 +119,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ this.scaleNode, this.scaleTopNode, this.dropNode, this.costBoxNode, this.weightDisplayNode ];
+    options.children = [ this.scaleNode, this.scaleTopNode, this.dropNode, this.costDisplayNode, this.weightDisplayNode ];
 
     Node.call( this, options );
 
@@ -150,10 +138,10 @@ define( function( require ) {
 
       // move cost display
       if ( self.weightDisplayNode.visible ) {
-        self.costBoxNode.centerX = self.costUnitDisplayX;
+        self.costDisplayNode.centerX = self.costUnitDisplayX;
       }
       else {
-        self.costBoxNode.centerX = self.costOnlyDisplayX;
+        self.costDisplayNode.centerX = self.costOnlyDisplayX;
       }
 
       var itemNode = ItemNodeFactory.createItem( new Item( itemData, ( isFruit ? 1 : 2 ) ) );
@@ -190,12 +178,12 @@ define( function( require ) {
 
   /**
    * Node used to display a numeric value associated with the items on the scale (i.e. cost, weight)
-   * @param {Property} property
+   * @param {Property} valueProperty
    * @param {Object} [options]
    * @returns {Panel}
    * @private
    */
-  function ValueDisplayNode( property, options ) {
+  function ValueDisplayNode( valueProperty, options ) {
 
     options = options || {};
 
@@ -208,23 +196,48 @@ define( function( require ) {
       resize: false,
       cornerRadius: 5,
       lineWidth: 0,
-      align: 'center'
+      align: 'center',
+      enableHideValue: false,
+      hideValueProperty: new Property( false ),
+      hiddenValueText: ''
     }, options );
+
+    var self = this;
+
+    this.enableHideValue   = options.enableHideValue;
+    this.hideValueProperty = options.hideValueProperty;
+    this.hiddenValueText   = options.hiddenValueText;
+
+    var contentNode = new Node();
+
+    if( this.enableHideValue  ) {
+      this.showValueButton = new ExpandCollapseButton( this.hideValueProperty, {
+        sideLength: 15
+      } );
+      contentNode.addChild( this.showValueButton );
+    }
 
     // @private
     var valueText = new Text( '-', {
+      left: ( this.showValueButton ? this.showValueButton.right + 4 : 0 ),
+      top:  ( this.showValueButton ? this.showValueButton.top : 0 ),
       font: DISPLAY_FONT,
       maxWidth: 0.9 * DISPLAY_SIZE.width,
       maxHeight: 0.9 * DISPLAY_SIZE.height
     } );
+    contentNode.addChild( valueText );
 
     // update value text
-    property.link( function( value, oldValue ) {
-      var fixedValue = Util.toFixed( value, options.decimalPlaces );
-      valueText.setText( options.preText + ' ' + fixedValue.toString() + ' ' + options.postText );
+    Property.multilink( [ valueProperty, this.hideValueProperty ], function( value, hideValue ) {
+      if( self.enableHideValue && !hideValue ) {
+        valueText.setText( ' ' + self.hiddenValueText );
+      } else {
+        var valueString = Util.toFixed( value, options.decimalPlaces ).toString();
+        valueText.setText( options.preText + ' ' + valueString + ' ' + options.postText );
+      }
     } );
 
-    return new Panel( valueText, options);
+    return new Panel( contentNode, options);
   }
 
   unitRates.register( 'ScaleNode', ScaleNode );

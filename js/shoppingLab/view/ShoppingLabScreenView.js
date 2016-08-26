@@ -20,7 +20,6 @@ define( function( require ) {
 
   /**
    * @param {ShoppingLabModel} model
-   * @param {boolean} labFlag
    * @constructor
    */
   function ShoppingLabScreenView( model ) {
@@ -31,7 +30,7 @@ define( function( require ) {
     this.sceneItemData[ SceneMode.PRODUCE ] = ItemData.CARROTS;
     this.sceneItemData[ SceneMode.CANDY ]   = ItemData.PURPLE_CANDY;
 
-    URShoppingScreenView.call( this, model );
+    URShoppingScreenView.call( this, model, true );
   }
 
   unitRates.register( 'ShoppingLabScreenView', ShoppingLabScreenView );

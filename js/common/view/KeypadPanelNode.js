@@ -18,6 +18,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var Panel = require( 'SUN/Panel' );
+  var Property = require( 'AXON/Property' );
 
   // strings
   var enterString = require( 'string!UNIT_RATES/enter' );
@@ -36,6 +37,9 @@ define( function( require ) {
     options = _.extend( {
       maxDigits: 4
     },  options || {} );
+
+    // @public
+    this.visibleProperty  = new Property( true );
 
     // @protected - all
     this.onSubmit = null;             // {function}() to call when the enter/check button is pressed
@@ -104,6 +108,24 @@ define( function( require ) {
   unitRates.register( 'KeypadPanelNode', KeypadPanelNode );
 
   return inherit( Panel, KeypadPanelNode, {
+
+    /**
+     * Sets visible & public property to false
+     * @public
+     */
+    hide: function() {
+      this.visible = false;
+      this.visibleProperty.value = this.visible;
+    },
+
+    /**
+     * Sets visible & public property to true
+     * @public
+     */
+    show: function() {
+      this.visible = true;
+      this.visibleProperty.value = this.visible;
+    },
 
     /**
      * Callback for the keypad string change

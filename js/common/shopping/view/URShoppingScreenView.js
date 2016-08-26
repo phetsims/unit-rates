@@ -20,6 +20,7 @@ define( function( require ) {
   var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
   var ShelfNode = require( 'UNIT_RATES/common/shopping/view/ShelfNode' );
   var ScaleNode = require( 'UNIT_RATES/common/shopping/view/ScaleNode' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Image = require( 'SCENERY/nodes/Image' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -32,10 +33,10 @@ define( function( require ) {
 
   /**
    * @param {ShoppingModel} model
-   * @param {boolean} labFlag
+   * @param {boolean} enableHideScaleCost
    * @constructor
    */
-  function URShoppingScreenView( model, labFlag ) {
+  function URShoppingScreenView( model, enableHideScaleCost ) {
 
     ScreenView.call( this );
 
@@ -64,8 +65,25 @@ define( function( require ) {
     this.keypad.right = this.numberLineNode.right - 30;
     this.keypad.top   = this.numberLineNode.bottom + 2 * ShoppingConstants.SCREEN_PANEL_SPACING;
 
+    // @protected - covers entire screen, uses pick to close keypad
+    this.keypadCloseArea = new Rectangle( 0, 0, window.innerWidth, window.innerHeight, { visible: false } );
+    this.addChild( this.keypadCloseArea );
+
+    this.keypad.visibleProperty.link( function( value, oldValue ) {
+      self.keypadCloseArea.visible = value;
+    } );
+
+    // Click on pickCloseArea to close keypad
+    this.keypadCloseArea.addInputListener( {
+      down: function( event ) {
+        self.keypad.hide();
+        self.keypad.clear();
+        self.keypad.clearListeners();
+      }
+    } );
+
     // transparent layer holding draggable shelf & scale item nodes
-    this.itemsLayer = new Rectangle( 0, 0, this.width, this.height); //, { pickable: false } );
+    this.itemsLayer = new Node();
     this.addChild( this.itemsLayer );
 
     // shelf
@@ -80,7 +98,8 @@ define( function( require ) {
     this.scaleNode = new ScaleNode( model.scale, this.itemsLayer,
                                     this.startUpdateItem.bind( this ), this.endUpdateItem.bind( this ) , {
       centerX: this.shelfNode.centerX,
-      bottom:  this.shelfNode.top - 75
+      bottom:  this.shelfNode.top - 75,
+      enableHideCost: enableHideScaleCost
     } );
     this.addChild( this.scaleNode );
 
@@ -123,20 +142,12 @@ define( function( require ) {
     // select the scene
     this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this) );
 
-    // Layer the draggable/clickable nodes for proper rendering/interaction
+    // Layer the keypad & draggable nodes for proper rendering/interaction
+    this.keypadCloseArea.moveToFront();
+    this.keypad.moveToFront();
     this.itemsLayer.moveToFront();
-    //this.scaleNode.moveToBack();
-    //this.shelfNode.moveToBack();
 
-    // Click on screen to close keypad
-    //this.itemsLayer.addInputListener( {
-    //  down: function( event ) {
-    //    self.hideKeypad();
-    //  }
-    //} );
-
-    // resize the items layer on a browser size change
-    this.onResize();
+    // resize the keypad pick layer on a browser size change
     this.addEventListener( 'bounds', this.onResize.bind( this ) );
 
     // initialize shelf items
@@ -256,7 +267,7 @@ define( function( require ) {
      * @private
      */
     hideKeypad: function() {
-      this.keypad.visible = false;
+      this.keypad.hide();
       this.keypad.clear();
       this.keypad.clearListeners();
     },
@@ -278,8 +289,8 @@ define( function( require ) {
      * @private
      */
     onResize: function() {
-      // resize the items layer to match the screen
-      this.itemsLayer.setRectBounds( new Bounds2( 0, 0,  window.innerWidth, window.innerHeight ) );
+      // resize the pick area to match the screen
+      this.keypadCloseArea.setRectBounds( new Bounds2( 0, 0,  window.innerWidth, window.innerHeight ) );
     }
 
   } ); // inherit

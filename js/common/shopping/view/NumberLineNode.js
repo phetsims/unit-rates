@@ -208,7 +208,7 @@ define( function( require ) {
         this.createItemMarkerNode( editItem );
 
         // reset the kepad
-        this.keypad.visible = false;
+        this.keypad.hide();
         this.keypad.clear();
       }
 
@@ -423,7 +423,7 @@ define( function( require ) {
     removeAllMarkers: function() {
 
       // Hide the keypad
-      this.keypad.visible = false;
+      this.keypad.hide();
 
       this.undoItemNodeList.length = 0;
 

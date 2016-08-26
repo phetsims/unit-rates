@@ -21,7 +21,6 @@ define( function( require ) {
 
   /**
    * @param {ShoppingModel} model
-   * @param {boolean} labFlag
    * @constructor
    */
   function ShoppingScreenView( model ) {
