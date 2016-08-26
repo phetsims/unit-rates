@@ -395,6 +395,7 @@ define( function( require ) {
      * @public
      */
     reset: function() {
+      this.showCostProperty.reset();
       this.populate();
     }
 
