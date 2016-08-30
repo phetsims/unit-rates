@@ -12,11 +12,10 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URShoppingScreenView = require( 'UNIT_RATES/common/shopping/view/URShoppingScreenView' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
-  var RateAdjustNode = require( 'UNIT_RATES/shoppingLab/view/RateAdjustNode' );
-  //var Property = require( 'AXON/Property' );
+  var ItemRateNode = require( 'UNIT_RATES/shoppingLab/view/ItemRateNode' );
 
   /**
    * @param {ShoppingLabModel} model
@@ -43,11 +42,11 @@ define( function( require ) {
      */
     addSubclassScreenNodes: function() {
 
-      this.adjustRateNode = new RateAdjustNode( this.model.itemDataProperty, {
-        left: this.layoutBounds.left + ShoppingConstants.SCREEN_PANEL_SPACING,
+      this.itemRateNode = new ItemRateNode( this.model.itemDataProperty, {
+        left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
         bottom:  this.scaleNode.bottom
       } );
-      this.addChild( this.adjustRateNode );
+      this.addChild( this.itemRateNode );
     },
 
     /**
@@ -56,7 +55,7 @@ define( function( require ) {
      */
     resetAll: function() {
 
-      this.adjustRateNode.reset();
+      this.itemRateNode.reset();
 
       URShoppingScreenView.prototype.resetAll.call( this );
     },

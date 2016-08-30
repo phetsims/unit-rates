@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URShoppingScreenView = require( 'UNIT_RATES/common/shopping/view/URShoppingScreenView' );
   var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
@@ -49,17 +49,17 @@ define( function( require ) {
         self.model.addChallengeItemsToNumberline();   // add new (i.e. correct unit rate)
         self.numberLineNode.populate();
       };
-      var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + ShoppingConstants.SCREEN_PANEL_SPACING + ShoppingConstants.SCREEN_HORIZONTAL_MARGIN );
+      var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING + URConstants.SCREEN_HORIZONTAL_MARGIN );
       this.challengesNode = new ChallengesNode( this.model.challenges, this.keypad, challengeWidth, onChallengePopulate, {
-        left: this.numberLineNode.right + ShoppingConstants.SCREEN_PANEL_SPACING,
-        top:  this.layoutBounds.top + ShoppingConstants.SCREEN_VERTICAL_MARGIN
+        left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
+        top:  this.layoutBounds.top + URConstants.SCREEN_VERTICAL_MARGIN
       } );
       this.addChild( this.challengesNode );
 
       // item selection - 1 combo box for each scene, hidden and shown based on sceneModeProperty
       var itemComboBoxOptions = {
-        left:   this.layoutBounds.left   + ShoppingConstants.SCREEN_HORIZONTAL_MARGIN,
-        bottom: this.layoutBounds.bottom - ShoppingConstants.SCREEN_VERTICAL_MARGIN
+        left:   this.layoutBounds.left   + URConstants.SCREEN_HORIZONTAL_MARGIN,
+        bottom: this.layoutBounds.bottom - URConstants.SCREEN_VERTICAL_MARGIN
       };
       this.fruitItemsComboBox = new ItemComboBox( SceneMode.FRUIT, this.fruitItemDataProperty,
         this, itemComboBoxOptions);

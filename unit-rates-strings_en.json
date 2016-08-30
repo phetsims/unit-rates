@@ -160,5 +160,11 @@
   },
   "forQuestion": {
     "value": "{0} for ${1}?"
+  },
+  "miles": {
+    "value": "miles"
+  },
+  "hours": {
+    "value": "hours"
   }
 }

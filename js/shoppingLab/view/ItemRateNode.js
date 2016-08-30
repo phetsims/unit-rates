@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A node containing all the challenge Q&A's nodes in a collapsable box
+ * A collapsable box node containing (several) spinners for changing the current unit rate
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -48,7 +48,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function RateAdjustNode( itemDataProperty, options ) {
+  function ItemRateNode( itemDataProperty, options ) {
 
     options = _.extend( {
     },  options || {} );
@@ -181,9 +181,9 @@ define( function( require ) {
     this.mutate( options );
   }
 
-  unitRates.register( 'RateAdjustNode', RateAdjustNode );
+  unitRates.register( 'ItemRateNode', ItemRateNode );
 
-  return inherit( AccordionBox, RateAdjustNode, {
+  return inherit( AccordionBox, ItemRateNode, {
 
     // no dispose, persists for the lifetime of the sim.
 

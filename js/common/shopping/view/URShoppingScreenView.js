@@ -12,7 +12,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var SceneButtonGroupNode = require( 'UNIT_RATES/common/shopping/view/SceneButtonGroupNode' );
@@ -57,13 +56,13 @@ define( function( require ) {
 
     // number line
     this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
-      left: this.layoutBounds.left + ShoppingConstants.SCREEN_PANEL_SPACING,
-      top:  this.layoutBounds.top  + ShoppingConstants.SCREEN_VERTICAL_MARGIN } );
+      left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
+      top:  this.layoutBounds.top  + URConstants.SCREEN_VERTICAL_MARGIN } );
     this.addChild( this.numberLineNode );
 
     // keypad layout
     this.keypad.right = this.numberLineNode.right - 30;
-    this.keypad.top   = this.numberLineNode.bottom + 2 * ShoppingConstants.SCREEN_PANEL_SPACING;
+    this.keypad.top   = this.numberLineNode.bottom + 2 * URConstants.SCREEN_PANEL_SPACING;
 
     // @protected - covers entire screen, uses pick to close keypad
     this.keypadCloseArea = new Rectangle( 0, 0, window.innerWidth, window.innerHeight, { visible: false } );
@@ -90,7 +89,7 @@ define( function( require ) {
     this.shelfNode = new ShelfNode( model.shelf, this.itemsLayer,
                                     this.startUpdateItem.bind( this ), this.endUpdateItem.bind( this ), {
       centerX: this.numberLineNode.centerX + 15,
-      bottom:  this.layoutBounds.bottom - ShoppingConstants.SCREEN_VERTICAL_MARGIN
+      bottom:  this.layoutBounds.bottom - URConstants.SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( this.shelfNode );
 
@@ -105,7 +104,7 @@ define( function( require ) {
 
     // remove button
     var scaleRemoveButtonNode = new RectangularPushButton( {
-      right:  this.scaleNode.left - ShoppingConstants.SCREEN_PANEL_SPACING,
+      right:  this.scaleNode.left - URConstants.SCREEN_PANEL_SPACING,
       bottom: this.scaleNode.bottom,
       baseColor: URConstants.DEFAULT_BUTTON_COLOR,
       content: new Image( removeButtonImage, { scale: 0.25 } ),
@@ -124,8 +123,8 @@ define( function( require ) {
       listener: function() {
         self.resetAll();
       },
-      right:  this.layoutBounds.maxX - ShoppingConstants.SCREEN_HORIZONTAL_MARGIN,
-      bottom: this.layoutBounds.maxY - ShoppingConstants.SCREEN_VERTICAL_MARGIN
+      right:  this.layoutBounds.maxX - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      bottom: this.layoutBounds.maxY - URConstants.SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( resetAllButton );
 
@@ -133,9 +132,8 @@ define( function( require ) {
 
     // scene buttons
     var sceneControlButtons = new SceneButtonGroupNode( this.sceneModeProperty, {
-      right:  this.layoutBounds.right - ShoppingConstants.SCREEN_HORIZONTAL_MARGIN,
-      //centerX:  this.challengesNode.centerX,
-      bottom: resetAllButton.top - ShoppingConstants.SCREEN_VERTICAL_MARGIN
+      right:  this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( sceneControlButtons );
 

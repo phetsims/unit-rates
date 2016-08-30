@@ -212,7 +212,9 @@ define( function( require ) {
 
     if( this.enableHideValue  ) {
       this.showValueButton = new ExpandCollapseButton( this.hideValueProperty, {
-        sideLength: 15
+        sideLength: 15,
+        touchAreaXDilation: 30,
+        touchAreaYDilation: 30
       } );
       contentNode.addChild( this.showValueButton );
     }

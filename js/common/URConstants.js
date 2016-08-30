@@ -17,6 +17,13 @@
   var URConstants = {
 
     //----------------------------------------------------------------------------
+    // Screens
+    //----------------------------------------------------------------------------
+    SCREEN_HORIZONTAL_MARGIN: 15, // screen top/bottom margin for panels (i.e numberline/challenges/shelf)
+    SCREEN_VERTICAL_MARGIN:   20, // screen left/right panel margin
+    SCREEN_PANEL_SPACING:     12, // space between major panels (i.e. numberline/challenges/keypad)
+
+    //----------------------------------------------------------------------------
     // Views
     //----------------------------------------------------------------------------
     PANEL_TITLE_FONT: new PhetFont( 14 ),   // Font use on all major panels (i.e. accordian boxes)
