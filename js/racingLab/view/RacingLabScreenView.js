@@ -15,6 +15,8 @@ define( function( require ) {
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
   var SpeedRateNode = require( 'UNIT_RATES/racingLab/view/SpeedRateNode' );
+  var RaceTrackNode = require( 'UNIT_RATES/racingLab/view/RaceTrackNode' );
+  var PlayPauseButton = require( 'SCENERY_PHET/buttons/PlayPauseButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Image = require( 'SCENERY/nodes/Image' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -25,6 +27,10 @@ define( function( require ) {
   // images
   var oneCarImage = require( 'image!UNIT_RATES/one_car.png' );
   var twoCarImage = require( 'image!UNIT_RATES/two_car.png' );
+
+  // strings
+  var milesCapString = require( 'string!UNIT_RATES/milesCap' );
+  var hoursCapString = require( 'string!UNIT_RATES/hoursCap' );
 
   /**
    * @param {RacingLabModel} model
@@ -54,13 +60,22 @@ define( function( require ) {
       left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
       top:  this.layoutBounds.top  + URConstants.SCREEN_VERTICAL_MARGIN } );
     this.addChild( this.numberLineNode );
+    this.numberLineNode.setLineLabels( milesCapString, hoursCapString );
 
     // number line
-    this.rate1Node = new SpeedRateNode( model, {
+    this.rateNode = new SpeedRateNode( model, {
       left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
       top:  this.layoutBounds.top     + URConstants.SCREEN_VERTICAL_MARGIN
     } );
-    this.addChild( this.rate1Node );
+    this.addChild( this.rateNode );
+
+    // track
+    this.trackNode = new RaceTrackNode( model.timerProperty, {
+      left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
+      top:  this.numberLineNode.bottom  + URConstants.SCREEN_VERTICAL_MARGIN,
+      timerText: 'Timer 1'
+    } );
+    this.addChild( this.trackNode );
 
     // keypad layout
     this.keypad.right = this.numberLineNode.right - 30;
@@ -82,6 +97,14 @@ define( function( require ) {
         self.keypad.clearListeners();
       }
     } );
+
+    // play/pause button
+    var playPauseButton = new PlayPauseButton( model.runningProperty, {
+      left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
+      top: this.trackNode.bottom + URConstants.SCREEN_PANEL_SPACING,
+      radius: 34
+    } );
+    this.addChild( playPauseButton );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
@@ -126,7 +149,8 @@ define( function( require ) {
     resetAll: function() {
         this.model.reset();
 
-        this.rate1Node.reset();
+        this.rateNode.reset();
+
         this.carCountProperty.reset();
         this.hideKeypad();
         this.numberLineNode.reset();

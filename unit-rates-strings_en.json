@@ -161,10 +161,19 @@
   "forQuestion": {
     "value": "{0} for ${1}?"
   },
+  "mi": {
+    "value": "mi"
+  },
   "miles": {
     "value": "miles"
   },
   "hours": {
     "value": "hours"
+  },
+  "milesCap": {
+    "value": "Miles"
+  },
+  "hoursCap": {
+    "value": "Hours"
   }
 }
