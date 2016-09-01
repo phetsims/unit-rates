@@ -30,6 +30,9 @@ define( function( require ) {
   // images
   var removeButtonImage = require( 'image!UNIT_RATES/remove-button.png' );
 
+  // strings
+  var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
+
   /**
    * @param {ShoppingModel} model
    * @param {boolean} enableHideScaleCost
@@ -57,7 +60,9 @@ define( function( require ) {
     // number line
     this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
       left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
-      top:  this.layoutBounds.top  + URConstants.SCREEN_VERTICAL_MARGIN } );
+      top:  this.layoutBounds.top  + URConstants.SCREEN_VERTICAL_MARGIN,
+      numberLineTitle: doubleNumberLineString
+    } );
     this.addChild( this.numberLineNode );
 
     // keypad layout

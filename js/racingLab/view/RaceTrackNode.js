@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  //var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var TimerNode = require( 'UNIT_RATES/racingLab/view/TimerNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -44,7 +44,7 @@ define( function( require ) {
       trackDistance:        250,
       trackMarkerInterval:  25,
       trackDimensions:      new Dimension2( 675, 100 ),
-      timerText:            ''
+      timerTitle:           ''
     }, options || {} );
 
     this.trackDimensions = options.trackDimensions;
@@ -67,7 +67,7 @@ define( function( require ) {
     } );
 
     this.greenFlagNode = new Image( greenFlagImage, {
-      scale:  0.075,
+      scale:  0.1,
       left:   this.origin.x,
       bottom: this.origin.y
     } );
@@ -78,7 +78,7 @@ define( function( require ) {
         .lineTo( -DIST_MARKER_SIZE / 2, DIST_MARKER_SIZE )
         .lineTo(  DIST_MARKER_SIZE / 2, DIST_MARKER_SIZE )
         .lineTo( 0, 0 ),  {
-      centerX:    this.origin.x,
+      centerX:    this.origin.x + 25,
       top:        this.origin.y,
       stroke:     'black',
       lineWidth:  1.25,
@@ -86,16 +86,16 @@ define( function( require ) {
     } );
 
     this.checkerFlagNode = new Image( checkerFlagImage, {
-      scale:  0.075,
+      scale:  0.1,
       left:   this.trackDimensions.width,
       bottom: this.origin.y
     } );
 
     // timer
     this.timer = new TimerNode( elpasedTimeProperty, {
-      left:  boundsNode.right,
-      top:   boundsNode.top,
-      hiddenTimeText: 'Timer 1'
+      left:  this.checkerFlagNode.right + URConstants.SCREEN_PANEL_SPACING,
+      centerY:   boundsNode.centerY,
+      hiddenTimeText: options.timerTitle
     } );
 
     assert && assert( !options.children, 'additional children not supported' );

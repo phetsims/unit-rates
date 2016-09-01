@@ -2,7 +2,7 @@
 
 /**
  *
- * @author TBD
+ * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
   'use strict';
@@ -12,10 +12,8 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
+  var CarWorksheetNode = require( 'UNIT_RATES/racingLab/view/CarWorksheetNode' );
   var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
-  var SpeedRateNode = require( 'UNIT_RATES/racingLab/view/SpeedRateNode' );
-  var RaceTrackNode = require( 'UNIT_RATES/racingLab/view/RaceTrackNode' );
   var PlayPauseButton = require( 'SCENERY_PHET/buttons/PlayPauseButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Image = require( 'SCENERY/nodes/Image' );
@@ -29,8 +27,12 @@ define( function( require ) {
   var twoCarImage = require( 'image!UNIT_RATES/two_car.png' );
 
   // strings
-  var milesCapString = require( 'string!UNIT_RATES/milesCap' );
-  var hoursCapString = require( 'string!UNIT_RATES/hoursCap' );
+  var doubleNumberLine1String = require( 'string!UNIT_RATES/doubleNumberLine1' );
+  var doubleNumberLine2String = require( 'string!UNIT_RATES/doubleNumberLine2' );
+  var rate1String = require( 'string!UNIT_RATES/rate1' );
+  var rate2String = require( 'string!UNIT_RATES/rate2' );
+  var timer1String = require( 'string!UNIT_RATES/timer1' );
+  var timer2String = require( 'string!UNIT_RATES/timer2' );
 
   /**
    * @param {RacingLabModel} model
@@ -54,32 +56,36 @@ define( function( require ) {
     } );
     this.addChild( this.keypad );
 
-    // number line
-    this.numberLineNode = new URNumberLineNode( {
-    //this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
-      left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
-      top:  this.layoutBounds.top  + URConstants.SCREEN_VERTICAL_MARGIN } );
-    this.addChild( this.numberLineNode );
-    this.numberLineNode.setLineLabels( milesCapString, hoursCapString );
-
-    // number line
-    this.rateNode = new SpeedRateNode( model, {
-      left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
-      top:  this.layoutBounds.top     + URConstants.SCREEN_VERTICAL_MARGIN
+    this.worksheetNode1 = new CarWorksheetNode( model, this.keypad, {
+      left:             URConstants.SCREEN_PANEL_SPACING,
+      top:              URConstants.SCREEN_VERTICAL_MARGIN,
+      numberLineTitle:  doubleNumberLine1String,
+      rateTitle:        rate1String,
+      timerTitle:       timer1String
     } );
-    this.addChild( this.rateNode );
+    this.addChild( this.worksheetNode1 );
 
-    // track
-    this.trackNode = new RaceTrackNode( model.timerProperty, {
-      left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
-      top:  this.numberLineNode.bottom  + URConstants.SCREEN_VERTICAL_MARGIN,
-      timerText: 'Timer 1'
+    this.worksheetNode2 = new CarWorksheetNode( model, this.keypad, {
+        left:             URConstants.SCREEN_PANEL_SPACING,
+        top:              this.worksheetNode1.bottom + URConstants.SCREEN_PANEL_SPACING,
+        trackOnTop:       true,
+        numberLineTitle:  doubleNumberLine2String,
+        rateTitle:        rate2String,
+        timerTitle:       timer2String
     } );
-    this.addChild( this.trackNode );
+    this.addChild( this.worksheetNode2 );
+
+    // play/pause button
+    var playPauseButton = new PlayPauseButton( model.runningProperty, {
+      right: this.worksheetNode2.right,
+      centerY: this.worksheetNode2.top - URConstants.SCREEN_PANEL_SPACING / 2,
+      radius: 34
+    } );
+    this.addChild( playPauseButton );
 
     // keypad layout
-    this.keypad.right = this.numberLineNode.right - 30;
-    this.keypad.top   = this.numberLineNode.bottom + 2 * URConstants.SCREEN_PANEL_SPACING;
+    this.keypad.right = this.worksheetNode1.right - 30;
+    this.keypad.top   = this.worksheetNode1.bottom + 2 * URConstants.SCREEN_PANEL_SPACING;
 
     // @protected - covers entire screen, uses pick to close keypad
     this.keypadCloseArea = new Rectangle( 0, 0, window.innerWidth, window.innerHeight, { visible: false } );
@@ -98,14 +104,6 @@ define( function( require ) {
       }
     } );
 
-    // play/pause button
-    var playPauseButton = new PlayPauseButton( model.runningProperty, {
-      left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
-      top: this.trackNode.bottom + URConstants.SCREEN_PANEL_SPACING,
-      radius: 34
-    } );
-    this.addChild( playPauseButton );
-
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
@@ -122,11 +120,15 @@ define( function( require ) {
     ], {
       right:  this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN,
-      orientation: 'vertical',
-      baseColor: 'white',
-      spacing: 5
+      orientation:  'vertical',
+      baseColor:    'white',
+      spacing:        5
     } );
     this.addChild( carCountButtons );
+
+    this.carCountProperty.link( function( value, oldValue ) {
+      self.worksheetNode2.visible = ( value === 2 );
+    } );
   }
 
   unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
@@ -149,11 +151,12 @@ define( function( require ) {
     resetAll: function() {
         this.model.reset();
 
-        this.rateNode.reset();
-
         this.carCountProperty.reset();
+
+        this.worksheetNode1.reset();
+        this.worksheetNode2.reset();
+
         this.hideKeypad();
-        this.numberLineNode.reset();
     },
 
     /**

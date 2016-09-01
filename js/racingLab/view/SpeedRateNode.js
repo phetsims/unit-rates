@@ -24,18 +24,17 @@ define( function( require ) {
   //var Util = require( 'DOT/Util' );
 
   // strings
-  var rateString = require( 'string!UNIT_RATES/rate' );
   var milesString = require( 'string!UNIT_RATES/miles' );
   var hoursString = require( 'string!UNIT_RATES/hours' );
 
   // constants
   var TEXT_FONT       = new PhetFont( 18 ); // Font to use for all text
   var TEXT_MAX_WIDTH  = 125;
-  var DIVISOR_WIDTH   = 135;
-  var X_MARGIN        = 20;
+  var DIVISOR_WIDTH   = 100;
+  var X_MARGIN        = 10;
   var Y_MARGIN        = 0;
-  var X_SPACING       = 20;
-  var Y_SPACING       = 10;
+  var X_SPACING       = 10;
+  var Y_SPACING       = 8;
 
   /**
    * @param {RacingLabModel} model
@@ -45,13 +44,14 @@ define( function( require ) {
   function SpeedRateNode( model, options ) {
 
     options = _.extend( {
+      rateTitle:  ''
     },  options || {} );
 
     // @protected - all
     this.milesRangeProperty = new Property( new RangeWithValue( 1, 250 ) );
     this.milesProperty      = new Property( 50 ),
-    this.hoursRangeProperty  = new Property( new RangeWithValue( 1, 20 ) );
-    this.hoursProperty       = new Property( 2 ),
+    this.hoursRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
+    this.hoursProperty      = new Property( 2 ),
 
     this.contentNode = new Node();
 
@@ -120,7 +120,7 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 15,
       buttonYMargin: 15,
-      titleNode: new Text( rateString, { font: URConstants.PANEL_TITLE_FONT, maxWidth: 100 } ),
+      titleNode: new Text( options.rateTitle, { font: URConstants.PANEL_TITLE_FONT, maxWidth: 100 } ),
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       contentAlign: 'center',

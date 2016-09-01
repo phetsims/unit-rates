@@ -24,9 +24,6 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  // strings
-  var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
-
   /**
    * @param {Object} [options]
    * @constructor
@@ -34,6 +31,7 @@ define( function( require ) {
   function URNumberLineNode( options ) {
 
      options = _.extend( {
+      numberLineTitle:    '',
       graphWidth:         675,
       graphHeight:        130,
       xAxisOffset:        10,
@@ -134,7 +132,7 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 15,
       buttonYMargin: 15,
-      titleNode: new Text( doubleNumberLineString, { font: URConstants.PANEL_TITLE_FONT } ),
+      titleNode: new Text( options.numberLineTitle, { font: URConstants.PANEL_TITLE_FONT } ),
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       contentAlign: 'left',

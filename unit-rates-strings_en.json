@@ -11,12 +11,6 @@
   "screen.racingLab": {
     "value": "Racing Lab"
   },
-  "doubleNumberLine": {
-    "value": "Double Number Line"
-  },
-  "rate": {
-    "value": "Rate"
-  },
   "currencySymbol": {
     "value": "$"
   },
@@ -175,5 +169,29 @@
   },
   "hoursCap": {
     "value": "Hours"
+  },
+  "timer1": {
+    "value": "Timer 1"
+  },
+  "timer2": {
+    "value": "Timer 2"
+  },
+  "doubleNumberLine": {
+    "value": "Double Number Line"
+  },
+  "doubleNumberLine1": {
+    "value": "Double Number Line 1"
+  },
+  "doubleNumberLine2": {
+    "value": "Double Number Line 2"
+  },
+    "rate": {
+    "value": "Rate"
+  },
+    "rate1": {
+    "value": "Rate 1"
+  },
+    "rate2": {
+    "value": "Rate 2"
   }
 }
