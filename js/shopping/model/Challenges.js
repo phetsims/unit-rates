@@ -160,7 +160,8 @@ define( function( require ) {
         var candyAnswerText1 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemData.rate.value, 2 ) );
         var c1 = new QuestionAnswer( candyItem1, itemData.rate.value, candyAnswerText1, {
           questionString: unitRateQuestionString,
-          unitString: poundString
+          unitString: poundString,
+          onCorrectAnswerCallback: this.onCorrectAnswer
         } );
 
         // Q: Cost of # <type>?
