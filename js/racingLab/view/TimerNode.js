@@ -45,18 +45,18 @@ define( function( require ) {
       cornerRadius:     5,
       lineWidth:        1.5,
       align:            'left',
-      hideTimeProperty: new Property( false ),
+      showTimeProperty: new Property( true ),
       hiddenTimeText:   ''
     }, options || {} );
 
     var self = this;
 
-    this.hideTimeProperty = options.hideTimeProperty;
+    this.showTimeProperty = options.showTimeProperty;
     this.hiddenTimeText   = options.hiddenTimeText;
 
     var contentNode = new Node();
 
-    this.showTimeButton = new ExpandCollapseButton( this.hideTimeProperty, {
+    this.showTimeButton = new ExpandCollapseButton( this.showTimeProperty, {
       sideLength:         15,
       touchAreaXDilation: 30,
       touchAreaYDilation: 30
@@ -86,8 +86,8 @@ define( function( require ) {
     Panel.call( this, contentNode, options);
 
     // update value text
-    Property.multilink( [ elapsedTimeProperty, this.hideTimeProperty ], function( elapsedTime, hiddenValue ) {
-      if( hiddenValue ) {
+    Property.multilink( [ elapsedTimeProperty, this.showTimeProperty ], function( elapsedTime, showTime ) {
+      if( !showTime ) {
         timerText.setText( self.hiddenTimeText );
         unitText.visible = false;
       } else {

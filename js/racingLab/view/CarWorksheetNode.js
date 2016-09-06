@@ -29,6 +29,8 @@ define( function( require ) {
     options = _.extend( {
       numberLineTitle:   '',
       rateTitle:         '',
+      rateColor:         'rgb(50,50,50)',
+      ratePressedColor:  'rgb(100,100,100)',
       timerTitle:        '',
       trackOnTop:       false
     }, options || {} );
@@ -38,15 +40,17 @@ define( function( require ) {
     // number line
     this.numberLineNode = new URNumberLineNode( {
     //this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
-      numberLineTitle: options.numberLineTitle,
-      graphHeight:        75
+      numberLineTitle:  options.numberLineTitle,
+      graphHeight:      75
      } );
     this.numberLineNode.setLineLabels( milesCapString, hoursCapString );
 
     // number line
     this.rateNode = new SpeedRateNode( model, {
       left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
-      rateTitle: options.rateTitle
+      rateTitle: options.rateTitle,
+      pickerColor:        options.rateColor,
+      pickerPressedColor: options.ratePressedColor
     } );
 
     // track

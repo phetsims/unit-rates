@@ -61,6 +61,8 @@ define( function( require ) {
       top:              URConstants.SCREEN_VERTICAL_MARGIN,
       numberLineTitle:  doubleNumberLine1String,
       rateTitle:        rate1String,
+      rateColor:         'rgb(29,174,235)',
+      ratePressedColor:  'rgb(9,154,215)',
       timerTitle:       timer1String
     } );
     this.addChild( this.worksheetNode1 );
@@ -71,13 +73,15 @@ define( function( require ) {
         trackOnTop:       true,
         numberLineTitle:  doubleNumberLine2String,
         rateTitle:        rate2String,
+        rateColor:         'rgb(233,33,45)',
+        ratePressedColor:  'rgb(213,13,25)',
         timerTitle:       timer2String
     } );
     this.addChild( this.worksheetNode2 );
 
     // play/pause button
     var playPauseButton = new PlayPauseButton( model.runningProperty, {
-      right: this.worksheetNode2.right,
+      right: this.worksheetNode2.right - 30,
       centerY: this.worksheetNode2.top - URConstants.SCREEN_PANEL_SPACING / 2,
       radius: 34
     } );

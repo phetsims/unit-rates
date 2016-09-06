@@ -44,7 +44,9 @@ define( function( require ) {
   function SpeedRateNode( model, options ) {
 
     options = _.extend( {
-      rateTitle:  ''
+      rateTitle:           '',
+      pickerColor:        'rgb(50,50,50)',
+      pickerPressedColor: 'rgb(100,100,100)'
     },  options || {} );
 
     // @protected - all
@@ -65,8 +67,8 @@ define( function( require ) {
     this.milesPicker = new NumberPicker(this.milesProperty, this.milesRangeProperty, {
       left:   X_MARGIN,
       top:    Y_MARGIN,
-      color: 'rgb(50,50,50)',
-      pressedColor: 'black',
+      color: options.pickerColor,
+      pressedColor: options.pickerPressedColor,
       xMargin: 8,
       yMargin: 0,
       cornerRadius: 0,
@@ -78,8 +80,8 @@ define( function( require ) {
     this.hoursPicker = new NumberPicker( this.hoursProperty, this.hoursRangeProperty, {
       centerX:   this.milesPicker.centerX,
       top: this.milesPicker.bottom + 2 * Y_SPACING,
-      color: 'rgb(50,50,50)',
-      pressedColor: 'black',
+      color: options.pickerColor,
+      pressedColor: options.pickerPressedColor,
       xMargin: 8,
       yMargin: 0,
       cornerRadius: 0,
