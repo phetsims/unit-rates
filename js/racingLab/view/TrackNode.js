@@ -148,11 +148,11 @@ define( function( require ) {
     } );
     childNodes.push( this.checkerFlagNode );
     this.checkerFlagNode.addDragListeners(
-      function() {                        // start drag
-        self.flagArrows.visible = false;
+      function() {
+        self.trackGroup.flagArrowsVisibleProperty.value = false;  // start drag
       }
-      , this.updateTrack.bind( this ),    // drag
-      null                                // end drag
+      , this.updateTrack.bind( this ),                            // drag
+      null                                                        // end drag
     );
 
     // mileage text
@@ -179,6 +179,10 @@ define( function( require ) {
     this.updateTrack();
 
     this.carNode.moveToFront();
+
+    this.trackGroup.flagArrowsVisibleProperty.link( function( value, oldValue ) {
+      self.flagArrows.visible = value;
+    } );
 
     this.trackGroup.elapsedTimeProperty.link( function( value, oldValue ) {
       self.updateCarTimer( value );
@@ -236,7 +240,9 @@ define( function( require ) {
 
       if( !this.trackGroup.carFinishedProperty.value ) {
         this.carNode.right = this.greenFlagNode.left + ( this.trackGroup.rateProperty.value * elapsedTime * this.milesPerPixel );
-
+        if( this.carNode.right > this.finishPoint.x ) {
+          this.carNode.right = this.finishPoint.x;
+        }
         this.trackGroup.carFinishedProperty.value = ( this.carNode.right >= this.finishPoint.x );
       }
     },
@@ -256,7 +262,6 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      this.flagArrows.visible = true;
       this.resetTrack();
       this.checkerFlagNode.item.setPosition( this.finishPoint.x, this.finishPoint.y, false );
       this.updateTrack();

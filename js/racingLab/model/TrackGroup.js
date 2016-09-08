@@ -16,15 +16,15 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function TrackGroup( elapsedTimeProperty ) {
+  function TrackGroup( elapsedTimeProperty, flagArrowsVisibleProperty ) {
 
     PropertySet.call( this, {
-      miles:        50,
-      milesRange:   new RangeWithValue( 1, 250 ),
-      hours:        1,
-      hoursRange:   new RangeWithValue( 1, 20 ),
-      rate:         50,
-      carFinished:  false
+      miles:              200,
+      milesRange:         new RangeWithValue( 20, 200 ),
+      hours:              1,
+      hoursRange:         new RangeWithValue( 1, 10 ),
+      rate:               200,
+      carFinished:        false
     } );
 
     //var self = this;
@@ -32,22 +32,8 @@ define( function( require ) {
     // seperate number line model
     //this.numberline = new NumberLine();
 
-    this.elapsedTimeProperty = elapsedTimeProperty;
-    this.elapsedTimeProperty.link( function( value, oldValue ) {
-      console.log('Time: ' + value.toFixed(2));
-    } );
-
-    this.milesProperty.link( function( value, oldValue ) {
-      console.log('Miles: ' + value);
-    } );
-
-    this.hoursProperty.link( function( value, oldValue ) {
-      console.log('Hours: ' + value);
-    } );
-
-    this.rateProperty.link( function( value, oldValue ) {
-      console.log('Rate: ' + value.toFixed(2));
-    } );
+    this.elapsedTimeProperty       = elapsedTimeProperty;
+    this.flagArrowsVisibleProperty = flagArrowsVisibleProperty;
   }
 
   unitRates.register( 'TrackGroup', TrackGroup );

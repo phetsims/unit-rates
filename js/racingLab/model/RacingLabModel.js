@@ -21,18 +21,19 @@ define( function( require ) {
   function RacingLabModel() {
 
     PropertySet.call( this, {
-      carCount:     1,
-      running:      false,
-      elapsedTime:  0.0
+      carCount:           1,
+      running:            false,
+      elapsedTime:        0.0,
+      flagArrowsVisible:  true
     } );
 
     var self = this;
 
     // @public - group models
-    this.trackGroup1 = new TrackGroup( this.elapsedTimeProperty );
-    this.trackGroup2 = new TrackGroup( this.elapsedTimeProperty );
+    this.trackGroup1 = new TrackGroup( this.elapsedTimeProperty, this.flagArrowsVisibleProperty );
+    this.trackGroup2 = new TrackGroup( this.elapsedTimeProperty, this.flagArrowsVisibleProperty );
 
-    // update value text
+    // update running state
     Property.lazyMultilink( [ this.trackGroup1.carFinishedProperty, this.trackGroup2.carFinishedProperty ],
       function( car1Finished, car2Finished ) {
         if( self.carCountProperty.value === 1 ) {
@@ -56,7 +57,6 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
-
       if ( this.runningProperty.value && dt < 1 ) {
         // convert to simulated elapsed hours
         var elapsedTime = ( dt * RacingLabConstants.TIME_DT_FACTOR );

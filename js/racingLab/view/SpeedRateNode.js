@@ -49,6 +49,8 @@ define( function( require ) {
       pickerPressedColor: 'rgb(100,100,100)'
     },  options || {} );
 
+    var self = this;
+
     this.groupModel = model;
 
     this.contentNode = new Node();
@@ -70,7 +72,9 @@ define( function( require ) {
       arrowHeight: 10,
       cornerRadius: 0,
       touchAreaXDilation: 30,
-      font: PICKER_FONT
+      font: PICKER_FONT,
+      upFunction: function() { return self.groupModel.milesProperty.get() + 5; },
+      downFunction: function() { return self.groupModel.milesProperty.get() - 5; }
     } );
     this.contentNode.addChild( this.milesPicker );
 
