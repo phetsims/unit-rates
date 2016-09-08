@@ -27,12 +27,14 @@ define( function( require ) {
 
   // images
   var greenFlagImage = require( 'image!UNIT_RATES/green_flag.png' );
-  var checkerFlagImage = require( 'image!UNIT_RATES/checker_flag.png' );
+  var checkerFlagImage = require( 'image!UNIT_RATES/checkered_flag.png' );
+  var doubleArrowImage = require( 'image!UNIT_RATES/double_arrow.png' );
 
   // strings
   var miString = require( 'string!UNIT_RATES/mi' );
 
   // constants
+  var TRACK_START_FLAG_X       = 60;
   var TRACK_BOTTOM_OFFSET      = 25;
   var TRACK_DARK_STROKE_COLOR  = 'rgba(0, 0, 0, 1.0)';
   var TRACK_LITE_STROKE_COLOR  = 'rgba(0, 0, 0, 0.25)';
@@ -42,12 +44,15 @@ define( function( require ) {
   var MARKER_SIZE              = 10;
   var MARKER_LINE_WIDTH        = 1.0;
   var MILEAGE_FONT             = new PhetFont( 12 );
+  var FLAG_SCALE               = 0.25;
 
   /**
+   * @param {TrackGroup} model
+   * @param {string} carImageName
    * @param {Object} [options]
    * @constructor
    */
-  function RaceTrackNode( elpasedTimeProperty, options ) {
+  function TrackNode( model, carImageName, options ) {
 
      options = _.extend( {
       trackDistance:        RacingLabConstants.MAX_TRACK_DISTANCE,        // track distance in miles
@@ -56,19 +61,22 @@ define( function( require ) {
       timerTitle:           ''                                            // title for the timer when closed
     }, options || {} );
 
+     var self = this;
+
+    // @protected - track model
+    this.trackGroup = model;
+
     // @protected all - various coordinates
     this.trackBounds    = options.trackBounds;
     this.trackDistance  = options.trackDistance;
     this.trackInterval  = options.trackInterval;
+    this.trackOrigin    = new Vector2( this.trackBounds.minX + TRACK_START_FLAG_X, this.trackBounds.maxY - TRACK_BOTTOM_OFFSET );
 
     // @protected all - various coordinates
-    this.origin       = new Vector2( this.trackBounds.minX, this.trackBounds.maxY - TRACK_BOTTOM_OFFSET );
-    this.startPoint   = new Vector2( this.origin.x, this.origin.y );
-    this.finishPoint  = new Vector2( this.trackBounds.maxX,  this.origin.y );
-    this.endPoint     = new Vector2( this.trackBounds.maxX,  this.origin.y );
-
-    this.milesPerPixel = ( this.trackBounds.maxX - this.trackBounds.minX ) / this.trackDistance;
+    this.milesPerPixel = ( this.trackBounds.maxX - TRACK_START_FLAG_X ) / this.trackDistance;
     this.intervalCount = this.trackDistance / this.trackInterval;
+
+    this.resetTrack();
 
     var childNodes = [];
 
@@ -96,11 +104,18 @@ define( function( require ) {
     childNodes.push( this.finishEndPath );
 
     this.greenFlagNode = new Image( greenFlagImage, {
-      scale:  0.075,
-      left:   this.origin.x,
-      bottom: this.origin.y
+      scale:  FLAG_SCALE,
+      left:   this.startPoint.x,
+      bottom: this.trackOrigin.y
     } );
     childNodes.push( this.greenFlagNode );
+
+    this.carNode = new Image( carImageName, {
+      scale:  0.28,
+      right:  this.greenFlagNode.left,
+      bottom: this.trackOrigin.y
+    } );
+    childNodes.push( this.carNode );
 
     // track interval markers
     this.intervalNodes = [];
@@ -110,8 +125,8 @@ define( function( require ) {
           .lineTo( -MARKER_SIZE / 2, MARKER_SIZE )
           .lineTo(  MARKER_SIZE / 2, MARKER_SIZE )
           .lineTo( 0, 0 ),  {
-        centerX:    this.origin.x + ( ( i + 1 ) * this.trackInterval * this.milesPerPixel ),
-        top:        this.origin.y,
+        centerX:    this.startPoint.x + ( ( i + 1 ) * this.trackInterval * this.milesPerPixel ),
+        top:        this.startPoint.y,
         stroke:     TRACK_DARK_STROKE_COLOR,
         lineWidth:  MARKER_LINE_WIDTH,
         fill:       MARKER_DARK_FILL_COLOR
@@ -119,22 +134,37 @@ define( function( require ) {
       childNodes.push( this.intervalNodes[i] );
     }
 
+    this.flagArrows = new Image( doubleArrowImage, {
+      scale:  0.23,
+      centerX: this.finishPoint.x + 1,
+      bottom: this.trackOrigin.y - 2
+    } );
+    childNodes.push( this.flagArrows );
+
+    // checkered flag
     this.checkerFlagNode = new FinishFlagNode( checkerFlagImage, this.finishPoint, {
-      imageScale:  0.075,
+      imageScale: FLAG_SCALE,
       bounds: new Bounds2( this.startPoint.x, this.startPoint.y,  this.trackBounds.maxX,  this.trackBounds.maxY )
     } );
     childNodes.push( this.checkerFlagNode );
-    this.checkerFlagNode.addDragListeners( null, this.adjustTrack.bind( this ), null );
+    this.checkerFlagNode.addDragListeners(
+      function() {                        // start drag
+        self.flagArrows.visible = false;
+      }
+      , this.updateTrack.bind( this ),    // drag
+      null                                // end drag
+    );
 
+    // mileage text
     this.mileageText = new Text( '', {
       centerX:  this.finishPoint.x,
-      top:      this.checkerFlagNode.bottom + MARKER_SIZE,
+      top:      this.checkerFlagNode.bottom + MARKER_SIZE + 2,
       font:     MILEAGE_FONT
     } );
     childNodes.push( this.mileageText );
 
     // timer
-    this.timer = new TimerNode( elpasedTimeProperty, {
+    this.timer = new TimerNode( this.trackGroup.elapsedTimeProperty, this.trackGroup.carFinishedProperty, {
       centerX:  this.finishPoint.x,
       bottom:   this.checkerFlagNode.top - URConstants.SCREEN_PANEL_SPACING / 2,
       hiddenTimeText: options.timerTitle
@@ -146,27 +176,32 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    this.adjustTrack();
+    this.updateTrack();
+
+    this.carNode.moveToFront();
+
+    this.trackGroup.elapsedTimeProperty.link( function( value, oldValue ) {
+      self.updateCarTimer( value );
+    } );
   }
 
-  unitRates.register( 'RaceTrackNode', RaceTrackNode );
+  unitRates.register( 'TrackNode', TrackNode );
 
-  return inherit( Node, RaceTrackNode, {
+  return inherit( Node, TrackNode, {
 
     /**
      *
      * @public
      */
-    adjustTrack: function() {
+    updateTrack: function() {
 
       this.finishPoint.x = this.checkerFlagNode.getCurrentPosition().x;
 
       // adjust track lengths
       this.startFinishPath.setShape( new Shape()
-        .moveTo( this.startPoint.x,  this.startPoint.y )
+        .moveTo( this.trackBounds.x,  this.trackOrigin.y )
         .lineTo( this.finishPoint.x, this.finishPoint.y )
       );
-
       this.finishEndPath.setShape( new Shape()
         .moveTo( this.finishPoint.x, this.finishPoint.y )
         .lineTo( this.endPoint.x,    this.endPoint.y )
@@ -176,7 +211,7 @@ define( function( require ) {
       this.timer.centerX = this.finishPoint.x;
 
       // adjust the mileage text & location
-      var miles = ( this.finishPoint.x / this.milesPerPixel ).toFixed( 0 );
+      var miles = ( ( this.finishPoint.x - this.startPoint.x ) / this.milesPerPixel ).toFixed( 0 );
       this.mileageText.setText( miles + ' ' + miString );
       this.mileageText.centerX = this.finishPoint.x;
 
@@ -197,7 +232,35 @@ define( function( require ) {
      *
      * @public
      */
+    updateCarTimer: function( elapsedTime ) {
+
+      if( !this.trackGroup.carFinishedProperty.value ) {
+        this.carNode.right = this.greenFlagNode.left + ( this.trackGroup.rateProperty.value * elapsedTime * this.milesPerPixel );
+
+        this.trackGroup.carFinishedProperty.value = ( this.carNode.right >= this.finishPoint.x );
+      }
+    },
+
+    /**
+     *
+     * @protected
+     */
+    resetTrack: function() {
+      this.startPoint   = new Vector2( this.trackOrigin.x, this.trackOrigin.y );
+      this.finishPoint  = new Vector2( this.trackBounds.maxX,  this.trackOrigin.y );
+      this.endPoint     = new Vector2( this.trackBounds.maxX,  this.trackOrigin.y );
+    },
+
+    /**
+     *
+     * @public
+     */
     reset: function() {
+      this.flagArrows.visible = true;
+      this.resetTrack();
+      this.checkerFlagNode.item.setPosition( this.finishPoint.x, this.finishPoint.y, false );
+      this.updateTrack();
+      this.updateCarTimer();
     }
 
   } ); // inherit

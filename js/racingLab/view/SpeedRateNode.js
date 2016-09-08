@@ -19,7 +19,6 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Shape = require( 'KITE/Shape' );
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var Property = require( 'AXON/Property' );
   //var Util = require( 'DOT/Util' );
 
@@ -28,16 +27,17 @@ define( function( require ) {
   var hoursString = require( 'string!UNIT_RATES/hours' );
 
   // constants
-  var TEXT_FONT       = new PhetFont( 18 ); // Font to use for all text
+  var TEXT_FONT       = new PhetFont( 14 ); // Font to use for all text
   var TEXT_MAX_WIDTH  = 125;
+  var PICKER_FONT     = new PhetFont( 18 ); // Font to use for all text
   var DIVISOR_WIDTH   = 100;
   var X_MARGIN        = 10;
   var Y_MARGIN        = 0;
   var X_SPACING       = 10;
-  var Y_SPACING       = 8;
+  var Y_SPACING       = 10;
 
   /**
-   * @param {RacingLabModel} model
+   * @param {TrackGroup} model
    * @param {Object} [options]
    * @constructor
    */
@@ -49,11 +49,7 @@ define( function( require ) {
       pickerPressedColor: 'rgb(100,100,100)'
     },  options || {} );
 
-    // @protected - all
-    this.milesRangeProperty = new Property( new RangeWithValue( 1, 250 ) );
-    this.milesProperty      = new Property( 50 ),
-    this.hoursRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
-    this.hoursProperty      = new Property( 2 ),
+    this.groupModel = model;
 
     this.contentNode = new Node();
 
@@ -62,31 +58,33 @@ define( function( require ) {
     this.contentNode.addChild( strut );
 
     // select the rate for the currently selected item - no dispose as these never go away
-    Property.lazyMultilink( [ this.milesProperty, this.hoursProperty ], this.rateChanged.bind( this ) );
+    Property.lazyMultilink( [ this.groupModel.milesProperty, this.groupModel.hoursProperty ], this.rateChanged.bind( this ) );
 
-    this.milesPicker = new NumberPicker(this.milesProperty, this.milesRangeProperty, {
+    this.milesPicker = new NumberPicker(this.groupModel.milesProperty, this.groupModel.milesRangeProperty, {
       left:   X_MARGIN,
       top:    Y_MARGIN,
       color: options.pickerColor,
       pressedColor: options.pickerPressedColor,
       xMargin: 8,
       yMargin: 0,
+      arrowHeight: 10,
       cornerRadius: 0,
       touchAreaXDilation: 30,
-      font: TEXT_FONT
+      font: PICKER_FONT
     } );
     this.contentNode.addChild( this.milesPicker );
 
-    this.hoursPicker = new NumberPicker( this.hoursProperty, this.hoursRangeProperty, {
+    this.hoursPicker = new NumberPicker( this.groupModel.hoursProperty, this.groupModel.hoursRangeProperty, {
       centerX:   this.milesPicker.centerX,
       top: this.milesPicker.bottom + 2 * Y_SPACING,
       color: options.pickerColor,
       pressedColor: options.pickerPressedColor,
       xMargin: 8,
       yMargin: 0,
+      arrowHeight: 10,
       cornerRadius: 0,
       touchAreaXDilation: 30,
-      font: TEXT_FONT
+      font: PICKER_FONT
     } );
     this.contentNode.addChild( this.hoursPicker );
 
@@ -146,7 +144,7 @@ define( function( require ) {
      * @private
      */
     rateChanged: function( miles, hours ) {
-
+      this.groupModel.rate = miles / hours;
     },
 
     /**
@@ -154,8 +152,6 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      this.milesProperty.reset();
-      this.hoursProperty.reset();
       this.expandedProperty.reset();
     }
 

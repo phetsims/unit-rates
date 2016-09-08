@@ -12,6 +12,8 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var RacingLabConstants = require( 'UNIT_RATES/racingLab/RacingLabConstants' );
+  var TrackGroup = require( 'UNIT_RATES/racingLab/model/TrackGroup' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
@@ -19,13 +21,30 @@ define( function( require ) {
   function RacingLabModel() {
 
     PropertySet.call( this, {
-      running: false,
-      timer: 0.0
+      carCount:     1,
+      running:      false,
+      elapsedTime:  0.0
     } );
 
-    this.runningProperty.link( function( value, oldValue ) {
-    } );
+    var self = this;
 
+    // @public - group models
+    this.trackGroup1 = new TrackGroup( this.elapsedTimeProperty );
+    this.trackGroup2 = new TrackGroup( this.elapsedTimeProperty );
+
+    // update value text
+    Property.lazyMultilink( [ this.trackGroup1.carFinishedProperty, this.trackGroup2.carFinishedProperty ],
+      function( car1Finished, car2Finished ) {
+        if( self.carCountProperty.value === 1 ) {
+          self.runningProperty.value = !car1Finished;
+        }
+        else if( self.carCountProperty.value === 2 ) {
+          self.runningProperty.value = !( car1Finished && car2Finished );
+        }
+        else {
+          assert && assert( false, 'Invalid car count' );
+        }
+    } );
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );
@@ -37,12 +56,34 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
-      if ( this.running && dt < 1 ) {
-        var elapsedHours =  ( dt * RacingLabConstants.TIME_DT_FACTOR );
-        this.timerProperty.value += elapsedHours;
-      }
-    }
 
+      if ( this.runningProperty.value && dt < 1 ) {
+        // convert to simulated elapsed hours
+        var elapsedTime = ( dt * RacingLabConstants.TIME_DT_FACTOR );
+        this.elapsedTimeProperty.value += elapsedTime;
+      }
+    },
+
+    /**
+     * Resets the challenges questions to all unanswered
+     * @public
+     */
+    restart: function() {
+      this.trackGroup1.restart();
+      this.trackGroup2.restart();
+      this.runningProperty.reset();
+      this.elapsedTimeProperty.reset();
+    },
+
+    /**
+     * Resets the challenges questions to all unanswered
+     * @public
+     */
+    reset: function() {
+      this.trackGroup1.reset();
+      this.trackGroup2.reset();
+      PropertySet.prototype.reset.call( this );
+    }
 
   } ); // inherit
 

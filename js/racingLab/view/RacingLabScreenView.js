@@ -12,19 +12,24 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var CarWorksheetNode = require( 'UNIT_RATES/racingLab/view/CarWorksheetNode' );
+  var TrackGroupNode = require( 'UNIT_RATES/racingLab/view/TrackGroupNode' );
   var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
-  var PlayPauseButton = require( 'SCENERY_PHET/buttons/PlayPauseButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
-  var Property = require( 'AXON/Property' );
   var Bounds2 = require( 'DOT/Bounds2' );
 
   // images
-  var oneCarImage = require( 'image!UNIT_RATES/one_car.png' );
-  var twoCarImage = require( 'image!UNIT_RATES/two_car.png' );
+  var oneCarSceneImage = require( 'image!UNIT_RATES/one_car_scene.png' );
+  var twoCarSceneImage = require( 'image!UNIT_RATES/two_car_scene.png' );
+  var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
+  var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
+  var greenFlagImage = require( 'image!UNIT_RATES/green_flag.png' );
+  var goButtonImage = require( 'image!UNIT_RATES/go_button.png' );
+  var stopButtonImage = require( 'image!UNIT_RATES/stop_button.png' );
 
   // strings
   var doubleNumberLine1String = require( 'string!UNIT_RATES/doubleNumberLine1' );
@@ -46,50 +51,70 @@ define( function( require ) {
 
     this.model = model;
 
-    // properties
-    this.carCountProperty = new Property( 1 );
-
     // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {
       maxDigits: 4,
       visible: false
     } );
     this.addChild( this.keypad );
+    this.keypad.hide();
 
-    this.worksheetNode1 = new CarWorksheetNode( model, this.keypad, {
+    this.trackGroup1Node = new TrackGroupNode( model.trackGroup1, blueCarImage, this.keypad, {
       left:             URConstants.SCREEN_PANEL_SPACING,
       top:              URConstants.SCREEN_VERTICAL_MARGIN,
       numberLineTitle:  doubleNumberLine1String,
       rateTitle:        rate1String,
-      rateColor:         'rgb(29,174,235)',
-      ratePressedColor:  'rgb(9,154,215)',
+      rateColor:        'rgb(29,174,235)',
+      ratePressedColor: 'rgb(9,154,215)',
       timerTitle:       timer1String
     } );
-    this.addChild( this.worksheetNode1 );
+    this.addChild( this.trackGroup1Node );
 
-    this.worksheetNode2 = new CarWorksheetNode( model, this.keypad, {
+    this.trackGroup2Node = new TrackGroupNode( model.trackGroup2, redCarImage, this.keypad, {
         left:             URConstants.SCREEN_PANEL_SPACING,
-        top:              this.worksheetNode1.bottom + URConstants.SCREEN_PANEL_SPACING,
+        top:              this.trackGroup1Node.bottom + 5,
         trackOnTop:       true,
         numberLineTitle:  doubleNumberLine2String,
         rateTitle:        rate2String,
-        rateColor:         'rgb(233,33,45)',
-        ratePressedColor:  'rgb(213,13,25)',
+        rateColor:        'rgb(233,33,45)',
+        ratePressedColor: 'rgb(213,13,25)',
         timerTitle:       timer2String
     } );
-    this.addChild( this.worksheetNode2 );
+    this.addChild( this.trackGroup2Node );
 
     // play/pause button
-    var playPauseButton = new PlayPauseButton( model.runningProperty, {
-      right: this.worksheetNode2.right - 30,
-      centerY: this.worksheetNode2.top - URConstants.SCREEN_PANEL_SPACING / 2,
-      radius: 34
+    this.goStopButton = new BooleanRoundToggleButton(
+      new Image( stopButtonImage, { scale: 0.25 } ),
+      new Image( goButtonImage, { scale: 0.25 } ), model.runningProperty, {
+      right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      centerY: this.trackGroup2Node.top - URConstants.SCREEN_PANEL_SPACING / 2,
+      radius: 45
     } );
-    this.addChild( playPauseButton );
+    this.addChild( this.goStopButton );
+
+    var restartButton = new RectangularPushButton( {
+      right: this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
+      centerY: this.goStopButton.centerY,
+      content: new Image( greenFlagImage, { scale: 0.18 } ),
+      minWidth: 45,
+      minHeight: 45,
+      cornerRadius: 4,
+      baseColor: '#A9D8FD',
+      xMargin: 8, // should be visibly greater than yMargin, see issue #109
+      yMargin: 5,
+      touchAreaXDilation: 0,
+      touchAreaYDilation: 0,
+      stroke: 'black',
+      lineWidth: 0.5,
+      listener: function() {
+        self.restart();
+      }
+    });
+    this.addChild( restartButton );
 
     // keypad layout
-    this.keypad.right = this.worksheetNode1.right - 30;
-    this.keypad.top   = this.worksheetNode1.bottom + 2 * URConstants.SCREEN_PANEL_SPACING;
+    this.keypad.right = this.trackGroup1Node.right - 30;
+    this.keypad.top   = this.trackGroup1Node.bottom + 2 * URConstants.SCREEN_PANEL_SPACING;
 
     // @protected - covers entire screen, uses pick to close keypad
     this.keypadCloseArea = new Rectangle( 0, 0, window.innerWidth, window.innerHeight, { visible: false } );
@@ -118,20 +143,26 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    var carCountButtons = new RadioButtonGroup( this.carCountProperty, [
-      { value: 1, node: new Image( oneCarImage, { scale: 0.075 } ) },
-      { value: 2, node: new Image( twoCarImage, { scale: 0.075 } ) }
+    this.carCountButtons = new RadioButtonGroup( this.model.carCountProperty, [
+      { value: 1, node: new Image( oneCarSceneImage, { scale: 0.22 } ) },
+      { value: 2, node: new Image( twoCarSceneImage, { scale: 0.22 } ) }
     ], {
       right:  this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN,
       orientation:  'vertical',
       baseColor:    'white',
-      spacing:        5
+      spacing:       11
     } );
-    this.addChild( carCountButtons );
+    this.addChild( this.carCountButtons );
 
-    this.carCountProperty.link( function( value, oldValue ) {
-      self.worksheetNode2.visible = ( value === 2 );
+    this.model.carCountProperty.link( function( value, oldValue ) {
+      self.trackGroup2Node.visible = ( value === 2 );
+    } );
+
+    this.model.runningProperty.link( function( value, oldValue ) {
+      self.goStopButton.baseColor = ( value ? '#6D6E70' :  '#87CAA7' );
+      //self.carCountButtons.opacity = ( value ? 0.5 : 1.0 );   // FIXME: what to disable when running
+      //self.carCountButtons.pickable = !value;
     } );
   }
 
@@ -152,14 +183,18 @@ define( function( require ) {
      * Called when the user selects the sim reset button
      * @protected
      */
+    restart: function() {
+      this.model.restart();
+    },
+
+    /**
+     * Called when the user selects the sim reset button
+     * @protected
+     */
     resetAll: function() {
         this.model.reset();
-
-        this.carCountProperty.reset();
-
-        this.worksheetNode1.reset();
-        this.worksheetNode2.reset();
-
+        this.trackGroup1Node.reset();
+        this.trackGroup2Node.reset();
         this.hideKeypad();
     },
 

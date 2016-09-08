@@ -13,7 +13,7 @@ define( function( require ) {
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var SpeedRateNode = require( 'UNIT_RATES/racingLab/view/SpeedRateNode' );
-  var RaceTrackNode = require( 'UNIT_RATES/racingLab/view/RaceTrackNode' );
+  var TrackNode = require( 'UNIT_RATES/racingLab/view/TrackNode' );
   var Node = require( 'SCENERY/nodes/Node' );
 
   // strings
@@ -21,32 +21,33 @@ define( function( require ) {
   var hoursCapString = require( 'string!UNIT_RATES/hoursCap' );
 
   /**
-   * @param {RacingLabModel} model
+   * @param {TrackGroup} model
+   * @param {string} carImageName
    * @constructor
    */
-  function CarWorksheetNode( model, keypad, options ) {
+  function TrackGroupNode( model, carImageName, keypad, options ) {
 
     options = _.extend( {
-      numberLineTitle:   '',
-      rateTitle:         '',
-      rateColor:         'rgb(50,50,50)',
-      ratePressedColor:  'rgb(100,100,100)',
-      timerTitle:        '',
+      numberLineTitle:  '',
+      rateTitle:        '',
+      rateColor:        'rgb(50,50,50)',
+      ratePressedColor: 'rgb(100,100,100)',
+      timerTitle:       '',
       trackOnTop:       false
     }, options || {} );
 
-    this.model = model;
+    this.trackGroup = model;
 
     // number line
     this.numberLineNode = new URNumberLineNode( {
-    //this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
+    //this.numberLineNode = new NumberLineNode( trackGroup.numberLine, this.keypad, {
       numberLineTitle:  options.numberLineTitle,
-      graphHeight:      75
+      graphHeight:      95
      } );
     this.numberLineNode.setLineLabels( milesCapString, hoursCapString );
 
     // number line
-    this.rateNode = new SpeedRateNode( model, {
+    this.rateNode = new SpeedRateNode( this.trackGroup, {
       left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
       rateTitle: options.rateTitle,
       pickerColor:        options.rateColor,
@@ -56,10 +57,10 @@ define( function( require ) {
     // track
     var trackOptions = { timerTitle: options.timerTitle };
     trackOptions = ( options.trackOnTop ?
-      _.extend( { bottom: this.numberLineNode.top - URConstants.SCREEN_VERTICAL_MARGIN }, trackOptions ) :
-      _.extend( { top: this.numberLineNode.bottom + URConstants.SCREEN_VERTICAL_MARGIN }, trackOptions )
+      _.extend( { bottom: this.numberLineNode.top - 4 }, trackOptions ) :
+      _.extend( { top: this.numberLineNode.bottom + 4 }, trackOptions )
     );
-    this.trackNode = new RaceTrackNode( model.timerProperty, trackOptions );
+    this.trackNode = new TrackNode( this.trackGroup, carImageName, trackOptions );
 
     assert && assert( !options.children, 'additional children not supported' );
     options.children = [ this.numberLineNode, this.rateNode, this.trackNode ];
@@ -67,9 +68,9 @@ define( function( require ) {
     Node.call( this, options );
   }
 
-  unitRates.register( 'CarWorksheetNode', CarWorksheetNode );
+  unitRates.register( 'TrackGroupNode', TrackGroupNode );
 
-  return inherit( Node, CarWorksheetNode, {
+  return inherit( Node, TrackGroupNode, {
 
     /**
      *
@@ -78,6 +79,7 @@ define( function( require ) {
     reset: function() {
       this.numberLineNode.reset();
       this.rateNode.reset();
+      this.trackNode.reset();
     }
 
   } ); // inherit

@@ -36,7 +36,7 @@ define( function( require ) {
    * @returns {Panel}
    * @private
    */
-  function TimerNode( elapsedTimeProperty, options ) {
+  function TimerNode( elapsedTimeProperty, disabledProperty, options ) {
 
     options = _.extend( {
       minWidth:         DISPLAY_SIZE.width,
@@ -53,6 +53,8 @@ define( function( require ) {
 
     this.showTimeProperty = options.showTimeProperty;
     this.hiddenTimeText   = options.hiddenTimeText;
+    this.disabledProperty = disabledProperty;
+    this.lastElapsedTime  = 0;
 
     var contentNode = new Node();
 
@@ -87,11 +89,16 @@ define( function( require ) {
 
     // update value text
     Property.multilink( [ elapsedTimeProperty, this.showTimeProperty ], function( elapsedTime, showTime ) {
+
+      if( !self.disabledProperty.value) {
+        self.lastElapsedTime = elapsedTime;
+      }
+
       if( !showTime ) {
         timerText.setText( self.hiddenTimeText );
         unitText.visible = false;
       } else {
-        var timerString = Util.toFixed( elapsedTime, 1 ).toString();
+        var timerString = Util.toFixed( self.lastElapsedTime, 2 ).toString();
         timerText.setText( timerString );
         unitText.visible = true;
       }

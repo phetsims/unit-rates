@@ -33,6 +33,7 @@ define( function( require ) {
     var origin  = new Vector2( position.x, position.y - image.height );
     var bounds  = new Bounds2( options.bounds.minX, options.bounds.minY - image.height,
                                options.bounds.maxX, options.bounds.maxY );
+
     // @public
     this.item = new MovableItem( {
       yAxisEnabled: false,

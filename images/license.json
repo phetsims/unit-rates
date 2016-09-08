@@ -23,7 +23,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by FIXME"
   },
-  "one_car.png": {
+  "one_car_scene.png": {
     "text": [
       "Copyright 2016 University of Colorado Boulder"
     ],
@@ -31,7 +31,23 @@
     "license": "contact phethelp@colorado.edu",
     "notes": ""
   },
-  "two_car.png": {
+  "two_car_scene.png": {
+    "text": [
+      "Copyright 2016 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "red_car.png": {
+    "text": [
+      "Copyright 2016 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "blue_car.png": {
     "text": [
       "Copyright 2016 University of Colorado Boulder"
     ],
@@ -47,7 +63,31 @@
     "license": "contact phethelp@colorado.edu",
     "notes": ""
   },
-  "checker_flag.png": {
+  "checkered_flag.png": {
+    "text": [
+      "Copyright 2016 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "double_arrow.png": {
+    "text": [
+      "Copyright 2016 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "go_button.png": {
+    "text": [
+      "Copyright 2016 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "stop_button.png": {
     "text": [
       "Copyright 2016 University of Colorado Boulder"
     ],
@@ -56,6 +96,14 @@
     "notes": ""
   },
   "scale.png": {
+    "text": [
+      "Copyright 2016 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "shelf.png": {
     "text": [
       "Copyright 2016 University of Colorado Boulder"
     ],
