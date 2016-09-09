@@ -11,7 +11,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
+  var RLNumberLineNode = require( 'UNIT_RATES/racingLab/view/RLNumberLineNode' );
   var SpeedRateNode = require( 'UNIT_RATES/racingLab/view/SpeedRateNode' );
   var TrackNode = require( 'UNIT_RATES/racingLab/view/TrackNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -39,11 +39,13 @@ define( function( require ) {
     this.trackGroup = model;
 
     // number line
-    this.numberLineNode = new URNumberLineNode( {
+    this.numberLineNode = new RLNumberLineNode( {
     //this.numberLineNode = new NumberLineNode( trackGroup.numberLine, this.keypad, {
       numberLineTitle:  options.numberLineTitle,
-      graphHeight:      95,
-      yAxisOffset:      60
+      graphWidth:   675,
+      graphHeight:  95,
+      yAxisOffset:  60,
+      yAxisLength:  675,
      } );
     this.numberLineNode.setLineLabels( milesCapString, hoursCapString );
 

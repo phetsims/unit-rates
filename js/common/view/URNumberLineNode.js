@@ -36,6 +36,7 @@ define( function( require ) {
       graphHeight:        130,
       xAxisOffset:        10,
       yAxisOffset:        0,
+      yAxisLength:        675,
       axisArrowSize:      5,
       axisLabelSpacing:   10,
       axisLabelFont:      new PhetFont( 14 ),
@@ -44,32 +45,41 @@ define( function( require ) {
 
     var self = this;
 
+    this.graphWidth       = options.graphWidth;
+    this.graphHeight      = options.graphHeight;
+    this.xAxisOffset      = options.xAxisOffset;
+    this.yAxisOffset      = options.yAxisOffset;
+    this.yAxisLength      = options.yAxisLength;
+    this.axisArrowSize    = options.axisArrowSize;
+    this.axisLabelSpacing = options.axisLabelSpacing;
+
+    // @public (read-only) graph origin & bounds
+    this.origin = new Vector2( this.yAxisOffset, this.graphHeight / 2 );
+
     // @protected - controls the accordian box expansion
     this.expandedProperty = new Property( true );
 
     // @protected - the accordian box content
-    this.contentNode = new Node();
-
-    // @public (read-only) graph origin & bounds
-    this.origin      = new Vector2( options.yAxisOffset, options.graphHeight / 2 );
-    this.graphBounds = new Bounds2( -options.yAxisOffset, 0, options.graphWidth - options.yAxisOffset , options.graphHeight );
-
-    // @protected - layer holding all the number line markers
-    this.graphMarkerLayerNode = new Path( new Shape().rect(
-      0, 0, options.graphWidth, options.graphHeight ), {
-      //stroke: 'red',  // debugging
+    this.contentNode = new Path( new Shape().rect( 0, 0, this.graphWidth, this.graphHeight ), {
+      stroke: 'red',  // debugging
       lineWidth: 1
     } );
-    this.contentNode.addChild( this.graphMarkerLayerNode );
+
+     // @protected - layer holding all the number line markers
+    this.markerLayerNode = new Path( new Shape().rect( 0, 0, this.graphWidth, this.graphHeight ), {
+      stroke: 'yellow',  // debugging
+      lineWidth: 1
+    } );
+    this.contentNode.addChild( this.markerLayerNode );
 
     // axis lines
-    var xZeroLine = new Path( new Shape()
-        .moveTo( options.yAxisOffset, this.origin.y + options.graphHeight / 5 )
-        .lineTo( options.yAxisOffset, this.origin.y - options.graphHeight / 5 ), {
+    this.xZeroLine = new Path( new Shape()
+        .moveTo( this.yAxisOffset, this.origin.y + this.graphHeight / 5 )
+        .lineTo( this.yAxisOffset, this.origin.y - this.graphHeight / 5 ), {
       stroke: 'black',
       lineWidth: 1.25
     } );
-    this.contentNode.addChild( xZeroLine );
+    this.contentNode.addChild( this.xZeroLine );
 
     // arrow options
     var arrowOptions =  {
@@ -80,37 +90,26 @@ define( function( require ) {
       };
 
     // @protected
-    this.topArrowNode = new ArrowNode( options.yAxisOffset,
-                                      this.origin.y - options.xAxisOffset,
-                                      options.graphWidth + options.axisArrowSize,
-                                      this.origin.y - options.xAxisOffset, arrowOptions);
+    this.topArrowNode = new ArrowNode( 0, 0, 0, 0, arrowOptions);
     this.contentNode.addChild( this.topArrowNode );
 
     // @protected
-    this.bottomArrowNode = new ArrowNode( options.yAxisOffset,
-                                         this.origin.y + options.xAxisOffset,
-                                         options.graphWidth + options.axisArrowSize,
-                                         this.origin.y + options.xAxisOffset, arrowOptions);
+    this.bottomArrowNode = new ArrowNode( 0, 0, 0, 0, arrowOptions );
     this.contentNode.addChild( this.bottomArrowNode );
 
     // arrow labels
     var labelOptions = { font:options.axisLabelFont, maxWidth:options.axisLabelMaxWidth };
 
     // @protected
-    this.topArrowLabel = new Text( 'top', _.extend( {}, labelOptions, {
-        left: this.topArrowNode.right + options.axisLabelSpacing,
-        centerY: this.topArrowNode.centerY
-      } )
-     );
+    this.topArrowLabel = new Text( 'top', labelOptions );
     this.contentNode.addChild( this.topArrowLabel );
 
     // @protected
-    this.bottomArrowLabel = new Text( 'bottom', _.extend( {}, labelOptions, {
-        left: this.bottomArrowNode.right + options.axisLabelSpacing,
-        centerY: this.bottomArrowNode.centerY
-      } )
-     );
+    this.bottomArrowLabel = new Text( 'bottom', labelOptions );
     this.contentNode.addChild( this.bottomArrowLabel );
+
+    // set the defautl Y-axis length
+    this.setLength( this.yAxisLength );
 
     // erase
     var eraserButton = new EraserButton( {
@@ -123,7 +122,7 @@ define( function( require ) {
     });
     this.contentNode.addChild( eraserButton );
 
-    this.graphMarkerLayerNode.moveToFront();
+    this.markerLayerNode.moveToFront();
 
     AccordionBox.call( this, this.contentNode, {
       expandedProperty: this.expandedProperty,
@@ -151,13 +150,27 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
-     * Sets dimensions of the number line
-     * @param {number} width
-     * @param {number} height
+     * Sets length of the number line
+     * @param {number} length
      * @public
      */
-    setDimensions: function( width, height ) {
-    },
+    setLength: function( length ) {
+
+      this.yAxisLength = length;
+
+      this.graphBounds = new Bounds2( -this.yAxisOffset, 0, this.graphWidth - this.yAxisOffset , this.graphHeight );
+
+      this.topArrowNode.setTailAndTip( this.yAxisOffset, this.origin.y - this.xAxisOffset,
+                                       this.yAxisLength + this.axisArrowSize, this.origin.y - this.xAxisOffset );
+      this.bottomArrowNode.setTailAndTip( this.yAxisOffset, this.origin.y + this.xAxisOffset,
+                                          this.yAxisLength + this.axisArrowSize, this.origin.y + this.xAxisOffset );
+
+      this.topArrowLabel.left    = this.topArrowNode.right + this.axisLabelSpacing;
+      this.topArrowLabel.centerY = this.topArrowNode.centerY;
+
+      this.bottomArrowLabel.left    = this.bottomArrowNode.right + this.axisLabelSpacing;
+      this.bottomArrowLabel.centerY = this.bottomArrowNode.centerY;
+   },
 
     /**
      * Sets the top & bottom axis labels (on the far right of the number line)
@@ -176,7 +189,7 @@ define( function( require ) {
      * @public
      */
     addMarker: function( marker ) {
-      this.graphMarkerLayerNode.addChild( marker );
+      this.markerLayerNode.addChild( marker );
     },
 
     /**
@@ -184,10 +197,10 @@ define( function( require ) {
      * @public
      */
     removeAllMarkers: function() {
-      this.graphMarkerLayerNode.getChildren().forEach( function( node ) {
+      this.markerLayerNode.getChildren().forEach( function( node ) {
         node.dispose();
       } );
-      this.graphMarkerLayerNode.removeAllChildren();
+      this.markerLayerNode.removeAllChildren();
     },
 
     /**
@@ -196,7 +209,7 @@ define( function( require ) {
      * @public
      */
     getAllMarkers: function() {
-      return this.graphMarkerLayerNode.getChildren();
+      return this.markerLayerNode.getChildren();
     },
 
     /**
@@ -207,7 +220,7 @@ define( function( require ) {
      * @public
      */
     forEachMarker: function( callback ) {
-      this.graphMarkerLayerNode.getChildren().forEach( callback );
+      this.markerLayerNode.getChildren().forEach( callback );
     },
 
     /**

@@ -35,6 +35,7 @@ define( function( require ) {
     this.bottomQnA = new QuestionAnswer( this, correctBottomValue, correctBottomValue );
 
     // @protected (read-only) - all
+    this.addProperty( 'isFractional', false );
     this.addProperty( 'outOfRange', false );
     this.addProperty( 'editable', options.editable );
     if ( !this.editableProperty.value ) {

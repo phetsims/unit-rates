@@ -175,7 +175,7 @@ define( function( require ) {
       var self = this;
 
       // remove all existing markers
-      this.graphMarkerLayerNode.removeAllChildren();
+      this.markerLayerNode.removeAllChildren();
 
       // reset the undo stack
       this.undoItemNodeList.length = 0;
