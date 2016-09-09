@@ -27,8 +27,6 @@ define( function( require ) {
       carFinished:        false
     } );
 
-    //var self = this;
-
     // seperate number line model
     //this.numberline = new NumberLine();
 

@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A specific instance of an item (i.e. apple, cucumber, blue candy) with it's dynamic attributes
+ * A base item class with various positioning related attributes
  *
  * @author Dave Schmitz (Schmitzware)
  */

@@ -151,6 +151,15 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
+     * Sets dimensions of the number line
+     * @param {number} width
+     * @param {number} height
+     * @public
+     */
+    setDimensions: function( width, height ) {
+    },
+
+    /**
      * Sets the top & bottom axis labels (on the far right of the number line)
      * @param {string} topLabel
      * @param {string} bottomLabel

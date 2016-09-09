@@ -34,7 +34,6 @@ define( function( require ) {
   var miString = require( 'string!UNIT_RATES/mi' );
 
   // constants
-  var TRACK_START_FLAG_X       = 60;
   var TRACK_BOTTOM_OFFSET      = 25;
   var TRACK_DARK_STROKE_COLOR  = 'rgba(0, 0, 0, 1.0)';
   var TRACK_LITE_STROKE_COLOR  = 'rgba(0, 0, 0, 0.25)';
@@ -70,10 +69,10 @@ define( function( require ) {
     this.trackBounds    = options.trackBounds;
     this.trackDistance  = options.trackDistance;
     this.trackInterval  = options.trackInterval;
-    this.trackOrigin    = new Vector2( this.trackBounds.minX + TRACK_START_FLAG_X, this.trackBounds.maxY - TRACK_BOTTOM_OFFSET );
+    this.trackOrigin    = new Vector2( this.trackBounds.minX + RacingLabConstants.TRACK_START_FLAG_X, this.trackBounds.maxY - TRACK_BOTTOM_OFFSET );
 
     // @protected all - various coordinates
-    this.milesPerPixel = ( this.trackBounds.maxX - TRACK_START_FLAG_X ) / this.trackDistance;
+    this.milesPerPixel = ( this.trackBounds.maxX - RacingLabConstants.TRACK_START_FLAG_X ) / this.trackDistance;
     this.intervalCount = this.trackDistance / this.trackInterval;
 
     this.resetTrack();
@@ -240,6 +239,7 @@ define( function( require ) {
 
       if( !this.trackGroup.carFinishedProperty.value ) {
         this.carNode.right = this.greenFlagNode.left + ( this.trackGroup.rateProperty.value * elapsedTime * this.milesPerPixel );
+
         if( this.carNode.right > this.finishPoint.x ) {
           this.carNode.right = this.finishPoint.x;
         }

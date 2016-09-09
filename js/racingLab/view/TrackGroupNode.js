@@ -42,7 +42,8 @@ define( function( require ) {
     this.numberLineNode = new URNumberLineNode( {
     //this.numberLineNode = new NumberLineNode( trackGroup.numberLine, this.keypad, {
       numberLineTitle:  options.numberLineTitle,
-      graphHeight:      95
+      graphHeight:      95,
+      yAxisOffset:      60
      } );
     this.numberLineNode.setLineLabels( milesCapString, hoursCapString );
 

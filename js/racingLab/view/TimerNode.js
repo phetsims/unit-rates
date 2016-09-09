@@ -23,7 +23,7 @@ define( function( require ) {
 
   // constants
   var DISPLAY_FONT    = new PhetFont( 14 );
-  var DISPLAY_SIZE    = new Dimension2( 125, 50 );
+  var DISPLAY_SIZE    = new Dimension2( 125, 45 );
   var DISPLAY_SPACING = 5;
 
   // strings
