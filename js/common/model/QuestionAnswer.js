@@ -95,6 +95,31 @@ define( function( require ) {
     },
 
     /**
+     * Returns the number of decimal places in the current answer value (i.e. 1.1 = 1, 1.33 = 2, 1.234 = 3)
+     * @return {number}
+     * @public
+     */
+    getAnswerPrecision: function() {
+
+      function roundDecimals(value, decimals) {
+        return Number(Util.roundSymmetric(value+'e'+decimals)+'e-'+decimals);
+      }
+
+      var count = roundDecimals( this.valueProperty.value, 2 );
+
+      if ( !isFinite( count ) ) {
+        return 0;
+      }
+
+      var e = 1;
+      var p = 0;
+      while ( Util.roundSymmetric( count * e ) / e !== count ) {
+        e *= 10; p++;
+      }
+      return p;
+    },
+
+    /**
      * Reset to the initial state
      * @public
      */

@@ -27,13 +27,13 @@ define( function( require ) {
   function RacingLabScreen() {
 
     var options = {
-      name: screenRacingLabString,
       backgroundColor: 'rgb(233,242,254)',
-      homeScreenIcon: new Image( screenIcon ),
       pickable: true //TODO explain why this is needed, since it's usually not necessary
     };
 
     Screen.call( this,
+      screenRacingLabString,
+      new Image( screenIcon ),
       function() { return new RacingLabModel(); },
       function( model ) { return new RacingLabScreenView( model ); },
       options

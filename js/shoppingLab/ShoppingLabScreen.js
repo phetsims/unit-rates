@@ -27,12 +27,12 @@ define( function( require ) {
   function ShoppingLabScreen() {
 
     var options = {
-      name: screenShoppingLabString,
-      backgroundColor: 'rgb(226,255,249)',
-      homeScreenIcon: new Image( screenIcon )
+      backgroundColor: 'rgb(226,255,249)'
     };
 
     Screen.call( this,
+      screenShoppingLabString,
+      new Image( screenIcon ),
       function() { return new ShoppingLabModel(); },
       function( model ) { return new ShoppingLabScreenView( model ); },
       options
