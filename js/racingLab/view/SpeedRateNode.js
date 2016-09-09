@@ -83,7 +83,7 @@ define( function( require ) {
 
     this.hoursPicker = new NumberPicker( this.groupModel.hoursProperty, this.groupModel.hoursRangeProperty, _.extend ( {
       centerX:   this.milesPicker.centerX,
-      top: this.milesPicker.bottom + 2 * Y_SPACING,
+      top: this.milesPicker.bottom + 2 * Y_SPACING
     }, pickerOptions ) );
     this.contentNode.addChild( this.hoursPicker );
 
