@@ -26,19 +26,22 @@ define( function( require ) {
    */
   function ShoppingScreen() {
 
+    var options = {
+      name: screenShoppingString,
+      backgroundColor: 'rgb(226,255,249)',
+      homeScreenIcon:  new Image( screenIcon ),
+      pickable: true //TODO explain why this is needed, since it's usually not necessary
+    };
+
     Screen.call( this,
-      screenShoppingString,
-      new Image( screenIcon ),
       function() { return new ShoppingModel(); },
       function( model ) { return new ShoppingScreenView( model ); },
-      { backgroundColor: 'rgb(226,255,249)', pickable: true }
+      options
     );
   }
 
   unitRates.register( 'ShoppingScreen', ShoppingScreen );
 
-  return inherit( Screen, ShoppingScreen, {
-
-    } ); // inherit
+  return inherit( Screen, ShoppingScreen );
 
 } ); // define
