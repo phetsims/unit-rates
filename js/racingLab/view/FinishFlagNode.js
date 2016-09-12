@@ -30,9 +30,9 @@ define( function( require ) {
     }, options || {} );
 
     var image   = new Image( imageString, { scale: options.imageScale } );
-    var origin  = new Vector2( position.x, position.y - image.height );
-    var bounds  = new Bounds2( options.bounds.minX, options.bounds.minY - image.height,
-                               options.bounds.maxX, options.bounds.maxY );
+    var origin  = new Vector2( position.x - image.width / 2, position.y - image.height );
+    var bounds  = new Bounds2( options.bounds.minX - image.width / 2, options.bounds.minY - image.height,
+                               options.bounds.maxX - image.width / 2, options.bounds.maxY );
 
     // @public
     this.item = new MovableItem( {

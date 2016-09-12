@@ -27,7 +27,7 @@ define( function( require ) {
   var twoCarSceneImage = require( 'image!UNIT_RATES/two_car_scene.png' );
   var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
   var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
-  var greenFlagImage = require( 'image!UNIT_RATES/green_flag.png' );
+  var returnCarButtonImage = require( 'image!UNIT_RATES/return_car_button.png' );
   var goButtonImage = require( 'image!UNIT_RATES/go_button.png' );
   var stopButtonImage = require( 'image!UNIT_RATES/stop_button.png' );
 
@@ -86,7 +86,7 @@ define( function( require ) {
     this.goStopButton = new BooleanRoundToggleButton(
       new Image( stopButtonImage, { scale: 0.25 } ),
       new Image( goButtonImage, { scale: 0.25 } ), model.runningProperty, {
-      right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      right: this.layoutBounds.right    - URConstants.SCREEN_HORIZONTAL_MARGIN,
       centerY: this.trackGroup2Node.top - URConstants.SCREEN_PANEL_SPACING / 2,
       radius: 45
     } );
@@ -95,7 +95,7 @@ define( function( require ) {
     var restartButton = new RectangularPushButton( {
       right: this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
       centerY: this.goStopButton.centerY,
-      content: new Image( greenFlagImage, { scale: 0.18 } ),
+      content: new Image( returnCarButtonImage, { scale: 0.18 } ),
       minWidth: 45,
       minHeight: 45,
       cornerRadius: 4,
@@ -160,7 +160,7 @@ define( function( require ) {
     } );
 
     this.model.runningProperty.link( function( value, oldValue ) {
-      self.goStopButton.baseColor = ( value ? '#6D6E70' :  '#87CAA7' );
+      self.goStopButton.baseColor = ( value ? '#6D6E70' :  '#85d4a6' );
       //self.carCountButtons.opacity = ( value ? 0.5 : 1.0 );   // FIXME: what to disable when running
       //self.carCountButtons.pickable = !value;
     } );
