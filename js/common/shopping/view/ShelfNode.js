@@ -16,8 +16,6 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Image = require( 'SCENERY/nodes/Image' );
   var Shape = require( 'KITE/Shape' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Bounds2 = require( 'DOT/Bounds2' );
 
   // images
   var shelfImage = require( 'image!UNIT_RATES/shelf.png' );
