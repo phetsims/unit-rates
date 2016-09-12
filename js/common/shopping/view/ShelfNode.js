@@ -14,16 +14,20 @@ define( function( require ) {
   var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var Shape = require( 'KITE/Shape' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Bounds2 = require( 'DOT/Bounds2' );
 
+  // images
+  var shelfImage = require( 'image!UNIT_RATES/shelf.png' );
+
   // constants
-  var BACK_DEPTH      = 35;
-  var BACK_OFFSET     = 0.15;
-  var SHELF_SIZE      = new Dimension2( 340, 20 );
+  var FRONT_HEIGHT    = 20;
+  var BACK_DEPTH      = 20;
+  var BACK_OFFSET     = 0.065;
   var NODE_X_SPACING  = 2;
-  var NODE_Y_SPACING  = 5;
+  var NODE_Y_SPACING  = 10;
 
   /**
    * @param {Shelf} shelf - model
@@ -44,40 +48,31 @@ define( function( require ) {
     this.startMoveCallback = startMoveCallback;
     this.endMoveCallback = endMoveCallback;
 
-    var pathOptions = {
-      fill: 'white',
-      stroke: 'black',
-      lineWidth: 1
-    };
+    var imageNode = new Image( shelfImage, { scale: 0.23 } );
 
-    this.backEdgeMinX = BACK_OFFSET * SHELF_SIZE.width;
-    this.backEdgeMaxX = ( 1 - BACK_OFFSET ) * SHELF_SIZE.width;
-    this.dropBounds   = new Bounds2( this.backEdgeMinX, -BACK_DEPTH, this.backEdgeMaxX, 0 );
+    this.backEdgeMinX = BACK_OFFSET * imageNode.width;
+    this.backEdgeMaxX = ( 1 - BACK_OFFSET ) * imageNode.width;
 
     // @private - top facce
     this.topNode = new Path( new Shape()
-      .moveTo( 0, 0 )
-      .lineTo( SHELF_SIZE.width, 0)
-      .lineTo( this.backEdgeMaxX, -BACK_DEPTH )
-      .lineTo( this.backEdgeMinX, -BACK_DEPTH )
-      .lineTo( 0, 0 ), pathOptions );
-
-    // @private - front facce
-    var frontShape = new Shape()
-      .moveTo( 0, 0 )
-      .lineTo( 0, SHELF_SIZE.height )
-      .lineTo( SHELF_SIZE.width, SHELF_SIZE.height)
-      .lineTo( SHELF_SIZE.width, 0);
+      .moveTo( 0, FRONT_HEIGHT )
+      .lineTo( imageNode.width, FRONT_HEIGHT)
+      .lineTo( this.backEdgeMaxX, 0 )
+      .lineTo( this.backEdgeMinX, 0 )
+      .lineTo( 0, FRONT_HEIGHT ), {
+      //fill: 'rgba(255,255,255,0.15)',
+      lineWidth: 0
+    } );
 
     // @private
     this.dropNode = new Path( new Shape()
-        .rect( this.backEdgeMinX - 15, ( -BACK_DEPTH ), ( this.backEdgeMaxX - this.backEdgeMinX + 20), BACK_DEPTH ), {
+        .rect( this.backEdgeMinX + 30, 0, ( this.backEdgeMaxX - this.backEdgeMinX - 60), BACK_DEPTH ), {
       //fill: 'rgba(255,255,0,0.5)', // uncomment to see drop zone
       lineWidth: 0
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ this.topNode, new Path( frontShape, pathOptions ), this.dropNode ];
+    options.children = [ imageNode, this.topNode, this.dropNode ];
 
     // refresh on item change
     shelf.itemDataProperty.lazyLink( function( itemData, oldItemData ) {
@@ -124,7 +119,7 @@ define( function( require ) {
 
         if ( itemArray.contains( itemNode.item ) ) {
 
-          var x = nodeX + NODE_X_SPACING;
+          var x = nodeX - itemNode.width / 4 + NODE_X_SPACING;
           var y = nodeY - ( itemNode.height ) + NODE_Y_SPACING;
 
           itemNode.item.setPosition( x, y, animate ); // positions are item center
