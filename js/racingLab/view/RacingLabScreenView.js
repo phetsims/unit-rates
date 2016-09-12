@@ -27,10 +27,6 @@ define( function( require ) {
   var twoCarSceneImage = require( 'image!UNIT_RATES/two_car_scene.png' );
   var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
   var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
-<<<<<<< HEAD
-  var greenFlagImage = require( 'image!UNIT_RATES/green_flag.png' );
-=======
->>>>>>> master
   var returnCarButtonImage = require( 'image!UNIT_RATES/return_car_button.png' );
   var goButtonImage = require( 'image!UNIT_RATES/go_button.png' );
   var stopButtonImage = require( 'image!UNIT_RATES/stop_button.png' );
@@ -90,20 +86,13 @@ define( function( require ) {
     this.goStopButton = new BooleanRoundToggleButton(
       new Image( stopButtonImage, { scale: 0.25 } ),
       new Image( goButtonImage, { scale: 0.25 } ), model.runningProperty, {
-<<<<<<< HEAD
       right:    this.layoutBounds.right  - URConstants.SCREEN_HORIZONTAL_MARGIN,
       centerY:  this.trackGroup2Node.top - URConstants.SCREEN_PANEL_SPACING / 2,
       radius:   45
-=======
-      right: this.layoutBounds.right    - URConstants.SCREEN_HORIZONTAL_MARGIN,
-      centerY: this.trackGroup2Node.top - URConstants.SCREEN_PANEL_SPACING / 2,
-      radius: 45
->>>>>>> master
     } );
     this.addChild( this.goStopButton );
 
     var restartButton = new RectangularPushButton( {
-<<<<<<< HEAD
       right:              this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
       centerY:            this.goStopButton.centerY,
       content:            new Image( returnCarButtonImage, { scale: 0.18 } ),
@@ -113,17 +102,6 @@ define( function( require ) {
       baseColor:          '#A9D8FD',
       xMargin:            8, // should be visibly greater than yMargin, see issue #109
       yMargin:            5,
-=======
-      right: this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
-      centerY: this.goStopButton.centerY,
-      content: new Image( returnCarButtonImage, { scale: 0.18 } ),
-      minWidth: 45,
-      minHeight: 45,
-      cornerRadius: 4,
-      baseColor: '#A9D8FD',
-      xMargin: 8, // should be visibly greater than yMargin, see issue #109
-      yMargin: 5,
->>>>>>> master
       touchAreaXDilation: 0,
       touchAreaYDilation: 0,
       stroke:             'black',
