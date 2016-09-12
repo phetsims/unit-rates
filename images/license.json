@@ -79,7 +79,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": ""
   },
-  "go_button.png": {
+  "go_button_icon.png": {
     "text": [
       "Copyright 2016 University of Colorado Boulder"
     ],
@@ -88,6 +88,14 @@
     "notes": ""
   },
   "stop_button.png": {
+    "text": [
+      "Copyright 2016 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "return_car_button.png": {
     "text": [
       "Copyright 2016 University of Colorado Boulder"
     ],

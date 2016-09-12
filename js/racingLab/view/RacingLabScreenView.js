@@ -28,7 +28,7 @@ define( function( require ) {
   var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
   var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
   var returnCarButtonImage = require( 'image!UNIT_RATES/return_car_button.png' );
-  var goButtonImage = require( 'image!UNIT_RATES/go_button.png' );
+  var goButtonIconImage = require( 'image!UNIT_RATES/go_button_icon.png' );
   var stopButtonImage = require( 'image!UNIT_RATES/stop_button.png' );
 
   // strings
@@ -84,11 +84,10 @@ define( function( require ) {
 
     // play/pause button
     this.goStopButton = new BooleanRoundToggleButton(
-      new Image( stopButtonImage, { scale: 0.25 } ),
-      new Image( goButtonImage, { scale: 0.25 } ), model.runningProperty, {
-      right:    this.layoutBounds.right  - URConstants.SCREEN_HORIZONTAL_MARGIN,
-      centerY:  this.trackGroup2Node.top - URConstants.SCREEN_PANEL_SPACING / 2,
-      radius:   45
+      new Image( goButtonIconImage, { scale: 0.25 } ), model.runningProperty, {
+      right: this.layoutBounds.right    - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      centerY: this.trackGroup2Node.top - URConstants.SCREEN_PANEL_SPACING / 2,
+      radius: 45
     } );
     this.addChild( this.goStopButton );
 
