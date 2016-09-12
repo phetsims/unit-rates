@@ -24,16 +24,16 @@ define( function( require ) {
     options = _.extend( {
       xAxisEnabled: true,
       yAxisEnabled: true,
-      bounds:       null,                 // Bounds2
-      position:     new Vector2( 0, 0 )
+      bounds: null,                 // Bounds2
+      position: new Vector2( 0, 0 )
     }, options || {} );
 
     // @public (read-write)
     PropertySet.call( this, {
       xAxisEnabled: options.xAxisEnabled,
       yAxisEnabled: options.yAxisEnabled,
-      bounds:       options.bounds,
-      position:     options.position
+      bounds: options.bounds,
+      position: options.position
     } );
   }
 
@@ -58,11 +58,10 @@ define( function( require ) {
           y: this.positionProperty.value.y
         };
 
-        var animationTween = new TWEEN.Tween( position ).
-          to( {
-            x: x,
-            y: y
-          }, 1000 )
+        var animationTween = new TWEEN.Tween( position ).to( {
+          x: x,
+          y: y
+        }, 1000 )
           .easing( TWEEN.Easing.Cubic.InOut )
           .onUpdate( function() {
             self.setPosition( position.x, position.y, false );
@@ -70,20 +69,20 @@ define( function( require ) {
           .onComplete( function() {
           } );
 
-        animationTween.start();
+        animationTween.start( phet.joist.elapsedTime );
       }
       else {
 
         // axis enable check
-        if( !this.xAxisEnabledProperty.value ) {
+        if ( !this.xAxisEnabledProperty.value ) {
           x = this.positionProperty.value.x;
         }
-        if( !this.yAxisEnabledProperty.value ) {
+        if ( !this.yAxisEnabledProperty.value ) {
           y = this.positionProperty.value.y;
         }
 
         // bounds check
-        if( this.boundsProperty ) {
+        if ( this.boundsProperty ) {
           var bounds = this.boundsProperty.value;
           x = ( x < bounds.minX ? bounds.minX : x );
           x = ( x > bounds.maxX ? bounds.maxX : x );

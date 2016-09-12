@@ -26,12 +26,12 @@ define( function( require ) {
 
     // @public (read-write)
     PropertySet.call( this, {
-      count:    count || 1,
+      count: count || 1,
       position: new Vector2( 0, 0 )
     } );
 
     // @public (read-only)
-    this.type   = data.type;
+    this.type = data.type;
   }
 
   unitRates.register( 'Item', Item );
@@ -55,11 +55,10 @@ define( function( require ) {
           y: this.positionProperty.value.y
         };
 
-        var animationTween = new TWEEN.Tween( position ).
-          to( {
-            x: x,
-            y: y
-          }, 1000 )
+        var animationTween = new TWEEN.Tween( position ).to( {
+          x: x,
+          y: y
+        }, 1000 )
           .easing( TWEEN.Easing.Cubic.InOut )
           .onUpdate( function() {
             self.setPosition( position.x, position.y, false );
@@ -67,7 +66,7 @@ define( function( require ) {
           .onComplete( function() {
           } );
 
-        animationTween.start();
+        animationTween.start( phet.joist.elapsedTime );
       }
       else {
         this.positionProperty.value = new Vector2( x, y );
@@ -81,7 +80,7 @@ define( function( require ) {
      * @public
      */
     isEqual: function( item ) {
-       return ( item.type  === this.type && item.countProperty.value === this.countProperty.value );
+      return ( item.type === this.type && item.countProperty.value === this.countProperty.value );
     },
 
     /**
@@ -90,7 +89,7 @@ define( function( require ) {
      * @public
      */
     isCandy: function() {
-      return ( this.type === ItemData.RED_CANDY.type   || this.type === ItemData.PURPLE_CANDY.type ||
+      return ( this.type === ItemData.RED_CANDY.type || this.type === ItemData.PURPLE_CANDY.type ||
                this.type === ItemData.GREEN_CANDY.type || this.type === ItemData.BLUE_CANDY.type );
     },
 
