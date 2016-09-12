@@ -84,6 +84,7 @@ define( function( require ) {
 
     // play/pause button
     this.goStopButton = new BooleanRoundToggleButton(
+      new Image( stopButtonImage, { scale: 0.25 } ),
       new Image( goButtonIconImage, { scale: 0.25 } ), model.runningProperty, {
       right: this.layoutBounds.right    - URConstants.SCREEN_HORIZONTAL_MARGIN,
       centerY: this.trackGroup2Node.top - URConstants.SCREEN_PANEL_SPACING / 2,
