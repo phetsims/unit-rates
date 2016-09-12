@@ -51,8 +51,8 @@ define( function( require ) {
 
     // number line
     this.rateNode = new SpeedRateNode( this.trackGroup, {
-      left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
-      rateTitle: options.rateTitle,
+      left:               this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
+      rateTitle:          options.rateTitle,
       pickerColor:        options.rateColor,
       pickerPressedColor: options.ratePressedColor
     } );
