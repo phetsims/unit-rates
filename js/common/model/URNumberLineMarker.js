@@ -28,7 +28,7 @@ define( function( require ) {
       editable: false
      }, options || {} );
 
-    MovableItem.call( this );
+    MovableItem.call( this, options );
 
     // @public - all
     this.topQnA    = new QuestionAnswer( this, correctTopValue, correctTopValue );
@@ -69,6 +69,34 @@ define( function( require ) {
   return inherit( MovableItem, URNumberLineMarker, {
 
     /**
+     * Checks both the cost & units answers
+     * @returns {boolean}
+     * @public
+     */
+    checkCorrectAnswers: function() {
+
+      var allCorrect = ( this.topQnA.isAnswerCorrect() && this.bottomQnA.isAnswerCorrect() );
+
+      this.editableProperty.set( !allCorrect || this.outOfRangeProperty.value );
+
+      return allCorrect;
+    },
+
+     /**
+     * Tells whether a marker is 'removable'. Markers which are 'removable' are those which
+     * are either still editable (i.e. not locked in) or those which have fractional 'count' values.
+     * @returns {boolean}
+     * @private
+     */
+    isRemovable: function() {
+      var isEditable      = this.editableProperty.value;
+      var topPrecision    = this.topQnA.getAnswerPrecision();
+      var bottomPrecision = this.bottomQnA.getAnswerPrecision();
+
+      return ( isEditable ) //|| ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) );
+    },
+
+    /**
      * Resets the properties and answer to the default (unanswered) state
      * @public
      */
@@ -83,20 +111,6 @@ define( function( require ) {
         this.bottomQnA.answerValue = Number( 0 );
         this.bottomQnA.valueProperty.value = Number( 0 );
       }
-    },
-
-    /**
-     * Checks both the cost & units answers
-     * @returns {boolean}
-     * @public
-     */
-    checkCorrectAnswers: function() {
-
-      var allCorrect = ( this.topQnA.isAnswerCorrect() && this.bottomQnA.isAnswerCorrect() );
-
-      this.editableProperty.set( !allCorrect || this.outOfRangeProperty.value );
-
-      return allCorrect;
     },
 
     // @public

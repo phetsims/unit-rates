@@ -14,13 +14,15 @@ define( function( require ) {
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
 
   /**
+   * @param {URNumberLine} numberline
+   * @param {KeypadPanelNode} keypad
    * @param {Object} [options]
    * @constructor
    */
-  function RLNumberLineNode( options ) {
+  function RLNumberLineNode( numberline, keypad, options ) {
 
 
-    URNumberLineNode.call( this, options );
+    URNumberLineNode.call( this, numberline, keypad, options );
   }
 
   unitRates.register( 'RLNumberLineNode', RLNumberLineNode );

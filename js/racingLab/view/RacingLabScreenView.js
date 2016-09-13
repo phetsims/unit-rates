@@ -53,8 +53,8 @@ define( function( require ) {
 
     // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {
-      maxDigits: 4,
-      visible: false
+      maxDigits:  4,
+      visible:    true
     } );
     this.addChild( this.keypad );
     this.keypad.hide();
@@ -154,6 +154,9 @@ define( function( require ) {
       spacing:       11
     } );
     this.addChild( this.carCountButtons );
+
+    this.keypadCloseArea.moveToFront();
+    this.keypad.moveToFront();
 
     this.model.carCountProperty.link( function( value, oldValue ) {
       self.trackGroup2Node.visible = ( value === 2 );

@@ -11,6 +11,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  //var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var RLNumberLineNode = require( 'UNIT_RATES/racingLab/view/RLNumberLineNode' );
   var SpeedRateNode = require( 'UNIT_RATES/racingLab/view/SpeedRateNode' );
   var TrackNode = require( 'UNIT_RATES/racingLab/view/TrackNode' );
@@ -36,16 +37,17 @@ define( function( require ) {
       trackOnTop:       false
     }, options || {} );
 
+    var self = this;
+
     this.trackGroup = model;
 
     // number line
-    this.numberLineNode = new RLNumberLineNode( {
-    //this.numberLineNode = new NumberLineNode( trackGroup.numberLine, this.keypad, {
+    this.numberLineNode = new RLNumberLineNode( this.trackGroup.numberline, keypad, {
       numberLineTitle:  options.numberLineTitle,
       graphWidth:   675,
       graphHeight:  95,
-      yAxisOffset:  60,
-      yAxisLength:  675,
+      yAxisOffset:  55,
+      yAxisLength:  612,
      } );
     this.numberLineNode.setLineLabels( milesCapString, hoursCapString );
 
@@ -69,6 +71,10 @@ define( function( require ) {
     options.children = [ this.numberLineNode, this.rateNode, this.trackNode ];
 
     Node.call( this, options );
+
+    this.trackGroup.trackPixelLengthProperty.lazyLink( function( value, oldValue ) {
+      self.numberLineNode.setPixelLength( value );
+    } );
   }
 
   unitRates.register( 'TrackGroupNode', TrackGroupNode );

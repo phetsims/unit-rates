@@ -229,6 +229,8 @@ define( function( require ) {
           this.intervalNodes[i].fill   = MARKER_DARK_FILL_COLOR;
         }
       }
+
+      this.trackGroup.trackPixelLengthProperty.value = this.finishPoint.x - this.startPoint.x;
     },
 
     /**

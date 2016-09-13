@@ -58,15 +58,15 @@ define( function( require ) {
     this.numberLine   = numberLine;
     this.keypad       = keypad;
 
-    URNumberLineNode.call( this, options );
-
-    // @private - the fixed X location for ALL markers which are off the end of the number line
-    this.outOfRangeMarkerX = ( this.topArrowNode.right + this.topArrowLabel.left ) / 2;
-
     // Array.<NumberLineMarkerNode> - The undo/remove stack of markers which keeps track of the order of
     // marker removals for the undo button.
     // @private
     this.undoItemNodeList = [];
+
+    URNumberLineNode.call( this, numberLine, keypad, options );
+
+    // @private - the fixed X location for ALL markers which are off the end of the number line
+    this.outOfRangeMarkerX = ( this.topArrowNode.right + this.topArrowLabel.left ) / 2;
 
     // undo button - it's position will change based on the marker beign edited. Incorrectly/unanswered editable markers
     // will position the button on the far left side of the number line, while correct/fractional 'count' markers will

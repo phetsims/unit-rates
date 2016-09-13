@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Property = require( 'AXON/Property' );
+  var Util = require( 'DOT/Util' );
 
   // constants
   var DEFAULT_ANSWER_VALUE = -1;

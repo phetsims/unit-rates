@@ -11,6 +11,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   /**
@@ -24,11 +25,12 @@ define( function( require ) {
       hours:              1,
       hoursRange:         new RangeWithValue( 1, 10 ),
       rate:               200,
-      carFinished:        false
+      carFinished:        false,
+      trackPixelLength:   600
     } );
 
     // seperate number line model
-    //this.numberline = new NumberLine();
+    this.numberline = new URNumberLine();
 
     this.elapsedTimeProperty       = elapsedTimeProperty;
     this.flagArrowsVisibleProperty = flagArrowsVisibleProperty;
