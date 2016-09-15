@@ -70,9 +70,11 @@ define( function( require ) {
    */
   function Challenges( itemDataProperty, onCorrectAnswer ) {
 
-    this.questionSet      = RAND.nextInt( 4 );  // 4 sets of data available - see ChallengeData.js
+    this.questionSet = -1;
+
     this.itemDataProperty = itemDataProperty;
     this.onCorrectAnswer  = onCorrectAnswer;
+    this.selectQuestionSet();
     this.populate();
   }
 
@@ -81,6 +83,22 @@ define( function( require ) {
   return inherit( Object, Challenges, {
 
     // no dispose, persists for the lifetime of the sim.
+
+    /**
+     * Retrieves the question for a specific index of the current item type
+     * @returns {QuestionAnswer}
+     * @protected
+     */
+    selectQuestionSet: function () {
+
+      var questionSet = -1;
+      do {
+        questionSet = RAND.nextInt( 4 );  // 4 sets of data available - see ChallengeData.js
+      }
+      while ( questionSet === this.questionSet );
+
+       this.questionSet = questionSet;
+    },
 
     /**
      * Retrieves the question for a specific index of the current item type
@@ -116,6 +134,8 @@ define( function( require ) {
      * @public
      */
     refresh: function() {
+
+      this.selectQuestionSet();
 
       var itemData = this.itemDataProperty.value;
 
