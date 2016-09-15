@@ -11,7 +11,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  //var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
+  var RacingLabConstants = require( 'UNIT_RATES/racingLab/RacingLabConstants' );
   var RLNumberLineNode = require( 'UNIT_RATES/racingLab/view/RLNumberLineNode' );
   var SpeedRateNode = require( 'UNIT_RATES/racingLab/view/SpeedRateNode' );
   var TrackNode = require( 'UNIT_RATES/racingLab/view/TrackNode' );
@@ -43,15 +43,19 @@ define( function( require ) {
 
     // number line
     this.numberLineNode = new RLNumberLineNode( this.trackGroup.numberline, keypad, {
-      numberLineTitle:  options.numberLineTitle,
-      graphWidth:   675,
-      graphHeight:  95,
-      yAxisOffset:  55,
-      yAxisLength:  612,
-     } );
+      numberLineTitle:            options.numberLineTitle,
+      graphWidth:                 RacingLabConstants.TRACK_NUMBER_LINE_WIDTH,
+      graphHeight:                95,
+      xAxisOffset:                9,
+      yAxisOffset:                RacingLabConstants.TRACK_NUMBER_LINE_OFFSET,
+      xAxisLength:                RacingLabConstants.TRACK_NUMBER_LINE_WIDTH - RacingLabConstants.TRACK_NUMBER_LINE_OFFSET,
+      yAxisLength:                28,
+      markerLargeHeight:          30,
+      markerSmallHeight:          15
+    } );
     this.numberLineNode.setLineLabels( milesCapString, hoursCapString );
 
-    // number line
+    // rate spinners
     this.rateNode = new SpeedRateNode( this.trackGroup, {
       left:               this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
       rateTitle:          options.rateTitle,
@@ -59,8 +63,13 @@ define( function( require ) {
       pickerPressedColor: options.ratePressedColor
     } );
 
-    // track
-    var trackOptions = { timerTitle: options.timerTitle };
+    // car track
+    var trackOptions = {
+      trackWidth:         RacingLabConstants.TRACK_NUMBER_LINE_WIDTH,
+      trackHeight:        100,
+      trackStartOffset:   RacingLabConstants.TRACK_NUMBER_LINE_OFFSET,
+      timerTitle:         options.timerTitle
+    };
     trackOptions = ( options.trackOnTop ?
       _.extend( { bottom: this.numberLineNode.top - 4 }, trackOptions ) :
       _.extend( { top: this.numberLineNode.bottom + 4 }, trackOptions )

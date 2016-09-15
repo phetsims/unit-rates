@@ -20,12 +20,15 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function URNumberLineMarker( correctTopValue, correctBottomValue, options ) {
+  function URNumberLineMarker( correctTopValue, correctBottomValue, rateProperty, options ) {
 
     var self = this;
 
     options = _.extend( {
-      editable: false
+      color:                'black',
+      editable:             false,
+      topHighPrecision:     1,
+      bottomHighPrecision:  2
      }, options || {} );
 
     MovableItem.call( this, options );
@@ -35,8 +38,12 @@ define( function( require ) {
     this.bottomQnA = new QuestionAnswer( this, correctBottomValue, correctBottomValue );
 
     // @protected (read-only) - all
-    this.addProperty( 'isFractional', false );
+    this.rateProperty = rateProperty;
+    this.color = options.color;
+    this.topHighPrecision = options.topHighPrecision;
+    this.bottomHighPrecision = options.bottomHighPrecision;
     this.addProperty( 'outOfRange', false );
+    this.addProperty( 'highPrecision', false );
     this.addProperty( 'editable', options.editable );
     if ( !this.editableProperty.value ) {
       this.topQnA.valueProperty.value    = correctTopValue;
@@ -48,7 +55,7 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if ( !allCorrect && value >= 0 ) {
         self.topQnA.answerValue = Number( value );
-        self.bottomQnA.answerValue = Util.toFixedNumber( ( value / self.rate ), 1 );
+        self.bottomQnA.answerValue = Util.toFixedNumber( ( value / self.rateProperty.value ), 1 );
         self.bottomQnA.valueProperty.set( Number( -1 ) );
       }
     } );
@@ -58,7 +65,7 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if ( !allCorrect && value >= 0 ) {
         self.bottomQnA.answerValue = Number( value );
-        self.topQnA.answerValue = Util.toFixedNumber( ( value * self.rate ), 2 );
+        self.topQnA.answerValue = Util.toFixedNumber( ( value * self.rateProperty.value ), 2 );
         self.topQnA.valueProperty.set( Number( -1 ) );
       }
     } );
@@ -79,21 +86,21 @@ define( function( require ) {
 
       this.editableProperty.set( !allCorrect || this.outOfRangeProperty.value );
 
+      var topPrecision    = this.topQnA.getAnswerPrecision();
+      var bottomPrecision = this.bottomQnA.getAnswerPrecision();
+      this.highPrecisionProperty.set( topPrecision >= this.topHighPrecision || bottomPrecision >= this.bottomHighPrecision );
+
       return allCorrect;
     },
 
      /**
      * Tells whether a marker is 'removable'. Markers which are 'removable' are those which
-     * are either still editable (i.e. not locked in) or those which have fractional 'count' values.
+     * are either still editable (i.e. not locked in) or those which have fractional values past a specified precision.
      * @returns {boolean}
      * @private
      */
     isRemovable: function() {
-      var isEditable      = this.editableProperty.value;
-      var topPrecision    = this.topQnA.getAnswerPrecision();
-      var bottomPrecision = this.bottomQnA.getAnswerPrecision();
-
-      return ( isEditable ) //|| ( !isCandy && countPrecision >= 1 ) || ( isCandy && countPrecision >= 2 ) );
+      return ( this.editableProperty.value || this.highPrecision.value );
     },
 
     /**
@@ -111,6 +118,9 @@ define( function( require ) {
         this.bottomQnA.answerValue = Number( 0 );
         this.bottomQnA.valueProperty.value = Number( 0 );
       }
+
+      this.highPrecisionProperty.reset();
+      this.editableProperty.reset();
     },
 
     // @public

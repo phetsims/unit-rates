@@ -12,7 +12,7 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
+ var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   /**
    * @constructor
@@ -29,8 +29,11 @@ define( function( require ) {
       trackPixelLength:   600
     } );
 
-    // seperate number line model
-    this.numberline = new URNumberLine();
+    // seperate number line model w/ top/bottom ranges
+    this.numberline = new URNumberLine( this.rateProperty, 200, 1, {
+      markerTopDecimals:    0,
+      markerBottomDecimals: 2
+    } );
 
     this.elapsedTimeProperty       = elapsedTimeProperty;
     this.flagArrowsVisibleProperty = flagArrowsVisibleProperty;
@@ -49,7 +52,6 @@ define( function( require ) {
     },
 
     /**
-     *
      * @public
      */
     reset: function() {

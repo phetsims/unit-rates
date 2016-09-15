@@ -31,9 +31,9 @@ define( function( require ) {
   var undoButtonImage = require( 'image!UNIT_RATES/undo-button.png' );
 
   // constants
-  var EDITABLE_MARKER_X = 25; // the defualt X position of an editable marker
-  var UNDO_BUTTON_X     = 5;  // the default X position of the undo/remove button
-
+  var EDITABLE_MARKER_X   = 25; // the defualt X position of an editable marker
+  var UNDO_BUTTON_X       = 5;  // the default X position of the undo/remove button
+  var ACCORDIAN_X_MARGIN  = 5;
   /**
    * @param {URNumberLine} numberline
    * @param {KeypadPanelNode} keypad
@@ -43,33 +43,49 @@ define( function( require ) {
   function URNumberLineNode( numberline, keypad, options ) {
 
      options = _.extend( {
-      numberLineTitle:    '',
-      graphWidth:         675,
-      graphHeight:        130,
-      xAxisOffset:        10,
-      yAxisOffset:        0,
-      yAxisLength:        675,
-      axisArrowSize:      5,
-      axisLabelSpacing:   10,
-      axisLabelFont:      new PhetFont( 14 ),
-      axisLabelMaxWidth:  75
+      numberLineTitle:            '',
+      graphWidth:                 700,
+      graphHeight:                130,
+      xAxisOffset:                10,
+      yAxisOffset:                0,
+      xAxisLength:                625,
+      yAxisLength:                25,
+      axisArrowSize:              5,
+      axisLabelSpacing:           10,
+      axisLabelFont:              new PhetFont( 14 ),
+      axisLabelMaxWidth:          75,
+      markerLargeHeight:          35,
+      markerSmallHeight:          18,
+      markerTopPattern:           '  {0}',
+      markerBottomPattern:        '{0}'
     }, options || {} );
 
     var self = this;
 
-    this.numberline       = numberline;
-    this.keypad           = keypad;
-    this.graphWidth       = options.graphWidth;
-    this.graphHeight      = options.graphHeight;
-    this.xAxisOffset      = options.xAxisOffset;
-    this.yAxisOffset      = options.yAxisOffset;
-    this.yAxisLength      = options.yAxisLength;
-    this.axisArrowSize    = options.axisArrowSize;
-    this.axisLabelSpacing = options.axisLabelSpacing;
-    this.axisArrowSize    = options.axisArrowSize;
+    // @protected - all
+    this.numberline         = numberline;
+    this.keypad             = keypad;
+    this.graphWidth         = options.graphWidth;         // width of the area taken by the numberline
+    this.graphHeight        = options.graphHeight;        // height of the area taken by the numberline
+    this.xAxisOffset        = options.xAxisOffset;        // width between the double X-axes
+    this.yAxisOffset        = options.yAxisOffset;        // offset for the start of y=0
+    this.xAxisLength        = options.xAxisLength;        // length (pixels) of the X axis
+    this.yAxisLength        = options.yAxisLength;        // length (pixels) of the Y axis
+    this.axisArrowSize      = options.axisArrowSize;
+    this.axisLabelSpacing   = options.axisLabelSpacing;
+    this.axisArrowSize      = options.axisArrowSize;
+    this.markerLargeHeight  = options.markerLargeHeight;
+    this.markerSmallHeight  = options.markerSmallHeight;
+    this.markerTopPattern   = options.markerTopPattern;
+    this.markerBottomPattern  = options.markerBottomPattern;
+    this.markerTopDecimalPlaces = options.markerTopDecimalPlaces;
+    this.markerBottomDecimalPlaces = options.markerBottomDecimalPlaces;
 
     // @public (read-only) graph origin & bounds
-    this.origin = new Vector2( this.yAxisOffset, this.graphHeight / 2 );
+    this.origin       = new Vector2( this.yAxisOffset, this.graphHeight / 2 );
+    this.graphBounds  = new Bounds2( 0, 0, this.graphWidth, this.graphHeight );
+    this.markerBounds = new Bounds2( 0, 0, this.graphWidth + this.axisArrowSize + this.axisLabelSpacing,
+      this.graphHeight );
 
     // Array.<NumberLineMarkerNode> - The undo/remove stack of markers which keeps track of the order of
     // marker removals for the undo button.
@@ -80,40 +96,19 @@ define( function( require ) {
     this.expandedProperty = new Property( true );
 
     // @protected - the accordian box content
-    this.contentNode = new Path( new Shape().rect( 0, 0, this.graphWidth, this.graphHeight ), {
-      stroke: 'red',  // debugging
-      lineWidth: 1
-    } );
-
-    // undo button - it's position will change based on the marker beign edited. Incorrectly/unanswered editable markers
-    // will position the button on the far left side of the number line, while correct/fractional 'count' markers will
-    // reposition the undo button directly under the marker.
-    this.undoEditButtonNode = new RectangularPushButton( {
-      visible: false,
-      baseColor: URConstants.DEFAULT_BUTTON_COLOR,
-      headWidth: 8,
-      headHeight: 8,
-      tailWidth: 5,
-      left: UNDO_BUTTON_X,
-      centerY: this.graphHeight / 2,
-      content: new Image( undoButtonImage, { scale: 0.25 }),
-      listener: function() {
-        self.removeEditMarker();
-      }
-    } );
-    this.contentNode.addChild( this.undoEditButtonNode );
+    this.contentNode = new Node();
 
      // @protected - layer holding all the number line markers
     this.markerLayerNode = new Path( new Shape().rect( 0, 0, this.graphWidth, this.graphHeight ), {
-      stroke: 'yellow',  // debugging
+      stroke: 'red',  // debugging
       lineWidth: 1
     } );
     this.contentNode.addChild( this.markerLayerNode );
 
     // axis lines
     this.xZeroLine = new Path( new Shape()
-        .moveTo( this.yAxisOffset, this.origin.y + this.graphHeight / 5 )
-        .lineTo( this.yAxisOffset, this.origin.y - this.graphHeight / 5 ), {
+        .moveTo( this.yAxisOffset, this.origin.y + this.yAxisLength )
+        .lineTo( this.yAxisOffset, this.origin.y - this.yAxisLength ), {
       stroke: 'black',
       lineWidth: 1.25
     } );
@@ -147,7 +142,25 @@ define( function( require ) {
     this.contentNode.addChild( this.bottomArrowLabel );
 
     // set the defautl Y-axis length
-    this.setPixelLength( this.yAxisLength );
+    this.setPixelLength( this.xAxisLength );
+
+    // undo button - it's position will change based on the marker beign edited. Incorrectly/unanswered editable markers
+    // will position the button on the far left side of the number line, while correct/fractional 'count' markers will
+    // reposition the undo button directly under the marker.
+    this.undoEditButtonNode = new RectangularPushButton( {
+      visible:    false,
+      baseColor:  URConstants.DEFAULT_BUTTON_COLOR,
+      headWidth:  8,
+      headHeight: 8,
+      tailWidth:  5,
+      left:       UNDO_BUTTON_X,
+      centerY:    this.graphHeight / 2,
+      content:    new Image( undoButtonImage, { scale: 0.25 }),
+      listener: function() {
+        self.removeEditMarker();
+      }
+    } );
+    this.contentNode.addChild( this.undoEditButtonNode );
 
     // erase
     var eraserButton = new EraserButton( {
@@ -160,25 +173,23 @@ define( function( require ) {
     });
     this.contentNode.addChild( eraserButton );
 
-    // @private - the fixed X location for ALL markers which are off the end of the number line
-    this.outOfRangeMarkerX = ( this.topArrowNode.right + this.topArrowLabel.left ) / 2;
-
     this.markerLayerNode.moveToFront();
+    this.undoEditButtonNode.moveToFront();
 
     AccordionBox.call( this, this.contentNode, {
       expandedProperty: this.expandedProperty,
-      fill: 'white',
-      cornerRadius: 10,
-      buttonLength: 20,
-      buttonXMargin: 15,
-      buttonYMargin: 15,
-      titleNode: new Text( options.numberLineTitle, { font: URConstants.PANEL_TITLE_FONT } ),
-      titleAlignX: 'left',
-      showTitleWhenExpanded: true,
-      contentAlign: 'left',
-      contentXMargin: 5,
-      contentYMargin: 5,
-      contentYSpacing: 5
+      fill:                   'white',
+      cornerRadius:           10,
+      buttonLength:           20,
+      buttonXMargin:          15,
+      buttonYMargin:          15,
+      titleNode:              new Text( options.numberLineTitle, { font: URConstants.PANEL_TITLE_FONT } ),
+      titleAlignX:            'left',
+      showTitleWhenExpanded:  true,
+      contentAlign:           'left',
+      contentXMargin:         ACCORDIAN_X_MARGIN,
+      contentYMargin:         5,
+      contentYSpacing:        5
     } );
 
     this.mutate( options );
@@ -199,14 +210,14 @@ define( function( require ) {
      */
     setPixelLength: function( length ) {
 
-      this.yAxisLength = this.yAxisOffset + this.axisArrowSize + length;
+      var self = this;
 
-      this.graphBounds = new Bounds2( -this.yAxisOffset, 0, this.graphWidth - this.yAxisOffset , this.graphHeight );
+      this.xAxisLength = this.yAxisOffset + this.axisArrowSize + length;
 
       this.topArrowNode.setTailAndTip( this.yAxisOffset, this.origin.y - this.xAxisOffset,
-                                       this.yAxisLength + this.axisArrowSize, this.origin.y - this.xAxisOffset );
+                                       this.xAxisLength, this.origin.y - this.xAxisOffset );
       this.bottomArrowNode.setTailAndTip( this.yAxisOffset, this.origin.y + this.xAxisOffset,
-                                          this.yAxisLength + this.axisArrowSize, this.origin.y + this.xAxisOffset );
+                                          this.xAxisLength, this.origin.y + this.xAxisOffset );
 
       this.topArrowLabel.left    = this.topArrowNode.right + this.axisLabelSpacing;
       this.topArrowLabel.centerY = this.topArrowNode.centerY;
@@ -214,7 +225,20 @@ define( function( require ) {
       this.bottomArrowLabel.left    = this.bottomArrowNode.right + this.axisLabelSpacing;
       this.bottomArrowLabel.centerY = this.bottomArrowNode.centerY;
 
-      // FIXME: update all marker bounds
+      // in between arrows and labels
+      this.outOfRangeMarkerX = ( this.xAxisLength + this.axisArrowSize );
+
+      // update all markers - hide those beyond bounds, move out of range, etc.
+      this.markerLayerNode.getChildren().forEach( function( node ) {
+
+        if( node.marker.outOfRangeProperty.value ) {
+          var position = node.marker.positionProperty.value;
+          node.marker.setPosition( self.outOfRangeMarkerX, position.y, false );
+        }
+        else {
+          node.visible = ( node.marker.positionProperty.value.x <= self.xAxisLength - self.axisArrowSize );
+        }
+      } );
    },
 
     /**
@@ -242,10 +266,17 @@ define( function( require ) {
      * @public
      */
     removeAllMarkers: function() {
+
       this.markerLayerNode.getChildren().forEach( function( node ) {
         node.dispose();
       } );
       this.markerLayerNode.removeAllChildren();
+
+      this.editMarkerNodeList = [];
+      this.numberline.removeAllMarkers();
+
+      this.updateUndoButton();
+      this.addEditMarker();
     },
 
     /**
@@ -281,8 +312,10 @@ define( function( require ) {
         // create a new editable item
         var editMarker = this.numberline.createMarker( -1, -1, {
           editable: true,
-          bounds:   this.graphBounds,
-          position: new Vector2( EDITABLE_MARKER_X, this.origin.y )
+          bounds:   this.markerBounds,
+          position: new Vector2( EDITABLE_MARKER_X, this.origin.y ),
+          //topHighPrecision:     1,
+          //bottomHighPrecision:  2
         } );
 
         // create a matching marker node for the item
@@ -311,7 +344,10 @@ define( function( require ) {
         this.numberline.removeMarker( editMarkerNode.marker );
 
         // remove the node
-        this.removeChild( editMarkerNode );
+        this.markerLayerNode.removeChild( editMarkerNode );
+
+        this.updateUndoButton();
+        this.addEditMarker();  // if needed
       }
     },
 
@@ -337,22 +373,25 @@ define( function( require ) {
       //}
 
       // make marker node at a specific location
-      var position = marker.positionProperty.value;
+      var position   = marker.positionProperty.value;
       var markerNode = new URNumberLineMarkerNode( marker, position, this.keypad, {
-        draggable:    false,
-        centerX:      position.x,
-        centerY:      position.y,
-        stroke:       'black',
-        lineWidth:    1.25,
-        markerColor:  markerColor,
-        bottomDecimalPlaces: 1 //( item.isCandy() ? 2 : 1 ) // Candy count values are 2 decimal places
+        draggable:            false,
+        centerX:              position.x,
+        centerY:              position.y,
+        color:                markerColor,
+        largeHeight:          this.markerLargeHeight,
+        smallHeight:          this.markerSmallHeight,
+        topPattern:           this.markerTopPattern,
+        bottomPattern:        this.markerBottomPattern,
+        topDecimalPlaces:     this.numberline.markerTopDecimals,
+        bottomDecimalPlaces:  this.numberline.markerBottomDecimals //( item.isCandy() ? 2 : 1 ) // Candy count values are 2 decimal places
       } );
       this.addMarker( markerNode );
 
       // update on top/bottom values changes
       this.qnaMultilink = Property.multilink( [ markerNode.marker.topQnA.valueProperty, markerNode.marker.bottomQnA.valueProperty ],
         function( topProperty, bottomProperty ) {
-          self.updateItemMarkerNode( markerNode );
+          self.updateMarkerNode( markerNode );
           self.addEditMarker();  // if needed
       } );
 
@@ -365,7 +404,7 @@ define( function( require ) {
      * @param {NumberLineMarkerNode}
      * @private
      */
-    updateItemMarkerNode: function( markerNode ) {
+    updateMarkerNode: function( markerNode ) {
 
       var x           = markerNode.marker.positionProperty.value.x;
       var y           = this.origin.y;
@@ -388,21 +427,19 @@ define( function( require ) {
         // calc X position based on the currently set value
         var xPercent = -1;
         if( bottomValue >= 0 ) {
-          xPercent = ( ( bottomValue - this.numberline.bottomRangeProperty.value.min ) /
-                        this.numberline.bottomRangeProperty.value.max );
+          xPercent = ( bottomValue  / this.numberline.bottomMaxValue );
         }
         else {
-          xPercent = ( ( topValue - this.numberline.topRangeProperty.value.min ) /
-                        this.numberline.topRangeProperty.value.max );
+          xPercent = ( topValue / this.numberline.topMaxValue );
         }
 
-        // off the number line?
-        if ( xPercent > 1.0 ) {
+        x = ( ( 1.0 - xPercent ) * this.origin.x ) + ( this.graphBounds.maxX * xPercent ) ;
+
+        if( x > this.xAxisLength ) {
           x = this.outOfRangeMarkerX;
           markerNode.marker.outOfRangeProperty.set( true );
         }
-        else if ( xPercent >= 0 ) {
-          x = ( ( 1.0 - xPercent ) * this.origin.x ) + ( ( this.graphBounds.maxX + this.origin.x / 1.5 ) * xPercent );
+        else {
           markerNode.marker.outOfRangeProperty.set( false );
         }
       }
@@ -457,6 +494,7 @@ define( function( require ) {
 
       }
     },
+
     /**
      * Resets the number line to the defautl state
      * @public

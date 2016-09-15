@@ -18,14 +18,11 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // constants
-  var LARGE_LINE_HEIGHT     = 35;
-  var SMALL_LINE_HEIGHT     = 18;
   var EDIT_BUTTON_MARGIN    = 5;
   var EDIT_BORDER_COLOR     = 'rgba(0,0,0,1)';
   var EDIT_BG_COLOR         = 'rgba(255,255,255,1)';
   var PRECISION_TEXT_COLOR  = 'rgba(128,128,128,1)';
   var DEFAULT_TEXT_COLOR    = 'rgba(0,0,0,1)';
-  var DEFAULT_LINE_COLOR    = 'rgba(0,0,0,1)';
   var DEFAULT_BORDER_COLOR  = 'rgba(0,0,0,0)';
   var RANGE_TEXT_COLOR      = 'rgba(255,0,0,1)';
   var TRANSPARENT_COLOR     = 'rgba(0,0,0,0)';
@@ -43,53 +40,59 @@ define( function( require ) {
 
     options = _.extend( {
       topPattern:           '{0}',
-      topDecimalPlaces:     2,
       bottomPattern:        '{0}',
+      topDecimalPlaces:     2,
       bottomDecimalPlaces:  1,
+      stroke:               'black',
       lineWidth:            1.25,
-      markerColor:          DEFAULT_LINE_COLOR
+      largeHeight:          35,
+      smallHeight:          18
     }, options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
     var self = this;
 
     // @public (read-write)
-    this.marker             = marker;
-    this.keypad             = keypad;
-    this.markerColor        = options.markerColor;
+    this.marker   = marker;
+    this.keypad   = keypad;
+
+    // @public (protected)
+    this.largeHeight = options.largeHeight;
+    this.smallHeight = options.smallHeight;
 
     // top label - cost
     this.topNumberDisplay = new EditNumberDisplayNode( keypad, this.marker.topQnA.valueProperty, options.topPattern, {
         centerX:          -2,
-        bottom:           -SMALL_LINE_HEIGHT,
+        bottom:           -this.smallHeight,
         decimalPlaces:    options.topDecimalPlaces,
         buttonPosition:   'top',
         buttonSpacing:    EDIT_BUTTON_MARGIN,
         textColor:        DEFAULT_TEXT_COLOR,
         backgroundColor:  TRANSPARENT_COLOR,
         borderColor:      EDIT_BORDER_COLOR,
-        font:             SMALL_FONT
+        font:             SMALL_FONT,
+        minWidth:         100
     } );
 
     this.smallLineShape = new Shape()
-      .moveTo( 0, -SMALL_LINE_HEIGHT )
-      .lineTo( 0,  SMALL_LINE_HEIGHT );
+      .moveTo( 0, -this.smallHeight )
+      .lineTo( 0,  this.smallHeight );
     this.largeLineShape = new Shape()
-      .moveTo( 0, -LARGE_LINE_HEIGHT )
-      .lineTo( 0,  LARGE_LINE_HEIGHT );
+      .moveTo( 0, -this.largeHeight )
+      .lineTo( 0,  this.largeHeight );
 
     this.markerLine = new Path( this.smallLineShape, {
         centerX:    0,
         centerY:    0,
         lineWidth:  options.lineWidth,
-        stroke:     options.markerColor,
+        stroke:     marker.color,
         pickable:   false
       } );
 
     // bottom label - unit
     this.bottomNumberDisplay = new EditNumberDisplayNode( keypad, this.marker.bottomQnA.valueProperty, options.bottomPattern, {
         centerX:          -2,
-        top:              SMALL_LINE_HEIGHT,
+        top:              this.smallHeight,
         decimalPlaces:    options.bottomDecimalPlaces,
         buttonPosition:   'bottom',
         buttonSpacing:    EDIT_BUTTON_MARGIN,
@@ -106,8 +109,8 @@ define( function( require ) {
 
     // check answers on user input
     this.qnaMultilink = Property.multilink( [ this.marker.topQnA.valueProperty, this.marker.bottomQnA.valueProperty, this.marker.outOfRangeProperty ],
-      function( costProperty, unitProperty, outOfRangeProperty ) {
-        self.checkEditable();
+      function( topProperty, bottomProperty, outOfRangeProperty ) {
+        self.checkProperties();
     } );
  }
 
@@ -116,16 +119,16 @@ define( function( require ) {
   return inherit( MovableItemNode, URNumberLineMarkerNode, {
 
     /**
-     * Changes various color/visibility attributes based on the edit state
+     * Changes color/size/other attributes based on various properties
      * @protected
      */
-    checkEditable: function() {
+    checkProperties: function() {
 
       // non-editable/locked marker
       if ( !this.marker.editableProperty.value ) {
 
-        // fractional counts have different visual represenation than whole counts.
-        if ( this.marker.isFractionalProperty.value ) {
+        // higher precision markers have different visual represenation.
+        if ( this.marker.highPrecisionProperty.value ) {
 
           // text/line color
           this.markerLine.stroke = PRECISION_TEXT_COLOR;
@@ -139,12 +142,12 @@ define( function( require ) {
 
           // layout
           this.markerLine.setShape(this.largeLineShape);
-          this.topNumberDisplay.bottom = -LARGE_LINE_HEIGHT;
-          this.bottomNumberDisplay.top =  LARGE_LINE_HEIGHT;
+          this.topNumberDisplay.bottom = -this.largeHeight;
+          this.bottomNumberDisplay.top =  this.largeHeight;
 
           // text color
-          this.topNumberDisplay.setTextColor( this.markerColor );
-          this.bottomNumberDisplay.setTextColor( this.markerColor );
+          this.topNumberDisplay.setTextColor( this.marker.color );
+          this.bottomNumberDisplay.setTextColor( this.marker.color );
 
           // font
           this.topNumberDisplay.setFont( LARGE_FONT );
@@ -168,8 +171,8 @@ define( function( require ) {
 
         // layout
         this.markerLine.setShape(this.smallLineShape);
-        this.topNumberDisplay.bottom = -SMALL_LINE_HEIGHT;
-        this.bottomNumberDisplay.top =  SMALL_LINE_HEIGHT;
+        this.topNumberDisplay.bottom = -this.smallHeight;
+        this.bottomNumberDisplay.top =  this.smallHeight;
 
         // edit button
         this.topNumberDisplay.showEditButton();

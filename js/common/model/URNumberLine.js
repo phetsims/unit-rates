@@ -13,20 +13,28 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLineMarker = require( 'UNIT_RATES/common/model/URNumberLineMarker' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
 
   /**
+   * @param {Object} [options]
    * @constructor
    */
-  function URNumberLine( ) {
+  function URNumberLine( rateProperty, topMaxValue, bottomMaxValue, options ) {
+
+     options = _.extend( {
+      markerTopDecimals:     0,
+      markerBottomDecimals:  2
+    }, options || {} );
 
     // @public (read-write)
     PropertySet.call( this, {
-      markers:      [],
-      topRange:     new Range( 0, 10 ),
-      bottomRange:  new Range( 0, 10 ),
+      markers:              [],
+      markerTopDecimals:    options.markerTopDecimals,
+      markerBottomDecimals: options.markerBottomDecimals
     } );
+
+    this.rateProperty    = rateProperty;
+    this.topMaxValue     = topMaxValue;
+    this.bottomMaxValue  = bottomMaxValue;
   }
 
   unitRates.register( 'URNumberLine', URNumberLine );
@@ -39,7 +47,7 @@ define( function( require ) {
      * @public
      */
     createMarker: function( correctTopValue, correctBottomValue, options ) {
-      var marker = new URNumberLineMarker( correctTopValue, correctBottomValue, options );
+      var marker = new URNumberLineMarker( correctTopValue, correctBottomValue, this.rateProperty, options );
       this.markersProperty.value.push( marker );
 
       return marker;
@@ -55,6 +63,15 @@ define( function( require ) {
       if (index > -1) {
         this.markersProperty.value.splice( index, 1 );
       }
+    },
+
+    /**
+     * creates a numberline marker
+     *  @param {URNumberLineMarker} marker
+     * @public
+     */
+    removeAllMarkers: function() {
+      this.markersProperty.value = [];
     },
 
     /**

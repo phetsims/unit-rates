@@ -63,34 +63,34 @@ define( function( require ) {
     Property.lazyMultilink( [ this.groupModel.milesProperty, this.groupModel.hoursProperty ], this.rateChanged.bind( this ) );
 
     var pickerOptions = {
-      color: options.pickerColor,
-      pressedColor: options.pickerPressedColor,
-      xMargin: 8,
-      yMargin: 8,
-      arrowHeight: 10,
-      arrowWidth: 75,
-      cornerRadius: 5,
+      color:              options.pickerColor,
+      pressedColor:       options.pickerPressedColor,
+      xMargin:            8,
+      yMargin:            8,
+      arrowHeight:        10,
+      arrowWidth:         75,
+      cornerRadius:       5,
       touchAreaXDilation: 30,
-      font: PICKER_FONT
+      font:               PICKER_FONT
     };
     this.milesPicker = new NumberPicker(this.groupModel.milesProperty, this.groupModel.milesRangeProperty, _.extend ( {
-      left:   X_MARGIN,
-      top:    Y_MARGIN,
-      upFunction: function() { return self.groupModel.milesProperty.get() + 5; },
+      left:         X_MARGIN,
+      top:          Y_MARGIN,
+      upFunction:   function() { return self.groupModel.milesProperty.get() + 5; },
       downFunction: function() { return self.groupModel.milesProperty.get() - 5; }
     }, pickerOptions ) );
     this.contentNode.addChild( this.milesPicker );
 
     this.hoursPicker = new NumberPicker( this.groupModel.hoursProperty, this.groupModel.hoursRangeProperty, _.extend ( {
-      centerX:   this.milesPicker.centerX,
-      top: this.milesPicker.bottom + 2 * Y_SPACING
+      centerX:  this.milesPicker.centerX,
+      top:      this.milesPicker.bottom + 2 * Y_SPACING
     }, pickerOptions ) );
     this.contentNode.addChild( this.hoursPicker );
 
     this.milesText = new Text( milesString , {
-      left: this.milesPicker.right + X_SPACING,
-      centerY: this.milesPicker.centerY,
-      font: TEXT_FONT,
+      left:     this.milesPicker.right + X_SPACING,
+      centerY:  this.milesPicker.centerY,
+      font:     TEXT_FONT,
       maxWidth: TEXT_MAX_WIDTH
     } );
     this.contentNode.addChild( this.milesText );
@@ -104,9 +104,9 @@ define( function( require ) {
     this.contentNode.addChild( divisorLine );
 
     this.hoursText = new Text( hoursString , {
-      left: this.milesText.left,
-      centerY: this.hoursPicker.centerY,
-      font: TEXT_FONT,
+      left:     this.milesText.left,
+      centerY:  this.hoursPicker.centerY,
+      font:     TEXT_FONT,
       maxWidth: TEXT_MAX_WIDTH
     } );
     this.contentNode.addChild( this.hoursText );
@@ -115,16 +115,16 @@ define( function( require ) {
     AccordionBox.call( this, this.contentNode, {
       expandedProperty: this.expandedProperty,
       fill: 'white',
-      cornerRadius: 10,
-      buttonLength: 20,
-      buttonXMargin: 15,
-      buttonYMargin: 5,
-      titleNode: new Text( options.rateTitle, { font: URConstants.PANEL_TITLE_FONT, maxWidth: 100 } ),
-      titleAlignX: 'left',
-      showTitleWhenExpanded: true,
-      contentAlign: 'center',
-      contentXMargin: 0,
-      contentYMargin: 5
+      cornerRadius:           10,
+      buttonLength:           20,
+      buttonXMargin:          15,
+      buttonYMargin:          5,
+      titleNode:              new Text( options.rateTitle, { font: URConstants.PANEL_TITLE_FONT, maxWidth: 100 } ),
+      titleAlignX:            'left',
+      showTitleWhenExpanded:  true,
+      contentAlign:           'center',
+      contentXMargin:         0,
+      contentYMargin:         5
     } );
 
     this.mutate( options );
@@ -143,7 +143,7 @@ define( function( require ) {
      * @private
      */
     rateChanged: function( miles, hours ) {
-      this.groupModel.rate = miles / hours;
+      this.groupModel.rateProperty.value = miles / hours;
     },
 
     /**
