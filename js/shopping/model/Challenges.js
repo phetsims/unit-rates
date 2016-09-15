@@ -11,9 +11,9 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
+  var ChallengeData = require( 'UNIT_RATES/shopping/model/ChallengeData' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Random = require( 'DOT/Random' );
@@ -70,6 +70,7 @@ define( function( require ) {
    */
   function Challenges( itemDataProperty, onCorrectAnswer ) {
 
+    this.questionSet      = RAND.nextInt( 4 );  // 4 sets of data available - see ChallengeData.js
     this.itemDataProperty = itemDataProperty;
     this.onCorrectAnswer  = onCorrectAnswer;
     this.populate();
@@ -165,7 +166,7 @@ define( function( require ) {
         } );
 
         // Q: Cost of # <type>?
-        var candyItem2 = this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [] );
+        var candyItem2 = this.getPromptItem( itemData, this.questionSet, 0 );
         var candyCost2 = Util.toFixedNumber( candyItem2.countProperty.value * itemData.rate.value, 2 );
         var candyAnswerText2 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost2, 2 ) );
         var candyUnitString2 = candyItem2.countProperty.value + ' ' + poundsString;
@@ -177,7 +178,7 @@ define( function( require ) {
         }  );
 
         // Q: Cost of # <type>?
-        var candyItem3 = this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [] );
+        var candyItem3 = this.getPromptItem( itemData, this.questionSet, 1 );
         var candyCost3 =  Util.toFixedNumber( candyItem3.countProperty.value * itemData.rate.value, 2 );
         var candyAnswerText3 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost3, 2 ) );
         var candyUnitString3 = candyItem3.countProperty.value + ' ' + poundsString;
@@ -189,7 +190,7 @@ define( function( require ) {
         }  );
 
         // Q: Cost of # <type>?
-        var candyItem4 = this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [] );
+        var candyItem4 = this.getPromptItem( itemData, this.questionSet, 2 );
         var candyCost4 =  Util.toFixedNumber( candyItem4.countProperty.value * itemData.rate.value, 2 );
         var candyAnswerText4 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost4, 2 ) );
         var candyUnitString4 = candyItem4.countProperty.value + ' ' + poundsString;
@@ -219,7 +220,7 @@ define( function( require ) {
         }  );
 
         // Q: Cost of # <type>?
-        var item2 = this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [] );
+        var item2 = this.getPromptItem( itemData, this.questionSet, 0 );
         var itemCost2 =  Util.toFixedNumber( item2.countProperty.value * itemData.rate.value, 2 );
         var itemAnswerText2 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost2, 2 ) );
         var itemUnitString2 = item2.countProperty.value + ' ' + namePluralCap;
@@ -231,7 +232,7 @@ define( function( require ) {
         }  );
 
         // Q: Cost of # <type>?
-        var item3 =  this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [ item2.countProperty.value ] );
+        var item3 =  this.getPromptItem( itemData, this.questionSet, 1 );
         var itemCost3 =  Util.toFixedNumber( item3.countProperty.value * itemData.rate.value, 2 );
         var itemAnswerText3 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost3, 2 ) );
         var itemUnitString3 = item3.countProperty.value + ' ' + namePluralCap;
@@ -243,7 +244,7 @@ define( function( require ) {
         }  );
 
         // Q: <type> for $?
-        var item4 = this.getPromptItem( itemData, ShoppingConstants.MAX_ITEMS, [] );
+        var item4 = this.getPromptItem( itemData, this.questionSet, 2 );
         var itemCost4 =  Util.toFixedNumber( item4.countProperty.value * itemData.rate.value, 2 );
         var itemAnswerText4 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost4, 2 ) );
         var itemUnitString4 = item4.countProperty.value + ' ' + namePluralCap;
@@ -342,11 +343,49 @@ define( function( require ) {
      * @private
      *
      */
-    getPromptItem: function( itemData, max, takenList ) {
+    getPromptItem: function( itemData, setNumber, promptNumber ) {
 
       var count = 0;
-      while( count === 0 || takenList.indexOf( count ) >= 0 ) {
-        count = RAND.nextInt( max );
+
+      switch( itemData.type ) {
+        case ItemData.APPLES.type:
+          count = ChallengeData.APPLES[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.LEMONS.type:
+          count = ChallengeData.LEMONS[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.ORANGES.type:
+          count = ChallengeData.ORANGES[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.PEARS.type:
+          count = ChallengeData.PEARS[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.CARROTS.type:
+          count = ChallengeData.CARROTS[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.CUCUMBERS.type:
+          count = ChallengeData.CUCUMBERS[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.POTATOES.type:
+          count = ChallengeData.POTATOES[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.TOMATOES.type:
+          count = ChallengeData.TOMATOES[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.RED_CANDY.type:
+          count = ChallengeData.RED_CANDY[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.PURPLE_CANDY.type:
+          count = ChallengeData.PURPLE_CANDY[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.GREEN_CANDY.type:
+          count = ChallengeData.GREEN_CANDY[ setNumber ][ promptNumber ];
+          break;
+        case ItemData.BLUE_CANDY.type:
+          count = ChallengeData.BLUE_CANDY[ setNumber ][ promptNumber ];
+          break;
+        default:
+            assert && assert( false, 'prompt data not available for item type' );
       }
 
       var item = new Item( itemData, count );
