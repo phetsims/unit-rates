@@ -34,17 +34,17 @@ define( function( require ) {
   function EditNumberDisplayNode( keypad, valueProperty, pattern, options ) {
 
     options = _.extend( {
-      numberRange:          new RangeWithValue( 0, ShoppingConstants.MAX_ITEMS ),  // valid range for the number display
-      font:                 new PhetFont( 10 ),                           // font used for the number display
-      decimalPlaces:        2,                                            // # decimal places for the number display
-      buttonPosition:       'left',                                       // edit button position (left|right|top|bottom|)
-      buttonSpacing:        0,                                            // space between the edit button & number display
+      numberRange:          new RangeWithValue( 0, 200 ),   // valid range for the number display
+      font:                 new PhetFont( 10 ),             // font used for the number display
+      decimalPlaces:        2,                              // # decimal places for the number display
+      buttonPosition:       'left',                         // edit button position (left|right|top|bottom|)
+      buttonSpacing:        0,                              // space between the edit button & number display
       textMaxWidth:         30,
       textColor:            'rgba(0,0,0,1)',
       borderColor:          'rgba(0,0,0,1)',
       backgroundColor:      'rgba(0,0,0,0)',
       focusBorderColor:     'rgba(230,132,5,1)'
-    },  options || {} );
+    }, options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
     // @protected - all
@@ -60,16 +60,16 @@ define( function( require ) {
 
     // NumberDisplay options
     var numberDisplayOptions = {
-      valuePattern: pattern,
-      font: options.font,
-      xMargin: 2,
-      yMargin: 2,
-      decimalPlaces: options.decimalPlaces,
-      numberFill: this.textColor,
-      numberMaxWidth: options.textMaxWidth,
+      valuePattern:     pattern,
+      font:             options.font,
+      xMargin:          2,
+      yMargin:          2,
+      decimalPlaces:    options.decimalPlaces,
+      numberFill:       this.textColor,
+      numberMaxWidth:   options.textMaxWidth,
       backgroundStroke: this.borderColor,
-      backgroundFill: this.backgroundColor,
-      pickable: false
+      backgroundFill:   this.backgroundColor,
+      pickable:         false
     };
     // @protected
     this.numberDisplay = new NumberDisplay( valueProperty, options.numberRange, numberDisplayOptions );

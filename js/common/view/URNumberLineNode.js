@@ -56,7 +56,7 @@ define( function( require ) {
       axisLabelMaxWidth:          75,
       markerLargeHeight:          35,
       markerSmallHeight:          18,
-      markerTopPattern:           '  {0}',
+      markerTopPattern:           '{0}',
       markerBottomPattern:        '{0}'
     }, options || {} );
 
@@ -100,7 +100,7 @@ define( function( require ) {
 
      // @protected - layer holding all the number line markers
     this.markerLayerNode = new Path( new Shape().rect( 0, 0, this.graphWidth, this.graphHeight ), {
-      stroke: 'red',  // debugging
+      //stroke: 'red',  // debugging
       lineWidth: 1
     } );
     this.contentNode.addChild( this.markerLayerNode );
