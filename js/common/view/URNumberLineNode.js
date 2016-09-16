@@ -78,8 +78,6 @@ define( function( require ) {
     this.markerSmallHeight  = options.markerSmallHeight;
     this.markerTopPattern   = options.markerTopPattern;
     this.markerBottomPattern  = options.markerBottomPattern;
-    this.markerTopDecimalPlaces = options.markerTopDecimalPlaces;
-    this.markerBottomDecimalPlaces = options.markerBottomDecimalPlaces;
 
     // @public (read-only) graph origin & bounds
     this.origin       = new Vector2( this.yAxisOffset, this.graphHeight / 2 );
@@ -141,9 +139,6 @@ define( function( require ) {
     this.bottomArrowLabel = new Text( 'bottom', labelOptions );
     this.contentNode.addChild( this.bottomArrowLabel );
 
-    // set the defautl Y-axis length
-    this.setPixelLength( this.xAxisLength );
-
     // undo button - it's position will change based on the marker beign edited. Incorrectly/unanswered editable markers
     // will position the button on the far left side of the number line, while correct/fractional 'count' markers will
     // reposition the undo button directly under the marker.
@@ -162,6 +157,9 @@ define( function( require ) {
     } );
     this.contentNode.addChild( this.undoEditButtonNode );
 
+    // set the defautl Y-axis length
+    this.setPixelLength( this.xAxisLength );
+
     // erase
     var eraserButton = new EraserButton( {
       baseColor: URConstants.DEFAULT_BUTTON_COLOR,
@@ -172,6 +170,7 @@ define( function( require ) {
       }
     });
     this.contentNode.addChild( eraserButton );
+
 
     this.markerLayerNode.moveToFront();
     this.undoEditButtonNode.moveToFront();
@@ -239,6 +238,9 @@ define( function( require ) {
           node.visible = ( node.marker.positionProperty.value.x <= self.xAxisLength - self.axisArrowSize );
         }
       } );
+
+      // undo button
+      this.updateUndoButton();
    },
 
     /**
@@ -325,8 +327,6 @@ define( function( require ) {
           editable: true,
           bounds:   this.markerBounds,
           position: new Vector2( EDITABLE_MARKER_X, this.origin.y )
-          //topHighPrecision:     1,
-          //bottomHighPrecision:  2
         } );
 
         // create a matching marker node for the item
@@ -393,9 +393,7 @@ define( function( require ) {
         largeHeight:          this.markerLargeHeight,
         smallHeight:          this.markerSmallHeight,
         topPattern:           this.markerTopPattern,
-        bottomPattern:        this.markerBottomPattern,
-        topDecimalPlaces:     this.numberline.markerTopDecimals,
-        bottomDecimalPlaces:  this.numberline.markerBottomDecimals //( item.isCandy() ? 2 : 1 ) // Candy count values are 2 decimal places
+        bottomPattern:        this.markerBottomPattern
       } );
       this.addMarkerNode( markerNode );
 
@@ -474,16 +472,13 @@ define( function( require ) {
      */
     updateUndoButton: function() {
 
-      // update undo button visibility
-      this.undoEditButtonNode.visible = ( this.removableMarkerNodeList.length > 0 );
-
-      if ( this.undoEditButtonNode.visible ) {
+      if( this.removableMarkerNodeList.length > 0 ) {
 
         // get the top marker on the undo stack
         var markerNode = this.removableMarkerNodeList[ this.removableMarkerNodeList.length-1 ];
 
         // move the undo button based on the marker's 'editability'
-        if ( markerNode.item.editableProperty.value ) {
+        if ( markerNode.marker.editableProperty.value ) {
           // edit marker
           this.undoEditButtonNode.left    = UNDO_BUTTON_X;
           this.undoEditButtonNode.centerY = this.graphBounds.centerY;
@@ -493,8 +488,11 @@ define( function( require ) {
           this.undoEditButtonNode.centerX = markerNode.centerX;
           this.undoEditButtonNode.top     = markerNode.bottom - 10;
         }
-
       }
+
+      // update undo button visibility
+      this.undoEditButtonNode.visible = ( this.removableMarkerNodeList.length > 0  &&
+                                          ( this.undoEditButtonNode.centerX <= this.xAxisLength - this.axisArrowSize ) );
     },
 
     /**

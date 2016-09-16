@@ -35,8 +35,10 @@ define( function( require ) {
 
     // seperate number line model w/ top/bottom ranges
     this.numberline = new URNumberLine( this.rateProperty, this.trackMilesProperty, this.trackHoursProperty, {
-      markerTopDecimals:    0,
-      markerBottomDecimals: 2
+      markerTopDecimals:          0,
+      markerBottomDecimals:       2,
+      markerTopHighPrecision:     1,
+      markerBottomHighPrecision:  2
     } );
 
     this.elapsedTimeProperty       = elapsedTimeProperty;

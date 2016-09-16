@@ -41,8 +41,6 @@ define( function( require ) {
     options = _.extend( {
       topPattern:           '{0}',
       bottomPattern:        '{0}',
-      topDecimalPlaces:     2,
-      bottomDecimalPlaces:  1,
       stroke:               'black',
       lineWidth:            1.25,
       largeHeight:          35,
@@ -64,7 +62,7 @@ define( function( require ) {
     this.topNumberDisplay = new EditNumberDisplayNode( keypad, this.marker.topQnA.valueProperty, options.topPattern, {
         centerX:          -2,
         bottom:           -this.smallHeight,
-        decimalPlaces:    options.topDecimalPlaces,
+        decimalPlaces:    marker.topDecimalPlaces,
         buttonPosition:   'top',
         buttonSpacing:    EDIT_BUTTON_MARGIN,
         textColor:        DEFAULT_TEXT_COLOR,
@@ -93,7 +91,7 @@ define( function( require ) {
     this.bottomNumberDisplay = new EditNumberDisplayNode( keypad, this.marker.bottomQnA.valueProperty, options.bottomPattern, {
         centerX:          -2,
         top:              this.smallHeight,
-        decimalPlaces:    options.bottomDecimalPlaces,
+        decimalPlaces:    marker.bottomDecimalPlaces,
         buttonPosition:   'bottom',
         buttonSpacing:    EDIT_BUTTON_MARGIN,
         textColor:        DEFAULT_TEXT_COLOR,

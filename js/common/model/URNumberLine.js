@@ -21,15 +21,19 @@ define( function( require ) {
   function URNumberLine( rateProperty, topMaxProperty, bottomMaxProperty, options ) {
 
      options = _.extend( {
-      markerTopDecimals:     0,
-      markerBottomDecimals:  2
+      markerTopDecimals:          0,
+      markerBottomDecimals:       2,
+      markerTopHighPrecision:     1,
+      markerBottomHighPrecision:  2
     }, options || {} );
 
     // @public (read-write)
     PropertySet.call( this, {
-      markers:              [],
-      markerTopDecimals:    options.markerTopDecimals,
-      markerBottomDecimals: options.markerBottomDecimals
+      markers:                    [],
+      markerTopDecimals:          options.markerTopDecimals,
+      markerBottomDecimals:       options.markerBottomDecimals,
+      markerTopHighPrecision:     options.markerTopHighPrecision,
+      markerBottomHighPrecision:  options.markerBottomHighPrecision
     } );
 
     this.rateProperty       = rateProperty;
@@ -47,6 +51,14 @@ define( function( require ) {
      * @public
      */
     createMarker: function( correctTopValue, correctBottomValue, options ) {
+
+      options = _.extend( {
+        topDecimalPlaces:     this.markerTopDecimalsProperty.value,
+        bottomDecimalPlaces:  this.markerBottomDecimalsProperty.value,
+        topHighPrecision:     this.markerTopHighPrecisionProperty.value,
+        bottomHighPrecision:  this.markerBottomHighPrecisionProperty.value
+      }, options || {} );
+
       var marker = new URNumberLineMarker( correctTopValue, correctBottomValue, this.rateProperty, options );
       this.markersProperty.value.push( marker );
 
@@ -87,8 +99,6 @@ define( function( require ) {
                    ( marker.topQnA.valueProperty.value === existingMarker.topQnA.valueProperty.value ) &&
                    ( marker.bottomQnA.valueProperty.value === existingMarker.bottomQnA.valueProperty.value ) );
       } );
-
-      console.log(this.markersProperty.value.length, ' - existing: ', existingMarkers.length);
 
       return ( existingMarkers.length > 0 );
     },

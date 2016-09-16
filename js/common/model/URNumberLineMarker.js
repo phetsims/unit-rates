@@ -22,16 +22,18 @@ define( function( require ) {
    */
   function URNumberLineMarker( correctTopValue, correctBottomValue, rateProperty, options ) {
 
-    var self = this;
-
     options = _.extend( {
       color:                'black',
       editable:             false,
+      topDecimalPlaces:     2,
+      bottomDecimalPlaces:  1,
       topHighPrecision:     1,
       bottomHighPrecision:  2
      }, options || {} );
 
     MovableItem.call( this, options );
+
+    var self = this;
 
     // @public - all
     this.topQnA    = new QuestionAnswer( this, correctTopValue, correctTopValue );
@@ -40,8 +42,10 @@ define( function( require ) {
     // @protected (read-only) - all
     this.rateProperty = rateProperty;
     this.color = options.color;
-    this.topHighPrecision = options.topHighPrecision;
-    this.bottomHighPrecision = options.bottomHighPrecision;
+    this.topDecimalPlaces     = options.topDecimalPlaces;
+    this.bottomDecimalPlaces  = options.bottomDecimalPlaces;
+    this.topHighPrecision     = options.topHighPrecision;
+    this.bottomHighPrecision  = options.bottomHighPrecision;
     this.addProperty( 'outOfRange', false );
     this.addProperty( 'highPrecision', false );
     this.addProperty( 'editable', options.editable );
@@ -55,7 +59,7 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if ( !allCorrect && value >= 0 ) {
         self.topQnA.answerValue = Number( value );
-        self.bottomQnA.answerValue = Util.toFixedNumber( ( value / self.rateProperty.value ), 1 );
+        self.bottomQnA.answerValue = Util.toFixedNumber( ( value / self.rateProperty.value ), self.topDecimalPlaces );
         self.bottomQnA.valueProperty.set( Number( -1 ) );
       }
     } );
@@ -65,7 +69,7 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if ( !allCorrect && value >= 0 ) {
         self.bottomQnA.answerValue = Number( value );
-        self.topQnA.answerValue = Util.toFixedNumber( ( value * self.rateProperty.value ), 2 );
+        self.topQnA.answerValue = Util.toFixedNumber( ( value * self.rateProperty.value ), self.bottomDecimalPlaces );
         self.topQnA.valueProperty.set( Number( -1 ) );
       }
     } );
