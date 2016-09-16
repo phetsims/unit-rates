@@ -90,7 +90,7 @@ define( function( require ) {
     // Array.<NumberLineMarkerNode> - The undo/remove stack of markers which keeps track of the order of
     // marker removals for the undo button.
     // @private
-    this.editMarkerNodeList = [];
+    this.removableMarkerNodeList = [];
 
     // @protected - controls the accordian box expansion
     this.expandedProperty = new Property( true );
@@ -254,11 +254,22 @@ define( function( require ) {
 
     /**
      * Adds a marker to the number line
-     * @param {Node} marker
+     * @param {URNumberLineMarkerNode} markerNode
      * @public
      */
-    addMarker: function( marker ) {
-      this.markerLayerNode.addChild( marker );
+    addMarkerNode: function( markerNode ) {
+      this.markerLayerNode.addChild( markerNode );
+    },
+
+    /**
+     * Adds a marker to the number line
+     * @param {URNumberLineMarkerNode} markerNode
+     * @public
+     */
+    removeMarkerNode: function( markerNode ) {
+      this.numberline.removeMarker(  markerNode.marker );
+      this.markerLayerNode.removeChild( markerNode );
+      markerNode.dispose();
     },
 
     /**
@@ -272,7 +283,7 @@ define( function( require ) {
       } );
       this.markerLayerNode.removeAllChildren();
 
-      this.editMarkerNodeList = [];
+      this.removableMarkerNodeList = [];
       this.numberline.removeAllMarkers();
 
       this.updateUndoButton();
@@ -313,7 +324,7 @@ define( function( require ) {
         var editMarker = this.numberline.createMarker( -1, -1, {
           editable: true,
           bounds:   this.markerBounds,
-          position: new Vector2( EDITABLE_MARKER_X, this.origin.y ),
+          position: new Vector2( EDITABLE_MARKER_X, this.origin.y )
           //topHighPrecision:     1,
           //bottomHighPrecision:  2
         } );
@@ -335,10 +346,10 @@ define( function( require ) {
      */
     removeEditMarker: function( ) {
 
-      if ( this.editMarkerNodeList.length > 0 ) {
+      if ( this.removableMarkerNodeList.length > 0 ) {
 
         // get the last edit node added
-        var editMarkerNode = this.editMarkerNodeList.pop();
+        var editMarkerNode = this.removableMarkerNodeList.pop();
 
         // remove the marker
         this.numberline.removeMarker( editMarkerNode.marker );
@@ -386,7 +397,7 @@ define( function( require ) {
         topDecimalPlaces:     this.numberline.markerTopDecimals,
         bottomDecimalPlaces:  this.numberline.markerBottomDecimals //( item.isCandy() ? 2 : 1 ) // Candy count values are 2 decimal places
       } );
-      this.addMarker( markerNode );
+      this.addMarkerNode( markerNode );
 
       // update on top/bottom values changes
       this.qnaMultilink = Property.multilink( [ markerNode.marker.topQnA.valueProperty, markerNode.marker.bottomQnA.valueProperty ],
@@ -399,8 +410,7 @@ define( function( require ) {
     },
 
     /**
-     * This does a few things but mainly updates the marker's position on the number line. It also may add the
-     * marker to the undo stack if it's an 'editable' marker.
+     * This does a few things; manages the undo stack, positions it on the number line & removes duplicates
      * @param {NumberLineMarkerNode}
      * @private
      */
@@ -408,7 +418,7 @@ define( function( require ) {
 
       var x           = markerNode.marker.positionProperty.value.x;
       var y           = this.origin.y;
-      var inUndoList  = ( this.editMarkerNodeList.indexOf( markerNode ) >= 0 );
+      var inUndoList  = ( this.removableMarkerNodeList.indexOf( markerNode ) >= 0 );
       var isRemovable = markerNode.marker.isRemovable();
       var topValue    = markerNode.marker.topQnA.valueProperty.value;
       var bottomValue = markerNode.marker.bottomQnA.valueProperty.value;
@@ -418,19 +428,19 @@ define( function( require ) {
 
         // undo stack managment
         if ( !inUndoList && isRemovable ) {
-          this.editMarkerNodeList.push( markerNode );
+          this.removableMarkerNodeList.push( markerNode );
         }
         else if ( inUndoList && !isRemovable ) {
-          this.editMarkerNodeList.splice( this.editMarkerNodeList.indexOf( markerNode ), 1 );
+          this.removableMarkerNodeList.splice( this.removableMarkerNodeList.indexOf( markerNode ), 1 );
         }
 
         // calc X position based on the currently set value
         var xPercent = -1;
         if( bottomValue >= 0 ) {
-          xPercent = ( bottomValue  / this.numberline.bottomMaxValue );
+          xPercent = ( bottomValue  / this.numberline.bottomMaxProperty.value );
         }
         else {
-          xPercent = ( topValue / this.numberline.topMaxValue );
+          xPercent = ( topValue / this.numberline.topMaxProperty.value );
         }
 
         x = ( ( 1.0 - xPercent ) * this.origin.x ) + ( this.graphBounds.maxX * xPercent ) ;
@@ -444,26 +454,18 @@ define( function( require ) {
         }
       }
 
-      // edit marker checks
-      if ( markerNode.marker.editableProperty.value ) {
-
-        // make sure the edit marker is on top of all other markers
-        markerNode.moveToFront();
-
-        // check edit marker for existing markers with same count
-        //var itemArray = this.getItemArray();
-        //var dupItemArray = itemArray.filter( function( item ) {
-        //  return ( item.isEqual( markerNode.item ) && item !== markerNode.item );
-        //} );
-
-        // if the edit marker is a dup, remove it
-        //if ( dupItemArray.length > 0 ) {
-        //  this.removeEditMarker();
-        //}
+      // check edit marker for existing markers with same values
+      if( this.numberline.markerExists( markerNode.marker ) ) {
+        this.removeMarkerNode( markerNode );
       }
 
       // update the position on the number line
       markerNode.marker.setPosition( x, y, markerNode.marker.editableProperty.value );
+
+      // make sure the edit marker is on top of others
+      if ( markerNode.marker.editableProperty.value ) {
+        markerNode.moveToFront();
+      }
     },
 
     /**
@@ -473,12 +475,12 @@ define( function( require ) {
     updateUndoButton: function() {
 
       // update undo button visibility
-      this.undoEditButtonNode.visible = ( this.editMarkerNodeList.length > 0 );
+      this.undoEditButtonNode.visible = ( this.removableMarkerNodeList.length > 0 );
 
       if ( this.undoEditButtonNode.visible ) {
 
         // get the top marker on the undo stack
-        var markerNode = this.editMarkerNodeList[ this.editMarkerNodeList.length-1 ];
+        var markerNode = this.removableMarkerNodeList[ this.removableMarkerNodeList.length-1 ];
 
         // move the undo button based on the marker's 'editability'
         if ( markerNode.item.editableProperty.value ) {
@@ -489,7 +491,7 @@ define( function( require ) {
         else {
           // position under marker node
           this.undoEditButtonNode.centerX = markerNode.centerX;
-          this.undoEditButtonNode.top     = markerNode.bottom;
+          this.undoEditButtonNode.top     = markerNode.bottom - 10;
         }
 
       }

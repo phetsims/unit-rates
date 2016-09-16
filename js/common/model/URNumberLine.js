@@ -18,7 +18,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function URNumberLine( rateProperty, topMaxValue, bottomMaxValue, options ) {
+  function URNumberLine( rateProperty, topMaxProperty, bottomMaxProperty, options ) {
 
      options = _.extend( {
       markerTopDecimals:     0,
@@ -32,9 +32,9 @@ define( function( require ) {
       markerBottomDecimals: options.markerBottomDecimals
     } );
 
-    this.rateProperty    = rateProperty;
-    this.topMaxValue     = topMaxValue;
-    this.bottomMaxValue  = bottomMaxValue;
+    this.rateProperty       = rateProperty;
+    this.topMaxProperty     = topMaxProperty;
+    this.bottomMaxProperty  = bottomMaxProperty;
   }
 
   unitRates.register( 'URNumberLine', URNumberLine );
@@ -72,6 +72,25 @@ define( function( require ) {
      */
     removeAllMarkers: function() {
       this.markersProperty.value = [];
+    },
+
+    /**
+     * Tells whether there is an existing marker with the same values in the marker list
+     * @param {URNumberLineMarker} marker
+     * @returns {boolean}
+     * @public
+     */
+    markerExists: function( marker ) {
+
+      var existingMarkers = this.markersProperty.value.filter( function( existingMarker ) {
+          return ( marker !== existingMarker &&
+                   ( marker.topQnA.valueProperty.value === existingMarker.topQnA.valueProperty.value ) &&
+                   ( marker.bottomQnA.valueProperty.value === existingMarker.bottomQnA.valueProperty.value ) );
+      } );
+
+      console.log(this.markersProperty.value.length, ' - existing: ', existingMarkers.length);
+
+      return ( existingMarkers.length > 0 );
     },
 
     /**

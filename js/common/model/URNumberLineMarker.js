@@ -82,13 +82,13 @@ define( function( require ) {
      */
     checkCorrectAnswers: function() {
 
-      var allCorrect = ( this.topQnA.isAnswerCorrect() && this.bottomQnA.isAnswerCorrect() );
-
-      this.editableProperty.set( !allCorrect || this.outOfRangeProperty.value );
-
       var topPrecision    = this.topQnA.getAnswerPrecision();
       var bottomPrecision = this.bottomQnA.getAnswerPrecision();
       this.highPrecisionProperty.set( topPrecision >= this.topHighPrecision || bottomPrecision >= this.bottomHighPrecision );
+
+      var allCorrect = ( this.topQnA.isAnswerCorrect() && this.bottomQnA.isAnswerCorrect() );
+
+      this.editableProperty.set( !allCorrect || this.outOfRangeProperty.value );
 
       return allCorrect;
     },
@@ -100,7 +100,7 @@ define( function( require ) {
      * @private
      */
     isRemovable: function() {
-      return ( this.editableProperty.value || this.highPrecision.value );
+      return ( this.editableProperty.value || this.highPrecisionProperty.value );
     },
 
     /**
