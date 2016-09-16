@@ -59,7 +59,7 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if ( !allCorrect && value >= 0 ) {
         self.topQnA.answerValue = Number( value );
-        self.bottomQnA.answerValue = Util.toFixedNumber( ( value / self.rateProperty.value ), self.topDecimalPlaces );
+        self.bottomQnA.answerValue = Util.toFixedNumber( ( value / self.rateProperty.value ), self.bottomDecimalPlaces );
         self.bottomQnA.valueProperty.set( Number( -1 ) );
       }
     } );
@@ -69,7 +69,7 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if ( !allCorrect && value >= 0 ) {
         self.bottomQnA.answerValue = Number( value );
-        self.topQnA.answerValue = Util.toFixedNumber( ( value * self.rateProperty.value ), self.bottomDecimalPlaces );
+        self.topQnA.answerValue = Util.toFixedNumber( ( value * self.rateProperty.value ), self.topDecimalPlaces );
         self.topQnA.valueProperty.set( Number( -1 ) );
       }
     } );
