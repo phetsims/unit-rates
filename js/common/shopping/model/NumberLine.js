@@ -24,7 +24,6 @@ define( function( require ) {
   function NumberLine( itemDataProperty, options ) {
 
     options = _.extend( {
-      rateProperty: new Property( 1.0 )
     }, options || {} );
 
     var self = this;
@@ -36,7 +35,6 @@ define( function( require ) {
       this.markerMap[ itemData.type ] = [];
     }
 
-    this.rateProperty = options.rateProperty;
     this.topMaxProperty = new Property( ShoppingConstants.MAX_ITEMS );
     this.bottomMaxProperty = new Property( ShoppingConstants.MAX_ITEMS );
 
@@ -50,8 +48,9 @@ define( function( require ) {
     // @public
     this.itemDataProperty = itemDataProperty;
 
-    // change marker arrays based on select item type
+    // change the NL rate and marker arrays based on selected item type
     this.itemDataProperty.link( function( itemData, oldItemData ) {
+      self.rateProperty = itemData.rate
       self.markersProperty.value = self.markerMap[ itemData.type ];
     } );
 

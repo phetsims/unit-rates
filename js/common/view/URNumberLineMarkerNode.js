@@ -11,7 +11,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var EditNumberDisplayNode = require( 'UNIT_RATES/common/view/EditNumberDisplayNode' );
-  var MovableItemNode = require( 'UNIT_RATES/common/view/MovableItemNode' );
+  var MovableNode = require( 'UNIT_RATES/common/view/MovableNode' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Shape = require( 'KITE/Shape' );
@@ -103,7 +103,7 @@ define( function( require ) {
     // add all child nodes
     options.children = [ this.topNumberDisplay, this.markerLine, this.bottomNumberDisplay ];
 
-    MovableItemNode.call( this, marker, position, options );
+    MovableNode.call( this, marker, position, options );
 
     // check answers on user input
     this.qnaMultilink = Property.multilink( [ this.marker.topQnA.valueProperty, this.marker.bottomQnA.valueProperty, this.marker.outOfRangeProperty ],
@@ -114,7 +114,7 @@ define( function( require ) {
 
   unitRates.register( 'URNumberLineMarkerNode', URNumberLineMarkerNode );
 
-  return inherit( MovableItemNode, URNumberLineMarkerNode, {
+  return inherit( MovableNode, URNumberLineMarkerNode, {
 
     /**
      * Changes color/size/other attributes based on various properties
@@ -210,7 +210,7 @@ define( function( require ) {
       this.qnaMultilink.dispose();
       this.topNumberDisplay.dispose();
       this.bottomNumberDisplay.dispose();
-      MovableItemNode.prototype.dispose.call( this );
+      MovableNode.prototype.dispose.call( this );
     }
 
   } ); // inherit

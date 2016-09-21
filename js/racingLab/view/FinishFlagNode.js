@@ -11,8 +11,8 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var MovableItem = require( 'UNIT_RATES/common/model/MovableItem' );
-  var MovableItemNode = require( 'UNIT_RATES/common/view/MovableItemNode' );
+  var Movable = require( 'UNIT_RATES/common/model/Movable' );
+  var MovableNode = require( 'UNIT_RATES/common/view/MovableNode' );
   var Image = require( 'SCENERY/nodes/Image' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -35,19 +35,19 @@ define( function( require ) {
                                options.bounds.maxX - image.width / 2, options.bounds.maxY );
 
     // @public
-    this.item = new MovableItem( {
+    this.item = new Movable( {
       yAxisEnabled: false,
       bounds:       bounds,
       position:     origin
     });
 
     options.children = [ image ];
-    MovableItemNode.call( this, this.item, position, options );
+    MovableNode.call( this, this.item, position, options );
   }
 
   unitRates.register( 'FinishFlagNode', FinishFlagNode );
 
-  return inherit( MovableItemNode, FinishFlagNode, {
+  return inherit( MovableNode, FinishFlagNode, {
 
   getCurrentPosition: function() {
     return this.item.positionProperty.value;

@@ -15,12 +15,12 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
 
   /**
-   * @param {MovableItem} item - the underlying item model w/ a position
+   * @param {Movable} item - the underlying item model w/ a position
    * @param {Vector2} position - a X,Y position property
    * @param {Object} [options]
    * @constructor
    */
-  function MovableItemNode( item, position, options ) {
+  function MovableNode( item, position, options ) {
 
     options = _.extend( {
       draggable:  true,
@@ -104,9 +104,9 @@ define( function( require ) {
     }
   }
 
-  unitRates.register( 'MovableItemNode', MovableItemNode );
+  unitRates.register( 'MovableNode', MovableNode );
 
-  return inherit( Node, MovableItemNode, {
+  return inherit( Node, MovableNode, {
 
     /**
      * Adds listeners for drag start & end

@@ -12,7 +12,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var MovableItem = require( 'UNIT_RATES/common/model/MovableItem' );
+  var Movable = require( 'UNIT_RATES/common/model/Movable' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
   var Util = require( 'DOT/Util' );
 
@@ -31,7 +31,7 @@ define( function( require ) {
       bottomHighPrecision:  2
      }, options || {} );
 
-    MovableItem.call( this, options );
+    Movable.call( this, options );
 
     var self = this;
 
@@ -80,7 +80,7 @@ define( function( require ) {
 
   unitRates.register( 'URNumberLineMarker', URNumberLineMarker );
 
-  return inherit( MovableItem, URNumberLineMarker, {
+  return inherit( Movable, URNumberLineMarker, {
 
     /**
      * Checks both the cost & units answers

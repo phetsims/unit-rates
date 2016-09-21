@@ -19,7 +19,7 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function MovableItem( options ) {
+  function Movable( options ) {
 
     options = _.extend( {
       xAxisEnabled: true,
@@ -37,9 +37,9 @@ define( function( require ) {
     } );
   }
 
-  unitRates.register( 'MovableItem', MovableItem );
+  unitRates.register( 'Movable', Movable );
 
-  return inherit( PropertySet, MovableItem, {
+  return inherit( PropertySet, Movable, {
 
     /**
      * Update the item position property, tween if specified
