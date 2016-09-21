@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
   var URNumberLineMarker = require( 'UNIT_RATES/common/model/URNumberLineMarker' );
@@ -28,12 +27,8 @@ define( function( require ) {
 
     var self = this;
 
-    // create type marker arrays
     this.markerMap = {};
-    for (var key in ItemData) {
-      var itemData = ItemData[ key ];
-      this.markerMap[ itemData.type ] = [];
-    }
+    this.initialize();
 
     this.topMaxProperty    = new Property( 0 );
     this.bottomMaxProperty = new Property( 0 );
@@ -52,7 +47,7 @@ define( function( require ) {
     this.itemDataProperty.link( function( itemData, oldItemData ) {
 
       // change item rate
-      self.rateProperty = itemData.rate
+      self.rateProperty = itemData.rate;
 
       // change cost (top) max values
       self.topMaxProperty.value    = itemData.maxCount * self.rateProperty.value;
@@ -67,9 +62,19 @@ define( function( require ) {
 
   return inherit( URNumberLine, NumberLine, {
 
+    /**
+     * create type marker arrays, one for each type (i.e. apples, carrots, etc..)
+     * @public @override
+     */
+    initialize: function(  ) {
+      for (var key in ItemData) {
+        var itemData = ItemData[ key ];
+        this.markerMap[ itemData.type ] = [];
+      }
+    },
 
     /**
-     * Creates a new item marker
+     * Creates a new item marker from specified ItemData & an item count
      * @param {ItemData} data
      * @param {number} [count]
      * @param {Object} [options]
@@ -82,25 +87,16 @@ define( function( require ) {
       var correctCost = ( count * data.rate.value );
       var correctUnit = ( count );
 
-      var marker = new URNumberLineMarker( correctCost, correctUnit, data.rate, options );
-      this.addMarker( marker );
+      var marker = this.createMarker( correctCost, correctUnit, options );
 
       return marker;
-    }
-
-    /**
-     * Updates the rate of the items  on currently on the number line (except editable items)
-     * @protected
-    updateNumberLineItemRate: function() {
-      var self = this;
-
-      var itemArray = this.itemCollection.getItemsWithType( this.itemDataProperty.value.type ); // NumberLineItemMarkers
-      itemArray.forEach( function( item ) {
-        item.setRate( self.itemDataProperty.value.rate.value );
-      } );
     },
-   */
 
+    // Resets all model elements
+    reset: function() {
+      this.initialize();
+      URNumberLine.prototype.reset.call( this );
+    }
 
   } ); // inherit
 

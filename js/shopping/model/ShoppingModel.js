@@ -22,7 +22,12 @@ define( function( require ) {
 
     URShoppingModel.call( this );
 
-    this.challenges = new Challenges( this.itemDataProperty, this.addChallengeItemsToNumberline.bind( this ) );
+    // @public - various callbacks when various challenge events takes place
+    this.onChallengeCallback = null;
+
+    this.challenges = new Challenges( this.itemDataProperty,
+      this.addChallengeItemsToNumberLine.bind( this ),
+      this.revertChallengeNumberLineItems.bind( this ) );
   }
 
   unitRates.register( 'ShoppingModel', ShoppingModel );
@@ -33,7 +38,7 @@ define( function( require ) {
      * Adds all correctly answered challenge questions to the numberline as items (Note: the number line will ignore duplicates)
      * @protected
      */
-    addChallengeItemsToNumberline: function() {
+    addChallengeItemsToNumberLine: function() {
       var self = this;
 
       // create a new item on the number line representing the correctly answered challenge questions
@@ -42,18 +47,30 @@ define( function( require ) {
       itemArray.forEach( function( item ) {
         var color =  ( ( item.countProperty.value === 1 ) ?
           ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR : ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR );
+
         self.numberLine.createItem( self.itemDataProperty.value, item.countProperty.value, { color: color } );
       } );
+
+      if( this.onChallengeCallback ) {
+        this.onChallengeCallback.call();
+      }
     },
 
     /**
      * Resets all items representing Challenge answers from the number line. Makes them regular/black markers
      * @protected
      */
-    resetChallengeNumberlineItems: function() {
+    revertChallengeNumberLineItems: function() {
+
       this.numberLine.forEachMarker( function( marker ) {
-        marker.color = 'black';
+        if( marker.color === ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR ) {
+          marker.color = 'black';
+        }
       });
+
+      if( this.onChallengeCallback ) {
+        this.onChallengeCallback.call();
+      }
     },
 
     // Resets all model elements

@@ -15,22 +15,22 @@ define( function( require ) {
     APPLES: {
       type:     'apple',
       rate:     new Property( 0.5 ),
-      maxCount: 15
+      maxCount: 16
     },
     LEMONS: {
       type:     'lemon',
       rate:     new Property( 0.25 ),
-      maxCount: 15
+      maxCount: 16
     },
     ORANGES: {
       type:     'orange',
       rate:     new Property( 0.75 ),
-      maxCount: 15
+      maxCount: 16
     },
     PEARS: {
       type:     'pear',
       rate:     new Property( 0.4 ),
-      maxCount: 15
+      maxCount: 16
     },
     CARROTS:{
       type:     'carrot',

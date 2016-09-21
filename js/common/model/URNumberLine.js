@@ -60,8 +60,12 @@ define( function( require ) {
       }, options || {} );
 
       var marker = new URNumberLineMarker( correctTopValue, correctBottomValue, this.rateProperty, options );
-
-      this.addMarker( marker );
+      if( !this.markerExists( marker ) ) {
+        this.addMarker( marker );
+      }
+      else {
+        // FIXME: dispose
+      }
 
       return marker;
     },

@@ -75,7 +75,7 @@ define( function( require ) {
     } );
 
      // Clear unit on incorrect cost answers
-    this.rateProperty.lazyLink( this.onRateChange );
+    this.rateProperty.lazyLink( this.onRateChange.bind( this ) );
   }
 
   unitRates.register( 'URNumberLineMarker', URNumberLineMarker );
@@ -114,9 +114,12 @@ define( function( require ) {
      * @private
      */
     onRateChange: function( value, oldValue ) {
-      console.log('onRateChange');
-      //this.topQnA.valueProperty.value =
-      //this.bottomQnA.valueProperty.value =
+      console.log('onRateChange', value, oldValue);
+
+      //var bottomValue = this.bottomQnA.valueProperty.value;
+
+      //this.topQnA.valueProperty.value = ( this.topQnA.valueProperty.value / oldValue ) * value;
+      //this.bottomQnA.valueProperty.value = bottomValue;
     },
 
     /**

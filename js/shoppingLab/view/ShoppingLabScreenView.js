@@ -87,11 +87,6 @@ define( function( require ) {
 
       // change the item type
       this.model.itemDataProperty.value= this.sceneItemData[ sceneMode ];
-
-      // This fixes an issue with items hanging in space when the item type selection changes. (see. issue #21, #18)
-      this.itemsLayer.getChildren().forEach( function( child ) {
-        self.endUpdateItem( child );
-      } );
     }
 
   } ); // inherit

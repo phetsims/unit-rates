@@ -100,20 +100,6 @@ define( function( require ) {
 
   return inherit( URNumberLineNode, NumberLineNode, {
 
-    /**
-     * Resets the node to it's default state
-     * @public
-     */
-    reset: function() {
-      URNumberLineNode.prototype.reset.call( this );
-
-    },
-
-    // @public
-    dispose: function() {
-      this.qnaMultilink.dispose();
-    }
-
   } );  // define
 
 } );  // inherit

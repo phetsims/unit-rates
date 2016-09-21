@@ -66,14 +66,16 @@ define( function( require ) {
   /**
    * @param {Property.<ItemData>} itemDataProperty - the curently selected item
    * @param {function} onCorrectAnswer - function to call when the correct answer is input
+   * @param {function} onRefresh - function to call when challenges are refreshed (not reset)
    * @constructor
    */
-  function Challenges( itemDataProperty, onCorrectAnswer ) {
+  function Challenges( itemDataProperty, onCorrectAnswer, onRefresh ) {
 
     this.questionSet = -1;
 
     this.itemDataProperty = itemDataProperty;
     this.onCorrectAnswer  = onCorrectAnswer;
+    this.onRefresh        = onRefresh;
     this.selectQuestionSet();
     this.populate();
   }
@@ -163,6 +165,10 @@ define( function( require ) {
         // set unit rate question to correct
         var newQ1 = newQnAArray[0];
         newQ1.setCorrect( true );
+      }
+
+      if( this.onRefresh ) {
+        this.onRefresh.call();
       }
     },
 

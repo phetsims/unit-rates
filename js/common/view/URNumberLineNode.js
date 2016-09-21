@@ -272,6 +272,8 @@ define( function( require ) {
     populate: function() {
       var self = this;
       this.numberLine.forEachMarker( function( marker ) {
+        console.log('populate: ', marker.topQnA.valueProperty.value, marker.bottomQnA.valueProperty.value);
+
         self.createMarkerNode( marker );
       } );
     },
@@ -417,7 +419,7 @@ define( function( require ) {
       } );
       this.addMarkerNode( markerNode );
 
-      // update on top/bottom values changes
+      // update on top/bottom values changes - FIXME: dispose/unlink
       this.qnaMultilink = Property.multilink( [ markerNode.marker.topQnA.valueProperty, markerNode.marker.bottomQnA.valueProperty ],
         function( topProperty, bottomProperty ) {
           self.updateMarkerNode( markerNode );

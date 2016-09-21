@@ -25,6 +25,8 @@ define( function( require ) {
    */
   function ShoppingScreenView( model ) {
 
+    model.onChallengeCallback = this.onChallangeCallback.bind( this );
+
     URShoppingScreenView.call( this, model, false, this.onNumberLineEraseCallback.bind( this ) );
   }
 
@@ -45,8 +47,7 @@ define( function( require ) {
 
       // challenges
       var onChallengePopulate = function() {
-        self.model.resetChallengeNumberlineItems();   // make old challenge markers regular/black markers
-        self.model.addChallengeItemsToNumberline();   // add new (i.e. correct unit rate)
+        self.model.addChallengeItemsToNumberLine();   // add new (i.e. correct unit rate)
         self.numberLineNode.populate();
       };
       var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING + URConstants.SCREEN_HORIZONTAL_MARGIN );
@@ -79,12 +80,21 @@ define( function( require ) {
     },
 
     /**
-     * Called from constructor to give subclass a chance to add UI elements at a specific point in the constructor
+     *
      * @protected
      */
     onNumberLineEraseCallback: function() {
       this.model.addScaleItemsToNumberline();
-      this.model.addChallengeItemsToNumberline();
+      this.model.addChallengeItemsToNumberLine();
+      this.numberLineNode.populate();
+    },
+
+    /**
+     *
+     * @protected
+     */
+    onChallangeCallback: function() {
+      this.numberLineNode.removeAllMarkerNodes();
       this.numberLineNode.populate();
     },
 
@@ -164,7 +174,7 @@ define( function( require ) {
           assert && assert( false, 'Unrecognized scene' );
       }
 
-      this.model.addChallengeItemsToNumberline();
+      this.model.addChallengeItemsToNumberLine();
 
       // This fixes an issue with items hanging in space when the item type selection changes. (see. issue #21, #18)
       this.itemsLayer.getChildren().forEach( function( child ) {
