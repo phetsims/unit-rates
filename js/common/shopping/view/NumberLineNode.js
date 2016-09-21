@@ -10,14 +10,8 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
-  var NumberLineMarkerNode = require( 'UNIT_RATES/common/shopping/view/NumberLineMarkerNode' );
-  var Property = require( 'AXON/Property' );
 
   // strings
   var applesCapString = require( 'string!UNIT_RATES/applesCap' );

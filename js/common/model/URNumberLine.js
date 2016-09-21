@@ -72,7 +72,7 @@ define( function( require ) {
      * @public
      */
     addMarker: function( marker ) {
-      var markers = this.markersProperty.value.push( marker );
+      this.markersProperty.value.push( marker );
       //this.markersProperty.notifyObserversStatic();
     },
 

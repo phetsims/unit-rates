@@ -90,7 +90,7 @@ define( function( require ) {
       this.addMarker( marker );
 
       return marker;
-    },
+    }
 
     /**
      * Updates the rate of the items  on currently on the number line (except editable items)
