@@ -83,6 +83,24 @@ define( function( require ) {
   return inherit( Movable, URNumberLineMarker, {
 
     /**
+     * returns the current top value
+     * @returns {number}
+     * @public
+     */
+    getTopValue: function() {
+      return this.topQnA.valueProperty.value;
+    },
+
+    /**
+     * returns the current bottom value
+     * @returns {number}
+     * @public
+     */
+    getBottomValue: function() {
+      return this.bottomQnA.valueProperty.value;
+    },
+
+    /**
      * Checks both the cost & units answers
      * @returns {boolean}
      * @public

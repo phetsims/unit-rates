@@ -13,7 +13,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
-  var URNumberLineMarker = require( 'UNIT_RATES/common/model/URNumberLineMarker' );
   var Property = require( 'AXON/Property' );
 
   /**

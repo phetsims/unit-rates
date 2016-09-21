@@ -201,10 +201,6 @@ define( function( require ) {
     this.mutate( options );
 
     this.addEditMarkerNode();
-
-    this.numberLine.markersProperty.link( function( value ) {
-      console.log( 'numberLine.markersProperty changed' );
-    } );
   }
 
   unitRates.register( 'URNumberLineNode', URNumberLineNode );
@@ -272,8 +268,6 @@ define( function( require ) {
     populate: function() {
       var self = this;
       this.numberLine.forEachMarker( function( marker ) {
-        console.log('populate: ', marker.topQnA.valueProperty.value, marker.bottomQnA.valueProperty.value);
-
         self.createMarkerNode( marker );
       } );
     },

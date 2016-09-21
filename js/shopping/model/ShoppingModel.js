@@ -48,7 +48,26 @@ define( function( require ) {
         var color =  ( ( item.countProperty.value === 1 ) ?
           ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR : ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR );
 
-        self.numberLine.createItem( self.itemDataProperty.value, item.countProperty.value, { color: color } );
+        // Check if there is an existing marker
+        var correctCost = ( item.countProperty.value * self.itemDataProperty.value.rate.value );
+        var correctUnit = ( item.countProperty.value );
+
+        var existingMarker = null;
+        self.numberLine.forEachMarker( function( marker ) {
+          if ( marker.getTopValue() === correctCost && marker.getBottomValue() === correctUnit ) {
+            existingMarker = marker;
+          }
+        });
+
+        // simply change the color
+        if( existingMarker ) {
+          existingMarker.color = color;
+        }
+        else {
+          // create a new marker
+          self.numberLine.createMarker( correctCost, correctUnit, { color: color } );
+        }
+
       } );
 
       if( this.onChallengeCallback ) {

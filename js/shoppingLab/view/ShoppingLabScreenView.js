@@ -76,7 +76,6 @@ define( function( require ) {
      * @override @protected
      */
     sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
-      var self = this;
 
       this.hideKeypad();
 
