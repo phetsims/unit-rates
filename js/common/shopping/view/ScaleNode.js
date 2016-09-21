@@ -32,6 +32,7 @@ define( function( require ) {
   var scaleImage = require( 'image!UNIT_RATES/scale.png' );
 
   // constants
+  var MAX_ITEMS             = 16;
   var DROP_ZONE_X_SCALE     = 1.05;                     // How much bigger the drop zone width is from the image
   var DROP_ZONE_Y_SCALE     = 2.25;                     // How much bigger the drop zone height is from the image
   var NODE_X_SPACING        = 0;
@@ -158,7 +159,7 @@ define( function( require ) {
       // save the Y coordinate for moving higher items to lower positions - use a .XX string
       self.stackedYPositions = [  itemY.toFixed( 2 ) ];
 
-      for (var i = 0; i < ShoppingConstants.MAX_ITEMS-1; i++) {
+      for (var i = 0; i < MAX_ITEMS; i++) {
 
         self.stackedPositions.push( new Vector2( itemX, itemY ) );
 

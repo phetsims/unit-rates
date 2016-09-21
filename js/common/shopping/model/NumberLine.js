@@ -35,8 +35,8 @@ define( function( require ) {
       this.markerMap[ itemData.type ] = [];
     }
 
-    this.topMaxProperty = new Property( ShoppingConstants.MAX_ITEMS );
-    this.bottomMaxProperty = new Property( ShoppingConstants.MAX_ITEMS );
+    this.topMaxProperty    = new Property( 0 );
+    this.bottomMaxProperty = new Property( 0 );
 
     URNumberLine.call( this, this.rateProperty, this.topMaxProperty, this.bottomMaxProperty, {
       markerTopDecimals:          2,
@@ -48,22 +48,19 @@ define( function( require ) {
     // @public
     this.itemDataProperty = itemDataProperty;
 
-    // change the NL rate and marker arrays based on selected item type
+    // update the numberline based on selected item type
     this.itemDataProperty.link( function( itemData, oldItemData ) {
+
+      // change item rate
       self.rateProperty = itemData.rate
+
+      // change cost (top) max values
+      self.topMaxProperty.value    = itemData.maxCount * self.rateProperty.value;
+      self.bottomMaxProperty.value = itemData.maxCount;
+
+      // change the marker arrays
       self.markersProperty.value = self.markerMap[ itemData.type ];
     } );
-
-    // update value text on cost/weight change
-    this.itemDataProperty.link( function( value, oldValue ) {
-
-      // reassign the rate update function to the current item type
-      if( oldValue ) {
-        //oldValue.rate.unlink( self.updateNumberLineItemRate );
-      }
-      //value.rate.link( self.updateNumberLineItemRate.bind( self ) );
-    } );
-
   }
 
   unitRates.register( 'NumberLine', NumberLine );

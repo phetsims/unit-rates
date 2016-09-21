@@ -63,7 +63,8 @@ define( function( require ) {
       left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
       top:  this.layoutBounds.top  + URConstants.SCREEN_VERTICAL_MARGIN,
       numberLineTitle:            doubleNumberLineString,
-      yAxisOffset:                50,
+      graphWidth:                 680,
+      yAxisOffset:                55,
       markerLargeHeight:          45,
       markerSmallHeight:          25,
       onEraseCallback:            eraseNumberLineCallback
