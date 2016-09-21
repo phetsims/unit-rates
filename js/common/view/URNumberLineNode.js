@@ -34,13 +34,14 @@ define( function( require ) {
   var EDITABLE_MARKER_X   = 25; // the defualt X position of an editable marker
   var UNDO_BUTTON_X       = 5;  // the default X position of the undo/remove button
   var ACCORDIAN_X_MARGIN  = 5;
+
   /**
-   * @param {URNumberLine} numberline
+   * @param {URNumberLine} numberLine
    * @param {KeypadPanelNode} keypad
    * @param {Object} [options]
    * @constructor
    */
-  function URNumberLineNode( numberline, keypad, options ) {
+  function URNumberLineNode( numberLine, keypad, options ) {
 
      options = _.extend( {
       numberLineTitle:            '',
@@ -57,16 +58,17 @@ define( function( require ) {
       markerLargeHeight:          35,
       markerSmallHeight:          18,
       markerTopPattern:           '{0}',
-      markerBottomPattern:        '{0}'
+      markerBottomPattern:        '{0}',
+      onEraseCallback:            null
     }, options || {} );
 
     var self = this;
 
     // @protected - all
-    this.numberline         = numberline;
+    this.numberLine         = numberLine;
     this.keypad             = keypad;
-    this.graphWidth         = options.graphWidth;         // width of the area taken by the numberline
-    this.graphHeight        = options.graphHeight;        // height of the area taken by the numberline
+    this.graphWidth         = options.graphWidth;         // width of the area taken by the numberLine
+    this.graphHeight        = options.graphHeight;        // height of the area taken by the numberLine
     this.xAxisOffset        = options.xAxisOffset;        // width between the double X-axes
     this.yAxisOffset        = options.yAxisOffset;        // offset for the start of y=0
     this.xAxisLength        = options.xAxisLength;        // length (pixels) of the X axis
@@ -78,6 +80,7 @@ define( function( require ) {
     this.markerSmallHeight  = options.markerSmallHeight;
     this.markerTopPattern   = options.markerTopPattern;
     this.markerBottomPattern  = options.markerBottomPattern;
+    this.onEraseCallback    = options.onEraseCallback;
 
     // @public (read-only) graph origin & bounds
     this.origin       = new Vector2( this.yAxisOffset, this.graphHeight / 2 );
@@ -166,7 +169,11 @@ define( function( require ) {
       left: this.bottomArrowLabel.right,
       top: options.graphHeight,
       listener: function() {
-        self.removeAllMarkers();
+        self.numberLine.removeAllMarkers();
+        self.removeAllMarkerNodes();
+        if( self.onEraseCallback ) {
+          self.onEraseCallback.call();
+        }
       }
     });
     this.contentNode.addChild( eraserButton );
@@ -193,7 +200,11 @@ define( function( require ) {
 
     this.mutate( options );
 
-    this.addEditMarker();
+    this.addEditMarkerNode();
+
+    this.numberLine.markersProperty.link( function( value ) {
+      console.log( 'numberLine.markersProperty changed' );
+    } );
   }
 
   unitRates.register( 'URNumberLineNode', URNumberLineNode );
@@ -255,6 +266,17 @@ define( function( require ) {
     },
 
     /**
+     *
+     * @public
+     */
+    populate: function() {
+      var self = this;
+      this.numberLine.forEachMarker( function( marker ) {
+        self.createMarkerNode( marker );
+      } );
+    },
+
+    /**
      * Adds a marker to the number line
      * @param {URNumberLineMarkerNode} markerNode
      * @public
@@ -269,35 +291,34 @@ define( function( require ) {
      * @public
      */
     removeMarkerNode: function( markerNode ) {
-      this.numberline.removeMarker(  markerNode.marker );
+      this.numberLine.removeMarker(  markerNode.marker );
       this.markerLayerNode.removeChild( markerNode );
       markerNode.dispose();
     },
 
     /**
-     * Removes all markers from the number line
+     * Removes all marker nodes from the number line
      * @public
      */
-    removeAllMarkers: function() {
+    removeAllMarkerNodes: function() {
 
-      this.markerLayerNode.getChildren().forEach( function( node ) {
+      this.forEachMarkerNode( function( node ) {
         node.dispose();
       } );
       this.markerLayerNode.removeAllChildren();
 
       this.removableMarkerNodeList = [];
-      this.numberline.removeAllMarkers();
 
       this.updateUndoButton();
-      this.addEditMarker();
+      this.addEditMarkerNode();
     },
 
     /**
      * Gets all the markers that are currently on the number line
-     * @returns {Array}.<Node>
+     * @returns {Array}.<URNumberLineMarkerNode>
      * @public
      */
-    getAllMarkers: function() {
+    getAllMarkerNodes: function() {
       return this.markerLayerNode.getChildren();
     },
 
@@ -308,7 +329,7 @@ define( function( require ) {
      * @param callback function(item)
      * @public
      */
-    forEachMarker: function( callback ) {
+    forEachMarkerNode: function( callback ) {
       this.markerLayerNode.getChildren().forEach( callback );
     },
 
@@ -317,19 +338,19 @@ define( function( require ) {
      * which allow the edit boxes to be linked to the shared keypad.
      * @private
      */
-    addEditMarker: function( ) {
+    addEditMarkerNode: function( ) {
 
       // create one if there is none
-      if ( !this.numberline.editMarkerExists() ) {
+      if ( !this.numberLine.editMarkerExists() ) {
 
         // create a new editable item
-        var editMarker = this.numberline.createMarker( -1, -1, {
+        var editMarker = this.numberLine.createMarker( -1, -1, {
           editable: true,
           bounds:   this.markerBounds,
           position: new Vector2( EDITABLE_MARKER_X, this.origin.y )
         } );
 
-        // create a matching marker node for the item
+        // create a matching marker node
         this.createMarkerNode( editMarker );
 
         // reset the kepad
@@ -344,7 +365,7 @@ define( function( require ) {
      * Removes the top marker in the undo stack from the number line.
      * @private
      */
-    removeEditMarker: function( ) {
+    removeEditMarker: function() {
 
       if ( this.removableMarkerNodeList.length > 0 ) {
 
@@ -352,18 +373,18 @@ define( function( require ) {
         var editMarkerNode = this.removableMarkerNodeList.pop();
 
         // remove the marker
-        this.numberline.removeMarker( editMarkerNode.marker );
+        this.numberLine.removeMarker( editMarkerNode.marker );
 
         // remove the node
         this.markerLayerNode.removeChild( editMarkerNode );
+        editMarkerNode.dispose();
 
-        this.updateUndoButton();
-        this.addEditMarker();  // if needed
+        this.addEditMarkerNode();  // if needed
       }
     },
 
     /**
-     * Creates a new marker node based on the specified item attiributes
+     * Creates a new marker node based on the specified marker attiributes
      * @param {NumberLineMarker} - the marker item)
      * @return {NumberLineMarkerNode}
      * @private
@@ -371,25 +392,24 @@ define( function( require ) {
     createMarkerNode: function( marker ) {
 
       var self = this;
+      var markerNode = null;
 
-      // Color the marker based on Challange prompts
-      var markerColor = 'black';
-      //if ( item.isChallenge ) {
-      //  if ( item.isChallengeUnitRate ) {
-      //    markerColor = ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR;
-      //  }
-      //  else {
-      //    markerColor = ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR;
-      //  }
-      //}
+      // check for existing node
+      var nodes = this.markerLayerNode.getChildren();
+      for (var i = 0; i < nodes.length; i++) {
+        markerNode = nodes[i];
+        if( markerNode.marker === marker ) {
+          return markerNode;
+        }
+      }
 
       // make marker node at a specific location
-      var position   = marker.positionProperty.value;
-      var markerNode = new URNumberLineMarkerNode( marker, position, this.keypad, {
+      var position = marker.positionProperty.value;
+      markerNode = new URNumberLineMarkerNode( marker, position, this.keypad, {
         draggable:            false,
         centerX:              position.x,
         centerY:              position.y,
-        color:                markerColor,
+        color:                marker.color,
         largeHeight:          this.markerLargeHeight,
         smallHeight:          this.markerSmallHeight,
         topPattern:           this.markerTopPattern,
@@ -401,7 +421,7 @@ define( function( require ) {
       this.qnaMultilink = Property.multilink( [ markerNode.marker.topQnA.valueProperty, markerNode.marker.bottomQnA.valueProperty ],
         function( topProperty, bottomProperty ) {
           self.updateMarkerNode( markerNode );
-          self.addEditMarker();  // if needed
+          self.addEditMarkerNode();  // if needed
       } );
 
       return markerNode;
@@ -416,7 +436,7 @@ define( function( require ) {
 
       var x           = markerNode.marker.positionProperty.value.x;
       var y           = this.origin.y;
-      var inUndoList  = ( this.removableMarkerNodeList.indexOf( markerNode ) >= 0 );
+      var nodeIndex   = this.removableMarkerNodeList.indexOf( markerNode );
       var isRemovable = markerNode.marker.isRemovable();
       var topValue    = markerNode.marker.topQnA.valueProperty.value;
       var bottomValue = markerNode.marker.bottomQnA.valueProperty.value;
@@ -425,20 +445,20 @@ define( function( require ) {
       if ( topValue >= 0 || bottomValue >= 0) {
 
         // undo stack managment
-        if ( !inUndoList && isRemovable ) {
+        if ( ( nodeIndex < 0 ) && isRemovable ) {
           this.removableMarkerNodeList.push( markerNode );
         }
-        else if ( inUndoList && !isRemovable ) {
-          this.removableMarkerNodeList.splice( this.removableMarkerNodeList.indexOf( markerNode ), 1 );
+        else if ( ( nodeIndex >= 0 ) && !isRemovable ) {
+          this.removableMarkerNodeList.splice( nodeIndex, 1 );
         }
 
         // calc X position based on the currently set value
         var xPercent = -1;
         if( bottomValue >= 0 ) {
-          xPercent = ( bottomValue  / this.numberline.bottomMaxProperty.value );
+          xPercent = ( bottomValue  / this.numberLine.bottomMaxProperty.value );
         }
         else {
-          xPercent = ( topValue / this.numberline.topMaxProperty.value );
+          xPercent = ( topValue / this.numberLine.topMaxProperty.value );
         }
 
         x = ( ( 1.0 - xPercent ) * this.origin.x ) + ( this.graphBounds.maxX * xPercent ) ;
@@ -453,7 +473,7 @@ define( function( require ) {
       }
 
       // check edit marker for existing markers with same values
-      if( this.numberline.markerExists( markerNode.marker ) ) {
+      if( this.numberLine.markerExists( markerNode.marker ) ) {
         this.removeMarkerNode( markerNode );
       }
 
@@ -501,7 +521,7 @@ define( function( require ) {
      */
     reset: function() {
       this.expandedProperty.reset();
-      this.removeAllMarkers();
+      this.removeAllMarkerNodes();
     }
 
   } );  // define

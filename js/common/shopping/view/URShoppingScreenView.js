@@ -36,9 +36,10 @@ define( function( require ) {
   /**
    * @param {ShoppingModel} model
    * @param {boolean} enableHideScaleCost
+   * @param {function} [eraseNumberLineCallback]
    * @constructor
    */
-  function URShoppingScreenView( model, enableHideScaleCost ) {
+  function URShoppingScreenView( model, enableHideScaleCost, eraseNumberLineCallback ) {
 
     ScreenView.call( this );
 
@@ -61,7 +62,11 @@ define( function( require ) {
     this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
       left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
       top:  this.layoutBounds.top  + URConstants.SCREEN_VERTICAL_MARGIN,
-      numberLineTitle: doubleNumberLineString
+      numberLineTitle:            doubleNumberLineString,
+      yAxisOffset:                50,
+      markerLargeHeight:          45,
+      markerSmallHeight:          25,
+      onEraseCallback:            eraseNumberLineCallback
     } );
     this.addChild( this.numberLineNode );
 
@@ -230,6 +235,8 @@ define( function( require ) {
         // Dropped on the scale
         this.model.addShelfItemToScale( itemNode.item );
         this.model.addScaleItemsToNumberline();
+        // populate number line
+        this.numberLineNode.populate();
 
         // Fruit bags should be expanded
         if ( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.countProperty.value > 1 ) {
@@ -246,9 +253,6 @@ define( function( require ) {
 
         // make sure items are stacked on the scale
         this.scaleNode.adjustItemPositions( animate );
-
-        // populate number line
-        this.numberLineNode.populate();
       }
       else {
 
@@ -257,6 +261,9 @@ define( function( require ) {
 
         // Update the number line
         this.model.addScaleItemsToNumberline();
+
+        // populate number line
+        this.numberLineNode.populate();
 
         // make sure items are stacked on the scale
         this.scaleNode.adjustItemPositions( animate );

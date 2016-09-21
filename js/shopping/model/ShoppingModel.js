@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URShoppingModel = require( 'UNIT_RATES/common/shopping/model/URShoppingModel' );
+  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
   var Challenges = require( 'UNIT_RATES/shopping/model/Challenges' );
 
   /**
@@ -29,26 +30,6 @@ define( function( require ) {
   return inherit( URShoppingModel, ShoppingModel, {
 
     /**
-     * Add local listener for item additions/removals. This is needed on initialization and on a reset all
-     * @override @protected
-     */
-    addArrayListeners: function() {
-      var self = this;
-
-      // item add/remove listeners
-      this.numberLine.addListeners(
-        function( item, observableArray ) {
-      },
-        function( item, observableArray ) {
-          // If the numberline is cleared, add back the scale contents and correct challenge questions answered
-          if ( observableArray.length === 0 ) {
-            self.addScaleItemsToNumberline();
-            self.addChallengeItemsToNumberline();
-          }
-      } );
-    },
-
-    /**
      * Adds all correctly answered challenge questions to the numberline as items (Note: the number line will ignore duplicates)
      * @protected
      */
@@ -57,11 +38,11 @@ define( function( require ) {
 
       // create a new item on the number line representing the correctly answered challenge questions
       var itemArray = this.challenges.getCorrectAnswerItems( this.itemDataProperty.value );
+
       itemArray.forEach( function( item ) {
-        self.numberLine.createItem( self.itemDataProperty.value, item.countProperty.value, {
-          isChallenge: true,
-          isChallengeUnitRate: ( item.countProperty.value === 1 )
-        } );
+        var color =  ( ( item.countProperty.value === 1 ) ?
+          ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR : ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR );
+        self.numberLine.createItem( self.itemDataProperty.value, item.countProperty.value, { color: color } );
       } );
     },
 
@@ -70,7 +51,9 @@ define( function( require ) {
      * @protected
      */
     resetChallengeNumberlineItems: function() {
-        this.numberLine.resetChallengeItems();
+      this.numberLine.forEachMarker( function( marker ) {
+        marker.color = 'black';
+      });
     },
 
     // Resets all model elements

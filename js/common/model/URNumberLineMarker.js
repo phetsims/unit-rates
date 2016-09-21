@@ -73,6 +73,9 @@ define( function( require ) {
         self.topQnA.valueProperty.set( Number( -1 ) );
       }
     } );
+
+     // Clear unit on incorrect cost answers
+    this.rateProperty.lazyLink( this.onRateChange );
   }
 
   unitRates.register( 'URNumberLineMarker', URNumberLineMarker );
@@ -108,6 +111,15 @@ define( function( require ) {
     },
 
     /**
+     * @private
+     */
+    onRateChange: function( value, oldValue ) {
+      console.log('onRateChange');
+      //this.topQnA.valueProperty.value =
+      //this.bottomQnA.valueProperty.value =
+    },
+
+    /**
      * Resets the properties and answer to the default (unanswered) state
      * @public
      */
@@ -131,7 +143,9 @@ define( function( require ) {
     dispose: function() {
       this.topQnA.dispose();
       this.bottomQnA.dispose();
+      this.rateProperty.unlink( this.onRateChange );
       this.outOfRangeProperty.unlinkAll();
+      this.highPrecision.unlinkAll();
       this.editableProperty.unlinkAll();
     }
 

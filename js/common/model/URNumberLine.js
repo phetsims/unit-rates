@@ -60,9 +60,20 @@ define( function( require ) {
       }, options || {} );
 
       var marker = new URNumberLineMarker( correctTopValue, correctBottomValue, this.rateProperty, options );
-      this.markersProperty.value.push( marker );
+
+      this.addMarker( marker );
 
       return marker;
+    },
+
+    /**
+     * creates a numberline marker
+     *  @param {URNumberLineMarker} marker
+     * @public
+     */
+    addMarker: function( marker ) {
+      var markers = this.markersProperty.value.push( marker );
+      //this.markersProperty.notifyObserversStatic();
     },
 
     /**
@@ -74,6 +85,7 @@ define( function( require ) {
       var index = this.markers.indexOf( marker );
       if (index > -1) {
         this.markersProperty.value.splice( index, 1 );
+        //this.markersProperty.notifyObserversStatic();
       }
     },
 
@@ -83,7 +95,8 @@ define( function( require ) {
      * @public
      */
     removeAllMarkers: function() {
-      this.markersProperty.value = [];
+      this.markersProperty.value.length = 0;
+      //this.markersProperty.notifyObserversStatic();
     },
 
     /**

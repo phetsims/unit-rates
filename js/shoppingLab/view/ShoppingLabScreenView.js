@@ -29,7 +29,7 @@ define( function( require ) {
     this.sceneItemData[ SceneMode.PRODUCE ] = ItemData.CARROTS;
     this.sceneItemData[ SceneMode.CANDY ]   = ItemData.PURPLE_CANDY;
 
-    URShoppingScreenView.call( this, model, true );
+    URShoppingScreenView.call( this, model, true, this.onNumberLineEraseCallback.bind( this ) );
   }
 
   unitRates.register( 'ShoppingLabScreenView', ShoppingLabScreenView );
@@ -47,6 +47,15 @@ define( function( require ) {
         bottom:  this.scaleNode.bottom
       } );
       this.addChild( this.itemRateNode );
+    },
+
+    /**
+     * Called from constructor to give subclass a chance to add UI elements at a specific point in the constructor
+     * @protected
+     */
+    onNumberLineEraseCallback: function() {
+      this.model.addScaleItemsToNumberline();
+      this.numberLineNode.populate();
     },
 
     /**

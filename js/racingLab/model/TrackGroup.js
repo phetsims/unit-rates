@@ -12,7 +12,7 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
- var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   /**
    * @constructor

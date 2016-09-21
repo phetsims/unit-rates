@@ -31,32 +31,11 @@ define( function( require ) {
     this.shelf      = new Shelf( this.itemDataProperty );
     this.scale      = new Scale( this.itemDataProperty );
     this.numberLine = new NumberLine( this.itemDataProperty );
-
-    this.addArrayListeners();
   }
 
   unitRates.register( 'URShoppingModel', URShoppingModel );
 
   return inherit( PropertySet, URShoppingModel, {
-
-    /**
-     * Add local listener for item additions/removals. This is needed on initialization and on a reset all
-     * @protected
-     */
-    addArrayListeners: function() {
-      var self = this;
-
-      // item add/remove listeners
-      this.numberLine.addListeners(
-        function( item, observableArray ) {
-      },
-        function( item, observableArray ) {
-          // If the numberline is cleared, add back the scale contents and correct challenge questions answered
-          if ( observableArray.length === 0 ) {
-            self.addScaleItemsToNumberline();
-          }
-      } );
-    },
 
     /**
      * Removes an item from the shelf and adds it to the scale
@@ -89,7 +68,7 @@ define( function( require ) {
     addScaleItemsToNumberline: function() {
 
       // create a new item on the number line representing the total number/weight of items currently on the scale
-      var count = this.scale.getItemCount() ;
+      var count = this.scale.getItemCount();
       if ( count > 0 ) {
         this.numberLine.createItem( this.itemDataProperty.value, count );
       }
@@ -101,7 +80,6 @@ define( function( require ) {
       this.scale.reset();
       this.numberLine.reset();
       PropertySet.prototype.reset.call( this );
-      this.addArrayListeners();
     }
 
   } ); // inherit

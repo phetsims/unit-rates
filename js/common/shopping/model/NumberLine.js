@@ -11,41 +11,69 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemCollection = require( 'UNIT_RATES/common/shopping/model/ItemCollection' );
-  var NumberLineItem = require( 'UNIT_RATES/common/shopping/model/NumberLineItem' );
+  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
+  var URNumberLineMarker = require( 'UNIT_RATES/common/model/URNumberLineMarker' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @param {Property.<ItemData>} itemDataProperty - the curently selected item
    * @constructor
    */
-  function NumberLine( itemDataProperty ) {
+  function NumberLine( itemDataProperty, options ) {
+
+    options = _.extend( {
+      rateProperty: new Property( 1.0 )
+    }, options || {} );
+
     var self = this;
 
-    // @public (all)
-    ItemCollection.call( this, {
+    // create type marker arrays
+    this.markerMap = {};
+    for (var key in ItemData) {
+      var itemData = ItemData[ key ];
+      this.markerMap[ itemData.type ] = [];
+    }
+
+    this.rateProperty = options.rateProperty;
+    this.topMaxProperty = new Property( ShoppingConstants.MAX_ITEMS );
+    this.bottomMaxProperty = new Property( ShoppingConstants.MAX_ITEMS );
+
+    URNumberLine.call( this, this.rateProperty, this.topMaxProperty, this.bottomMaxProperty, {
+      markerTopDecimals:          2,
+      markerBottomDecimals:       1,
+      markerTopHighPrecision:     2,
+      markerBottomHighPrecision:  2
     } );
 
     // @public
     this.itemDataProperty = itemDataProperty;
+
+    // change marker arrays based on select item type
+    this.itemDataProperty.link( function( itemData, oldItemData ) {
+      self.markersProperty.value = self.markerMap[ itemData.type ];
+    } );
 
     // update value text on cost/weight change
     this.itemDataProperty.link( function( value, oldValue ) {
 
       // reassign the rate update function to the current item type
       if( oldValue ) {
-        oldValue.rate.unlink( self.updateNumberLineItemRate );
+        //oldValue.rate.unlink( self.updateNumberLineItemRate );
       }
-      value.rate.link( self.updateNumberLineItemRate.bind( self ) );
+      //value.rate.link( self.updateNumberLineItemRate.bind( self ) );
     } );
 
   }
 
   unitRates.register( 'NumberLine', NumberLine );
 
-  return inherit( ItemCollection, NumberLine, {
+  return inherit( URNumberLine, NumberLine, {
+
 
     /**
-     * Creates a new item/adds it to the types specific array
+     * Creates a new item marker
      * @param {ItemData} data
      * @param {number} [count]
      * @param {Object} [options]
@@ -53,62 +81,30 @@ define( function( require ) {
      * @public @override
      */
     createItem: function( data, count, options ) {
-      var item = new NumberLineItem( data, count, options );
-      this.addItem( item );
-      return item;
-    },
 
-    /**
-     * Adds an item to the types specific array
-     * Does not allow for new items which equal existing items but will replace existing items with challenge items,
-     * as these take precendence over standard/non-challenge items.
-     *
-     * @param {NumberLineItem} item
-     * @param {boolean} [replace]
-     * @public @override
-     */
-     addItem: function( item ) {
-      var self = this;
+      // The correct answers
+      var correctCost = ( count * data.rate.value );
+      var correctUnit = ( count );
 
-      var itemArray = this.getItemsWithType( item.type );
-      var existingItem = this.containsItem( item );
-      if ( existingItem === null ) {
-        itemArray.add( item );
-      }
-      else if ( item.isChallenge ) {
-        self.removeItem( existingItem );
-        item.dispose();
-        itemArray.add( item );
-      }
+      var marker = new URNumberLineMarker( correctCost, correctUnit, data.rate, options );
+      this.addMarker( marker );
+
+      return marker;
     },
 
     /**
      * Updates the rate of the items  on currently on the number line (except editable items)
      * @protected
-     */
     updateNumberLineItemRate: function() {
       var self = this;
 
-      var itemArray = this.getItemsWithType( this.itemDataProperty.value.type ); // NumberLineItems
+      var itemArray = this.itemCollection.getItemsWithType( this.itemDataProperty.value.type ); // NumberLineItemMarkers
       itemArray.forEach( function( item ) {
         item.setRate( self.itemDataProperty.value.rate.value );
       } );
     },
+   */
 
-    /**
-     * Changes all items representing Challenge answers to regluar/black markers on the number line.
-     * @public
-     */
-     resetChallengeItems: function() {
-
-      var itemArray = this.getItemsWithType( this.itemDataProperty.value.type ); // NumberLineItems
-      itemArray.forEach( function( item ) {
-        if ( item.isChallenge ) {
-          item.isChallenge  = false;
-          item.isChallengeUnitRate = false;
-        }
-      } );
-    }
 
   } ); // inherit
 

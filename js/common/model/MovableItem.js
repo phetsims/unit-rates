@@ -82,7 +82,7 @@ define( function( require ) {
         }
 
         // bounds check
-        if ( this.boundsProperty ) {
+        if ( this.boundsProperty.value !== null ) {
           var bounds = this.boundsProperty.value;
           x = ( x < bounds.minX ? bounds.minX : x );
           x = ( x > bounds.maxX ? bounds.maxX : x );

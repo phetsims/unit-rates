@@ -25,7 +25,7 @@ define( function( require ) {
    */
   function ShoppingScreenView( model ) {
 
-    URShoppingScreenView.call( this, model, false );
+    URShoppingScreenView.call( this, model, false, this.onNumberLineEraseCallback.bind( this ) );
   }
 
   unitRates.register( 'ShoppingScreenView', ShoppingScreenView );
@@ -76,6 +76,16 @@ define( function( require ) {
       // select the item based on scene & item selection - no dispose as this never goes away
       Property.multilink( [ this.sceneModeProperty, this.fruitItemDataProperty, this.produceItemDataProperty,
         this.candyItemDataProperty ], this.itemSelectionChanged.bind( this ) );
+    },
+
+    /**
+     * Called from constructor to give subclass a chance to add UI elements at a specific point in the constructor
+     * @protected
+     */
+    onNumberLineEraseCallback: function() {
+      this.model.addScaleItemsToNumberline();
+      this.model.addChallengeItemsToNumberline();
+      this.numberLineNode.populate();
     },
 
     /**
