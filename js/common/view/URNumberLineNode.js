@@ -85,7 +85,7 @@ define( function( require ) {
     // @public (read-only) graph origin & bounds
     this.origin       = new Vector2( this.yAxisOffset, this.graphHeight / 2 );
     this.graphBounds  = new Bounds2( 0, 0, this.graphWidth, this.graphHeight );
-    this.markerBounds = new Bounds2( 0, 0, this.graphWidth + this.axisArrowSize + this.axisLabelSpacing,
+    this.markerBounds = new Bounds2( 0, 0, this.graphWidth + this.xAxisLength + this.axisArrowSize + this.axisLabelSpacing,
       this.graphHeight );
 
     // Array.<NumberLineMarkerNode> - The undo/remove stack of markers which keeps track of the order of
@@ -160,7 +160,7 @@ define( function( require ) {
     } );
     this.contentNode.addChild( this.undoEditButtonNode );
 
-    // set the defautl Y-axis length
+    // set the defaukt Y-axis length
     this.setPixelLength( this.xAxisLength );
 
     // erase
@@ -232,7 +232,7 @@ define( function( require ) {
       this.bottomArrowLabel.centerY = this.bottomArrowNode.centerY;
 
       // in between arrows and labels
-      this.outOfRangeMarkerX = ( this.xAxisLength + this.axisArrowSize );
+      this.outOfRangeMarkerX = ( this.topArrowLabel.left - this.axisLabelSpacing / 2 );
 
       // update all markers - hide those beyond bounds, move out of range, etc.
       this.markerLayerNode.getChildren().forEach( function( node ) {
@@ -459,7 +459,7 @@ define( function( require ) {
 
         x = ( ( 1.0 - xPercent ) * this.origin.x ) + ( this.graphBounds.maxX * xPercent ) ;
 
-        if( x > this.xAxisLength ) {
+        if( x > ( this.graphBounds.maxX ) ) {
           x = this.outOfRangeMarkerX;
           markerNode.marker.outOfRangeProperty.set( true );
         }

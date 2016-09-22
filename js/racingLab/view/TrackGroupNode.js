@@ -12,7 +12,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var RacingLabConstants = require( 'UNIT_RATES/racingLab/RacingLabConstants' );
-  var RLNumberLineNode = require( 'UNIT_RATES/racingLab/view/RLNumberLineNode' );
+  var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var SpeedRateNode = require( 'UNIT_RATES/racingLab/view/SpeedRateNode' );
   var TrackNode = require( 'UNIT_RATES/racingLab/view/TrackNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -42,7 +42,7 @@ define( function( require ) {
     this.trackGroup = model;
 
     // number line
-    this.numberLineNode = new RLNumberLineNode( this.trackGroup.numberline, keypad, {
+    this.numberLineNode = new URNumberLineNode( this.trackGroup.numberline, keypad, {
       numberLineTitle:            options.numberLineTitle,
       graphWidth:                 RacingLabConstants.TRACK_NUMBER_LINE_WIDTH,
       graphHeight:                95,
