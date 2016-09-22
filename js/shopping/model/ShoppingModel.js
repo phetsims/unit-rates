@@ -42,14 +42,14 @@ define( function( require ) {
       var self = this;
 
       // create a new item on the number line representing the correctly answered challenge questions
-      var itemArray = this.challenges.getCorrectAnswerItems( this.itemDataProperty.value );
+      var itemArray = this.challenges.getCorrectAnswerItems( this.itemTypeProperty.value );
 
       itemArray.forEach( function( item ) {
         var color =  ( ( item.countProperty.value === 1 ) ?
           ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR : ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR );
 
         // Check if there is an existing marker
-        var correctCost = ( item.countProperty.value * self.itemDataProperty.value.rate.value );
+        var correctCost = ( item.countProperty.value * self.itemRateProperty.value );
         var correctUnit = ( item.countProperty.value );
 
         var existingMarker = null;

@@ -74,8 +74,13 @@ define( function( require ) {
       }
     } );
 
-     // Clear unit on incorrect cost answers
-    this.rateProperty.lazyLink( this.onRateChange.bind( this ) );
+    // Update top QnA on rate change
+    this.rateProperty.lazyLink( function( rate, oldRate ) {
+      if( !self.editableProperty.value ) {
+        self.topQnA.answerValue = Util.toFixedNumber( ( self.bottomQnA.valueProperty.value * rate ), self.topDecimalPlaces );
+        self.topQnA.valueProperty.value = self.topQnA.answerValue;
+      }
+    } );
   }
 
   unitRates.register( 'URNumberLineMarker', URNumberLineMarker );
@@ -126,18 +131,6 @@ define( function( require ) {
      */
     isRemovable: function() {
       return ( this.editableProperty.value || this.highPrecisionProperty.value );
-    },
-
-    /**
-     * @private
-     */
-    onRateChange: function( value, oldValue ) {
-      console.log('onRateChange', value, oldValue);
-
-      //var bottomValue = this.bottomQnA.valueProperty.value;
-
-      //this.topQnA.valueProperty.value = ( this.topQnA.valueProperty.value / oldValue ) * value;
-      //this.bottomQnA.valueProperty.value = bottomValue;
     },
 
     /**

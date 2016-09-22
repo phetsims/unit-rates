@@ -34,11 +34,11 @@ define( function( require ) {
     }, options );
 
     RadioButtonGroup.call( this, sceneModeProperty, [
-      { value: SceneMode.FRUIT,   node: ItemNodeFactory.createItem( new Item( ItemData.APPLES, 1  ),
+      { value: SceneMode.FRUIT,   node: ItemNodeFactory.createItem( new Item( ItemData.APPLES.type, 1  ),
         { imageScale: 0.025 } ) },
-      { value: SceneMode.PRODUCE, node: ItemNodeFactory.createItem( new Item( ItemData.CARROTS, 1 ),
+      { value: SceneMode.PRODUCE, node: ItemNodeFactory.createItem( new Item( ItemData.CARROTS.type, 1 ),
         { imageScale: 0.025 } ) },
-      { value: SceneMode.CANDY,   node: ItemNodeFactory.createItem( new Item( ItemData.PURPLE_CANDY, 1 ),
+      { value: SceneMode.CANDY,   node: ItemNodeFactory.createItem( new Item( ItemData.PURPLE_CANDY.type, 1 ),
         { imageScale: 0.035 } ) }
     ], options );
   }

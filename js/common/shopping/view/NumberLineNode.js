@@ -54,10 +54,10 @@ define( function( require ) {
     numberLine.removeAllMarkers();
 
     // refresh on item change
-    numberLine.itemDataProperty.link( function( itemData, oldItemData ) {
+    numberLine.itemTypeProperty.link( function( itemType, oldType ) {
 
       // set number line labels
-      switch( itemData.type ) {
+      switch( itemType ) {
         case ItemData.APPLES.type:
           self.setLineLabels( costCurrencyString, applesCapString );
           break;

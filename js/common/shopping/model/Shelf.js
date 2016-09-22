@@ -65,72 +65,72 @@ define( function( require ) {
 
         switch( itemData.type ) {
           case ItemData.APPLES.type:
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
+            this.createItem( itemData.type, 5 );
+            this.createItem( itemData.type, 5 );
+            this.createItem( itemData.type, 5 );
           break;
           case ItemData.LEMONS.type:
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
+            this.createItem( itemData.type, 5 );
+            this.createItem( itemData.type, 5 );
+            this.createItem( itemData.type, 5 );
           break;
           case ItemData.ORANGES.type:
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
+            this.createItem( itemData.type, 5 );
+            this.createItem( itemData.type, 5 );
+            this.createItem( itemData.type, 5 );
           break;
           case ItemData.PEARS.type:
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
-            this.createItem( itemData, 5 );
+            this.createItem( itemData.type, 5 );
+            this.createItem( itemData.type, 5 );
+            this.createItem( itemData.type, 5 );
           break;
           case ItemData.CARROTS.type:
-            this.createItem( itemData, 4 );
-            this.createItem( itemData, 4 );
-            this.createItem( itemData, 4 );
-            this.createItem( itemData, 4 );
+            this.createItem( itemData.type, 4 );
+            this.createItem( itemData.type, 4 );
+            this.createItem( itemData.type, 4 );
+            this.createItem( itemData.type, 4 );
           break;
           case ItemData.CUCUMBERS.type:
-            this.createItem( itemData, 3 );
-            this.createItem( itemData, 3 );
-            this.createItem( itemData, 3 );
-            this.createItem( itemData, 3 );
+            this.createItem( itemData.type, 3 );
+            this.createItem( itemData.type, 3 );
+            this.createItem( itemData.type, 3 );
+            this.createItem( itemData.type, 3 );
           break;
           case ItemData.POTATOES.type:
-            this.createItem( itemData, 3 );
-            this.createItem( itemData, 3 );
-            this.createItem( itemData, 3 );
-            this.createItem( itemData, 3 );
+            this.createItem( itemData.type, 3 );
+            this.createItem( itemData.type, 3 );
+            this.createItem( itemData.type, 3 );
+            this.createItem( itemData.type, 3 );
           break;
           case ItemData.TOMATOES.type:
-            this.createItem( itemData, 4 );
-            this.createItem( itemData, 4 );
-            this.createItem( itemData, 4 );
-            this.createItem( itemData, 4 );
+            this.createItem( itemData.type, 4 );
+            this.createItem( itemData.type, 4 );
+            this.createItem( itemData.type, 4 );
+            this.createItem( itemData.type, 4 );
           break;
           case ItemData.PURPLE_CANDY.type:
-            this.createItem( itemData, .4 );
-            this.createItem( itemData, .4 );
-            this.createItem( itemData, .4 );
-            this.createItem( itemData, .4 );
+            this.createItem( itemData.type, .4 );
+            this.createItem( itemData.type, .4 );
+            this.createItem( itemData.type, .4 );
+            this.createItem( itemData.type, .4 );
           break;
           case ItemData.RED_CANDY.type:
-            this.createItem( itemData, .3 );
-            this.createItem( itemData, .3 );
-            this.createItem( itemData, .3 );
-            this.createItem( itemData, .3 );
+            this.createItem( itemData.type, .3 );
+            this.createItem( itemData.type, .3 );
+            this.createItem( itemData.type, .3 );
+            this.createItem( itemData.type, .3 );
           break;
           case ItemData.GREEN_CANDY.type:
-            this.createItem( itemData, .3 );
-            this.createItem( itemData, .3 );
-            this.createItem( itemData, .3 );
-            this.createItem( itemData, .3 );
+            this.createItem( itemData.type, .3 );
+            this.createItem( itemData.type, .3 );
+            this.createItem( itemData.type, .3 );
+            this.createItem( itemData.type, .3 );
           break;
           case ItemData.BLUE_CANDY.type:
-            this.createItem( itemData, .4 );
-            this.createItem( itemData, .4 );
-            this.createItem( itemData, .4 );
-            this.createItem( itemData, .4 );
+            this.createItem( itemData.type, .4 );
+            this.createItem( itemData.type, .4 );
+            this.createItem( itemData.type, .4 );
+            this.createItem( itemData.type, .4 );
           break;
 
           default:

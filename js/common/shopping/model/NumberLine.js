@@ -17,9 +17,10 @@ define( function( require ) {
 
   /**
    * @param {Property.<ItemData>} itemDataProperty - the curently selected item
+   * @param {Property.<number>} itemRateProperty - the curently selected item rate
    * @constructor
    */
-  function NumberLine( itemDataProperty, options ) {
+  function NumberLine( itemTypeProperty, itemRateProperty, options ) {
 
     options = _.extend( {
     }, options || {} );
@@ -29,31 +30,29 @@ define( function( require ) {
     this.markerMap = {};
     this.initialize();
 
+    this.itemTypeProperty = itemTypeProperty;
+
     this.topMaxProperty    = new Property( 0 );
     this.bottomMaxProperty = new Property( 0 );
 
-    URNumberLine.call( this, this.rateProperty, this.topMaxProperty, this.bottomMaxProperty, {
+    URNumberLine.call( this, itemRateProperty, this.topMaxProperty, this.bottomMaxProperty, {
       markerTopDecimals:          2,
       markerBottomDecimals:       1,
       markerTopHighPrecision:     2,
       markerBottomHighPrecision:  2
     } );
 
-    // @public
-    this.itemDataProperty = itemDataProperty;
-
     // update the numberline based on selected item type
-    this.itemDataProperty.link( function( itemData, oldItemData ) {
+    this.itemTypeProperty.link( function( itemType, oldType ) {
 
-      // change item rate
-      self.rateProperty = itemData.rate;
+      var maxUnit = self.getMaxUnit( itemType );
 
       // change cost (top) max values
-      self.topMaxProperty.value    = itemData.maxCount * self.rateProperty.value;
-      self.bottomMaxProperty.value = itemData.maxCount;
+      self.topMaxProperty.value    = maxUnit * self.rateProperty.value;
+      self.bottomMaxProperty.value = maxUnit;
 
       // change the marker arrays
-      self.markersProperty.value = self.markerMap[ itemData.type ];
+      self.markersProperty.value = self.markerMap[ itemType ];
     } );
   }
 
@@ -73,22 +72,55 @@ define( function( require ) {
     },
 
     /**
-     * Creates a new item marker from specified ItemData & an item count
-     * @param {ItemData} data
-     * @param {number} [count]
-     * @param {Object} [options]
-     * @return {Item}
-     * @public @override
+     *
+     * @protected
      */
-    createItem: function( data, count, options ) {
+    getMaxUnit: function( itemType ) {
 
-      // The correct answers
-      var correctCost = ( count * data.rate.value );
-      var correctUnit = ( count );
+      var maxUnits = 1;
 
-      var marker = this.createMarker( correctCost, correctUnit, options );
+      switch( itemType ) {
+          case ItemData.APPLES.type:
+            maxUnits = ItemData.APPLES.maxUnit;
+          break;
+          case ItemData.LEMONS.type:
+            maxUnits = ItemData.LEMONS.maxUnit;
+          break;
+          case ItemData.ORANGES.type:
+            maxUnits = ItemData.ORANGES.maxUnit;
+          break;
+          case ItemData.PEARS.type:
+            maxUnits = ItemData.PEARS.maxUnit;
+          break;
+          case ItemData.CARROTS.type:
+            maxUnits = ItemData.CARROTS.maxUnit;
+          break;
+          case ItemData.CUCUMBERS.type:
+            maxUnits = ItemData.CUCUMBERS.maxUnit;
+          break;
+          case ItemData.POTATOES.type:
+            maxUnits = ItemData.POTATOES.maxUnit;
+          break;
+          case ItemData.TOMATOES.type:
+            maxUnits = ItemData.TOMATOES.maxUnit;
+          break;
+          case ItemData.PURPLE_CANDY.type:
+            maxUnits = ItemData.PURPLE_CANDY.maxUnit;
+          break;
+          case ItemData.RED_CANDY.type:
+            maxUnits = ItemData.RED_CANDY.maxUnit;
+          break;
+          case ItemData.GREEN_CANDY.type:
+            maxUnits = ItemData.GREEN_CANDY.maxUnit;
+          break;
+          case ItemData.BLUE_CANDY.type:
+            maxUnits = ItemData.BLUE_CANDY.maxUnit;
+          break;
+          default:
+             assert && assert( false, 'Cannot get max unit of unrecognized type' );
+        }
 
-      return marker;
+        return maxUnits;
     },
 
     // Resets all model elements

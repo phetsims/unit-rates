@@ -18,11 +18,11 @@ define( function( require ) {
   // constants
 
   /**
-   * @param {ItemData} data
+   * @param {string} type
    * @param {number} [count]
    * @constructor
    */
-  function Item( data, count ) {
+  function Item( type, count ) {
 
     // @public (read-write)
     PropertySet.call( this, {
@@ -31,7 +31,7 @@ define( function( require ) {
     } );
 
     // @public (read-only)
-    this.type = data.type;
+    this.type = type;
   }
 
   unitRates.register( 'Item', Item );
@@ -81,6 +81,16 @@ define( function( require ) {
      */
     isEqual: function( item ) {
       return ( item.type === this.type && item.countProperty.value === this.countProperty.value );
+    },
+
+    /**
+     * Convenience function
+     * @returns {boolean}
+     * @public
+     */
+    isFruit: function() {
+      return ( this.type === ItemData.APPLES.type || this.type === ItemData.LEMONS.type ||
+               this.type === ItemData.ORANGES.type || this.type === ItemData.PEARS.type );
     },
 
     /**

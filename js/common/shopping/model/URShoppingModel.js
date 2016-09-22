@@ -24,18 +24,51 @@ define( function( require ) {
 
     // @public (all)
     PropertySet.call( this, {
-      itemData: ItemData.APPLES   // the currently selected item type (& the associated static attributes)
+      itemData: ItemData.APPLES,   // the currently selected item type (& the associated static attributes)
+      itemType: ItemData.APPLES.type,
+      itemRate: ItemData.APPLES.rate
     } );
+
+    var self = this;
+
+    this.rateMap = {};
+    this.initializeRateMap();
 
     // @public
     this.shelf      = new Shelf( this.itemDataProperty );
-    this.scale      = new Scale( this.itemDataProperty );
-    this.numberLine = new NumberLine( this.itemDataProperty );
+    this.scale      = new Scale( this.itemTypeProperty, this.itemRateProperty );
+    this.numberLine = new NumberLine( this.itemTypeProperty, this.itemRateProperty );
+
+    // update value text on cost/weight change
+    this.itemDataProperty.link( function( itemData, oldItemData ) {
+
+      // save old rate which may have been changed
+      if( oldItemData ) {
+        self.rateMap[ oldItemData.type ] = self.itemRateProperty.value;
+      }
+
+      // set new type & rate
+      self.itemTypeProperty.value = itemData.type;
+      self.itemRateProperty.value = self.rateMap[ itemData.type ];
+    } );
   }
 
   unitRates.register( 'URShoppingModel', URShoppingModel );
 
   return inherit( PropertySet, URShoppingModel, {
+
+    /**
+     * create type marker arrays, one for each type (i.e. apples, carrots, etc..)
+     * @public @override
+     */
+    initializeRateMap: function(  ) {
+      var self = this;
+
+      for (var key in ItemData) {
+        var itemData = ItemData[ key ];
+        self.rateMap[ itemData.type ] = itemData.rate;
+      }
+    },
 
     /**
      * Removes an item from the shelf and adds it to the scale
@@ -70,7 +103,11 @@ define( function( require ) {
       // create a new item on the number line representing the total number/weight of items currently on the scale
       var count = this.scale.getItemCount();
       if ( count > 0 ) {
-        this.numberLine.createItem( this.itemDataProperty.value, count );
+        // The correct answers
+        var correctCost = ( count * this.itemRateProperty.value );
+        var correctUnit = ( count );
+
+        this.numberLine.createMarker( correctCost, correctUnit, {});
       }
     },
 

@@ -124,9 +124,7 @@ define( function( require ) {
     Node.call( this, options );
 
     // refresh on item change
-    scale.itemDataProperty.link( function( itemData, oldData ) {
-
-      var itemType = itemData.type;
+    scale.itemTypeProperty.link( function( itemType, oldType ) {
 
       var isFruit = ( itemType === ItemData.APPLES.type  || itemType === ItemData.LEMONS.type ||
                       itemType === ItemData.ORANGES.type || itemType === ItemData.PEARS.type );
@@ -144,7 +142,7 @@ define( function( require ) {
         self.costDisplayNode.centerX = self.costOnlyDisplayX;
       }
 
-      var itemNode = ItemNodeFactory.createItem( new Item( itemData, ( isFruit ? 1 : 2 ) ) );
+      var itemNode = ItemNodeFactory.createItem( new Item( itemType, ( isFruit ? 1 : 2 ) ) );
 
       // pre-compute stacked item positions
       var globalDropBounds = self.scaleTopNode.getGlobalBounds();
@@ -268,7 +266,7 @@ define( function( require ) {
       var self = this;
 
       // get the current array for the item type
-      var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
+      var itemArray = this.scale.getItemsWithType( this.scale.itemTypeProperty.value );
 
       var allNodes = [];
       var updateNodes = [];
@@ -345,7 +343,7 @@ define( function( require ) {
       var self = this;
 
       // get the current array for the item type
-      var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
+      var itemArray = this.scale.getItemsWithType( this.scale.itemTypeProperty.value );
 
       // checks the item layer to see if there is already a node for the item
       // @param {Item}

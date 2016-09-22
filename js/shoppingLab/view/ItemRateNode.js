@@ -44,17 +44,20 @@ define( function( require ) {
   var CANDY_INDEX     = 2;
 
   /**
-   * @param {Property.<ItemData>} itemDataProperty - the curently selected item
+   * @param {Property.<string>} itemTypeProperty - the curently selected item type
+   * @param {Property.<number>} itemRateProperty - the curently selected item rate
    * @param {Object} [options]
    * @constructor
    */
-  function ItemRateNode( itemDataProperty, options ) {
+  function ItemRateNode( itemTypeProperty, itemRateProperty, options ) {
 
     options = _.extend( {
     },  options || {} );
 
     // @protected - all
-    this.itemDataProperty   = itemDataProperty;
+    this.itemTypeProperty = itemTypeProperty;
+    this.itemRateProperty = itemRateProperty;
+
     this.itemPickerIndex    = APPLES_INDEX;
     this.costRangeProperty  = new Property( new RangeWithValue( 1, 20 ) );
     this.countRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
@@ -176,7 +179,7 @@ define( function( require ) {
     } );
 
     // refresh on item change
-    this.itemDataProperty.link( this.itemSelectionChanged.bind( this ) );
+    this.itemTypeProperty.link( this.itemSelectionChanged.bind( this ) );
 
     this.mutate( options );
   }
@@ -193,7 +196,7 @@ define( function( require ) {
      * @param {Property.<ItemData>} itemData - the item data for the previously item
      * @private
      */
-    itemSelectionChanged: function( itemData, oldItemData ) {
+    itemSelectionChanged: function( itemType, oldType ) {
 
       // hide all pickers
       for (var i = 0; i < this.itemPickerData.length; i++) {
@@ -202,7 +205,7 @@ define( function( require ) {
       }
 
       // map item type to picker index
-      switch( itemData.type ) {
+      switch( itemType ) {
         case ItemData.APPLES.type:
           this.itemPickerIndex = APPLES_INDEX;
           break;
@@ -237,7 +240,7 @@ define( function( require ) {
 
       var decimals = 2;
       var rate = cost/count;
-      this.itemDataProperty.value.rate.value = Number( Util.roundSymmetric(rate+'e'+decimals)+'e-'+decimals );
+      this.itemRateProperty.value = Number( Util.roundSymmetric(rate+'e'+decimals)+'e-'+decimals );
     },
 
     /**
