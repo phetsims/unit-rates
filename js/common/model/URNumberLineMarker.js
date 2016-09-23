@@ -59,7 +59,7 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if ( !allCorrect && value >= 0 ) {
         self.topQnA.answerValue = Number( value );
-        self.bottomQnA.answerValue = Util.toFixedNumber( ( value / self.rateProperty.value ), self.bottomDecimalPlaces );
+        self.bottomQnA.answerValue = value / self.rateProperty.value;
         self.bottomQnA.valueProperty.set( Number( -1 ) );
       }
     } );
@@ -69,23 +69,33 @@ define( function( require ) {
       var allCorrect = self.checkCorrectAnswers();
       if ( !allCorrect && value >= 0 ) {
         self.bottomQnA.answerValue = Number( value );
-        self.topQnA.answerValue = Util.toFixedNumber( ( value * self.rateProperty.value ), self.topDecimalPlaces );
+        self.topQnA.answerValue = value * self.rateProperty.value;
         self.topQnA.valueProperty.set( Number( -1 ) );
       }
     } );
 
     // Update top QnA on rate change
-    this.rateProperty.lazyLink( function( rate, oldRate ) {
-      if( !self.editableProperty.value ) {
-        self.topQnA.answerValue = Util.toFixedNumber( ( self.bottomQnA.valueProperty.value * rate ), self.topDecimalPlaces );
-        self.topQnA.valueProperty.value = self.topQnA.answerValue;
-      }
-    } );
+    this.rateProperty.lazyLink( this.onRateChange.bind( this ) );
   }
 
   unitRates.register( 'URNumberLineMarker', URNumberLineMarker );
 
   return inherit( Movable, URNumberLineMarker, {
+
+    /**
+     * returns the current top value
+     * @returns {number}
+     * @public
+     */
+    onRateChange: function( rate, oldRate ) {
+      if( !this.editableProperty.value ) {
+        this.topQnA.answerValue = this.bottomQnA.valueProperty.value * rate;
+        this.topQnA.valueProperty.value = this.topQnA.answerValue;
+
+        this.bottomQnA.answerValue = this.topQnA.valueProperty.value / rate;
+        this.bottomQnA.valueProperty.value = this.bottomQnA.answerValue;
+      }
+    },
 
     /**
      * returns the current top value
@@ -157,7 +167,7 @@ define( function( require ) {
     dispose: function() {
       this.topQnA.dispose();
       this.bottomQnA.dispose();
-      this.rateProperty.unlink( this.onRateChange );
+      this.rateProperty.unlink( this.onRateChange.bind( this ) );
       this.outOfRangeProperty.unlinkAll();
       this.highPrecision.unlinkAll();
       this.editableProperty.unlinkAll();

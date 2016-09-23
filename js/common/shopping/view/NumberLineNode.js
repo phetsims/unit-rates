@@ -107,6 +107,15 @@ define( function( require ) {
 
   return inherit( URNumberLineNode, NumberLineNode, {
 
+
+    /**
+     * Called when the user selects the sim reset button
+     * @overrride @protected
+     */
+    reset: function() {
+      URNumberLineNode.prototype.reset.call( this );
+    }
+
   } );  // define
 
 } );  // inherit

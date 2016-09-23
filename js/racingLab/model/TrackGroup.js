@@ -20,10 +20,10 @@ define( function( require ) {
   function TrackGroup( elapsedTimeProperty, flagArrowsVisibleProperty ) {
 
     PropertySet.call( this, {
-      miles:              200,
-      milesRange:         new RangeWithValue( 20, 200 ),
-      hours:              1,
-      hoursRange:         new RangeWithValue( 1, 10 ),
+      miles:              200,                            // used in rate adjustment spinner
+      milesRange:         new RangeWithValue( 20, 200 ),  // used in rate adjustment spinner
+      hours:              1,                              // used in rate adjustment spinner
+      hoursRange:         new RangeWithValue( 1, 10 ),    // used in rate adjustment spinner
       rate:               200,
       carFinished:        false,
       trackPixelLength:   600,
@@ -44,9 +44,9 @@ define( function( require ) {
     this.elapsedTimeProperty       = elapsedTimeProperty;
     this.flagArrowsVisibleProperty = flagArrowsVisibleProperty;
 
-    // make the track hours the same as the rate spinner hours (note: track miles is fixed in this sim)
-    this.hoursProperty.lazyLink( function( value, oldValue ) {
-      self.trackHoursProperty.value = value;
+    // Adjust the number line hours to match the track (note: track miles is fixed in this sim)
+    this.rateProperty.lazyLink( function( rate, oldRate ) {
+      self.trackHoursProperty.value =  self.trackMilesProperty.value / rate;
     } );
   }
 

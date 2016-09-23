@@ -33,10 +33,11 @@ define( function( require ) {
    * @param {URNumberLineMarker} marker
    * @param {Vector2} position - x,y position on the number line
    * @param {KeypadPanelNode} keypad - shared keypad
+   * @param {function} updateFunction - number line update function
    * @param {Object} [options]
    * @constructor
    */
-  function URNumberLineMarkerNode( marker, position, keypad, options ) {
+  function URNumberLineMarkerNode( marker, position, keypad, updateFunction, options ) {
 
     options = _.extend( {
       topPattern:           '{0}',
@@ -53,6 +54,7 @@ define( function( require ) {
     // @public (read-write)
     this.marker   = marker;
     this.keypad   = keypad;
+    this.updateFunc = updateFunction;
 
     // @public (protected)
     this.largeHeight = options.largeHeight;
@@ -109,6 +111,7 @@ define( function( require ) {
     this.qnaMultilink = Property.multilink( [ this.marker.topQnA.valueProperty, this.marker.bottomQnA.valueProperty, this.marker.outOfRangeProperty ],
       function( topProperty, bottomProperty, outOfRangeProperty ) {
         self.checkProperties();
+        self.updateFunc( self );
     } );
  }
 

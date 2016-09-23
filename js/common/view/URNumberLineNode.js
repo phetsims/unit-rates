@@ -207,8 +207,6 @@ define( function( require ) {
 
   return inherit( AccordionBox, URNumberLineNode, {
 
-    // no dispose, persists for the lifetime of the sim.
-
     /**
      * Sets length of the number line in pixels
      * @param {number} length
@@ -401,7 +399,7 @@ define( function( require ) {
 
       // make marker node at a specific location
       var position = marker.positionProperty.value;
-      markerNode = new URNumberLineMarkerNode( marker, position, this.keypad, {
+      markerNode = new URNumberLineMarkerNode( marker, position, this.keypad, this.updateMarkerNode.bind( this ), {
         draggable:            false,
         centerX:              position.x,
         centerY:              position.y,
@@ -412,13 +410,6 @@ define( function( require ) {
         bottomPattern:        this.markerBottomPattern
       } );
       this.addMarkerNode( markerNode );
-
-      // update on top/bottom values changes - FIXME: dispose/unlink
-      this.qnaMultilink = Property.multilink( [ markerNode.marker.topQnA.valueProperty, markerNode.marker.bottomQnA.valueProperty ],
-        function( topProperty, bottomProperty ) {
-          self.updateMarkerNode( markerNode );
-          self.addEditMarkerNode();  // if needed
-      } );
 
       return markerNode;
     },
@@ -480,6 +471,8 @@ define( function( require ) {
       if ( markerNode.marker.editableProperty.value ) {
         markerNode.moveToFront();
       }
+
+      this.addEditMarkerNode();
     },
 
     /**

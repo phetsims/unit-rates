@@ -29,6 +29,7 @@ define( function( require ) {
     options = _.extend( {
       questionString: '',
       unitString:     '',
+      decimalPlaces:  2,
       onCorrectAnswerCallback: null   // function called when the question has been answered correctly
     },  options || {} );
 
@@ -37,7 +38,8 @@ define( function( require ) {
     // @public (read-only) - all
     this.item           = item;                                 // {Item} associated with this question
     this.questionString = options.questionString;               // {string} question to be asked
-    this.unitString     = options.unitString;                   // {string} unit
+    this.unitString     = options.unitString;                    // {string} unit
+    this.decimalPlaces  = options.decimalPlaces;
     this.answerValue    = answerValue;                          // {number} the correct answer value
     this.answerText     = answerText;                           // {Text} the correct answer text
     this.valueProperty  = new Property( DEFAULT_ANSWER_VALUE ); // user's answer input property
@@ -92,7 +94,8 @@ define( function( require ) {
      * @public
      */
     isAnswerCorrect: function() {
-      return ( Number( this.answerValue ) === Number( this.valueProperty.value ) );
+      return ( Util.toFixedNumber( this.answerValue, this.decimalPlaces ) ===
+               Util.toFixedNumber( this.valueProperty.value, this.decimalPlaces ) );
     },
 
     /**
