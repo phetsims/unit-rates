@@ -154,7 +154,6 @@ define( function( require ) {
      * @protected
      */
     itemSelectionChanged: function( sceneMode, fruitItemData, produceItemData, candyItemData ) {
-      var self = this;
 
       this.hideKeypad();
 

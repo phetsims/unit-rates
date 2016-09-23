@@ -14,7 +14,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Movable = require( 'UNIT_RATES/common/model/Movable' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
-  var Util = require( 'DOT/Util' );
 
   /**
    * @param {Object} [options]

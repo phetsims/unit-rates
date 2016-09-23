@@ -385,7 +385,6 @@ define( function( require ) {
      */
     createMarkerNode: function( marker ) {
 
-      var self = this;
       var markerNode = null;
 
       // check for existing node

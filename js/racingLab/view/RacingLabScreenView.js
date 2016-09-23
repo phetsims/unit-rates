@@ -53,6 +53,7 @@ define( function( require ) {
 
     // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {
+
       maxDigits:  4,
       visible:    true
     } );
@@ -113,8 +114,8 @@ define( function( require ) {
     this.addChild( restartButton );
 
     // keypad layout
-    this.keypad.right = this.trackGroup1Node.right - 30;
-    this.keypad.top   = this.trackGroup1Node.bottom + 2 * URConstants.SCREEN_PANEL_SPACING;
+    this.keypad.right   = this.width;
+    this.keypad.centerY = this.centerY;
 
     // @protected - covers entire screen, uses pick to close keypad
     this.keypadCloseArea = new Rectangle( 0, 0, window.innerWidth, window.innerHeight, { visible: false } );
