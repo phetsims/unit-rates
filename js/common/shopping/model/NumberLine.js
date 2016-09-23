@@ -123,10 +123,12 @@ define( function( require ) {
         return maxUnits;
     },
 
-    // Resets all model elements
+    // Resets number line
     reset: function() {
-      this.initialize();
+
       URNumberLine.prototype.reset.call( this );
+
+      this.initialize();
     }
 
   } ); // inherit

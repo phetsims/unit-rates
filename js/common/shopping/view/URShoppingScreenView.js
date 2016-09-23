@@ -172,23 +172,6 @@ define( function( require ) {
     },
 
     /**
-     * Called when the user selects the sim reset button
-     * @protected
-     */
-    resetAll: function() {
-        this.model.reset();
-
-        this.sceneModeProperty.reset();
-        this.hideKeypad();
-
-        this.removeAllItems();
-
-        this.numberLineNode.reset();
-        this.scaleNode.reset();
-        this.shelfNode.reset();
-    },
-
-    /**
      * Call when the user selected a new scene
      * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
      * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
@@ -293,7 +276,24 @@ define( function( require ) {
     onResize: function() {
       // resize the pick area to match the screen
       this.keypadCloseArea.setRectBounds( new Bounds2( 0, 0,  window.innerWidth, window.innerHeight ) );
-    }
+    },
+
+    /**
+     * Called when the user selects the sim reset button
+     * @protected
+     */
+    resetAll: function() {
+        this.model.reset();
+
+        this.sceneModeProperty.reset();
+        this.hideKeypad();
+
+        this.removeAllItems();
+
+        this.numberLineNode.reset();
+        this.scaleNode.reset();
+        this.shelfNode.reset();
+    },
 
   } ); // inherit
 

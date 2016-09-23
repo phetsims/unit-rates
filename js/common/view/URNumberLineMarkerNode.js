@@ -131,6 +131,11 @@ define( function( require ) {
         // higher precision markers have different visual represenation.
         if ( this.marker.highPrecisionProperty.value ) {
 
+          // layout
+          this.markerLine.setShape(this.smallLineShape);
+          this.topNumberDisplay.bottom = -this.smallHeight;
+          this.bottomNumberDisplay.top =  this.smallHeight;
+
           // text/line color
           this.markerLine.stroke = PRECISION_TEXT_COLOR;
           this.topNumberDisplay.setTextColor( PRECISION_TEXT_COLOR );
