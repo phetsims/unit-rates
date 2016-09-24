@@ -128,6 +128,15 @@ define( function( require ) {
 
       URNumberLine.prototype.reset.call( this );
 
+      for (var key in ItemData) {
+        var itemData = ItemData[ key ];
+        var markerArray = this.markerMap[ itemData.type ];
+        while ( markerArray.length ) {
+          var marker = markerArray.pop();
+          marker.dispose();
+        }
+      }
+
       this.initialize();
     }
 

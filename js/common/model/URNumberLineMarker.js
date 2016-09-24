@@ -168,7 +168,7 @@ define( function( require ) {
       this.bottomQnA.dispose();
       this.rateProperty.unlink( this.onRateChange.bind( this ) );
       this.outOfRangeProperty.unlinkAll();
-      this.highPrecision.unlinkAll();
+      this.highPrecisionProperty.unlinkAll();
       this.editableProperty.unlinkAll();
     }
 

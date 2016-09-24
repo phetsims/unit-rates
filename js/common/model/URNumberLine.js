@@ -143,8 +143,18 @@ define( function( require ) {
         this.markersProperty.value.forEach( callback );
      },
 
+     // Resets number line
+    reset: function() {
+      var markerArray = this.markersProperty.value;
+      while ( markerArray.length ) {
+        var marker = markerArray.pop();
+        marker.dispose();
+      }
+    },
+
     // @public
     dispose: function() {
+      this.reset();
     }
 
   } ); // inherit
