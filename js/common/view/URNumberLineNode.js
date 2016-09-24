@@ -207,6 +207,8 @@ define( function( require ) {
 
   return inherit( AccordionBox, URNumberLineNode, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
      * Sets length of the number line in pixels
      * @param {number} length

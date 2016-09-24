@@ -293,7 +293,7 @@ define( function( require ) {
         this.numberLineNode.reset();
         this.scaleNode.reset();
         this.shelfNode.reset();
-    },
+    }
 
   } ); // inherit
 

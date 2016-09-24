@@ -57,6 +57,8 @@ define( function( require ) {
 
   return inherit( PropertySet, URShoppingModel, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
      * create type marker arrays, one for each type (i.e. apples, carrots, etc..)
      * @public @override

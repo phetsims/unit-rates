@@ -60,6 +60,8 @@ define( function( require ) {
 
   return inherit( URNumberLine, NumberLine, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
      * create type marker arrays, one for each type (i.e. apples, carrots, etc..)
      * @public @override
