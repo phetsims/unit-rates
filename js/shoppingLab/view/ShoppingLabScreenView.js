@@ -23,13 +23,22 @@ define( function( require ) {
    */
   function ShoppingLabScreenView( model ) {
 
+    var self = this;
+
+    this.model = model;
+
     // @private - mapping from scene to item type
     this.sceneItemData = [];
     this.sceneItemData[ SceneMode.FRUIT ]   = ItemData.APPLES;
     this.sceneItemData[ SceneMode.PRODUCE ] = ItemData.CARROTS;
     this.sceneItemData[ SceneMode.CANDY ]   = ItemData.PURPLE_CANDY;
 
-    URShoppingScreenView.call( this, model, true );
+    URShoppingScreenView.call( this, model, true, this.onNumberLineEraseCallback.bind( this ) );
+
+    // refresh on item change
+    this.model.itemRateProperty.link( function( itemRate, oldRate ) {
+      self.refreshNumberLine();
+    } );
   }
 
   unitRates.register( 'ShoppingLabScreenView', ShoppingLabScreenView );
@@ -42,11 +51,29 @@ define( function( require ) {
      */
     addSubclassScreenNodes: function() {
 
-      this.itemRateNode = new ItemRateNode( this.model.itemDataProperty, {
+      this.itemRateNode = new ItemRateNode( this.model.itemTypeProperty, this.model.itemRateProperty, {
         left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
         bottom:  this.scaleNode.bottom
       } );
       this.addChild( this.itemRateNode );
+    },
+
+    /**
+     * Called from constructor to give subclass a chance to add UI elements at a specific point in the constructor
+     * @protected
+     */
+    onNumberLineEraseCallback: function() {
+      this.model.addScaleItemsToNumberline();
+      this.numberLineNode.populate();
+    },
+
+    /**
+     *
+     * @protected
+     */
+    refreshNumberLine: function() {
+      this.numberLineNode.removeAllMarkerNodes();
+      this.numberLineNode.populate();
     },
 
     /**
@@ -67,7 +94,6 @@ define( function( require ) {
      * @override @protected
      */
     sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
-      var self = this;
 
       this.hideKeypad();
 
@@ -78,11 +104,6 @@ define( function( require ) {
 
       // change the item type
       this.model.itemDataProperty.value= this.sceneItemData[ sceneMode ];
-
-      // This fixes an issue with items hanging in space when the item type selection changes. (see. issue #21, #18)
-      this.itemsLayer.getChildren().forEach( function( child ) {
-        self.endUpdateItem( child );
-      } );
     }
 
   } ); // inherit

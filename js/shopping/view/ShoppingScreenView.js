@@ -25,7 +25,9 @@ define( function( require ) {
    */
   function ShoppingScreenView( model ) {
 
-    URShoppingScreenView.call( this, model, false );
+    model.onChallengeCallback = this.onChallangeCallback.bind( this );
+
+    URShoppingScreenView.call( this, model, false, this.onNumberLineEraseCallback.bind( this ) );
   }
 
   unitRates.register( 'ShoppingScreenView', ShoppingScreenView );
@@ -45,8 +47,7 @@ define( function( require ) {
 
       // challenges
       var onChallengePopulate = function() {
-        self.model.resetChallengeNumberlineItems();   // make old challenge markers regular/black markers
-        self.model.addChallengeItemsToNumberline();   // add new (i.e. correct unit rate)
+        self.model.addChallengeItemsToNumberLine();   // add new (i.e. correct unit rate)
         self.numberLineNode.populate();
       };
       var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING + URConstants.SCREEN_HORIZONTAL_MARGIN );
@@ -76,6 +77,25 @@ define( function( require ) {
       // select the item based on scene & item selection - no dispose as this never goes away
       Property.multilink( [ this.sceneModeProperty, this.fruitItemDataProperty, this.produceItemDataProperty,
         this.candyItemDataProperty ], this.itemSelectionChanged.bind( this ) );
+    },
+
+    /**
+     *
+     * @protected
+     */
+    onNumberLineEraseCallback: function() {
+      this.model.addScaleItemsToNumberline();
+      this.model.addChallengeItemsToNumberLine();
+      this.numberLineNode.populate();
+    },
+
+    /**
+     *
+     * @protected
+     */
+    onChallangeCallback: function() {
+      this.numberLineNode.removeAllMarkerNodes();
+      this.numberLineNode.populate();
     },
 
     /**
@@ -134,7 +154,6 @@ define( function( require ) {
      * @protected
      */
     itemSelectionChanged: function( sceneMode, fruitItemData, produceItemData, candyItemData ) {
-      var self = this;
 
       this.hideKeypad();
 
@@ -154,12 +173,7 @@ define( function( require ) {
           assert && assert( false, 'Unrecognized scene' );
       }
 
-      this.model.addChallengeItemsToNumberline();
-
-      // This fixes an issue with items hanging in space when the item type selection changes. (see. issue #21, #18)
-      this.itemsLayer.getChildren().forEach( function( child ) {
-        self.endUpdateItem( child );
-      } );
+      this.model.addChallengeItemsToNumberLine();
     }
 
   } ); // inherit

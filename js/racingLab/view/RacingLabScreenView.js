@@ -53,8 +53,9 @@ define( function( require ) {
 
     // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {
-      maxDigits: 4,
-      visible: false
+
+      maxDigits:  4,
+      visible:    true
     } );
     this.addChild( this.keypad );
     this.keypad.hide();
@@ -93,19 +94,19 @@ define( function( require ) {
     this.addChild( this.goStopButton );
 
     var restartButton = new RectangularPushButton( {
-      right: this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
-      centerY: this.goStopButton.centerY,
-      content: new Image( returnCarButtonImage, { scale: 0.18 } ),
-      minWidth: 45,
-      minHeight: 45,
-      cornerRadius: 4,
-      baseColor: '#A9D8FD',
-      xMargin: 8, // should be visibly greater than yMargin, see issue #109
-      yMargin: 5,
+      right:              this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
+      centerY:            this.goStopButton.centerY,
+      content:            new Image( returnCarButtonImage, { scale: 0.18 } ),
+      minWidth:           45,
+      minHeight:          45,
+      cornerRadius:       4,
+      baseColor:          '#A9D8FD',
+      xMargin:            8, // should be visibly greater than yMargin, see issue #109
+      yMargin:            5,
       touchAreaXDilation: 0,
       touchAreaYDilation: 0,
-      stroke: 'black',
-      lineWidth: 0.5,
+      stroke:             'black',
+      lineWidth:          0.5,
       listener: function() {
         self.restart();
       }
@@ -113,8 +114,8 @@ define( function( require ) {
     this.addChild( restartButton );
 
     // keypad layout
-    this.keypad.right = this.trackGroup1Node.right - 30;
-    this.keypad.top   = this.trackGroup1Node.bottom + 2 * URConstants.SCREEN_PANEL_SPACING;
+    this.keypad.right   = this.width;
+    this.keypad.centerY = this.centerY;
 
     // @protected - covers entire screen, uses pick to close keypad
     this.keypadCloseArea = new Rectangle( 0, 0, window.innerWidth, window.innerHeight, { visible: false } );
@@ -154,6 +155,9 @@ define( function( require ) {
       spacing:       11
     } );
     this.addChild( this.carCountButtons );
+
+    this.keypadCloseArea.moveToFront();
+    this.keypad.moveToFront();
 
     this.model.carCountProperty.link( function( value, oldValue ) {
       self.trackGroup2Node.visible = ( value === 2 );

@@ -12,7 +12,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var RacingLabConstants = require( 'UNIT_RATES/racingLab/RacingLabConstants' );
   var FinishFlagNode = require( 'UNIT_RATES/racingLab/view/FinishFlagNode' );
   var TimerNode = require( 'UNIT_RATES/racingLab/view/TimerNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -34,6 +33,8 @@ define( function( require ) {
   var miString = require( 'string!UNIT_RATES/mi' );
 
   // constants
+  var TRACK_MAX_DISTANCE       = 200;     // FIXME: use number picker property.max
+  var TRACK_INTERVAL_DISTANCE  = 50;
   var TRACK_BOTTOM_OFFSET      = 25;
   var TRACK_DARK_STROKE_COLOR  = 'rgba(0, 0, 0, 1.0)';
   var TRACK_LITE_STROKE_COLOR  = 'rgba(0, 0, 0, 0.25)';
@@ -54,10 +55,10 @@ define( function( require ) {
   function TrackNode( model, carImageName, options ) {
 
      options = _.extend( {
-      trackDistance:        RacingLabConstants.MAX_TRACK_DISTANCE,        // track distance in miles
-      trackInterval:        RacingLabConstants.TRACK_INTERVAL_DISTANCE,   // interval marker in miles
-      trackBounds:          new Bounds2( 0, 0, 675, 100 ),                // track bounds in pixels
-      timerTitle:           ''                                            // title for the timer when closed
+      trackWidth:         0,
+      trackHeight:        100,
+      trackStartOffset:   0,
+      timerTitle:   ''                                            // title for the timer when closed
     }, options || {} );
 
      var self = this;
@@ -65,23 +66,21 @@ define( function( require ) {
     // @protected - track model
     this.trackGroup = model;
 
-    // @protected all - various coordinates
-    this.trackBounds    = options.trackBounds;
-    this.trackDistance  = options.trackDistance;
-    this.trackInterval  = options.trackInterval;
-    this.trackOrigin    = new Vector2( this.trackBounds.minX + RacingLabConstants.TRACK_START_FLAG_X, this.trackBounds.maxY - TRACK_BOTTOM_OFFSET );
+    this.trackWidth       = options.trackWidth;
+    this.trackHeight      = options.trackHeight;
+    this.trackStartOffset = options.trackStartOffset;
 
-    // @protected all - various coordinates
-    this.milesPerPixel = ( this.trackBounds.maxX - RacingLabConstants.TRACK_START_FLAG_X ) / this.trackDistance;
-    this.intervalCount = this.trackDistance / this.trackInterval;
+    // @protected all
+    this.trackOrigin   = new Vector2( this.trackStartOffset, this.trackHeight - TRACK_BOTTOM_OFFSET );
+    this.milesPerPixel = ( this.trackWidth - this.trackStartOffset ) / TRACK_MAX_DISTANCE;
+    this.intervalCount = TRACK_MAX_DISTANCE / TRACK_INTERVAL_DISTANCE;
 
     this.resetTrack();
 
     var childNodes = [];
 
     // @protected - layer holding all the number line markers
-    var boundsNode = new Path( new Shape().rect(
-      0, 0, this.trackBounds.maxX, this.trackBounds.maxY ), {
+    var boundsNode = new Path( new Shape().rect( 0, 0, this.trackWidth, this.trackHeight ), {
       //stroke: 'red',  // debugging
       lineWidth: 1
     } );
@@ -124,7 +123,7 @@ define( function( require ) {
           .lineTo( -MARKER_SIZE / 2, MARKER_SIZE )
           .lineTo(  MARKER_SIZE / 2, MARKER_SIZE )
           .lineTo( 0, 0 ),  {
-        centerX:    this.startPoint.x + ( ( i + 1 ) * this.trackInterval * this.milesPerPixel ),
+        centerX:    this.startPoint.x + ( ( i + 1 ) * TRACK_INTERVAL_DISTANCE * this.milesPerPixel ),
         top:        this.startPoint.y,
         stroke:     TRACK_DARK_STROKE_COLOR,
         lineWidth:  MARKER_LINE_WIDTH,
@@ -143,7 +142,7 @@ define( function( require ) {
     // checkered flag
     this.checkerFlagNode = new FinishFlagNode( checkerFlagImage, this.finishPoint, {
       imageScale: FLAG_SCALE,
-      bounds: new Bounds2( this.startPoint.x, this.startPoint.y,  this.trackBounds.maxX,  this.trackBounds.maxY )
+      bounds: new Bounds2( this.startPoint.x, this.startPoint.y,  this.trackWidth,  this.trackHeight )
     } );
     childNodes.push( this.checkerFlagNode );
     this.checkerFlagNode.addDragListeners(
@@ -202,7 +201,7 @@ define( function( require ) {
 
       // adjust track lengths
       this.startFinishPath.setShape( new Shape()
-        .moveTo( this.trackBounds.x,  this.trackOrigin.y )
+        .moveTo( 0,  this.finishPoint.y )
         .lineTo( this.finishPoint.x, this.finishPoint.y )
       );
       this.finishEndPath.setShape( new Shape()
@@ -229,6 +228,8 @@ define( function( require ) {
           this.intervalNodes[i].fill   = MARKER_DARK_FILL_COLOR;
         }
       }
+
+      this.trackGroup.trackPixelLengthProperty.value = this.finishPoint.x - this.startPoint.x;
     },
 
     /**
@@ -253,8 +254,8 @@ define( function( require ) {
      */
     resetTrack: function() {
       this.startPoint   = new Vector2( this.trackOrigin.x, this.trackOrigin.y );
-      this.finishPoint  = new Vector2( this.trackBounds.maxX,  this.trackOrigin.y );
-      this.endPoint     = new Vector2( this.trackBounds.maxX,  this.trackOrigin.y );
+      this.finishPoint  = new Vector2( this.trackWidth,    this.trackOrigin.y );
+      this.endPoint     = new Vector2( this.trackWidth,    this.trackOrigin.y );
     },
 
     /**

@@ -47,8 +47,8 @@ define( function( require ) {
 
     // @protected
     this.keypad = new NumberKeypad( {
-      maxDigits: options.maxDigits,
-      decimalPointKey: true
+      maxDigits:        options.maxDigits,
+      decimalPointKey:  true
     } );
 
     // Add the number readout background.

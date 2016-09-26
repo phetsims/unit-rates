@@ -30,7 +30,7 @@ define( function( require ) {
 
   /**
    *
-   * @param {ChallengeQuestionAnswer} qna
+   * @param {QuestionAnswer} qna
    * @param {NumberKeypad} keypad - shared keypad node
    * @param {Object} [options]
    * @constructor

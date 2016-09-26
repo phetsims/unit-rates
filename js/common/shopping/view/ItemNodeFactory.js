@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemNode = require( 'UNIT_RATES/common/shopping/view/ItemNode' );
+  var MovableNode = require( 'UNIT_RATES/common/view/MovableNode' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var Image = require( 'SCENERY/nodes/Image' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -57,12 +57,13 @@ define( function( require ) {
       options = _.extend( {
         imageScale: -1,
         moveStartCallback: null,  // function called when item drag starts
+        moveCallback: null,       // function called during the drag
         moveEndCallback: null,    // function called when item drag ends
         pickable: true
      }, options || {} );
 
-      var itemNode = new ItemNode( item, new Vector2( 0, 0 ), options );
-      itemNode.addDragListeners( options.moveStartCallback, options.moveEndCallback );
+      var itemNode = new MovableNode( item, new Vector2( 0, 0 ), options );
+      itemNode.addDragListeners( options.moveStartCallback, options.moveCallback, options.moveEndCallback );
 
       var imageName  = null;
       var imageScale = null;

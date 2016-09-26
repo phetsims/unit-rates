@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Property = require( 'AXON/Property' );
+  var Util = require( 'DOT/Util' );
 
   // constants
   var DEFAULT_ANSWER_VALUE = -1;
@@ -28,6 +29,7 @@ define( function( require ) {
     options = _.extend( {
       questionString: '',
       unitString:     '',
+      decimalPlaces:  2,
       onCorrectAnswerCallback: null   // function called when the question has been answered correctly
     },  options || {} );
 
@@ -36,7 +38,8 @@ define( function( require ) {
     // @public (read-only) - all
     this.item           = item;                                 // {Item} associated with this question
     this.questionString = options.questionString;               // {string} question to be asked
-    this.unitString     = options.unitString;                   // {string} unit
+    this.unitString     = options.unitString;                    // {string} unit
+    this.decimalPlaces  = options.decimalPlaces;
     this.answerValue    = answerValue;                          // {number} the correct answer value
     this.answerText     = answerText;                           // {Text} the correct answer text
     this.valueProperty  = new Property( DEFAULT_ANSWER_VALUE ); // user's answer input property
@@ -91,7 +94,33 @@ define( function( require ) {
      * @public
      */
     isAnswerCorrect: function() {
-      return ( Number( this.answerValue ) === Number( this.valueProperty.value ) );
+      return ( Util.toFixedNumber( this.answerValue, this.decimalPlaces ) ===
+               Util.toFixedNumber( this.valueProperty.value, this.decimalPlaces ) );
+    },
+
+    /**
+     * Returns the number of decimal places in the current answer value (i.e. 1.1 = 1, 1.33 = 2, 1.234 = 3)
+     * @return {number}
+     * @public
+     */
+    getAnswerPrecision: function() {
+
+      function roundDecimals(value, decimals) {
+        return Number(Util.roundSymmetric(value+'e'+decimals)+'e-'+decimals);
+      }
+
+      var count = roundDecimals( this.valueProperty.value, 2 );
+
+      if ( !isFinite( count ) ) {
+        return 0;
+      }
+
+      var e = 1;
+      var p = 0;
+      while ( Util.roundSymmetric( count * e ) / e !== count ) {
+        e *= 10; p++;
+      }
+      return p;
     },
 
     /**

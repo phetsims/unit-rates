@@ -11,103 +11,135 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemCollection = require( 'UNIT_RATES/common/shopping/model/ItemCollection' );
-  var NumberLineItem = require( 'UNIT_RATES/common/shopping/model/NumberLineItem' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @param {Property.<ItemData>} itemDataProperty - the curently selected item
+   * @param {Property.<number>} itemRateProperty - the curently selected item rate
    * @constructor
    */
-  function NumberLine( itemDataProperty ) {
+  function NumberLine( itemTypeProperty, itemRateProperty, options ) {
+
+    options = _.extend( {
+    }, options || {} );
+
     var self = this;
 
-    // @public (all)
-    ItemCollection.call( this, {
+    this.markerMap = {};
+    this.initialize();
+
+    this.itemTypeProperty = itemTypeProperty;
+
+    this.topMaxProperty    = new Property( 0 );
+    this.bottomMaxProperty = new Property( 0 );
+
+    URNumberLine.call( this, itemRateProperty, this.topMaxProperty, this.bottomMaxProperty, {
+      markerTopDecimals:          2,
+      markerBottomDecimals:       1,
+      markerTopHighPrecision:     2,
+      markerBottomHighPrecision:  2
     } );
 
-    // @public
-    this.itemDataProperty = itemDataProperty;
+    // update the numberline based on selected item type
+    this.itemTypeProperty.link( function( itemType, oldType ) {
 
-    // update value text on cost/weight change
-    this.itemDataProperty.link( function( value, oldValue ) {
+      var maxUnit = self.getMaxUnit( itemType );
 
-      // reassign the rate update function to the current item type
-      if( oldValue ) {
-        oldValue.rate.unlink( self.updateNumberLineItemRate );
-      }
-      value.rate.link( self.updateNumberLineItemRate.bind( self ) );
+      // change cost (top) max values
+      self.topMaxProperty.value    = maxUnit * self.rateProperty.value;
+      self.bottomMaxProperty.value = maxUnit;
+
+      // change the marker arrays
+      self.markersProperty.value = self.markerMap[ itemType ];
     } );
-
   }
 
   unitRates.register( 'NumberLine', NumberLine );
 
-  return inherit( ItemCollection, NumberLine, {
+  return inherit( URNumberLine, NumberLine, {
+
+    // no dispose, persists for the lifetime of the sim.
 
     /**
-     * Creates a new item/adds it to the types specific array
-     * @param {ItemData} data
-     * @param {number} [count]
-     * @param {Object} [options]
-     * @return {Item}
+     * create type marker arrays, one for each type (i.e. apples, carrots, etc..)
      * @public @override
      */
-    createItem: function( data, count, options ) {
-      var item = new NumberLineItem( data, count, options );
-      this.addItem( item );
-      return item;
+    initialize: function(  ) {
+      for (var key in ItemData) {
+        var itemData = ItemData[ key ];
+        this.markerMap[ itemData.type ] = [];
+      }
     },
 
     /**
-     * Adds an item to the types specific array
-     * Does not allow for new items which equal existing items but will replace existing items with challenge items,
-     * as these take precendence over standard/non-challenge items.
      *
-     * @param {NumberLineItem} item
-     * @param {boolean} [replace]
-     * @public @override
-     */
-     addItem: function( item ) {
-      var self = this;
-
-      var itemArray = this.getItemsWithType( item.type );
-      var existingItem = this.containsItem( item );
-      if ( existingItem === null ) {
-        itemArray.add( item );
-      }
-      else if ( item.isChallenge ) {
-        self.removeItem( existingItem );
-        item.dispose();
-        itemArray.add( item );
-      }
-    },
-
-    /**
-     * Updates the rate of the items  on currently on the number line (except editable items)
      * @protected
      */
-    updateNumberLineItemRate: function() {
-      var self = this;
+    getMaxUnit: function( itemType ) {
 
-      var itemArray = this.getItemsWithType( this.itemDataProperty.value.type ); // NumberLineItems
-      itemArray.forEach( function( item ) {
-        item.setRate( self.itemDataProperty.value.rate.value );
-      } );
+      var maxUnits = 1;
+
+      switch( itemType ) {
+          case ItemData.APPLES.type:
+            maxUnits = ItemData.APPLES.maxUnit;
+          break;
+          case ItemData.LEMONS.type:
+            maxUnits = ItemData.LEMONS.maxUnit;
+          break;
+          case ItemData.ORANGES.type:
+            maxUnits = ItemData.ORANGES.maxUnit;
+          break;
+          case ItemData.PEARS.type:
+            maxUnits = ItemData.PEARS.maxUnit;
+          break;
+          case ItemData.CARROTS.type:
+            maxUnits = ItemData.CARROTS.maxUnit;
+          break;
+          case ItemData.CUCUMBERS.type:
+            maxUnits = ItemData.CUCUMBERS.maxUnit;
+          break;
+          case ItemData.POTATOES.type:
+            maxUnits = ItemData.POTATOES.maxUnit;
+          break;
+          case ItemData.TOMATOES.type:
+            maxUnits = ItemData.TOMATOES.maxUnit;
+          break;
+          case ItemData.PURPLE_CANDY.type:
+            maxUnits = ItemData.PURPLE_CANDY.maxUnit;
+          break;
+          case ItemData.RED_CANDY.type:
+            maxUnits = ItemData.RED_CANDY.maxUnit;
+          break;
+          case ItemData.GREEN_CANDY.type:
+            maxUnits = ItemData.GREEN_CANDY.maxUnit;
+          break;
+          case ItemData.BLUE_CANDY.type:
+            maxUnits = ItemData.BLUE_CANDY.maxUnit;
+          break;
+          default:
+             assert && assert( false, 'Cannot get max unit of unrecognized type' );
+        }
+
+        return maxUnits;
     },
 
-    /**
-     * Changes all items representing Challenge answers to regluar/black markers on the number line.
-     * @public
-     */
-     resetChallengeItems: function() {
+    // Resets number line
+    reset: function() {
 
-      var itemArray = this.getItemsWithType( this.itemDataProperty.value.type ); // NumberLineItems
-      itemArray.forEach( function( item ) {
-        if ( item.isChallenge ) {
-          item.isChallenge  = false;
-          item.isChallengeUnitRate = false;
+      URNumberLine.prototype.reset.call( this );
+
+      for (var key in ItemData) {
+        var itemData = ItemData[ key ];
+        var markerArray = this.markerMap[ itemData.type ];
+        while ( markerArray.length ) {
+          var marker = markerArray.pop();
+          marker.dispose();
         }
-      } );
+      }
+
+      this.initialize();
     }
 
   } ); // inherit

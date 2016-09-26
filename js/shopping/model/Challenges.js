@@ -66,14 +66,16 @@ define( function( require ) {
   /**
    * @param {Property.<ItemData>} itemDataProperty - the curently selected item
    * @param {function} onCorrectAnswer - function to call when the correct answer is input
+   * @param {function} onRefresh - function to call when challenges are refreshed (not reset)
    * @constructor
    */
-  function Challenges( itemDataProperty, onCorrectAnswer ) {
+  function Challenges( itemDataProperty, onCorrectAnswer, onRefresh ) {
 
     this.questionSet = -1;
 
     this.itemDataProperty = itemDataProperty;
     this.onCorrectAnswer  = onCorrectAnswer;
+    this.onRefresh        = onRefresh;
     this.selectQuestionSet();
     this.populate();
   }
@@ -107,8 +109,8 @@ define( function( require ) {
      */
     getQuestionAnswer: function( index ) {
 
-      var itemData = this.itemDataProperty.value;
-      var challengeData = this.challengeData[ itemData.type ];
+      var itemType = this.itemDataProperty.value.type;
+      var challengeData = this.challengeData[ itemType ];
       assert && assert( index < challengeData.length, 'invalid question index' );
 
       return challengeData[ index ];
@@ -164,6 +166,10 @@ define( function( require ) {
         var newQ1 = newQnAArray[0];
         newQ1.setCorrect( true );
       }
+
+      if( this.onRefresh ) {
+        this.onRefresh.call();
+      }
     },
 
     /**
@@ -173,21 +179,24 @@ define( function( require ) {
      */
     generateQuestionsAnswersForItem: function( itemData ) {
 
-      if ( itemData.type === ItemData.RED_CANDY.type   || itemData.type === ItemData.PURPLE_CANDY.type ||
-           itemData.type === ItemData.GREEN_CANDY.type || itemData.type === ItemData.BLUE_CANDY.type )  {
+      var itemType = itemData.type;
+      var itemRate = itemData.rate;
+
+      if ( itemType === ItemData.RED_CANDY.type   || itemType === ItemData.PURPLE_CANDY.type ||
+           itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type )  {
 
         // Q: Unit rate
         var candyItem1 = new Item( itemData, 1 );
-        var candyAnswerText1 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemData.rate.value, 2 ) );
-        var c1 = new QuestionAnswer( candyItem1, itemData.rate.value, candyAnswerText1, {
+        var candyAnswerText1 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );
+        var c1 = new QuestionAnswer( candyItem1, itemRate, candyAnswerText1, {
           questionString: unitRateQuestionString,
           unitString: poundString,
           onCorrectAnswerCallback: this.onCorrectAnswer
         } );
 
         // Q: Cost of # <type>?
-        var candyItem2 = this.getPromptItem( itemData, this.questionSet, 0 );
-        var candyCost2 = Util.toFixedNumber( candyItem2.countProperty.value * itemData.rate.value, 2 );
+        var candyItem2 = this.getPromptItem( itemType, this.questionSet, 0 );
+        var candyCost2 = Util.toFixedNumber( candyItem2.countProperty.value * itemRate, 2 );
         var candyAnswerText2 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost2, 2 ) );
         var candyUnitString2 = candyItem2.countProperty.value + ' ' + poundsString;
         var costOfCandyQuestionString2 =  StringUtils.format( costOfQuestionString, candyItem2.countProperty.value, lbsString );
@@ -198,8 +207,8 @@ define( function( require ) {
         }  );
 
         // Q: Cost of # <type>?
-        var candyItem3 = this.getPromptItem( itemData, this.questionSet, 1 );
-        var candyCost3 =  Util.toFixedNumber( candyItem3.countProperty.value * itemData.rate.value, 2 );
+        var candyItem3 = this.getPromptItem( itemType, this.questionSet, 1 );
+        var candyCost3 =  Util.toFixedNumber( candyItem3.countProperty.value * itemRate, 2 );
         var candyAnswerText3 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost3, 2 ) );
         var candyUnitString3 = candyItem3.countProperty.value + ' ' + poundsString;
         var costOfCandyQuestionString3 =  StringUtils.format( costOfQuestionString, candyItem3.countProperty.value, lbsString );
@@ -210,8 +219,8 @@ define( function( require ) {
         }  );
 
         // Q: Cost of # <type>?
-        var candyItem4 = this.getPromptItem( itemData, this.questionSet, 2 );
-        var candyCost4 =  Util.toFixedNumber( candyItem4.countProperty.value * itemData.rate.value, 2 );
+        var candyItem4 = this.getPromptItem( itemType, this.questionSet, 2 );
+        var candyCost4 =  Util.toFixedNumber( candyItem4.countProperty.value * itemRate, 2 );
         var candyAnswerText4 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost4, 2 ) );
         var candyUnitString4 = candyItem4.countProperty.value + ' ' + poundsString;
         var costOfCandyQuestionString4 =  StringUtils.format( costOfQuestionString, candyItem4.countProperty.value, lbsString );
@@ -221,27 +230,27 @@ define( function( require ) {
           onCorrectAnswerCallback: this.onCorrectAnswer
         }  );
 
-        this.challengeData[ itemData.type ] = [ c1, c2, c3, c4 ];
+        this.challengeData[ itemType ] = [ c1, c2, c3, c4 ];
 
       } else {
 
-        //var name          = this.getNameForItemType(itemData.type, false, false );
-        var nameCap       = this.getNameForItemType(itemData.type, false, true );
-        var namePlural    = this.getNameForItemType(itemData.type, true, false );
-        var namePluralCap = this.getNameForItemType(itemData.type, true, true );
+        //var name          = this.getNameForItemType(itemType, false, false );
+        var nameCap       = this.getNameForItemType(itemType, false, true );
+        var namePlural    = this.getNameForItemType(itemType, true, false );
+        var namePluralCap = this.getNameForItemType(itemType, true, true );
 
         // Q: Unit rate
         var item1 = new Item( itemData, 1 );
-        var itemAnswerText1 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemData.rate.value, 2 ) );
-        var i1 = new QuestionAnswer( item1, itemData.rate.value, itemAnswerText1, {
+        var itemAnswerText1 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );
+        var i1 = new QuestionAnswer( item1, itemRate, itemAnswerText1, {
           questionString: unitRateQuestionString,
           unitString: nameCap,
            onCorrectAnswerCallback: this.onCorrectAnswer
         }  );
 
         // Q: Cost of # <type>?
-        var item2 = this.getPromptItem( itemData, this.questionSet, 0 );
-        var itemCost2 =  Util.toFixedNumber( item2.countProperty.value * itemData.rate.value, 2 );
+        var item2 = this.getPromptItem( itemType, this.questionSet, 0 );
+        var itemCost2 =  Util.toFixedNumber( item2.countProperty.value * itemRate, 2 );
         var itemAnswerText2 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost2, 2 ) );
         var itemUnitString2 = item2.countProperty.value + ' ' + namePluralCap;
         var costOfItemQuestionString2 =  StringUtils.format( costOfQuestionString, item2.countProperty.value, namePlural );
@@ -252,8 +261,8 @@ define( function( require ) {
         }  );
 
         // Q: Cost of # <type>?
-        var item3 =  this.getPromptItem( itemData, this.questionSet, 1 );
-        var itemCost3 =  Util.toFixedNumber( item3.countProperty.value * itemData.rate.value, 2 );
+        var item3 =  this.getPromptItem( itemType, this.questionSet, 1 );
+        var itemCost3 =  Util.toFixedNumber( item3.countProperty.value * itemRate, 2 );
         var itemAnswerText3 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost3, 2 ) );
         var itemUnitString3 = item3.countProperty.value + ' ' + namePluralCap;
         var costOfItemQuestionString3 =  StringUtils.format( costOfQuestionString, item3.countProperty.value, namePlural );
@@ -264,8 +273,8 @@ define( function( require ) {
         }  );
 
         // Q: <type> for $?
-        var item4 = this.getPromptItem( itemData, this.questionSet, 2 );
-        var itemCost4 =  Util.toFixedNumber( item4.countProperty.value * itemData.rate.value, 2 );
+        var item4 = this.getPromptItem( itemType, this.questionSet, 2 );
+        var itemCost4 =  Util.toFixedNumber( item4.countProperty.value * itemRate, 2 );
         var itemAnswerText4 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost4, 2 ) );
         var itemUnitString4 = item4.countProperty.value + ' ' + namePluralCap;
         var itemForQuestionString4 =  StringUtils.format( forQuestionString, namePluralCap, Util.toFixed( itemCost4, 2 ) );
@@ -275,7 +284,7 @@ define( function( require ) {
           onCorrectAnswerCallback: this.onCorrectAnswer
         }  );
 
-        this.challengeData[ itemData.type ] = [ i1, i2, i3, i4 ];
+        this.challengeData[ itemType ] = [ i1, i2, i3, i4 ];
       }
     },
 
@@ -337,15 +346,15 @@ define( function( require ) {
 
     /**
      * Gets the items assocaited with all the correctly answered challenge questions
-     * @return {Array}.<Item>
+     * @return {string} itemType
      * @public
      *
      */
-    getCorrectAnswerItems: function( itemData ) {
+    getCorrectAnswerItems: function( itemType ) {
 
       var correctItems = [];
 
-      var qnaArray = this.challengeData[ itemData.type ];
+      var qnaArray = this.challengeData[ itemType ];
       qnaArray.forEach( function( qna ) {
         if ( qna.isAnswerValid() && qna.isAnswerCorrect() ) {
           correctItems.push( qna.item );
@@ -357,17 +366,17 @@ define( function( require ) {
 
     /**
      * Generate an item with a random count in the range [1 - max] not in the 'taken' list
-     * FIXME: when available, use design document Challenge prompt data based on itemData.type
+     * FIXME: when available, use design document Challenge prompt data based on itemType
      *
      * @return {Item}
      * @private
      *
      */
-    getPromptItem: function( itemData, setNumber, promptNumber ) {
+    getPromptItem: function( itemType, setNumber, promptNumber ) {
 
       var count = 0;
 
-      switch( itemData.type ) {
+      switch( itemType ) {
         case ItemData.APPLES.type:
           count = ChallengeData.APPLES[ setNumber ][ promptNumber ];
           break;
@@ -408,7 +417,7 @@ define( function( require ) {
             assert && assert( false, 'prompt data not available for item type' );
       }
 
-      var item = new Item( itemData, count );
+      var item = new Item( itemType, count );
 
       return item;
     },

@@ -24,38 +24,52 @@ define( function( require ) {
 
     // @public (all)
     PropertySet.call( this, {
-      itemData: ItemData.APPLES   // the currently selected item type (& the associated static attributes)
+      itemData: ItemData.APPLES,   // the currently selected item type (& the associated static attributes)
+      itemType: ItemData.APPLES.type,
+      itemRate: ItemData.APPLES.rate
     } );
+
+    var self = this;
+
+    this.rateMap = {};
+    this.initializeRateMap();
 
     // @public
     this.shelf      = new Shelf( this.itemDataProperty );
-    this.scale      = new Scale( this.itemDataProperty );
-    this.numberLine = new NumberLine( this.itemDataProperty );
+    this.scale      = new Scale( this.itemTypeProperty, this.itemRateProperty );
+    this.numberLine = new NumberLine( this.itemTypeProperty, this.itemRateProperty );
 
-    this.addArrayListeners();
+    // update value text on cost/weight change
+    this.itemDataProperty.link( function( itemData, oldItemData ) {
+
+      // save old rate which may have been changed
+      if( oldItemData ) {
+        self.rateMap[ oldItemData.type ] = self.itemRateProperty.value;
+      }
+
+      // set new type & rate
+      self.itemTypeProperty.value = itemData.type;
+      self.itemRateProperty.value = self.rateMap[ itemData.type ];
+    } );
   }
 
   unitRates.register( 'URShoppingModel', URShoppingModel );
 
   return inherit( PropertySet, URShoppingModel, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
-     * Add local listener for item additions/removals. This is needed on initialization and on a reset all
-     * @protected
+     * create type marker arrays, one for each type (i.e. apples, carrots, etc..)
+     * @public @override
      */
-    addArrayListeners: function() {
+    initializeRateMap: function(  ) {
       var self = this;
 
-      // item add/remove listeners
-      this.numberLine.addListeners(
-        function( item, observableArray ) {
-      },
-        function( item, observableArray ) {
-          // If the numberline is cleared, add back the scale contents and correct challenge questions answered
-          if ( observableArray.length === 0 ) {
-            self.addScaleItemsToNumberline();
-          }
-      } );
+      for (var key in ItemData) {
+        var itemData = ItemData[ key ];
+        self.rateMap[ itemData.type ] = itemData.rate;
+      }
     },
 
     /**
@@ -89,9 +103,13 @@ define( function( require ) {
     addScaleItemsToNumberline: function() {
 
       // create a new item on the number line representing the total number/weight of items currently on the scale
-      var count = this.scale.getItemCount() ;
+      var count = this.scale.getItemCount();
       if ( count > 0 ) {
-        this.numberLine.createItem( this.itemDataProperty.value, count );
+        // The correct answers
+        var correctCost = ( count * this.itemRateProperty.value );
+        var correctUnit = ( count );
+
+        this.numberLine.createMarker( correctCost, correctUnit, {});
       }
     },
 
@@ -101,7 +119,6 @@ define( function( require ) {
       this.scale.reset();
       this.numberLine.reset();
       PropertySet.prototype.reset.call( this );
-      this.addArrayListeners();
     }
 
   } ); // inherit

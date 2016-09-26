@@ -11,6 +11,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var RacingLabConstants = require( 'UNIT_RATES/racingLab/RacingLabConstants' );
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var SpeedRateNode = require( 'UNIT_RATES/racingLab/view/SpeedRateNode' );
   var TrackNode = require( 'UNIT_RATES/racingLab/view/TrackNode' );
@@ -36,27 +37,39 @@ define( function( require ) {
       trackOnTop:       false
     }, options || {} );
 
+    var self = this;
+
     this.trackGroup = model;
 
     // number line
-    this.numberLineNode = new URNumberLineNode( {
-    //this.numberLineNode = new NumberLineNode( trackGroup.numberLine, this.keypad, {
-      numberLineTitle:  options.numberLineTitle,
-      graphHeight:      95,
-      yAxisOffset:      60
-     } );
+    this.numberLineNode = new URNumberLineNode( this.trackGroup.numberline, keypad, {
+      numberLineTitle:            options.numberLineTitle,
+      graphWidth:                 RacingLabConstants.TRACK_NUMBER_LINE_WIDTH,
+      graphHeight:                95,
+      xAxisOffset:                9,
+      yAxisOffset:                RacingLabConstants.TRACK_NUMBER_LINE_OFFSET,
+      xAxisLength:                RacingLabConstants.TRACK_NUMBER_LINE_WIDTH - RacingLabConstants.TRACK_NUMBER_LINE_OFFSET,
+      yAxisLength:                28,
+      markerLargeHeight:          30,
+      markerSmallHeight:          15
+    } );
     this.numberLineNode.setLineLabels( milesCapString, hoursCapString );
 
-    // number line
+    // rate spinners
     this.rateNode = new SpeedRateNode( this.trackGroup, {
-      left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
-      rateTitle: options.rateTitle,
+      left:               this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
+      rateTitle:          options.rateTitle,
       pickerColor:        options.rateColor,
       pickerPressedColor: options.ratePressedColor
     } );
 
-    // track
-    var trackOptions = { timerTitle: options.timerTitle };
+    // car track
+    var trackOptions = {
+      trackWidth:         RacingLabConstants.TRACK_NUMBER_LINE_WIDTH,
+      trackHeight:        100,
+      trackStartOffset:   RacingLabConstants.TRACK_NUMBER_LINE_OFFSET,
+      timerTitle:         options.timerTitle
+    };
     trackOptions = ( options.trackOnTop ?
       _.extend( { bottom: this.numberLineNode.top - 4 }, trackOptions ) :
       _.extend( { top: this.numberLineNode.bottom + 4 }, trackOptions )
@@ -67,6 +80,10 @@ define( function( require ) {
     options.children = [ this.numberLineNode, this.rateNode, this.trackNode ];
 
     Node.call( this, options );
+
+    this.trackGroup.trackPixelLengthProperty.lazyLink( function( value, oldValue ) {
+      self.numberLineNode.setPixelLength( value );
+    } );
   }
 
   unitRates.register( 'TrackGroupNode', TrackGroupNode );

@@ -36,9 +36,10 @@ define( function( require ) {
   /**
    * @param {ShoppingModel} model
    * @param {boolean} enableHideScaleCost
+   * @param {function} [eraseNumberLineCallback]
    * @constructor
    */
-  function URShoppingScreenView( model, enableHideScaleCost ) {
+  function URShoppingScreenView( model, enableHideScaleCost, eraseNumberLineCallback ) {
 
     ScreenView.call( this );
 
@@ -61,7 +62,8 @@ define( function( require ) {
     this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
       left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
       top:  this.layoutBounds.top  + URConstants.SCREEN_VERTICAL_MARGIN,
-      numberLineTitle: doubleNumberLineString
+      numberLineTitle:            doubleNumberLineString,
+      onEraseCallback:            eraseNumberLineCallback
     } );
     this.addChild( this.numberLineNode );
 
@@ -170,23 +172,6 @@ define( function( require ) {
     },
 
     /**
-     * Called when the user selects the sim reset button
-     * @protected
-     */
-    resetAll: function() {
-        this.model.reset();
-
-        this.sceneModeProperty.reset();
-        this.hideKeypad();
-
-        this.removeAllItems();
-
-        this.numberLineNode.reset();
-        this.scaleNode.reset();
-        this.shelfNode.reset();
-    },
-
-    /**
      * Call when the user selected a new scene
      * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
      * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
@@ -195,11 +180,6 @@ define( function( require ) {
     sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
 
       this.hideKeypad();
-
-      // This fixes an issue with items hanging in space when the item type selection changes. (see. issue #21, #18)
-      this.itemsLayer.getChildren().forEach( function( child ) {
-        self.endUpdateItem( child );
-      } );
     },
 
     /*
@@ -230,6 +210,8 @@ define( function( require ) {
         // Dropped on the scale
         this.model.addShelfItemToScale( itemNode.item );
         this.model.addScaleItemsToNumberline();
+        // populate number line
+        this.numberLineNode.populate();
 
         // Fruit bags should be expanded
         if ( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.countProperty.value > 1 ) {
@@ -246,9 +228,6 @@ define( function( require ) {
 
         // make sure items are stacked on the scale
         this.scaleNode.adjustItemPositions( animate );
-
-        // populate number line
-        this.numberLineNode.populate();
       }
       else {
 
@@ -257,6 +236,9 @@ define( function( require ) {
 
         // Update the number line
         this.model.addScaleItemsToNumberline();
+
+        // populate number line
+        this.numberLineNode.populate();
 
         // make sure items are stacked on the scale
         this.scaleNode.adjustItemPositions( animate );
@@ -294,6 +276,23 @@ define( function( require ) {
     onResize: function() {
       // resize the pick area to match the screen
       this.keypadCloseArea.setRectBounds( new Bounds2( 0, 0,  window.innerWidth, window.innerHeight ) );
+    },
+
+    /**
+     * Called when the user selects the sim reset button
+     * @protected
+     */
+    resetAll: function() {
+        this.model.reset();
+
+        this.sceneModeProperty.reset();
+        this.hideKeypad();
+
+        this.removeAllItems();
+
+        this.numberLineNode.reset();
+        this.scaleNode.reset();
+        this.shelfNode.reset();
     }
 
   } ); // inherit

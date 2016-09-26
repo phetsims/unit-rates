@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
   var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
@@ -32,6 +31,7 @@ define( function( require ) {
   var scaleImage = require( 'image!UNIT_RATES/scale.png' );
 
   // constants
+  var MAX_ITEMS             = 16;
   var DROP_ZONE_X_SCALE     = 1.05;                     // How much bigger the drop zone width is from the image
   var DROP_ZONE_Y_SCALE     = 2.25;                     // How much bigger the drop zone height is from the image
   var NODE_X_SPACING        = 0;
@@ -124,9 +124,7 @@ define( function( require ) {
     Node.call( this, options );
 
     // refresh on item change
-    scale.itemDataProperty.link( function( itemData, oldData ) {
-
-      var itemType = itemData.type;
+    scale.itemTypeProperty.link( function( itemType, oldType ) {
 
       var isFruit = ( itemType === ItemData.APPLES.type  || itemType === ItemData.LEMONS.type ||
                       itemType === ItemData.ORANGES.type || itemType === ItemData.PEARS.type );
@@ -144,7 +142,7 @@ define( function( require ) {
         self.costDisplayNode.centerX = self.costOnlyDisplayX;
       }
 
-      var itemNode = ItemNodeFactory.createItem( new Item( itemData, ( isFruit ? 1 : 2 ) ) );
+      var itemNode = ItemNodeFactory.createItem( new Item( itemType, ( isFruit ? 1 : 2 ) ) );
 
       // pre-compute stacked item positions
       var globalDropBounds = self.scaleTopNode.getGlobalBounds();
@@ -158,7 +156,7 @@ define( function( require ) {
       // save the Y coordinate for moving higher items to lower positions - use a .XX string
       self.stackedYPositions = [  itemY.toFixed( 2 ) ];
 
-      for (var i = 0; i < ShoppingConstants.MAX_ITEMS-1; i++) {
+      for (var i = 0; i < MAX_ITEMS; i++) {
 
         self.stackedPositions.push( new Vector2( itemX, itemY ) );
 
@@ -268,7 +266,7 @@ define( function( require ) {
       var self = this;
 
       // get the current array for the item type
-      var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
+      var itemArray = this.scale.getItemsWithType( this.scale.itemTypeProperty.value );
 
       var allNodes = [];
       var updateNodes = [];
@@ -345,7 +343,7 @@ define( function( require ) {
       var self = this;
 
       // get the current array for the item type
-      var itemArray = this.scale.getItemsWithType( this.scale.itemDataProperty.value.type );
+      var itemArray = this.scale.getItemsWithType( this.scale.itemTypeProperty.value );
 
       // checks the item layer to see if there is already a node for the item
       // @param {Item}
