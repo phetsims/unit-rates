@@ -1,8 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A base item class with various positioning related attributes
- *
+ * A base class used for positioning/animating derivied nodes
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -22,10 +21,10 @@ define( function( require ) {
   function Movable( options ) {
 
     options = _.extend( {
-      xAxisEnabled: true,
-      yAxisEnabled: true,
-      bounds: null,                 // Bounds2
-      position: new Vector2( 0, 0 )
+      xAxisEnabled: true,           // allows movement in x direction
+      yAxisEnabled: true,           // allows movement in y direction
+      bounds: null,                 // Bounds2 - allowed bounds for movement.
+      position: new Vector2( 0, 0 ) // default position
     }, options || {} );
 
     // @public (read-write)
@@ -42,7 +41,7 @@ define( function( require ) {
   return inherit( PropertySet, Movable, {
 
     /**
-     * Update the item position property, tween if specified
+     * Update the item position property, tween if animate specified
      * @param {number} x
      * @param {number} y
      * @param {boolean} animate - preforms a tween between the old position and the new

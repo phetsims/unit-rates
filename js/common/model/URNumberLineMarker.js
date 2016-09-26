@@ -1,8 +1,10 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A derivied Item which has a cost & unit duo of questions and answers. This QuestionAnswer isn't considered 'correct' until the
- * cost & unit answers are both correct. Instances are mainly used the number line model.
+ * Consolidates two QuestionAnswer classes into a number line marker. A marker is considered 'edtiable' until both
+ * QuestionAnswers are answered correctly. Markers can also be tagged as 'out of range' (aka. off the end of the
+ * number line)in which they will remain as 'editable'. Markers can also be marked as of 'high precision' (which means
+ * they will have a different visual representation on the NL.)
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -16,6 +18,9 @@ define( function( require ) {
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
 
   /**
+   * @param {number} answerValue - the correct answer value
+   * @param {number} answerText - the text to display on a correct answer value
+   * @param {Property.<number>} rateProperty - the current unit rate of the model/number line
    * @param {Object} [options]
    * @constructor
    */
@@ -24,10 +29,10 @@ define( function( require ) {
     options = _.extend( {
       color:                'black',
       editable:             false,
-      topDecimalPlaces:     2,
-      bottomDecimalPlaces:  1,
-      topHighPrecision:     1,
-      bottomHighPrecision:  2
+      topDecimalPlaces:     2,        // # decimals place for display
+      bottomDecimalPlaces:  1,        // # decimals place for display
+      topHighPrecision:     1,        // # decimals which makes a marker a 'high precision', potentially display differently
+      bottomHighPrecision:  2         // # decimals which makes a marker a 'high precision', potentially display differently
      }, options || {} );
 
     Movable.call( this, options );
@@ -39,21 +44,25 @@ define( function( require ) {
     this.bottomQnA = new QuestionAnswer( this, correctBottomValue, correctBottomValue );
 
     // @protected (read-only) - all
-    this.rateProperty = rateProperty;
-    this.color = options.color;
+    this.rateProperty         = rateProperty;
+    this.color                = options.color;
     this.topDecimalPlaces     = options.topDecimalPlaces;
     this.bottomDecimalPlaces  = options.bottomDecimalPlaces;
     this.topHighPrecision     = options.topHighPrecision;
     this.bottomHighPrecision  = options.bottomHighPrecision;
+
+    // @public (read-write) - all
     this.addProperty( 'outOfRange', false );
     this.addProperty( 'highPrecision', false );
     this.addProperty( 'editable', options.editable );
+
+    // non-editable markers are automatically 'correct'
     if ( !this.editableProperty.value ) {
       this.topQnA.valueProperty.value    = correctTopValue;
       this.bottomQnA.valueProperty.value = correctBottomValue;
     }
 
-    // Clear unit on incorrect cost answers
+    // On incorrect top values, assign new correct bottom answers
     this.topQnA.valueProperty.lazyLink( function( value, oldValue ) {
       var allCorrect = self.checkCorrectAnswers();
       if ( !allCorrect && value >= 0 ) {
@@ -63,7 +72,7 @@ define( function( require ) {
       }
     } );
 
-     // Clear cost on incorrect unit answers
+    // On incorrect bottom values, assign new correct top answers
     this.bottomQnA.valueProperty.lazyLink( function( value, oldValue ) {
       var allCorrect = self.checkCorrectAnswers();
       if ( !allCorrect && value >= 0 ) {
@@ -82,8 +91,9 @@ define( function( require ) {
   return inherit( Movable, URNumberLineMarker, {
 
     /**
-     * returns the current top value
-     * @returns {number}
+     * Changes the top & bottom correct answers when the unit rate changes
+     * @param {number} rate
+     * @param {number} oldRate
      * @public
      */
     onRateChange: function( rate, oldRate ) {
@@ -115,7 +125,7 @@ define( function( require ) {
     },
 
     /**
-     * Checks both the cost & units answers
+     * Checks both the top & bottom answers for correctness
      * @returns {boolean}
      * @public
      */

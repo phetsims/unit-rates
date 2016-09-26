@@ -15,10 +15,10 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // constants
-  var DEFAULT_ANSWER_VALUE = -1;
+  var DEFAULT_ANSWER_VALUE = -1;    // in this sim all correct answers are positive, so this us used to indicate 'unanswered'
 
   /**
-   * @param {Item} item - the item associated with this question
+   * @param {Object} item - an Object to associate with this question
    * @param {number} answerValue - the correct answer value
    * @param {number} answerText - the text to display on a correct answer value
    * @param {Object} [options]
@@ -38,8 +38,8 @@ define( function( require ) {
     // @public (read-only) - all
     this.item           = item;                                 // {Item} associated with this question
     this.questionString = options.questionString;               // {string} question to be asked
-    this.unitString     = options.unitString;                    // {string} unit
-    this.decimalPlaces  = options.decimalPlaces;
+    this.unitString     = options.unitString;                   // {string} unit
+    this.decimalPlaces  = options.decimalPlaces;                // the number of decimals to use when evaluating correctness
     this.answerValue    = answerValue;                          // {number} the correct answer value
     this.answerText     = answerText;                           // {Text} the correct answer text
     this.valueProperty  = new Property( DEFAULT_ANSWER_VALUE ); // user's answer input property

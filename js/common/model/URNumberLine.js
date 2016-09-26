@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * Holds the items currently on the number line
+ * Base class number line model. Basically holds all the number line 'markers'
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -21,10 +21,10 @@ define( function( require ) {
   function URNumberLine( rateProperty, topMaxProperty, bottomMaxProperty, options ) {
 
      options = _.extend( {
-      markerTopDecimals:          0,
-      markerBottomDecimals:       2,
-      markerTopHighPrecision:     1,
-      markerBottomHighPrecision:  2
+      markerTopDecimals:          0,    // # decimals place for display
+      markerBottomDecimals:       2,    // # decimals place for display
+      markerTopHighPrecision:     1,    // # decimals which makes a marker a 'high precision', potentially display differently
+      markerBottomHighPrecision:  2     // # decimals which makes a marker a 'high precision', potentially display differently
     }, options || {} );
 
     // @public (read-write)
@@ -47,6 +47,8 @@ define( function( require ) {
 
     /**
      * creates a numberline marker
+     * @param {number} correctTopValue - the correct value for the top of the double number line marker
+     * @param {number} correctBottomValue - the correct value for the bottom of the double number line marker
      * @returns {URNumberLineMarker}
      * @public
      */
@@ -71,8 +73,8 @@ define( function( require ) {
     },
 
     /**
-     * creates a numberline marker
-     *  @param {URNumberLineMarker} marker
+     * adds an existing numberline marker
+     * @param {URNumberLineMarker} marker
      * @public
      */
     addMarker: function( marker ) {
@@ -81,8 +83,8 @@ define( function( require ) {
     },
 
     /**
-     * creates a numberline marker
-     *  @param {URNumberLineMarker} marker
+     * removes an existing numberline marker
+     * @param {URNumberLineMarker} marker
      * @public
      */
     removeMarker: function( marker ) {
@@ -94,8 +96,8 @@ define( function( require ) {
     },
 
     /**
-     * creates a numberline marker
-     *  @param {URNumberLineMarker} marker
+     * removes all markers
+     * @param {URNumberLineMarker} marker
      * @public
      */
     removeAllMarkers: function() {
@@ -104,7 +106,7 @@ define( function( require ) {
     },
 
     /**
-     * Tells whether there is an existing marker with the same values in the marker list
+     * Checks if there is an existing marker with the same values in the marker list
      * @param {URNumberLineMarker} marker
      * @returns {boolean}
      * @public
@@ -143,8 +145,11 @@ define( function( require ) {
         this.markersProperty.value.forEach( callback );
      },
 
-     // Resets number line
-    reset: function() {
+    /**
+     *Resets number line
+     * @public
+     */
+     reset: function() {
       var markerArray = this.markersProperty.value;
       while ( markerArray.length ) {
         var marker = markerArray.pop();
