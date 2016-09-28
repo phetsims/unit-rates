@@ -53,6 +53,14 @@ define( function( require ) {
   return inherit( PropertySet, RacingLabModel, {
 
     /**
+     * @return {boolean}
+     * @public
+     */
+    atStart: function() {
+      return ( this.elapsedTimeProperty.value === 0.0 );
+    },
+
+    /**
      * {number} dt - time step
      * @public
      */

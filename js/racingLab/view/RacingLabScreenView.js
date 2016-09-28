@@ -93,7 +93,7 @@ define( function( require ) {
     } );
     this.addChild( this.goStopButton );
 
-    var restartButton = new RectangularPushButton( {
+    this.restartButton = new RectangularPushButton( {
       right:              this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
       centerY:            this.goStopButton.centerY,
       content:            new Image( returnCarButtonImage, { scale: 0.18 } ),
@@ -107,11 +107,13 @@ define( function( require ) {
       touchAreaYDilation: 0,
       stroke:             'black',
       lineWidth:          0.5,
+      visible:            false,
       listener: function() {
         self.restart();
+        self.restartButton.visible = false;
       }
     });
-    this.addChild( restartButton );
+    this.addChild( this.restartButton );
 
     // keypad layout
     this.keypad.right   = this.width;
@@ -163,10 +165,9 @@ define( function( require ) {
       self.trackGroup2Node.visible = ( value === 2 );
     } );
 
-    this.model.runningProperty.link( function( value, oldValue ) {
+    this.model.runningProperty.lazyLink( function( value, oldValue ) {
+      self.restartButton.visible = ( !value && !self.model.atStart() );
       self.goStopButton.baseColor = ( value ? '#6D6E70' :  '#85d4a6' );
-      //self.carCountButtons.opacity = ( value ? 0.5 : 1.0 );   // FIXME: what to disable when running
-      //self.carCountButtons.pickable = !value;
     } );
   }
 
