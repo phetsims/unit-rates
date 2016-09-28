@@ -66,6 +66,7 @@ define( function( require ) {
      * @public
      */
     reset: function() {
+      this.numberline.reset();
       this.milesProperty.reset();
       this.milesRangeProperty.reset();
       this.hoursProperty.reset();
