@@ -37,8 +37,6 @@ define( function( require ) {
 
     Movable.call( this, options );
 
-    var self = this;
-
     // @public - all
     this.topQnA    = new QuestionAnswer( this, correctTopValue, correctTopValue );
     this.bottomQnA = new QuestionAnswer( this, correctBottomValue, correctBottomValue );
