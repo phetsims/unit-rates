@@ -69,7 +69,8 @@ define( function( require ) {
     this.readoutText = new Text( '', { font: READOUT_FONT } );
 
     // update the value on keypad user interaction
-    this.keypad.digitStringProperty.link( this.onKeypadDigitStringChange.bind( this ) );
+    this.onKeypadDigitStringChangeBound = this.onKeypadDigitStringChange.bind( this );
+    this.keypad.digitStringProperty.link( this.onKeypadDigitStringChangeBound );
 
     // Layout
     this.keypad.top = this.readoutBackground.bottom + SPACING;
@@ -219,7 +220,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      this.keypad.digitStringProperty.unlink( this.onKeypadDigitStringChange );
+      this.keypad.digitStringProperty.unlink( this.onKeypadDigitStringChangeBound  );
     }
 
   } ); // inherit

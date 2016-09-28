@@ -1,7 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A specific instance of an item (i.e. apple, cucumber, blue candy) with it's dynamic attributes
+ * A specific instance of an item (i.e. apple, cucumber, blue candy) or collection (i.e. bag). Items with a counts > 1
+ * are considered a collection.
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -26,7 +27,7 @@ define( function( require ) {
     Movable.call( this, { } );
 
     // @public (read-only)
-    this.type = type;
+    this.type          = type;                    //(i.e. apple, cucumber, blue candy)
     this.countProperty = new Property( count );
   }
 

@@ -96,6 +96,8 @@ define( function( require ) {
     //
     dispose: function() {
       this.positionProperty.unlinkAll();
+
+      PropertySet.prototype.dispose.call( this );
     }
 
   } ); // inherit

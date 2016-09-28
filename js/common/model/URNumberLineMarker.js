@@ -63,32 +63,51 @@ define( function( require ) {
     }
 
     // On incorrect top values, assign new correct bottom answers
-    this.topQnA.valueProperty.lazyLink( function( value, oldValue ) {
-      var allCorrect = self.checkCorrectAnswers();
-      if ( !allCorrect && value >= 0 ) {
-        self.topQnA.answerValue = Number( value );
-        self.bottomQnA.answerValue = value / self.rateProperty.value;
-        self.bottomQnA.valueProperty.set( Number( -1 ) );
-      }
-    } );
+    this.onTopValueChangeBound = this.onTopValueChange.bind( this );
+    this.topQnA.valueProperty.lazyLink( this.onTopValueChangeBound );
 
     // On incorrect bottom values, assign new correct top answers
-    this.bottomQnA.valueProperty.lazyLink( function( value, oldValue ) {
-      var allCorrect = self.checkCorrectAnswers();
-      if ( !allCorrect && value >= 0 ) {
-        self.bottomQnA.answerValue = Number( value );
-        self.topQnA.answerValue = value * self.rateProperty.value;
-        self.topQnA.valueProperty.set( Number( -1 ) );
-      }
-    } );
+    this.onBottomValueChangeBound = this.onBottomValueChange.bind( this );
+    this.bottomQnA.valueProperty.lazyLink( this.onBottomValueChangeBound );
 
     // Update top QnA on rate change
-    this.rateProperty.lazyLink( this.onRateChange.bind( this ) );
+    this.onRateChangeBound = this.onRateChange.bind( this );
+    this.rateProperty.lazyLink( this.onRateChangeBound );
   }
 
   unitRates.register( 'URNumberLineMarker', URNumberLineMarker );
 
   return inherit( Movable, URNumberLineMarker, {
+
+    /**
+     * On incorrect top values, assign new correct bottom answers
+     * @param {number} value
+     * @param {number} oldValue
+     * @public
+     */
+    onTopValueChange: function( value, oldValue ) {
+      var allCorrect = this.checkCorrectAnswers();
+      if ( !allCorrect && value >= 0 ) {
+        this.topQnA.answerValue = Number( value );
+        this.bottomQnA.answerValue = value / this.rateProperty.value;
+        this.bottomQnA.valueProperty.set( Number( -1 ) );
+      }
+    },
+
+    /**
+     * On incorrect bottom values, assign new correct top answers
+     * @param {number} value
+     * @param {number} oldValue
+     * @public
+     */
+    onBottomValueChange: function( value, oldValue ) {
+      var allCorrect = this.checkCorrectAnswers();
+      if ( !allCorrect && value >= 0 ) {
+        this.bottomQnA.answerValue = Number( value );
+        this.topQnA.answerValue = value * this.rateProperty.value;
+        this.topQnA.valueProperty.set( Number( -1 ) );
+      }
+    },
 
     /**
      * Changes the top & bottom correct answers when the unit rate changes
@@ -174,12 +193,19 @@ define( function( require ) {
 
     // @public
     dispose: function() {
+      this.topQnA.valueProperty.unlink( this.onTopValueChangeBound );
       this.topQnA.dispose();
+
+      this.bottomQnA.valueProperty.unlink( this.onBottomValueChangeBound );
       this.bottomQnA.dispose();
-      this.rateProperty.unlink( this.onRateChange.bind( this ) );
+
+      this.rateProperty.unlink( this.onRateChangeBound );
+
       this.outOfRangeProperty.unlinkAll();
       this.highPrecisionProperty.unlinkAll();
       this.editableProperty.unlinkAll();
+
+      Movable.prototype.dispose.call( this );
     }
 
   } ); // inherit

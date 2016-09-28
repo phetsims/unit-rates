@@ -164,6 +164,8 @@ define( function( require ) {
       if ( this.dragListener ) {
         this.removeInputListener( this.dragListener );
       }
+
+      Node.prototype.dispose.call( this );
     }
 
   } ); // inherit

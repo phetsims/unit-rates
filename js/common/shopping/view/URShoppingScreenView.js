@@ -163,6 +163,8 @@ define( function( require ) {
 
   return inherit( ScreenView, URShoppingScreenView, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
      * Called from the constructor to allow for subclassed to add additional nodes/properties to the screen
      * @protected

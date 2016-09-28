@@ -134,6 +134,7 @@ define( function( require ) {
     // @public
     dispose: function() {
       this.valueProperty.unlinkAll();
+      this.valueProperty.dispose();
     }
 
   } );  // inherit

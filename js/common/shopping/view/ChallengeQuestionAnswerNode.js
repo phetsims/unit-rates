@@ -1,8 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A Node representation managing all the UI for an individual Challenge question & answer. These exist for the duration
- * of the simulation.
+ * A Node representation managing all the UI for an individual Challenge question & answer.
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -118,7 +118,8 @@ define( function( require ) {
     } );
 
     // check the answer on user value input
-    this.qna.valueProperty.link( this.checkAnswer.bind( this ) );
+    this.checkAnswerBound = this.checkAnswer.bind( this );
+    this.qna.valueProperty.link( this.checkAnswerBound );
 
     options.children = [ this.challengeText, this.editNumberDisplay, this.correctTextDisplay, this.faceNode,
                          this.unitLine, this.unitText ];
@@ -170,7 +171,7 @@ define( function( require ) {
     // @public
     dispose: function() {
       this.editNumberDisplay.dispose();
-      this.qna.valueProperty.unlink( this.checkAnswer.bind( this ) );
+      this.qna.valueProperty.unlink( this.checkAnswerBound );
     }
 
   } );  // define

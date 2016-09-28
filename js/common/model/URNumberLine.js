@@ -66,7 +66,7 @@ define( function( require ) {
         this.addMarker( marker );
       }
       else {
-        // FIXME: dispose
+        marker.dispose();
       }
 
       return marker;
@@ -79,7 +79,6 @@ define( function( require ) {
      */
     addMarker: function( marker ) {
       this.markersProperty.value.push( marker );
-      //this.markersProperty.notifyObserversStatic();
     },
 
     /**
@@ -90,9 +89,16 @@ define( function( require ) {
     removeMarker: function( marker ) {
       var index = this.markers.indexOf( marker );
       if (index > -1) {
-        this.markersProperty.value.splice( index, 1 );
-        //this.markersProperty.notifyObserversStatic();
+
+        // get the marker array
+        var markerArray = this.markersProperty.value;
+
+        // remove the marker from the array
+        markerArray.splice( index, 1 );
       }
+
+      // dispose of the specified marker
+      marker.dispose();
     },
 
     /**
@@ -101,8 +107,11 @@ define( function( require ) {
      * @public
      */
     removeAllMarkers: function() {
-      this.markersProperty.value.length = 0;
-      //this.markersProperty.notifyObserversStatic();
+      var markerArray = this.markersProperty.value;
+      while ( markerArray.length ) {
+        var marker = markerArray.pop();
+        marker.dispose();
+      }
     },
 
     /**
@@ -146,20 +155,17 @@ define( function( require ) {
      },
 
     /**
-     *Resets number line
+     * Resets number line
      * @public
      */
      reset: function() {
-      var markerArray = this.markersProperty.value;
-      while ( markerArray.length ) {
-        var marker = markerArray.pop();
-        marker.dispose();
-      }
+      this.removeAllMarkers();
     },
 
     // @public
     dispose: function() {
-      this.reset();
+      this.removeAllMarkers();
+      PropertySet.prototype.dispose.call( this );
     }
 
   } ); // inherit

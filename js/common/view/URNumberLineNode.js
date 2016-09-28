@@ -288,9 +288,9 @@ define( function( require ) {
      */
     removeMarkerNode: function( markerNode ) {
       this.numberLine.removeMarker(  markerNode.marker );
-      this.markerLayerNode.removeChild( markerNode );
       markerNode.dispose();
-    },
+      this.markerLayerNode.removeChild( markerNode );
+     },
 
     /**
      * Removes all marker nodes from the number line

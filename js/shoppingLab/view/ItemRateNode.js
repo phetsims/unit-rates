@@ -179,7 +179,8 @@ define( function( require ) {
     } );
 
     // refresh on item change
-    this.itemTypeProperty.link( this.itemSelectionChanged.bind( this ) );
+    this.itemSelectionChangedBound = this.itemSelectionChanged.bind( this );
+    this.itemTypeProperty.link( this.itemSelectionChangedBound );
 
     this.mutate( options );
   }

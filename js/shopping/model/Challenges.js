@@ -71,7 +71,8 @@ define( function( require ) {
    */
   function Challenges( itemDataProperty, onCorrectAnswer, onRefresh ) {
 
-    this.questionSet = -1;
+    this.challengeData    = {};
+    this.questionSet      = -1;
 
     this.itemDataProperty = itemDataProperty;
     this.onCorrectAnswer  = onCorrectAnswer;
@@ -122,11 +123,21 @@ define( function( require ) {
      */
     populate: function() {
 
-      this.challengeData = {};
 
       // create questions & answers
       for( var key in ItemData ) {
+
         var itemData = ItemData[ key ];
+
+        // dispose of any old questions
+        var qnaArray = this.challengeData[ itemData.type ];
+        if( qnaArray ) {
+            qnaArray.forEach( function( qna ) {
+            qna.dispose();
+          } );
+          this.challengeData[ itemData.type ] = [];
+        }
+
         this.generateQuestionsAnswersForItem( itemData );
       }
     },
