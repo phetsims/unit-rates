@@ -28,9 +28,9 @@ define( function( require ) {
 
   // constants
   var TEXT_FONT       = new PhetFont( 14 ); // Font to use for all text
-  var TEXT_MAX_WIDTH  = 125;
+  var TEXT_MAX_WIDTH  = 100;
   var PICKER_FONT     = new PhetFont( 16 ); // Font to use for all text
-  var DIVISOR_WIDTH   = 125;
+  var DIVISOR_WIDTH   = 100;
   var X_MARGIN        = 10;
   var Y_MARGIN        = 0;
   var X_SPACING       = 10;

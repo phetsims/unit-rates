@@ -18,8 +18,6 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var Util = require( 'DOT/Util' );
-
 
   // constants
   var DISPLAY_FONT    = new PhetFont( 14 );
@@ -32,6 +30,7 @@ define( function( require ) {
   /**
    * Node used to display an elapsed time (i.e. hours), in a 'collapsable' panel
    * @param {Property.<number>} elapsedTimeProperty
+   * @param {Property.<boolean>} disabledProperty
    * @param {Object} [options]
    * @returns {Panel}
    * @private
@@ -51,10 +50,13 @@ define( function( require ) {
 
     var self = this;
 
+    // @public (read-write)
+    this.displayValueProperty    = new Property( 0.0 );
+
+    // @private - all
     this.showTimeProperty = options.showTimeProperty;
     this.hiddenTimeText   = options.hiddenTimeText;
     this.disabledProperty = disabledProperty;
-    this.lastElapsedTime  = 0;
 
     var contentNode = new Node();
 
@@ -75,35 +77,16 @@ define( function( require ) {
     } );
     contentNode.addChild( timerText );
 
-    // @private
-    var unitText = new Text( hoursString, {
-      right:    contentNode.right,
-      bottom:   this.showTimeButton.bottom,
-      font:     DISPLAY_FONT,
-      maxWidth: 0.32 * DISPLAY_SIZE.width,
-      maxHeight: DISPLAY_SIZE.height
-    } );
-    contentNode.addChild( unitText );
-
     Panel.call( this, contentNode, options);
 
-    // update value text
-    Property.multilink( [ elapsedTimeProperty, this.showTimeProperty ], function( elapsedTime, showTime ) {
-
-      if( !self.disabledProperty.value) {
-        self.lastElapsedTime = elapsedTime;
-      }
+    // update timer text
+    Property.multilink( [ this.displayValueProperty, this.showTimeProperty ], function( displayValue, showTime ) {
 
       if( !showTime ) {
         timerText.setText( self.hiddenTimeText );
-        unitText.visible = false;
       } else {
-        var timerString = Util.toFixed( self.lastElapsedTime, 2 ).toString();
-        timerText.setText( timerString );
-        unitText.visible = true;
+        timerText.setText( displayValue + ' ' + hoursString );    // tack on the hours string
       }
-
-      unitText.left = timerText.right + DISPLAY_SPACING;
     } );
   }
 

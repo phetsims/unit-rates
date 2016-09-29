@@ -52,6 +52,8 @@ define( function( require ) {
 
   return inherit( PropertySet, RacingLabModel, {
 
+    // no dispose, persists for the lifetime of the sim.
+
     /**
      * @return {boolean}
      * @public
@@ -66,14 +68,14 @@ define( function( require ) {
      */
     step: function( dt ) {
       if ( this.runningProperty.value && dt < 1 ) {
-        // convert to simulated elapsed hours
-        var elapsedTime = ( dt * RacingLabConstants.TIME_DT_FACTOR );
-        this.elapsedTimeProperty.value += elapsedTime;
+        // Scale sim dt to slow things down
+        var scaleDt = ( dt / RacingLabConstants.SIM_DT_SCALE );
+        this.elapsedTimeProperty.value += scaleDt;
       }
     },
 
     /**
-     * Resets the challenges questions to all unanswered
+     * Restarts both tracks - car at start line, elapsed time = 0.
      * @public
      */
     restart: function() {

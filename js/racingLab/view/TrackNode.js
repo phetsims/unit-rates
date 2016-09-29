@@ -33,7 +33,7 @@ define( function( require ) {
   var miString = require( 'string!UNIT_RATES/mi' );
 
   // constants
-  var TRACK_MAX_DISTANCE       = 200;     // FIXME: use number picker property.max
+  var TRACK_MAX_DISTANCE       = 200;
   var TRACK_INTERVAL_DISTANCE  = 50;
   var TRACK_BOTTOM_OFFSET      = 25;
   var TRACK_DARK_STROKE_COLOR  = 'rgba(0, 0, 0, 1.0)';
@@ -214,9 +214,10 @@ define( function( require ) {
       this.timer.centerX = this.finishPoint.x;
 
       // adjust the mileage text & location
-      var miles = Util.toFixed( ( this.finishPoint.x - this.startPoint.x ) / this.milesPerPixel, 0 );
+      var miles = Util.roundSymmetric( ( this.finishPoint.x - this.startPoint.x ) / this.milesPerPixel );
       this.mileageText.setText( miles + ' ' + miString );
       this.mileageText.centerX = this.finishPoint.x;
+      this.trackGroup.trackMilesProperty.value = miles;
 
       // adjust marker colors
       for (var i = 0; i < this.intervalNodes.length; i++) {
@@ -239,14 +240,13 @@ define( function( require ) {
      */
     updateCarTimer: function( elapsedTime ) {
 
-      if( !this.trackGroup.carFinishedProperty.value ) {
-        this.carNode.right = this.greenFlagNode.left + ( this.trackGroup.rateProperty.value * elapsedTime * this.milesPerPixel );
+      // update the car
+      var carPosition = this.greenFlagNode.left + ( this.trackGroup.rateProperty.value * elapsedTime * this.milesPerPixel );
+      this.carNode.right = ( carPosition < this.finishPoint.x ? carPosition : this.finishPoint.x );
 
-        if( this.carNode.right > this.finishPoint.x ) {
-          this.carNode.right = this.finishPoint.x;
-        }
-        this.trackGroup.carFinishedProperty.value = ( this.carNode.right >= this.finishPoint.x );
-      }
+      // update the timer text
+      var timerValue = ( elapsedTime > this.trackGroup.trackHoursProperty.value ? this.trackGroup.trackHoursProperty.value : elapsedTime );
+      this.timer.displayValueProperty.value = Util.toFixed( timerValue, 2 ).toString();
     },
 
     /**

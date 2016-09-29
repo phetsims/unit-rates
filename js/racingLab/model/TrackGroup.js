@@ -13,6 +13,10 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var Property = require( 'AXON/Property' );
+
+  // constants
+  var MAX_MILES = 200;
 
   /**
    * @constructor
@@ -26,33 +30,46 @@ define( function( require ) {
       hoursRange:         new RangeWithValue( 1, 10 ),    // used in rate adjustment spinner
       rate:               200,
       carFinished:        false,
+      numberLineMaxHours: 1,
       trackPixelLength:   600,
-      trackMiles:         200,
+      trackMiles:         MAX_MILES,
       trackHours:         1
     } );
 
     var self = this;
 
-    // seperate number line model w/ top/bottom ranges
-    this.numberline = new URNumberLine( this.rateProperty, this.trackMilesProperty, this.trackHoursProperty, {
+    this.elapsedTimeProperty = elapsedTimeProperty;
+    this.flagArrowsVisibleProperty = flagArrowsVisibleProperty;
+
+    // seperate number line model w/ top/bottom ranges - (note: top number line (miles) is fixed at MAX_MILES)
+    this.numberline = new URNumberLine( this.rateProperty, new Property( MAX_MILES ), this.numberLineMaxHoursProperty, {
       markerTopDecimals:          0,
       markerBottomDecimals:       2,
       markerTopHighPrecision:     1,
       markerBottomHighPrecision:  2
     } );
 
-    this.elapsedTimeProperty       = elapsedTimeProperty;
-    this.flagArrowsVisibleProperty = flagArrowsVisibleProperty;
-
     // Adjust the number line hours to match the track (note: track miles is fixed in this sim)
-    this.rateProperty.lazyLink( function( rate, oldRate ) {
-      self.trackHoursProperty.value =  self.trackMilesProperty.value / rate;
+    this.rateProperty.link( function( rate, oldRate ) {
+      self.numberLineMaxHoursProperty.value =  MAX_MILES / rate;
+    } );
+
+    // Adjust the max track hours
+    Property.lazyMultilink( [ this.trackMilesProperty, this.rateProperty ], function( miles, rate ) {
+      self.trackHoursProperty.value =  miles / rate;
+    } );
+
+    // Check elapsed time to see if the car has finished
+    this.elapsedTimeProperty.link( function( value, oldValue ) {
+      self.carFinishedProperty.value = ( value >= self.trackHoursProperty.value );
     } );
   }
 
   unitRates.register( 'TrackGroup', TrackGroup );
 
   return inherit( PropertySet, TrackGroup, {
+
+    // no dispose, persists for the lifetime of the sim.
 
     /**
      *

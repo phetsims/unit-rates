@@ -26,7 +26,8 @@ define( function( require ) {
 
     options = _.extend( {
       imageScale: 1.0,
-      bounds:     null
+      bounds:     null,
+      cursor:     'pointer'
     }, options || {} );
 
     var image   = new Image( imageString, { scale: options.imageScale } );
