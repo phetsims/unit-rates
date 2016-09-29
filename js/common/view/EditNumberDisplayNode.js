@@ -42,7 +42,7 @@ define( function( require ) {
       textColor:            'rgba(0,0,0,1)',
       borderColor:          'rgba(0,0,0,1)',
       backgroundColor:      'rgba(0,0,0,0)',
-      focusBorderColor:     'rgba(230,132,5,1)'
+      focusBorderColor:     'rgba(230,132,5,1)'             // border color when the edit button has been pressed
     }, options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
@@ -108,7 +108,7 @@ define( function( require ) {
       assert && assert( false, 'invalid buttonPosition for EditNumberDisplayNode' );
     }
 
-    // @protected
+    // @protected - all
     this.editButton = new RectangularPushButton( editButtonOptions );
     this.editButtonListener = this.showKeypad.bind( this );
     this.editButton.addListener( this.editButtonListener );
@@ -123,8 +123,8 @@ define( function( require ) {
   return inherit( Node, EditNumberDisplayNode, {
 
     /**
-     * Sets the font for the number display
-     * @param {Font} font
+     * Sets the visibility for the number display
+     * @param {boolean} visible
      * @public
      */
     setVisible: function( visible ) {
@@ -172,23 +172,16 @@ define( function( require ) {
     },
 
     /**
-     * Shows the edit button
+     * Sets the visibility for the edit button
+     * @param {boolean} visible
      * @public
      */
-    showEditButton: function() {
-      this.editButton.visible = true;
+    setEditButtonVisible: function( visible ) {
+      this.editButton.visible = visible;
     },
 
     /**
-     * Hides the edit button
-     * @public
-     */
-    hideEditButton: function() {
-      this.editButton.visible = false;
-    },
-
-    /**
-     * Makes the keypad visible and links up it's listeners
+     * Makes the keypad visible, links up it's listeners & changes the NumberDisplay border color
      * @public
      */
     showKeypad: function() {
@@ -202,13 +195,13 @@ define( function( require ) {
 
       this.numberDisplay.setBackgroundStroke( this.focusBorderColor );
 
-      // Set keypad listeners
+      // Set keypad listeners to this instance of the EditNumberDisplayNode
       this.keypad.setListeners( function() {
-          // onSubmit
+          // onSubmit - let this instance know when the keypad value changes
           self.valueProperty.value = self.keypad.getValue();
           self.keypad.clear();
         }, function() {
-          // onListenerChanged
+          // onListenerChanged - let this instance know when it's focus goes away
           self.hasKeypadFocus = false;
           self.numberDisplay.setBackgroundStroke( self.borderColor );
         }

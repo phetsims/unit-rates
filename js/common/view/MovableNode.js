@@ -1,6 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
+ * Base class for any node that can be moved in the sim
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -23,16 +24,16 @@ define( function( require ) {
   function MovableNode( item, position, options ) {
 
     options = _.extend( {
-      draggable:  true,
+      draggable:  true,    // whether or not this node can be dragged by the user
       dragHandle: null,    // Bounds2 - the portion of the node that serves as a drag handle (local coordinates, unused)
-      pickable: true
+      pickable:   true
     }, options || {} );
 
     Node.call( this, options );
 
     var self = this;
 
-    this.item = item;
+    this.item = item; // FIXME: called 'item' simply because the shopping screens were done first, probably should be movable.
     this.lastPosition = position;
     this.item.setPosition( position.x, position.y, false );
 
@@ -40,9 +41,9 @@ define( function( require ) {
     this.draggable          = options.draggable;
     this.isDragging         = false;
     this.dragHandle         = ( options.dragHandle !== null ? options.dragHandle : null );
-    this.moveStartCallback  = null;
-    this.moveCallback       = null;
-    this.moveEndCallback    = null;
+    this.moveStartCallback  = null;           // function called on move start
+    this.moveCallback       = null;           // function called on move
+    this.moveEndCallback    = null;           // function called on move end
     this.dragStartEmitter   = new Emitter();
     this.dragEmitter        = new Emitter();
     this.dragEndEmitter     = new Emitter();

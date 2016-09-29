@@ -25,7 +25,7 @@ define( function( require ) {
 
   // constants
   var READOUT_FONT = new PhetFont( 25 );    // Font used for the numeric display
-  var SPACING = 10;                         // Spacing between all nodes
+  var SPACING = 10;                         // Spacing (horizontal & vertical) between all nodes
   var TEXT_MAX_WIDTH  = 150;
 
   /**
@@ -43,7 +43,7 @@ define( function( require ) {
 
     // @protected - all
     this.onSubmit = null;             // {function}() to call when the enter/check button is pressed
-    this.onListenerChanged = null;    // {funtcion}() to call when the keypad listener changes
+    this.onListenerChanged = null;    // {function}() to call when the keypad listener changes
 
     // @protected
     this.keypad = new NumberKeypad( {
@@ -139,7 +139,8 @@ define( function( require ) {
      },
 
     /**
-     * Assigns a set of listeners to the keypad, there is only one listener assigned at any given time.
+     * Assigns a set of listeners to the keypad, there is only one listener assigned at any given time. That listener
+     * is considered to have the focus from the keypad
      * @param {function}() onSubmit - called when the enter/check button is pressed
      * @param {function}() onListenerChanged - called when the keypad listener changes
      * @public

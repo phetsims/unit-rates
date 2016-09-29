@@ -1,8 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * Displays the shelf and any items that were added to it. The 'top' portion of the shelf is also considered a
- * drop-zone' for items being dragged from the scale
+ * Displays the shelf and any items that were added to it.
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -21,7 +21,6 @@ define( function( require ) {
   var shelfImage = require( 'image!UNIT_RATES/shelf.png' );
 
   // constants
-  var FRONT_HEIGHT    = 20;
   var BACK_DEPTH      = 20;
   var BACK_OFFSET     = 0.065;
   var NODE_X_SPACING  = 2;
@@ -51,29 +50,18 @@ define( function( require ) {
     this.backEdgeMinX = BACK_OFFSET * imageNode.width;
     this.backEdgeMaxX = ( 1 - BACK_OFFSET ) * imageNode.width;
 
-    // @private - top facce
+    // @private - Note: this is used only as a defined area for positioning items on the shelf
     this.topNode = new Path( new Shape()
-      .moveTo( 0, FRONT_HEIGHT )
-      .lineTo( imageNode.width, FRONT_HEIGHT)
-      .lineTo( this.backEdgeMaxX, 0 )
-      .lineTo( this.backEdgeMinX, 0 )
-      .lineTo( 0, FRONT_HEIGHT ), {
-      //fill: 'rgba(255,255,255,0.15)',
-      lineWidth: 0
-    } );
-
-    // @private
-    this.dropNode = new Path( new Shape()
         .rect( this.backEdgeMinX + 30, 0, ( this.backEdgeMaxX - this.backEdgeMinX - 60), BACK_DEPTH ), {
-      //fill: 'rgba(255,255,0,0.5)', // uncomment to see drop zone
+      //fill: 'rgba(255,255,0,0.5)', // uncomment to see top positioning zone
       lineWidth: 0
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ imageNode, this.topNode, this.dropNode ];
+    options.children = [ imageNode, this.topNode ];
 
     // refresh on item change
-    shelf.itemDataProperty.lazyLink( function( itemData, oldItemData ) {
+    shelf.itemTypeProperty.lazyLink( function( itemType, oldItemType ) {
       self.populate();
     } );
 
@@ -87,27 +75,17 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
-     * Checks if the specified bounds is in a droppable location
-     * @param {Bounds2} bounds - parent (layer) coordinates
-     * @return {boolean}
-     * @public
-     */
-    intersectsDropArea: function( bounds ) {
-      var localBounds = this.parentToLocalBounds( bounds );
-      return this.topNode.intersectsBoundsSelf( localBounds );
-    },
-
-    /**
-     * Adjusts item nodes bottom center coordinate to be on the top of the shelf all the time.
+     * Adjusts item nodes bottom center coordinate to be on the topNode of the shelf at all time.
+     * @param {boolean}
      * @public
      */
     adjustItemPositions: function( animate ) {
 
-      var globalDropBounds = this.dropNode.getGlobalBounds();
+      var globalDropBounds = this.topNode.getGlobalBounds();
       var localDropBounds  = this.itemLayer.globalToParentBounds( globalDropBounds );
 
       // get the current array for the item type
-      var itemArray = this.shelf.getItemsWithType( this.shelf.itemDataProperty.value.type );
+      var itemArray = this.shelf.getItemsWithType( this.shelf.itemTypeProperty.value );
 
       var nodeX = localDropBounds.minX;
       var nodeY = localDropBounds.centerY - NODE_Y_SPACING;
@@ -141,13 +119,13 @@ define( function( require ) {
       var self = this;
 
       // get the current array for the item type
-      var itemArray = this.shelf.getItemsWithType( this.shelf.itemDataProperty.value.type );
+      var itemArray = this.shelf.getItemsWithType( this.shelf.itemTypeProperty.value );
 
       // create nodes for all items of type
       itemArray.forEach( function( item ) {
 
         // create new item node
-        var itemNode = ItemNodeFactory.createItem( item, {
+        var itemNode = ItemNodeFactory.createItemNode( item, {
           moveStartCallback: self.startMoveCallback,
           moveEndCallback: self.endMoveCallback
         } );
@@ -160,7 +138,7 @@ define( function( require ) {
     },
 
     /**
-     * Basically repopulates the current item type.
+     * Reset the the shelf node to its initial state (current item type only)
      * @public
      */
     resetCurrentItem: function() {

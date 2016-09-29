@@ -24,22 +24,23 @@ define( function( require ) {
 
     // @public (all)
     PropertySet.call( this, {
-      itemData: ItemData.APPLES,   // the currently selected item type (& the associated static attributes)
-      itemType: ItemData.APPLES.type,
-      itemRate: ItemData.APPLES.rate
+      itemData: ItemData.APPLES,      // the currently selected item data type
+      itemType: ItemData.APPLES.type, // the currently selected item type
+      itemRate: ItemData.APPLES.rate  // the currently selected item rate
     } );
 
     var self = this;
 
-    this.rateMap = {};
+    // @private
+    this.rateMap = {};    // holds the current rates for all item types
     this.initializeRateMap();
 
     // @public
-    this.shelf      = new Shelf( this.itemDataProperty );
+    this.shelf      = new Shelf( this.itemTypeProperty );
     this.scale      = new Scale( this.itemTypeProperty, this.itemRateProperty );
     this.numberLine = new NumberLine( this.itemTypeProperty, this.itemRateProperty );
 
-    // update value text on cost/weight change
+    // save the potentially adjusted rate and change the current type and rate on an item data change
     this.itemDataProperty.link( function( itemData, oldItemData ) {
 
       // save old rate which may have been changed
@@ -60,7 +61,7 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
-     * create type marker arrays, one for each type (i.e. apples, carrots, etc..)
+     * create rate entries for each item type (i.e. apples, carrots, etc..)
      * @public @override
      */
     initializeRateMap: function(  ) {
@@ -98,7 +99,7 @@ define( function( require ) {
 
     /**
      * Adds all items on the scale to the numberline (Note: the number line will ignore duplicates)
-     * @protected
+     * @public
      */
     addScaleItemsToNumberline: function() {
 

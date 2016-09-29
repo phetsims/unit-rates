@@ -61,44 +61,44 @@ define( function( require ) {
     switch( sceneMode ) {
       case SceneMode.FRUIT:
         items.push( ComboBox.createItem(
-          this.createItemRow( applesCapString, ItemNodeFactory.createItem( new Item( ItemData.APPLES.type, 1 ) ) ),
+          this.createItemRow( applesCapString, ItemNodeFactory.createItemNode( new Item( ItemData.APPLES.type, 1 ) ) ),
           ItemData.APPLES ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( lemonsCapString, ItemNodeFactory.createItem( new Item( ItemData.LEMONS.type, 1 ) ) ),
+          this.createItemRow( lemonsCapString, ItemNodeFactory.createItemNode( new Item( ItemData.LEMONS.type, 1 ) ) ),
           ItemData.LEMONS ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( orangesCapString, ItemNodeFactory.createItem( new Item( ItemData.ORANGES.type, 1 ) ) ),
+          this.createItemRow( orangesCapString, ItemNodeFactory.createItemNode( new Item( ItemData.ORANGES.type, 1 ) ) ),
           ItemData.ORANGES ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( pearsCapString, ItemNodeFactory.createItem( new Item( ItemData.PEARS.type, 1 ) ) ),
+          this.createItemRow( pearsCapString, ItemNodeFactory.createItemNode( new Item( ItemData.PEARS.type, 1 ) ) ),
           ItemData.PEARS ) );
         break;
       case SceneMode.PRODUCE:
         items.push( ComboBox.createItem(
-          this.createItemRow( carrotsCapString, ItemNodeFactory.createItem( new Item( ItemData.CARROTS.type, 1 ) ) ),
+          this.createItemRow( carrotsCapString, ItemNodeFactory.createItemNode( new Item( ItemData.CARROTS.type, 1 ) ) ),
           ItemData.CARROTS ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( cucumbersCapString, ItemNodeFactory.createItem( new Item( ItemData.CUCUMBERS.type, 1 ) ) ),
+          this.createItemRow( cucumbersCapString, ItemNodeFactory.createItemNode( new Item( ItemData.CUCUMBERS.type, 1 ) ) ),
           ItemData.CUCUMBERS ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( potatoesCapString, ItemNodeFactory.createItem( new Item( ItemData.POTATOES.type, 1 ) ) ),
+          this.createItemRow( potatoesCapString, ItemNodeFactory.createItemNode( new Item( ItemData.POTATOES.type, 1 ) ) ),
           ItemData.POTATOES ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( tomatoesCapString, ItemNodeFactory.createItem( new Item( ItemData.TOMATOES.type, 1 ) ) ),
+          this.createItemRow( tomatoesCapString, ItemNodeFactory.createItemNode( new Item( ItemData.TOMATOES.type, 1 ) ) ),
           ItemData.TOMATOES ) );
         break;
       case SceneMode.CANDY:
         items.push( ComboBox.createItem(
-          this.createItemRow( purpleCandyString, ItemNodeFactory.createItem( new Item( ItemData.PURPLE_CANDY.type, 1 ),
+          this.createItemRow( purpleCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.PURPLE_CANDY.type, 1 ),
             { imageScale: 0.035 } ) ), ItemData.PURPLE_CANDY ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( redCandyString, ItemNodeFactory.createItem( new Item( ItemData.RED_CANDY.type, 1 ),
+          this.createItemRow( redCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.RED_CANDY.type, 1 ),
             { imageScale: 0.035 } ) ), ItemData.RED_CANDY ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( greenCandyString, ItemNodeFactory.createItem( new Item( ItemData.GREEN_CANDY.type, 1 ),
+          this.createItemRow( greenCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.GREEN_CANDY.type, 1 ),
             { imageScale: 0.035 } ) ), ItemData.GREEN_CANDY ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( blueCandyString, ItemNodeFactory.createItem( new Item( ItemData.BLUE_CANDY.type, 1 ),
+          this.createItemRow( blueCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.BLUE_CANDY.type, 1 ),
             { imageScale: 0.035 } ) ), ItemData.BLUE_CANDY ) );
         break;
       default:
@@ -145,7 +145,7 @@ define( function( require ) {
      */
     createItemRow: function( itemString, itemNode ) {
 
-      var itemText = new Text( itemString, { font: FONT, maxWidth: 150 } );
+      var itemText = new Text( itemString, { font: FONT, maxWidth: 140 } );
       var hStrut = new HStrut( 175 - itemText.width - itemNode.width );
 
       // container for one row in the legend

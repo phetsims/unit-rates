@@ -2,7 +2,9 @@
 
 /**
  * Displays the scale and any items that were added to it. Also displays the cost for all items (& weight for candy).
- * The 'top' portion of the scale is also considered a 'drop-zone' for items being dragged from the shelf.
+ * There is an invisible 'drop zone' in which any item drag that ends in the area will automatically be moved to the
+ * scale.
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -31,13 +33,13 @@ define( function( require ) {
   var scaleImage = require( 'image!UNIT_RATES/scale.png' );
 
   // constants
-  var MAX_ITEMS             = 16;
+  var MAX_ITEMS             = 16;                       // The max # items to be stacked on the scale - ever!
   var DROP_ZONE_X_SCALE     = 1.05;                     // How much bigger the drop zone width is from the image
   var DROP_ZONE_Y_SCALE     = 2.25;                     // How much bigger the drop zone height is from the image
-  var NODE_X_SPACING        = 0;
-  var NODE_Y_SPACING        = 5;
-  var DISPLAY_BOTTOM_OFFSET = 32;
-  var DISPLAY_SPACING       = 10;                       // space beteen mutliple displays
+  var NODE_X_SPACING        = 0;                        // hortizontal distance between stacked items
+  var NODE_Y_SPACING        = 5;                        // vertical distance between stacked items
+  var DISPLAY_BOTTOM_OFFSET = 32;                       // the offset for the cost & weight displays (& drop zone)
+  var DISPLAY_SPACING       = 10;                       // horizontal space beteen mutliple displays
   var DISPLAY_FONT          = new PhetFont( 20 );
   var DISPLAY_SIZE          = new Dimension2( 70, 40 );
 
@@ -50,8 +52,8 @@ define( function( require ) {
    *
    * @param {Scale} scale - model
    * @param {Node} itemLayer - a container node which holds the item nodes. Used here for local posiitoning of items
-   * @param (function} startMoveCallback - function called when item drag starts
-   * @param (function} endMoveCallback - function called when item drag ends
+   * @param (function} startMoveCallback - function to be called when item drag starts
+   * @param (function} endMoveCallback - function to be called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
@@ -80,7 +82,7 @@ define( function( require ) {
       lineWidth: 0
     } );
 
-    // a transparant node overlaying the scale - defines a drop location
+    // a transparant node overlaying the scale - defines the valid drop area
     var dropWidth  = this.scaleNode.width  * DROP_ZONE_X_SCALE;
     var dropHeight = this.scaleNode.height * DROP_ZONE_Y_SCALE;
     // @private
@@ -96,9 +98,10 @@ define( function( require ) {
     this.costOnlyDisplayX = this.scaleNode.centerX;
     this.costUnitDisplayX = this.scaleNode.centerX - ( DISPLAY_SIZE.width / 2 ) - DISPLAY_SPACING;
 
+    // @private - used to 'open & close' the cost display
     this.showCostProperty = new Property( true );
 
-    // cost of items display, always visible
+    // cost of items display
     // @private
     this.costDisplayNode = new ValueDisplayNode( this.scale.costProperty, {
       centerX: this.costOnlyDisplayX,
@@ -110,7 +113,7 @@ define( function( require ) {
       hiddenValueText: costString
     } );
 
-    // weight of items display, visibility changes
+    // weight of items display, visibility changes based on item type
     // @private
     this.weightDisplayNode = new ValueDisplayNode( this.scale.weightProperty, {
       postText: lbsString,
@@ -142,7 +145,7 @@ define( function( require ) {
         self.costDisplayNode.centerX = self.costOnlyDisplayX;
       }
 
-      var itemNode = ItemNodeFactory.createItem( new Item( itemType, ( isFruit ? 1 : 2 ) ) );
+      var itemNode = ItemNodeFactory.createItemNode( new Item( itemType, ( isFruit ? 1 : 2 ) ) );
 
       // pre-compute stacked item positions
       var globalDropBounds = self.scaleTopNode.getGlobalBounds();
@@ -153,8 +156,8 @@ define( function( require ) {
       // save pre-colmputed staked positions (array of Vector2)
       self.stackedPositions = [];
 
-      // save the Y coordinate for moving higher items to lower positions - use a .XX string
-      self.stackedYPositions = [  itemY.toFixed( 2 ) ];
+      // save the Y coordinate for moving higher items to lower positions
+      self.stackedYPositions = [  Util.toFixed( itemY, 2 ) ];
 
       for (var i = 0; i < MAX_ITEMS; i++) {
 
@@ -166,7 +169,7 @@ define( function( require ) {
           itemX = localDropBounds.minX + NODE_X_SPACING;
           itemY -= itemNode.height - NODE_Y_SPACING;
 
-          self.stackedYPositions.push( itemY.toFixed( 2 ) );
+          self.stackedYPositions.push( Util.toFixed( itemY, 2 ) );
         }
       }
 
@@ -195,9 +198,9 @@ define( function( require ) {
       cornerRadius: 5,
       lineWidth: 0,
       align: 'center',
-      enableHideValue: false,
-      hideValueProperty: new Property( false ),
-      hiddenValueText: ''
+      enableHideValue: false,           // switch to show/hide the option to close the display
+      hideValueProperty: new Property( false ),  // property holding the visibility  of the value display
+      hiddenValueText: ''               // text to show when the value display is closed
     }, options );
 
     var self = this;
@@ -259,7 +262,8 @@ define( function( require ) {
     },
 
     /**
-     * Moves any out of place nodes back into a stacked position.
+     * Moves any out of place nodes back into a stacked positions. Nodes will slide from right to left, and fall
+     * from top to bottom to fill in and vacant spaces.
      * @public
      */
     adjustItemPositions: function( animate ) {
@@ -272,7 +276,8 @@ define( function( require ) {
       var updateNodes = [];
       var availablePositions = self.stackedPositions.slice( 0 );
 
-      // Filter out nodes that need to be repositioned, at the sme time figure out the available positions in the stack.
+      // Filter out only nodes that need to be repositioned, at the same time figure out the available positions
+      // in the stack.
       this.itemLayer.getChildren().forEach( function( itemNode ) {
 
         if ( itemArray.contains( itemNode.item ) ) {
@@ -310,7 +315,7 @@ define( function( require ) {
         var position = availablePositions[i];
 
         // only consider bottom positions
-        if( position.y.toFixed( 2 ) !== self.stackedYPositions[0] ) {
+        if( Util.toFixed( position.y, 2 ) !== self.stackedYPositions[0] ) {
           continue;
         }
 
@@ -318,7 +323,7 @@ define( function( require ) {
           var itemNode = allNodes[j];
 
           // only consider nodes that are not on the bottom
-          if( itemNode.item.position.y.toFixed( 2 ) !== self.stackedYPositions[0] ) {
+          if( Util.toFixed( itemNode.item.position.y, 2 ) !== self.stackedYPositions[0] ) {
 
             var nodeDistance = itemNode.item.position.distance( position );
             if ( nodeDistance < 1.5 * itemNode.width ) {
@@ -369,7 +374,7 @@ define( function( require ) {
         if ( !itemNodeExists( item ) ) {
 
           // create new item node
-          var itemNode = ItemNodeFactory.createItem( item, {
+          var itemNode = ItemNodeFactory.createItemNode( item, {
             moveStartCallback: self.startMoveCallback,
             moveEndCallback: self.endMoveCallback
           } );

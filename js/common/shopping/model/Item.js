@@ -1,8 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A specific instance of an item (i.e. apple, cucumber, blue candy) or collection (i.e. bag). Items with a counts > 1
- * are considered a collection.
+ * A specific instance of an item (i.e. apple, cucumber, blue candy) or group of multiple items (i.e. bag, count > 1).
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -27,8 +26,8 @@ define( function( require ) {
     Movable.call( this, { } );
 
     // @public (read-only)
-    this.type          = type;                    //(i.e. apple, cucumber, blue candy)
-    this.countProperty = new Property( count );
+    this.type          = type;                    // (i.e. apple, cucumber, blue candy)
+    this.countProperty = new Property( count );   // the number of items (or weight in pounds for candy) the instance represents
   }
 
   unitRates.register( 'Item', Item );

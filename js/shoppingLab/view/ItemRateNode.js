@@ -33,7 +33,7 @@ define( function( require ) {
 
   // constants
   var TEXT_FONT       = new PhetFont( 18 ); // Font to use for all text
-  var TEXT_MAX_WIDTH  = 125;
+  var TEXT_MAX_WIDTH  = 80;
   var DIVISOR_WIDTH   = 135;
   var X_MARGIN        = 20;
   var Y_MARGIN        = 0;

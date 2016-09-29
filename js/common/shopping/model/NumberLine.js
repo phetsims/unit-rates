@@ -1,7 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * Holds the items currently on the number line
+ * Derivied from URNumberLine. Holds the markers currently on the number line. This class adds in functionality to swap
+ * out the marker arrays based on the currently selected item type (i.e. apples, carrots, etc..)
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -18,6 +19,7 @@ define( function( require ) {
   /**
    * @param {Property.<ItemData>} itemDataProperty - the curently selected item
    * @param {Property.<number>} itemRateProperty - the curently selected item rate
+   * @param {Object} [options]
    * @constructor
    */
   function NumberLine( itemTypeProperty, itemRateProperty, options ) {

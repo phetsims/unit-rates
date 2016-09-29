@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A Node representation managing all the UI for an individual Challenge question & answer.
+ * The node for a single Challenge question. Each node uses a QuestionAnswer instance to determine correctness.
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -70,6 +70,7 @@ define( function( require ) {
       maxWidth: TEXT_MAX_WIDTH
     } );
 
+    // @protected - current value display
     var pattern = options.preValueString + '{0}' + options.postValueString;
     this.editNumberDisplay = new EditNumberDisplayNode( keypad, qna.valueProperty, pattern, {
         centerX: this.challengeText.centerX - HORIZONTAL_SPACING,
@@ -81,7 +82,7 @@ define( function( require ) {
         textColor: this.defaultTextColor
     } );
 
-    // @protected - alternate correct label
+    // @protected - alternate label to display when correct
     this.correctTextDisplay = new Text( this.qna.answerText , {
       centerX: this.challengeText.centerX,
       top: this.challengeText.bottom + 2 * VERICAL_SPACING,

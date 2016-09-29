@@ -23,7 +23,7 @@ define( function( require ) {
 
   // constants
   var DISPLAY_FONT    = new PhetFont( 14 );
-  var DISPLAY_SIZE    = new Dimension2( 125, 45 );
+  var DISPLAY_SIZE    = new Dimension2( 135, 45 );
   var DISPLAY_SPACING = 5;
 
   // strings
@@ -80,7 +80,7 @@ define( function( require ) {
       right:    contentNode.right,
       bottom:   this.showTimeButton.bottom,
       font:     DISPLAY_FONT,
-      maxWidth: 0.4 * DISPLAY_SIZE.width,
+      maxWidth: 0.32 * DISPLAY_SIZE.width,
       maxHeight: DISPLAY_SIZE.height
     } );
     contentNode.addChild( unitText );

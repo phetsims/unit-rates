@@ -2,7 +2,7 @@
 
 /**
  * This object is collection of constants that configure common shopping properties.
- * If you change something here, it will change everywhere* in the shopping simulation.
+ * If you change something here, it will change everywhere in the shopping simulations
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -18,8 +18,8 @@
     //----------------------------------------------------------------------------
     // Views
     //----------------------------------------------------------------------------
-    DEFAULT_CORRECT_PROMPT_COLOR:   'rgba(0,0,225,1)',
-    UNIT_RATE_CORRECT_PROMPT_COLOR: 'rgba(0,192,0,1)'
+    DEFAULT_CORRECT_PROMPT_COLOR:   'rgba(0,0,225,1)',    // Challenge question color
+    UNIT_RATE_CORRECT_PROMPT_COLOR: 'rgba(0,192,0,1)'     // Chanllenge Unit Rate question color
 
     //----------------------------------------------------------------------------
     // Models

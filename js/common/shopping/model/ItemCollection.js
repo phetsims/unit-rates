@@ -2,7 +2,7 @@
 
 /**
  * A collection of all different types of items (i.e. apple, cucumbers, blue candy). Specific type of items
- * are collected in their own ObservableArray. Specific arrays are mapped by item type.
+ * are collected in their own ObservableArray. Specific arrays are mapped by the item type.
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -23,8 +23,8 @@ define( function( require ) {
    */
   function ItemCollection() {
 
-    // @private - the collection of different types of items
-    this.itemsMap = {};
+    // @private - the collection of different arrays of items
+    this.itemsMap = {};  //  (i.e.  { 'apples' : [ item1, item2, .. itemN ], 'carrots': [] })
 
     // create empty item arrays
     this.initializeArrays();
@@ -49,8 +49,8 @@ define( function( require ) {
 
     /**
      * Creates a new item & adds it to the types specific array
-     * @param {ItemData} data
-     * @param {number} [count]
+     * @param {ItemData} data - contains the type of item to create (FIXME: refactor to just pass type)
+     * @param {number} count
      * @return {Item}
      * @public
      */
@@ -61,7 +61,7 @@ define( function( require ) {
     },
 
     /**
-     * Adds an existing item to the types specific array
+     * Adds an existing item to the type specific array
      * @param {Item} item
      * @public
      */
@@ -73,7 +73,7 @@ define( function( require ) {
     },
 
     /**
-     * Removes an item from the types specific array
+     * Removes an item from the type specific array
      * @param {Item} item
      * @public
      */
@@ -83,7 +83,7 @@ define( function( require ) {
     },
 
     /**
-     * Searches the type specific array for a matching item.
+     * Searches the type specific array for a matching item. An item is considered if both the type & count match.
      * @param {Item} item
      * @return {Item} - returns the matching item or null
      * @public
@@ -116,9 +116,9 @@ define( function( require ) {
     },
 
     /**
-     * Gets the number of items in the type specific array
+     * Gets the number of items in a type specific array.
      * @param {string} type
-     * @returns {number}
+     * @returns {number} - Note: this returns the sum of item.counts, not the number of items in the array
      * @protected
      */
     getNumberOfItemsWithType: function( type ) {
@@ -180,8 +180,18 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      this.itemsMap = {};
-      this.initializeArrays();
+      for (var type in this.itemsMap) {
+        this.resetItemType( type );
+      }
+    },
+
+    // This is currently never called
+    dispose: function() {
+      for (var type in this.itemsMap) {
+        var itemArray = this.itemsMap[ type ];
+        //itemArray.removeAllListeners(); // FIXME: this doesn't exist but would be nice if it did (similar to Property.unlinkAll() )
+        itemArray.dispose();
+      }
     }
 
   } ); // inherit

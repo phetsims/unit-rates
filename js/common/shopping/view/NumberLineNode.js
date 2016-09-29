@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A derived, shopping-specific, double number line. Basically handles adding/removing marker nodes.
+ * A derived, shopping-specific, double number line. Basically adds swapping x-axis labels based on item type
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -53,7 +53,7 @@ define( function( require ) {
 
     numberLine.removeAllMarkers();
 
-    // refresh on item change
+    // refresh on item type change
     numberLine.itemTypeProperty.link( function( itemType, oldType ) {
 
       // set number line labels

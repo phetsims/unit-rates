@@ -24,8 +24,7 @@ define( function( require ) {
   function Scale( itemTypeProperty, itemRateProperty ) {
 
     // @public (all)
-    ItemCollection.call( this, {
-    } );
+    ItemCollection.call( this, { } );
 
     var self = this;
 
@@ -40,7 +39,7 @@ define( function( require ) {
 
     // refresh on item change
     this.itemRateProperty.link( function( itemData, oldItemData ) {
-        self.updateScaleItemRate();
+        self.updateScale();
     } );
 
   }
@@ -52,7 +51,7 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
-     * Add local listener for item additions/removals. This is needed on initialization and on a reset all
+     * Add local listener for item additions/removals. This is only needed on initialization.
      * @protected
      */
     addArrayListeners: function() {
@@ -70,7 +69,7 @@ define( function( require ) {
     },
 
     /**
-     * Returns the total number of items on the scale
+     * Returns the total number of items on the scale for the current item type
      * @return {number}
      * @override @public
      */
@@ -79,7 +78,7 @@ define( function( require ) {
     },
 
     /**
-     * Adds an item to the types specific array
+     * Adds an item to the type specific array
      * Note: fruit types are a special case, they get expanded into indivdual items
      * @param {Item} item
      * @override @public
@@ -109,7 +108,7 @@ define( function( require ) {
     },
 
     /**
-     * Resets the current item type - basically removing all items of the current type from the scale
+     * Resets the current item type - basically removes all items of the current type from the scale
      * @public
      */
     resetCurrentItem: function() {
@@ -117,21 +116,21 @@ define( function( require ) {
     },
 
     /**
-     * Updates the rate of the items on currently on the scale
+     * Recalculates the cost and weight of the items on currently on the scale
      * @protected
      */
-    updateScaleItemRate: function() {
+    updateScale: function() {
       var self = this;
 
       self.costProperty.reset();
       self.weightProperty.reset();
 
-      // get the current array for the item type
       var cost = 0;
       var weight = 0;
+
+      // get the current array for the item type
       var itemArray = self.getItemsWithType( this.itemTypeProperty.value );
       itemArray.forEach( function( item ) {
-
         cost   += ( self.itemRateProperty.value * item.countProperty.value );
         weight += item.countProperty.value; // since candy is in bulk we just use fractional counts to represent weight
       } );
@@ -145,12 +144,11 @@ define( function( require ) {
      * @public
      */
     reset: function() {
+      ItemCollection.prototype.reset.call( this );
       this.costProperty.reset();
       this.weightProperty.reset();
-      ItemCollection.prototype.reset.call( this );
-      this.addArrayListeners();
     }
 
-  } );
+  } );  // inherit
 
-} );
+} );  // define

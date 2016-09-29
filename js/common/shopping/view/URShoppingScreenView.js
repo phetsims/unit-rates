@@ -35,8 +35,8 @@ define( function( require ) {
 
   /**
    * @param {ShoppingModel} model
-   * @param {boolean} enableHideScaleCost
-   * @param {function} [eraseNumberLineCallback]
+   * @param {boolean} enableHideScaleCost - flag to enable the option to close the scale value display
+   * @param {function} [eraseNumberLineCallback] - function to be called when the number line erase button is pressed
    * @constructor
    */
   function URShoppingScreenView( model, enableHideScaleCost, eraseNumberLineCallback ) {
@@ -47,7 +47,7 @@ define( function( require ) {
 
     this.model = model;
 
-    // properties
+    // @public - the scene type (fruit | produce | candy )
     // FIXME: scene & item randomly choosen @ startup (TBD as per current design document)
     this.sceneModeProperty = new Property( SceneMode.FRUIT );
 
@@ -59,6 +59,7 @@ define( function( require ) {
     this.addChild( this.keypad );
 
     // number line
+    // @public
     this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
       left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
       top:  this.layoutBounds.top  + URConstants.SCREEN_VERTICAL_MARGIN,
@@ -94,22 +95,24 @@ define( function( require ) {
 
     // shelf
     this.shelfNode = new ShelfNode( model.shelf, this.itemsLayer,
-                                    this.startUpdateItem.bind( this ), this.endUpdateItem.bind( this ), {
-      centerX: this.numberLineNode.centerX + 15,
-      bottom:  this.layoutBounds.bottom - URConstants.SCREEN_VERTICAL_MARGIN
+      this.startUpdateItem.bind( this ),
+      this.endUpdateItem.bind( this ), {
+        centerX: this.numberLineNode.centerX + 15,
+        bottom:  this.layoutBounds.bottom - URConstants.SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( this.shelfNode );
 
     // scale
     this.scaleNode = new ScaleNode( model.scale, this.itemsLayer,
-                                    this.startUpdateItem.bind( this ), this.endUpdateItem.bind( this ) , {
-      centerX: this.shelfNode.centerX,
-      bottom:  this.shelfNode.top - 75,
-      enableHideCost: enableHideScaleCost
+      this.startUpdateItem.bind( this ),
+      this.endUpdateItem.bind( this ) , {
+        centerX: this.shelfNode.centerX,
+        bottom:  this.shelfNode.top - 75,
+        enableHideCost: enableHideScaleCost
     } );
     this.addChild( this.scaleNode );
 
-    // remove button
+    // scale remove all items button
     var scaleRemoveButtonNode = new RectangularPushButton( {
       right:  this.scaleNode.left - URConstants.SCREEN_PANEL_SPACING,
       bottom: this.scaleNode.bottom,
@@ -137,7 +140,7 @@ define( function( require ) {
 
     this.addSubclassScreenNodes();
 
-    // scene buttons
+    // scene selection buttons
     var sceneControlButtons = new SceneButtonGroupNode( this.sceneModeProperty, {
       right:  this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN
@@ -180,25 +183,21 @@ define( function( require ) {
      * @protected
      */
     sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
-
       this.hideKeypad();
     },
 
     /*
-     * Updates the model based on where the item is on on the screen - i.e. on the scale or shelf or in no-man's land.
-     * Called on scene changes or when an item's node (i.e. individual items or bags) is moved to a new location
+     * Called before an item is dragged
      * @param {Node} itemNode - the item being moved.
      * @protected
      */
     startUpdateItem: function( itemNode ) {
-      // Move item back to the shelf
-      this.model.addScaleItemToShelf( itemNode.item );
-      this.scaleNode.adjustItemPositions( true );
     },
 
     /*
-     * Updates the model based on where the item is on on the screen - i.e. on the scale or shelf or in no-man's land.
-     * Called on scene changes or when an item's node (i.e. individual items or bags) is moved to a new location
+     * Called after an item is dropped. Updates the model based on where the item is on on the screen - i.e. on the
+     * scale or shelf or in no-man's land. Called on scene changes or when an item's node (i.e. individual items or
+     * bags) is moved to a new location
      * @param {Node} itemNode - the item being moved.
      * @protected
      */
@@ -206,7 +205,7 @@ define( function( require ) {
 
       var animate = true;
 
-      // Check node position - on scale, shelf or in no-man's land
+      // Check node position - on scale or in no-man's land
       if ( this.scaleNode.intersectsDropArea( itemNode.bounds ) ) {
 
         // Dropped on the scale
@@ -232,7 +231,6 @@ define( function( require ) {
         this.scaleNode.adjustItemPositions( animate );
       }
       else {
-
         // Move item back to the shelf
         this.model.addScaleItemToShelf( itemNode.item );
 
@@ -260,6 +258,7 @@ define( function( require ) {
     },
 
     /**
+     * Removed all movable items from the screen
      * @protected
      */
     removeAllItems: function() {
@@ -273,6 +272,7 @@ define( function( require ) {
     },
 
     /**
+     * Resizes the keypad close area to match that of the browser window.
      * @protected
      */
     onResize: function() {

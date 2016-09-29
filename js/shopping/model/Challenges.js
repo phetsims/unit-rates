@@ -100,7 +100,7 @@ define( function( require ) {
       }
       while ( questionSet === this.questionSet );
 
-       this.questionSet = questionSet;
+      this.questionSet = questionSet;
     },
 
     /**
@@ -122,7 +122,6 @@ define( function( require ) {
      * @public
      */
     populate: function() {
-
 
       // create questions & answers
       for( var key in ItemData ) {

@@ -1,8 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * Factory for creating the various item nodes (fruit, produce, candy, bags). These are generic for now and may be
- * replaced with static artwork at a later time.
+ * Factory for creating the various item nodes (fruit, produce, candy, bags).
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -49,10 +48,10 @@ define( function( require ) {
      * Creates a node of a specified size for specified item
      * @param {ItemData} item - the item to create (i.e. apple, carrot)
      * @param {Object} [options]
-     * @returns {Node}
+     * @returns {MovableNode}
      * @public
      */
-    createItem: function( item, options ) {
+    createItemNode: function( item, options ) {
 
       options = _.extend( {
         imageScale: -1,

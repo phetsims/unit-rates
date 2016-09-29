@@ -22,7 +22,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Vector2 = require( 'DOT/Vector2' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  //var Property = require( 'AXON/Property' );
+  var Util = require( 'DOT/Util' );
 
   // images
   var greenFlagImage = require( 'image!UNIT_RATES/green_flag.png' );
@@ -157,7 +157,8 @@ define( function( require ) {
     this.mileageText = new Text( '', {
       centerX:  this.finishPoint.x,
       top:      this.checkerFlagNode.bottom + MARKER_SIZE + 2,
-      font:     MILEAGE_FONT
+      font:     MILEAGE_FONT,
+      maxWidth: 2 * options.trackStartOffset
     } );
     childNodes.push( this.mileageText );
 
@@ -213,7 +214,7 @@ define( function( require ) {
       this.timer.centerX = this.finishPoint.x;
 
       // adjust the mileage text & location
-      var miles = ( ( this.finishPoint.x - this.startPoint.x ) / this.milesPerPixel ).toFixed( 0 );
+      var miles = Util.toFixed( ( this.finishPoint.x - this.startPoint.x ) / this.milesPerPixel, 0 );
       this.mileageText.setText( miles + ' ' + miString );
       this.mileageText.centerX = this.finishPoint.x;
 

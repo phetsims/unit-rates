@@ -1,7 +1,12 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A parent node (of baically two editable number displays) which represents a spot on the double number line.
+ * A number line marker node (of baically two editable number displays) which represents a spot on the double number line.
+ * A marker node has different appearence, which one is used is based on several property values. A marker maybe:
+ *  - Editable | non-editable
+ *  - High | low precision
+ *  - Out of Range
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -31,9 +36,9 @@ define( function( require ) {
 
   /**
    * @param {URNumberLineMarker} marker
-   * @param {Vector2} position - x,y position on the number line
+   * @param {Vector2} position - (x,y) position on the number line
    * @param {KeypadPanelNode} keypad - shared keypad
-   * @param {function} updateFunction - number line update function
+   * @param {function} updateFunction - the parent number line update function, basically called when the node needs to be moved
    * @param {Object} [options]
    * @constructor
    */
@@ -56,11 +61,11 @@ define( function( require ) {
     this.keypad   = keypad;
     this.updateFunction = updateFunction;
 
-    // @public (protected)
+    // @protected
     this.largeHeight = options.largeHeight;
     this.smallHeight = options.smallHeight;
 
-    // top label - cost
+    // @protected - top label
     this.topNumberDisplay = new EditNumberDisplayNode( keypad, this.marker.topQnA.valueProperty, options.topPattern, {
         centerX:          -2,
         bottom:           -this.smallHeight,
@@ -74,6 +79,7 @@ define( function( require ) {
         minWidth:         100
     } );
 
+    // @protected - both
     this.smallLineShape = new Shape()
       .moveTo( 0, -this.smallHeight )
       .lineTo( 0,  this.smallHeight );
@@ -89,7 +95,7 @@ define( function( require ) {
         pickable:   false
       } );
 
-    // bottom label - unit
+    // @protected - bottom label
     this.bottomNumberDisplay = new EditNumberDisplayNode( keypad, this.marker.bottomQnA.valueProperty, options.bottomPattern, {
         centerX:          -2,
         top:              this.smallHeight,
@@ -107,7 +113,7 @@ define( function( require ) {
 
     MovableNode.call( this, marker, position, options );
 
-    // check answers on user input
+    // change appearence on user input
     this.qnaMultilink = Property.multilink( [ this.marker.topQnA.valueProperty, this.marker.bottomQnA.valueProperty, this.marker.outOfRangeProperty ],
       function( topProperty, bottomProperty, outOfRangeProperty ) {
         self.checkProperties();
@@ -161,8 +167,8 @@ define( function( require ) {
         }
 
         // edit button
-        this.topNumberDisplay.hideEditButton();
-        this.bottomNumberDisplay.hideEditButton();
+        this.topNumberDisplay.setEditButtonVisible( false );
+        this.bottomNumberDisplay.setEditButtonVisible( false );
 
         // background color
         this.topNumberDisplay.setBackgroundColor( TRANSPARENT_COLOR );
@@ -181,8 +187,8 @@ define( function( require ) {
         this.bottomNumberDisplay.top =  this.smallHeight;
 
         // edit button
-        this.topNumberDisplay.showEditButton();
-        this.bottomNumberDisplay.showEditButton();
+        this.topNumberDisplay.setEditButtonVisible( true );
+        this.bottomNumberDisplay.setEditButtonVisible( true );
 
         // text color
         if ( this.marker.topQnA.isAnswerValid() ) {
