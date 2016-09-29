@@ -69,7 +69,7 @@ define( function( require ) {
     step: function( dt ) {
       if ( this.runningProperty.value && dt < 1 ) {
         // Scale sim dt to slow things down
-        var scaleDt = ( dt / RacingLabConstants.SIM_DT_SCALE );
+        var scaleDt = ( dt / RacingLabConstants.RACING_DT_SCALE );
         this.elapsedTimeProperty.value += scaleDt;
       }
     },

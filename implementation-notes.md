@@ -6,6 +6,10 @@ items are managed at the top-most model level (i.e. URShoppingModel & RacingLabM
 
 - Positioning & tween animation for all movable nodes is done in the common/model/Movable base class
 
+- The touch area for all movable objects is currently the bounds of the image being used. This is problematic when trying
+adjust the touch area. Right now you have to resize the image (see. Racing Lab checkered_flag.png).
+There's got to be a better way to handle this.
+
 - When profiling memory usage, if asserts are enabled the sim will leak memory because of the
 SUN/buttons/RectangularPushButton's being used. Apparently SUN buttons dispose fails when assertions are enabled, so the
 disposes are turned off if asserts are turned on (see sun/#212)
@@ -22,3 +26,4 @@ still not getting disposed of properly.
 - Any item that is not dragged to the scale drop zone is automatically moved back to the shelf.
 
 :RACING LAB:
+
