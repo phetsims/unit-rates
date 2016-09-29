@@ -141,8 +141,8 @@ define( function( require ) {
       listener: function() {
         self.resetAll();
       },
-      right:  this.layoutBounds.maxX - 10,
-      bottom: this.layoutBounds.maxY - 10
+      right:  this.layoutBounds.maxX - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      bottom: this.layoutBounds.maxY - URConstants.SCREEN_HORIZONTAL_MARGIN
     } );
     this.addChild( resetAllButton );
 
