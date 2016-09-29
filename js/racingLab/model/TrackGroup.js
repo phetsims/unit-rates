@@ -24,8 +24,8 @@ define( function( require ) {
   function TrackGroup( elapsedTimeProperty, flagArrowsVisibleProperty ) {
 
     PropertySet.call( this, {
-      miles:              200,                            // used in rate adjustment spinner
-      milesRange:         new RangeWithValue( 20, 200 ),  // used in rate adjustment spinner
+      miles:              100,                            // used in rate adjustment spinner
+      milesRange:         new RangeWithValue( 20, 100 ),  // used in rate adjustment spinner
       hours:              1,                              // used in rate adjustment spinner
       hoursRange:         new RangeWithValue( 1, 10 ),    // used in rate adjustment spinner
       rate:               200,
