@@ -16,7 +16,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // constants
-  var MAX_MILES = 100;
+  var MAX_MILES = 200;
 
   /**
    * @constructor
@@ -24,11 +24,11 @@ define( function( require ) {
   function TrackGroup( elapsedTimeProperty, flagArrowsVisibleProperty ) {
 
     PropertySet.call( this, {
-      miles:              100,                            // used in rate adjustment spinner
-      milesRange:         new RangeWithValue( 20, 100 ),  // used in rate adjustment spinner
+      miles:              200,                            // used in rate adjustment spinner
+      milesRange:         new RangeWithValue( 20, 200 ),  // used in rate adjustment spinner
       hours:              1,                              // used in rate adjustment spinner
       hoursRange:         new RangeWithValue( 1, 10 ),    // used in rate adjustment spinner
-      rate:               100,                            // teh starting rate - based on the above spinner defaults
+      rate:               200,
       carFinished:        false,
       numberLineMaxHours: 1,
       trackPixelLength:   600,
