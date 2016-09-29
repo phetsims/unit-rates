@@ -210,7 +210,8 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
-     * Sets length of the number line in pixels
+     * Sets length of the number line in pixels. The idea here was that you could have the full number line area defined
+     * by the bounds (this.graphBounds), but you could have shorter X-axis lengths contained within those bounds
      * @param {number} length
      * @public
      */
@@ -320,8 +321,7 @@ define( function( require ) {
 
     /**
      * Applies a callback function to each marker in the number line
-     * Note: Adding | deleting markers here is not allowed!
-     *
+     * Note: Adding or deleting markers here is not allowed!
      * @param callback function(item)
      * @public
      */

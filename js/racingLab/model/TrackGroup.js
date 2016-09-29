@@ -89,6 +89,10 @@ define( function( require ) {
       this.hoursProperty.reset();
       this.hoursRangeProperty.reset();
       this.rateProperty.reset();
+      this.numberLineMaxHoursProperty.reset();
+      this.trackPixelLengthProperty.reset();
+      this.trackMilesProperty.reset();
+      this.trackHoursProperty.reset();
       this.carFinishedProperty.reset();
     }
 

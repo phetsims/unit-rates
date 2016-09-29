@@ -146,7 +146,7 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    this.carCountButtons = new RadioButtonGroup( this.model.carCountProperty, [
+    this.trackCountButtons = new RadioButtonGroup( this.model.trackCountProperty, [
       { value: 1, node: new Image( oneCarSceneImage, { scale: 0.22 } ) },
       { value: 2, node: new Image( twoCarSceneImage, { scale: 0.22 } ) }
     ], {
@@ -156,12 +156,12 @@ define( function( require ) {
       baseColor:    'white',
       spacing:       11
     } );
-    this.addChild( this.carCountButtons );
+    this.addChild( this.trackCountButtons );
 
     this.keypadCloseArea.moveToFront();
     this.keypad.moveToFront();
 
-    this.model.carCountProperty.link( function( value, oldValue ) {
+    this.model.trackCountProperty.link( function( value, oldValue ) {
       self.trackGroup2Node.visible = ( value === 2 );
     } );
 

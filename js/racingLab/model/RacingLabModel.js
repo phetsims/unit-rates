@@ -1,8 +1,10 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
+ * The Racing lab model contains the 2 individual track models and uses those to determine when both races are finished.
+ * It also scales the simulation dt values to slow down the overall simulation.
  *
- * @author TBD
+ * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
   'use strict';
@@ -21,7 +23,7 @@ define( function( require ) {
   function RacingLabModel() {
 
     PropertySet.call( this, {
-      carCount:           1,
+      trackCount:           1,        // number of cars or tracks
       running:            false,
       elapsedTime:        0.0,
       flagArrowsVisible:  true
@@ -36,10 +38,10 @@ define( function( require ) {
     // update running state
     Property.lazyMultilink( [ this.trackGroup1.carFinishedProperty, this.trackGroup2.carFinishedProperty ],
       function( car1Finished, car2Finished ) {
-        if( self.carCountProperty.value === 1 ) {
+        if( self.trackCountProperty.value === 1 ) {
           self.runningProperty.value = !car1Finished;
         }
-        else if( self.carCountProperty.value === 2 ) {
+        else if( self.trackCountProperty.value === 2 ) {
           self.runningProperty.value = !( car1Finished && car2Finished );
         }
         else {
@@ -90,9 +92,10 @@ define( function( require ) {
      * @public
      */
     reset: function() {
+      PropertySet.prototype.reset.call( this );
       this.trackGroup1.reset();
       this.trackGroup2.reset();
-      PropertySet.prototype.reset.call( this );
+      this.restart();
     }
 
   } ); // inherit

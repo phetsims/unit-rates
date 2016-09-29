@@ -267,7 +267,7 @@ define( function( require ) {
       this.resetTrack();
       this.checkerFlagNode.item.setPosition( this.finishPoint.x, this.finishPoint.y, false );
       this.updateTrack();
-      this.updateCarTimer();
+      this.updateCarTimer(0);
     }
 
   } ); // inherit
