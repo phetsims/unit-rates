@@ -16,6 +16,7 @@ define( function( require ) {
   // constants
 
   /**
+   * @param {Object} [options]
    * @constructor
    */
   function Movable( options ) {

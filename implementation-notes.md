@@ -19,11 +19,14 @@ still not getting disposed of properly.
 
 :SHOPPING & SHOPPING LAB:
 
+- Most functionality is in common as the Shopping & Shopping Lab screens are very similar.
+
 - The main models (Shelf, Scale & Number Line) are all dervived from ItemCollection which holds multiple arrays of items
 (i.e. apples, carrots, etc.. ). Instanced of individual items are moved from one model to another when a user drags them.
 (i.e. from shelf to scale or vice versa). The item arrays are switched in each model when the itemTypeProperty changes.
 
-- Any item that is not dragged to the scale drop zone is automatically moved back to the shelf.
+- Any item that is not dragged to the scale drop zone is automatically moved back to the shelf. This is initiated in
+common/shopping/model/URShoppingModel
 
 :RACING LAB:
 

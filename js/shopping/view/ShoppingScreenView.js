@@ -1,8 +1,9 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * The main shopping screen layout and top level behaviors
- * (i.e. scene selection, moving items between shelf/scale, reset, etc.)
+ * The main shopping screen This is derivied from URShoppingScreenView and adds the item combobox and challenge panel
+ * to it.
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

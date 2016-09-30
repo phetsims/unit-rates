@@ -18,13 +18,13 @@
     //----------------------------------------------------------------------------
     // Views
     //----------------------------------------------------------------------------
-    TRACK_NUMBER_LINE_OFFSET:   55,
+    TRACK_NUMBER_LINE_OFFSET:   55,     // the offset of the start of X=0 (aka. the space for the edit marker)
     TRACK_NUMBER_LINE_WIDTH:    670,
 
     //----------------------------------------------------------------------------
     // Models
     //----------------------------------------------------------------------------
-    RACING_DT_SCALE:             1.75
+    RACING_DT_SCALE:             1.75   // the scale factor used to slow down the sim.
 
   };
 

@@ -1,8 +1,9 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * Displays the scale and any items that were added to it. Also displays the cost for all items (& weight for candy).
- * The 'top' portion of the scale is also considered a 'drop-zone' for items being dragged from the shelf.
+ * Node used to display a timer value. This class does no timing calulations itself, simply tacks on a time unit
+ * string to a property value and displays it.
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -28,14 +29,11 @@ define( function( require ) {
   var hoursString = require( 'string!UNIT_RATES/hours' );
 
   /**
-   * Node used to display an elapsed time (i.e. hours), in a 'collapsable' panel
-   * @param {Property.<number>} elapsedTimeProperty
-   * @param {Property.<boolean>} disabledProperty
    * @param {Object} [options]
    * @returns {Panel}
    * @private
    */
-  function TimerNode( elapsedTimeProperty, disabledProperty, options ) {
+  function TimerDisplayNode( options ) {
 
     options = _.extend( {
       minWidth:         DISPLAY_SIZE.width,
@@ -44,8 +42,8 @@ define( function( require ) {
       cornerRadius:     5,
       lineWidth:        1.5,
       align:            'left',
-      showTimeProperty: new Property( true ),
-      hiddenTimeText:   ''
+      showTimeProperty: new Property( true ), // property used to toggle the display of the timer value or 'hiddenTimeText'
+      hiddenTimeText:   ''  // the text show when the timer value is hidden
     }, options || {} );
 
     var self = this;
@@ -56,7 +54,6 @@ define( function( require ) {
     // @private - all
     this.showTimeProperty = options.showTimeProperty;
     this.hiddenTimeText   = options.hiddenTimeText;
-    this.disabledProperty = disabledProperty;
 
     var contentNode = new Node();
 
@@ -67,7 +64,7 @@ define( function( require ) {
     } );
     contentNode.addChild( this.showTimeButton );
 
-    // @private
+    // @private - this indirectly is set via the displayValueProperty
     var timerText = new Text( '-', {
       left:     this.showTimeButton.right + DISPLAY_SPACING,
       bottom:   this.showTimeButton.bottom,
@@ -81,7 +78,6 @@ define( function( require ) {
 
     // update timer text
     Property.multilink( [ this.displayValueProperty, this.showTimeProperty ], function( displayValue, showTime ) {
-
       if( !showTime ) {
         timerText.setText( self.hiddenTimeText );
       } else {
@@ -90,16 +86,16 @@ define( function( require ) {
     } );
   }
 
-  unitRates.register( 'TimerNode', TimerNode );
+  unitRates.register( 'TimerDisplayNode', TimerDisplayNode );
 
-  return inherit( Panel, TimerNode, {
+  return inherit( Panel, TimerDisplayNode, {
 
     /**
      * Resets the node to it default
      * @public
      */
     reset: function() {
-      this.hideTimeProperty.reset();
+      this.showTimeProperty.reset();
     }
 
   } );  // inherit

@@ -1,8 +1,9 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
+ * Shopping lab model
  *
- * @author TBD
+ * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
   'use strict';

@@ -193,8 +193,8 @@ define( function( require ) {
 
     /**
      * Called when the user selected a new item type (i.e. "apples", "carrots", "red candy")
-     * @param {Property.<ItemData>} itemData - the item data for the selected item
-     * @param {Property.<ItemData>} itemData - the item data for the previously item
+     * @param {string} itemType - the curently selected item type
+     * @param {string} oldType - the previously selected item type
      * @private
      */
     itemSelectionChanged: function( itemType, oldType ) {
@@ -229,8 +229,8 @@ define( function( require ) {
     /**
      * Called when the user changes the total cost or item count
      * Changes the unit rate for the item currently used in the sim
-     * @param {Property.<number>} cost - total cost
-     * @param {Property.<number> }count - number of items
+     * @param {<number>} cost - total cost
+     * @param {<number> }count - number of items
      * @private
      */
     rateChanged: function( cost, count ) {

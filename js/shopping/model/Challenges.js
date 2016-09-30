@@ -19,7 +19,7 @@ define( function( require ) {
   var Random = require( 'DOT/Random' );
   var Util = require( 'DOT/Util' );
 
-  // strings
+  // strings - lots of 'em
   var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
   var costOfQuestionString = require( 'string!UNIT_RATES/costOfQuestion' );
   var forQuestionString = require( 'string!UNIT_RATES/forQuestion' );
@@ -142,7 +142,8 @@ define( function( require ) {
     },
 
     /**
-     * Re-populates the initial questions/values for the current item type (i.e. apples, carrots, red candy).
+     * Re-populates the initial questions/values for the current item type (i.e. apples, carrots, red candy). This
+     * also qurrently selects a random question set different than the one previously set.
      * @public
      */
     refresh: function() {
@@ -183,7 +184,8 @@ define( function( require ) {
     },
 
     /**
-     * Generates a set (currently 4) of challenge questions for a specific item type.
+     * Generates a set (currently 4) of challenge questions for a specific item type. Fruit & produce are the same type
+     * of questions but candy is different.
      * @param {ItemData} - itemData
      * @private
      */
@@ -299,7 +301,7 @@ define( function( require ) {
     },
 
     /**
-     * Retrives the name of an item from it's type
+     * Retrives the correct version of name for an item from it's type
      * @param {Item.type} type - the item type (i.e. apples, carrots, red candy)
      * @param {boolean} plural
      * @param {boolean} capitalize
@@ -356,7 +358,7 @@ define( function( require ) {
 
     /**
      * Gets the items assocaited with all the correctly answered challenge questions
-     * @return {string} itemType
+      * @return {Array.<QuestionAnswer>}
      * @public
      *
      */
@@ -375,9 +377,10 @@ define( function( require ) {
     },
 
     /**
-     * Generate an item with a random count in the range [1 - max] not in the 'taken' list
-     * FIXME: when available, use design document Challenge prompt data based on itemType
-     *
+     * Generate an item with a count set from the ChallengeData
+     * @return {string} itemType
+     * @param {number} setNumber - set (0|1|2|3)
+     * @param {number} promptNumber - prompt (0|1|2)
      * @return {Item}
      * @private
      *
@@ -385,6 +388,9 @@ define( function( require ) {
     getPromptItem: function( itemType, setNumber, promptNumber ) {
 
       var count = 0;
+
+      assert && assert( (setNumber < 4), 'Invalid challenge set number' );
+      assert && assert( (promptNumber < 3), 'Invalid challenge prompt number' );
 
       switch( itemType ) {
         case ItemData.APPLES.type:

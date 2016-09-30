@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- *
+ * The entire racing lab screen.
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -60,6 +60,7 @@ define( function( require ) {
     this.addChild( this.keypad );
     this.keypad.hide();
 
+    // top track
     this.trackGroup1Node = new TrackGroupNode( model.trackGroup1, blueCarImage, this.keypad, {
       left:             URConstants.SCREEN_PANEL_SPACING,
       top:              URConstants.SCREEN_VERTICAL_MARGIN,
@@ -71,6 +72,7 @@ define( function( require ) {
     } );
     this.addChild( this.trackGroup1Node );
 
+    // bottom track
     this.trackGroup2Node = new TrackGroupNode( model.trackGroup2, redCarImage, this.keypad, {
         left:             URConstants.SCREEN_PANEL_SPACING,
         top:              this.trackGroup1Node.bottom + 5,
@@ -93,6 +95,7 @@ define( function( require ) {
     } );
     this.addChild( this.goStopButton );
 
+    // restart button which moves the car back to the start line. Is only visible when not racing
     this.restartButton = new RectangularPushButton( {
       right:              this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
       centerY:            this.goStopButton.centerY,
@@ -101,7 +104,7 @@ define( function( require ) {
       minHeight:          45,
       cornerRadius:       4,
       baseColor:          '#A9D8FD',
-      xMargin:            8, // should be visibly greater than yMargin, see issue #109
+      xMargin:            8,
       yMargin:            5,
       touchAreaXDilation: 0,
       touchAreaYDilation: 0,
@@ -119,7 +122,7 @@ define( function( require ) {
     this.keypad.right   = this.width;
     this.keypad.centerY = this.centerY;
 
-    // @protected - covers entire screen, uses pick to close keypad
+    // @protected - covers entire screen, uses picking to close keypad, 'visible' only when the keypad is visible
     this.keypadCloseArea = new Rectangle( 0, 0, window.innerWidth, window.innerHeight, { visible: false } );
     this.addChild( this.keypadCloseArea );
 
@@ -146,6 +149,7 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
+    // 1 or 2 car track selection buttons
     this.trackCountButtons = new RadioButtonGroup( this.model.trackCountProperty, [
       { value: 1, node: new Image( oneCarSceneImage, { scale: 0.22 } ) },
       { value: 2, node: new Image( twoCarSceneImage, { scale: 0.22 } ) }
@@ -158,13 +162,16 @@ define( function( require ) {
     } );
     this.addChild( this.trackCountButtons );
 
+    // layer thing correctly
     this.keypadCloseArea.moveToFront();
     this.keypad.moveToFront();
 
+    // show/hide the 2nd track based ont eh track count
     this.model.trackCountProperty.link( function( value, oldValue ) {
       self.trackGroup2Node.visible = ( value === 2 );
     } );
 
+    // show/hide the restart button, change the go/stop button color
     this.model.runningProperty.lazyLink( function( value, oldValue ) {
       self.restartButton.visible = ( !value && !self.model.atStart() );
       self.goStopButton.baseColor = ( value ? '#6D6E70' :  '#85d4a6' );
@@ -176,6 +183,7 @@ define( function( require ) {
   return inherit( ScreenView, RacingLabScreenView, {
 
     /**
+     * Hide the keypad and clear it's listeners
      * @protected
      */
     hideKeypad: function() {
@@ -204,6 +212,7 @@ define( function( require ) {
     },
 
     /**
+     * Resizes the keypad's rentangular pick area to match the full screen of the browser.
      * @protected
      */
     onResize: function() {

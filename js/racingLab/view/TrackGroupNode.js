@@ -1,6 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
+ * Node encompassing the number line, race track and rate adjustment panel.
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -24,6 +25,8 @@ define( function( require ) {
   /**
    * @param {TrackGroup} model
    * @param {string} carImageName
+   * @param {KeypadPanelNode} shared keypad
+   * @param {Object} [options]
    * @constructor
    */
   function TrackGroupNode( model, carImageName, keypad, options ) {

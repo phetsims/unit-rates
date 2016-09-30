@@ -24,9 +24,9 @@ define( function( require ) {
 
     PropertySet.call( this, {
       trackCount:           1,        // number of cars or tracks
-      running:            false,
-      elapsedTime:        0.0,
-      flagArrowsVisible:  true
+      running:            false,      // is a race currently running
+      elapsedTime:        0.0,        // elapsed time in hours
+      flagArrowsVisible:  true        // are the green flags around teh finish flag visible
     } );
 
     var self = this;
@@ -35,7 +35,7 @@ define( function( require ) {
     this.trackGroup1 = new TrackGroup( this.elapsedTimeProperty, this.flagArrowsVisibleProperty );
     this.trackGroup2 = new TrackGroup( this.elapsedTimeProperty, this.flagArrowsVisibleProperty );
 
-    // update running state
+    // update race running state
     Property.lazyMultilink( [ this.trackGroup1.carFinishedProperty, this.trackGroup2.carFinishedProperty ],
       function( car1Finished, car2Finished ) {
         if( self.trackCountProperty.value === 1 ) {
@@ -57,6 +57,7 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
+     * Returns if the model is in teh sstart position or not
      * @return {boolean}
      * @public
      */
@@ -65,6 +66,7 @@ define( function( require ) {
     },
 
     /**
+     * Simulation time step
      * {number} dt - time step
      * @public
      */
@@ -88,7 +90,7 @@ define( function( require ) {
     },
 
     /**
-     * Resets the challenges questions to all unanswered
+     * Resets the model to it's initial state
      * @public
      */
     reset: function() {

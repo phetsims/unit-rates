@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * Data for all the challenge prompts
+ * Data for the challenge prompts. Note: question #1 is always the unit-rate and that data is not contained here.
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -12,10 +12,10 @@ define( function( require ) {
 
   var ChallengeData = Object( {
     APPLES: [
-      [ 10, 6, 8 ],
-      [ 10, 16, 13 ],
-      [ 15, 9, 7 ],
-      [ 15, 4, 9 ]
+      [ 10, 6, 8 ],     // set A - [ question#2, question#3, question#4 ]
+      [ 10, 16, 13 ],   // set B
+      [ 15, 9, 7 ],     // set C
+      [ 15, 4, 9 ]      // set D
     ],
     LEMONS: [
       [ 10,4, 14 ],

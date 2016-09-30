@@ -20,7 +20,6 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var AccordionBox = require( 'SUN/AccordionBox' );
   var Property = require( 'AXON/Property' );
-  //var Util = require( 'DOT/Util' );
 
   // strings
   var milesString = require( 'string!UNIT_RATES/miles' );
@@ -53,13 +52,14 @@ define( function( require ) {
 
     this.groupModel = model;
 
+    // the content node for the AccordionBox
     this.contentNode = new Node();
 
     // layout adjustment
     var strut = new HStrut( DIVISOR_WIDTH + 2 * X_MARGIN );   // This will set the width of the panel
     this.contentNode.addChild( strut );
 
-    // select the rate for the currently selected item - no dispose as these never go away
+    // change the rate when either miles/hours spinner changes - no dispose as these never go away
     Property.lazyMultilink( [ this.groupModel.milesProperty, this.groupModel.hoursProperty ], this.rateChanged.bind( this ) );
 
     var pickerOptions = {
@@ -76,7 +76,7 @@ define( function( require ) {
     this.milesPicker = new NumberPicker(this.groupModel.milesProperty, this.groupModel.milesRangeProperty, _.extend ( {
       left:         X_MARGIN,
       top:          Y_MARGIN,
-      upFunction:   function() { return self.groupModel.milesProperty.get() + 5; },
+      upFunction:   function() { return self.groupModel.milesProperty.get() + 5; }, // move miles in increments of 5
       downFunction: function() { return self.groupModel.milesProperty.get() - 5; }
     }, pickerOptions ) );
     this.contentNode.addChild( this.milesPicker );
@@ -137,9 +137,9 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
-     * Called when the user changes the miles or hours
-     * @param {Property.<number>} miles
-     * @param {Property.<number> } hours
+     * Called when the user changes the miles or hours, updates the current unit rate
+     * @param {number} miles
+     * @param {number} hours
      * @private
      */
     rateChanged: function( miles, hours ) {
@@ -147,7 +147,7 @@ define( function( require ) {
     },
 
     /**
-     * Resets the challenges questions to all unanswered
+     * Resets the cnode to it's initial state
      * @public
      */
     reset: function() {

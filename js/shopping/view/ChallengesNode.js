@@ -36,7 +36,7 @@ define( function( require ) {
    * @param {Challenges} challenges - the challenges model
    * @param {NumberKeypad} keypad - shared keypad
    * @param {number} fixedWidth - the fixed width of the node
-   * @param {function} onPopulateCallback - called everytime the Node is populated
+   * @param {function()} onPopulateCallback - called everytime the Node is populated
    * @param {Object} [options]
    * @constructor
    */

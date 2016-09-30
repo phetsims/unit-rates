@@ -1,8 +1,9 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
+ * Racing Lab screen
  *
- * @author TBD
+ * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
   'use strict';

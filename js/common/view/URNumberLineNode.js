@@ -37,7 +37,7 @@ define( function( require ) {
 
   /**
    * @param {URNumberLine} numberLine
-   * @param {KeypadPanelNode} keypad
+   * @param {KeypadPanelNode} shared keypad
    * @param {Object} [options]
    * @constructor
    */
