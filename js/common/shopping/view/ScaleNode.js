@@ -33,15 +33,15 @@ define( function( require ) {
   var scaleImage = require( 'image!UNIT_RATES/scale.png' );
 
   // constants
-  var MAX_ITEMS             = 16;                       // The max # items to be stacked on the scale - ever!
-  var DROP_ZONE_X_SCALE     = 1.05;                     // How much bigger the drop zone width is from the image
-  var DROP_ZONE_Y_SCALE     = 2.25;                     // How much bigger the drop zone height is from the image
-  var NODE_X_SPACING        = 0;                        // hortizontal distance between stacked items
-  var NODE_Y_SPACING        = 5;                        // vertical distance between stacked items
+  var MAX_ITEMS = 16;                       // The max # items to be stacked on the scale - ever!
+  var DROP_ZONE_X_SCALE = 1.05;                     // How much bigger the drop zone width is from the image
+  var DROP_ZONE_Y_SCALE = 2.25;                     // How much bigger the drop zone height is from the image
+  var NODE_X_SPACING = 0;                        // horizontal distance between stacked items
+  var NODE_Y_SPACING = 5;                        // vertical distance between stacked items
   var DISPLAY_BOTTOM_OFFSET = 32;                       // the offset for the cost & weight displays (& drop zone)
-  var DISPLAY_SPACING       = 10;                       // horizontal space beteen mutliple displays
-  var DISPLAY_FONT          = new PhetFont( 20 );
-  var DISPLAY_SIZE          = new Dimension2( 70, 40 );
+  var DISPLAY_SPACING = 10;                       // horizontal space between multiple displays
+  var DISPLAY_FONT = new PhetFont( 20 );
+  var DISPLAY_SIZE = new Dimension2( 70, 40 );
 
   // strings
   var costString = require( 'string!UNIT_RATES/cost' );
@@ -51,45 +51,45 @@ define( function( require ) {
   /**
    *
    * @param {Scale} scale - model
-   * @param {Node} itemLayer - a container node which holds the item nodes. Used here for local posiitoning of items
-   * @param (function} startMoveCallback - function to be called when item drag starts
-   * @param (function} endMoveCallback - function to be called when item drag ends
+   * @param {Node} itemLayer - a container node which holds the item nodes. Used here for local positioning of items
+   * @param {function} startMoveCallback - function to be called when item drag starts
+   * @param {function} endMoveCallback - function to be called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
   function ScaleNode( scale, itemLayer, startMoveCallback, endMoveCallback, options ) {
 
     options = options || {
-      enableHideCost: false
-    };
+        enableHideCost: false
+      };
 
     var self = this;
 
-    this.scale              = scale;
-    this.itemLayer          = itemLayer;
-    this.startMoveCallback  = startMoveCallback;
-    this.endMoveCallback    = endMoveCallback;
+    this.scale = scale;
+    this.itemLayer = itemLayer;
+    this.startMoveCallback = startMoveCallback;
+    this.endMoveCallback = endMoveCallback;
 
     // load the scale image
     this.scaleNode = new Image( scaleImage );
 
-    // a transparant node with the approximate shape of the top of the scale - used for positioning dropped items
+    // a transparent node with the approximate shape of the top of the scale - used for positioning dropped items
     // @private
     this.scaleTopNode = new Path( new Shape()
-       .ellipse( this.scaleNode.centerX, this.scaleNode.top + 12,
+      .ellipse( this.scaleNode.centerX, this.scaleNode.top + 12,
         this.scaleNode.width * 0.4, this.scaleNode.height * 0.1, 0 ), {
       //fill: 'rgba(0,255,0,0.5)', // uncomment to see top zone
       lineWidth: 0
     } );
 
-    // a transparant node overlaying the scale - defines the valid drop area
-    var dropWidth  = this.scaleNode.width  * DROP_ZONE_X_SCALE;
+    // a transparent node overlaying the scale - defines the valid drop area
+    var dropWidth = this.scaleNode.width * DROP_ZONE_X_SCALE;
     var dropHeight = this.scaleNode.height * DROP_ZONE_Y_SCALE;
     // @private
     this.dropNode = new Path( new Shape()
-        .rect( this.scaleNode.left - ( dropWidth  - this.scaleNode.width ) / 2,
-               this.scaleNode.top  - ( dropHeight - this.scaleNode.height ),
-               dropWidth, dropHeight - DISPLAY_BOTTOM_OFFSET ), {
+      .rect( this.scaleNode.left - ( dropWidth - this.scaleNode.width ) / 2,
+        this.scaleNode.top - ( dropHeight - this.scaleNode.height ),
+        dropWidth, dropHeight - DISPLAY_BOTTOM_OFFSET ), {
       //fill: 'rgba(255,255,0,0.5)', // uncomment to see drop zone
       lineWidth: 0
     } );
@@ -129,9 +129,9 @@ define( function( require ) {
     // refresh on item change
     scale.itemTypeProperty.link( function( itemType, oldType ) {
 
-      var isFruit = ( itemType === ItemData.APPLES.type  || itemType === ItemData.LEMONS.type ||
+      var isFruit = ( itemType === ItemData.APPLES.type || itemType === ItemData.LEMONS.type ||
                       itemType === ItemData.ORANGES.type || itemType === ItemData.PEARS.type );
-      var isCandy = ( itemType === ItemData.RED_CANDY.type   || itemType === ItemData.PURPLE_CANDY.type ||
+      var isCandy = ( itemType === ItemData.RED_CANDY.type || itemType === ItemData.PURPLE_CANDY.type ||
                       itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type );
 
       // show/hide weight display for candy only
@@ -149,17 +149,17 @@ define( function( require ) {
 
       // pre-compute stacked item positions
       var globalDropBounds = self.scaleTopNode.getGlobalBounds();
-      var localDropBounds  = self.itemLayer.globalToParentBounds( globalDropBounds );
+      var localDropBounds = self.itemLayer.globalToParentBounds( globalDropBounds );
       var itemX = localDropBounds.minX - itemNode.width / 2 + NODE_X_SPACING;
       var itemY = localDropBounds.centerY - itemNode.height + 2;
 
-      // save pre-colmputed staked positions (array of Vector2)
+      // save pre-computed staked positions (array of Vector2)
       self.stackedPositions = [];
 
       // save the Y coordinate for moving higher items to lower positions
-      self.stackedYPositions = [  Util.toFixed( itemY, 2 ) ];
+      self.stackedYPositions = [ Util.toFixed( itemY, 2 ) ];
 
-      for (var i = 0; i < MAX_ITEMS; i++) {
+      for ( var i = 0; i < MAX_ITEMS; i++ ) {
 
         self.stackedPositions.push( new Vector2( itemX, itemY ) );
 
@@ -192,7 +192,7 @@ define( function( require ) {
       minWidth: DISPLAY_SIZE.width,
       minHeight: DISPLAY_SIZE.height,
       preText: '',                      // optional text before the value (i.e. '$')
-      decimalPlaces: 1,                 // decimal plce to show for the scale value
+      decimalPlaces: 1,                 // decimal place to show for the scale value
       postText: '',                     // optional text after the value (i.e. 'lbs')
       resize: false,
       cornerRadius: 5,
@@ -205,13 +205,13 @@ define( function( require ) {
 
     var self = this;
 
-    this.enableHideValue   = options.enableHideValue;
+    this.enableHideValue = options.enableHideValue;
     this.hideValueProperty = options.hideValueProperty;
-    this.hiddenValueText   = options.hiddenValueText;
+    this.hiddenValueText = options.hiddenValueText;
 
     var contentNode = new Node();
 
-    if( this.enableHideValue  ) {
+    if ( this.enableHideValue ) {
       this.showValueButton = new ExpandCollapseButton( this.hideValueProperty, {
         sideLength: 15,
         touchAreaXDilation: 30,
@@ -223,7 +223,7 @@ define( function( require ) {
     // @private
     var valueText = new Text( '-', {
       left: ( this.showValueButton ? this.showValueButton.right + 4 : 0 ),
-      top:  ( this.showValueButton ? this.showValueButton.top : 0 ),
+      top: ( this.showValueButton ? this.showValueButton.top : 0 ),
       font: DISPLAY_FONT,
       maxWidth: 0.9 * DISPLAY_SIZE.width,
       maxHeight: 0.9 * DISPLAY_SIZE.height
@@ -232,15 +232,16 @@ define( function( require ) {
 
     // update value text
     Property.multilink( [ valueProperty, this.hideValueProperty ], function( value, hideValue ) {
-      if( self.enableHideValue && !hideValue ) {
+      if ( self.enableHideValue && !hideValue ) {
         valueText.setText( ' ' + self.hiddenValueText );
-      } else {
+      }
+      else {
         var valueString = Util.toFixed( value, options.decimalPlaces ).toString();
         valueText.setText( options.preText + ' ' + valueString + ' ' + options.postText );
       }
     } );
 
-    return new Panel( contentNode, options);
+    return new Panel( contentNode, options );
   }
 
   unitRates.register( 'ScaleNode', ScaleNode );
@@ -286,8 +287,8 @@ define( function( require ) {
 
           // check if the node is in a correct position
           var index = availablePositions.findIndex( function( element, index, array ) {
-              return element.equals( itemNode.item.position );
-            }, this );
+            return element.equals( itemNode.item.position );
+          }, this );
 
           if ( index < 0 ) {
             // not in correct position, add the node to the update list
@@ -310,28 +311,28 @@ define( function( require ) {
 
       // for remaining available positions, move higher nodes to lower positions
       // for every open bottom spot see if there's a nearby node to fill it
-      for (var i = 0; i < availablePositions.length; i++) {
+      for ( var i = 0; i < availablePositions.length; i++ ) {
 
-        var position = availablePositions[i];
+        var position = availablePositions[ i ];
 
         // only consider bottom positions
-        if( Util.toFixed( position.y, 2 ) !== self.stackedYPositions[0] ) {
+        if ( Util.toFixed( position.y, 2 ) !== self.stackedYPositions[ 0 ] ) {
           continue;
         }
 
-        for (var j = 0; j < allNodes.length; j++) {
-          var itemNode = allNodes[j];
+        for ( var j = 0; j < allNodes.length; j++ ) {
+          var itemNode = allNodes[ j ];
 
           // only consider nodes that are not on the bottom
-          if( Util.toFixed( itemNode.item.position.y, 2 ) !== self.stackedYPositions[0] ) {
+          if ( Util.toFixed( itemNode.item.position.y, 2 ) !== self.stackedYPositions[ 0 ] ) {
 
             var nodeDistance = itemNode.item.position.distance( position );
             if ( nodeDistance < 1.5 * itemNode.width ) {
               // move the node
               itemNode.item.setPosition( position.x, position.y, animate );
 
-              // remove the position from the availble list
-              availablePositions.splice( i, 1);
+              // remove the position from the available list
+              availablePositions.splice( i, 1 );
               break;
             }
           }
@@ -358,8 +359,8 @@ define( function( require ) {
 
         var itemNodeArray = self.itemLayer.getChildren();
 
-        for (var i = 0; i < itemNodeArray.length; i++) {
-          if ( itemNodeArray[i].item === item ) {
+        for ( var i = 0; i < itemNodeArray.length; i++ ) {
+          if ( itemNodeArray[ i ].item === item ) {
             exists = true;
             break;
           }

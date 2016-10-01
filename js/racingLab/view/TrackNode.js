@@ -1,4 +1,3 @@
-
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
@@ -34,18 +33,18 @@ define( function( require ) {
   var miString = require( 'string!UNIT_RATES/mi' );
 
   // constants
-  var TRACK_MAX_DISTANCE       = 200;   // max track distance in miles
-  var TRACK_INTERVAL_DISTANCE  = 50;    // yellow interval marker distance
-  var TRACK_BOTTOM_OFFSET      = 25;    // the height beneath the track, used for the interval markers
-  var TRACK_DARK_STROKE_COLOR  = 'rgba(0, 0, 0, 1.0)';
-  var TRACK_LITE_STROKE_COLOR  = 'rgba(0, 0, 0, 0.25)';
-  var TRACK_LINE_WIDTH         = 1.5;
-  var MARKER_DARK_FILL_COLOR   = 'rgba(255, 255, 0, 1.0)';
-  var MARKER_LITE_FILL_COLOR   = 'rgba(255, 255, 0, 0.25)';
-  var MARKER_SIZE              = 10;    // interval marker size
-  var MARKER_LINE_WIDTH        = 1.0;
-  var MILEAGE_FONT             = new PhetFont( 12 );
-  var FLAG_SCALE               = 0.25;  // scale factor for both start & finish flag images
+  var TRACK_MAX_DISTANCE = 200;   // max track distance in miles
+  var TRACK_INTERVAL_DISTANCE = 50;    // yellow interval marker distance
+  var TRACK_BOTTOM_OFFSET = 25;    // the height beneath the track, used for the interval markers
+  var TRACK_DARK_STROKE_COLOR = 'rgba(0, 0, 0, 1.0)';
+  var TRACK_LITE_STROKE_COLOR = 'rgba(0, 0, 0, 0.25)';
+  var TRACK_LINE_WIDTH = 1.5;
+  var MARKER_DARK_FILL_COLOR = 'rgba(255, 255, 0, 1.0)';
+  var MARKER_LITE_FILL_COLOR = 'rgba(255, 255, 0, 0.25)';
+  var MARKER_SIZE = 10;    // interval marker size
+  var MARKER_LINE_WIDTH = 1.0;
+  var MILEAGE_FONT = new PhetFont( 12 );
+  var FLAG_SCALE = 0.25;  // scale factor for both start & finish flag images
 
   /**
    * @param {TrackGroup} model
@@ -55,25 +54,25 @@ define( function( require ) {
    */
   function TrackNode( model, carImageName, options ) {
 
-     options = _.extend( {
-      trackWidth:         0,        // sets the overall width of the node
-      trackHeight:        100,      // sets the overall height of the node
-      trackStartOffset:   0,        // the offset of the green start flag
-      timerTitle:   ''              // title for the timer when closed
+    options = _.extend( {
+      trackWidth: 0,        // sets the overall width of the node
+      trackHeight: 100,      // sets the overall height of the node
+      trackStartOffset: 0,        // the offset of the green start flag
+      timerTitle: ''              // title for the timer when closed
     }, options || {} );
 
-     var self = this;
+    var self = this;
 
     // @protected - track model
     this.trackGroup = model;
 
     // @protected - all
-    this.trackWidth       = options.trackWidth;
-    this.trackHeight      = options.trackHeight;
+    this.trackWidth = options.trackWidth;
+    this.trackHeight = options.trackHeight;
     this.trackStartOffset = options.trackStartOffset;
 
     // @protected - all
-    this.trackOrigin   = new Vector2( this.trackStartOffset, this.trackHeight - TRACK_BOTTOM_OFFSET );
+    this.trackOrigin = new Vector2( this.trackStartOffset, this.trackHeight - TRACK_BOTTOM_OFFSET );
     this.milesPerPixel = ( this.trackWidth - this.trackStartOffset ) / TRACK_MAX_DISTANCE;
     this.intervalCount = TRACK_MAX_DISTANCE / TRACK_INTERVAL_DISTANCE;
 
@@ -81,13 +80,13 @@ define( function( require ) {
 
     var childNodes = [];
 
-    /*  // only really used for debuggine the bound of the draggable track area
-    var boundsNode = new Path( new Shape().rect( 0, 0, this.trackWidth, this.trackHeight ), {
-      stroke: 'red',  // debugging
-      lineWidth: 1
-    } );
-    childNodes.push( boundsNode );
-    */
+    /*  // only really used for debugging the bound of the draggable track area
+     var boundsNode = new Path( new Shape().rect( 0, 0, this.trackWidth, this.trackHeight ), {
+     stroke: 'red',  // debugging
+     lineWidth: 1
+     } );
+     childNodes.push( boundsNode );
+     */
 
     // track lines - start to finish
     this.startFinishPath = new Path( null, {
@@ -98,48 +97,48 @@ define( function( require ) {
 
     // track lines
     this.finishEndPath = new Path( null, {
-        stroke: TRACK_LITE_STROKE_COLOR,
-        lineDash: [ 5, 5 ],
-        lineWidth: TRACK_LINE_WIDTH
+      stroke: TRACK_LITE_STROKE_COLOR,
+      lineDash: [ 5, 5 ],
+      lineWidth: TRACK_LINE_WIDTH
     } );
     childNodes.push( this.finishEndPath );
 
     // start flag
     this.greenFlagNode = new Image( greenFlagImage, {
-      scale:  FLAG_SCALE,
-      left:   this.startPoint.x,
+      scale: FLAG_SCALE,
+      left: this.startPoint.x,
       bottom: this.trackOrigin.y
     } );
     childNodes.push( this.greenFlagNode );
 
     // race car
     this.carNode = new Image( carImageName, {
-      scale:  0.28,
-      right:  this.greenFlagNode.left,
+      scale: 0.28,
+      right: this.greenFlagNode.left,
       bottom: this.trackOrigin.y
     } );
     childNodes.push( this.carNode );
 
     // track interval markers
     this.intervalNodes = [];
-    for (var i = 0; i < this.intervalCount; i++) {
-      this.intervalNodes[i] =  new Path( new Shape()
-          .moveTo( 0, 0 )
-          .lineTo( -MARKER_SIZE / 2, MARKER_SIZE )
-          .lineTo(  MARKER_SIZE / 2, MARKER_SIZE )
-          .lineTo( 0, 0 ),  {
-        centerX:    this.startPoint.x + ( ( i + 1 ) * TRACK_INTERVAL_DISTANCE * this.milesPerPixel ),
-        top:        this.startPoint.y,
-        stroke:     TRACK_DARK_STROKE_COLOR,
-        lineWidth:  MARKER_LINE_WIDTH,
-        fill:       MARKER_DARK_FILL_COLOR
+    for ( var i = 0; i < this.intervalCount; i++ ) {
+      this.intervalNodes[ i ] = new Path( new Shape()
+        .moveTo( 0, 0 )
+        .lineTo( -MARKER_SIZE / 2, MARKER_SIZE )
+        .lineTo( MARKER_SIZE / 2, MARKER_SIZE )
+        .lineTo( 0, 0 ), {
+        centerX: this.startPoint.x + ( ( i + 1 ) * TRACK_INTERVAL_DISTANCE * this.milesPerPixel ),
+        top: this.startPoint.y,
+        stroke: TRACK_DARK_STROKE_COLOR,
+        lineWidth: MARKER_LINE_WIDTH,
+        fill: MARKER_DARK_FILL_COLOR
       } );
-      childNodes.push( this.intervalNodes[i] );
+      childNodes.push( this.intervalNodes[ i ] );
     }
 
-    // green arrows initiall around teh finish flag
+    // green arrows initial around teh finish flag
     this.flagArrows = new Image( doubleArrowImage, {
-      scale:  0.23,
+      scale: 0.23,
       centerX: this.finishPoint.x + 1,
       bottom: this.trackOrigin.y - 2
     } );
@@ -147,9 +146,9 @@ define( function( require ) {
 
     // checkered finish flag
     this.checkerFlagNode = new FinishFlagNode( checkerFlagImage, this.finishPoint,
-      new Bounds2( this.startPoint.x, this.startPoint.y,  this.trackWidth,  this.trackHeight ), {
-      imageScale: FLAG_SCALE
-    } );
+      new Bounds2( this.startPoint.x, this.startPoint.y, this.trackWidth, this.trackHeight ), {
+        imageScale: FLAG_SCALE
+      } );
     childNodes.push( this.checkerFlagNode );
     this.checkerFlagNode.addDragListeners(
       function() {
@@ -159,19 +158,19 @@ define( function( require ) {
       null                                                        // end drag
     );
 
-    // mileage text beneath the finsih flag
+    // mileage text beneath the finish flag
     this.mileageText = new Text( '', {
-      centerX:  this.finishPoint.x,
-      top:      this.checkerFlagNode.bottom + MARKER_SIZE + 2,
-      font:     MILEAGE_FONT,
+      centerX: this.finishPoint.x,
+      top: this.checkerFlagNode.bottom + MARKER_SIZE + 2,
+      font: MILEAGE_FONT,
       maxWidth: 2 * options.trackStartOffset
     } );
     childNodes.push( this.mileageText );
 
     // timer
     this.timer = new TimerDisplayNode( {
-      centerX:  this.finishPoint.x,
-      bottom:   this.checkerFlagNode.top - URConstants.SCREEN_PANEL_SPACING / 2,
+      centerX: this.finishPoint.x,
+      bottom: this.checkerFlagNode.top - URConstants.SCREEN_PANEL_SPACING / 2,
       hiddenTimeText: options.timerTitle
     } );
     childNodes.push( this.timer );
@@ -208,12 +207,12 @@ define( function( require ) {
 
       // adjust track lengths
       this.startFinishPath.setShape( new Shape()
-        .moveTo( 0,  this.finishPoint.y )
+        .moveTo( 0, this.finishPoint.y )
         .lineTo( this.finishPoint.x, this.finishPoint.y )
       );
       this.finishEndPath.setShape( new Shape()
         .moveTo( this.finishPoint.x, this.finishPoint.y )
-        .lineTo( this.endPoint.x,    this.endPoint.y )
+        .lineTo( this.endPoint.x, this.endPoint.y )
       );
 
       // adjust timer location
@@ -226,14 +225,14 @@ define( function( require ) {
       this.trackGroup.trackMilesProperty.value = miles;
 
       // adjust marker colors
-      for (var i = 0; i < this.intervalNodes.length; i++) {
-        if( this.intervalNodes[i].centerX > this.finishPoint.x ) {
-          this.intervalNodes[i].stroke = TRACK_LITE_STROKE_COLOR;
-          this.intervalNodes[i].fill   = MARKER_LITE_FILL_COLOR;
+      for ( var i = 0; i < this.intervalNodes.length; i++ ) {
+        if ( this.intervalNodes[ i ].centerX > this.finishPoint.x ) {
+          this.intervalNodes[ i ].stroke = TRACK_LITE_STROKE_COLOR;
+          this.intervalNodes[ i ].fill = MARKER_LITE_FILL_COLOR;
         }
         else {
-          this.intervalNodes[i].stroke = TRACK_DARK_STROKE_COLOR;
-          this.intervalNodes[i].fill   = MARKER_DARK_FILL_COLOR;
+          this.intervalNodes[ i ].stroke = TRACK_DARK_STROKE_COLOR;
+          this.intervalNodes[ i ].fill = MARKER_DARK_FILL_COLOR;
         }
       }
 
@@ -257,13 +256,13 @@ define( function( require ) {
     },
 
     /**
-     * Resets the track length to the inital size
+     * Resets the track length to the initial size
      * @protected
      */
     resetTrack: function() {
-      this.startPoint   = new Vector2( this.trackOrigin.x, this.trackOrigin.y );
-      this.finishPoint  = new Vector2( this.trackWidth,    this.trackOrigin.y );
-      this.endPoint     = new Vector2( this.trackWidth,    this.trackOrigin.y );
+      this.startPoint = new Vector2( this.trackOrigin.x, this.trackOrigin.y );
+      this.finishPoint = new Vector2( this.trackWidth, this.trackOrigin.y );
+      this.endPoint = new Vector2( this.trackWidth, this.trackOrigin.y );
     },
 
     /**
@@ -275,7 +274,7 @@ define( function( require ) {
       this.resetTrack();
       this.checkerFlagNode.item.setPosition( this.finishPoint.x, this.finishPoint.y, false );
       this.updateTrack();
-      this.updateCarTimer(0);
+      this.updateCarTimer( 0 );
     }
 
   } ); // inherit

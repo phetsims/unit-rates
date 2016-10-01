@@ -11,9 +11,9 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   var SceneMode = Object.freeze( {
-    FRUIT:    'Fruit',
-    PRODUCE:  'Produce',
-    CANDY:    'Candy'
+    FRUIT: 'Fruit',
+    PRODUCE: 'Produce',
+    CANDY: 'Candy'
   } );
 
   unitRates.register( 'SceneMode', SceneMode );

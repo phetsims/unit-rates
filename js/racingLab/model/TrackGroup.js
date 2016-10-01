@@ -24,16 +24,16 @@ define( function( require ) {
   function TrackGroup( elapsedTimeProperty, flagArrowsVisibleProperty ) {
 
     PropertySet.call( this, {
-      miles:              100,                            // used in rate adjustment spinner
-      milesRange:         new RangeWithValue( 20, 100 ),  // used in rate adjustment spinner
-      hours:              1,                              // used in rate adjustment spinner
-      hoursRange:         new RangeWithValue( 1, 10 ),    // used in rate adjustment spinner
-      rate:               200,                            // the unit rate for the track
-      carFinished:        false,                          // flag set when the car passes the finish point
+      miles: 100,                            // used in rate adjustment spinner
+      milesRange: new RangeWithValue( 20, 100 ),  // used in rate adjustment spinner
+      hours: 1,                              // used in rate adjustment spinner
+      hoursRange: new RangeWithValue( 1, 10 ),    // used in rate adjustment spinner
+      rate: 200,                            // the unit rate for the track
+      carFinished: false,                          // flag set when the car passes the finish point
       numberLineMaxHours: 1,                              // the number line's maximum bottom value
-      trackPixelLength:   600,                            // the length of the track in pixels
-      trackMiles:         MAX_MILES,                      // the length of the track in miles
-      trackHours:         1                               // the length of the track in hours
+      trackPixelLength: 600,                            // the length of the track in pixels
+      trackMiles: MAX_MILES,                      // the length of the track in miles
+      trackHours: 1                               // the length of the track in hours
     } );
 
     var self = this;
@@ -41,22 +41,22 @@ define( function( require ) {
     this.elapsedTimeProperty = elapsedTimeProperty;
     this.flagArrowsVisibleProperty = flagArrowsVisibleProperty;
 
-    // seperate number line model w/ top/bottom ranges - (note: top number line (miles) is fixed at MAX_MILES)
+    // separate number line model w/ top/bottom ranges - (note: top number line (miles) is fixed at MAX_MILES)
     this.numberline = new URNumberLine( this.rateProperty, new Property( MAX_MILES ), this.numberLineMaxHoursProperty, {
-      markerTopDecimals:          0,
-      markerBottomDecimals:       2,
-      markerTopHighPrecision:     1,
-      markerBottomHighPrecision:  2
+      markerTopDecimals: 0,
+      markerBottomDecimals: 2,
+      markerTopHighPrecision: 1,
+      markerBottomHighPrecision: 2
     } );
 
     // Adjust the number line hours to match the track (note: track distance is fixed in this sim, it's always MAX_MILES)
     this.rateProperty.link( function( rate, oldRate ) {
-      self.numberLineMaxHoursProperty.value =  MAX_MILES / rate;
+      self.numberLineMaxHoursProperty.value = MAX_MILES / rate;
     } );
 
     // Adjust the max track hours based on a change in the rate
     Property.lazyMultilink( [ this.trackMilesProperty, this.rateProperty ], function( miles, rate ) {
-      self.trackHoursProperty.value =  miles / rate;
+      self.trackHoursProperty.value = miles / rate;
     } );
 
     // Check elapsed time to see if the car has finished

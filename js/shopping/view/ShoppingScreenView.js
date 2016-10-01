@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * The main shopping screen This is derivied from URShoppingScreenView and adds the item combobox and challenge panel
+ * The main shopping screen This is derived from URShoppingScreenView and adds the item combo box and challenge panel
  * to it.
  *
  * @author Dave Schmitz (Schmitzware)
@@ -26,7 +26,7 @@ define( function( require ) {
    */
   function ShoppingScreenView( model ) {
 
-    model.onChallengeCallback = this.onChallangeCallback.bind( this );
+    model.onChallengeCallback = this.onChallengeCallback.bind( this );
 
     URShoppingScreenView.call( this, model, false, this.onNumberLineEraseCallback.bind( this ) );
   }
@@ -42,9 +42,9 @@ define( function( require ) {
     addSubclassScreenNodes: function() {
       var self = this;
 
-      this.fruitItemDataProperty   = new Property( ItemData.APPLES );
+      this.fruitItemDataProperty = new Property( ItemData.APPLES );
       this.produceItemDataProperty = new Property( ItemData.CARROTS );
-      this.candyItemDataProperty   = new Property( ItemData.PURPLE_CANDY );
+      this.candyItemDataProperty = new Property( ItemData.PURPLE_CANDY );
 
       // challenges
       var onChallengePopulate = function() {
@@ -54,25 +54,25 @@ define( function( require ) {
       var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING + URConstants.SCREEN_HORIZONTAL_MARGIN );
       this.challengesNode = new ChallengesNode( this.model.challenges, this.keypad, challengeWidth, onChallengePopulate, {
         left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
-        top:  this.layoutBounds.top + URConstants.SCREEN_VERTICAL_MARGIN
+        top: this.layoutBounds.top + URConstants.SCREEN_VERTICAL_MARGIN
       } );
       this.addChild( this.challengesNode );
 
       // item selection - 1 combo box for each scene, hidden and shown based on sceneModeProperty
       var itemComboBoxOptions = {
-        left:   this.layoutBounds.left   + URConstants.SCREEN_HORIZONTAL_MARGIN,
+        left: this.layoutBounds.left + URConstants.SCREEN_HORIZONTAL_MARGIN,
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_VERTICAL_MARGIN
       };
       this.fruitItemsComboBox = new ItemComboBox( SceneMode.FRUIT, this.fruitItemDataProperty,
-        this, itemComboBoxOptions);
+        this, itemComboBoxOptions );
       this.addChild( this.fruitItemsComboBox );
 
       this.produceItemsComboBox = new ItemComboBox( SceneMode.PRODUCE, this.produceItemDataProperty,
-        this, itemComboBoxOptions);
+        this, itemComboBoxOptions );
       this.addChild( this.produceItemsComboBox );
 
       this.candyItemsComboBox = new ItemComboBox( SceneMode.CANDY, this.candyItemDataProperty,
-        this, itemComboBoxOptions);
+        this, itemComboBoxOptions );
       this.addChild( this.candyItemsComboBox );
 
       // select the item based on scene & item selection - no dispose as this never goes away
@@ -85,7 +85,7 @@ define( function( require ) {
      * @protected
      */
     onNumberLineEraseCallback: function() {
-      this.model.addScaleItemsToNumberline();
+      this.model.addScaleItemsToNumberLine();
       this.model.addChallengeItemsToNumberLine();
       this.numberLineNode.populate();
     },
@@ -94,14 +94,14 @@ define( function( require ) {
      *
      * @protected
      */
-    onChallangeCallback: function() {
+    onChallengeCallback: function() {
       this.numberLineNode.removeAllMarkerNodes();
       this.numberLineNode.populate();
     },
 
     /**
      * Called when the user selects the sim reset button
-     * @overrride @protected
+     * @override @protected
      */
     resetAll: function() {
 
@@ -127,19 +127,19 @@ define( function( require ) {
       // hide/show different combo boxes based on scene selection
       switch( sceneMode ) {
         case SceneMode.FRUIT:
-          this.fruitItemsComboBox.visible   = true;
+          this.fruitItemsComboBox.visible = true;
           this.produceItemsComboBox.visible = false;
-          this.candyItemsComboBox.visible   = false;
+          this.candyItemsComboBox.visible = false;
           break;
         case SceneMode.PRODUCE:
-          this.fruitItemsComboBox.visible   = false;
+          this.fruitItemsComboBox.visible = false;
           this.produceItemsComboBox.visible = true;
-          this.candyItemsComboBox.visible   = false;
+          this.candyItemsComboBox.visible = false;
           break;
         case SceneMode.CANDY:
-          this.fruitItemsComboBox.visible   = false;
+          this.fruitItemsComboBox.visible = false;
           this.produceItemsComboBox.visible = false;
-          this.candyItemsComboBox.visible   = true;
+          this.candyItemsComboBox.visible = true;
           break;
         default:
           assert && assert( false, 'Unrecognized scene' );
@@ -162,13 +162,13 @@ define( function( require ) {
 
       switch( sceneMode ) {
         case SceneMode.FRUIT:
-            this.model.itemData = fruitItemData;
+          this.model.itemData = fruitItemData;
           break;
         case SceneMode.PRODUCE:
-            this.model.itemData = produceItemData;
+          this.model.itemData = produceItemData;
           break;
         case SceneMode.CANDY:
-            this.model.itemData = candyItemData;
+          this.model.itemData = candyItemData;
           break;
         default:
           assert && assert( false, 'Unrecognized scene' );

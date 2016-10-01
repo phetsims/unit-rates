@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A collapsable box node containing (several) spinners for changing the current unit rate
+ * A collapsible box node containing (several) spinners for changing the current unit rate
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -32,63 +32,62 @@ define( function( require ) {
   var poundsString = require( 'string!UNIT_RATES/pounds' );
 
   // constants
-  var TEXT_FONT       = new PhetFont( 18 ); // Font to use for all text
-  var TEXT_MAX_WIDTH  = 80;
-  var DIVISOR_WIDTH   = 135;
-  var X_MARGIN        = 20;
-  var Y_MARGIN        = 0;
-  var X_SPACING       = 20;
-  var Y_SPACING       = 10;
-  var APPLES_INDEX    = 0;
-  var CARROTS_INDEX   = 1;
-  var CANDY_INDEX     = 2;
+  var TEXT_FONT = new PhetFont( 18 ); // Font to use for all text
+  var TEXT_MAX_WIDTH = 80;
+  var DIVISOR_WIDTH = 135;
+  var X_MARGIN = 20;
+  var Y_MARGIN = 0;
+  var X_SPACING = 20;
+  var Y_SPACING = 10;
+  var APPLES_INDEX = 0;
+  var CARROTS_INDEX = 1;
+  var CANDY_INDEX = 2;
 
   /**
-   * @param {Property.<string>} itemTypeProperty - the curently selected item type
-   * @param {Property.<number>} itemRateProperty - the curently selected item rate
+   * @param {Property.<string>} itemTypeProperty - the currently selected item type
+   * @param {Property.<number>} itemRateProperty - the currently selected item rate
    * @param {Object} [options]
    * @constructor
    */
   function ItemRateNode( itemTypeProperty, itemRateProperty, options ) {
 
-    options = _.extend( {
-    },  options || {} );
+    options = _.extend( {}, options || {} );
 
     // @protected - all
     this.itemTypeProperty = itemTypeProperty;
     this.itemRateProperty = itemRateProperty;
 
-    this.itemPickerIndex    = APPLES_INDEX;
-    this.costRangeProperty  = new Property( new RangeWithValue( 1, 20 ) );
+    this.itemPickerIndex = APPLES_INDEX;
+    this.costRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
     this.countRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
     this.itemPickerData = [
       {                                                // APPLES_INDEX
-        costProperty:             new Property( 1 ),   // initial number picker apples cost
-        costPicker:               null,
-        countProperty:            new Property( 2 ),   // initial number picker apples count
-        countPicker:              null,
-        countPickerColor:         'rgb(233,33,45)',
-        countPickerPressedColor:  'rgb(203,3,15)',
-        countString:              applesString,
+        costProperty: new Property( 1 ),   // initial number picker apples cost
+        costPicker: null,
+        countProperty: new Property( 2 ),   // initial number picker apples count
+        countPicker: null,
+        countPickerColor: 'rgb(233,33,45)',
+        countPickerPressedColor: 'rgb(203,3,15)',
+        countString: applesString,
         visible: true
       }, {                                              // CARROTS_INDEX
-        costProperty:             new Property( 2 ),
-        costPicker:               null,
-        countProperty:            new Property( 5 ),
-        countPicker:              null,
-        countPickerColor:         'rgb(241,128,48)',
-        countPickerPressedColor:  'rgb(211,98,18)',
-        countString:              carrotsString,
-        visible:                  false
+        costProperty: new Property( 2 ),
+        costPicker: null,
+        countProperty: new Property( 5 ),
+        countPicker: null,
+        countPickerColor: 'rgb(241,128,48)',
+        countPickerPressedColor: 'rgb(211,98,18)',
+        countString: carrotsString,
+        visible: false
       }, {                                              // CANDY_INDEX
-        costProperty:             new Property( 5 ),
-        costPicker:               null,
-        countProperty:            new Property( 1 ),
-        countPicker:              null,
-        countPickerColor:         'rgb(144,74,154)',
-        countPickerPressedColor:  'rgb(114,44,124)',
-        countString:              poundsString,
-        visible:                  false
+        costProperty: new Property( 5 ),
+        costPicker: null,
+        countProperty: new Property( 1 ),
+        countPicker: null,
+        countPickerColor: 'rgb(144,74,154)',
+        countPickerPressedColor: 'rgb(114,44,124)',
+        countString: poundsString,
+        visible: false
       }
     ];
 
@@ -98,45 +97,45 @@ define( function( require ) {
     var strut = new HStrut( DIVISOR_WIDTH + 2 * X_MARGIN );   // This will set the width of the panel
     this.contentNode.addChild( strut );
 
-    // need to create seperate pickers for dealing with multiple properties and different NumberPicker colors
-    for (var i = 0; i < this.itemPickerData.length; i++) {
+    // need to create separate pickers for dealing with multiple properties and different NumberPicker colors
+    for ( var i = 0; i < this.itemPickerData.length; i++ ) {
 
       // select the rate for the currently selected item - no dispose as these never go away
       Property.lazyMultilink( [ this.itemPickerData[ i ].costProperty, this.itemPickerData[ i ].countProperty ],
         this.rateChanged.bind( this ) );
 
-      this.itemPickerData[i].costPicker = new NumberPicker( this.itemPickerData[ i ].costProperty,
+      this.itemPickerData[ i ].costPicker = new NumberPicker( this.itemPickerData[ i ].costProperty,
         this.costRangeProperty, {
-        left:   X_MARGIN,
-        top:    Y_MARGIN,
-        color: 'rgb(50,50,50)',
-        pressedColor: 'black',
-        xMargin: 8,
-        yMargin: 0,
-        cornerRadius: 0,
-        touchAreaXDilation: 30,
-        font: TEXT_FONT,
-        visible: this.itemPickerData[i].visible
-      } );
+          left: X_MARGIN,
+          top: Y_MARGIN,
+          color: 'rgb(50,50,50)',
+          pressedColor: 'black',
+          xMargin: 8,
+          yMargin: 0,
+          cornerRadius: 0,
+          touchAreaXDilation: 30,
+          font: TEXT_FONT,
+          visible: this.itemPickerData[ i ].visible
+        } );
       this.contentNode.addChild( this.itemPickerData[ i ].costPicker );
 
-      this.itemPickerData[i].countPicker = new NumberPicker( this.itemPickerData[ i ].countProperty,
+      this.itemPickerData[ i ].countPicker = new NumberPicker( this.itemPickerData[ i ].countProperty,
         this.countRangeProperty, {
-        left:   X_MARGIN,
-        top: this.itemPickerData[i].costPicker.bottom + 2 * Y_SPACING,
-        color: this.itemPickerData[i].countPickerColor,
-        pressedColor: this.itemPickerData[i].countPickerPressedColor,
-        xMargin: 8,
-        yMargin: 0,
-        cornerRadius: 0,
-        touchAreaXDilation: 30,
-        font: TEXT_FONT,
-        visible: this.itemPickerData[i].visible
-      } );
+          left: X_MARGIN,
+          top: this.itemPickerData[ i ].costPicker.bottom + 2 * Y_SPACING,
+          color: this.itemPickerData[ i ].countPickerColor,
+          pressedColor: this.itemPickerData[ i ].countPickerPressedColor,
+          xMargin: 8,
+          yMargin: 0,
+          cornerRadius: 0,
+          touchAreaXDilation: 30,
+          font: TEXT_FONT,
+          visible: this.itemPickerData[ i ].visible
+        } );
       this.contentNode.addChild( this.itemPickerData[ i ].countPicker );
     }
 
-    this.currencyText = new Text( dollarsString , {
+    this.currencyText = new Text( dollarsString, {
       left: this.itemPickerData[ APPLES_INDEX ].costPicker.right + X_SPACING,
       centerY: this.itemPickerData[ APPLES_INDEX ].costPicker.centerY,
       font: TEXT_FONT,
@@ -145,16 +144,16 @@ define( function( require ) {
     this.contentNode.addChild( this.currencyText );
 
     var divisorLine = new Path( new Shape()
-        .moveTo( this.itemPickerData[ APPLES_INDEX ].costPicker.left,
-          this.itemPickerData[ APPLES_INDEX ].costPicker.bottom + Y_SPACING )
-        .lineTo( this.itemPickerData[ APPLES_INDEX ].costPicker.left + DIVISOR_WIDTH,
-          this.itemPickerData[ APPLES_INDEX ].costPicker.bottom + Y_SPACING ), {
+      .moveTo( this.itemPickerData[ APPLES_INDEX ].costPicker.left,
+        this.itemPickerData[ APPLES_INDEX ].costPicker.bottom + Y_SPACING )
+      .lineTo( this.itemPickerData[ APPLES_INDEX ].costPicker.left + DIVISOR_WIDTH,
+        this.itemPickerData[ APPLES_INDEX ].costPicker.bottom + Y_SPACING ), {
       stroke: 'black',
       lineWidth: 1.25
     } );
     this.contentNode.addChild( divisorLine );
 
-    this.unitText = new Text( applesString , {
+    this.unitText = new Text( applesString, {
       left: this.itemPickerData[ APPLES_INDEX ].countPicker.right + X_SPACING,
       centerY: this.itemPickerData[ APPLES_INDEX ].countPicker.centerY,
       font: TEXT_FONT,
@@ -193,16 +192,16 @@ define( function( require ) {
 
     /**
      * Called when the user selected a new item type (i.e. "apples", "carrots", "red candy")
-     * @param {string} itemType - the curently selected item type
+     * @param {string} itemType - the currently selected item type
      * @param {string} oldType - the previously selected item type
      * @private
      */
     itemSelectionChanged: function( itemType, oldType ) {
 
       // hide all pickers
-      for (var i = 0; i < this.itemPickerData.length; i++) {
-        this.itemPickerData[i].costPicker.visible  = false;
-        this.itemPickerData[i].countPicker.visible = false;
+      for ( var i = 0; i < this.itemPickerData.length; i++ ) {
+        this.itemPickerData[ i ].costPicker.visible = false;
+        this.itemPickerData[ i ].countPicker.visible = false;
       }
 
       // map item type to picker index
@@ -221,7 +220,7 @@ define( function( require ) {
       }
 
       // set up the current picker
-      this.itemPickerData[ this.itemPickerIndex ].costPicker.visible  = true;
+      this.itemPickerData[ this.itemPickerIndex ].costPicker.visible = true;
       this.itemPickerData[ this.itemPickerIndex ].countPicker.visible = true;
       this.unitText.setText( this.itemPickerData[ this.itemPickerIndex ].countString );
     },
@@ -229,19 +228,19 @@ define( function( require ) {
     /**
      * Called when the user changes the total cost or item count
      * Changes the unit rate for the item currently used in the sim
-     * @param {<number>} cost - total cost
-     * @param {<number> }count - number of items
+     * @param {number} cost - total cost
+     * @param {number}count - number of items
      * @private
      */
     rateChanged: function( cost, count ) {
 
-      // save the bumber picker values
-      this.itemPickerData[ this.itemPickerIndex ].costProperty.value  = cost;
+      // save the number picker values
+      this.itemPickerData[ this.itemPickerIndex ].costProperty.value = cost;
       this.itemPickerData[ this.itemPickerIndex ].countProperty.value = count;
 
       var decimals = 2;
-      var rate = cost/count;
-      this.itemRateProperty.value = Number( Util.roundSymmetric(rate+'e'+decimals)+'e-'+decimals );
+      var rate = cost / count;
+      this.itemRateProperty.value = Number( Util.roundSymmetric( rate.toString() + 'e' + decimals.toString() ) + 'e-' + decimals );
     },
 
     /**
@@ -249,9 +248,9 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      for (var i = 0; i < this.itemPickerData.length; i++) {
-        this.itemPickerData[i].costProperty.reset();
-        this.itemPickerData[i].countProperty.reset();
+      for ( var i = 0; i < this.itemPickerData.length; i++ ) {
+        this.itemPickerData[ i ].costProperty.reset();
+        this.itemPickerData[ i ].countProperty.reset();
       }
       this.expandedProperty.reset();
 

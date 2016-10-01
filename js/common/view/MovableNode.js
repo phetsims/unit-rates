@@ -24,9 +24,9 @@ define( function( require ) {
   function MovableNode( item, position, options ) {
 
     options = _.extend( {
-      draggable:  true,    // whether or not this node can be dragged by the user
+      draggable: true,    // whether or not this node can be dragged by the user
       dragHandle: null,    // Bounds2 - the portion of the node that serves as a drag handle (local coordinates, unused)
-      pickable:   true
+      pickable: true
     }, options || {} );
 
     Node.call( this, options );
@@ -38,19 +38,19 @@ define( function( require ) {
     this.item.setPosition( position.x, position.y, false );
 
     // @protected - all used to track item movement (i.e. dragging, animation)
-    this.draggable          = options.draggable;
-    this.isDragging         = false;
-    this.dragHandle         = ( options.dragHandle !== null ? options.dragHandle : null );
-    this.moveStartCallback  = null;           // function called on move start
-    this.moveCallback       = null;           // function called on move
-    this.moveEndCallback    = null;           // function called on move end
-    this.dragStartEmitter   = new Emitter();
-    this.dragEmitter        = new Emitter();
-    this.dragEndEmitter     = new Emitter();
+    this.draggable = options.draggable;
+    this.isDragging = false;
+    this.dragHandle = ( options.dragHandle !== null ? options.dragHandle : null );
+    this.moveStartCallback = null;           // function called on move start
+    this.moveCallback = null;           // function called on move
+    this.moveEndCallback = null;           // function called on move end
+    this.dragStartEmitter = new Emitter();
+    this.dragEmitter = new Emitter();
+    this.dragEndEmitter = new Emitter();
 
     // translate node according to item position property
     this.positionListener = function( position, oldPosition ) {
-        self.translation = position;
+      self.translation = position;
     };
     this.item.positionProperty.link( this.positionListener );
 
@@ -75,7 +75,7 @@ define( function( require ) {
             }
           }
 
-          var clickOffset   = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
+          var clickOffset = self.globalToParentPoint( e.pointer.point ).subtract( e.currentTarget.translation );
           self.lastPosition = self.globalToParentPoint( e.pointer.point ).subtract( clickOffset );
 
           // announce drag start
@@ -111,15 +111,15 @@ define( function( require ) {
 
     /**
      * Adds listeners for drag start & end
-     * @param (function} moveStartCallback - function called when item drag starts
-     * @param (function} moveCallback - function called when item is dragged
-     * @param (function} moveEndCallback - function called when item drag ends
+     * @param {function} moveStartCallback - function called when item drag starts
+     * @param {function} moveCallback - function called when item is dragged
+     * @param {function} moveEndCallback - function called when item drag ends
      * @public
      */
     addDragListeners: function( moveStartCallback, moveCallback, moveEndCallback ) {
       this.moveStartCallback = moveStartCallback;
-      this.moveCallback      = moveCallback ;
-      this.moveEndCallback   = moveEndCallback;
+      this.moveCallback = moveCallback;
+      this.moveEndCallback = moveEndCallback;
 
       if ( this.moveStartCallback ) {
         this.dragStartEmitter.addListener( this.moveStartCallback );
@@ -137,7 +137,7 @@ define( function( require ) {
      * @public
      */
     restoreLastPosition: function() {
-       this.item.setPosition( this.lastPosition.x, this.lastPosition.y, true );
+      this.item.setPosition( this.lastPosition.x, this.lastPosition.y, true );
     },
 
     // @public

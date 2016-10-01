@@ -20,13 +20,13 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   // constants
-  var VERICAL_SPACING       = 4;                  // vertical space between UI components
-  var HORIZONTAL_SPACING    = 30;                 // horizontal space between UI components
-  var TEXT_FONT             = new PhetFont( 12 ); // Font to use for all text
-  var TEXT_MAX_WIDTH        = 125;
-  var DIVISOR_WIDTH         = 75;                 // width of the horizonal line between the number entry & unit text
-  var DEFAULT_TEXT_COLOR    = 'rgba(0,0,0,0)';
-  var DEFAULT_BORDER_COLOR  = 'rgba(0,0,0,1)';
+  var VERTICAL_SPACING = 4;                  // vertical space between UI components
+  var HORIZONTAL_SPACING = 30;                 // horizontal space between UI components
+  var TEXT_FONT = new PhetFont( 12 ); // Font to use for all text
+  var TEXT_MAX_WIDTH = 125;
+  var DIVISOR_WIDTH = 75;                 // width of the horizontal line between the number entry & unit text
+  var DEFAULT_TEXT_COLOR = 'rgba(0,0,0,0)';
+  var DEFAULT_BORDER_COLOR = 'rgba(0,0,0,1)';
 
   /**
    *
@@ -38,17 +38,17 @@ define( function( require ) {
   function ChallengeQuestionAnswerNode( qna, keypad, options ) {
 
     options = _.extend( {
-      showUnitText:         false,              // is the unit text string displayed or not
-      preValueString:       '',                 // text shown before the value in the number display node
-      postValueString:      '',                 // text shown after the value in the number display node
-      decimalPlaces:        2,                  // # of decimal places to use in the number display node
-      defaultTextColor:     'rgba(0,0,0,0)',
-      correctTextColor:     'rgba(0,0,0,1)',
-      incorrectTextColor:   'rgba(255,0,0,1)',
-      defaultBorderColor:   'rgba(0,0,0,1)',
-      correctBorderColor:   'rgba(0,0,0,0)',
+      showUnitText: false,              // is the unit text string displayed or not
+      preValueString: '',                 // text shown before the value in the number display node
+      postValueString: '',                 // text shown after the value in the number display node
+      decimalPlaces: 2,                  // # of decimal places to use in the number display node
+      defaultTextColor: 'rgba(0,0,0,0)',
+      correctTextColor: 'rgba(0,0,0,1)',
+      incorrectTextColor: 'rgba(255,0,0,1)',
+      defaultBorderColor: 'rgba(0,0,0,1)',
+      correctBorderColor: 'rgba(0,0,0,0)',
       incorrectBorderColor: 'rgba(0,0,0,1)'
-    },  options || {} );
+    }, options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
     // @public (read-only)
@@ -56,12 +56,12 @@ define( function( require ) {
 
     // @protected - all
     this.keypad = keypad;
-    this.defaultTextColor      = options.defaultTextColor;
-    this.correctTextColor      = options.correctTextColor;
-    this.incorrectTextColor    = options.incorrectTextColor;
-    this.defaultBorderColor    = options.defaultBorderColor;
-    this.correctBorderColor    = options.correctBorderColor;
-    this.incorrectBorderColor  = options.incorrectBorderColor;
+    this.defaultTextColor = options.defaultTextColor;
+    this.correctTextColor = options.correctTextColor;
+    this.incorrectTextColor = options.incorrectTextColor;
+    this.defaultBorderColor = options.defaultBorderColor;
+    this.correctBorderColor = options.correctBorderColor;
+    this.incorrectBorderColor = options.incorrectBorderColor;
 
     // @protected - the challenge question
     this.challengeText = new Text( this.qna.questionString, {
@@ -73,19 +73,19 @@ define( function( require ) {
     // @protected - current value display
     var pattern = options.preValueString + '{0}' + options.postValueString;
     this.editNumberDisplay = new EditNumberDisplayNode( keypad, qna.valueProperty, pattern, {
-        centerX: this.challengeText.centerX - HORIZONTAL_SPACING,
-        top: this.challengeText.bottom + VERICAL_SPACING,
-        buttonSpacing: HORIZONTAL_SPACING,
-        font: new PhetFont( 14 ),
-        decimalPlaces: options.decimalPlaces,
-        textMaxWidth: 75,
-        textColor: this.defaultTextColor
+      centerX: this.challengeText.centerX - HORIZONTAL_SPACING,
+      top: this.challengeText.bottom + VERTICAL_SPACING,
+      buttonSpacing: HORIZONTAL_SPACING,
+      font: new PhetFont( 14 ),
+      decimalPlaces: options.decimalPlaces,
+      textMaxWidth: 75,
+      textColor: this.defaultTextColor
     } );
 
     // @protected - alternate label to display when correct
-    this.correctTextDisplay = new Text( this.qna.answerText , {
+    this.correctTextDisplay = new Text( this.qna.answerText, {
       centerX: this.challengeText.centerX,
-      top: this.challengeText.bottom + 2 * VERICAL_SPACING,
+      top: this.challengeText.bottom + 2 * VERTICAL_SPACING,
       font: TEXT_FONT,
       maxWidth: TEXT_MAX_WIDTH,
       fill: this.correctTextColor,
@@ -102,8 +102,8 @@ define( function( require ) {
 
     // @protected - unit divider line
     this.unitLine = new Path( new Shape()
-        .moveTo( this.challengeText.centerX - DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERICAL_SPACING )
-        .lineTo( this.challengeText.centerX + DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERICAL_SPACING ), {
+      .moveTo( this.challengeText.centerX - DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERTICAL_SPACING )
+      .lineTo( this.challengeText.centerX + DIVISOR_WIDTH / 2, this.editNumberDisplay.bottom + VERTICAL_SPACING ), {
       stroke: 'black',
       lineWidth: 1.25,
       visible: options.showUnitText
@@ -123,7 +123,7 @@ define( function( require ) {
     this.qna.valueProperty.link( this.checkAnswerBound );
 
     options.children = [ this.challengeText, this.editNumberDisplay, this.correctTextDisplay, this.faceNode,
-                         this.unitLine, this.unitText ];
+      this.unitLine, this.unitText ];
 
     Node.call( this, options );
   }
@@ -149,7 +149,7 @@ define( function( require ) {
         this.unitLine.visible = true;
         this.unitText.visible = true;
         this.faceNode.visible = true;
-        this.editNumberDisplay.hideEditButton();
+        this.editNumberDisplay.setVisible( false );
         this.editNumberDisplay.setTextColor( this.correctTextColor );
         this.editNumberDisplay.setBorderColor( this.correctBorderColor );
         //this.challengeText.setFill( this.correctTextColor );

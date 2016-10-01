@@ -17,14 +17,14 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   /**
-   * @param {Property.<string>} itemTypeProperty - the curently selected item type
-   * @param {Property.<number>} itemRateProperty - the curently selected item rate
+   * @param {Property.<string>} itemTypeProperty - the currently selected item type
+   * @param {Property.<number>} itemRateProperty - the currently selected item rate
    * @constructor
    */
   function Scale( itemTypeProperty, itemRateProperty ) {
 
     // @public (all)
-    ItemCollection.call( this, { } );
+    ItemCollection.call( this, {} );
 
     var self = this;
 
@@ -32,14 +32,14 @@ define( function( require ) {
     this.itemRateProperty = itemRateProperty;
 
     // @protected - the current cost and weight of all items on the scale
-    this.costProperty   = new Property( 0.0 );
+    this.costProperty = new Property( 0.0 );
     this.weightProperty = new Property( 0.0 );
 
     this.addArrayListeners();
 
     // refresh on item change
     this.itemRateProperty.link( function( itemData, oldItemData ) {
-        self.updateScale();
+      self.updateScale();
     } );
 
   }
@@ -59,13 +59,13 @@ define( function( require ) {
 
       // refresh on item additions/removals
       this.addListeners( function( item, observableArray ) {
-        self.costProperty.value   += ( self.itemRateProperty.value * item.countProperty.value );
-        self.weightProperty.value += item.countProperty.value;
-      },
-      function( item, observableArray ) {
-        self.costProperty.value   -= ( self.itemRateProperty.value * item.countProperty.value );
-        self.weightProperty.value -= item.countProperty.value;
-      } );
+          self.costProperty.value += ( self.itemRateProperty.value * item.countProperty.value );
+          self.weightProperty.value += item.countProperty.value;
+        },
+        function( item, observableArray ) {
+          self.costProperty.value -= ( self.itemRateProperty.value * item.countProperty.value );
+          self.weightProperty.value -= item.countProperty.value;
+        } );
     },
 
     /**
@@ -79,7 +79,7 @@ define( function( require ) {
 
     /**
      * Adds an item to the type specific array
-     * Note: fruit types are a special case, they get expanded into indivdual items
+     * Note: fruit types are a special case, they get expanded into individual items
      * @param {Item} item
      * @override @public
      */
@@ -89,10 +89,10 @@ define( function( require ) {
       if ( item.countProperty.value > 1 ) {
 
         var types = {};
-        types[ ItemData.APPLES.type ]  = ItemData.APPLES;
-        types[ ItemData.LEMONS.type ]  = ItemData.LEMONS;
+        types[ ItemData.APPLES.type ] = ItemData.APPLES;
+        types[ ItemData.LEMONS.type ] = ItemData.LEMONS;
         types[ ItemData.ORANGES.type ] = ItemData.ORANGES;
-        types[ ItemData.PEARS.type ]   = ItemData.PEARS;
+        types[ ItemData.PEARS.type ] = ItemData.PEARS;
         if ( item.isFruit() ) {
           for ( var i = 0; i < item.countProperty.value; i++ ) {
             ItemCollection.prototype.addItem.call( this, new Item( item.type, 1 ) );
@@ -103,7 +103,7 @@ define( function( require ) {
         }
       }
       else {
-         ItemCollection.prototype.addItem.call( this, item );
+        ItemCollection.prototype.addItem.call( this, item );
       }
     },
 
@@ -131,11 +131,11 @@ define( function( require ) {
       // get the current array for the item type
       var itemArray = self.getItemsWithType( this.itemTypeProperty.value );
       itemArray.forEach( function( item ) {
-        cost   += ( self.itemRateProperty.value * item.countProperty.value );
+        cost += ( self.itemRateProperty.value * item.countProperty.value );
         weight += item.countProperty.value; // since candy is in bulk we just use fractional counts to represent weight
       } );
 
-      self.costProperty.value   = cost;
+      self.costProperty.value = cost;
       self.weightProperty.value = weight;
     },
 

@@ -39,9 +39,9 @@ define( function( require ) {
 
   /**
    *
-   * @param {SceneMode} parentNode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
-   * @param {Property.<ItemData>} itemDataProperty - the curently selected item
-   * @param {Node} parentNode - the parent node of the combobox
+   * @param {SceneMode} sceneMode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
+   * @param {Property.<ItemData>} itemDataProperty - the currently selected item
+   * @param {Node} parentNode - the parent node of the combo box
    * @param {Object} [options]
    * @constructor
    */
@@ -57,7 +57,7 @@ define( function( require ) {
     }, options );
 
     // populate the menu based on which scene
-    var items  = [];
+    var items = [];
     switch( sceneMode ) {
       case SceneMode.FRUIT:
         items.push( ComboBox.createItem(
@@ -122,17 +122,17 @@ define( function( require ) {
      */
     setSceneMode: function( sceneMode ) {
       switch( sceneMode ) {
-      case SceneMode.FRUIT:
+        case SceneMode.FRUIT:
           console.log( 'Scene fruit' );
           break;
-      case SceneMode.PRODUCE:
+        case SceneMode.PRODUCE:
           console.log( 'Scene produce' );
           break;
-      case SceneMode.CANDY:
+        case SceneMode.CANDY:
           console.log( 'Scene candy' );
           break;
-      default:
-        assert && assert( false, 'Combo box using unrecognized scene' );
+        default:
+          assert && assert( false, 'Combo box using unrecognized scene' );
       }
 
     },

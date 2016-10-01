@@ -23,9 +23,6 @@ define( function( require ) {
 
   unitRates.register( 'ShoppingLabModel', ShoppingLabModel );
 
-  return inherit( URShoppingModel, ShoppingLabModel, {
-
-
-  } ); // inherit
+  return inherit( URShoppingModel, ShoppingLabModel, {} ); // inherit
 
 } ); // define

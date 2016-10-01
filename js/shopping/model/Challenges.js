@@ -51,8 +51,8 @@ define( function( require ) {
   var cucumberCapString = require( 'string!UNIT_RATES/cucumberCap' );
   var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
   var cucumbersCapString = require( 'string!UNIT_RATES/cucumbersCap' );
-  var potatoeString = require( 'string!UNIT_RATES/potatoe' );
-  var potatoeCapString = require( 'string!UNIT_RATES/potatoeCap' );
+  var potatoString = require( 'string!UNIT_RATES/potato' );
+  var potatoCapString = require( 'string!UNIT_RATES/potatoCap' );
   var potatoesString = require( 'string!UNIT_RATES/potatoes' );
   var potatoesCapString = require( 'string!UNIT_RATES/potatoesCap' );
   var tomatoString = require( 'string!UNIT_RATES/tomato' );
@@ -64,19 +64,19 @@ define( function( require ) {
   var RAND = new Random();
 
   /**
-   * @param {Property.<ItemData>} itemDataProperty - the curently selected item
+   * @param {Property.<ItemData>} itemDataProperty - the currently selected item
    * @param {function} onCorrectAnswer - function to call when the correct answer is input
    * @param {function} onRefresh - function to call when challenges are refreshed (not reset)
    * @constructor
    */
   function Challenges( itemDataProperty, onCorrectAnswer, onRefresh ) {
 
-    this.challengeData    = {};
-    this.questionSet      = -1;
+    this.challengeData = {};
+    this.questionSet = -1;
 
     this.itemDataProperty = itemDataProperty;
-    this.onCorrectAnswer  = onCorrectAnswer;
-    this.onRefresh        = onRefresh;
+    this.onCorrectAnswer = onCorrectAnswer;
+    this.onRefresh = onRefresh;
     this.selectQuestionSet();
     this.populate();
   }
@@ -92,7 +92,7 @@ define( function( require ) {
      * @returns {QuestionAnswer}
      * @protected
      */
-    selectQuestionSet: function () {
+    selectQuestionSet: function() {
 
       var questionSet = -1;
       do {
@@ -124,14 +124,14 @@ define( function( require ) {
     populate: function() {
 
       // create questions & answers
-      for( var key in ItemData ) {
+      for ( var key in ItemData ) {
 
         var itemData = ItemData[ key ];
 
         // dispose of any old questions
         var qnaArray = this.challengeData[ itemData.type ];
-        if( qnaArray ) {
-            qnaArray.forEach( function( qna ) {
+        if ( qnaArray ) {
+          qnaArray.forEach( function( qna ) {
             qna.dispose();
           } );
           this.challengeData[ itemData.type ] = [];
@@ -143,7 +143,7 @@ define( function( require ) {
 
     /**
      * Re-populates the initial questions/values for the current item type (i.e. apples, carrots, red candy). This
-     * also qurrently selects a random question set different than the one previously set.
+     * also currently selects a random question set different than the one previously set.
      * @public
      */
     refresh: function() {
@@ -174,11 +174,11 @@ define( function( require ) {
         var newQnAArray = this.challengeData[ itemData.type ];
 
         // set unit rate question to correct
-        var newQ1 = newQnAArray[0];
+        var newQ1 = newQnAArray[ 0 ];
         newQ1.setCorrect( true );
       }
 
-      if( this.onRefresh ) {
+      if ( this.onRefresh ) {
         this.onRefresh.call();
       }
     },
@@ -186,7 +186,7 @@ define( function( require ) {
     /**
      * Generates a set (currently 4) of challenge questions for a specific item type. Fruit & produce are the same type
      * of questions but candy is different.
-     * @param {ItemData} - itemData
+     * @param {ItemData} itemData - the type and rate used to generate questions
      * @private
      */
     generateQuestionsAnswersForItem: function( itemData ) {
@@ -194,12 +194,12 @@ define( function( require ) {
       var itemType = itemData.type;
       var itemRate = itemData.rate;
 
-      if ( itemType === ItemData.RED_CANDY.type   || itemType === ItemData.PURPLE_CANDY.type ||
-           itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type )  {
+      if ( itemType === ItemData.RED_CANDY.type || itemType === ItemData.PURPLE_CANDY.type ||
+           itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type ) {
 
         // Q: Unit rate
         var candyItem1 = new Item( itemData, 1 );
-        var candyAnswerText1 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );
+        var candyAnswerText1 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );
         var c1 = new QuestionAnswer( candyItem1, itemRate, candyAnswerText1, {
           questionString: unitRateQuestionString,
           unitString: poundString,
@@ -209,99 +209,100 @@ define( function( require ) {
         // Q: Cost of # <type>?
         var candyItem2 = this.getPromptItem( itemType, this.questionSet, 0 );
         var candyCost2 = Util.toFixedNumber( candyItem2.countProperty.value * itemRate, 2 );
-        var candyAnswerText2 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost2, 2 ) );
+        var candyAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost2, 2 ) );
         var candyUnitString2 = candyItem2.countProperty.value + ' ' + poundsString;
-        var costOfCandyQuestionString2 =  StringUtils.format( costOfQuestionString, candyItem2.countProperty.value, lbsString );
+        var costOfCandyQuestionString2 = StringUtils.format( costOfQuestionString, candyItem2.countProperty.value, lbsString );
         var c2 = new QuestionAnswer( candyItem2, candyCost2, candyAnswerText2, {
           questionString: costOfCandyQuestionString2,
           unitString: candyUnitString2,
           onCorrectAnswerCallback: this.onCorrectAnswer
-        }  );
+        } );
 
         // Q: Cost of # <type>?
         var candyItem3 = this.getPromptItem( itemType, this.questionSet, 1 );
-        var candyCost3 =  Util.toFixedNumber( candyItem3.countProperty.value * itemRate, 2 );
-        var candyAnswerText3 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost3, 2 ) );
+        var candyCost3 = Util.toFixedNumber( candyItem3.countProperty.value * itemRate, 2 );
+        var candyAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost3, 2 ) );
         var candyUnitString3 = candyItem3.countProperty.value + ' ' + poundsString;
-        var costOfCandyQuestionString3 =  StringUtils.format( costOfQuestionString, candyItem3.countProperty.value, lbsString );
+        var costOfCandyQuestionString3 = StringUtils.format( costOfQuestionString, candyItem3.countProperty.value, lbsString );
         var c3 = new QuestionAnswer( candyItem3, candyCost3, candyAnswerText3, {
           questionString: costOfCandyQuestionString3,
           unitString: candyUnitString3,
           onCorrectAnswerCallback: this.onCorrectAnswer
-        }  );
+        } );
 
         // Q: Cost of # <type>?
         var candyItem4 = this.getPromptItem( itemType, this.questionSet, 2 );
-        var candyCost4 =  Util.toFixedNumber( candyItem4.countProperty.value * itemRate, 2 );
-        var candyAnswerText4 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost4, 2 ) );
+        var candyCost4 = Util.toFixedNumber( candyItem4.countProperty.value * itemRate, 2 );
+        var candyAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost4, 2 ) );
         var candyUnitString4 = candyItem4.countProperty.value + ' ' + poundsString;
-        var costOfCandyQuestionString4 =  StringUtils.format( costOfQuestionString, candyItem4.countProperty.value, lbsString );
+        var costOfCandyQuestionString4 = StringUtils.format( costOfQuestionString, candyItem4.countProperty.value, lbsString );
         var c4 = new QuestionAnswer( candyItem4, candyCost4, candyAnswerText4, {
           questionString: costOfCandyQuestionString4,
           unitString: candyUnitString4,
           onCorrectAnswerCallback: this.onCorrectAnswer
-        }  );
+        } );
 
         this.challengeData[ itemType ] = [ c1, c2, c3, c4 ];
 
-      } else {
+      }
+      else {
 
         //var name          = this.getNameForItemType(itemType, false, false );
-        var nameCap       = this.getNameForItemType(itemType, false, true );
-        var namePlural    = this.getNameForItemType(itemType, true, false );
-        var namePluralCap = this.getNameForItemType(itemType, true, true );
+        var nameCap = this.getNameForItemType( itemType, false, true );
+        var namePlural = this.getNameForItemType( itemType, true, false );
+        var namePluralCap = this.getNameForItemType( itemType, true, true );
 
         // Q: Unit rate
         var item1 = new Item( itemData, 1 );
-        var itemAnswerText1 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );
+        var itemAnswerText1 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );
         var i1 = new QuestionAnswer( item1, itemRate, itemAnswerText1, {
           questionString: unitRateQuestionString,
           unitString: nameCap,
-           onCorrectAnswerCallback: this.onCorrectAnswer
-        }  );
+          onCorrectAnswerCallback: this.onCorrectAnswer
+        } );
 
         // Q: Cost of # <type>?
         var item2 = this.getPromptItem( itemType, this.questionSet, 0 );
-        var itemCost2 =  Util.toFixedNumber( item2.countProperty.value * itemRate, 2 );
-        var itemAnswerText2 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost2, 2 ) );
+        var itemCost2 = Util.toFixedNumber( item2.countProperty.value * itemRate, 2 );
+        var itemAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost2, 2 ) );
         var itemUnitString2 = item2.countProperty.value + ' ' + namePluralCap;
-        var costOfItemQuestionString2 =  StringUtils.format( costOfQuestionString, item2.countProperty.value, namePlural );
+        var costOfItemQuestionString2 = StringUtils.format( costOfQuestionString, item2.countProperty.value, namePlural );
         var i2 = new QuestionAnswer( item2, itemCost2, itemAnswerText2, {
           questionString: costOfItemQuestionString2,
           unitString: itemUnitString2,
           onCorrectAnswerCallback: this.onCorrectAnswer
-        }  );
+        } );
 
         // Q: Cost of # <type>?
-        var item3 =  this.getPromptItem( itemType, this.questionSet, 1 );
-        var itemCost3 =  Util.toFixedNumber( item3.countProperty.value * itemRate, 2 );
-        var itemAnswerText3 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost3, 2 ) );
+        var item3 = this.getPromptItem( itemType, this.questionSet, 1 );
+        var itemCost3 = Util.toFixedNumber( item3.countProperty.value * itemRate, 2 );
+        var itemAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost3, 2 ) );
         var itemUnitString3 = item3.countProperty.value + ' ' + namePluralCap;
-        var costOfItemQuestionString3 =  StringUtils.format( costOfQuestionString, item3.countProperty.value, namePlural );
+        var costOfItemQuestionString3 = StringUtils.format( costOfQuestionString, item3.countProperty.value, namePlural );
         var i3 = new QuestionAnswer( item3, itemCost3, itemAnswerText3, {
           questionString: costOfItemQuestionString3,
           unitString: itemUnitString3,
           onCorrectAnswerCallback: this.onCorrectAnswer
-        }  );
+        } );
 
         // Q: <type> for $?
         var item4 = this.getPromptItem( itemType, this.questionSet, 2 );
-        var itemCost4 =  Util.toFixedNumber( item4.countProperty.value * itemRate, 2 );
-        var itemAnswerText4 =  StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost4, 2 ) );
+        var itemCost4 = Util.toFixedNumber( item4.countProperty.value * itemRate, 2 );
+        var itemAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost4, 2 ) );
         var itemUnitString4 = item4.countProperty.value + ' ' + namePluralCap;
-        var itemForQuestionString4 =  StringUtils.format( forQuestionString, namePluralCap, Util.toFixed( itemCost4, 2 ) );
+        var itemForQuestionString4 = StringUtils.format( forQuestionString, namePluralCap, Util.toFixed( itemCost4, 2 ) );
         var i4 = new QuestionAnswer( item4, item4.countProperty.value, itemAnswerText4, {
           questionString: itemForQuestionString4,
           unitString: itemUnitString4,
           onCorrectAnswerCallback: this.onCorrectAnswer
-        }  );
+        } );
 
         this.challengeData[ itemType ] = [ i1, i2, i3, i4 ];
       }
     },
 
     /**
-     * Retrives the correct version of name for an item from it's type
+     * Retrieves the correct version of name for an item from it's type
      * @param {Item.type} type - the item type (i.e. apples, carrots, red candy)
      * @param {boolean} plural
      * @param {boolean} capitalize
@@ -313,52 +314,52 @@ define( function( require ) {
 
       var name = '';
       switch( type ) {
-          case ItemData.APPLES.type:
-            name = ( plural ? ( capitalize ? applesCapString : applesString ) :
-                              ( capitalize ? appleCapString : appleString ) );
-            break;
-          case ItemData.LEMONS.type:
-            name = ( plural ? ( capitalize ? lemonsCapString : lemonsString ) :
-                              ( capitalize ? lemonCapString : lemonString ) );
-            break;
-          case ItemData.ORANGES.type:
-            name = ( plural ? ( capitalize ? orangesCapString : orangesString ) :
-                              ( capitalize ? orangeCapString : orangeString ) );
-            break;
-          case ItemData.PEARS.type:
-            name = ( plural ? ( capitalize ? pearsCapString : pearsString ) :
-                              ( capitalize ? pearCapString : pearString ) );
-            break;
-          case ItemData.CARROTS.type:
-            name = ( plural ? ( capitalize ? carrotsCapString : carrotsString ) :
-                              ( capitalize ? carrotCapString : carrotString ) );
-            break;
-          case ItemData.CUCUMBERS.type:
-            name = ( plural ? ( capitalize ? cucumbersCapString : cucumbersString ) :
-                              ( capitalize ? cucumberCapString : cucumberString ) );
-            break;
-          case ItemData.POTATOES.type:
-            name = ( plural ? ( capitalize ? potatoesCapString : potatoesString ) :
-                              ( capitalize ? potatoeCapString : potatoeString ) );
-            break;
-          case ItemData.TOMATOES.type:
-            name = ( plural ? ( capitalize ? tomatoesCapString : tomatoesString ) :
-                              ( capitalize ? tomatoCapString : tomatoString ) );
-            break;
-          case ItemData.RED_CANDY.type:
-          case ItemData.PURPLE_CANDY.type:
-          case ItemData.GREEN_CANDY.type:
-          case ItemData.BLUE_CANDY.type:
-          default:
-            assert && assert( false, 'no name available for item type' );
-        }
+        case ItemData.APPLES.type:
+          name = ( plural ? ( capitalize ? applesCapString : applesString ) :
+                   ( capitalize ? appleCapString : appleString ) );
+          break;
+        case ItemData.LEMONS.type:
+          name = ( plural ? ( capitalize ? lemonsCapString : lemonsString ) :
+                   ( capitalize ? lemonCapString : lemonString ) );
+          break;
+        case ItemData.ORANGES.type:
+          name = ( plural ? ( capitalize ? orangesCapString : orangesString ) :
+                   ( capitalize ? orangeCapString : orangeString ) );
+          break;
+        case ItemData.PEARS.type:
+          name = ( plural ? ( capitalize ? pearsCapString : pearsString ) :
+                   ( capitalize ? pearCapString : pearString ) );
+          break;
+        case ItemData.CARROTS.type:
+          name = ( plural ? ( capitalize ? carrotsCapString : carrotsString ) :
+                   ( capitalize ? carrotCapString : carrotString ) );
+          break;
+        case ItemData.CUCUMBERS.type:
+          name = ( plural ? ( capitalize ? cucumbersCapString : cucumbersString ) :
+                   ( capitalize ? cucumberCapString : cucumberString ) );
+          break;
+        case ItemData.POTATOES.type:
+          name = ( plural ? ( capitalize ? potatoesCapString : potatoesString ) :
+                   ( capitalize ? potatoCapString : potatoString ) );
+          break;
+        case ItemData.TOMATOES.type:
+          name = ( plural ? ( capitalize ? tomatoesCapString : tomatoesString ) :
+                   ( capitalize ? tomatoCapString : tomatoString ) );
+          break;
+        case ItemData.RED_CANDY.type:
+        case ItemData.PURPLE_CANDY.type:
+        case ItemData.GREEN_CANDY.type:
+        case ItemData.BLUE_CANDY.type:
+        default:
+          assert && assert( false, 'no name available for item type' );
+      }
 
       return name;
     },
 
     /**
-     * Gets the items assocaited with all the correctly answered challenge questions
-      * @return {Array.<QuestionAnswer>}
+     * Gets the items associated with all the correctly answered challenge questions
+     * @return {Array.<QuestionAnswer>}
      * @public
      *
      */
@@ -378,7 +379,7 @@ define( function( require ) {
 
     /**
      * Generate an item with a count set from the ChallengeData
-     * @return {string} itemType
+     * @param {string} itemType
      * @param {number} setNumber - set (0|1|2|3)
      * @param {number} promptNumber - prompt (0|1|2)
      * @return {Item}
@@ -430,7 +431,7 @@ define( function( require ) {
           count = ChallengeData.BLUE_CANDY[ setNumber ][ promptNumber ];
           break;
         default:
-            assert && assert( false, 'prompt data not available for item type' );
+          assert && assert( false, 'prompt data not available for item type' );
       }
 
       var item = new Item( itemType, count );
@@ -444,7 +445,7 @@ define( function( require ) {
      */
     reset: function() {
 
-      for (var key in ItemData) {
+      for ( var key in ItemData ) {
         var itemData = ItemData[ key ];
         var qnaArray = this.challengeData[ itemData.type ];
         qnaArray.forEach( function( qna ) {

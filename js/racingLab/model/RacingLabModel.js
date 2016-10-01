@@ -23,10 +23,10 @@ define( function( require ) {
   function RacingLabModel() {
 
     PropertySet.call( this, {
-      trackCount:           1,        // number of cars or tracks
-      running:            false,      // is a race currently running
-      elapsedTime:        0.0,        // elapsed time in hours
-      flagArrowsVisible:  true        // are the green flags around teh finish flag visible
+      trackCount: 1,        // number of cars or tracks
+      running: false,      // is a race currently running
+      elapsedTime: 0.0,        // elapsed time in hours
+      flagArrowsVisible: true        // are the green flags around teh finish flag visible
     } );
 
     var self = this;
@@ -38,16 +38,16 @@ define( function( require ) {
     // update race running state
     Property.lazyMultilink( [ this.trackGroup1.carFinishedProperty, this.trackGroup2.carFinishedProperty ],
       function( car1Finished, car2Finished ) {
-        if( self.trackCountProperty.value === 1 ) {
+        if ( self.trackCountProperty.value === 1 ) {
           self.runningProperty.value = !car1Finished;
         }
-        else if( self.trackCountProperty.value === 2 ) {
+        else if ( self.trackCountProperty.value === 2 ) {
           self.runningProperty.value = !( car1Finished && car2Finished );
         }
         else {
           assert && assert( false, 'Invalid car count' );
         }
-    } );
+      } );
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );
@@ -57,7 +57,7 @@ define( function( require ) {
     // no dispose, persists for the lifetime of the sim.
 
     /**
-     * Returns if the model is in teh sstart position or not
+     * Returns if the model is in the start position or not
      * @return {boolean}
      * @public
      */

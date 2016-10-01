@@ -48,7 +48,7 @@ define( function( require ) {
     this.model = model;
 
     // @public - the scene type (fruit | produce | candy )
-    // FIXME: scene & item randomly choosen @ startup (TBD as per current design document)
+    // FIXME: scene & item randomly chosen @ startup (TBD as per current design document)
     this.sceneModeProperty = new Property( SceneMode.FRUIT );
 
     // shared keypad which becomes visible when an edit number display button is selected.
@@ -62,15 +62,15 @@ define( function( require ) {
     // @public
     this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
       left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
-      top:  this.layoutBounds.top  + URConstants.SCREEN_VERTICAL_MARGIN,
-      numberLineTitle:            doubleNumberLineString,
-      onEraseCallback:            eraseNumberLineCallback
+      top: this.layoutBounds.top + URConstants.SCREEN_VERTICAL_MARGIN,
+      numberLineTitle: doubleNumberLineString,
+      onEraseCallback: eraseNumberLineCallback
     } );
     this.addChild( this.numberLineNode );
 
     // keypad layout
     this.keypad.right = this.numberLineNode.right - 30;
-    this.keypad.top   = this.numberLineNode.bottom + 2 * URConstants.SCREEN_PANEL_SPACING;
+    this.keypad.top = this.numberLineNode.bottom + 2 * URConstants.SCREEN_PANEL_SPACING;
 
     // @protected - covers entire screen, uses pick to close keypad
     this.keypadCloseArea = new Rectangle( 0, 0, window.innerWidth, window.innerHeight, { visible: false } );
@@ -98,23 +98,23 @@ define( function( require ) {
       this.startUpdateItem.bind( this ),
       this.endUpdateItem.bind( this ), {
         centerX: this.numberLineNode.centerX + 15,
-        bottom:  this.layoutBounds.bottom - URConstants.SCREEN_VERTICAL_MARGIN
-    } );
+        bottom: this.layoutBounds.bottom - URConstants.SCREEN_VERTICAL_MARGIN
+      } );
     this.addChild( this.shelfNode );
 
     // scale
     this.scaleNode = new ScaleNode( model.scale, this.itemsLayer,
       this.startUpdateItem.bind( this ),
-      this.endUpdateItem.bind( this ) , {
+      this.endUpdateItem.bind( this ), {
         centerX: this.shelfNode.centerX,
-        bottom:  this.shelfNode.top - 75,
+        bottom: this.shelfNode.top - 75,
         enableHideCost: enableHideScaleCost
-    } );
+      } );
     this.addChild( this.scaleNode );
 
     // scale remove all items button
     var scaleRemoveButtonNode = new RectangularPushButton( {
-      right:  this.scaleNode.left - URConstants.SCREEN_PANEL_SPACING,
+      right: this.scaleNode.left - URConstants.SCREEN_PANEL_SPACING,
       bottom: this.scaleNode.bottom,
       baseColor: URConstants.DEFAULT_BUTTON_COLOR,
       content: new Image( removeButtonImage, { scale: 0.25 } ),
@@ -133,7 +133,7 @@ define( function( require ) {
       listener: function() {
         self.resetAll();
       },
-      right:  this.layoutBounds.maxX - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      right: this.layoutBounds.maxX - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: this.layoutBounds.maxY - URConstants.SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( resetAllButton );
@@ -142,13 +142,13 @@ define( function( require ) {
 
     // scene selection buttons
     var sceneControlButtons = new SceneButtonGroupNode( this.sceneModeProperty, {
-      right:  this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( sceneControlButtons );
 
     // select the scene
-    this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this) );
+    this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this ) );
 
     // Layer the keypad & draggable nodes for proper rendering/interaction
     this.keypadCloseArea.moveToFront();
@@ -210,7 +210,7 @@ define( function( require ) {
 
         // Dropped on the scale
         this.model.addShelfItemToScale( itemNode.item );
-        this.model.addScaleItemsToNumberline();
+        this.model.addScaleItemsToNumberLine();
         // populate number line
         this.numberLineNode.populate();
 
@@ -235,7 +235,7 @@ define( function( require ) {
         this.model.addScaleItemToShelf( itemNode.item );
 
         // Update the number line
-        this.model.addScaleItemsToNumberline();
+        this.model.addScaleItemsToNumberLine();
 
         // populate number line
         this.numberLineNode.populate();
@@ -272,12 +272,12 @@ define( function( require ) {
     },
 
     /**
-     * Resizes the keypad close area to match that of the browser window.
+     * Resize the keypad close area to match that of the browser window.
      * @protected
      */
     onResize: function() {
       // resize the pick area to match the screen
-      this.keypadCloseArea.setRectBounds( new Bounds2( 0, 0,  window.innerWidth, window.innerHeight ) );
+      this.keypadCloseArea.setRectBounds( new Bounds2( 0, 0, window.innerWidth, window.innerHeight ) );
     },
 
     /**
@@ -285,16 +285,16 @@ define( function( require ) {
      * @protected
      */
     resetAll: function() {
-        this.model.reset();
+      this.model.reset();
 
-        this.sceneModeProperty.reset();
-        this.hideKeypad();
+      this.sceneModeProperty.reset();
+      this.hideKeypad();
 
-        this.removeAllItems();
+      this.removeAllItems();
 
-        this.numberLineNode.reset();
-        this.scaleNode.reset();
-        this.shelfNode.reset();
+      this.numberLineNode.reset();
+      this.scaleNode.reset();
+      this.shelfNode.reset();
     }
 
   } ); // inherit

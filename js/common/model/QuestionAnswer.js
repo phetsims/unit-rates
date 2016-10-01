@@ -28,21 +28,21 @@ define( function( require ) {
 
     options = _.extend( {
       questionString: '',
-      unitString:     '',
-      decimalPlaces:  2,
+      unitString: '',
+      decimalPlaces: 2,
       onCorrectAnswerCallback: null   // function called when the question has been answered correctly
-    },  options || {} );
+    }, options || {} );
 
     var self = this;
 
     // @public (read-only) - all
-    this.item           = item;                                 // {Item} associated with this question
+    this.item = item;                                 // {Item} associated with this question
     this.questionString = options.questionString;               // {string} question to be asked
-    this.unitString     = options.unitString;                   // {string} unit
-    this.decimalPlaces  = options.decimalPlaces;                // the number of decimals to use when evaluating correctness
-    this.answerValue    = answerValue;                          // {number} the correct answer value
-    this.answerText     = answerText;                           // {Text} the correct answer text
-    this.valueProperty  = new Property( DEFAULT_ANSWER_VALUE ); // user's answer input property
+    this.unitString = options.unitString;                   // {string} unit
+    this.decimalPlaces = options.decimalPlaces;                // the number of decimals to use when evaluating correctness
+    this.answerValue = answerValue;                          // {number} the correct answer value
+    this.answerText = answerText;                           // {Text} the correct answer text
+    this.valueProperty = new Property( DEFAULT_ANSWER_VALUE ); // user's answer input property
 
     // @protected - {function}
     this.onCorrectAnswerCallback = options.onCorrectAnswerCallback;
@@ -105,8 +105,8 @@ define( function( require ) {
      */
     getAnswerPrecision: function() {
 
-      function roundDecimals(value, decimals) {
-        return Number(Util.roundSymmetric(value+'e'+decimals)+'e-'+decimals);
+      function roundDecimals( value, decimals ) {
+        return Number( Util.roundSymmetric( value.toString() + 'e' + decimals.toString() ) + 'e-' + decimals );
       }
 
       var count = roundDecimals( this.valueProperty.value, 2 );
@@ -118,7 +118,8 @@ define( function( require ) {
       var e = 1;
       var p = 0;
       while ( Util.roundSymmetric( count * e ) / e !== count ) {
-        e *= 10; p++;
+        e *= 10;
+        p++;
       }
       return p;
     },

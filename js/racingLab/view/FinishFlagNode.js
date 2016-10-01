@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * The draggable finish/checkered flag node. It's is only allowed to move along the horizonal axis and is bound that
+ * The draggable finish/checkered flag node. It's is only allowed to move along the horizontal axis and is bound that
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -30,22 +30,22 @@ define( function( require ) {
 
     options = _.extend( {
       imageScale: 1.0,
-      cursor:     'pointer'
+      cursor: 'pointer'
     }, options || {} );
 
-    var image   = new Image( imageString, { scale: options.imageScale } );
-    var origin  = new Vector2( position.x - image.width / 2, position.y - image.height );
+    var image = new Image( imageString, { scale: options.imageScale } );
+    var origin = new Vector2( position.x - image.width / 2, position.y - image.height );
 
     // adjust the bounds passed in to account for the size of the flag image
-    var adjustedBounds  = new Bounds2( bounds.minX - image.width / 2, bounds.minY - image.height,
-                               bounds.maxX - image.width / 2, bounds.maxY );
+    var adjustedBounds = new Bounds2( bounds.minX - image.width / 2, bounds.minY - image.height,
+      bounds.maxX - image.width / 2, bounds.maxY );
 
     // @public
     this.item = new Movable( {
-      yAxisEnabled: false,      // horizonal movement only
-      bounds:       adjustedBounds,
-      position:     origin
-    });
+      yAxisEnabled: false,      // horizontal movement only
+      bounds: adjustedBounds,
+      position: origin
+    } );
 
     assert && assert( !options.children, 'additional children not supported' );
     options.children = [ image ];
@@ -57,14 +57,14 @@ define( function( require ) {
 
   return inherit( MovableNode, FinishFlagNode, {
 
-  /**
-   * Returns the postition of the flag
-   * @return {Vector2}
-   * @public
-   */
-  getCurrentPosition: function() {
-    return this.item.positionProperty.value;
-  }
+    /**
+     * Returns the position of the flag
+     * @return {Vector2}
+     * @public
+     */
+    getCurrentPosition: function() {
+      return this.item.positionProperty.value;
+    }
 
   } ); // inherit
 

@@ -6,20 +6,20 @@
  *
  * @author Dave Schmitz (Schmitzware)
  */
- define( function( require ) {
+define( function( require ) {
   'use strict';
 
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // constants
- var ShoppingConstants = {
+  var ShoppingConstants = {
 
     //----------------------------------------------------------------------------
     // Views
     //----------------------------------------------------------------------------
-    DEFAULT_CORRECT_PROMPT_COLOR:   'rgba(0,0,225,1)',    // Challenge question color
-    UNIT_RATE_CORRECT_PROMPT_COLOR: 'rgba(0,192,0,1)'     // Chanllenge Unit Rate question color
+    DEFAULT_CORRECT_PROMPT_COLOR: 'rgba(0,0,225,1)',    // Challenge question color
+    UNIT_RATE_CORRECT_PROMPT_COLOR: 'rgba(0,192,0,1)'     // Challenge Unit Rate question color
 
     //----------------------------------------------------------------------------
     // Models

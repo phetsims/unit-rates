@@ -33,12 +33,18 @@ define( function( require ) {
     }, options );
 
     RadioButtonGroup.call( this, sceneModeProperty, [
-      { value: SceneMode.FRUIT,   node: ItemNodeFactory.createItemNode( new Item( ItemData.APPLES.type, 1  ),
-        { imageScale: 0.025 } ) },
-      { value: SceneMode.PRODUCE, node: ItemNodeFactory.createItemNode( new Item( ItemData.CARROTS.type, 1 ),
-        { imageScale: 0.025 } ) },
-      { value: SceneMode.CANDY,   node: ItemNodeFactory.createItemNode( new Item( ItemData.PURPLE_CANDY.type, 1 ),
-        { imageScale: 0.035 } ) }
+      {
+        value: SceneMode.FRUIT, node: ItemNodeFactory.createItemNode( new Item( ItemData.APPLES.type, 1 ),
+        { imageScale: 0.025 } )
+      },
+      {
+        value: SceneMode.PRODUCE, node: ItemNodeFactory.createItemNode( new Item( ItemData.CARROTS.type, 1 ),
+        { imageScale: 0.025 } )
+      },
+      {
+        value: SceneMode.CANDY, node: ItemNodeFactory.createItemNode( new Item( ItemData.PURPLE_CANDY.type, 1 ),
+        { imageScale: 0.035 } )
+      }
     ], options );
   }
 

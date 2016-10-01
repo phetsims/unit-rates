@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A base class used for positioning/animating derivied nodes
+ * A base class used for positioning/animating derived nodes
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -59,9 +59,9 @@ define( function( require ) {
         };
 
         var animationTween = new TWEEN.Tween( position ).to( {
-          x: x,
-          y: y
-        }, 1000 )
+            x: x,
+            y: y
+          }, 1000 )
           .easing( TWEEN.Easing.Cubic.InOut )
           .onUpdate( function() {
             self.setPosition( position.x, position.y, false );

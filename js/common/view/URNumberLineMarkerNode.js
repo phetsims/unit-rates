@@ -1,8 +1,8 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A number line marker node (of baically two editable number displays) which represents a spot on the double number line.
- * A marker node has different appearence, which one is used is based on several property values. A marker maybe:
+ * A number line marker node (of basically two editable number displays) which represents a spot on the double number line.
+ * A marker node has different appearance, which one is used is based on several property values. A marker maybe:
  *  - Editable | non-editable
  *  - High | low precision
  *  - Out of Range
@@ -23,16 +23,16 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // constants
-  var EDIT_BUTTON_MARGIN    = 5;
-  var EDIT_BORDER_COLOR     = 'rgba(0,0,0,1)';
-  var EDIT_BG_COLOR         = 'rgba(255,255,255,1)';
-  var PRECISION_TEXT_COLOR  = 'rgba(128,128,128,1)';
-  var DEFAULT_TEXT_COLOR    = 'rgba(0,0,0,1)';
-  var DEFAULT_BORDER_COLOR  = 'rgba(0,0,0,0)';
-  var RANGE_TEXT_COLOR      = 'rgba(255,0,0,1)';
-  var TRANSPARENT_COLOR     = 'rgba(0,0,0,0)';
-  var LARGE_FONT            = new PhetFont( 11 );
-  var SMALL_FONT            = new PhetFont( 9 );
+  var EDIT_BUTTON_MARGIN = 5;
+  var EDIT_BORDER_COLOR = 'rgba(0,0,0,1)';
+  var EDIT_BG_COLOR = 'rgba(255,255,255,1)';
+  var PRECISION_TEXT_COLOR = 'rgba(128,128,128,1)';
+  var DEFAULT_TEXT_COLOR = 'rgba(0,0,0,1)';
+  var DEFAULT_BORDER_COLOR = 'rgba(0,0,0,0)';
+  var RANGE_TEXT_COLOR = 'rgba(255,0,0,1)';
+  var TRANSPARENT_COLOR = 'rgba(0,0,0,0)';
+  var LARGE_FONT = new PhetFont( 11 );
+  var SMALL_FONT = new PhetFont( 9 );
 
   /**
    * @param {URNumberLineMarker} marker
@@ -45,20 +45,20 @@ define( function( require ) {
   function URNumberLineMarkerNode( marker, position, keypad, updateFunction, options ) {
 
     options = _.extend( {
-      topPattern:           '{0}',
-      bottomPattern:        '{0}',
-      stroke:               'black',
-      lineWidth:            1.25,
-      largeHeight:          35,
-      smallHeight:          18
+      topPattern: '{0}',
+      bottomPattern: '{0}',
+      stroke: 'black',
+      lineWidth: 1.25,
+      largeHeight: 35,
+      smallHeight: 18
     }, options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
     var self = this;
 
     // @public (read-write)
-    this.marker   = marker;
-    this.keypad   = keypad;
+    this.marker = marker;
+    this.keypad = keypad;
     this.updateFunction = updateFunction;
 
     // @protected
@@ -67,45 +67,45 @@ define( function( require ) {
 
     // @protected - top label
     this.topNumberDisplay = new EditNumberDisplayNode( keypad, this.marker.topQnA.valueProperty, options.topPattern, {
-        centerX:          -2,
-        bottom:           -this.smallHeight,
-        decimalPlaces:    marker.topDecimalPlaces,
-        buttonPosition:   'top',
-        buttonSpacing:    EDIT_BUTTON_MARGIN,
-        textColor:        DEFAULT_TEXT_COLOR,
-        backgroundColor:  TRANSPARENT_COLOR,
-        borderColor:      EDIT_BORDER_COLOR,
-        font:             SMALL_FONT,
-        minWidth:         100
+      centerX: -2,
+      bottom: -this.smallHeight,
+      decimalPlaces: marker.topDecimalPlaces,
+      buttonPosition: 'top',
+      buttonSpacing: EDIT_BUTTON_MARGIN,
+      textColor: DEFAULT_TEXT_COLOR,
+      backgroundColor: TRANSPARENT_COLOR,
+      borderColor: EDIT_BORDER_COLOR,
+      font: SMALL_FONT,
+      minWidth: 100
     } );
 
     // @protected - both
     this.smallLineShape = new Shape()
       .moveTo( 0, -this.smallHeight )
-      .lineTo( 0,  this.smallHeight );
+      .lineTo( 0, this.smallHeight );
     this.largeLineShape = new Shape()
       .moveTo( 0, -this.largeHeight )
-      .lineTo( 0,  this.largeHeight );
+      .lineTo( 0, this.largeHeight );
 
     this.markerLine = new Path( this.smallLineShape, {
-        centerX:    0,
-        centerY:    0,
-        lineWidth:  options.lineWidth,
-        stroke:     marker.color,
-        pickable:   false
-      } );
+      centerX: 0,
+      centerY: 0,
+      lineWidth: options.lineWidth,
+      stroke: marker.color,
+      pickable: false
+    } );
 
     // @protected - bottom label
     this.bottomNumberDisplay = new EditNumberDisplayNode( keypad, this.marker.bottomQnA.valueProperty, options.bottomPattern, {
-        centerX:          -2,
-        top:              this.smallHeight,
-        decimalPlaces:    marker.bottomDecimalPlaces,
-        buttonPosition:   'bottom',
-        buttonSpacing:    EDIT_BUTTON_MARGIN,
-        textColor:        DEFAULT_TEXT_COLOR,
-        backgroundColor:  TRANSPARENT_COLOR,
-        borderColor:      EDIT_BORDER_COLOR,
-        font:             SMALL_FONT
+      centerX: -2,
+      top: this.smallHeight,
+      decimalPlaces: marker.bottomDecimalPlaces,
+      buttonPosition: 'bottom',
+      buttonSpacing: EDIT_BUTTON_MARGIN,
+      textColor: DEFAULT_TEXT_COLOR,
+      backgroundColor: TRANSPARENT_COLOR,
+      borderColor: EDIT_BORDER_COLOR,
+      font: SMALL_FONT
     } );
 
     // add all child nodes
@@ -113,13 +113,13 @@ define( function( require ) {
 
     MovableNode.call( this, marker, position, options );
 
-    // change appearence on user input
+    // change appearance on user input
     this.qnaMultilink = Property.multilink( [ this.marker.topQnA.valueProperty, this.marker.bottomQnA.valueProperty, this.marker.outOfRangeProperty ],
       function( topProperty, bottomProperty, outOfRangeProperty ) {
         self.checkProperties();
         self.updateFunction( self );
-    } );
- }
+      } );
+  }
 
   unitRates.register( 'URNumberLineMarkerNode', URNumberLineMarkerNode );
 
@@ -134,13 +134,13 @@ define( function( require ) {
       // non-editable/locked marker
       if ( !this.marker.editableProperty.value ) {
 
-        // higher precision markers have different visual represenation.
+        // higher precision markers have different visual representation.
         if ( this.marker.highPrecisionProperty.value ) {
 
           // layout
-          this.markerLine.setShape(this.smallLineShape);
+          this.markerLine.setShape( this.smallLineShape );
           this.topNumberDisplay.bottom = -this.smallHeight;
-          this.bottomNumberDisplay.top =  this.smallHeight;
+          this.bottomNumberDisplay.top = this.smallHeight;
 
           // text/line color
           this.markerLine.stroke = PRECISION_TEXT_COLOR;
@@ -153,9 +153,9 @@ define( function( require ) {
         else {
 
           // layout
-          this.markerLine.setShape(this.largeLineShape);
+          this.markerLine.setShape( this.largeLineShape );
           this.topNumberDisplay.bottom = -this.largeHeight;
-          this.bottomNumberDisplay.top =  this.largeHeight;
+          this.bottomNumberDisplay.top = this.largeHeight;
 
           // text color
           this.topNumberDisplay.setTextColor( this.marker.color );
@@ -182,9 +182,9 @@ define( function( require ) {
         // editable marker
 
         // layout
-        this.markerLine.setShape(this.smallLineShape);
+        this.markerLine.setShape( this.smallLineShape );
         this.topNumberDisplay.bottom = -this.smallHeight;
-        this.bottomNumberDisplay.top =  this.smallHeight;
+        this.bottomNumberDisplay.top = this.smallHeight;
 
         // edit button
         this.topNumberDisplay.setEditButtonVisible( true );
@@ -192,7 +192,7 @@ define( function( require ) {
 
         // text color
         if ( this.marker.topQnA.isAnswerValid() ) {
-           this.topNumberDisplay.setTextColor( this.marker.outOfRangeProperty.value ? RANGE_TEXT_COLOR : DEFAULT_TEXT_COLOR );
+          this.topNumberDisplay.setTextColor( this.marker.outOfRangeProperty.value ? RANGE_TEXT_COLOR : DEFAULT_TEXT_COLOR );
         }
         else {
           this.topNumberDisplay.setTextColor( TRANSPARENT_COLOR );

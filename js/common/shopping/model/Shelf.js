@@ -15,7 +15,7 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
 
   /**
-   * @param {Property.<ItemData>} itemTypeProperty - the curently selected item type
+   * @param {Property.<ItemData>} itemTypeProperty - the currently selected item type
    * @constructor
    */
   function Shelf( itemTypeProperty ) {
@@ -36,12 +36,12 @@ define( function( require ) {
 
     /**
      * Populates the shelf with the initial items counts for all item types
-     * @private
+     * @protected
      */
     populate: function() {
 
       // Iterate over all the different item types
-      for (var key in ItemData) {
+      for ( var key in ItemData ) {
         var itemData = ItemData[ key ];
         this.populateItemType( itemData.type );
       }
@@ -54,83 +54,83 @@ define( function( require ) {
      */
     populateItemType: function( itemType ) {
 
-        // Only populate empty shelves
-        if ( this.getNumberOfItemsWithType( itemType ) > 0 ) {
-          return;
-        }
+      // Only populate empty shelves
+      if ( this.getNumberOfItemsWithType( itemType ) > 0 ) {
+        return;
+      }
 
-        switch( itemType ) {
-          case ItemData.APPLES.type:
-            this.createItem( itemType, 5 );
-            this.createItem( itemType, 5 );
-            this.createItem( itemType, 5 );
+      switch( itemType ) {
+        case ItemData.APPLES.type:
+          this.createItem( itemType, 5 );
+          this.createItem( itemType, 5 );
+          this.createItem( itemType, 5 );
           break;
-          case ItemData.LEMONS.type:
-            this.createItem( itemType, 5 );
-            this.createItem( itemType, 5 );
-            this.createItem( itemType, 5 );
+        case ItemData.LEMONS.type:
+          this.createItem( itemType, 5 );
+          this.createItem( itemType, 5 );
+          this.createItem( itemType, 5 );
           break;
-          case ItemData.ORANGES.type:
-            this.createItem( itemType, 5 );
-            this.createItem( itemType, 5 );
-            this.createItem( itemType, 5 );
+        case ItemData.ORANGES.type:
+          this.createItem( itemType, 5 );
+          this.createItem( itemType, 5 );
+          this.createItem( itemType, 5 );
           break;
-          case ItemData.PEARS.type:
-            this.createItem( itemType, 5 );
-            this.createItem( itemType, 5 );
-            this.createItem( itemType, 5 );
+        case ItemData.PEARS.type:
+          this.createItem( itemType, 5 );
+          this.createItem( itemType, 5 );
+          this.createItem( itemType, 5 );
           break;
-          case ItemData.CARROTS.type:
-            this.createItem( itemType, 4 );
-            this.createItem( itemType, 4 );
-            this.createItem( itemType, 4 );
-            this.createItem( itemType, 4 );
+        case ItemData.CARROTS.type:
+          this.createItem( itemType, 4 );
+          this.createItem( itemType, 4 );
+          this.createItem( itemType, 4 );
+          this.createItem( itemType, 4 );
           break;
-          case ItemData.CUCUMBERS.type:
-            this.createItem( itemType, 3 );
-            this.createItem( itemType, 3 );
-            this.createItem( itemType, 3 );
-            this.createItem( itemType, 3 );
+        case ItemData.CUCUMBERS.type:
+          this.createItem( itemType, 3 );
+          this.createItem( itemType, 3 );
+          this.createItem( itemType, 3 );
+          this.createItem( itemType, 3 );
           break;
-          case ItemData.POTATOES.type:
-            this.createItem( itemType, 3 );
-            this.createItem( itemType, 3 );
-            this.createItem( itemType, 3 );
-            this.createItem( itemType, 3 );
+        case ItemData.POTATOES.type:
+          this.createItem( itemType, 3 );
+          this.createItem( itemType, 3 );
+          this.createItem( itemType, 3 );
+          this.createItem( itemType, 3 );
           break;
-          case ItemData.TOMATOES.type:
-            this.createItem( itemType, 4 );
-            this.createItem( itemType, 4 );
-            this.createItem( itemType, 4 );
-            this.createItem( itemType, 4 );
+        case ItemData.TOMATOES.type:
+          this.createItem( itemType, 4 );
+          this.createItem( itemType, 4 );
+          this.createItem( itemType, 4 );
+          this.createItem( itemType, 4 );
           break;
-          case ItemData.PURPLE_CANDY.type:
-            this.createItem( itemType, .4 );
-            this.createItem( itemType, .4 );
-            this.createItem( itemType, .4 );
-            this.createItem( itemType, .4 );
+        case ItemData.PURPLE_CANDY.type:
+          this.createItem( itemType, .4 );
+          this.createItem( itemType, .4 );
+          this.createItem( itemType, .4 );
+          this.createItem( itemType, .4 );
           break;
-          case ItemData.RED_CANDY.type:
-            this.createItem( itemType, .3 );
-            this.createItem( itemType, .3 );
-            this.createItem( itemType, .3 );
-            this.createItem( itemType, .3 );
+        case ItemData.RED_CANDY.type:
+          this.createItem( itemType, .3 );
+          this.createItem( itemType, .3 );
+          this.createItem( itemType, .3 );
+          this.createItem( itemType, .3 );
           break;
-          case ItemData.GREEN_CANDY.type:
-            this.createItem( itemType, .3 );
-            this.createItem( itemType, .3 );
-            this.createItem( itemType, .3 );
-            this.createItem( itemType, .3 );
+        case ItemData.GREEN_CANDY.type:
+          this.createItem( itemType, .3 );
+          this.createItem( itemType, .3 );
+          this.createItem( itemType, .3 );
+          this.createItem( itemType, .3 );
           break;
-          case ItemData.BLUE_CANDY.type:
-            this.createItem( itemType, .4 );
-            this.createItem( itemType, .4 );
-            this.createItem( itemType, .4 );
-            this.createItem( itemType, .4 );
+        case ItemData.BLUE_CANDY.type:
+          this.createItem( itemType, .4 );
+          this.createItem( itemType, .4 );
+          this.createItem( itemType, .4 );
+          this.createItem( itemType, .4 );
           break;
-          default:
-            assert && assert( false, 'Cannot populate unrecognized type' );
-        }
+        default:
+          assert && assert( false, 'Cannot populate unrecognized type' );
+      }
     },
 
     /**
@@ -146,7 +146,7 @@ define( function( require ) {
      * Resets the self to it's default state - repopulating all items
      * @public
      */
-   reset: function() {
+    reset: function() {
       ItemCollection.prototype.reset.call( this );
       this.populate();
     }

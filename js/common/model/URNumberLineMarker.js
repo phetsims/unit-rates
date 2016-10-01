@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * Consolidates two QuestionAnswer classes into a number line marker. A marker is considered 'edtiable' until both
+ * Consolidates two QuestionAnswer classes into a number line marker. A marker is considered 'editable' until both
  * QuestionAnswers are answered correctly. Markers can also be tagged as 'out of range' (aka. off the end of the
  * number line)in which they will remain as 'editable'. Markers can also be marked as of 'high precision' (which means
  * they will have a different visual representation on the NL.)
@@ -18,8 +18,8 @@ define( function( require ) {
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
 
   /**
-   * @param {number} answerValue - the correct answer value
-   * @param {number} answerText - the text to display on a correct answer value
+   * @param {number} correctTopValue - the correct value for the top X-axis entry
+   * @param {number} correctBottomValue  - the correct value for the bottom X-axis entry
    * @param {Property.<number>} rateProperty - the current unit rate of the model/number line
    * @param {Object} [options]
    * @constructor
@@ -27,27 +27,27 @@ define( function( require ) {
   function URNumberLineMarker( correctTopValue, correctBottomValue, rateProperty, options ) {
 
     options = _.extend( {
-      color:                'black',
-      editable:             false,
-      topDecimalPlaces:     2,        // # decimals place for display
-      bottomDecimalPlaces:  1,        // # decimals place for display
-      topHighPrecision:     1,        // # decimals which makes a marker a 'high precision', potentially display differently
-      bottomHighPrecision:  2         // # decimals which makes a marker a 'high precision', potentially display differently
-     }, options || {} );
+      color: 'black',
+      editable: false,
+      topDecimalPlaces: 2,        // # decimals place for display
+      bottomDecimalPlaces: 1,        // # decimals place for display
+      topHighPrecision: 1,        // # decimals which makes a marker a 'high precision', potentially display differently
+      bottomHighPrecision: 2         // # decimals which makes a marker a 'high precision', potentially display differently
+    }, options || {} );
 
     Movable.call( this, options );
 
     // @public - all
-    this.topQnA    = new QuestionAnswer( this, correctTopValue, correctTopValue );
+    this.topQnA = new QuestionAnswer( this, correctTopValue, correctTopValue );
     this.bottomQnA = new QuestionAnswer( this, correctBottomValue, correctBottomValue );
 
     // @protected (read-only) - all
-    this.rateProperty         = rateProperty;
-    this.color                = options.color;
-    this.topDecimalPlaces     = options.topDecimalPlaces;
-    this.bottomDecimalPlaces  = options.bottomDecimalPlaces;
-    this.topHighPrecision     = options.topHighPrecision;
-    this.bottomHighPrecision  = options.bottomHighPrecision;
+    this.rateProperty = rateProperty;
+    this.color = options.color;
+    this.topDecimalPlaces = options.topDecimalPlaces;
+    this.bottomDecimalPlaces = options.bottomDecimalPlaces;
+    this.topHighPrecision = options.topHighPrecision;
+    this.bottomHighPrecision = options.bottomHighPrecision;
 
     // @public (read-write) - all
     this.addProperty( 'outOfRange', false );
@@ -56,7 +56,7 @@ define( function( require ) {
 
     // non-editable markers are automatically 'correct'
     if ( !this.editableProperty.value ) {
-      this.topQnA.valueProperty.value    = correctTopValue;
+      this.topQnA.valueProperty.value = correctTopValue;
       this.bottomQnA.valueProperty.value = correctBottomValue;
     }
 
@@ -114,7 +114,7 @@ define( function( require ) {
      * @public
      */
     onRateChange: function( rate, oldRate ) {
-      if( !this.editableProperty.value ) {
+      if ( !this.editableProperty.value ) {
         this.topQnA.answerValue = this.bottomQnA.valueProperty.value * rate;
         this.topQnA.valueProperty.value = this.topQnA.answerValue;
 
@@ -148,7 +148,7 @@ define( function( require ) {
      */
     checkCorrectAnswers: function() {
 
-      var topPrecision    = this.topQnA.getAnswerPrecision();
+      var topPrecision = this.topQnA.getAnswerPrecision();
       var bottomPrecision = this.bottomQnA.getAnswerPrecision();
       this.highPrecisionProperty.set( topPrecision >= this.topHighPrecision || bottomPrecision >= this.bottomHighPrecision );
 
@@ -159,7 +159,7 @@ define( function( require ) {
       return allCorrect;
     },
 
-     /**
+    /**
      * Tells whether a marker is 'removable'. Markers which are 'removable' are those which
      * are either still editable (i.e. not locked in) or those which have fractional values past a specified precision.
      * @returns {boolean}

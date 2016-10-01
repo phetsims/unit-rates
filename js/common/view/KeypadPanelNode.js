@@ -26,7 +26,7 @@ define( function( require ) {
   // constants
   var READOUT_FONT = new PhetFont( 25 );    // Font used for the numeric display
   var SPACING = 10;                         // Spacing (horizontal & vertical) between all nodes
-  var TEXT_MAX_WIDTH  = 150;
+  var TEXT_MAX_WIDTH = 150;
 
   /**
    * @param {Object} [options]
@@ -36,10 +36,10 @@ define( function( require ) {
 
     options = _.extend( {
       maxDigits: 4
-    },  options || {} );
+    }, options || {} );
 
     // @public
-    this.visibleProperty  = new Property( true );
+    this.visibleProperty = new Property( true );
 
     // @protected - all
     this.onSubmit = null;             // {function}() to call when the enter/check button is pressed
@@ -47,8 +47,8 @@ define( function( require ) {
 
     // @protected
     this.keypad = new NumberKeypad( {
-      maxDigits:        options.maxDigits,
-      decimalPointKey:  true
+      maxDigits: options.maxDigits,
+      decimalPointKey: true
     } );
 
     // Add the number readout background.
@@ -81,9 +81,9 @@ define( function( require ) {
       baseColor: '#F2E916',
       maxWidth: TEXT_MAX_WIDTH,
       cornerRadius: 4
-    });
+    } );
 
-    this.enterButton.top  = this.keypad.bottom + SPACING;
+    this.enterButton.top = this.keypad.bottom + SPACING;
     this.enterButton.left = (this.keypad.bounds.width - this.enterButton.bounds.width) / 2;
 
     // Group all nodes
@@ -92,14 +92,14 @@ define( function( require ) {
     } );
 
     Panel.call( this, numberControlGroup, {
-      xMargin:            SPACING,
-      yMargin:            SPACING,
-      fill:               'rgba(0,0,0,0.05)',
-      stroke:             'gray',
-      lineWidth:          1,
-      resize:             false,
+      xMargin: SPACING,
+      yMargin: SPACING,
+      fill: 'rgba(0,0,0,0.05)',
+      stroke: 'gray',
+      lineWidth: 1,
+      resize: false,
       backgroundPickable: true,
-      visible:            false
+      visible: false
     } );
 
     // Pass options through to parent class.
@@ -134,15 +134,15 @@ define( function( require ) {
      * @public
      */
     onKeypadDigitStringChange: function( digitString ) {
-      this.readoutText.text   = digitString;
+      this.readoutText.text = digitString;
       this.readoutText.center = this.readoutBackground.center;
-     },
+    },
 
     /**
      * Assigns a set of listeners to the keypad, there is only one listener assigned at any given time. That listener
      * is considered to have the focus from the keypad
-     * @param {function}() onSubmit - called when the enter/check button is pressed
-     * @param {function}() onListenerChanged - called when the keypad listener changes
+     * @param {function()} onSubmit - called when the enter/check button is pressed
+     * @param {function()} onListenerChanged - called when the keypad listener changes
      * @public
      */
     setListeners: function( onSubmit, onListenerChanged ) {
@@ -159,7 +159,7 @@ define( function( require ) {
         this.onListenerChanged.call();
       }
 
-      this.onSubmit          = onSubmit;
+      this.onSubmit = onSubmit;
       this.onListenerChanged = onListenerChanged;
 
       // when the enter button is pressed, call the submit callback and close/clear the keypad
@@ -170,7 +170,7 @@ define( function( require ) {
         self.hide();
         self.clear();
         self.clearListeners();
-      });
+      } );
     },
 
     /**
@@ -189,7 +189,7 @@ define( function( require ) {
         this.onListenerChanged.call();
       }
 
-      this.onSubmit          = null;
+      this.onSubmit = null;
       this.onListenerChanged = null;
     },
 
@@ -221,7 +221,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      this.keypad.digitStringProperty.unlink( this.onKeypadDigitStringChangeBound  );
+      this.keypad.digitStringProperty.unlink( this.onKeypadDigitStringChangeBound );
     }
 
   } ); // inherit

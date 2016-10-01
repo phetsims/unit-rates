@@ -33,42 +33,42 @@ define( function( require ) {
   function EditNumberDisplayNode( keypad, valueProperty, pattern, options ) {
 
     options = _.extend( {
-      numberRange:          new RangeWithValue( 0, 200 ),   // valid range for the number display
-      font:                 new PhetFont( 10 ),             // font used for the number display
-      decimalPlaces:        2,                              // # decimal places for the number display
-      buttonPosition:       'left',                         // edit button position (left|right|top|bottom|)
-      buttonSpacing:        0,                              // space between the edit button & number display
-      textMaxWidth:         30,
-      textColor:            'rgba(0,0,0,1)',
-      borderColor:          'rgba(0,0,0,1)',
-      backgroundColor:      'rgba(0,0,0,0)',
-      focusBorderColor:     'rgba(230,132,5,1)'             // border color when the edit button has been pressed
+      numberRange: new RangeWithValue( 0, 200 ),   // valid range for the number display
+      font: new PhetFont( 10 ),             // font used for the number display
+      decimalPlaces: 2,                              // # decimal places for the number display
+      buttonPosition: 'left',                         // edit button position (left|right|top|bottom|)
+      buttonSpacing: 0,                              // space between the edit button & number display
+      textMaxWidth: 30,
+      textColor: 'rgba(0,0,0,1)',
+      borderColor: 'rgba(0,0,0,1)',
+      backgroundColor: 'rgba(0,0,0,0)',
+      focusBorderColor: 'rgba(230,132,5,1)'             // border color when the edit button has been pressed
     }, options || {} );
     assert && assert( !options.children, 'additional children not supported' );
 
     // @protected - all
-    this.keypad           = keypad;
-    this.hasKeypadFocus   = false;                    // state used to indicate the shared kaypad focus on this node
-    this.valueProperty    = valueProperty;
+    this.keypad = keypad;
+    this.keypadFocus = false;                    // state used to indicate the shared keypad focus on this node
+    this.valueProperty = valueProperty;
 
     // @protected - all colors
-    this.textColor        = options.textColor;
-    this.borderColor      = options.borderColor;
-    this.backgroundColor  = options.backgroundColor;
+    this.textColor = options.textColor;
+    this.borderColor = options.borderColor;
+    this.backgroundColor = options.backgroundColor;
     this.focusBorderColor = options.focusBorderColor;
 
     // NumberDisplay options
     var numberDisplayOptions = {
-      valuePattern:     pattern,
-      font:             options.font,
-      xMargin:          2,
-      yMargin:          2,
-      decimalPlaces:    options.decimalPlaces,
-      numberFill:       this.textColor,
-      numberMaxWidth:   options.textMaxWidth,
+      valuePattern: pattern,
+      font: options.font,
+      xMargin: 2,
+      yMargin: 2,
+      decimalPlaces: options.decimalPlaces,
+      numberFill: this.textColor,
+      numberMaxWidth: options.textMaxWidth,
       backgroundStroke: this.borderColor,
-      backgroundFill:   this.backgroundColor,
-      pickable:         false
+      backgroundFill: this.backgroundColor,
+      pickable: false
     };
     // @protected
     this.numberDisplay = new NumberDisplay( valueProperty, options.numberRange, numberDisplayOptions );
@@ -77,7 +77,7 @@ define( function( require ) {
       content: new Image( editButtonImage, { scale: 0.2 } ),
       baseColor: URConstants.EDIT_BUTTON_COLOR,
       pickable: true
-      };
+    };
 
     // positioning the edit button
     if ( options.buttonPosition === 'left' ) {
@@ -187,11 +187,11 @@ define( function( require ) {
     showKeypad: function() {
       var self = this;
 
-      if ( this.hasKeypadFocus ) {
+      if ( this.keypadFocus ) {
         return;
       }
 
-      this.hasKeypadFocus = true;
+      this.keypadFocus = true;
 
       this.numberDisplay.setBackgroundStroke( this.focusBorderColor );
 
@@ -202,7 +202,7 @@ define( function( require ) {
           self.keypad.clear();
         }, function() {
           // onListenerChanged - let this instance know when it's focus goes away
-          self.hasKeypadFocus = false;
+          self.keypadFocus = false;
           self.numberDisplay.setBackgroundStroke( self.borderColor );
         }
       );
@@ -225,7 +225,7 @@ define( function( require ) {
      * @public
      */
     hasKeypadFocus: function() {
-      return this.hasKeypadFocus;
+      return this.keypadFocus;
     },
 
     // @public

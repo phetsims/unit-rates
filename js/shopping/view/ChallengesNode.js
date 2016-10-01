@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * A node containing all the challenge Q&A's nodes in a collapsable box
+ * A node containing all the challenge Q&A's nodes in a collapsible box
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -30,20 +30,19 @@ define( function( require ) {
   var refreshButtonImage = require( 'image!UNIT_RATES/refresh-button.png' );
 
   // constants
-  var VERTICAL_SPACING    = 20;
+  var VERTICAL_SPACING = 20;
 
   /**
    * @param {Challenges} challenges - the challenges model
    * @param {NumberKeypad} keypad - shared keypad
    * @param {number} fixedWidth - the fixed width of the node
-   * @param {function()} onPopulateCallback - called everytime the Node is populated
+   * @param {function()} onPopulateCallback - called every time the Node is populated
    * @param {Object} [options]
    * @constructor
    */
   function ChallengesNode( challenges, keypad, fixedWidth, onPopulateCallback, options ) {
 
-    options = _.extend( {
-    },  options || {} );
+    options = _.extend( {}, options || {} );
 
     var self = this;
 
@@ -56,8 +55,8 @@ define( function( require ) {
 
     // refresh on item change
     this.challenges.itemDataProperty.link( function( itemData, oldItemData ) {
-        self.removeAllContent();
-        self.populate();
+      self.removeAllContent();
+      self.populate();
     } );
 
     this.expandedProperty = new Property( true );
@@ -105,9 +104,9 @@ define( function( require ) {
         preValueString: currencySymbolString,
         decimalPlaces: 2,
         showUnitText: true,
-        correctTextColor:  ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR
+        correctTextColor: ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR
       } );
-      this.contentNode.addChild( questionNode0  );
+      this.contentNode.addChild( questionNode0 );
 
       // 2nd question
       var qna1 = this.challenges.getQuestionAnswer( 1 );
@@ -116,9 +115,9 @@ define( function( require ) {
         top: questionNode0.bottom + VERTICAL_SPACING,
         preValueString: currencySymbolString,
         decimalPlaces: 2,
-        correctTextColor:  ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
+        correctTextColor: ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
       } );
-      this.contentNode.addChild( questionNode1  );
+      this.contentNode.addChild( questionNode1 );
 
       // 3rd question
       var qna2 = this.challenges.getQuestionAnswer( 2 );
@@ -127,17 +126,17 @@ define( function( require ) {
         top: questionNode1.bottom + VERTICAL_SPACING,
         preValueString: currencySymbolString,
         decimalPlaces: 2,
-        correctTextColor:  ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
+        correctTextColor: ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
       } );
-      this.contentNode.addChild( questionNode2  );
+      this.contentNode.addChild( questionNode2 );
 
       // 4th. question - note: this question is formatted differently if the item type is candy.
       var itemType = this.challenges.itemDataProperty.value.type;
-      var isCandy  =  ( itemType === ItemData.RED_CANDY.type   || itemType === ItemData.PURPLE_CANDY.type ||
-                        itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type );
-      var preValueString  = ( isCandy ? currencySymbolString : '  ' );
+      var isCandy = ( itemType === ItemData.RED_CANDY.type || itemType === ItemData.PURPLE_CANDY.type ||
+                      itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type );
+      var preValueString = ( isCandy ? currencySymbolString : '  ' );
       var postValueString = ( isCandy ? '' : '    ' );
-      var decimalPlaces   = ( isCandy ? 2 :  0 );
+      var decimalPlaces = ( isCandy ? 2 : 0 );
 
       var qna3 = this.challenges.getQuestionAnswer( 3 );
       var questionNode3 = new ChallengeQuestionAnswerNode( qna3, this.keypad, {
@@ -146,13 +145,13 @@ define( function( require ) {
         preValueString: preValueString,
         decimalPlaces: decimalPlaces,
         postValueString: postValueString,
-        correctTextColor:  ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
+        correctTextColor: ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
       } );
-      this.contentNode.addChild( questionNode3  );
+      this.contentNode.addChild( questionNode3 );
 
       // @private - refresh questions button
       var refreshButtonNode = new RectangularPushButton( {
-        right:  this.contentNode.right - 8,
+        right: this.contentNode.right - 8,
         top: questionNode3.bottom + 2,
         baseColor: URConstants.DEFAULT_BUTTON_COLOR,
         content: new Image( refreshButtonImage, { scale: 0.25 } ),

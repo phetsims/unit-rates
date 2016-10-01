@@ -41,7 +41,7 @@ define( function( require ) {
      * @protected
      */
     initializeArrays: function() {
-      for (var key in ItemData) {
+      for ( var key in ItemData ) {
         var itemData = ItemData[ key ];
         this.getItemsWithType( itemData.type ); // creates a new array if it doesn't already exist
       }
@@ -65,7 +65,7 @@ define( function( require ) {
      * @param {Item} item
      * @public
      */
-     addItem: function( item ) {
+    addItem: function( item ) {
       var itemArray = this.getItemsWithType( item.type );
       if ( !itemArray.contains( item ) ) {
         itemArray.add( item );
@@ -95,7 +95,7 @@ define( function( require ) {
       var existingItem = null;
       itemArray.forEach( function( arrayItem ) {
         if ( item.isEqual( arrayItem ) ) {
-            existingItem = arrayItem;
+          existingItem = arrayItem;
         }
       } );
 
@@ -109,7 +109,7 @@ define( function( require ) {
      * @public
      */
     addListeners: function( itemAddedListener, itemRemovedListener ) {
-      for (var type in this.itemsMap) {
+      for ( var type in this.itemsMap ) {
         var itemArray = this.getItemsWithType( type );
         itemArray.addListeners( itemAddedListener, itemRemovedListener );
       }
@@ -180,14 +180,14 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      for (var type in this.itemsMap) {
+      for ( var type in this.itemsMap ) {
         this.resetItemType( type );
       }
     },
 
     // This is currently never called
     dispose: function() {
-      for (var type in this.itemsMap) {
+      for ( var type in this.itemsMap ) {
         var itemArray = this.itemsMap[ type ];
         //itemArray.removeAllListeners(); // FIXME: this doesn't exist but would be nice if it did (similar to Property.unlinkAll() )
         itemArray.dispose();

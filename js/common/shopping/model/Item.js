@@ -23,10 +23,10 @@ define( function( require ) {
   function Item( type, count ) {
 
     // @public (read-write)
-    Movable.call( this, { } );
+    Movable.call( this, {} );
 
     // @public (read-only)
-    this.type          = type;                    // (i.e. apple, cucumber, blue candy)
+    this.type = type;                    // (i.e. apple, cucumber, blue candy)
     this.countProperty = new Property( count );   // the number of items (or weight in pounds for candy) the instance represents
   }
 

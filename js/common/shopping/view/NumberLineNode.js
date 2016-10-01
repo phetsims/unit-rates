@@ -38,13 +38,13 @@ define( function( require ) {
   function NumberLineNode( numberLine, keypad, options ) {
 
     options = _.extend( {
-      graphWidth:                 655,
-      xAxisOffset:                9,
-      yAxisOffset:                55,
-      xAxisLength:                615,
-      yAxisLength:                28,
-      markerLargeHeight:          45,
-      markerSmallHeight:          25
+      graphWidth: 655,
+      xAxisOffset: 9,
+      yAxisOffset: 55,
+      xAxisLength: 615,
+      yAxisLength: 28,
+      markerLargeHeight: 45,
+      markerSmallHeight: 25
     }, options || {} );
 
     var self = this;
@@ -110,7 +110,7 @@ define( function( require ) {
 
     /**
      * Called when the user selects the sim reset button
-     * @overrride @protected
+     * @override @protected
      */
     reset: function() {
       URNumberLineNode.prototype.reset.call( this );

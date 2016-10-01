@@ -21,16 +21,16 @@ define( function( require ) {
   var shelfImage = require( 'image!UNIT_RATES/shelf.png' );
 
   // constants
-  var BACK_DEPTH      = 20;
-  var BACK_OFFSET     = 0.065;
-  var NODE_X_SPACING  = 2;
-  var NODE_Y_SPACING  = 10;
+  var BACK_DEPTH = 20;
+  var BACK_OFFSET = 0.065;
+  var NODE_X_SPACING = 2;
+  var NODE_Y_SPACING = 10;
 
   /**
    * @param {Shelf} shelf - model
-   * @param {Node} itemLayer - a container node which holds the item nodes. Used here for local posiitoning of items
-   * @param (function} startMoveCallback - function called when item drag starts
-   * @param (function} endMoveCallback - function called when item drag ends
+   * @param {Node} itemLayer - a container node which holds the item nodes. Used here for local positioning of items
+   * @param {function} startMoveCallback - function called when item drag starts
+   * @param {function} endMoveCallback - function called when item drag ends
    * @param {Object} [options]
    * @constructor
    */
@@ -52,7 +52,7 @@ define( function( require ) {
 
     // @private - Note: this is used only as a defined area for positioning items on the shelf
     this.topNode = new Path( new Shape()
-        .rect( this.backEdgeMinX + 30, 0, ( this.backEdgeMaxX - this.backEdgeMinX - 60), BACK_DEPTH ), {
+      .rect( this.backEdgeMinX + 30, 0, ( this.backEdgeMaxX - this.backEdgeMinX - 60), BACK_DEPTH ), {
       //fill: 'rgba(255,255,0,0.5)', // uncomment to see top positioning zone
       lineWidth: 0
     } );
@@ -76,13 +76,13 @@ define( function( require ) {
 
     /**
      * Adjusts item nodes bottom center coordinate to be on the topNode of the shelf at all time.
-     * @param {boolean}
+     * @param {boolean} animate - animate the change in position
      * @public
      */
     adjustItemPositions: function( animate ) {
 
       var globalDropBounds = this.topNode.getGlobalBounds();
-      var localDropBounds  = this.itemLayer.globalToParentBounds( globalDropBounds );
+      var localDropBounds = this.itemLayer.globalToParentBounds( globalDropBounds );
 
       // get the current array for the item type
       var itemArray = this.shelf.getItemsWithType( this.shelf.itemTypeProperty.value );
@@ -142,8 +142,8 @@ define( function( require ) {
      * @public
      */
     resetCurrentItem: function() {
-        this.shelf.resetCurrentItem();
-        this.populate();
+      this.shelf.resetCurrentItem();
+      this.populate();
     },
 
     /**

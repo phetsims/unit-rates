@@ -35,7 +35,7 @@ define( function( require ) {
   return inherit( URShoppingModel, ShoppingModel, {
 
     /**
-     * Adds all correctly answered challenge questions to the numberline as items (Note: the number line will ignore duplicates)
+     * Adds all correctly answered challenge questions to the number line as items (Note: the number line will ignore duplicates)
      * @protected
      */
     addChallengeItemsToNumberLine: function() {
@@ -45,8 +45,8 @@ define( function( require ) {
       var itemArray = this.challenges.getCorrectAnswerItems( this.itemTypeProperty.value );
 
       itemArray.forEach( function( item ) {
-        var color =  ( ( item.countProperty.value === 1 ) ?
-          ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR : ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR );
+        var color = ( ( item.countProperty.value === 1 ) ?
+                      ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR : ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR );
 
         // Check if there is an existing marker
         var correctCost = ( item.countProperty.value * self.itemRateProperty.value );
@@ -57,10 +57,10 @@ define( function( require ) {
           if ( marker.getTopValue() === correctCost && marker.getBottomValue() === correctUnit ) {
             existingMarker = marker;
           }
-        });
+        } );
 
         // simply change the color
-        if( existingMarker ) {
+        if ( existingMarker ) {
           existingMarker.color = color;
         }
         else {
@@ -70,7 +70,7 @@ define( function( require ) {
 
       } );
 
-      if( this.onChallengeCallback ) {
+      if ( this.onChallengeCallback ) {
         this.onChallengeCallback.call();
       }
     },
@@ -82,12 +82,12 @@ define( function( require ) {
     revertChallengeNumberLineItems: function() {
 
       this.numberLine.forEachMarker( function( marker ) {
-        if( marker.color === ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR ) {
+        if ( marker.color === ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR ) {
           marker.color = 'black';
         }
-      });
+      } );
 
-      if( this.onChallengeCallback ) {
+      if ( this.onChallengeCallback ) {
         this.onChallengeCallback.call();
       }
     },

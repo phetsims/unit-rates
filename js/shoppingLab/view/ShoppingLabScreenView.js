@@ -1,7 +1,7 @@
 // Copyright 2002-2016, University of Colorado Boulder
 
 /**
- * The main shopping screen This is derivied from URShoppingScreenView and adds rate adjustment panel to it.
+ * The main shopping screen This is derived from URShoppingScreenView and adds rate adjustment panel to it.
  *
  * @author Dave Schmitz (Schmitzware)
  */
@@ -29,9 +29,9 @@ define( function( require ) {
 
     // @private - mapping from scene to item type
     this.sceneItemData = [];
-    this.sceneItemData[ SceneMode.FRUIT ]   = ItemData.APPLES;
+    this.sceneItemData[ SceneMode.FRUIT ] = ItemData.APPLES;
     this.sceneItemData[ SceneMode.PRODUCE ] = ItemData.CARROTS;
-    this.sceneItemData[ SceneMode.CANDY ]   = ItemData.PURPLE_CANDY;
+    this.sceneItemData[ SceneMode.CANDY ] = ItemData.PURPLE_CANDY;
 
     URShoppingScreenView.call( this, model, true, this.onNumberLineEraseCallback.bind( this ) );
 
@@ -53,7 +53,7 @@ define( function( require ) {
 
       this.itemRateNode = new ItemRateNode( this.model.itemTypeProperty, this.model.itemRateProperty, {
         left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
-        bottom:  this.scaleNode.bottom
+        bottom: this.scaleNode.bottom
       } );
       this.addChild( this.itemRateNode );
     },
@@ -63,7 +63,7 @@ define( function( require ) {
      * @protected
      */
     onNumberLineEraseCallback: function() {
-      this.model.addScaleItemsToNumberline();
+      this.model.addScaleItemsToNumberLine();
       this.numberLineNode.populate();
     },
 
@@ -78,7 +78,7 @@ define( function( require ) {
 
     /**
      * Called when the user selects the sim reset button
-     * @overrride @protected
+     * @override @protected
      */
     resetAll: function() {
 
@@ -103,7 +103,7 @@ define( function( require ) {
         'Unrecognized scene' );
 
       // change the item type
-      this.model.itemDataProperty.value= this.sceneItemData[ sceneMode ];
+      this.model.itemDataProperty.value = this.sceneItemData[ sceneMode ];
     }
 
   } ); // inherit

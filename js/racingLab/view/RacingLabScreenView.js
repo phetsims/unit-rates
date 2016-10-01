@@ -54,34 +54,34 @@ define( function( require ) {
     // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {
 
-      maxDigits:  4,
-      visible:    true
+      maxDigits: 4,
+      visible: true
     } );
     this.addChild( this.keypad );
     this.keypad.hide();
 
     // top track
     this.trackGroup1Node = new TrackGroupNode( model.trackGroup1, blueCarImage, this.keypad, {
-      left:             URConstants.SCREEN_PANEL_SPACING,
-      top:              URConstants.SCREEN_VERTICAL_MARGIN,
-      numberLineTitle:  doubleNumberLine1String,
-      rateTitle:        rate1String,
-      rateColor:        'rgb(29,174,235)',
+      left: URConstants.SCREEN_PANEL_SPACING,
+      top: URConstants.SCREEN_VERTICAL_MARGIN,
+      numberLineTitle: doubleNumberLine1String,
+      rateTitle: rate1String,
+      rateColor: 'rgb(29,174,235)',
       ratePressedColor: 'rgb(9,154,215)',
-      timerTitle:       timer1String
+      timerTitle: timer1String
     } );
     this.addChild( this.trackGroup1Node );
 
     // bottom track
     this.trackGroup2Node = new TrackGroupNode( model.trackGroup2, redCarImage, this.keypad, {
-        left:             URConstants.SCREEN_PANEL_SPACING,
-        top:              this.trackGroup1Node.bottom + 5,
-        trackOnTop:       true,
-        numberLineTitle:  doubleNumberLine2String,
-        rateTitle:        rate2String,
-        rateColor:        'rgb(233,33,45)',
-        ratePressedColor: 'rgb(213,13,25)',
-        timerTitle:       timer2String
+      left: URConstants.SCREEN_PANEL_SPACING,
+      top: this.trackGroup1Node.bottom + 5,
+      trackOnTop: true,
+      numberLineTitle: doubleNumberLine2String,
+      rateTitle: rate2String,
+      rateColor: 'rgb(233,33,45)',
+      ratePressedColor: 'rgb(213,13,25)',
+      timerTitle: timer2String
     } );
     this.addChild( this.trackGroup2Node );
 
@@ -89,37 +89,37 @@ define( function( require ) {
     this.goStopButton = new BooleanRoundToggleButton(
       new Image( stopButtonImage, { scale: 0.25 } ),
       new Image( goButtonIconImage, { scale: 0.25 } ), model.runningProperty, {
-      right: this.layoutBounds.right    - URConstants.SCREEN_HORIZONTAL_MARGIN,
-      centerY: this.trackGroup2Node.top - URConstants.SCREEN_PANEL_SPACING / 2,
-      radius: 45
-    } );
+        right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
+        centerY: this.trackGroup2Node.top - URConstants.SCREEN_PANEL_SPACING / 2,
+        radius: 45
+      } );
     this.addChild( this.goStopButton );
 
     // restart button which moves the car back to the start line. Is only visible when not racing
     this.restartButton = new RectangularPushButton( {
-      right:              this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
-      centerY:            this.goStopButton.centerY,
-      content:            new Image( returnCarButtonImage, { scale: 0.18 } ),
-      minWidth:           45,
-      minHeight:          45,
-      cornerRadius:       4,
-      baseColor:          '#A9D8FD',
-      xMargin:            8,
-      yMargin:            5,
+      right: this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
+      centerY: this.goStopButton.centerY,
+      content: new Image( returnCarButtonImage, { scale: 0.18 } ),
+      minWidth: 45,
+      minHeight: 45,
+      cornerRadius: 4,
+      baseColor: '#A9D8FD',
+      xMargin: 8,
+      yMargin: 5,
       touchAreaXDilation: 0,
       touchAreaYDilation: 0,
-      stroke:             'black',
-      lineWidth:          0.5,
-      visible:            false,
+      stroke: 'black',
+      lineWidth: 0.5,
+      visible: false,
       listener: function() {
         self.restart();
         self.restartButton.visible = false;
       }
-    });
+    } );
     this.addChild( this.restartButton );
 
     // keypad layout
-    this.keypad.right   = this.width;
+    this.keypad.right = this.width;
     this.keypad.centerY = this.centerY;
 
     // @protected - covers entire screen, uses picking to close keypad, 'visible' only when the keypad is visible
@@ -144,7 +144,7 @@ define( function( require ) {
       listener: function() {
         self.resetAll();
       },
-      right:  this.layoutBounds.maxX - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      right: this.layoutBounds.maxX - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: this.layoutBounds.maxY - URConstants.SCREEN_HORIZONTAL_MARGIN
     } );
     this.addChild( resetAllButton );
@@ -154,11 +154,11 @@ define( function( require ) {
       { value: 1, node: new Image( oneCarSceneImage, { scale: 0.22 } ) },
       { value: 2, node: new Image( twoCarSceneImage, { scale: 0.22 } ) }
     ], {
-      right:  this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN,
-      orientation:  'vertical',
-      baseColor:    'white',
-      spacing:       11
+      orientation: 'vertical',
+      baseColor: 'white',
+      spacing: 11
     } );
     this.addChild( this.trackCountButtons );
 
@@ -174,7 +174,7 @@ define( function( require ) {
     // show/hide the restart button, change the go/stop button color
     this.model.runningProperty.lazyLink( function( value, oldValue ) {
       self.restartButton.visible = ( !value && !self.model.atStart() );
-      self.goStopButton.baseColor = ( value ? '#6D6E70' :  '#85d4a6' );
+      self.goStopButton.baseColor = ( value ? '#6D6E70' : '#85d4a6' );
     } );
   }
 
@@ -205,19 +205,19 @@ define( function( require ) {
      * @protected
      */
     resetAll: function() {
-        this.model.reset();
-        this.trackGroup1Node.reset();
-        this.trackGroup2Node.reset();
-        this.hideKeypad();
+      this.model.reset();
+      this.trackGroup1Node.reset();
+      this.trackGroup2Node.reset();
+      this.hideKeypad();
     },
 
     /**
-     * Resizes the keypad's rentangular pick area to match the full screen of the browser.
+     * Resize the keypad's rectangular pick area to match the full screen of the browser.
      * @protected
      */
     onResize: function() {
       // resize the pick area to match the screen
-      this.keypadCloseArea.setRectBounds( new Bounds2( 0, 0,  window.innerWidth, window.innerHeight ) );
+      this.keypadCloseArea.setRectBounds( new Bounds2( 0, 0, window.innerWidth, window.innerHeight ) );
     }
 
   } ); // inherit

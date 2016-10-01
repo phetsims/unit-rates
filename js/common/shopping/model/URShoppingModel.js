@@ -36,15 +36,15 @@ define( function( require ) {
     this.initializeRateMap();
 
     // @public
-    this.shelf      = new Shelf( this.itemTypeProperty );
-    this.scale      = new Scale( this.itemTypeProperty, this.itemRateProperty );
+    this.shelf = new Shelf( this.itemTypeProperty );
+    this.scale = new Scale( this.itemTypeProperty, this.itemRateProperty );
     this.numberLine = new NumberLine( this.itemTypeProperty, this.itemRateProperty );
 
     // save the potentially adjusted rate and change the current type and rate on an item data change
     this.itemDataProperty.link( function( itemData, oldItemData ) {
 
       // save old rate which may have been changed
-      if( oldItemData ) {
+      if ( oldItemData ) {
         self.rateMap[ oldItemData.type ] = self.itemRateProperty.value;
       }
 
@@ -64,10 +64,10 @@ define( function( require ) {
      * create rate entries for each item type (i.e. apples, carrots, etc..)
      * @public @override
      */
-    initializeRateMap: function(  ) {
+    initializeRateMap: function() {
       var self = this;
 
-      for (var key in ItemData) {
+      for ( var key in ItemData ) {
         var itemData = ItemData[ key ];
         self.rateMap[ itemData.type ] = itemData.rate;
       }
@@ -82,7 +82,7 @@ define( function( require ) {
 
       // Remove from shelf & add to scale
       this.shelf.removeItem( item );
-      this.scale.addItem(item );
+      this.scale.addItem( item );
     },
 
     /**
@@ -98,10 +98,10 @@ define( function( require ) {
     },
 
     /**
-     * Adds all items on the scale to the numberline (Note: the number line will ignore duplicates)
+     * Adds all items on the scale to the number line (Note: the number line will ignore duplicates)
      * @public
      */
-    addScaleItemsToNumberline: function() {
+    addScaleItemsToNumberLine: function() {
 
       // create a new item on the number line representing the total number/weight of items currently on the scale
       var count = this.scale.getItemCount();
@@ -110,7 +110,7 @@ define( function( require ) {
         var correctCost = ( count * this.itemRateProperty.value );
         var correctUnit = ( count );
 
-        this.numberLine.createMarker( correctCost, correctUnit, {});
+        this.numberLine.createMarker( correctCost, correctUnit, {} );
       }
     },
 

@@ -4,7 +4,7 @@
  * Shopping lab screen
  *
  * @author Dave Schmitz (Schmitzware)
-*/
+ */
 define( function( require ) {
   'use strict';
 
