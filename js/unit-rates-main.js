@@ -23,10 +23,9 @@ define( function( require ) {
     credits: {
       leadDesign: 'Amy Rouinfar',
       softwareDevelopment: 'Dave Schmitz (Schmitzware), Chris Malley (PixelZoom, Inc.)',
-      team: '',
-      qualityAssurance: '',
-      graphicArts: '',
-      thanks: ''
+      team: 'Amy Hanson, Amanda McGarry, Susan Miller, Ariel Paul, Kathy Perkins',
+      qualityAssurance: 'Steele Dalton, Amanda Davis',
+      graphicArts: 'Mariah Hermsmeyer'
     }
   };
 
