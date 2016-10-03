@@ -9,13 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var Shape = require( 'KITE/Shape' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
   var shelfImage = require( 'image!UNIT_RATES/shelf.png' );

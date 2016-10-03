@@ -9,19 +9,19 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var TrackGroupNode = require( 'UNIT_RATES/racingLab/view/TrackGroupNode' );
-  var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
+  var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
-  var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
-  var Bounds2 = require( 'DOT/Bounds2' );
+  var ScreenView = require( 'JOIST/ScreenView' );
+  var TrackGroupNode = require( 'UNIT_RATES/racingLab/view/TrackGroupNode' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   // images
   var oneCarSceneImage = require( 'image!UNIT_RATES/one_car_scene.png' );

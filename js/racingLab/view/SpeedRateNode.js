@@ -8,22 +8,22 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AccordionBox = require( 'SUN/AccordionBox' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Shape = require( 'KITE/Shape' );
-  var AccordionBox = require( 'SUN/AccordionBox' );
   var Property = require( 'AXON/Property' );
+  var Shape = require( 'KITE/Shape' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   // strings
-  var milesString = require( 'string!UNIT_RATES/miles' );
   var hoursString = require( 'string!UNIT_RATES/hours' );
+  var milesString = require( 'string!UNIT_RATES/miles' );
 
   // constants
   var TEXT_FONT = new PhetFont( 14 ); // Font to use for all text

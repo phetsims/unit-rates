@@ -10,23 +10,23 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
-  var Panel = require( 'SUN/Panel' );
-  var Property = require( 'AXON/Property' );
   var Dimension2 = require( 'DOT/Dimension2' );
+  var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Panel = require( 'SUN/Panel' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Property = require( 'AXON/Property' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+
+  // strings
+  var hoursString = require( 'string!UNIT_RATES/hours' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 14 );
   var DISPLAY_SIZE = new Dimension2( 135, 45 );
   var DISPLAY_SPACING = 5;
-
-  // strings
-  var hoursString = require( 'string!UNIT_RATES/hours' );
 
   /**
    * @param {Object} [options]

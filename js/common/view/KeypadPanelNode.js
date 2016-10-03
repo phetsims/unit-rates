@@ -10,15 +10,15 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
+  var Panel = require( 'SUN/Panel' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  var Panel = require( 'SUN/Panel' );
-  var Property = require( 'AXON/Property' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
   var enterString = require( 'string!UNIT_RATES/enter' );

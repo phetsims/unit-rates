@@ -10,22 +10,22 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AccordionBox = require( 'SUN/AccordionBox' );
+  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  var Bounds2 = require( 'DOT/Bounds2' );
+  var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Path = require( 'SCENERY/nodes/Path' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Property = require( 'AXON/Property' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var Shape = require( 'KITE/Shape' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URNumberLineMarkerNode = require( 'UNIT_RATES/common/view/URNumberLineMarkerNode' );
-  var AccordionBox = require( 'SUN/AccordionBox' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var Shape = require( 'KITE/Shape' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var Property = require( 'AXON/Property' );
-  var Bounds2 = require( 'DOT/Bounds2' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // images

@@ -12,7 +12,6 @@ define( function( require ) {
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
-  // constants
   var RacingLabConstants = {
 
     //----------------------------------------------------------------------------

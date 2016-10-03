@@ -9,25 +9,25 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var FinishFlagNode = require( 'UNIT_RATES/racingLab/view/FinishFlagNode' );
-  var TimerDisplayNode = require( 'UNIT_RATES/racingLab/view/TimerDisplayNode' );
+  var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Shape = require( 'KITE/Shape' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var Bounds2 = require( 'DOT/Bounds2' );
+  var Shape = require( 'KITE/Shape' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var TimerDisplayNode = require( 'UNIT_RATES/racingLab/view/TimerDisplayNode' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var Util = require( 'DOT/Util' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // images
-  var greenFlagImage = require( 'image!UNIT_RATES/green_flag.png' );
   var checkerFlagImage = require( 'image!UNIT_RATES/checkered_flag.png' );
   var doubleArrowImage = require( 'image!UNIT_RATES/double_arrow.png' );
+  var greenFlagImage = require( 'image!UNIT_RATES/green_flag.png' );
 
   // strings
   var milesString = require( 'string!UNIT_RATES/miles' );

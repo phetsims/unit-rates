@@ -10,10 +10,9 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
-  // constants
   var URConstants = {
 
     //----------------------------------------------------------------------------

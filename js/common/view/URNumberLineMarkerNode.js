@@ -13,14 +13,14 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var EditNumberDisplayNode = require( 'UNIT_RATES/common/view/EditNumberDisplayNode' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var MovableNode = require( 'UNIT_RATES/common/view/MovableNode' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Shape = require( 'KITE/Shape' );
   var Property = require( 'AXON/Property' );
+  var Shape = require( 'KITE/Shape' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // constants
   var EDIT_BUTTON_MARGIN = 5;

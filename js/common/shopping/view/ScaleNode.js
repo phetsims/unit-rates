@@ -11,26 +11,31 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Dimension2 = require( 'DOT/Dimension2' );
+  var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Panel = require( 'SUN/Panel' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Property = require( 'AXON/Property' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Panel = require( 'SUN/Panel' );
-  var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Property = require( 'AXON/Property' );
 
   // images
   var scaleImage = require( 'image!UNIT_RATES/scale.png' );
+
+  // strings
+  var lbsString = require( 'string!UNIT_RATES/lbs' );
+  var costString = require( 'string!UNIT_RATES/cost' );
+  var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
 
   // constants
   var MAX_ITEMS = 16;                       // The max # items to be stacked on the scale - ever!
@@ -42,11 +47,6 @@ define( function( require ) {
   var DISPLAY_SPACING = 10;                       // horizontal space between multiple displays
   var DISPLAY_FONT = new PhetFont( 20 );
   var DISPLAY_SIZE = new Dimension2( 70, 40 );
-
-  // strings
-  var costString = require( 'string!UNIT_RATES/cost' );
-  var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
-  var lbsString = require( 'string!UNIT_RATES/lbs' );
 
   /**
    *

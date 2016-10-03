@@ -9,15 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Bounds2 = require( 'DOT/Bounds2' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var Movable = require( 'UNIT_RATES/common/model/Movable' );
   var MovableNode = require( 'UNIT_RATES/common/view/MovableNode' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var Bounds2 = require( 'DOT/Bounds2' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
-
-  // constants
 
   /**
    * @param {string} imageString - flag image name

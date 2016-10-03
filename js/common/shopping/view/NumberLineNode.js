@@ -10,9 +10,9 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
 
   // strings
   var applesCapString = require( 'string!UNIT_RATES/applesCap' );

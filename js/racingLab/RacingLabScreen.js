@@ -9,10 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var RacingLabModel = require( 'UNIT_RATES/racingLab/model/RacingLabModel' );
   var RacingLabScreenView = require( 'UNIT_RATES/racingLab/view/RacingLabScreenView' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var Screen = require( 'JOIST/Screen' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 

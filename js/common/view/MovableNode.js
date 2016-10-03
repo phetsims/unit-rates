@@ -9,11 +9,11 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var Emitter = require( 'AXON/Emitter' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {Movable} item - the underlying item model w/ a position

@@ -10,17 +10,17 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var RacingLabConstants = require( 'UNIT_RATES/racingLab/RacingLabConstants' );
-  var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
   var SpeedRateNode = require( 'UNIT_RATES/racingLab/view/SpeedRateNode' );
   var TrackNode = require( 'UNIT_RATES/racingLab/view/TrackNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
 
   // strings
-  var milesCapString = require( 'string!UNIT_RATES/milesCap' );
   var hoursCapString = require( 'string!UNIT_RATES/hoursCap' );
+  var milesCapString = require( 'string!UNIT_RATES/milesCap' );
 
   /**
    * @param {TrackGroup} model

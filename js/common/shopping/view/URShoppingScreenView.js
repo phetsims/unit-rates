@@ -10,23 +10,23 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
-  var SceneButtonGroupNode = require( 'UNIT_RATES/common/shopping/view/SceneButtonGroupNode' );
-  var NumberLineNode = require( 'UNIT_RATES/common/shopping/view/NumberLineNode' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
-  var ShelfNode = require( 'UNIT_RATES/common/shopping/view/ShelfNode' );
-  var ScaleNode = require( 'UNIT_RATES/common/shopping/view/ScaleNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var NumberLineNode = require( 'UNIT_RATES/common/shopping/view/NumberLineNode' );
+  var Property = require( 'AXON/Property' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var Property = require( 'AXON/Property' );
-  var Bounds2 = require( 'DOT/Bounds2' );
+  var ScaleNode = require( 'UNIT_RATES/common/shopping/view/ScaleNode' );
+  var SceneButtonGroupNode = require( 'UNIT_RATES/common/shopping/view/SceneButtonGroupNode' );
+  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
+  var ScreenView = require( 'JOIST/ScreenView' );
+  var ShelfNode = require( 'UNIT_RATES/common/shopping/view/ShelfNode' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   // images
   var removeButtonImage = require( 'image!UNIT_RATES/remove-button.png' );

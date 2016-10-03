@@ -9,15 +9,15 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberDisplay = require( 'SCENERY_PHET/NumberDisplay' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   // images
   var editButtonImage = require( 'image!UNIT_RATES/edit-button.png' );

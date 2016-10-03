@@ -9,10 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var MovableNode = require( 'UNIT_RATES/common/view/MovableNode' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var MovableNode = require( 'UNIT_RATES/common/view/MovableNode' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // images
