@@ -220,7 +220,7 @@ define( function( require ) {
 
       // adjust the mileage text & location
       var miles = Util.roundSymmetric( ( this.finishPoint.x - this.startPoint.x ) / this.milesPerPixel );
-      this.mileageText.setText( miles + ' ' + milesString ); //TODO i18n of order
+      this.mileageText.setText( miles + ' ' + milesString ); //TODO fix i18n, https://github.com/phetsims/unit-rates/issues/59
       this.mileageText.centerX = this.finishPoint.x;
       this.trackGroup.trackMilesProperty.value = miles;
 
