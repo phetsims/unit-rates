@@ -2,7 +2,7 @@
 
 /**
  *
- * @author TBD
+ * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
   'use strict';

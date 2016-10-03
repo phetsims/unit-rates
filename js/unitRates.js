@@ -3,7 +3,7 @@
 /**
  * Creates the namespace for this simulation.
  *
- * @author TBD
+ * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
   'use strict';

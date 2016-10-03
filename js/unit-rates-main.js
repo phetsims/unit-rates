@@ -3,7 +3,7 @@
 /**
  * Main entry point for the sim.
  *
- * @author TBD
+ * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
   'use strict';
