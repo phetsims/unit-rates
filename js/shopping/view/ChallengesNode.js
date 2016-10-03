@@ -9,19 +9,19 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var ChallengeQuestionAnswerNode = require( 'UNIT_RATES/common/shopping/view/ChallengeQuestionAnswerNode' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var ChallengeQuestionAnswerNode = require( 'UNIT_RATES/common/shopping/view/ChallengeQuestionAnswerNode' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
+  var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   // strings
   var challengesString = require( 'string!UNIT_RATES/challenges' );
