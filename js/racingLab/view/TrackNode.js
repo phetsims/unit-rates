@@ -80,6 +80,7 @@ define( function( require ) {
 
     var childNodes = [];
 
+    //TODO delete or enable via a query parameter
     /*  // only really used for debugging the bound of the draggable track area
      var boundsNode = new Path( new Shape().rect( 0, 0, this.trackWidth, this.trackHeight ), {
      stroke: 'red',  // debugging
@@ -88,6 +89,7 @@ define( function( require ) {
      childNodes.push( boundsNode );
      */
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     // track lines - start to finish
     this.startFinishPath = new Path( null, {
       stroke: TRACK_DARK_STROKE_COLOR,

@@ -117,6 +117,7 @@ define( function( require ) {
       visible: options.showUnitText
     } );
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     // check the answer on user value input
     this.checkAnswerBound = this.checkAnswer.bind( this );
     this.qna.valueProperty.link( this.checkAnswerBound );

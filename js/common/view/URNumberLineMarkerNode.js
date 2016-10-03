@@ -87,6 +87,7 @@ define( function( require ) {
       .moveTo( 0, -this.largeHeight )
       .lineTo( 0, this.largeHeight );
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.markerLine = new Path( this.smallLineShape, {
       centerX: 0,
       centerY: 0,

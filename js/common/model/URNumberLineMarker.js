@@ -49,7 +49,7 @@ define( function( require ) {
     this.topHighPrecision = options.topHighPrecision;
     this.bottomHighPrecision = options.bottomHighPrecision;
 
-    // @public (read-write) - all
+    // @public - all
     this.addProperty( 'outOfRange', false );
     this.addProperty( 'highPrecision', false );
     this.addProperty( 'editable', options.editable );

@@ -22,6 +22,7 @@ define( function( require ) {
 
     ItemCollection.call( this );
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.itemTypeProperty = itemTypeProperty;
 
     // Add initial items

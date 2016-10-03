@@ -27,8 +27,9 @@ define( function( require ) {
       position: new Vector2( 0, 0 ) // default position
     }, options || {} );
 
-    // @public (read-write)
     PropertySet.call( this, {
+
+      // @public
       xAxisEnabled: options.xAxisEnabled,
       yAxisEnabled: options.yAxisEnabled,
       bounds: options.bounds,

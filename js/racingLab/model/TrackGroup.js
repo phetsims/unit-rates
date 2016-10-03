@@ -39,6 +39,7 @@ define( function( require ) {
 
     var self = this;
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.elapsedTimeProperty = elapsedTimeProperty;
     this.flagArrowsVisibleProperty = flagArrowsVisibleProperty;
 

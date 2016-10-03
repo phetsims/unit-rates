@@ -71,6 +71,7 @@ define( function( require ) {
    */
   function Challenges( itemDataProperty, onCorrectAnswer, onRefresh ) {
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.challengeData = {};
     this.questionSet = -1;
 

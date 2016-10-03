@@ -107,6 +107,7 @@ define( function( require ) {
     } );
     this.contentNode.addChild( this.markerLayerNode );
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     // axis lines
     this.xZeroLine = new Path( new Shape()
       .moveTo( this.yAxisOffset, this.origin.y + this.yAxisLength )

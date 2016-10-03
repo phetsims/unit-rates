@@ -50,6 +50,7 @@ define( function( require ) {
 
     var self = this;
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.groupModel = model;
 
     // the content node for the AccordionBox

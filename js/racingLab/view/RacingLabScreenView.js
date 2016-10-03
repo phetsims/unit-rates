@@ -50,6 +50,7 @@ define( function( require ) {
 
     var self = this;
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.model = model;
 
     // shared keypad which becomes visible when an edit number display button is selected.

@@ -26,6 +26,7 @@ define( function( require ) {
     // @public - various callbacks when various challenge events takes place
     this.onChallengeCallback = null;
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.challenges = new Challenges( this.itemDataProperty,
       this.addChallengeItemsToNumberLine.bind( this ),
       this.revertChallengeNumberLineItems.bind( this ) );

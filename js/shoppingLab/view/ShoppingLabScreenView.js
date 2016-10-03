@@ -26,6 +26,7 @@ define( function( require ) {
 
     var self = this;
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.model = model;
 
     // @private - mapping from scene to item type

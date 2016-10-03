@@ -183,6 +183,7 @@ define( function( require ) {
       contentYMargin: 10
     } );
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     // refresh on item change
     this.itemSelectionChangedBound = this.itemSelectionChanged.bind( this );
     this.itemTypeProperty.link( this.itemSelectionChangedBound );

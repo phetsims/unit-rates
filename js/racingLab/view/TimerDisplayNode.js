@@ -57,6 +57,7 @@ define( function( require ) {
 
     var contentNode = new Node();
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.showTimeButton = new ExpandCollapseButton( this.showTimeProperty, {
       sideLength: 15,
       touchAreaXDilation: 30,

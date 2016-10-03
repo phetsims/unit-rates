@@ -22,8 +22,7 @@ define( function( require ) {
    */
   function Item( type, count ) {
 
-    // @public (read-write)
-    Movable.call( this, {} );
+    Movable.call( this );
 
     // @public (read-only)
     this.type = type;                    // (i.e. apple, cucumber, blue candy)

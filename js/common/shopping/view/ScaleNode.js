@@ -64,6 +64,7 @@ define( function( require ) {
 
     var self = this;
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.scale = scale;
     this.itemLayer = itemLayer;
     this.startMoveCallback = startMoveCallback;

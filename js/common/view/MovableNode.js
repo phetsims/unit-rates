@@ -33,6 +33,7 @@ define( function( require ) {
 
     var self = this;
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.item = item; // FIXME: called 'item' simply because the shopping screens were done first, probably should be movable.
     this.lastPosition = position;
     this.item.setPosition( position.x, position.y, false );
