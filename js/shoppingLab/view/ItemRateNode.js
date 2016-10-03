@@ -52,15 +52,14 @@ define( function( require ) {
    */
   function ItemRateNode( itemTypeProperty, itemRateProperty, options ) {
 
-    options = _.extend( {}, options || {} );
-
-    // @protected - all
+    // @private
     this.itemTypeProperty = itemTypeProperty;
     this.itemRateProperty = itemRateProperty;
-
     this.itemPickerIndex = APPLES_INDEX;
     this.costRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
     this.countRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
+
+    // @private
     this.itemPickerData = [
       {
         // APPLES_INDEX
@@ -95,7 +94,7 @@ define( function( require ) {
       }
     ];
 
-    this.contentNode = new Node();
+    this.contentNode = new Node(); // @private
 
     // layout adjustment
     var strut = new HStrut( DIVISOR_WIDTH + 2 * X_MARGIN );   // This will set the width of the panel
@@ -139,6 +138,7 @@ define( function( require ) {
       this.contentNode.addChild( this.itemPickerData[ i ].countPicker );
     }
 
+    // @private
     this.currencyText = new Text( dollarsString, {
       left: this.itemPickerData[ APPLES_INDEX ].costPicker.right + X_SPACING,
       centerY: this.itemPickerData[ APPLES_INDEX ].costPicker.centerY,
@@ -157,6 +157,7 @@ define( function( require ) {
     } );
     this.contentNode.addChild( divisorLine );
 
+    // @private
     this.unitText = new Text( applesString, {
       left: this.itemPickerData[ APPLES_INDEX ].countPicker.right + X_SPACING,
       centerY: this.itemPickerData[ APPLES_INDEX ].countPicker.centerY,
@@ -165,6 +166,7 @@ define( function( require ) {
     } );
     this.contentNode.addChild( this.unitText );
 
+    // @private
     this.expandedProperty = new Property( true );
     AccordionBox.call( this, this.contentNode, {
       expandedProperty: this.expandedProperty,
@@ -193,6 +195,20 @@ define( function( require ) {
   return inherit( AccordionBox, ItemRateNode, {
 
     // no dispose, persists for the lifetime of the sim.
+
+    /**
+     * Resets the challenges questions to all unanswered
+     * @public
+     */
+    reset: function() {
+      for ( var i = 0; i < this.itemPickerData.length; i++ ) {
+        this.itemPickerData[ i ].costProperty.reset();
+        this.itemPickerData[ i ].countProperty.reset();
+      }
+      this.expandedProperty.reset();
+
+      this.itemPickerIndex = APPLES_INDEX;
+    },
 
     /**
      * Called when the user selected a new item type (i.e. "apples", "carrots", "red candy")
@@ -245,20 +261,6 @@ define( function( require ) {
       var decimals = 2;
       var rate = cost / count;
       this.itemRateProperty.value = Number( Util.roundSymmetric( rate.toString() + 'e' + decimals.toString() ) + 'e-' + decimals );
-    },
-
-    /**
-     * Resets the challenges questions to all unanswered
-     * @public
-     */
-    reset: function() {
-      for ( var i = 0; i < this.itemPickerData.length; i++ ) {
-        this.itemPickerData[ i ].costProperty.reset();
-        this.itemPickerData[ i ].countProperty.reset();
-      }
-      this.expandedProperty.reset();
-
-      this.itemPickerIndex = APPLES_INDEX;
     }
 
   } );  // define
