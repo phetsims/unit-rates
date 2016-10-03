@@ -1,4 +1,4 @@
-// Copyright 2002-2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * A node containing all the challenge Q&A's nodes in a collapsible box

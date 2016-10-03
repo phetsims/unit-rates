@@ -1,4 +1,4 @@
-// Copyright 2002-2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * The node for a single Challenge question. Each node uses a QuestionAnswer instance to determine correctness.

@@ -1,4 +1,4 @@
-// Copyright 2002-2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * A base class used for positioning/animating derived nodes

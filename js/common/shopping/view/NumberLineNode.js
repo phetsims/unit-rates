@@ -1,4 +1,4 @@
-// Copyright 2002-2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * A derived, shopping-specific, double number line. Basically adds swapping x-axis labels based on item type

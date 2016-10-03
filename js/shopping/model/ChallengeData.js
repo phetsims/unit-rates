@@ -1,4 +1,4 @@
-// Copyright 2002-2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * Data for the challenge prompts. Note: question #1 is always the unit-rate and that data is not contained here.

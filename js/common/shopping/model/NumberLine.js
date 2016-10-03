@@ -1,4 +1,4 @@
-// Copyright 2002-2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * Derived from URNumberLine. Holds the markers currently on the number line. This class adds in functionality to swap

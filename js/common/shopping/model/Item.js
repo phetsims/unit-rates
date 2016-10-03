@@ -1,4 +1,4 @@
-// Copyright 2002-2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * A specific instance of an item (i.e. apple, cucumber, blue candy) or group of multiple items (i.e. bag, count > 1).

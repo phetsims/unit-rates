@@ -1,4 +1,4 @@
-// Copyright 2002-2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * A collection of all different types of items (i.e. apple, cucumbers, blue candy). Specific type of items

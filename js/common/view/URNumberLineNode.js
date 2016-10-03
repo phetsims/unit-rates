@@ -1,4 +1,4 @@
-// Copyright 2002-2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * Base class for all number line nodes in the simulation. Base functionality includes, drawing and labeling the

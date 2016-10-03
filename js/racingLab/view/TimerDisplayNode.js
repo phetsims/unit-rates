@@ -1,4 +1,4 @@
-// Copyright 2002-2016, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * Node used to display a timer value. This class does no timing calculations itself, simply tacks on a time unit
