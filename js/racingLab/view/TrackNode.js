@@ -30,7 +30,7 @@ define( function( require ) {
   var doubleArrowImage = require( 'image!UNIT_RATES/double_arrow.png' );
 
   // strings
-  var miString = require( 'string!UNIT_RATES/mi' );
+  var milesString = require( 'string!UNIT_RATES/miles' );
 
   // constants
   var TRACK_MAX_DISTANCE = 200;   // max track distance in miles
@@ -220,7 +220,7 @@ define( function( require ) {
 
       // adjust the mileage text & location
       var miles = Util.roundSymmetric( ( this.finishPoint.x - this.startPoint.x ) / this.milesPerPixel );
-      this.mileageText.setText( miles + ' ' + miString );
+      this.mileageText.setText( miles + ' ' + milesString ); //TODO i18n of order
       this.mileageText.centerX = this.finishPoint.x;
       this.trackGroup.trackMilesProperty.value = miles;
 
