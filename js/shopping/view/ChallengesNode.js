@@ -43,8 +43,6 @@ define( function( require ) {
    */
   function ChallengesNode( challenges, keypad, fixedWidth, onPopulateCallback, options ) {
 
-    options = _.extend( {}, options || {} );
-
     var self = this;
 
     //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
@@ -77,6 +75,7 @@ define( function( require ) {
       contentYMargin: 10
     } );
 
+    //TODO these options should be passed via AccordionBox.call
     this.mutate( options );
   }
 

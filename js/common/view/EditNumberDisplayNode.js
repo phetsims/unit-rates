@@ -42,7 +42,7 @@ define( function( require ) {
       borderColor: 'rgba(0,0,0,1)',
       backgroundColor: 'rgba(0,0,0,0)',
       focusBorderColor: 'rgba(230,132,5,1)'             // border color when the edit button has been pressed
-    }, options || {} );
+    }, options );
     assert && assert( !options.children, 'additional children not supported' );
 
     // @protected - all

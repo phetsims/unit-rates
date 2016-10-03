@@ -24,8 +24,6 @@ define( function( require ) {
    */
   function SceneButtonGroupNode( sceneModeProperty, options ) {
 
-    options = options || {};
-
     options = _.extend( {
       orientation: 'horizontal',
       baseColor: 'white',

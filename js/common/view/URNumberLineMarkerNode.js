@@ -51,7 +51,7 @@ define( function( require ) {
       lineWidth: 1.25,
       largeHeight: 35,
       smallHeight: 18
-    }, options || {} );
+    }, options );
     assert && assert( !options.children, 'additional children not supported' );
 
     var self = this;

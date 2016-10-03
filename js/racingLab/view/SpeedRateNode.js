@@ -46,7 +46,7 @@ define( function( require ) {
       rateTitle: '',
       pickerColor: 'rgb(50,50,50)',
       pickerPressedColor: 'rgb(100,100,100)'
-    }, options || {} );
+    }, options );
 
     var self = this;
 

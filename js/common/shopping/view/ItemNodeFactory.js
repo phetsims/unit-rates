@@ -59,7 +59,7 @@ define( function( require ) {
         moveCallback: null,       // function called during the drag
         moveEndCallback: null,    // function called when item drag ends
         pickable: true
-      }, options || {} );
+      }, options );
 
       var itemNode = new MovableNode( item, new Vector2( 0, 0 ), options );
       itemNode.addDragListeners( options.moveStartCallback, options.moveCallback, options.moveEndCallback );

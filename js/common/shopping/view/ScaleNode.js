@@ -186,8 +186,6 @@ define( function( require ) {
    */
   function ValueDisplayNode( valueProperty, options ) {
 
-    options = options || {};
-
     options = _.extend( {
       minWidth: DISPLAY_SIZE.width,
       minHeight: DISPLAY_SIZE.height,

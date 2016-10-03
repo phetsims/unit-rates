@@ -47,7 +47,7 @@ define( function( require ) {
       defaultBorderColor: 'rgba(0,0,0,1)',
       correctBorderColor: 'rgba(0,0,0,0)',
       incorrectBorderColor: 'rgba(0,0,0,1)'
-    }, options || {} );
+    }, options );
     assert && assert( !options.children, 'additional children not supported' );
 
     // @public (read-only)

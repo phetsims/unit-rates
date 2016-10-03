@@ -61,7 +61,7 @@ define( function( require ) {
       markerTopPattern: '{0}',
       markerBottomPattern: '{0}',
       onEraseCallback: null
-    }, options || {} );
+    }, options );
 
     var self = this;
 

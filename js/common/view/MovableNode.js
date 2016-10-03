@@ -27,7 +27,7 @@ define( function( require ) {
       draggable: true,    // whether or not this node can be dragged by the user
       dragHandle: null,    // Bounds2 - the portion of the node that serves as a drag handle (local coordinates, unused)
       pickable: true
-    }, options || {} );
+    }, options );
 
     Node.call( this, options );
 

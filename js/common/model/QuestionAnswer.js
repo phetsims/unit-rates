@@ -31,7 +31,7 @@ define( function( require ) {
       unitString: '',
       decimalPlaces: 2,
       onCorrectAnswerCallback: null   // function called when the question has been answered correctly
-    }, options || {} );
+    }, options );
 
     var self = this;
 

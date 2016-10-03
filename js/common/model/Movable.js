@@ -25,7 +25,7 @@ define( function( require ) {
       yAxisEnabled: true,           // allows movement in y direction
       bounds: null,                 // Bounds2 - allowed bounds for movement.
       position: new Vector2( 0, 0 ) // default position
-    }, options || {} );
+    }, options );
 
     PropertySet.call( this, {
 

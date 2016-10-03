@@ -33,7 +33,7 @@ define( function( require ) {
       bottomDecimalPlaces: 1,        // # decimals place for display
       topHighPrecision: 1,        // # decimals which makes a marker a 'high precision', potentially display differently
       bottomHighPrecision: 2         // # decimals which makes a marker a 'high precision', potentially display differently
-    }, options || {} );
+    }, options );
 
     Movable.call( this, options );
 

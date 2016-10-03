@@ -42,7 +42,7 @@ define( function( require ) {
       yAxisLength: 28,
       markerLargeHeight: 45,
       markerSmallHeight: 25
-    }, options || {} );
+    }, options );
 
     var self = this;
 

@@ -29,7 +29,7 @@ define( function( require ) {
     options = _.extend( {
       imageScale: 1.0,
       cursor: 'pointer'
-    }, options || {} );
+    }, options );
 
     var image = new Image( imageString, { scale: options.imageScale } );
     var origin = new Vector2( position.x - image.width / 2, position.y - image.height );

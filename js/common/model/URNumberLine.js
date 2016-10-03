@@ -28,7 +28,7 @@ define( function( require ) {
       markerBottomDecimals: 2,    // # decimals place for display
       markerTopHighPrecision: 1,    // # decimals which makes a marker a 'high precision', potentially display differently
       markerBottomHighPrecision: 2     // # decimals which makes a marker a 'high precision', potentially display differently
-    }, options || {} );
+    }, options );
 
     // @public (read-write)
     PropertySet.call( this, {
@@ -63,7 +63,7 @@ define( function( require ) {
         bottomDecimalPlaces: this.markerBottomDecimalsProperty.value,
         topHighPrecision: this.markerTopHighPrecisionProperty.value,
         bottomHighPrecision: this.markerBottomHighPrecisionProperty.value
-      }, options || {} );
+      }, options );
 
       var marker = new URNumberLineMarker( correctTopValue, correctBottomValue, this.rateProperty, options );
       if ( !this.markerExists( marker ) ) {

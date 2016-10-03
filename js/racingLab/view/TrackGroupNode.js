@@ -38,7 +38,7 @@ define( function( require ) {
       ratePressedColor: 'rgb(100,100,100)',
       timerTitle: '',
       trackOnTop: false
-    }, options || {} );
+    }, options );
 
     var self = this;
 

@@ -59,7 +59,7 @@ define( function( require ) {
       trackHeight: 100,      // sets the overall height of the node
       trackStartOffset: 0,        // the offset of the green start flag
       timerTitle: ''              // title for the timer when closed
-    }, options || {} );
+    }, options );
 
     var self = this;
 

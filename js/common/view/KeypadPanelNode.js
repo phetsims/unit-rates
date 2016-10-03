@@ -36,7 +36,7 @@ define( function( require ) {
 
     options = _.extend( {
       maxDigits: 4
-    }, options || {} );
+    }, options );
 
     // @public
     this.visibleProperty = new Property( true );

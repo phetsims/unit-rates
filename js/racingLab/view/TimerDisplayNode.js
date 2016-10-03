@@ -44,7 +44,7 @@ define( function( require ) {
       align: 'left',
       showTimeProperty: new Property( true ), // property used to toggle the display of the timer value or 'hiddenTimeText'
       hiddenTimeText: ''  // the text show when the timer value is hidden
-    }, options || {} );
+    }, options );
 
     var self = this;
 
