@@ -83,6 +83,7 @@ define( function( require ) {
         case ItemData.TOMATOES.type:
           self.setLineLabels( costCurrencyString, tomatoesCapString );
           break;
+        //TODO identical cases below here
         case ItemData.RED_CANDY.type:
           self.setLineLabels( costCurrencyString, weightUnitString );
           break;
