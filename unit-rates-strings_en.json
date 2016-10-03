@@ -161,11 +161,11 @@
   "miles": {
     "value": "miles"
   },
-  "hours": {
-    "value": "hours"
-  },
   "milesCap": {
     "value": "Miles"
+  },
+  "hours": {
+    "value": "hours"
   },
   "hoursCap": {
     "value": "Hours"
