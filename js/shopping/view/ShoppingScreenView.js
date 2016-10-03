@@ -115,7 +115,7 @@ define( function( require ) {
     },
 
     /**
-     * Call when the user selected a new scene (i.e. "1", "2", "3")
+     * Call when the user selected a new scene (i.e. '1', '2', '3')
      * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
      * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
      * @override @protected
@@ -147,7 +147,7 @@ define( function( require ) {
     },
 
     /**
-     * Called when the user selected a new item type (i.e. "apples", "carrots", "red candy")
+     * Called when the user selected a new item type (i.e. 'apples', 'carrots', 'red candy')
      * @param {Property.<SceneMode>} sceneMode - indicates the scene type
      * @param {Property.<ItemData>} fruitItemData - the item data for the selected fruit item
      * @param {Property.<ItemData>} produceItemData - the item data for the selected produce item
