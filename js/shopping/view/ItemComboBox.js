@@ -22,14 +22,14 @@ define( function( require ) {
   var ComboBox = require( 'SUN/ComboBox' );
 
   // strings
-  var applesCapString = require( 'string!UNIT_RATES/applesCap' );
-  var lemonsCapString = require( 'string!UNIT_RATES/lemonsCap' );
-  var orangesCapString = require( 'string!UNIT_RATES/orangesCap' );
-  var pearsCapString = require( 'string!UNIT_RATES/pearsCap' );
-  var carrotsCapString = require( 'string!UNIT_RATES/carrotsCap' );
-  var cucumbersCapString = require( 'string!UNIT_RATES/cucumbersCap' );
-  var potatoesCapString = require( 'string!UNIT_RATES/potatoesCap' );
-  var tomatoesCapString = require( 'string!UNIT_RATES/tomatoesCap' );
+  var applesString = require( 'string!UNIT_RATES/apples' );
+  var lemonsString = require( 'string!UNIT_RATES/lemons' );
+  var orangesString = require( 'string!UNIT_RATES/oranges' );
+  var pearsString = require( 'string!UNIT_RATES/pears' );
+  var carrotsString = require( 'string!UNIT_RATES/carrots' );
+  var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
+  var potatoesString = require( 'string!UNIT_RATES/potatoes' );
+  var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
   var blueCandyString = require( 'string!UNIT_RATES/blueCandy' );
   var greenCandyString = require( 'string!UNIT_RATES/greenCandy' );
   var purpleCandyString = require( 'string!UNIT_RATES/purpleCandy' );
@@ -62,30 +62,30 @@ define( function( require ) {
     switch( sceneMode ) {
       case SceneMode.FRUIT:
         items.push( ComboBox.createItem(
-          this.createItemRow( applesCapString, ItemNodeFactory.createItemNode( new Item( ItemData.APPLES.type, 1 ) ) ),
+          this.createItemRow( applesString, ItemNodeFactory.createItemNode( new Item( ItemData.APPLES.type, 1 ) ) ),
           ItemData.APPLES ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( lemonsCapString, ItemNodeFactory.createItemNode( new Item( ItemData.LEMONS.type, 1 ) ) ),
+          this.createItemRow( lemonsString, ItemNodeFactory.createItemNode( new Item( ItemData.LEMONS.type, 1 ) ) ),
           ItemData.LEMONS ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( orangesCapString, ItemNodeFactory.createItemNode( new Item( ItemData.ORANGES.type, 1 ) ) ),
+          this.createItemRow( orangesString, ItemNodeFactory.createItemNode( new Item( ItemData.ORANGES.type, 1 ) ) ),
           ItemData.ORANGES ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( pearsCapString, ItemNodeFactory.createItemNode( new Item( ItemData.PEARS.type, 1 ) ) ),
+          this.createItemRow( pearsString, ItemNodeFactory.createItemNode( new Item( ItemData.PEARS.type, 1 ) ) ),
           ItemData.PEARS ) );
         break;
       case SceneMode.PRODUCE:
         items.push( ComboBox.createItem(
-          this.createItemRow( carrotsCapString, ItemNodeFactory.createItemNode( new Item( ItemData.CARROTS.type, 1 ) ) ),
+          this.createItemRow( carrotsString, ItemNodeFactory.createItemNode( new Item( ItemData.CARROTS.type, 1 ) ) ),
           ItemData.CARROTS ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( cucumbersCapString, ItemNodeFactory.createItemNode( new Item( ItemData.CUCUMBERS.type, 1 ) ) ),
+          this.createItemRow( cucumbersString, ItemNodeFactory.createItemNode( new Item( ItemData.CUCUMBERS.type, 1 ) ) ),
           ItemData.CUCUMBERS ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( potatoesCapString, ItemNodeFactory.createItemNode( new Item( ItemData.POTATOES.type, 1 ) ) ),
+          this.createItemRow( potatoesString, ItemNodeFactory.createItemNode( new Item( ItemData.POTATOES.type, 1 ) ) ),
           ItemData.POTATOES ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( tomatoesCapString, ItemNodeFactory.createItemNode( new Item( ItemData.TOMATOES.type, 1 ) ) ),
+          this.createItemRow( tomatoesString, ItemNodeFactory.createItemNode( new Item( ItemData.TOMATOES.type, 1 ) ) ),
           ItemData.TOMATOES ) );
         break;
       case SceneMode.CANDY:

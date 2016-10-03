@@ -36,99 +36,51 @@
     "value": "Enter"
   },
   "apple": {
-    "value": "apple"
-  },
-  "appleCap": {
     "value": "Apple"
   },
   "apples": {
-    "value": "apples"
-  },
-  "applesCap": {
     "value": "Apples"
   },
   "lemon": {
-    "value": "lemon"
-  },
-  "lemonCap": {
     "value": "Lemon"
   },
   "lemons": {
-    "value": "lemons"
-  },
-  "lemonsCap": {
     "value": "Lemons"
   },
   "orange": {
-    "value": "orange"
-  },
-  "orangeCap": {
     "value": "Orange"
   },
   "oranges": {
-    "value": "oranges"
-  },
-  "orangesCap": {
     "value": "Oranges"
   },
   "pear": {
-    "value": "pear"
-  },
-  "pearCap": {
     "value": "Pear"
   },
   "pears": {
-    "value": "pears"
-  },
-  "pearsCap": {
     "value": "Pears"
   },
   "carrot": {
-    "value": "carrot"
-  },
-  "carrotCap": {
     "value": "Carrot"
   },
   "carrots": {
-    "value": "carrots"
-  },
-  "carrotsCap": {
     "value": "Carrots"
   },
   "cucumber": {
-    "value": "cucumber"
-  },
-  "cucumberCap": {
     "value": "Cucumber"
   },
   "cucumbers": {
-    "value": "cucumbers"
-  },
-  "cucumbersCap": {
     "value": "Cucumbers"
   },
   "potato": {
-    "value": "potato"
-  },
-  "potatoCap": {
     "value": "Potato"
   },
   "potatoes": {
-    "value": "potatoes"
-  },
-  "potatoesCap": {
     "value": "Potatoes"
   },
   "tomato": {
-    "value": "tomato"
-  },
-  "tomatoCap": {
     "value": "Tomato"
   },
   "tomatoes": {
-    "value": "tomatoes"
-  },
-  "tomatoesCap": {
     "value": "Tomatoes"
   },
   "blueCandy": {
@@ -158,14 +110,8 @@
   "miles": {
     "value": "miles"
   },
-  "milesCap": {
-    "value": "Miles"
-  },
   "hours": {
     "value": "hours"
-  },
-  "hoursCap": {
-    "value": "Hours"
   },
   "timer1": {
     "value": "Timer 1"

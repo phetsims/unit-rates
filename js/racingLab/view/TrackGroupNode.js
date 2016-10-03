@@ -19,8 +19,8 @@ define( function( require ) {
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
 
   // strings
-  var hoursCapString = require( 'string!UNIT_RATES/hoursCap' );
-  var milesCapString = require( 'string!UNIT_RATES/milesCap' );
+  var hoursString = require( 'string!UNIT_RATES/hours' );
+  var milesString = require( 'string!UNIT_RATES/miles' );
 
   /**
    * @param {TrackGroup} model
@@ -57,7 +57,7 @@ define( function( require ) {
       markerLargeHeight: 30,
       markerSmallHeight: 15
     } );
-    this.numberLineNode.setLineLabels( milesCapString, hoursCapString );
+    this.numberLineNode.setLineLabels( milesString, hoursString );
 
     // rate spinners
     this.rateNode = new SpeedRateNode( this.trackGroup, {

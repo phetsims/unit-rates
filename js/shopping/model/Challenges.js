@@ -28,37 +28,21 @@ define( function( require ) {
   var lbsString = require( 'string!UNIT_RATES/lbs' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
   var appleString = require( 'string!UNIT_RATES/apple' );
-  var appleCapString = require( 'string!UNIT_RATES/appleCap' );
   var applesString = require( 'string!UNIT_RATES/apples' );
-  var applesCapString = require( 'string!UNIT_RATES/applesCap' );
   var lemonString = require( 'string!UNIT_RATES/lemon' );
-  var lemonCapString = require( 'string!UNIT_RATES/lemonCap' );
   var lemonsString = require( 'string!UNIT_RATES/lemons' );
-  var lemonsCapString = require( 'string!UNIT_RATES/lemonsCap' );
   var orangeString = require( 'string!UNIT_RATES/orange' );
-  var orangeCapString = require( 'string!UNIT_RATES/orangeCap' );
   var orangesString = require( 'string!UNIT_RATES/oranges' );
-  var orangesCapString = require( 'string!UNIT_RATES/orangesCap' );
   var pearString = require( 'string!UNIT_RATES/pear' );
-  var pearCapString = require( 'string!UNIT_RATES/pearCap' );
   var pearsString = require( 'string!UNIT_RATES/pears' );
-  var pearsCapString = require( 'string!UNIT_RATES/pearsCap' );
   var carrotString = require( 'string!UNIT_RATES/carrot' );
-  var carrotCapString = require( 'string!UNIT_RATES/carrotCap' );
   var carrotsString = require( 'string!UNIT_RATES/carrots' );
-  var carrotsCapString = require( 'string!UNIT_RATES/carrotsCap' );
   var cucumberString = require( 'string!UNIT_RATES/cucumber' );
-  var cucumberCapString = require( 'string!UNIT_RATES/cucumberCap' );
   var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
-  var cucumbersCapString = require( 'string!UNIT_RATES/cucumbersCap' );
   var potatoString = require( 'string!UNIT_RATES/potato' );
-  var potatoCapString = require( 'string!UNIT_RATES/potatoCap' );
   var potatoesString = require( 'string!UNIT_RATES/potatoes' );
-  var potatoesCapString = require( 'string!UNIT_RATES/potatoesCap' );
   var tomatoString = require( 'string!UNIT_RATES/tomato' );
-  var tomatoCapString = require( 'string!UNIT_RATES/tomatoCap' );
   var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
-  var tomatoesCapString = require( 'string!UNIT_RATES/tomatoesCap' );
 
   // constants
   var RAND = new Random();
@@ -315,36 +299,36 @@ define( function( require ) {
       var name = '';
       switch( type ) {
         case ItemData.APPLES.type:
-          name = ( plural ? ( capitalize ? applesCapString : applesString ) :
-                   ( capitalize ? appleCapString : appleString ) );
+          name = ( plural ? ( capitalize ? applesString : applesString ) :
+                   ( capitalize ? appleString : appleString ) );
           break;
         case ItemData.LEMONS.type:
-          name = ( plural ? ( capitalize ? lemonsCapString : lemonsString ) :
-                   ( capitalize ? lemonCapString : lemonString ) );
+          name = ( plural ? ( capitalize ? lemonsString : lemonsString ) :
+                   ( capitalize ? lemonString : lemonString ) );
           break;
         case ItemData.ORANGES.type:
-          name = ( plural ? ( capitalize ? orangesCapString : orangesString ) :
-                   ( capitalize ? orangeCapString : orangeString ) );
+          name = ( plural ? ( capitalize ? orangesString : orangesString ) :
+                   ( capitalize ? orangeString : orangeString ) );
           break;
         case ItemData.PEARS.type:
-          name = ( plural ? ( capitalize ? pearsCapString : pearsString ) :
-                   ( capitalize ? pearCapString : pearString ) );
+          name = ( plural ? ( capitalize ? pearsString : pearsString ) :
+                   ( capitalize ? pearString : pearString ) );
           break;
         case ItemData.CARROTS.type:
-          name = ( plural ? ( capitalize ? carrotsCapString : carrotsString ) :
-                   ( capitalize ? carrotCapString : carrotString ) );
+          name = ( plural ? ( capitalize ? carrotsString : carrotsString ) :
+                   ( capitalize ? carrotString : carrotString ) );
           break;
         case ItemData.CUCUMBERS.type:
-          name = ( plural ? ( capitalize ? cucumbersCapString : cucumbersString ) :
-                   ( capitalize ? cucumberCapString : cucumberString ) );
+          name = ( plural ? ( capitalize ? cucumbersString : cucumbersString ) :
+                   ( capitalize ? cucumberString : cucumberString ) );
           break;
         case ItemData.POTATOES.type:
-          name = ( plural ? ( capitalize ? potatoesCapString : potatoesString ) :
-                   ( capitalize ? potatoCapString : potatoString ) );
+          name = ( plural ? ( capitalize ? potatoesString : potatoesString ) :
+                   ( capitalize ? potatoString : potatoString ) );
           break;
         case ItemData.TOMATOES.type:
-          name = ( plural ? ( capitalize ? tomatoesCapString : tomatoesString ) :
-                   ( capitalize ? tomatoCapString : tomatoString ) );
+          name = ( plural ? ( capitalize ? tomatoesString : tomatoesString ) :
+                   ( capitalize ? tomatoString : tomatoString ) );
           break;
         case ItemData.RED_CANDY.type:
         case ItemData.PURPLE_CANDY.type:

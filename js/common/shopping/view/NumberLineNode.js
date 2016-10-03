@@ -15,14 +15,14 @@ define( function( require ) {
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
 
   // strings
-  var applesCapString = require( 'string!UNIT_RATES/applesCap' );
-  var lemonsCapString = require( 'string!UNIT_RATES/lemonsCap' );
-  var orangesCapString = require( 'string!UNIT_RATES/orangesCap' );
-  var pearsCapString = require( 'string!UNIT_RATES/pearsCap' );
-  var carrotsCapString = require( 'string!UNIT_RATES/carrotsCap' );
-  var cucumbersCapString = require( 'string!UNIT_RATES/cucumbersCap' );
-  var potatoesCapString = require( 'string!UNIT_RATES/potatoesCap' );
-  var tomatoesCapString = require( 'string!UNIT_RATES/tomatoesCap' );
+  var applesString = require( 'string!UNIT_RATES/apples' );
+  var lemonsString = require( 'string!UNIT_RATES/lemons' );
+  var orangesString = require( 'string!UNIT_RATES/oranges' );
+  var pearsString = require( 'string!UNIT_RATES/pears' );
+  var carrotsString = require( 'string!UNIT_RATES/carrots' );
+  var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
+  var potatoesString = require( 'string!UNIT_RATES/potatoes' );
+  var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
   var costString = require( 'string!UNIT_RATES/cost' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
   var weightString = require( 'string!UNIT_RATES/weight' );
@@ -60,28 +60,28 @@ define( function( require ) {
       // set number line labels
       switch( itemType ) {
         case ItemData.APPLES.type:
-          self.setLineLabels( costCurrencyString, applesCapString );
+          self.setLineLabels( costCurrencyString, applesString );
           break;
         case ItemData.LEMONS.type:
-          self.setLineLabels( costCurrencyString, lemonsCapString );
+          self.setLineLabels( costCurrencyString, lemonsString );
           break;
         case ItemData.ORANGES.type:
-          self.setLineLabels( costCurrencyString, orangesCapString );
+          self.setLineLabels( costCurrencyString, orangesString );
           break;
         case ItemData.PEARS.type:
-          self.setLineLabels( costCurrencyString, pearsCapString );
+          self.setLineLabels( costCurrencyString, pearsString );
           break;
         case ItemData.CARROTS.type:
-          self.setLineLabels( costCurrencyString, carrotsCapString );
+          self.setLineLabels( costCurrencyString, carrotsString );
           break;
         case ItemData.CUCUMBERS.type:
-          self.setLineLabels( costCurrencyString, cucumbersCapString );
+          self.setLineLabels( costCurrencyString, cucumbersString );
           break;
         case ItemData.POTATOES.type:
-          self.setLineLabels( costCurrencyString, potatoesCapString );
+          self.setLineLabels( costCurrencyString, potatoesString );
           break;
         case ItemData.TOMATOES.type:
-          self.setLineLabels( costCurrencyString, tomatoesCapString );
+          self.setLineLabels( costCurrencyString, tomatoesString );
           break;
         //TODO identical cases below here
         case ItemData.RED_CANDY.type:
