@@ -24,9 +24,7 @@ define( function( require ) {
    */
   function NumberLine( itemTypeProperty, itemRateProperty, options ) {
 
-    options = _.extend( {
-
-    }, options || {} );
+    options = _.extend( {}, options || {} );
 
     var self = this;
 

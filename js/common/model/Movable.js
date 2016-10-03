@@ -58,9 +58,9 @@ define( function( require ) {
         };
 
         var animationTween = new TWEEN.Tween( position ).to( {
-            x: x,
-            y: y
-          }, 1000 )
+          x: x,
+          y: y
+        }, 1000 )
           .easing( TWEEN.Easing.Cubic.InOut )
           .onUpdate( function() {
             self.setPosition( position.x, position.y, false );
