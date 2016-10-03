@@ -23,12 +23,8 @@ define( function( require ) {
   var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
   var potatoesString = require( 'string!UNIT_RATES/potatoes' );
   var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
-  var costString = require( 'string!UNIT_RATES/cost' );
-  var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
-  var weightString = require( 'string!UNIT_RATES/weight' );
-  var lbsString = require( 'string!UNIT_RATES/lbs' );
-  var costCurrencyString = costString + ' (' + currencySymbolString + ')';
-  var weightUnitString = weightString + ' (' + lbsString + ')';
+  var costUnitsString = require( 'string!UNIT_RATES/costUnits' );
+  var weightUnitsString = require( 'string!UNIT_RATES/weightUnits' );
 
   /**
    * @param {NumberLine} numberLine - the model
@@ -60,41 +56,41 @@ define( function( require ) {
       // set number line labels
       switch( itemType ) {
         case ItemData.APPLES.type:
-          self.setLineLabels( costCurrencyString, applesString );
+          self.setLineLabels( costUnitsString, applesString );
           break;
         case ItemData.LEMONS.type:
-          self.setLineLabels( costCurrencyString, lemonsString );
+          self.setLineLabels( costUnitsString, lemonsString );
           break;
         case ItemData.ORANGES.type:
-          self.setLineLabels( costCurrencyString, orangesString );
+          self.setLineLabels( costUnitsString, orangesString );
           break;
         case ItemData.PEARS.type:
-          self.setLineLabels( costCurrencyString, pearsString );
+          self.setLineLabels( costUnitsString, pearsString );
           break;
         case ItemData.CARROTS.type:
-          self.setLineLabels( costCurrencyString, carrotsString );
+          self.setLineLabels( costUnitsString, carrotsString );
           break;
         case ItemData.CUCUMBERS.type:
-          self.setLineLabels( costCurrencyString, cucumbersString );
+          self.setLineLabels( costUnitsString, cucumbersString );
           break;
         case ItemData.POTATOES.type:
-          self.setLineLabels( costCurrencyString, potatoesString );
+          self.setLineLabels( costUnitsString, potatoesString );
           break;
         case ItemData.TOMATOES.type:
-          self.setLineLabels( costCurrencyString, tomatoesString );
+          self.setLineLabels( costUnitsString, tomatoesString );
           break;
         //TODO identical cases below here
         case ItemData.RED_CANDY.type:
-          self.setLineLabels( costCurrencyString, weightUnitString );
+          self.setLineLabels( costUnitsString, weightUnitsString );
           break;
         case ItemData.PURPLE_CANDY.type:
-          self.setLineLabels( costCurrencyString, weightUnitString );
+          self.setLineLabels( costUnitsString, weightUnitsString );
           break;
         case ItemData.GREEN_CANDY.type:
-          self.setLineLabels( costCurrencyString, weightUnitString );
+          self.setLineLabels( costUnitsString, weightUnitsString );
           break;
         case ItemData.BLUE_CANDY.type:
-          self.setLineLabels( costCurrencyString, weightUnitString );
+          self.setLineLabels( costUnitsString, weightUnitsString );
           break;
         default:
           assert && assert( false, 'Number line using unrecognized type' );

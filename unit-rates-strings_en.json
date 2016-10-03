@@ -29,8 +29,11 @@
   "cost": {
     "value": "Cost"
   },
-  "weight": {
-    "value": "Weight"
+  "costUnits": {
+    "value": "Cost ($)"
+  },
+  "weightUnits": {
+    "value": "Weight (lbs)"
   },
   "enter": {
     "value": "Enter"
