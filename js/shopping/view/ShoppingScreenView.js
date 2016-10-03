@@ -101,7 +101,8 @@ define( function( require ) {
 
     /**
      * Called when the user selects the sim reset button
-     * @override @protected
+     * @override
+     * @protected
      */
     resetAll: function() {
 
@@ -118,7 +119,8 @@ define( function( require ) {
      * Call when the user selected a new scene (i.e. '1', '2', '3')
      * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
      * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
-     * @override @protected
+     * @override
+     * @protected
      */
     sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
 
