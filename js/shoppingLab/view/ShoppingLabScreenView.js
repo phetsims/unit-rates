@@ -1,7 +1,8 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * The main shopping screen This is derived from URShoppingScreenView and adds rate adjustment panel to it.
+ * View for the 'Shopping Lab' screen.
+ * This is derived from URShoppingScreenView and adds rate adjustment panel to it.
  *
  * @author Dave Schmitz (Schmitzware)
  */

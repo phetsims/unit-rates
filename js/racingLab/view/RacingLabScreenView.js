@@ -1,7 +1,8 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * The entire racing lab screen.
+ * View for the 'Racing Lab' screen
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

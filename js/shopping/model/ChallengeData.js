@@ -2,6 +2,7 @@
 
 /**
  * Data for the challenge prompts. Note: question #1 is always the unit-rate and that data is not contained here.
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

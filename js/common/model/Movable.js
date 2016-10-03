@@ -2,6 +2,7 @@
 
 /**
  * A base class used for positioning/animating derived nodes
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
@@ -12,8 +13,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
-
-  // constants
 
   /**
    * @param {Object} [options]
@@ -94,10 +93,9 @@ define( function( require ) {
       }
     },
 
-    //
+    // @public
     dispose: function() {
       this.positionProperty.unlinkAll();
-
       PropertySet.prototype.dispose.call( this );
     }
 

@@ -3,6 +3,7 @@
 /**
  * The main shopping screen layout and top level behaviors
  * (i.e. scene selection, moving items between shelf/scale, reset, etc.)
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

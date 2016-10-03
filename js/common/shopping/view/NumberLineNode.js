@@ -2,6 +2,7 @@
 
 /**
  * A derived, shopping-specific, double number line. Basically adds swapping x-axis labels based on item type
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

@@ -2,6 +2,7 @@
 
 /**
  * Container for the various shopping scene types
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

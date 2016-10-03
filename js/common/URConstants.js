@@ -19,6 +19,7 @@ define( function( require ) {
     //----------------------------------------------------------------------------
     // Screens
     //----------------------------------------------------------------------------
+
     SCREEN_HORIZONTAL_MARGIN: 15, // screen left/right margin for panels (i.e number line/challenges/shelf)
     SCREEN_VERTICAL_MARGIN: 15, // screen top/bottom panel margin
     SCREEN_PANEL_SPACING: 12, // space between major panels (i.e. number line/challenges/keypad)
@@ -26,6 +27,7 @@ define( function( require ) {
     //----------------------------------------------------------------------------
     // Views
     //----------------------------------------------------------------------------
+
     PANEL_TITLE_FONT: new PhetFont( 14 ),   // Font use on all major panels (i.e. accordion boxes)
 
     DEFAULT_BUTTON_COLOR: '#f2f2f2',      // Common default button color

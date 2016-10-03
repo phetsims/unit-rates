@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * Racing Lab screen
+ * The 'Racing Lab' screen
  *
  * @author Dave Schmitz (Schmitzware)
  */

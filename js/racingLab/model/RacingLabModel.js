@@ -1,6 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
+ * Model for the 'Racing Lab' screen.
  * The Racing lab model contains the 2 individual track models and uses those to determine when both races are finished.
  * It also scales the simulation dt values to slow down the overall simulation.
  *

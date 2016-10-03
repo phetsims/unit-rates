@@ -2,6 +2,7 @@
 
 /**
  * A collapsible box node containing (several) spinners for changing the current unit rate
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

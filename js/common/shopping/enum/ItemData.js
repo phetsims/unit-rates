@@ -5,6 +5,7 @@
  * type = the item type (duh)
  * rate = the default unit rate
  * maxUnits = the maximum number of items that should appear on the bottom number line (item count | weight )
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

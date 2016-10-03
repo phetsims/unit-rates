@@ -1,6 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
+ * Model for the 'Shopping' screen.
  * The shopping-only (no lab) model specifics - basically, challenge prompts interaction
  *
  * @author Dave Schmitz (Schmitzware)

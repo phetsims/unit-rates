@@ -2,6 +2,7 @@
 
 /**
  * A node containing all the challenge Q&A's nodes in a collapsible box
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {

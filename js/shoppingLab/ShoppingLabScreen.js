@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * Shopping lab screen
+ * The 'Shopping Lab' screen
  *
  * @author Dave Schmitz (Schmitzware)
  */

@@ -3,6 +3,7 @@
 /**
  * Base class for all number line nodes in the simulation. Base functionality includes, drawing and labeling the
  * double axes managing a current list of number line markers.
+ *
  * @author Dave Schmitz (Schmitzware)
  */
 define( function( require ) {
