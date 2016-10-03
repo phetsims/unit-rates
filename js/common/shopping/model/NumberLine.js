@@ -19,12 +19,9 @@ define( function( require ) {
   /**
    * @param {Property.<ItemData>} itemTypeProperty - the currently selected item
    * @param {Property.<number>} itemRateProperty - the currently selected item rate
-   * @param {Object} [options]
    * @constructor
    */
-  function NumberLine( itemTypeProperty, itemRateProperty, options ) {
-
-    options = _.extend( {}, options || {} );
+  function NumberLine( itemTypeProperty, itemRateProperty ) {
 
     var self = this;
 
