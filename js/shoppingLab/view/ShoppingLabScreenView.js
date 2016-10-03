@@ -69,7 +69,7 @@ define( function( require ) {
     },
 
     /**
-     * TODO document
+     * TODO document, https://github.com/phetsims/unit-rates/issues/64
      * @protected
      */
     refreshNumberLine: function() {

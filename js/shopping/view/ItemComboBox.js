@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * TODO doc
+ * TODO document, https://github.com/phetsims/unit-rates/issues/64
  *
  * @author Dave Schmitz (Schmitzware)
  */

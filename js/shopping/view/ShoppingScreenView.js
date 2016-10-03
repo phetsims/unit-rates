@@ -81,7 +81,7 @@ define( function( require ) {
     },
 
     /**
-     * TODO document
+     * TODO document, https://github.com/phetsims/unit-rates/issues/64
      * @protected
      */
     onNumberLineEraseCallback: function() {
@@ -91,7 +91,7 @@ define( function( require ) {
     },
 
     /**
-     * TODO document
+     * TODO document, https://github.com/phetsims/unit-rates/issues/64
      * @protected
      */
     onChallengeCallback: function() {
