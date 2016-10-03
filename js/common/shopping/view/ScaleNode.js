@@ -177,6 +177,7 @@ define( function( require ) {
     } );
   }
 
+  //TODO this looks like constructor, but returns a Panel. Fix this.
   /**
    * Node used to display a numeric value associated with the items on the scale (i.e. cost, weight)
    * @param {Property.<number>} valueProperty
