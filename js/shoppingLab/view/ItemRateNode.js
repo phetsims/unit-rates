@@ -62,7 +62,8 @@ define( function( require ) {
     this.costRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
     this.countRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
     this.itemPickerData = [
-      {                                                // APPLES_INDEX
+      {
+        // APPLES_INDEX
         costProperty: new Property( 1 ),   // initial number picker apples cost
         costPicker: null,
         countProperty: new Property( 2 ),   // initial number picker apples count
@@ -71,7 +72,8 @@ define( function( require ) {
         countPickerPressedColor: 'rgb(203,3,15)',
         countString: applesString,
         visible: true
-      }, {                                              // CARROTS_INDEX
+      }, {
+        // CARROTS_INDEX
         costProperty: new Property( 2 ),
         costPicker: null,
         countProperty: new Property( 5 ),
@@ -80,7 +82,8 @@ define( function( require ) {
         countPickerPressedColor: 'rgb(211,98,18)',
         countString: carrotsString,
         visible: false
-      }, {                                              // CANDY_INDEX
+      }, {
+        // CANDY_INDEX
         costProperty: new Property( 5 ),
         costPicker: null,
         countProperty: new Property( 1 ),
