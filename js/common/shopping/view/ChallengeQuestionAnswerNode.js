@@ -29,7 +29,6 @@ define( function( require ) {
   var DEFAULT_BORDER_COLOR = 'rgba(0,0,0,1)';
 
   /**
-   *
    * @param {QuestionAnswer} qna
    * @param {NumberKeypad} keypad - shared keypad node
    * @param {Object} [options]

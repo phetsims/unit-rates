@@ -120,6 +120,7 @@ define( function( require ) {
     /**
      * Selects the current scene
      * @param {SceneMode} sceneMode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
+     * TODO visibility annotation
      */
     setSceneMode: function( sceneMode ) {
       switch( sceneMode ) {
@@ -143,6 +144,7 @@ define( function( require ) {
      * @param {string} itemString - the item name
      * @param {Node} itemNode - the item icon
      * @returns {HBox}
+     * TODO visibility annotation
      */
     createItemRow: function( itemString, itemNode ) {
 

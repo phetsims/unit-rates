@@ -49,7 +49,6 @@ define( function( require ) {
   var DISPLAY_SIZE = new Dimension2( 70, 40 );
 
   /**
-   *
    * @param {Scale} scale - model
    * @param {Node} itemLayer - a container node which holds the item nodes. Used here for local positioning of items
    * @param {function} startMoveCallback - function to be called when item drag starts

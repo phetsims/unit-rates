@@ -18,7 +18,6 @@ define( function( require ) {
   var ObservableArray = require( 'AXON/ObservableArray' );
 
   /**
-   *
    * @constructor
    */
   function ItemCollection() {

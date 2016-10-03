@@ -187,7 +187,7 @@ define( function( require ) {
       this.hideKeypad();
     },
 
-    /*
+    /**
      * Called before an item is dragged
      * @param {Node} itemNode - the item being moved.
      * @protected

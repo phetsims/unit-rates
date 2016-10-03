@@ -93,10 +93,7 @@ define( function( require ) {
 
   return inherit( Node, TrackGroupNode, {
 
-    /**
-     *
-     * @public
-     */
+    // @public
     reset: function() {
       this.numberLineNode.reset();
       this.rateNode.reset();

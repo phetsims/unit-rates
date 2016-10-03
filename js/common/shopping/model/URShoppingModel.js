@@ -114,7 +114,7 @@ define( function( require ) {
       }
     },
 
-    // Resets all model elements
+    // @public Resets all model elements
     reset: function() {
       this.shelf.reset();
       this.scale.reset();

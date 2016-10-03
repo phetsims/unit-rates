@@ -108,12 +108,12 @@ define( function( require ) {
 
   return inherit( URNumberLineNode, NumberLineNode, {
 
-
     /**
      * Called when the user selects the sim reset button
      * @override @protected
      */
     reset: function() {
+      //TODO why overriding this? It's not adding anything to the supertype call
       URNumberLineNode.prototype.reset.call( this );
     }
 

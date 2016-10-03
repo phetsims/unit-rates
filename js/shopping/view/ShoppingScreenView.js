@@ -81,7 +81,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * TODO document
      * @protected
      */
     onNumberLineEraseCallback: function() {
@@ -91,7 +91,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * TODO document
      * @protected
      */
     onChallengeCallback: function() {

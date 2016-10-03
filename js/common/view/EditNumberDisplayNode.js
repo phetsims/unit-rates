@@ -23,7 +23,6 @@ define( function( require ) {
   var editButtonImage = require( 'image!UNIT_RATES/edit-button.png' );
 
   /**
-   *
    * @param {KeypadPanelNode} keypad - shared keypad
    * @param {Property.<Number>} valueProperty - used to receive input from the keypad
    * @param {string} pattern - the text pattern to display in the NumberDisplay
@@ -70,6 +69,7 @@ define( function( require ) {
       backgroundFill: this.backgroundColor,
       pickable: false
     };
+
     // @protected
     this.numberDisplay = new NumberDisplay( valueProperty, options.numberRange, numberDisplayOptions );
 

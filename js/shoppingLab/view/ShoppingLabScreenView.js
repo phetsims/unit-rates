@@ -69,7 +69,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * TODO document
      * @protected
      */
     refreshNumberLine: function() {

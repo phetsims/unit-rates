@@ -74,7 +74,7 @@ define( function( require ) {
                this.type === ItemData.GREEN_CANDY.type || this.type === ItemData.BLUE_CANDY.type );
     },
 
-    //
+    // @public
     dispose: function() {
       Movable.prototype.dispose.call( this );
     }

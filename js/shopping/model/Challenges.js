@@ -308,7 +308,6 @@ define( function( require ) {
      * @param {boolean} capitalize
      * @returns {string}
      * @private
-     *
      */
     getNameForItemType: function( type, plural, capitalize ) {
 
@@ -361,7 +360,6 @@ define( function( require ) {
      * Gets the items associated with all the correctly answered challenge questions
      * @return {Array.<QuestionAnswer>}
      * @public
-     *
      */
     getCorrectAnswerItems: function( itemType ) {
 
@@ -384,7 +382,6 @@ define( function( require ) {
      * @param {number} promptNumber - prompt (0|1|2)
      * @return {Item}
      * @private
-     *
      */
     getPromptItem: function( itemType, setNumber, promptNumber ) {
 
