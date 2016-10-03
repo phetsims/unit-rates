@@ -19,10 +19,10 @@ define( function( require ) {
   var unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );
 
   var simOptions = {
+    //TODO finalize credits, https://github.com/phetsims/unit-rates/issues/55
     credits: {
-      //TODO fill in proper credits, all of these fields are optional, see joist.AboutDialog
-      leadDesign: '',
-      softwareDevelopment: '',
+      leadDesign: 'Amy Rouinfar',
+      softwareDevelopment: 'Dave Schmitz (Schmitzware), Chris Malley (PixelZoom, Inc.)',
       team: '',
       qualityAssurance: '',
       graphicArts: '',
