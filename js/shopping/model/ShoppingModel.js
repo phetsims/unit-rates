@@ -10,11 +10,11 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Challenges = require( 'UNIT_RATES/shopping/model/Challenges' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URShoppingModel = require( 'UNIT_RATES/common/shopping/model/URShoppingModel' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
-  var Challenges = require( 'UNIT_RATES/shopping/model/Challenges' );
 
   /**
    * @constructor

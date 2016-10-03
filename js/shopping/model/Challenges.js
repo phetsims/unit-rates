@@ -9,14 +9,14 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
-  var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
   var ChallengeData = require( 'UNIT_RATES/shopping/model/ChallengeData' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Random = require( 'DOT/Random' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
   var Util = require( 'DOT/Util' );
 
   // strings - lots of 'em

@@ -9,9 +9,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var RacingLabScreen = require( 'UNIT_RATES/racingLab/RacingLabScreen' );
   var ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
   var ShoppingLabScreen = require( 'UNIT_RATES/shoppingLab/ShoppingLabScreen' );
-  var RacingLabScreen = require( 'UNIT_RATES/racingLab/RacingLabScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
 

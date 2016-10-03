@@ -9,28 +9,28 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AccordionBox = require( 'SUN/AccordionBox' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Shape = require( 'KITE/Shape' );
-  var AccordionBox = require( 'SUN/AccordionBox' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var Property = require( 'AXON/Property' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var Shape = require( 'KITE/Shape' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var Util = require( 'DOT/Util' );
 
   // strings
-  var rateString = require( 'string!UNIT_RATES/rate' );
-  var dollarsString = require( 'string!UNIT_RATES/dollars' );
   var applesString = require( 'string!UNIT_RATES/apples' );
   var carrotsString = require( 'string!UNIT_RATES/carrots' );
+  var dollarsString = require( 'string!UNIT_RATES/dollars' );
   var poundsString = require( 'string!UNIT_RATES/pounds' );
+  var rateString = require( 'string!UNIT_RATES/rate' );
 
   // constants
   var TEXT_FONT = new PhetFont( 18 ); // Font to use for all text

@@ -11,12 +11,12 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URShoppingScreenView = require( 'UNIT_RATES/common/shopping/view/URShoppingScreenView' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var ItemRateNode = require( 'UNIT_RATES/shoppingLab/view/ItemRateNode' );
+  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var URShoppingScreenView = require( 'UNIT_RATES/common/shopping/view/URShoppingScreenView' );
 
   /**
    * @param {ShoppingLabModel} model
