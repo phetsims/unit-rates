@@ -112,10 +112,10 @@ define( function( require ) {
       touchAreaYDilation: 0,
       stroke: 'black',
       lineWidth: 0.5,
-      visible: false,
+      enabled: false,
       listener: function() {
         self.restart();
-        self.restartButton.visible = false;
+        self.restartButton.enabled = false;
       }
     } );
     this.addChild( this.restartButton );
@@ -175,7 +175,7 @@ define( function( require ) {
 
     // show/hide the restart button, change the go/stop button color
     this.model.runningProperty.lazyLink( function( value, oldValue ) {
-      self.restartButton.visible = ( !value && !self.model.atStart() );
+      self.restartButton.enabled = ( !value && !self.model.atStart() );
       self.goStopButton.baseColor = ( value ? '#6D6E70' : '#85d4a6' );
     } );
   }
