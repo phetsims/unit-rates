@@ -120,6 +120,7 @@ define( function( require ) {
         self.checkProperties();
         self.updateFunction( self );
       } );
+    assert && assert( this.qnaMultilink, 'you hit this bug: https://github.com/phetsims/unit-rates/issues/106' );
   }
 
   unitRates.register( 'URNumberLineMarkerNode', URNumberLineMarkerNode );
