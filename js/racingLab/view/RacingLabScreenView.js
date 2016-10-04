@@ -63,26 +63,26 @@ define( function( require ) {
     this.keypad.hide();
 
     // top track
-    this.trackGroup1Node = new TrackGroupNode( model.trackGroup1, blueCarImage, this.keypad, {
+    this.trackGroup1Node = new TrackGroupNode( model.trackGroup1, redCarImage, this.keypad, {
       left: URConstants.PANEL_SPACING,
       top: URConstants.SCREEN_VERTICAL_MARGIN,
       numberLineTitle: doubleNumberLine1String,
       rateTitle: rate1String,
-      rateColor: 'rgb(29,174,235)',
-      ratePressedColor: 'rgb(9,154,215)',
+      rateColor: 'rgb(233,33,45)',
+      ratePressedColor: 'rgb(213,13,25)',
       timerTitle: timer1String
     } );
     this.addChild( this.trackGroup1Node );
 
     // bottom track
-    this.trackGroup2Node = new TrackGroupNode( model.trackGroup2, redCarImage, this.keypad, {
+    this.trackGroup2Node = new TrackGroupNode( model.trackGroup2, blueCarImage, this.keypad, {
       left: URConstants.PANEL_SPACING,
       top: this.trackGroup1Node.bottom + 5,
       trackOnTop: true,
       numberLineTitle: doubleNumberLine2String,
       rateTitle: rate2String,
-      rateColor: 'rgb(233,33,45)',
-      ratePressedColor: 'rgb(213,13,25)',
+      rateColor: 'rgb(29,174,235)',
+      ratePressedColor: 'rgb(9,154,215)',
       timerTitle: timer2String
     } );
     this.addChild( this.trackGroup2Node );
