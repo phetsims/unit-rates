@@ -14,7 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var RacingLabConstants = require( 'UNIT_RATES/racingLab/RacingLabConstants' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var TrackGroup = require( 'UNIT_RATES/racingLab/model/TrackGroup' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -74,8 +74,7 @@ define( function( require ) {
     step: function( dt ) {
       if ( this.runningProperty.value && dt < 1 ) {
         // Scale sim dt to slow things down
-        var scaleDt = ( dt / RacingLabConstants.RACING_DT_SCALE );
-        this.elapsedTimeProperty.value += scaleDt;
+        this.elapsedTimeProperty.value += ( dt / 1.75 );
       }
     },
 

@@ -54,7 +54,7 @@ define( function( require ) {
     addSubclassScreenNodes: function() {
 
       this.itemRateNode = new ItemRateNode( this.model.itemTypeProperty, this.model.itemRateProperty, {
-        left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
+        left: this.layoutBounds.left + URConstants.PANEL_SPACING,
         bottom: this.scaleNode.bottom
       } );
       this.addChild( this.itemRateNode );

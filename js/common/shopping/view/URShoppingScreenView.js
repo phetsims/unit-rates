@@ -63,7 +63,7 @@ define( function( require ) {
     // number line
     // @public
     this.numberLineNode = new NumberLineNode( model.numberLine, this.keypad, {
-      left: this.layoutBounds.left + URConstants.SCREEN_PANEL_SPACING,
+      left: this.layoutBounds.left + URConstants.PANEL_SPACING,
       top: this.layoutBounds.top + URConstants.SCREEN_VERTICAL_MARGIN,
       numberLineTitle: doubleNumberLineString,
       onEraseCallback: eraseNumberLineCallback
@@ -72,7 +72,7 @@ define( function( require ) {
 
     // keypad layout
     this.keypad.right = this.numberLineNode.right - 30;
-    this.keypad.top = this.numberLineNode.bottom + 2 * URConstants.SCREEN_PANEL_SPACING;
+    this.keypad.top = this.numberLineNode.bottom + 2 * URConstants.PANEL_SPACING;
 
     // @protected - covers entire screen, uses pick to close keypad
     this.keypadCloseArea = new Rectangle( 0, 0, window.innerWidth, window.innerHeight, { visible: false } );
@@ -116,7 +116,7 @@ define( function( require ) {
 
     // scale remove all items button
     var scaleRemoveButtonNode = new RectangularPushButton( {
-      right: this.scaleNode.left - URConstants.SCREEN_PANEL_SPACING,
+      right: this.scaleNode.left - URConstants.PANEL_SPACING,
       bottom: this.scaleNode.bottom,
       baseColor: '#f2f2f2',
       content: new Image( removeButtonImage, { scale: 0.25 } ),

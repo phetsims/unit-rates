@@ -18,7 +18,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
@@ -105,7 +105,7 @@ define( function( require ) {
         preValueString: currencySymbolString,
         decimalPlaces: 2,
         showUnitText: true,
-        correctTextColor: ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR
+        correctTextColor: URConstants.UNIT_RATE_CORRECT_PROMPT_COLOR
       } );
       this.contentNode.addChild( questionNode0 );
 
@@ -116,7 +116,7 @@ define( function( require ) {
         top: questionNode0.bottom + VERTICAL_SPACING,
         preValueString: currencySymbolString,
         decimalPlaces: 2,
-        correctTextColor: ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
+        correctTextColor: URConstants.DEFAULT_CORRECT_PROMPT_COLOR
       } );
       this.contentNode.addChild( questionNode1 );
 
@@ -127,7 +127,7 @@ define( function( require ) {
         top: questionNode1.bottom + VERTICAL_SPACING,
         preValueString: currencySymbolString,
         decimalPlaces: 2,
-        correctTextColor: ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
+        correctTextColor: URConstants.DEFAULT_CORRECT_PROMPT_COLOR
       } );
       this.contentNode.addChild( questionNode2 );
 
@@ -146,7 +146,7 @@ define( function( require ) {
         preValueString: preValueString,
         decimalPlaces: decimalPlaces,
         postValueString: postValueString,
-        correctTextColor: ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR
+        correctTextColor: URConstants.DEFAULT_CORRECT_PROMPT_COLOR
       } );
       this.contentNode.addChild( questionNode3 );
 

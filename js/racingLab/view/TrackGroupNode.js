@@ -11,16 +11,19 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var RacingLabConstants = require( 'UNIT_RATES/racingLab/RacingLabConstants' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var SpeedRateNode = require( 'UNIT_RATES/racingLab/view/SpeedRateNode' );
   var TrackNode = require( 'UNIT_RATES/racingLab/view/TrackNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
 
   // strings
   var hoursString = require( 'string!UNIT_RATES/hours' );
   var milesString = require( 'string!UNIT_RATES/miles' );
+  
+  // constants
+  var RACE_TRACK_NUMBER_LINE_OFFSET = 55; // the offset of the start of X=0 (aka. the space for the edit marker)
+  var RACING_LAB_NUMBER_LINE_WIDTH = 670; // width of the number line
 
   /**
    * @param {TrackGroup} model
@@ -48,11 +51,11 @@ define( function( require ) {
     // number line
     this.numberLineNode = new URNumberLineNode( this.trackGroup.numberline, keypad, {
       numberLineTitle: options.numberLineTitle,
-      graphWidth: RacingLabConstants.TRACK_NUMBER_LINE_WIDTH,
+      graphWidth: RACING_LAB_NUMBER_LINE_WIDTH,
       graphHeight: 95,
       xAxisOffset: 9,
-      yAxisOffset: RacingLabConstants.TRACK_NUMBER_LINE_OFFSET,
-      xAxisLength: RacingLabConstants.TRACK_NUMBER_LINE_WIDTH - RacingLabConstants.TRACK_NUMBER_LINE_OFFSET,
+      yAxisOffset: RACE_TRACK_NUMBER_LINE_OFFSET,
+      xAxisLength: RACING_LAB_NUMBER_LINE_WIDTH - RACE_TRACK_NUMBER_LINE_OFFSET,
       yAxisLength: 28,
       markerLargeHeight: 30,
       markerSmallHeight: 15
@@ -61,7 +64,7 @@ define( function( require ) {
 
     // rate spinners
     this.rateNode = new SpeedRateNode( this.trackGroup, {
-      left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
+      left: this.numberLineNode.right + URConstants.PANEL_SPACING,
       rateTitle: options.rateTitle,
       pickerColor: options.rateColor,
       pickerPressedColor: options.ratePressedColor
@@ -69,9 +72,9 @@ define( function( require ) {
 
     // car track
     var trackOptions = {
-      trackWidth: RacingLabConstants.TRACK_NUMBER_LINE_WIDTH,
+      trackWidth: RACING_LAB_NUMBER_LINE_WIDTH,
       trackHeight: 100,
-      trackStartOffset: RacingLabConstants.TRACK_NUMBER_LINE_OFFSET,
+      trackStartOffset: RACE_TRACK_NUMBER_LINE_OFFSET,
       timerTitle: options.timerTitle
     };
     trackOptions = ( options.trackOnTop ?

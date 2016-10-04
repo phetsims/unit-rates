@@ -12,7 +12,7 @@ define( function( require ) {
   // modules
   var Challenges = require( 'UNIT_RATES/shopping/model/Challenges' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ShoppingConstants = require( 'UNIT_RATES/common/shopping/ShoppingConstants' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URShoppingModel = require( 'UNIT_RATES/common/shopping/model/URShoppingModel' );
 
@@ -48,7 +48,7 @@ define( function( require ) {
 
       itemArray.forEach( function( item ) {
         var color = ( ( item.countProperty.value === 1 ) ?
-                      ShoppingConstants.UNIT_RATE_CORRECT_PROMPT_COLOR : ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR );
+                      URConstants.UNIT_RATE_CORRECT_PROMPT_COLOR : URConstants.DEFAULT_CORRECT_PROMPT_COLOR );
 
         // Check if there is an existing marker
         var correctCost = ( item.countProperty.value * self.itemRateProperty.value );
@@ -84,7 +84,7 @@ define( function( require ) {
     revertChallengeNumberLineItems: function() {
 
       this.numberLine.forEachMarker( function( marker ) {
-        if ( marker.color === ShoppingConstants.DEFAULT_CORRECT_PROMPT_COLOR ) {
+        if ( marker.color === URConstants.DEFAULT_CORRECT_PROMPT_COLOR ) {
           marker.color = 'black';
         }
       } );

@@ -17,9 +17,12 @@ define( function( require ) {
 
     SCREEN_HORIZONTAL_MARGIN: 15, // screen left/right margin for panels (i.e number line/challenges/shelf)
     SCREEN_VERTICAL_MARGIN: 15, // screen top/bottom panel margin
-    SCREEN_PANEL_SPACING: 12, // space between major panels (i.e. number line/challenges/keypad)
 
-    PANEL_TITLE_FONT: new PhetFont( 14 )   // Font use on all major panels (i.e. accordion boxes)
+    PANEL_SPACING: 12, // space between major panels (i.e. number line/challenges/keypad)
+    PANEL_TITLE_FONT: new PhetFont( 14 ), // Font use on all major panels (i.e. accordion boxes)
+
+    DEFAULT_CORRECT_PROMPT_COLOR: 'rgb( 0, 0, 225 )', // Challenge question color
+    UNIT_RATE_CORRECT_PROMPT_COLOR: 'rgb( 0, 192, 0 )' // Challenge Unit Rate question color
   };
 
   unitRates.register( 'URConstants', URConstants );

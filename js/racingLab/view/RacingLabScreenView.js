@@ -64,7 +64,7 @@ define( function( require ) {
 
     // top track
     this.trackGroup1Node = new TrackGroupNode( model.trackGroup1, blueCarImage, this.keypad, {
-      left: URConstants.SCREEN_PANEL_SPACING,
+      left: URConstants.PANEL_SPACING,
       top: URConstants.SCREEN_VERTICAL_MARGIN,
       numberLineTitle: doubleNumberLine1String,
       rateTitle: rate1String,
@@ -76,7 +76,7 @@ define( function( require ) {
 
     // bottom track
     this.trackGroup2Node = new TrackGroupNode( model.trackGroup2, redCarImage, this.keypad, {
-      left: URConstants.SCREEN_PANEL_SPACING,
+      left: URConstants.PANEL_SPACING,
       top: this.trackGroup1Node.bottom + 5,
       trackOnTop: true,
       numberLineTitle: doubleNumberLine2String,
@@ -92,14 +92,14 @@ define( function( require ) {
       new Image( stopButtonImage, { scale: 0.25 } ),
       new Image( goButtonIconImage, { scale: 0.25 } ), model.runningProperty, {
         right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
-        centerY: this.trackGroup2Node.top - URConstants.SCREEN_PANEL_SPACING / 2,
+        centerY: this.trackGroup2Node.top - URConstants.PANEL_SPACING / 2,
         radius: 45
       } );
     this.addChild( this.goStopButton );
 
     // restart button which moves the car back to the start line. Is only visible when not racing
     this.restartButton = new RectangularPushButton( {
-      right: this.goStopButton.left - URConstants.SCREEN_PANEL_SPACING,
+      right: this.goStopButton.left - URConstants.PANEL_SPACING,
       centerY: this.goStopButton.centerY,
       content: new Image( returnCarButtonImage, { scale: 0.18 } ),
       minWidth: 45,

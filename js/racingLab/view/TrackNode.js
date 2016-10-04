@@ -172,7 +172,7 @@ define( function( require ) {
     // timer
     this.timer = new TimerDisplayNode( {
       centerX: this.finishPoint.x,
-      bottom: this.checkerFlagNode.top - URConstants.SCREEN_PANEL_SPACING / 2,
+      bottom: this.checkerFlagNode.top - URConstants.PANEL_SPACING / 2,
       hiddenTimeText: options.timerTitle
     } );
     childNodes.push( this.timer );

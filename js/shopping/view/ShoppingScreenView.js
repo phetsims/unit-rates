@@ -51,9 +51,9 @@ define( function( require ) {
         self.model.addChallengeItemsToNumberLine();   // add new (i.e. correct unit rate)
         self.numberLineNode.populate();
       };
-      var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING + URConstants.SCREEN_HORIZONTAL_MARGIN );
+      var challengeWidth = this.layoutBounds.maxX - ( this.numberLineNode.right + URConstants.PANEL_SPACING + URConstants.SCREEN_HORIZONTAL_MARGIN );
       this.challengesNode = new ChallengesNode( this.model.challenges, this.keypad, challengeWidth, onChallengePopulate, {
-        left: this.numberLineNode.right + URConstants.SCREEN_PANEL_SPACING,
+        left: this.numberLineNode.right + URConstants.PANEL_SPACING,
         top: this.layoutBounds.top + URConstants.SCREEN_VERTICAL_MARGIN
       } );
       this.addChild( this.challengesNode );
