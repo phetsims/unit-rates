@@ -149,7 +149,7 @@ define( function( require ) {
     // reposition the undo button directly under the marker.
     this.undoEditButtonNode = new RectangularPushButton( {
       visible: false,
-      baseColor: URConstants.DEFAULT_BUTTON_COLOR,
+      baseColor: '#f2f2f2',
       headWidth: 8,
       headHeight: 8,
       tailWidth: 5,

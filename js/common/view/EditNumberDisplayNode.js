@@ -75,7 +75,7 @@ define( function( require ) {
 
     var editButtonOptions = {
       content: new Image( editButtonImage, { scale: 0.2 } ),
-      baseColor: URConstants.EDIT_BUTTON_COLOR,
+      baseColor: 'yellow',
       pickable: true
     };
 

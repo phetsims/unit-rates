@@ -154,7 +154,7 @@ define( function( require ) {
       var refreshButtonNode = new RectangularPushButton( {
         right: this.contentNode.right - 8,
         top: questionNode3.bottom + 2,
-        baseColor: URConstants.DEFAULT_BUTTON_COLOR,
+        baseColor: '#f2f2f2',
         content: new Image( refreshButtonImage, { scale: 0.25 } ),
         listener: function() {
           self.removeAllContent();

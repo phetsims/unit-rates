@@ -118,7 +118,7 @@ define( function( require ) {
     var scaleRemoveButtonNode = new RectangularPushButton( {
       right: this.scaleNode.left - URConstants.SCREEN_PANEL_SPACING,
       bottom: this.scaleNode.bottom,
-      baseColor: URConstants.DEFAULT_BUTTON_COLOR,
+      baseColor: '#f2f2f2',
       content: new Image( removeButtonImage, { scale: 0.25 } ),
       listener: function() {
 
