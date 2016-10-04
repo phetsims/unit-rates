@@ -114,7 +114,7 @@ define( function( require ) {
 
     MovableNode.call( this, marker, position, options );
 
-    // change appearance on user input
+    // @private change appearance on user input
     this.qnaMultilink = Property.multilink( [ this.marker.topQnA.valueProperty, this.marker.bottomQnA.valueProperty, this.marker.outOfRangeProperty ],
       function( topProperty, bottomProperty, outOfRangeProperty ) {
         self.checkProperties();
