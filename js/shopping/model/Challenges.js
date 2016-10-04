@@ -416,9 +416,7 @@ define( function( require ) {
           assert && assert( false, 'prompt data not available for item type' );
       }
 
-      var item = new Item( itemType, count );
-
-      return item;
+      return new Item( itemType, count );
     },
 
     /**
