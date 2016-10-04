@@ -49,6 +49,7 @@ define( function( require ) {
 
     /**
      * Called from constructor to give subclass a chance to add UI elements at a specific point in the constructor
+     *
      * @protected
      */
     addSubclassScreenNodes: function() {
@@ -62,6 +63,7 @@ define( function( require ) {
 
     /**
      * Called from constructor to give subclass a chance to add UI elements at a specific point in the constructor
+     *
      * @protected
      */
     onNumberLineEraseCallback: function() {
@@ -71,6 +73,7 @@ define( function( require ) {
 
     /**
      * TODO document, https://github.com/phetsims/unit-rates/issues/64
+     *
      * @protected
      */
     refreshNumberLine: function() {
@@ -80,6 +83,7 @@ define( function( require ) {
 
     /**
      * Called when the user selects the sim reset button
+     *
      * @override @protected
      */
     resetAll: function() {
@@ -91,6 +95,7 @@ define( function( require ) {
 
     /**
      * Called when the user selects a new scene
+     *
      * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
      * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
      * @override @protected

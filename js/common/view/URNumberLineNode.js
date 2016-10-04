@@ -214,6 +214,7 @@ define( function( require ) {
     /**
      * Sets length of the number line in pixels. The idea here was that you could have the full number line area defined
      * by the bounds (this.graphBounds), but you could have shorter X-axis lengths contained within those bounds
+     *
      * @param {number} length
      * @public
      */
@@ -255,6 +256,7 @@ define( function( require ) {
 
     /**
      * Sets the top & bottom axis labels (on the far right of the number line)
+     *
      * @param {string} topLabel
      * @param {string} bottomLabel
      * @public
@@ -265,6 +267,7 @@ define( function( require ) {
     },
 
     /**
+     * TODO document this
      *
      * @public
      */
@@ -277,6 +280,7 @@ define( function( require ) {
 
     /**
      * Adds a marker to the number line
+     *
      * @param {URNumberLineMarkerNode} markerNode
      * @public
      */
@@ -286,6 +290,7 @@ define( function( require ) {
 
     /**
      * Adds a marker to the number line
+     *
      * @param {URNumberLineMarkerNode} markerNode
      * @public
      */
@@ -297,6 +302,7 @@ define( function( require ) {
 
     /**
      * Removes all marker nodes from the number line
+     *
      * @public
      */
     removeAllMarkerNodes: function() {
@@ -314,6 +320,7 @@ define( function( require ) {
 
     /**
      * Gets all the markers that are currently on the number line
+     *
      * @returns {Array}.<URNumberLineMarkerNode>
      * @public
      */
@@ -324,6 +331,7 @@ define( function( require ) {
     /**
      * Applies a callback function to each marker in the number line
      * Note: Adding or deleting markers here is not allowed!
+     *
      * @param callback function(item)
      * @public
      */
@@ -334,6 +342,7 @@ define( function( require ) {
     /**
      * Adds a new editable marker to the number line (if one doesn't already exist). Editable markers have buttons
      * which allow the edit boxes to be linked to the shared keypad.
+     *
      * @protected
      */
     addEditMarkerNode: function() {
@@ -361,6 +370,7 @@ define( function( require ) {
 
     /**
      * Removes the top marker in the undo stack from the number line.
+     *
      * @private
      */
     removeEditMarker: function() {
@@ -383,6 +393,7 @@ define( function( require ) {
 
     /**
      * Creates a new marker node based on the specified marker attributes
+     *
      * @param {URNumberLineMarker} marker - the marker item
      * @return {URNumberLineMarkerNode}
      * @private
@@ -419,6 +430,7 @@ define( function( require ) {
 
     /**
      * This does a few things; manages the undo stack, positions it on the number line & removes duplicates
+     *
      * @param {URNumberLineMarkerNode} markerNode
      * @private
      */
@@ -480,6 +492,7 @@ define( function( require ) {
 
     /**
      * Handles the undo button visibility as well as it's location - to the far left or under a specific marker.
+     *
      * @private
      */
     updateUndoButton: function() {
@@ -507,10 +520,7 @@ define( function( require ) {
                                           ( this.undoEditButtonNode.centerX <= this.xAxisLength - this.axisArrowSize ) );
     },
 
-    /**
-     * Resets the number line to the default state
-     * @public
-     */
+    // @public
     reset: function() {
       this.expandedProperty.reset();
       this.removeAllMarkerNodes();

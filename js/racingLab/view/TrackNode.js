@@ -201,6 +201,7 @@ define( function( require ) {
 
     /**
      * Sets track shapes (solid & dashed grey), positions the interval markers & calculates the finish mileage
+     *
      * @public
      */
     updateTrack: function() {
@@ -243,6 +244,7 @@ define( function( require ) {
 
     /**
      * Positions the car on teh track and sets the associated timer value
+     *
      * @param {number} elapsedTime - the elapsed time in hours
      * @public
      */
@@ -259,6 +261,7 @@ define( function( require ) {
 
     /**
      * Resets the track length to the initial size
+     *
      * @protected
      */
     resetTrack: function() {
@@ -267,10 +270,7 @@ define( function( require ) {
       this.endPoint = new Vector2( this.trackWidth, this.trackOrigin.y );
     },
 
-    /**
-     * Resets all nodes back to their initial state
-     * @public
-     */
+    // @public
     reset: function() {
       this.timer.reset();
       this.resetTrack();

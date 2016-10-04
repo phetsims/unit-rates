@@ -37,7 +37,9 @@ define( function( require ) {
   return inherit( URShoppingModel, ShoppingModel, {
 
     /**
-     * Adds all correctly answered challenge questions to the number line as items (Note: the number line will ignore duplicates)
+     * Adds all correctly answered challenge questions to the number line as items
+     * (Note: the number line will ignore duplicates)
+     *
      * @protected
      */
     addChallengeItemsToNumberLine: function() {
@@ -79,6 +81,7 @@ define( function( require ) {
 
     /**
      * Resets all items representing Challenge answers from the number line. Makes them regular/black markers
+     *
      * @protected
      */
     revertChallengeNumberLineItems: function() {
@@ -94,7 +97,7 @@ define( function( require ) {
       }
     },
 
-    // Resets all model elements
+    // @public
     reset: function() {
       this.challenges.reset();
       URShoppingModel.prototype.reset.call( this );

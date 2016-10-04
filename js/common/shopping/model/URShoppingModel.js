@@ -62,7 +62,9 @@ define( function( require ) {
 
     /**
      * create rate entries for each item type (i.e. apples, carrots, etc..)
-     * @public @override
+     *
+     * @public
+     * @override
      */
     initializeRateMap: function() {
       var self = this;
@@ -75,6 +77,7 @@ define( function( require ) {
 
     /**
      * Removes an item from the shelf and adds it to the scale
+     *
      * @param {Item} item
      * @public
      */
@@ -87,6 +90,7 @@ define( function( require ) {
 
     /**
      * Removes an item from the scale and adds it to the shelf
+     *
      * @param {Item} item
      * @public
      */
@@ -99,6 +103,7 @@ define( function( require ) {
 
     /**
      * Adds all items on the scale to the number line (Note: the number line will ignore duplicates)
+     *
      * @public
      */
     addScaleItemsToNumberLine: function() {
@@ -114,7 +119,7 @@ define( function( require ) {
       }
     },
 
-    // @public Resets all model elements
+    // @public
     reset: function() {
       this.shelf.reset();
       this.scale.reset();

@@ -172,6 +172,7 @@ define( function( require ) {
 
     /**
      * Called from the constructor to allow for subclassed to add additional nodes/properties to the screen
+     *
      * @protected
      */
     constructScreenNodes: function() {
@@ -180,6 +181,7 @@ define( function( require ) {
 
     /**
      * Call when the user selected a new scene
+     *
      * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
      * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
      * @protected
@@ -190,6 +192,7 @@ define( function( require ) {
 
     /**
      * Called before an item is dragged
+     *
      * @param {Node} itemNode - the item being moved.
      * @protected
      */
@@ -200,6 +203,7 @@ define( function( require ) {
      * Called after an item is dropped. Updates the model based on where the item is on on the screen - i.e. on the
      * scale or shelf or in no-man's land. Called on scene changes or when an item's node (i.e. individual items or
      * bags) is moved to a new location
+     *
      * @param {Node} itemNode - the item being moved.
      * @protected
      */
@@ -251,6 +255,8 @@ define( function( require ) {
     },
 
     /**
+     * TODO document this
+     *
      * @protected
      */
     hideKeypad: function() {
@@ -261,6 +267,7 @@ define( function( require ) {
 
     /**
      * Removed all movable items from the screen
+     *
      * @protected
      */
     removeAllItems: function() {
@@ -275,6 +282,7 @@ define( function( require ) {
 
     /**
      * Resize the keypad close area to match that of the browser window.
+     *
      * @protected
      */
     onResize: function() {
@@ -284,6 +292,7 @@ define( function( require ) {
 
     /**
      * Called when the user selects the sim reset button
+     *
      * @protected
      */
     resetAll: function() {

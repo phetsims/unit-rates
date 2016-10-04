@@ -112,6 +112,7 @@ define( function( require ) {
 
     /**
      * Adds listeners for drag start & end
+     *
      * @param {function} moveStartCallback - function called when item drag starts
      * @param {function} moveCallback - function called when item is dragged
      * @param {function} moveEndCallback - function called when item drag ends
@@ -135,6 +136,7 @@ define( function( require ) {
 
     /**
      * Moves the node back to the position before the last drag
+     *
      * @public
      */
     restoreLastPosition: function() {

@@ -112,6 +112,7 @@ define( function( require ) {
 
     /**
      * Sets visible & public property to false
+     *
      * @public
      */
     hide: function() {
@@ -121,6 +122,7 @@ define( function( require ) {
 
     /**
      * Sets visible & public property to true
+     *
      * @public
      */
     show: function() {
@@ -130,6 +132,7 @@ define( function( require ) {
 
     /**
      * Callback for the keypad string change
+     *
      * @param {string} digitString - called when the keypad listener changes
      * @public
      */
@@ -141,6 +144,7 @@ define( function( require ) {
     /**
      * Assigns a set of listeners to the keypad, there is only one listener assigned at any given time. That listener
      * is considered to have the focus from the keypad
+     *
      * @param {function()} onSubmit - called when the enter/check button is pressed
      * @param {function()} onListenerChanged - called when the keypad listener changes
      * @public
@@ -175,6 +179,7 @@ define( function( require ) {
 
     /**
      * Removes the currently set listener
+     *
      * @public
      */
     clearListeners: function() {
@@ -195,6 +200,7 @@ define( function( require ) {
 
     /**
      * Sets the current keypad value
+     *
      * @param {Number} value - the value to set the keypad to
      * @public
      */
@@ -204,6 +210,7 @@ define( function( require ) {
 
     /**
      * Gets the current keypad value
+     *
      * @returns {Number}
      * @public
      */
@@ -213,6 +220,7 @@ define( function( require ) {
 
     /**
      * Clear the keypad value
+     *
      * @public
      */
     clear: function() {

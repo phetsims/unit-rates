@@ -39,7 +39,6 @@ define( function( require ) {
   var FONT = new PhetFont( 18 );
 
   /**
-   *
    * @param {SceneMode} sceneMode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
    * @param {Property.<ItemData>} itemDataProperty - the currently selected item
    * @param {Node} parentNode - the parent node of the combo box
@@ -119,6 +118,7 @@ define( function( require ) {
 
     /**
      * Selects the current scene
+     *
      * @param {SceneMode} sceneMode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
      * TODO visibility annotation, https://github.com/phetsims/unit-rates/issues/63
      */
@@ -141,6 +141,7 @@ define( function( require ) {
 
     /**
      * Creates one row or entry in the menu consisting of an icon and a label
+     *
      * @param {string} itemString - the item name
      * @param {Node} itemNode - the item icon
      * @returns {HBox}

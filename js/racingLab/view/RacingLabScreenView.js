@@ -186,6 +186,7 @@ define( function( require ) {
 
     /**
      * Hide the keypad and clear it's listeners
+     *
      * @protected
      */
     hideKeypad: function() {
@@ -196,6 +197,7 @@ define( function( require ) {
 
     /**
      * Called when the user selects the sim reset button
+     *
      * @protected
      */
     restart: function() {
@@ -204,6 +206,7 @@ define( function( require ) {
 
     /**
      * Called when the user selects the sim reset button
+     *
      * @protected
      */
     resetAll: function() {
@@ -215,6 +218,7 @@ define( function( require ) {
 
     /**
      * Resize the keypad's rectangular pick area to match the full screen of the browser.
+     *
      * @protected
      */
     onResize: function() {

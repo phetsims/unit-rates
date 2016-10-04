@@ -35,16 +35,16 @@ define( function( require ) {
 
     var self = this;
 
-    // @public (read-only) - all
-    this.item = item;                                 // {Item} associated with this question
-    this.questionString = options.questionString;               // {string} question to be asked
-    this.unitString = options.unitString;                   // {string} unit
-    this.decimalPlaces = options.decimalPlaces;                // the number of decimals to use when evaluating correctness
-    this.answerValue = answerValue;                          // {number} the correct answer value
-    this.answerText = answerText;                           // {Text} the correct answer text
+    // @public (read-only)
+    this.item = item; // {Item} associated with this question
+    this.questionString = options.questionString; // {string} question to be asked
+    this.unitString = options.unitString; // {string} unit
+    this.decimalPlaces = options.decimalPlaces; // the number of decimals to use when evaluating correctness
+    this.answerValue = answerValue; // {number} the correct answer value
+    this.answerText = answerText; // {Text} the correct answer text
     this.valueProperty = new Property( DEFAULT_ANSWER_VALUE ); // user's answer input property
 
-    // @protected - {function}
+    // @protected {function}
     this.onCorrectAnswerCallback = options.onCorrectAnswerCallback;
 
     // make callback on correct answer
@@ -62,7 +62,8 @@ define( function( require ) {
   return inherit( Object, QuestionAnswer, {
 
     /**
-     * Sets the answer to correct or not
+     * Sets the answer value
+     *
      * @param {number} answerValue - the correct answer value
      * @public
      */
@@ -72,6 +73,7 @@ define( function( require ) {
 
     /**
      * Sets the answer to correct or not
+     *
      * @param {boolean} state
      * @public
      */
@@ -81,6 +83,7 @@ define( function( require ) {
 
     /**
      * Convenience function telling if the current user input is a valid value
+     *
      * @returns {boolean}
      * @public
      */
@@ -90,6 +93,7 @@ define( function( require ) {
 
     /**
      * Convenience function telling if the current user input matches the correct value
+     *
      * @returns {boolean}
      * @public
      */
@@ -100,6 +104,7 @@ define( function( require ) {
 
     /**
      * Returns the number of decimal places in the current answer value (i.e. 1.1 = 1, 1.33 = 2, 1.234 = 3)
+     *
      * @return {number}
      * @public
      */
@@ -124,10 +129,7 @@ define( function( require ) {
       return p;
     },
 
-    /**
-     * Reset to the initial state
-     * @public
-     */
+    // @public
     reset: function() {
       this.valueProperty.reset();
     },

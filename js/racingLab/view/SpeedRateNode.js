@@ -139,6 +139,7 @@ define( function( require ) {
 
     /**
      * Called when the user changes the miles or hours, updates the current unit rate
+     *
      * @param {number} miles
      * @param {number} hours
      * @private
@@ -147,10 +148,7 @@ define( function( require ) {
       this.groupModel.rateProperty.value = miles / hours;
     },
 
-    /**
-     * Resets the node to it's initial state
-     * @public
-     */
+    // @public
     reset: function() {
       this.expandedProperty.reset();
     }

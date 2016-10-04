@@ -37,11 +37,11 @@ define( function( require ) {
 
     Movable.call( this, options );
 
-    // @public - all
+    // @public
     this.topQnA = new QuestionAnswer( this, correctTopValue, correctTopValue );
     this.bottomQnA = new QuestionAnswer( this, correctBottomValue, correctBottomValue );
 
-    // @protected (read-only) - all
+    // @protected (read-only)
     this.rateProperty = rateProperty;
     this.color = options.color;
     this.topDecimalPlaces = options.topDecimalPlaces;
@@ -49,7 +49,7 @@ define( function( require ) {
     this.topHighPrecision = options.topHighPrecision;
     this.bottomHighPrecision = options.bottomHighPrecision;
 
-    // @public - all
+    // @public
     this.addProperty( 'outOfRange', false );
     this.addProperty( 'highPrecision', false );
     this.addProperty( 'editable', options.editable );
@@ -79,6 +79,7 @@ define( function( require ) {
 
     /**
      * On incorrect top values, assign new correct bottom answers
+     *
      * @param {number} value
      * @param {number} oldValue
      * @public
@@ -94,6 +95,7 @@ define( function( require ) {
 
     /**
      * On incorrect bottom values, assign new correct top answers
+     *
      * @param {number} value
      * @param {number} oldValue
      * @public
@@ -109,6 +111,7 @@ define( function( require ) {
 
     /**
      * Changes the top & bottom correct answers when the unit rate changes
+     *
      * @param {number} rate
      * @param {number} oldRate
      * @public
@@ -125,6 +128,7 @@ define( function( require ) {
 
     /**
      * returns the current top value
+     *
      * @returns {number}
      * @public
      */
@@ -134,6 +138,7 @@ define( function( require ) {
 
     /**
      * returns the current bottom value
+     *
      * @returns {number}
      * @public
      */
@@ -143,6 +148,7 @@ define( function( require ) {
 
     /**
      * Checks both the top & bottom answers for correctness
+     *
      * @returns {boolean}
      * @public
      */
@@ -162,6 +168,7 @@ define( function( require ) {
     /**
      * Tells whether a marker is 'removable'. Markers which are 'removable' are those which
      * are either still editable (i.e. not locked in) or those which have fractional values past a specified precision.
+     *
      * @returns {boolean}
      * @private
      */
@@ -169,10 +176,7 @@ define( function( require ) {
       return ( this.editableProperty.value || this.highPrecisionProperty.value );
     },
 
-    /**
-     * Resets the properties and answer to the default (unanswered) state
-     * @public
-     */
+    // @public
     reset: function() {
 
       if ( this.topQnA ) {

@@ -25,6 +25,7 @@ define( function( require ) {
     // @private - the collection of different arrays of items
     this.itemsMap = {};  //  (i.e.  { 'apples' : [ item1, item2, .. itemN ], 'carrots': [] })
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     // create empty item arrays
     this.initializeArrays();
 
@@ -37,6 +38,7 @@ define( function( require ) {
 
     /**
      * Creates empty arrays for all item types (i.e. apples, carrots, red candy, etc..)
+     *
      * @protected
      */
     initializeArrays: function() {
@@ -48,6 +50,7 @@ define( function( require ) {
 
     /**
      * Creates a new item & adds it to the types specific array
+     *
      * @param {ItemData} data - contains the type of item to create (FIXME: refactor to just pass type)
      * @param {number} count
      * @return {Item}
@@ -61,6 +64,7 @@ define( function( require ) {
 
     /**
      * Adds an existing item to the type specific array
+     *
      * @param {Item} item
      * @public
      */
@@ -73,6 +77,7 @@ define( function( require ) {
 
     /**
      * Removes an item from the type specific array
+     *
      * @param {Item} item
      * @public
      */
@@ -83,6 +88,7 @@ define( function( require ) {
 
     /**
      * Searches the type specific array for a matching item. An item is considered if both the type & count match.
+     *
      * @param {Item} item
      * @return {Item} - returns the matching item or null
      * @public
@@ -103,6 +109,7 @@ define( function( require ) {
 
     /**
      * Adds addition/removal listeners to all type specific arrays
+     *
      * @param {function( Item, ObservableArray )} itemAddedListener
      * @param {function( Item, ObservableArray )} itemRemovedListener
      * @public
@@ -116,6 +123,7 @@ define( function( require ) {
 
     /**
      * Gets the number of items in a type specific array.
+     *
      * @param {string} type
      * @returns {number} - Note: this returns the sum of item.counts, not the number of items in the array
      * @protected
@@ -133,6 +141,7 @@ define( function( require ) {
 
     /**
      * Gets the collection for a specific type, or create an empty collection if none exists
+     *
      * @param {string} type
      * @returns {ObservableArray}
      * @protected
@@ -148,6 +157,7 @@ define( function( require ) {
 
     /**
      * Removes all items from the collection for a specific type
+     *
      * @param {string} type
      * @public
      */
@@ -162,6 +172,7 @@ define( function( require ) {
 
     /**
      * Resets the collection for a specific type to the original state
+     *
      * @param {string} type
      * @public
      */
@@ -176,6 +187,7 @@ define( function( require ) {
 
     /**
      * Resets the collection to the default state
+     *
      * @public
      */
     reset: function() {
@@ -184,11 +196,12 @@ define( function( require ) {
       }
     },
 
-    // This is currently never called
+    //TODO This is currently never called
+    // @public
     dispose: function() {
       for ( var type in this.itemsMap ) {
         var itemArray = this.itemsMap[ type ];
-        //itemArray.removeAllListeners(); // FIXME: this doesn't exist but would be nice if it did (similar to Property.unlinkAll() )
+        //itemArray.removeAllListeners(); //TODO fix me: this doesn't exist but would be nice if it did (similar to Property.unlinkAll() )
         itemArray.dispose();
       }
     }

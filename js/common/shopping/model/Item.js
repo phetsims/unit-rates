@@ -35,6 +35,7 @@ define( function( require ) {
 
     /**
      * Convenience function
+     *
      * @param {Item} item
      * @returns {boolean}
      * @public
@@ -45,6 +46,7 @@ define( function( require ) {
 
     /**
      * Convenience function
+     *
      * @returns {boolean}
      * @public
      */
@@ -55,6 +57,7 @@ define( function( require ) {
 
     /**
      * Convenience function
+     *
      * @returns {boolean}
      * @public
      */
@@ -65,6 +68,7 @@ define( function( require ) {
 
     /**
      * Convenience function
+     *
      * @returns {boolean}
      * @public
      */

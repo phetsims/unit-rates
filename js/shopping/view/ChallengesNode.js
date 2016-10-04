@@ -87,6 +87,7 @@ define( function( require ) {
 
     /**
      * Creates the questions and answer nodes for all challenge questions
+     *
      * @public
      */
     populate: function() {
@@ -170,6 +171,8 @@ define( function( require ) {
     },
 
     /**
+     * TODO document this
+     *
      * @protected
      */
     removeAllContent: function() {
@@ -186,10 +189,7 @@ define( function( require ) {
       this.contentNode.removeAllChildren();
     },
 
-    /**
-     * Resets the challenges questions to all unanswered
-     * @public
-     */
+    // @public
     reset: function() {
       this.expandedProperty.reset();
       this.removeAllContent();

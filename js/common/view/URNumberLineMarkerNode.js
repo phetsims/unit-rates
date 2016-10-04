@@ -129,6 +129,7 @@ define( function( require ) {
 
     /**
      * Changes color/size/other attributes based on various properties
+     *
      * @protected
      */
     checkProperties: function() {

@@ -59,6 +59,7 @@ define( function( require ) {
 
     /**
      * Returns if the model is in the start position or not
+     *
      * @return {boolean}
      * @public
      */
@@ -68,6 +69,7 @@ define( function( require ) {
 
     /**
      * Simulation time step
+     *
      * {number} dt - time step
      * @public
      */
@@ -80,6 +82,7 @@ define( function( require ) {
 
     /**
      * Restarts both tracks - car at start line, elapsed time = 0.
+     *
      * @public
      */
     restart: function() {
@@ -89,10 +92,7 @@ define( function( require ) {
       this.elapsedTimeProperty.reset();
     },
 
-    /**
-     * Resets the model to it's initial state
-     * @public
-     */
+    // @public
     reset: function() {
       PropertySet.prototype.reset.call( this );
       this.trackGroup1.reset();

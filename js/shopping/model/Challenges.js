@@ -74,6 +74,7 @@ define( function( require ) {
 
     /**
      * Retrieves the question for a specific index of the current item type
+     *
      * @returns {QuestionAnswer}
      * @protected
      */
@@ -90,6 +91,7 @@ define( function( require ) {
 
     /**
      * Retrieves the question for a specific index of the current item type
+     *
      * @returns {QuestionAnswer}
      * @public
      */
@@ -104,6 +106,7 @@ define( function( require ) {
 
     /**
      * Populates the initial questions/values for all item types (i.e. apples, carrots, red candy)
+     *
      * @public
      */
     populate: function() {
@@ -129,6 +132,7 @@ define( function( require ) {
     /**
      * Re-populates the initial questions/values for the current item type (i.e. apples, carrots, red candy). This
      * also currently selects a random question set different than the one previously set.
+     *
      * @public
      */
     refresh: function() {
@@ -171,6 +175,7 @@ define( function( require ) {
     /**
      * Generates a set (currently 4) of challenge questions for a specific item type. Fruit & produce are the same type
      * of questions but candy is different.
+     *
      * @param {ItemData} itemData - the type and rate used to generate questions
      * @private
      */
@@ -288,6 +293,7 @@ define( function( require ) {
 
     /**
      * Retrieves the correct version of name for an item from it's type
+     *
      * @param {Item.type} type - the item type (i.e. apples, carrots, red candy)
      * @param {boolean} plural
      * @param {boolean} capitalize
@@ -343,6 +349,7 @@ define( function( require ) {
 
     /**
      * Gets the items associated with all the correctly answered challenge questions
+     *
      * @return {Array.<QuestionAnswer>}
      * @public
      */
@@ -362,6 +369,7 @@ define( function( require ) {
 
     /**
      * Generate an item with a count set from the ChallengeData
+     *
      * @param {string} itemType
      * @param {number} setNumber - set (0|1|2|3)
      * @param {number} promptNumber - prompt (0|1|2)
@@ -419,10 +427,7 @@ define( function( require ) {
       return new Item( itemType, count );
     },
 
-    /**
-     * Resets the challenge data to the default state (all unanswered)
-     * @public
-     */
+    // @public
     reset: function() {
 
       for ( var key in ItemData ) {

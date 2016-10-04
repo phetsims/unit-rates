@@ -63,7 +63,9 @@ define( function( require ) {
 
     /**
      * create type marker arrays, one for each type (i.e. apples, carrots, etc..)
-     * @public @override
+     *
+     * @public
+     * @override
      */
     initialize: function() {
       for ( var key in ItemData ) {
@@ -73,7 +75,7 @@ define( function( require ) {
     },
 
     /**
-     *
+     * TODO document
      * @protected
      */
     getMaxUnit: function( itemType ) {
@@ -124,7 +126,7 @@ define( function( require ) {
       return maxUnits;
     },
 
-    // Resets number line
+    // @public
     reset: function() {
 
       URNumberLine.prototype.reset.call( this );

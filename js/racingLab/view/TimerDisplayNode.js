@@ -92,10 +92,7 @@ define( function( require ) {
 
   return inherit( Panel, TimerDisplayNode, {
 
-    /**
-     * Resets the node to it default
-     * @public
-     */
+    // @public
     reset: function() {
       this.showTimeProperty.reset();
     }

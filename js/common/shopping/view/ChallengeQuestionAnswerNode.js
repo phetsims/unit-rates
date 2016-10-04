@@ -134,6 +134,7 @@ define( function( require ) {
 
     /**
      * Changes various color/visibility attributes based on the users answer
+     *
      * @protected
      */
     checkAnswer: function() {

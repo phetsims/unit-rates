@@ -75,16 +75,14 @@ define( function( require ) {
 
     /**
      * Resets the finished flag for the track
+     *
      * @public
      */
     restart: function() {
       this.carFinishedProperty.reset();
     },
 
-    /**
-     * Resets the model to it's initial state
-     * @public
-     */
+    // @public
     reset: function() {
       this.numberline.reset();
       this.milesProperty.reset();

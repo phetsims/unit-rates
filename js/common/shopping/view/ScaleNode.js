@@ -251,6 +251,7 @@ define( function( require ) {
 
     /**
      * Checks if an area (bounds) is in/intersects a droppable location on the scale
+     *
      * @param {Bounds2} bounds - parent (layer) coordinates
      * @return {boolean}
      * @public
@@ -264,6 +265,7 @@ define( function( require ) {
     /**
      * Moves any out of place nodes back into a stacked positions. Nodes will slide from right to left, and fall
      * from top to bottom to fill in and vacant spaces.
+     *
      * @public
      */
     adjustItemPositions: function( animate ) {
@@ -341,6 +343,7 @@ define( function( require ) {
 
     /**
      * Creates nodes for each item in the model
+     *
      * @public
      */
     populate: function() {
@@ -389,6 +392,7 @@ define( function( require ) {
 
     /**
      * Reset the scale node to its initial state (for the currently selected item type
+     *
      * @public
      */
     resetCurrentItem: function() {
@@ -397,6 +401,7 @@ define( function( require ) {
 
     /**
      * Reset the scale node to its initial state (all item types)
+     *
      * @public
      */
     reset: function() {

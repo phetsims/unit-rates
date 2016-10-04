@@ -199,6 +199,7 @@ define( function( require ) {
 
     /**
      * Resets the challenges questions to all unanswered
+     *
      * @public
      */
     reset: function() {
@@ -213,6 +214,7 @@ define( function( require ) {
 
     /**
      * Called when the user selected a new item type (i.e. 'apples', 'carrots', 'red candy')
+     *
      * @param {string} itemType - the currently selected item type
      * @param {string} oldType - the previously selected item type
      * @private
@@ -249,6 +251,7 @@ define( function( require ) {
     /**
      * Called when the user changes the total cost or item count
      * Changes the unit rate for the item currently used in the sim
+     *
      * @param {number} cost - total cost
      * @param {number}count - number of items
      * @private

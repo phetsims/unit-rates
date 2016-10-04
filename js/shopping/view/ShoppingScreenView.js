@@ -37,6 +37,7 @@ define( function( require ) {
 
     /**
      * Called from constructor to give subclass a chance to add UI elements at a specific point in the constructor
+     *
      * @protected
      */
     addSubclassScreenNodes: function() {
@@ -82,6 +83,7 @@ define( function( require ) {
 
     /**
      * TODO document, https://github.com/phetsims/unit-rates/issues/64
+     *
      * @protected
      */
     onNumberLineEraseCallback: function() {
@@ -92,6 +94,7 @@ define( function( require ) {
 
     /**
      * TODO document, https://github.com/phetsims/unit-rates/issues/64
+     *
      * @protected
      */
     onChallengeCallback: function() {
@@ -101,6 +104,7 @@ define( function( require ) {
 
     /**
      * Called when the user selects the sim reset button
+     *
      * @override
      * @protected
      */
@@ -116,7 +120,8 @@ define( function( require ) {
     },
 
     /**
-     * Call when the user selected a new scene (i.e. '1', '2', '3')
+     * Call when the user selected a new scene
+     *
      * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
      * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
      * @override
@@ -150,6 +155,7 @@ define( function( require ) {
 
     /**
      * Called when the user selected a new item type (i.e. 'apples', 'carrots', 'red candy')
+     *
      * @param {Property.<SceneMode>} sceneMode - indicates the scene type
      * @param {Property.<ItemData>} fruitItemData - the item data for the selected fruit item
      * @param {Property.<ItemData>} produceItemData - the item data for the selected produce item

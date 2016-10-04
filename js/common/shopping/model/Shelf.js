@@ -37,6 +37,7 @@ define( function( require ) {
 
     /**
      * Populates the shelf with the initial items counts for all item types
+     *
      * @protected
      */
     populate: function() {
@@ -50,6 +51,7 @@ define( function( require ) {
 
     /**
      * Populates the shelf with the initial items counts for the specified item type
+     *
      * @param {string} itemType - this will be a <type> from ItemData
      * @private
      */
@@ -136,6 +138,7 @@ define( function( require ) {
 
     /**
      * Reset the current item to it's default - basically repopulating the shelf with the original item counts
+     *
      * @public
      */
     resetCurrentItem: function() {
@@ -143,10 +146,7 @@ define( function( require ) {
       this.populateItemType( this.itemTypeProperty.value );
     },
 
-    /**
-     * Resets the self to it's default state - repopulating all items
-     * @public
-     */
+    // @public
     reset: function() {
       ItemCollection.prototype.reset.call( this );
       this.populate();

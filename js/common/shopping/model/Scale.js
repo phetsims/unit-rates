@@ -53,6 +53,7 @@ define( function( require ) {
 
     /**
      * Add local listener for item additions/removals. This is only needed on initialization.
+     *
      * @protected
      */
     addArrayListeners: function() {
@@ -71,8 +72,10 @@ define( function( require ) {
 
     /**
      * Returns the total number of items on the scale for the current item type
+     *
      * @return {number}
-     * @override @public
+     * @override
+     * @public
      */
     getItemCount: function() {
       return this.getNumberOfItemsWithType( this.itemTypeProperty.value );
@@ -81,8 +84,10 @@ define( function( require ) {
     /**
      * Adds an item to the type specific array
      * Note: fruit types are a special case, they get expanded into individual items
+     *
      * @param {Item} item
-     * @override @public
+     * @override
+     * @public
      */
     addItem: function( item ) {
 
@@ -110,6 +115,7 @@ define( function( require ) {
 
     /**
      * Resets the current item type - basically removes all items of the current type from the scale
+     *
      * @public
      */
     resetCurrentItem: function() {
@@ -118,6 +124,7 @@ define( function( require ) {
 
     /**
      * Recalculates the cost and weight of the items on currently on the scale
+     *
      * @protected
      */
     updateScale: function() {
@@ -140,10 +147,7 @@ define( function( require ) {
       self.weightProperty.value = weight;
     },
 
-    /**
-     * Reset the scale to the default state.
-     * @public
-     */
+    // public
     reset: function() {
       ItemCollection.prototype.reset.call( this );
       this.costProperty.reset();

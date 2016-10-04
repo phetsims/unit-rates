@@ -123,6 +123,7 @@ define( function( require ) {
 
     /**
      * Sets the visibility for the number display
+     *
      * @param {boolean} visible
      * @public
      */
@@ -133,6 +134,7 @@ define( function( require ) {
 
     /**
      * Sets the font for the number display
+     *
      * @param {Font} font
      * @public
      */
@@ -142,6 +144,7 @@ define( function( require ) {
 
     /**
      * Sets the current text color
+     *
      * @param {Color|String} color
      * @public
      */
@@ -152,6 +155,7 @@ define( function( require ) {
 
     /**
      * Sets the current border color
+     *
      * @param {Color|String} color
      * @public
      */
@@ -162,6 +166,7 @@ define( function( require ) {
 
     /**
      * Sets the current background color
+     *
      * @param {Color|String} color
      * @public
      */
@@ -172,6 +177,7 @@ define( function( require ) {
 
     /**
      * Sets the visibility for the edit button
+     *
      * @param {boolean} visible
      * @public
      */
@@ -181,6 +187,7 @@ define( function( require ) {
 
     /**
      * Makes the keypad visible, links up it's listeners & changes the NumberDisplay border color
+     *
      * @public
      */
     showKeypad: function() {
@@ -212,6 +219,7 @@ define( function( require ) {
 
     /**
      * Hides the keypad
+     *
      * @public
      */
     hideKeypad: function() {
@@ -220,6 +228,7 @@ define( function( require ) {
 
     /**
      * Returns the current keypad focus state
+     *
      * @returns {boolean}
      * @public
      */

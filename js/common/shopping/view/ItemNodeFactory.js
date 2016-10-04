@@ -46,6 +46,7 @@ define( function( require ) {
 
     /**
      * Creates a node of a specified size for specified item
+     *
      * @param {ItemData} item - the item to create (i.e. apple, carrot)
      * @param {Object} [options]
      * @returns {MovableNode}

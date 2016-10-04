@@ -30,8 +30,9 @@ define( function( require ) {
       markerBottomHighPrecision: 2     // # decimals which makes a marker a 'high precision', potentially display differently
     }, options );
 
-    // @public (read-write)
     PropertySet.call( this, {
+
+      // @public
       markers: [],
       markerTopDecimals: options.markerTopDecimals,
       markerBottomDecimals: options.markerBottomDecimals,
@@ -39,6 +40,7 @@ define( function( require ) {
       markerBottomHighPrecision: options.markerBottomHighPrecision
     } );
 
+    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.rateProperty = rateProperty;
     this.topMaxProperty = topMaxProperty;
     this.bottomMaxProperty = bottomMaxProperty;
@@ -50,6 +52,7 @@ define( function( require ) {
 
     /**
      * creates a number line marker
+     *
      * @param {number} correctTopValue - the correct value for the top of the double number line marker
      * @param {number} correctBottomValue - the correct value for the bottom of the double number line marker
      * @param {Object} [options]
@@ -78,6 +81,7 @@ define( function( require ) {
 
     /**
      * adds an existing number line marker
+     *
      * @param {URNumberLineMarker} marker
      * @public
      */
@@ -87,6 +91,7 @@ define( function( require ) {
 
     /**
      * removes an existing number line marker
+     *
      * @param {URNumberLineMarker} marker
      * @public
      */
@@ -107,6 +112,7 @@ define( function( require ) {
 
     /**
      * removes all markers
+     *
      * @public
      */
     removeAllMarkers: function() {
@@ -119,6 +125,7 @@ define( function( require ) {
 
     /**
      * Checks if there is an existing marker with the same values in the marker list
+     *
      * @param {URNumberLineMarker} marker
      * @returns {boolean}
      * @public
@@ -136,6 +143,7 @@ define( function( require ) {
 
     /**
      * Tells whether there is an existing editable marker in the marker list
+     *
      * @returns {boolean}
      * @public
      */
@@ -150,6 +158,7 @@ define( function( require ) {
 
     /**
      * Foreach convenience function
+     *
      * @param {function( item, index )} callback
      * @public
      */
@@ -157,10 +166,7 @@ define( function( require ) {
       this.markersProperty.value.forEach( callback );
     },
 
-    /**
-     * Resets number line
-     * @public
-     */
+    // @public
     reset: function() {
       this.removeAllMarkers();
     },

@@ -57,6 +57,7 @@ define( function( require ) {
 
     /**
      * Returns the position of the flag
+     *
      * @return {Vector2}
      * @public
      */
