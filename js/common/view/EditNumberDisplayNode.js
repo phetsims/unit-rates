@@ -17,7 +17,6 @@ define( function( require ) {
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   // images
   var editButtonImage = require( 'image!UNIT_RATES/edit-button.png' );
