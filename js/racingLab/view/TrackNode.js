@@ -115,7 +115,7 @@ define( function( require ) {
 
     // race car
     this.carNode = new Image( carImageName, {
-      scale: 0.28,
+      scale: 0.5,
       right: this.greenFlagNode.left,
       bottom: this.trackOrigin.y
     } );
