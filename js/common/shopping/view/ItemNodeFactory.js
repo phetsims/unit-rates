@@ -157,7 +157,7 @@ define( function( require ) {
           }
           else {
             imageName = purpleCandyBagImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           break;
         case ItemData.RED_CANDY.type:
@@ -167,7 +167,7 @@ define( function( require ) {
           }
           else {
             imageName = redCandyBagImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           break;
         case ItemData.GREEN_CANDY.type:
@@ -177,7 +177,7 @@ define( function( require ) {
           }
           else {
             imageName = greenCandyBagImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           break;
         case ItemData.BLUE_CANDY.type:
@@ -187,7 +187,7 @@ define( function( require ) {
           }
           else {
             imageName = blueCandyBagImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           break;
         default:
