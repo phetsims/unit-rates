@@ -152,7 +152,7 @@ define( function( require ) {
       tailWidth: 5,
       left: UNDO_BUTTON_X,
       centerY: this.graphHeight / 2,
-      content: new FontAwesomeNode( 'undo', { scale: 0.25 } ),
+      content: new FontAwesomeNode( 'undo', { scale: 0.38 } ),
       listener: function() {
         self.removeEditMarker();
       }
