@@ -44,7 +44,6 @@ define( function( require ) {
   var MARKER_SIZE = 10;    // interval marker size
   var MARKER_LINE_WIDTH = 1.0;
   var MILEAGE_FONT = new PhetFont( 12 );
-  var FLAG_SCALE = 0.5;  // scale factor for both start & finish flag images
 
   /**
    * @param {TrackGroup} model
@@ -107,7 +106,7 @@ define( function( require ) {
 
     // start flag
     this.greenFlagNode = new Image( greenFlagImage, {
-      scale: FLAG_SCALE,
+      scale: 0.5,
       left: this.startPoint.x,
       bottom: this.trackOrigin.y
     } );
@@ -149,7 +148,7 @@ define( function( require ) {
     // checkered finish flag
     this.checkerFlagNode = new FinishFlagNode( checkerFlagImage, this.finishPoint,
       new Bounds2( this.startPoint.x, this.startPoint.y, this.trackWidth, this.trackHeight ), {
-        imageScale: FLAG_SCALE
+        imageScale: 0.5
       } );
     childNodes.push( this.checkerFlagNode );
     this.checkerFlagNode.addDragListeners(

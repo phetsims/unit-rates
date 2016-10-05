@@ -18,25 +18,25 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {string} imageString - flag image name
+   * @param {HTMLImageElement} image - flag image
    * @param {Vector2} position - starting position
    * @param {Bounds2} bounds - valid area the flag can be moved
    * @param {Object} [options]
    * @constructor
    */
-  function FinishFlagNode( imageString, position, bounds, options ) {
+  function FinishFlagNode( image, position, bounds, options ) {
 
     options = _.extend( {
       imageScale: 1.0,
       cursor: 'pointer'
     }, options );
 
-    var image = new Image( imageString, { scale: options.imageScale } );
-    var origin = new Vector2( position.x - image.width / 2, position.y - image.height );
+    var imageNode = new Image( image, { scale: options.imageScale } );
+    var origin = new Vector2( position.x - imageNode.width / 2, position.y - imageNode.height );
 
     // adjust the bounds passed in to account for the size of the flag image
-    var adjustedBounds = new Bounds2( bounds.minX - image.width / 2, bounds.minY - image.height,
-      bounds.maxX - image.width / 2, bounds.maxY );
+    var adjustedBounds = new Bounds2( bounds.minX - imageNode.width / 2, bounds.minY - imageNode.height,
+      bounds.maxX - imageNode.width / 2, bounds.maxY );
 
     // @public
     this.item = new Movable( {
@@ -46,7 +46,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'additional children not supported' );
-    options.children = [ image ];
+    options.children = [ imageNode ];
 
     MovableNode.call( this, this.item, position, options );
   }
