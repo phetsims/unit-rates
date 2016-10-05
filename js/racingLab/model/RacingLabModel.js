@@ -14,7 +14,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var TrackGroup = require( 'UNIT_RATES/racingLab/model/TrackGroup' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
