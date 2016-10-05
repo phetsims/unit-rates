@@ -46,7 +46,7 @@ define( function( require ) {
     this.startMoveCallback = startMoveCallback;
     this.endMoveCallback = endMoveCallback;
 
-    var imageNode = new Image( shelfImage, { scale: 0.23 } );
+    var imageNode = new Image( shelfImage, { scale: 0.5 } );
 
     this.backEdgeMinX = BACK_OFFSET * imageNode.width;
     this.backEdgeMaxX = ( 1 - BACK_OFFSET ) * imageNode.width;
