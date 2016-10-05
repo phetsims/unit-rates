@@ -11,8 +11,8 @@ define( function( require ) {
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var ChallengeQuestionAnswerNode = require( 'UNIT_RATES/common/shopping/view/ChallengeQuestionAnswerNode' );
+  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -25,9 +25,6 @@ define( function( require ) {
   // strings
   var challengesString = require( 'string!UNIT_RATES/challenges' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
-
-  // images
-  var refreshButtonImage = require( 'image!UNIT_RATES/refresh-button.png' );
 
   // constants
   var VERTICAL_SPACING = 20;
@@ -155,7 +152,7 @@ define( function( require ) {
         right: this.contentNode.right - 8,
         top: questionNode3.bottom + 2,
         baseColor: '#f2f2f2',
-        content: new Image( refreshButtonImage, { scale: 0.25 } ),
+        content: new FontAwesomeNode( 'refresh', { scale: 0.38 } ),
         listener: function() {
           self.removeAllContent();
           self.challenges.refresh(); // update the model
