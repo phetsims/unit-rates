@@ -1,330 +1,248 @@
 {
-  "shopping_screen_icon.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+  "apple.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by FIXME"
+    "notes": "created by TODO"
   },
-  "shopping_lab_screen_icon.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+  "apple_bag.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by FIXME"
+    "notes": "created by TODO"
   },
-  "racing_lab_screen_icon.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+  "blue_candy.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by FIXME"
+    "notes": "created by TODO"
   },
-  "red_car.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+  "blue_candy_bag.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "notes": "created by TODO"
   },
   "blue_car.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "green_flag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "checkered_flag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "double_arrow.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "go_button_icon.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "stop_button.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "return_car_button.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "scale.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "shelf.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "edit-button.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "refresh-button.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "remove-button.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "undo-button.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "apple.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
     "notes": ""
   },
   "carrot.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "green_candy.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "orange.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "potato.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "red_candy.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "apple_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "notes": "created by TODO"
   },
   "carrot_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "notes": "created by TODO"
   },
-  "green_candy_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+  "checkered_flag.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "orange_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "potato_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "red_candy_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "blue_candy.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "notes": "created by TODO"
   },
   "cucumber.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "lemon.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "pear.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "purple_candy.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "tomato.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
-  },
-  "blue_candy_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "notes": "created by TODO"
   },
   "cucumber_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "double_arrow.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "edit-button.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": ""
+  },
+  "go_button_icon.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "green_candy.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "green_candy_bag.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "green_flag.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "lemon.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
     "notes": ""
   },
   "lemon_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "notes": "created by TODO"
+  },
+  "orange.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "orange_bag.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "pear.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
   },
   "pear_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "notes": "created by TODO"
+  },
+  "potato.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "potato_bag.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "purple_candy.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
   },
   "purple_candy_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "notes": "created by TODO"
+  },
+  "racing_lab_screen_icon.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "red_candy.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "red_candy_bag.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "red_car.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "refresh-button.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "remove-button.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "return_car_button.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "scale.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "shelf.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "shopping_lab_screen_icon.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "shopping_screen_icon.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "stop_button.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
+  },
+  "tomato.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
   },
   "tomato_bag.png": {
-    "text": [
-      "Copyright 2016 University of Colorado Boulder"
-    ],
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": ""
+    "notes": "created by TODO"
+  },
+  "undo-button.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by TODO"
   }
 }
