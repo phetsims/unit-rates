@@ -113,41 +113,41 @@ define( function( require ) {
         case ItemData.CARROTS.type:
           if ( item.countProperty.value === 1 ) {
             imageName = carrotImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           else {
             imageName = carrotBagImage;
-            imageScale = 0.045;
+            imageScale = 0.5;
           }
           break;
         case ItemData.CUCUMBERS.type:
           if ( item.countProperty.value === 1 ) {
             imageName = cucumberImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           else {
             imageName = cucumberBagImage;
-            imageScale = 0.045;
+            imageScale = 0.5;
           }
           break;
         case ItemData.POTATOES.type:
           if ( item.countProperty.value === 1 ) {
             imageName = potatoImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           else {
             imageName = potatoBagImage;
-            imageScale = 0.045;
+            imageScale = 0.5;
           }
           break;
         case ItemData.TOMATOES.type:
           if ( item.countProperty.value === 1 ) {
             imageName = tomatoImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           else {
             imageName = tomatoBagImage;
-            imageScale = 0.045;
+            imageScale = 0.5;
           }
           break;
         case ItemData.PURPLE_CANDY.type:

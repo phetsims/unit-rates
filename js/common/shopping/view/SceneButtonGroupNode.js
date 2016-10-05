@@ -40,7 +40,7 @@ define( function( require ) {
       {
         value: SceneMode.PRODUCE,
         node: ItemNodeFactory.createItemNode( new Item( ItemData.CARROTS.type, 1 ),
-        { imageScale: 0.025 } )
+        { imageScale: 0.5 } )
       },
       {
         value: SceneMode.CANDY,
