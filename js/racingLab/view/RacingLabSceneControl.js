@@ -68,8 +68,8 @@ define( function( require ) {
     return new VBox( {
       spacing: 7, // space between the 2 cars
       children: [
-        createCarImage( blueCarImage, maxCarWidth ),
-        createCarImage( redCarImage, maxCarWidth )
+        createCarImage( redCarImage, maxCarWidth ),
+        createCarImage( blueCarImage, maxCarWidth )
       ]
     } );
   }
