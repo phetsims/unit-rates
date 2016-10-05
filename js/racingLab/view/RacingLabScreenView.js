@@ -14,7 +14,7 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
-  var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
+  var RacingLabSceneControl = require( 'UNIT_RATES/racingLab/view/RacingLabSceneControl' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -24,8 +24,6 @@ define( function( require ) {
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   // images
-  var oneCarSceneImage = require( 'image!UNIT_RATES/one_car_scene.png' );
-  var twoCarSceneImage = require( 'image!UNIT_RATES/two_car_scene.png' );
   var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
   var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
   var returnCarButtonImage = require( 'image!UNIT_RATES/return_car_button.png' );
@@ -151,18 +149,15 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    // 1 or 2 car track selection buttons
-    this.trackCountButtons = new RadioButtonGroup( this.model.trackCountProperty, [
-      { value: 1, node: new Image( oneCarSceneImage, { scale: 0.22 } ) },
-      { value: 2, node: new Image( twoCarSceneImage, { scale: 0.22 } ) }
-    ], {
+    // scene control, 1 or 2 cars
+    var sceneControl = new RacingLabSceneControl( this.model.trackCountProperty, {
       right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN,
       orientation: 'vertical',
       baseColor: 'white',
       spacing: 11
     } );
-    this.addChild( this.trackCountButtons );
+    this.addChild( sceneControl );
 
     // layer thing correctly
     this.keypadCloseArea.moveToFront();
