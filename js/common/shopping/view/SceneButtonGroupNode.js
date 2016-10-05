@@ -35,7 +35,7 @@ define( function( require ) {
       {
         value: SceneMode.FRUIT,
         node: ItemNodeFactory.createItemNode( new Item( ItemData.APPLES.type, 1 ),
-        { imageScale: 0.025 } )
+        { imageScale: 0.5 } )
       },
       {
         value: SceneMode.PRODUCE,

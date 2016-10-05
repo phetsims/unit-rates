@@ -55,7 +55,7 @@ define( function( require ) {
     createItemNode: function( item, options ) {
 
       options = _.extend( {
-        imageScale: -1,
+        imageScale: -1, //TODO this is bad
         moveStartCallback: null,  // function called when item drag starts
         moveCallback: null,       // function called during the drag
         moveEndCallback: null,    // function called when item drag ends
@@ -73,41 +73,41 @@ define( function( require ) {
         case ItemData.APPLES.type:
           if ( item.countProperty.value === 1 ) {
             imageName = appleImage;
-            imageScale = 0.024;
+            imageScale = 0.5;
           }
           else {
             imageName = appleBagImage;
-            imageScale = 0.045;
+            imageScale = 0.5;
           }
           break;
         case ItemData.LEMONS.type:
           if ( item.countProperty.value === 1 ) {
             imageName = lemonImage;
-            imageScale = 0.020;
+            imageScale = 0.5;
           }
           else {
             imageName = lemonBagImage;
-            imageScale = 0.045;
+            imageScale = 0.5;
           }
           break;
         case ItemData.ORANGES.type:
           if ( item.countProperty.value === 1 ) {
             imageName = orangeImage;
-            imageScale = 0.022;
+            imageScale = 0.5;
           }
           else {
             imageName = orangeBagImage;
-            imageScale = 0.045;
+            imageScale = 0.5;
           }
           break;
         case ItemData.PEARS.type:
           if ( item.countProperty.value === 1 ) {
             imageName = pearImage;
-            imageScale = 0.026;
+            imageScale = 0.5;
           }
           else {
             imageName = pearBagImage;
-            imageScale = 0.045;
+            imageScale = 0.5;
           }
           break;
         case ItemData.CARROTS.type:
