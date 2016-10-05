@@ -55,150 +55,69 @@ define( function( require ) {
     createItemNode: function( item, options ) {
 
       options = _.extend( {
-        imageScale: -1, //TODO this is bad
+        imageScale: 0.5,
         moveStartCallback: null,  // function called when item drag starts
         moveCallback: null,       // function called during the drag
         moveEndCallback: null,    // function called when item drag ends
-        pickable: true
+        pickable: true //TODO this doesn't seem appropriate, since item nodes are used in (e.g.) combo boxes
       }, options );
 
-      var itemNode = new MovableNode( item, new Vector2( 0, 0 ), options );
-      itemNode.addDragListeners( options.moveStartCallback, options.moveCallback, options.moveEndCallback );
-
+      // Get the item's image name
       var imageName = null;
-      var imageScale = null;
-
-      // Get the item image name & scaling based on the Item type & count
+      var singleItem = ( item.countProperty.get() === 1 );
       switch( item.type ) {
+
+        // fruits
         case ItemData.APPLES.type:
-          if ( item.countProperty.value === 1 ) {  //TODO factor out: var oneItem = ( item.countProperty.value === 1 );
-            imageName = appleImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = appleBagImage;
-            imageScale = 0.5;
-          }
+          imageName = ( singleItem ) ? appleImage : appleBagImage;
           break;
         case ItemData.LEMONS.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = lemonImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = lemonBagImage;
-            imageScale = 0.5;
-          }
+          imageName = singleItem ? lemonImage : lemonBagImage;
           break;
         case ItemData.ORANGES.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = orangeImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = orangeBagImage;
-            imageScale = 0.5;
-          }
+          imageName = singleItem ? orangeImage : orangeBagImage;
           break;
         case ItemData.PEARS.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = pearImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = pearBagImage;
-            imageScale = 0.5;
-          }
+          imageName = singleItem ? pearImage : pearBagImage;
           break;
+
+        // vegetables
         case ItemData.CARROTS.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = carrotImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = carrotBagImage;
-            imageScale = 0.5;
-          }
+          imageName = singleItem ? carrotImage : carrotBagImage;
           break;
         case ItemData.CUCUMBERS.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = cucumberImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = cucumberBagImage;
-            imageScale = 0.5;
-          }
+          imageName = singleItem ? cucumberImage : cucumberBagImage;
           break;
         case ItemData.POTATOES.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = potatoImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = potatoBagImage;
-            imageScale = 0.5;
-          }
+            imageName = singleItem ? potatoImage : potatoBagImage;
           break;
         case ItemData.TOMATOES.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = tomatoImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = tomatoBagImage;
-            imageScale = 0.5;
-          }
+            imageName = singleItem ? tomatoImage : tomatoBagImage;
           break;
+
+        // candy
         case ItemData.PURPLE_CANDY.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = purpleCandyImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = purpleCandyBagImage;
-            imageScale = 0.5;
-          }
+            imageName = singleItem ? purpleCandyImage : purpleCandyBagImage;
           break;
         case ItemData.RED_CANDY.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = redCandyImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = redCandyBagImage;
-            imageScale = 0.5;
-          }
+            imageName = singleItem ? redCandyImage : redCandyBagImage;
           break;
         case ItemData.GREEN_CANDY.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = greenCandyImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = greenCandyBagImage;
-            imageScale = 0.5;
-          }
+            imageName = singleItem ? greenCandyImage : greenCandyBagImage;
           break;
         case ItemData.BLUE_CANDY.type:
-          if ( item.countProperty.value === 1 ) {
-            imageName = blueCandyImage;
-            imageScale = 0.5;
-          }
-          else {
-            imageName = blueCandyBagImage;
-            imageScale = 0.5;
-          }
+            imageName = singleItem ? blueCandyImage : blueCandyBagImage;
           break;
+
         default:
-          assert && assert( false, 'Node factory cannot create item of unrecognized type' );
+          throw new Error( false, 'unsupported item type: ' + item.type );
       }
 
-      assert && assert( imageName !== null, 'Unable to create item node of type:' + item.type );
-
-      var imageNode = new Image( imageName, { scale: ( options.imageScale > 0 ? options.imageScale : imageScale ) } );
-
-      itemNode.addChild( imageNode );
+      var itemNode = new MovableNode( item, new Vector2( 0, 0 ), options );
+      //TODO this should be doable via MovableNode options
+      itemNode.addDragListeners( options.moveStartCallback, options.moveCallback, options.moveEndCallback );
+      //TODO this should be doable via MovableNode options
+      itemNode.addChild( new Image( imageName, { scale: options.imageScale } ) );
 
       return itemNode;
     }
