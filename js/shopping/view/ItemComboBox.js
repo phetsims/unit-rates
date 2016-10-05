@@ -35,9 +35,6 @@ define( function( require ) {
   var purpleCandyString = require( 'string!UNIT_RATES/purpleCandy' );
   var redCandyString = require( 'string!UNIT_RATES/redCandy' );
 
-  // constants
-  var FONT = new PhetFont( 18 );
-
   /**
    * @param {SceneMode} sceneMode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
    * @param {Property.<ItemData>} itemDataProperty - the currently selected item
@@ -59,48 +56,28 @@ define( function( require ) {
     // populate the menu based on which scene
     var items = [];
     switch( sceneMode ) {
+
       case SceneMode.FRUIT:
-        items.push( ComboBox.createItem(
-          this.createItemRow( applesString, ItemNodeFactory.createItemNode( new Item( ItemData.APPLES.type, 1 ) ) ),
-          ItemData.APPLES ) );
-        items.push( ComboBox.createItem(
-          this.createItemRow( lemonsString, ItemNodeFactory.createItemNode( new Item( ItemData.LEMONS.type, 1 ) ) ),
-          ItemData.LEMONS ) );
-        items.push( ComboBox.createItem(
-          this.createItemRow( orangesString, ItemNodeFactory.createItemNode( new Item( ItemData.ORANGES.type, 1 ) ) ),
-          ItemData.ORANGES ) );
-        items.push( ComboBox.createItem(
-          this.createItemRow( pearsString, ItemNodeFactory.createItemNode( new Item( ItemData.PEARS.type, 1 ) ) ),
-          ItemData.PEARS ) );
+        items.push( createItem( applesString, ItemData.APPLES ) );
+        items.push( createItem( lemonsString, ItemData.LEMONS ) );
+        items.push( createItem( orangesString, ItemData.ORANGES ) );
+        items.push( createItem( pearsString, ItemData.PEARS ) );
         break;
+
       case SceneMode.PRODUCE:
-        items.push( ComboBox.createItem(
-          this.createItemRow( carrotsString, ItemNodeFactory.createItemNode( new Item( ItemData.CARROTS.type, 1 ) ) ),
-          ItemData.CARROTS ) );
-        items.push( ComboBox.createItem(
-          this.createItemRow( cucumbersString, ItemNodeFactory.createItemNode( new Item( ItemData.CUCUMBERS.type, 1 ) ) ),
-          ItemData.CUCUMBERS ) );
-        items.push( ComboBox.createItem(
-          this.createItemRow( potatoesString, ItemNodeFactory.createItemNode( new Item( ItemData.POTATOES.type, 1 ) ) ),
-          ItemData.POTATOES ) );
-        items.push( ComboBox.createItem(
-          this.createItemRow( tomatoesString, ItemNodeFactory.createItemNode( new Item( ItemData.TOMATOES.type, 1 ) ) ),
-          ItemData.TOMATOES ) );
+        items.push( createItem( carrotsString, ItemData.CARROTS ) );
+        items.push( createItem( cucumbersString, ItemData.CUCUMBERS ) );
+        items.push( createItem( potatoesString, ItemData.POTATOES ) );
+        items.push( createItem( tomatoesString, ItemData.TOMATOES ) );
         break;
+
       case SceneMode.CANDY:
-        items.push( ComboBox.createItem(
-          this.createItemRow( purpleCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.PURPLE_CANDY.type, 1 ) ) ),
-          ItemData.PURPLE_CANDY ) );
-        items.push( ComboBox.createItem(
-          this.createItemRow( redCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.RED_CANDY.type, 1 ) ) ),
-          ItemData.RED_CANDY ) );
-        items.push( ComboBox.createItem(
-          this.createItemRow( greenCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.GREEN_CANDY.type, 1 ) ) ),
-          ItemData.GREEN_CANDY ) );
-        items.push( ComboBox.createItem(
-          this.createItemRow( blueCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.BLUE_CANDY.type, 1 ) ) ),
-          ItemData.BLUE_CANDY ) );
+        items.push( createItem( purpleCandyString, ItemData.PURPLE_CANDY ) );
+        items.push( createItem( redCandyString, ItemData.RED_CANDY ) );
+        items.push( createItem( greenCandyString, ItemData.GREEN_CANDY ) );
+        items.push( createItem( blueCandyString, ItemData.BLUE_CANDY ) );
         break;
+
       default:
         assert && assert( false, 'Combo box using unrecognized type' );
     }
@@ -112,56 +89,33 @@ define( function( require ) {
 
   unitRates.register( 'ItemComboBox', ItemComboBox );
 
-  return inherit( ComboBox, ItemComboBox, {
+  /**
+   * Creates an item for the combo box.
+   *
+   * @param {string} labelString
+   * @param {ItemData} itemData
+   * @returns {{node: Node, value: *}}
+   */
+  function createItem( labelString, itemData ) {
 
-    // no dispose, persists for the lifetime of the sim.
+    var itemText = new Text( labelString, {
+      font: new PhetFont( 18 ),
+      maxWidth: 140
+    } );
+    var itemIcon = ItemNodeFactory.createItemNode( new Item( itemData.type, 1 ) );
+    var hStrut = new HStrut( 175 - itemText.width - itemIcon.width );  //TODO magic constant 175
 
-    /**
-     * Selects the current scene
-     *
-     * @param {SceneMode} sceneMode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
-     * TODO visibility annotation, https://github.com/phetsims/unit-rates/issues/63
-     */
-    setSceneMode: function( sceneMode ) {
-      switch( sceneMode ) {
-        case SceneMode.FRUIT:
-          console.log( 'Scene fruit' );
-          break;
-        case SceneMode.PRODUCE:
-          console.log( 'Scene produce' );
-          break;
-        case SceneMode.CANDY:
-          console.log( 'Scene candy' );
-          break;
-        default:
-          assert && assert( false, 'Combo box using unrecognized scene' );
-      }
+    var itemNode = new HBox( {
+      spacing: 0,
+      top: 0,
+      right: 0,
+      align: 'center',
+      children: [ itemText, hStrut, itemIcon ]
+    } );
 
-    },
+    return ComboBox.createItem( itemNode, itemData );
+  }
 
-    /**
-     * Creates one row or entry in the menu consisting of an icon and a label
-     *
-     * @param {string} itemString - the item name
-     * @param {Node} itemNode - the item icon
-     * @returns {HBox}
-     * TODO visibility annotation, https://github.com/phetsims/unit-rates/issues/63
-     */
-    createItemRow: function( itemString, itemNode ) {
+  return inherit( ComboBox, ItemComboBox );
 
-      var itemText = new Text( itemString, { font: FONT, maxWidth: 140 } );
-      var hStrut = new HStrut( 175 - itemText.width - itemNode.width );
-
-      // container for one row in the legend
-      return new HBox( {
-        spacing: 0,
-        top: 0,
-        right: 0,
-        align: 'center',
-        children: [ itemText, hStrut, itemNode ]
-      } );
-    }
-
-  } ); // inherit
-
-} ); // define
+} );
