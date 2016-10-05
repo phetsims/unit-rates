@@ -152,10 +152,7 @@ define( function( require ) {
     // scene control, 1 or 2 cars
     var sceneControl = new RacingLabSceneControl( this.model.trackCountProperty, {
       right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
-      bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN,
-      orientation: 'vertical',
-      baseColor: 'white',
-      spacing: 11
+      bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( sceneControl );
 

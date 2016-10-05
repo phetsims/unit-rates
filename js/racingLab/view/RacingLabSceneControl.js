@@ -13,12 +13,11 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // images
-  // var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
-  // var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
-  var oneCarSceneImage = require( 'image!UNIT_RATES/one_car_scene.png' );
-  var twoCarSceneImage = require( 'image!UNIT_RATES/two_car_scene.png' );
+  var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
+  var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
 
   /**
    * @param {Property.<number>} trackCountProperty
@@ -26,13 +25,53 @@ define( function( require ) {
    * @constructor
    */
   function RacingLabSceneControl( trackCountProperty, options ) {
+
+    options = _.extend( {
+      
+      // RacingLabSceneControl options
+      buttonWidth: 68,
+      
+      // RadioButtonGroup options
+      orientation: 'vertical',
+      baseColor: 'white',
+      buttonContentXMargin: 12,
+      buttonContentYMargin: 10,
+      spacing: 11 // space between the buttons
+      
+    }, options );
+    
+    var maxCarWidth = options.buttonWidth - ( 2 * options.buttonContentXMargin );
+
     RadioButtonGroup.call( this, trackCountProperty, [
-      { value: 1, node: new Image( oneCarSceneImage, { scale: 0.22 } ) },
-      { value: 2, node: new Image( twoCarSceneImage, { scale: 0.22 } ) }
+      { value: 1, node: createOneCarIcon( maxCarWidth ) },
+      { value: 2, node: createTwoCarsIcon( maxCarWidth ) }
     ], options );
   }
 
   unitRates.register( 'RacingLabSceneControl', RacingLabSceneControl );
+
+  // Creates a car icon that fits on the button
+  function createCarImage( imageFile, maxCarWidth ) {
+    var carImage = new Image( imageFile );
+    carImage.setScaleMagnitude( maxCarWidth / carImage.width );
+    return carImage;
+  }
+
+  // Creates the icon for the 1-car scene
+  function createOneCarIcon( maxCarWidth ) {
+    return createCarImage( redCarImage, maxCarWidth );
+  }
+
+  // Creates the icon for the 2-cars scene
+  function createTwoCarsIcon( maxCarWidth ) {
+    return new VBox( {
+      spacing: 7, // space between the 2 cars
+      children: [
+        createCarImage( blueCarImage, maxCarWidth ),
+        createCarImage( redCarImage, maxCarWidth )
+      ]
+    } );
+  }
 
   return inherit( RadioButtonGroup, RacingLabSceneControl );
 } );
