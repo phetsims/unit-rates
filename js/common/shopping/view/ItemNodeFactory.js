@@ -71,7 +71,7 @@ define( function( require ) {
       // Get the item image name & scaling based on the Item type & count
       switch( item.type ) {
         case ItemData.APPLES.type:
-          if ( item.countProperty.value === 1 ) {
+          if ( item.countProperty.value === 1 ) {  //TODO factor out: var oneItem = ( item.countProperty.value === 1 );
             imageName = appleImage;
             imageScale = 0.5;
           }
