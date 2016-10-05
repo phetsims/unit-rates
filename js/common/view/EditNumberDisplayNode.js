@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberDisplay = require( 'SCENERY_PHET/NumberDisplay' );
