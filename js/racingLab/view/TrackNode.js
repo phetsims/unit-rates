@@ -140,7 +140,7 @@ define( function( require ) {
 
     // green arrows initial around teh finish flag
     this.flagArrows = new Image( doubleArrowImage, {
-      scale: 0.23,
+      scale: 0.5,
       centerX: this.finishPoint.x + 1,
       bottom: this.trackOrigin.y - 2
     } );
