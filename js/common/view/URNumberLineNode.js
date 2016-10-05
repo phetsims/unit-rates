@@ -14,7 +14,7 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
-  var Image = require( 'SCENERY/nodes/Image' );
+  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -27,9 +27,6 @@ define( function( require ) {
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URNumberLineMarkerNode = require( 'UNIT_RATES/common/view/URNumberLineMarkerNode' );
   var Vector2 = require( 'DOT/Vector2' );
-
-  // images
-  var undoButtonImage = require( 'image!UNIT_RATES/undo-button.png' );
 
   // constants
   var EDITABLE_MARKER_X = 25; // the default X position of an editable marker
@@ -155,7 +152,7 @@ define( function( require ) {
       tailWidth: 5,
       left: UNDO_BUTTON_X,
       centerY: this.graphHeight / 2,
-      content: new Image( undoButtonImage, { scale: 0.25 } ),
+      content: new FontAwesomeNode( 'undo', { scale: 0.25 } ),
       listener: function() {
         self.removeEditMarker();
       }
