@@ -20,7 +20,7 @@ define( function( require ) {
   var screenShoppingLabString = require( 'string!UNIT_RATES/screen.shoppingLab' );
 
   // images
-  var screenIcon = require( 'image!UNIT_RATES/Shopping-Lab-screen-icon.png' );
+  var screenIcon = require( 'image!UNIT_RATES/shopping_lab_screen_icon.png' );
 
   /**
    * @constructor

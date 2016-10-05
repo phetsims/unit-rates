@@ -20,7 +20,7 @@ define( function( require ) {
   var screenRacingLabString = require( 'string!UNIT_RATES/screen.racingLab' );
 
   // images
-  var screenIcon = require( 'image!UNIT_RATES/Racing-Lab-screen-icon.png' );
+  var screenIcon = require( 'image!UNIT_RATES/racing_lab_screen_icon.png' );
 
   /**
    * @constructor
