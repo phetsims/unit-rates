@@ -167,7 +167,7 @@ define( function( require ) {
 
     // erase
     var eraserButton = new EraserButton( {
-      baseColor: '#A9D8FD',
+      baseColor: 'rgb( 255, 255, 219 )',
       left: this.bottomArrowLabel.right,
       top: options.graphHeight,
       listener: function() {
