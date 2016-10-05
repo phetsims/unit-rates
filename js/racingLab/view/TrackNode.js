@@ -44,7 +44,7 @@ define( function( require ) {
   var MARKER_SIZE = 10;    // interval marker size
   var MARKER_LINE_WIDTH = 1.0;
   var MILEAGE_FONT = new PhetFont( 12 );
-  var FLAG_SCALE = 0.25;  // scale factor for both start & finish flag images
+  var FLAG_SCALE = 0.5;  // scale factor for both start & finish flag images
 
   /**
    * @param {TrackGroup} model
