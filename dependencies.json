@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.0-dev.23 Mon Oct 03 2016 21:42:28 GMT-0600 (MDT)",
+  "comment": "# unit-rates 1.0.0-dev.24 Wed Oct 05 2016 13:04:59 GMT-0600 (MDT)",
   "assert": {
     "sha": "845be6b591cb746b0b05b7023208aef2e49a8855",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "e5bb5ce945e1b075beb1ee54cc21588eb7d92da1",
+    "sha": "d1bd66e177b4cac79328e24635d06726c3cfef47",
     "branch": "master"
   },
   "dot": {
@@ -57,11 +57,11 @@
     "branch": "master"
   },
   "tandem": {
-    "sha": "fa89ce899f84a0cddb81971e7ae739773706721a",
+    "sha": "01cae1dc9a3c4cae1f8a194a6fc41738318f8818",
     "branch": "master"
   },
   "unit-rates": {
-    "sha": "2bfd9c4b9395c199e3ed51507e2ca952426b52d0",
+    "sha": "9d32eb948631d12b7235525b25763c0cc1f91432",
     "branch": "master"
   }
 }
