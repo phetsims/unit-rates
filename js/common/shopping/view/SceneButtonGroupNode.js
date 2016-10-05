@@ -45,7 +45,7 @@ define( function( require ) {
       {
         value: SceneMode.CANDY,
         node: ItemNodeFactory.createItemNode( new Item( ItemData.PURPLE_CANDY.type, 1 ),
-        { imageScale: 0.035 } )
+        { imageScale: 0.5 } )
       }
     ], options );
   }

@@ -153,7 +153,7 @@ define( function( require ) {
         case ItemData.PURPLE_CANDY.type:
           if ( item.countProperty.value === 1 ) {
             imageName = purpleCandyImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           else {
             imageName = purpleCandyBagImage;
@@ -163,7 +163,7 @@ define( function( require ) {
         case ItemData.RED_CANDY.type:
           if ( item.countProperty.value === 1 ) {
             imageName = redCandyImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           else {
             imageName = redCandyBagImage;
@@ -173,7 +173,7 @@ define( function( require ) {
         case ItemData.GREEN_CANDY.type:
           if ( item.countProperty.value === 1 ) {
             imageName = greenCandyImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           else {
             imageName = greenCandyBagImage;
@@ -183,7 +183,7 @@ define( function( require ) {
         case ItemData.BLUE_CANDY.type:
           if ( item.countProperty.value === 1 ) {
             imageName = blueCandyImage;
-            imageScale = 0.025;
+            imageScale = 0.5;
           }
           else {
             imageName = blueCandyBagImage;

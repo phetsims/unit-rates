@@ -89,17 +89,17 @@ define( function( require ) {
         break;
       case SceneMode.CANDY:
         items.push( ComboBox.createItem(
-          this.createItemRow( purpleCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.PURPLE_CANDY.type, 1 ),
-            { imageScale: 0.035 } ) ), ItemData.PURPLE_CANDY ) );
+          this.createItemRow( purpleCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.PURPLE_CANDY.type, 1 ) ) ),
+          ItemData.PURPLE_CANDY ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( redCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.RED_CANDY.type, 1 ),
-            { imageScale: 0.035 } ) ), ItemData.RED_CANDY ) );
+          this.createItemRow( redCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.RED_CANDY.type, 1 ) ) ),
+          ItemData.RED_CANDY ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( greenCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.GREEN_CANDY.type, 1 ),
-            { imageScale: 0.035 } ) ), ItemData.GREEN_CANDY ) );
+          this.createItemRow( greenCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.GREEN_CANDY.type, 1 ) ) ),
+          ItemData.GREEN_CANDY ) );
         items.push( ComboBox.createItem(
-          this.createItemRow( blueCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.BLUE_CANDY.type, 1 ),
-            { imageScale: 0.035 } ) ), ItemData.BLUE_CANDY ) );
+          this.createItemRow( blueCandyString, ItemNodeFactory.createItemNode( new Item( ItemData.BLUE_CANDY.type, 1 ) ) ),
+          ItemData.BLUE_CANDY ) );
         break;
       default:
         assert && assert( false, 'Combo box using unrecognized type' );
