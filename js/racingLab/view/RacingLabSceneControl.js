@@ -27,19 +27,19 @@ define( function( require ) {
   function RacingLabSceneControl( trackCountProperty, options ) {
 
     options = _.extend( {
-      
+
       // RacingLabSceneControl options
       buttonWidth: 68,
-      
+
       // RadioButtonGroup options
       orientation: 'vertical',
       baseColor: 'white',
       buttonContentXMargin: 12,
       buttonContentYMargin: 10,
       spacing: 11 // space between the buttons
-      
+
     }, options );
-    
+
     var maxCarWidth = options.buttonWidth - ( 2 * options.buttonContentXMargin );
 
     RadioButtonGroup.call( this, trackCountProperty, [
@@ -50,19 +50,20 @@ define( function( require ) {
 
   unitRates.register( 'RacingLabSceneControl', RacingLabSceneControl );
 
-  // Creates a car icon that fits on the button
-  function createCarImage( imageFile, maxCarWidth ) {
-    var carImage = new Image( imageFile );
-    carImage.setScaleMagnitude( maxCarWidth / carImage.width );
-    return carImage;
-  }
-
-  // Creates the icon for the 1-car scene
+  /**
+   * Creates the icon for the 1-car scene, scaled to fit a specified width.
+   *
+   * @param {number} maxCarWidth
+   */
   function createOneCarIcon( maxCarWidth ) {
     return createCarImage( redCarImage, maxCarWidth );
   }
 
-  // Creates the icon for the 2-cars scene
+  /**
+   * Creates the icon for the 2-cars scene, scaled to fit a specified width.
+   *
+   * @param {number} maxCarWidth
+   */
   function createTwoCarsIcon( maxCarWidth ) {
     return new VBox( {
       spacing: 7, // space between the 2 cars
@@ -71,6 +72,18 @@ define( function( require ) {
         createCarImage( redCarImage, maxCarWidth )
       ]
     } );
+  }
+
+  /**
+   * Creates a car Image, scaled to fit a specified width.
+   *
+   * @param {HTMLImageElement} imageFile
+   * @param {number} maxCarWidth
+   */
+  function createCarImage( imageFile, maxCarWidth ) {
+    var carImage = new Image( imageFile );
+    carImage.setScaleMagnitude( maxCarWidth / carImage.width );
+    return carImage;
   }
 
   return inherit( RadioButtonGroup, RacingLabSceneControl );
