@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -17,9 +18,6 @@ define( function( require ) {
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-
-  // images
-  var editButtonImage = require( 'image!UNIT_RATES/edit-button.png' );
 
   /**
    * @param {KeypadPanelNode} keypad - shared keypad
@@ -73,7 +71,7 @@ define( function( require ) {
     this.numberDisplay = new NumberDisplay( valueProperty, options.numberRange, numberDisplayOptions );
 
     var editButtonOptions = {
-      content: new Image( editButtonImage, { scale: 0.2 } ),
+      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.32 } ),
       baseColor: 'yellow',
       pickable: true
     };
