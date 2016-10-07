@@ -25,7 +25,6 @@ define( function( require ) {
   var forQuestionString = require( 'string!UNIT_RATES/forQuestion' );
   var poundString = require( 'string!UNIT_RATES/pound' );
   var poundsString = require( 'string!UNIT_RATES/pounds' );
-  var lbsString = require( 'string!UNIT_RATES/lbs' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
   var appleString = require( 'string!UNIT_RATES/apple' );
   var applesString = require( 'string!UNIT_RATES/apples' );
@@ -201,7 +200,7 @@ define( function( require ) {
         var candyCost2 = Util.toFixedNumber( candyItem2.countProperty.value * itemRate, 2 );
         var candyAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost2, 2 ) );
         var candyUnitString2 = candyItem2.countProperty.value + ' ' + poundsString;
-        var costOfCandyQuestionString2 = StringUtils.format( costOfQuestionString, candyItem2.countProperty.value, lbsString );
+        var costOfCandyQuestionString2 = StringUtils.format( costOfQuestionString, candyItem2.countProperty.value, poundsString );
         var c2 = new QuestionAnswer( candyItem2, candyCost2, candyAnswerText2, {
           questionString: costOfCandyQuestionString2,
           unitString: candyUnitString2,
@@ -213,7 +212,7 @@ define( function( require ) {
         var candyCost3 = Util.toFixedNumber( candyItem3.countProperty.value * itemRate, 2 );
         var candyAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost3, 2 ) );
         var candyUnitString3 = candyItem3.countProperty.value + ' ' + poundsString;
-        var costOfCandyQuestionString3 = StringUtils.format( costOfQuestionString, candyItem3.countProperty.value, lbsString );
+        var costOfCandyQuestionString3 = StringUtils.format( costOfQuestionString, candyItem3.countProperty.value, poundsString );
         var c3 = new QuestionAnswer( candyItem3, candyCost3, candyAnswerText3, {
           questionString: costOfCandyQuestionString3,
           unitString: candyUnitString3,
@@ -225,7 +224,7 @@ define( function( require ) {
         var candyCost4 = Util.toFixedNumber( candyItem4.countProperty.value * itemRate, 2 );
         var candyAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost4, 2 ) );
         var candyUnitString4 = candyItem4.countProperty.value + ' ' + poundsString;
-        var costOfCandyQuestionString4 = StringUtils.format( costOfQuestionString, candyItem4.countProperty.value, lbsString );
+        var costOfCandyQuestionString4 = StringUtils.format( costOfQuestionString, candyItem4.countProperty.value, poundsString );
         var c4 = new QuestionAnswer( candyItem4, candyCost4, candyAnswerText4, {
           questionString: costOfCandyQuestionString4,
           unitString: candyUnitString4,

@@ -23,9 +23,6 @@
   "costOfQuestion": {
     "value": "Cost of {0} {1}?"
   },
-  "costUnits": {
-    "value": "Cost ($)"
-  },
   "cucumber": {
     "value": "Cucumber"
   },
@@ -133,9 +130,6 @@
   },
   "unitRateQuestion": {
     "value": "Unit Rate?"
-  },
-  "weightUnits": {
-    "value": "Weight (lbs)"
   },
   "unit-rates.title": {
     "value": "Unit Rates"
