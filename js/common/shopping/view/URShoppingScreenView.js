@@ -11,9 +11,10 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
+  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberLineNode = require( 'UNIT_RATES/common/shopping/view/NumberLineNode' );
   var Property = require( 'AXON/Property' );
@@ -27,9 +28,6 @@ define( function( require ) {
   var ShelfNode = require( 'UNIT_RATES/common/shopping/view/ShelfNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-
-  // images
-  var removeButtonImage = require( 'image!UNIT_RATES/remove-button.png' );
 
   // strings
   var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
@@ -115,11 +113,14 @@ define( function( require ) {
     this.addChild( this.scaleNode );
 
     // scale remove all items button
+    var scaleRemoveIcon = new FontAwesomeNode( 'level_down' );
+    scaleRemoveIcon.setScaleMagnitude( -0.7, 0.7 ); // reflect about the y axis
     var scaleRemoveButtonNode = new RectangularPushButton( {
+      xMargin: 12,
       right: this.scaleNode.left - URConstants.PANEL_SPACING,
       bottom: this.scaleNode.bottom,
       baseColor: '#f2f2f2',
-      content: new Image( removeButtonImage, { scale: 0.25 } ),
+      content: scaleRemoveIcon,
       listener: function() {
 
         // reset the current item type - remove scale items & re-populates shelf items
