@@ -224,7 +224,9 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      this.qnaMultilink.dispose();
+      //TODO fatal errors here, https://github.com/phetsims/unit-rates/issues/106, https://github.com/phetsims/unit-rates/issues/107
+      // this.qnaMultilink.dispose();
+
       this.topNumberDisplay.dispose();
       this.bottomNumberDisplay.dispose();
       MovableNode.prototype.dispose.call( this );
