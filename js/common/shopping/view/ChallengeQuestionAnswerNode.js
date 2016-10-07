@@ -16,8 +16,12 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Shape = require( 'KITE/Shape' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+
+  // strings
+  var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   // constants
   var VERTICAL_SPACING = 4;                  // vertical space between UI components
@@ -109,7 +113,7 @@ define( function( require ) {
     } );
 
     // @protected - unit label
-    this.unitText = new Text( this.qna.unitString, {
+    this.unitText = new Text( StringUtils.format( valueUnitsString, '1', this.qna.unitString ), {
       centerX: this.challengeText.centerX,
       top: this.unitLine.bottom + 2,
       font: TEXT_FONT,
