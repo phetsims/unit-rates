@@ -103,17 +103,6 @@ define( function( require ) {
 
   unitRates.register( 'NumberLineNode', NumberLineNode );
 
-  return inherit( URNumberLineNode, NumberLineNode, {
-
-    /**
-     * @override
-     * @protected
-     */
-    reset: function() {
-      //TODO why overriding this? It's not adding anything to the supertype call
-      URNumberLineNode.prototype.reset.call( this );
-    }
-
-  } );  // define
+  return inherit( URNumberLineNode, NumberLineNode );  // define
 
 } );  // inherit
