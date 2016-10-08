@@ -42,6 +42,7 @@ define( function( require ) {
   var potatoesString = require( 'string!UNIT_RATES/potatoes' );
   var tomatoString = require( 'string!UNIT_RATES/tomato' );
   var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
+  var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   // constants
   var RAND = new Random();
@@ -191,7 +192,7 @@ define( function( require ) {
         var candyAnswerText1 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );//TODO i18n
         var c1 = new QuestionAnswer( candyItem1, itemRate, candyAnswerText1, {
           questionString: unitRateQuestionString,
-          unitString: poundString,
+          unitString: StringUtils.format( valueUnitsString, 1, poundString ),
           onCorrectAnswerCallback: this.onCorrectAnswer
         } );
 
@@ -246,7 +247,7 @@ define( function( require ) {
         var itemAnswerText1 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );
         var i1 = new QuestionAnswer( item1, itemRate, itemAnswerText1, {
           questionString: unitRateQuestionString,
-          unitString: nameCap,
+          unitString: StringUtils.format( valueUnitsString, 1, nameCap ),
           onCorrectAnswerCallback: this.onCorrectAnswer
         } );
 
