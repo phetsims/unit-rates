@@ -188,7 +188,7 @@ define( function( require ) {
 
         // Q: Unit rate
         var candyItem1 = new Item( itemData, 1 );
-        var candyAnswerText1 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );
+        var candyAnswerText1 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );//TODO i18n
         var c1 = new QuestionAnswer( candyItem1, itemRate, candyAnswerText1, {
           questionString: unitRateQuestionString,
           unitString: poundString,
