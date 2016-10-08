@@ -199,8 +199,8 @@ define( function( require ) {
         // Q: Cost of # <type>?
         var candyItem2 = this.getPromptItem( itemType, this.questionSet, 0 );
         var candyCost2 = Util.toFixedNumber( candyItem2.countProperty.value * itemRate, 2 );
-        var candyAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost2, 2 ) );
-        var candyUnitString2 = candyItem2.countProperty.value + ' ' + poundsString;
+        var candyAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost2, 2 ) ); //TODO i18n
+        var candyUnitString2 = candyItem2.countProperty.value + ' ' + poundsString; //TODO i18n
         var costOfCandyQuestionString2 = StringUtils.format( costOfQuestionString, candyItem2.countProperty.value, poundsString );
         var c2 = new QuestionAnswer( candyItem2, candyCost2, candyAnswerText2, {
           questionString: costOfCandyQuestionString2,
@@ -211,8 +211,8 @@ define( function( require ) {
         // Q: Cost of # <type>?
         var candyItem3 = this.getPromptItem( itemType, this.questionSet, 1 );
         var candyCost3 = Util.toFixedNumber( candyItem3.countProperty.value * itemRate, 2 );
-        var candyAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost3, 2 ) );
-        var candyUnitString3 = candyItem3.countProperty.value + ' ' + poundsString;
+        var candyAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost3, 2 ) ); //TODO i18n
+        var candyUnitString3 = candyItem3.countProperty.value + ' ' + poundsString; //TODO i18n
         var costOfCandyQuestionString3 = StringUtils.format( costOfQuestionString, candyItem3.countProperty.value, poundsString );
         var c3 = new QuestionAnswer( candyItem3, candyCost3, candyAnswerText3, {
           questionString: costOfCandyQuestionString3,
@@ -223,8 +223,8 @@ define( function( require ) {
         // Q: Cost of # <type>?
         var candyItem4 = this.getPromptItem( itemType, this.questionSet, 2 );
         var candyCost4 = Util.toFixedNumber( candyItem4.countProperty.value * itemRate, 2 );
-        var candyAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost4, 2 ) );
-        var candyUnitString4 = candyItem4.countProperty.value + ' ' + poundsString;
+        var candyAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost4, 2 ) ); //TODO i18n
+        var candyUnitString4 = candyItem4.countProperty.value + ' ' + poundsString; //TODO i18n
         var costOfCandyQuestionString4 = StringUtils.format( costOfQuestionString, candyItem4.countProperty.value, poundsString );
         var c4 = new QuestionAnswer( candyItem4, candyCost4, candyAnswerText4, {
           questionString: costOfCandyQuestionString4,
@@ -254,8 +254,8 @@ define( function( require ) {
         // Q: Cost of # <type>?
         var item2 = this.getPromptItem( itemType, this.questionSet, 0 );
         var itemCost2 = Util.toFixedNumber( item2.countProperty.value * itemRate, 2 );
-        var itemAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost2, 2 ) );
-        var itemUnitString2 = item2.countProperty.value + ' ' + namePluralCap;
+        var itemAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost2, 2 ) ); //TODO i18n
+        var itemUnitString2 = item2.countProperty.value + ' ' + namePluralCap; //TODO i18n
         var costOfItemQuestionString2 = StringUtils.format( costOfQuestionString, item2.countProperty.value, namePlural );
         var i2 = new QuestionAnswer( item2, itemCost2, itemAnswerText2, {
           questionString: costOfItemQuestionString2,
@@ -266,8 +266,8 @@ define( function( require ) {
         // Q: Cost of # <type>?
         var item3 = this.getPromptItem( itemType, this.questionSet, 1 );
         var itemCost3 = Util.toFixedNumber( item3.countProperty.value * itemRate, 2 );
-        var itemAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost3, 2 ) );
-        var itemUnitString3 = item3.countProperty.value + ' ' + namePluralCap;
+        var itemAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost3, 2 ) ); //TODO i18n
+        var itemUnitString3 = item3.countProperty.value + ' ' + namePluralCap; //TODO i18n
         var costOfItemQuestionString3 = StringUtils.format( costOfQuestionString, item3.countProperty.value, namePlural );
         var i3 = new QuestionAnswer( item3, itemCost3, itemAnswerText3, {
           questionString: costOfItemQuestionString3,
@@ -278,8 +278,8 @@ define( function( require ) {
         // Q: <type> for $?
         var item4 = this.getPromptItem( itemType, this.questionSet, 2 );
         var itemCost4 = Util.toFixedNumber( item4.countProperty.value * itemRate, 2 );
-        var itemAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost4, 2 ) );
-        var itemUnitString4 = item4.countProperty.value + ' ' + namePluralCap;
+        var itemAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost4, 2 ) ); //TODO i18n
+        var itemUnitString4 = item4.countProperty.value + ' ' + namePluralCap; //TODO i18n
         var itemForQuestionString4 = StringUtils.format( forQuestionString, namePluralCap, Util.toFixed( itemCost4, 2 ) );
         var i4 = new QuestionAnswer( item4, item4.countProperty.value, itemAnswerText4, {
           questionString: itemForQuestionString4,
