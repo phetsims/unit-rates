@@ -14,7 +14,6 @@ define( function( require ) {
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
-  var Random = require( 'DOT/Random' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Util = require( 'DOT/Util' );
@@ -43,9 +42,6 @@ define( function( require ) {
   var tomatoString = require( 'string!UNIT_RATES/tomato' );
   var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
-
-  // constants
-  var RAND = new Random();
 
   /**
    * @param {Property.<ItemData>} itemDataProperty - the currently selected item
@@ -82,8 +78,7 @@ define( function( require ) {
 
       var questionSet = -1;
       do {
-        //TODO use phet.joist.random
-        questionSet = RAND.nextInt( 4 );  // 4 sets of data available - see ChallengeData.js
+        questionSet = phet.joist.random.nextInt( 4 );  // 4 sets of data available - see ChallengeData.js
       }
       while ( questionSet === this.questionSet );
 
