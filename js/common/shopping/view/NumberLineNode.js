@@ -103,6 +103,5 @@ define( function( require ) {
 
   unitRates.register( 'NumberLineNode', NumberLineNode );
 
-  return inherit( URNumberLineNode, NumberLineNode );  // define
-
-} );  // inherit
+  return inherit( URNumberLineNode, NumberLineNode );
+} );
