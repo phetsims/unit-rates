@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ChallengeData = require( 'UNIT_RATES/shopping/model/ChallengeData' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
@@ -25,22 +24,6 @@ define( function( require ) {
   var poundString = require( 'string!UNIT_RATES/pound' );
   var poundsString = require( 'string!UNIT_RATES/pounds' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
-  var appleString = require( 'string!UNIT_RATES/apple' );
-  var applesString = require( 'string!UNIT_RATES/apples' );
-  var lemonString = require( 'string!UNIT_RATES/lemon' );
-  var lemonsString = require( 'string!UNIT_RATES/lemons' );
-  var orangeString = require( 'string!UNIT_RATES/orange' );
-  var orangesString = require( 'string!UNIT_RATES/oranges' );
-  var pearString = require( 'string!UNIT_RATES/pear' );
-  var pearsString = require( 'string!UNIT_RATES/pears' );
-  var carrotString = require( 'string!UNIT_RATES/carrot' );
-  var carrotsString = require( 'string!UNIT_RATES/carrots' );
-  var cucumberString = require( 'string!UNIT_RATES/cucumber' );
-  var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
-  var potatoString = require( 'string!UNIT_RATES/potato' );
-  var potatoesString = require( 'string!UNIT_RATES/potatoes' );
-  var tomatoString = require( 'string!UNIT_RATES/tomato' );
-  var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   /**
@@ -234,17 +217,14 @@ define( function( require ) {
       }
       else {
 
-        //var name          = this.getNameForItemType(itemType, false, false );
-        var nameCap = this.getNameForItemType( itemType, false, true );
-        var namePlural = this.getNameForItemType( itemType, true, false );
-        var namePluralCap = this.getNameForItemType( itemType, true, true );
+        var pluralName = itemData.pluralName;
 
         // Q: Unit rate
         var item1 = new Item( itemData, 1 );
         var itemAnswerText1 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemRate, 2 ) );
         var i1 = new QuestionAnswer( item1, itemRate, itemAnswerText1, {
           questionString: unitRateQuestionString,
-          unitString: StringUtils.format( valueUnitsString, 1, nameCap ),
+          unitString: StringUtils.format( valueUnitsString, 1, itemData.singularName ),
           onCorrectAnswerCallback: this.onCorrectAnswer
         } );
 
@@ -252,8 +232,8 @@ define( function( require ) {
         var item2 = this.getPromptItem( itemData, this.questionSet, 0 );
         var itemCost2 = Util.toFixedNumber( item2.countProperty.value * itemRate, 2 );
         var itemAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost2, 2 ) ); //TODO i18n
-        var itemUnitString2 = item2.countProperty.value + ' ' + namePluralCap; //TODO i18n
-        var costOfItemQuestionString2 = StringUtils.format( costOfQuestionString, item2.countProperty.value, namePlural );
+        var itemUnitString2 = item2.countProperty.value + ' ' + pluralName; //TODO i18n
+        var costOfItemQuestionString2 = StringUtils.format( costOfQuestionString, item2.countProperty.value, pluralName );
         var i2 = new QuestionAnswer( item2, itemCost2, itemAnswerText2, {
           questionString: costOfItemQuestionString2,
           unitString: itemUnitString2,
@@ -264,8 +244,8 @@ define( function( require ) {
         var item3 = this.getPromptItem( itemData, this.questionSet, 1 );
         var itemCost3 = Util.toFixedNumber( item3.countProperty.value * itemRate, 2 );
         var itemAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost3, 2 ) ); //TODO i18n
-        var itemUnitString3 = item3.countProperty.value + ' ' + namePluralCap; //TODO i18n
-        var costOfItemQuestionString3 = StringUtils.format( costOfQuestionString, item3.countProperty.value, namePlural );
+        var itemUnitString3 = item3.countProperty.value + ' ' + pluralName; //TODO i18n
+        var costOfItemQuestionString3 = StringUtils.format( costOfQuestionString, item3.countProperty.value, pluralName );
         var i3 = new QuestionAnswer( item3, itemCost3, itemAnswerText3, {
           questionString: costOfItemQuestionString3,
           unitString: itemUnitString3,
@@ -276,8 +256,8 @@ define( function( require ) {
         var item4 = this.getPromptItem( itemData, this.questionSet, 2 );
         var itemCost4 = Util.toFixedNumber( item4.countProperty.value * itemRate, 2 );
         var itemAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost4, 2 ) ); //TODO i18n
-        var itemUnitString4 = item4.countProperty.value + ' ' + namePluralCap; //TODO i18n
-        var itemForQuestionString4 = StringUtils.format( forQuestionString, namePluralCap, Util.toFixed( itemCost4, 2 ) );
+        var itemUnitString4 = item4.countProperty.value + ' ' + pluralName; //TODO i18n
+        var itemForQuestionString4 = StringUtils.format( forQuestionString, pluralName, Util.toFixed( itemCost4, 2 ) );
         var i4 = new QuestionAnswer( item4, item4.countProperty.value, itemAnswerText4, {
           questionString: itemForQuestionString4,
           unitString: itemUnitString4,
@@ -286,62 +266,6 @@ define( function( require ) {
 
         this.challengeData[ itemType ] = [ i1, i2, i3, i4 ];
       }
-    },
-
-    /**
-     * Retrieves the correct version of name for an item from it's type
-     *
-     * @param {Item.type} type - the item type (i.e. apples, carrots, red candy)
-     * @param {boolean} plural
-     * @param {boolean} capitalize
-     * @returns {string}
-     * @private
-     */
-    getNameForItemType: function( type, plural, capitalize ) {
-
-      var name = '';
-      switch( type ) {
-        case ItemData.APPLES.type:
-          name = ( plural ? ( capitalize ? applesString : applesString ) :
-                   ( capitalize ? appleString : appleString ) );
-          break;
-        case ItemData.LEMONS.type:
-          name = ( plural ? ( capitalize ? lemonsString : lemonsString ) :
-                   ( capitalize ? lemonString : lemonString ) );
-          break;
-        case ItemData.ORANGES.type:
-          name = ( plural ? ( capitalize ? orangesString : orangesString ) :
-                   ( capitalize ? orangeString : orangeString ) );
-          break;
-        case ItemData.PEARS.type:
-          name = ( plural ? ( capitalize ? pearsString : pearsString ) :
-                   ( capitalize ? pearString : pearString ) );
-          break;
-        case ItemData.CARROTS.type:
-          name = ( plural ? ( capitalize ? carrotsString : carrotsString ) :
-                   ( capitalize ? carrotString : carrotString ) );
-          break;
-        case ItemData.CUCUMBERS.type:
-          name = ( plural ? ( capitalize ? cucumbersString : cucumbersString ) :
-                   ( capitalize ? cucumberString : cucumberString ) );
-          break;
-        case ItemData.POTATOES.type:
-          name = ( plural ? ( capitalize ? potatoesString : potatoesString ) :
-                   ( capitalize ? potatoString : potatoString ) );
-          break;
-        case ItemData.TOMATOES.type:
-          name = ( plural ? ( capitalize ? tomatoesString : tomatoesString ) :
-                   ( capitalize ? tomatoString : tomatoString ) );
-          break;
-        case ItemData.RED_CANDY.type:
-        case ItemData.PURPLE_CANDY.type:
-        case ItemData.GREEN_CANDY.type:
-        case ItemData.BLUE_CANDY.type:
-        default:
-          assert && assert( false, 'no name available for item type' );
-      }
-
-      return name;
     },
 
     /**

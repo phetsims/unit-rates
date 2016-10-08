@@ -14,12 +14,36 @@ define( function( require ) {
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
+  // strings
+  var appleString = require( 'string!UNIT_RATES/apple' );
+  var applesString = require( 'string!UNIT_RATES/apples' );
+  var carrotString = require( 'string!UNIT_RATES/carrot' );
+  var carrotsString = require( 'string!UNIT_RATES/carrots' );
+  var cucumberString = require( 'string!UNIT_RATES/cucumber' );
+  var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
+  var lemonString = require( 'string!UNIT_RATES/lemon' );
+  var lemonsString = require( 'string!UNIT_RATES/lemons' );
+  var orangeString = require( 'string!UNIT_RATES/orange' );
+  var orangesString = require( 'string!UNIT_RATES/oranges' );
+  var pearString = require( 'string!UNIT_RATES/pear' );
+  var pearsString = require( 'string!UNIT_RATES/pears' );
+  var potatoString = require( 'string!UNIT_RATES/potato' );
+  var potatoesString = require( 'string!UNIT_RATES/potatoes' );
+  var tomatoString = require( 'string!UNIT_RATES/tomato' );
+  var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
+  var blueCandyString = require( 'string!UNIT_RATES/blueCandy' );
+  var greenCandyString = require( 'string!UNIT_RATES/greenCandy' );
+  var purpleCandyString = require( 'string!UNIT_RATES/purpleCandy' );
+  var redCandyString = require( 'string!UNIT_RATES/redCandy' );
+
   var ItemData = Object( {
 
     APPLES: {
       type: 'apple',
       rate: 0.5,
       maxUnit: 16,
+      singularName: appleString,
+      pluralName: applesString,
       challengeData: [
         [ 10, 6, 8 ],     // set A - [ question#2, question#3, question#4 ]
         [ 10, 16, 13 ],   // set B
@@ -32,6 +56,8 @@ define( function( require ) {
       type: 'lemon',
       rate: 0.25,
       maxUnit: 16,
+      singularName: lemonString,
+      pluralName: lemonsString,
       challengeData: [
         [ 10, 4, 14 ],
         [ 10, 14, 7 ],
@@ -44,6 +70,8 @@ define( function( require ) {
       type: 'orange',
       rate: 0.75,
       maxUnit: 16,
+      singularName: orangeString,
+      pluralName: orangesString,
       challengeData: [
         [ 10, 4, 11 ],
         [ 10, 16, 8 ],
@@ -56,6 +84,8 @@ define( function( require ) {
       type: 'pear',
       rate: 0.4,
       maxUnit: 16,
+      singularName: pearString,
+      pluralName: pearsString,
       challengeData: [
         [ 10, 6, 16 ],
         [ 10, 14, 12 ],
@@ -68,6 +98,8 @@ define( function( require ) {
       type: 'carrot',
       rate: 0.15,
       maxUnit: 16,
+      singularName: carrotString,
+      pluralName: carrotsString,
       challengeData: [
         [ 9, 19, 21 ],
         [ 15, 25, 23 ],
@@ -80,6 +112,8 @@ define( function( require ) {
       type: 'cucumber',
       rate: 0.22,
       maxUnit: 12,
+      singularName: cucumberString,
+      pluralName: cucumbersString,
       challengeData: [
         [ 7, 19, 18 ],
         [ 11, 25, 23 ],
@@ -92,6 +126,8 @@ define( function( require ) {
       type: 'potato',
       rate: 0.45,
       maxUnit: 12,
+      singularName: potatoString,
+      pluralName: potatoesString,
       challengeData: [
         [ 7, 17, 21 ],
         [ 8, 19, 18 ],
@@ -104,6 +140,8 @@ define( function( require ) {
       type: 'tomato',
       rate: 0.3,
       maxUnit: 16,
+      singularName: tomatoString,
+      pluralName: tomatoesString,
       challengeData: [
         [ 7, 23, 28 ],
         [ 13, 25, 23 ],
@@ -116,6 +154,8 @@ define( function( require ) {
       type: 'purpleCandy',
       rate: 5.40,
       maxUnit: 1.6,
+      singularName: purpleCandyString,
+      pluralName: null,
       challengeData: [
         [ 0.6, 2.2, 2.4 ],
         [ 1.5, 3.1, 3.1 ],
@@ -128,6 +168,8 @@ define( function( require ) {
       type: 'redCandy',
       rate: 3.80,
       maxUnit: 1.2,
+      singularName: redCandyString,
+      pluralName: null,
       challengeData: [
         [ 0.4, 2.3, 2 ],
         [ 0.7, 2.1, 2.4 ],
@@ -140,6 +182,8 @@ define( function( require ) {
       type: 'greenCandy',
       rate: 8.20,
       maxUnit: 1.2,
+      singularName: greenCandyString,
+      pluralName: null,
       challengeData: [
         [ 0.7, 1.9, 2.2 ],
         [ 1.3, 2.5, 2.4 ],
@@ -152,6 +196,8 @@ define( function( require ) {
       type: 'blueCandy',
       rate: 1.30,
       maxUnit: 1.6,
+      singularName: blueCandyString,
+      pluralName: null,
       challengeData: [
         [ 0.3, 1.9, 3.2 ],
         [ 0.7, 2.2, 2.3 ],
