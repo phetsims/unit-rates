@@ -25,6 +25,7 @@ define( function( require ) {
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var Util = require( 'DOT/Util' );
 
+  //TODO get these strings from ItemData
   // strings
   var applesString = require( 'string!UNIT_RATES/apples' );
   var carrotsString = require( 'string!UNIT_RATES/carrots' );
