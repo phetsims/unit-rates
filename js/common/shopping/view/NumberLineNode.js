@@ -79,19 +79,15 @@ define( function( require ) {
         case ItemData.TOMATOES.type:
           self.setLineLabels( dollarsString, tomatoesString );
           break;
-        //TODO identical cases below here
+
+        // candy cases are identical cases below here
         case ItemData.RED_CANDY.type:
-          self.setLineLabels( dollarsString, poundsString );
-          break;
         case ItemData.PURPLE_CANDY.type:
-          self.setLineLabels( dollarsString, poundsString );
-          break;
         case ItemData.GREEN_CANDY.type:
-          self.setLineLabels( dollarsString, poundsString );
-          break;
         case ItemData.BLUE_CANDY.type:
           self.setLineLabels( dollarsString, poundsString );
           break;
+
         default:
           assert && assert( false, 'Number line using unrecognized type' );
       }
