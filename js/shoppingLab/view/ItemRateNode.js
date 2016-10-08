@@ -25,10 +25,7 @@ define( function( require ) {
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var Util = require( 'DOT/Util' );
 
-  //TODO get these strings from ItemData
   // strings
-  var applesString = require( 'string!UNIT_RATES/apples' );
-  var carrotsString = require( 'string!UNIT_RATES/carrots' );
   var dollarsString = require( 'string!UNIT_RATES/dollars' );
   var poundsString = require( 'string!UNIT_RATES/pounds' );
   var rateString = require( 'string!UNIT_RATES/rate' );
@@ -72,7 +69,7 @@ define( function( require ) {
         countPicker: null,
         countPickerColor: 'rgb(233,33,45)',
         countPickerPressedColor: 'rgb(203,3,15)',
-        countString: applesString,
+        countString: ItemData.APPLES.pluralName,
         visible: true
       }, {
         // CARROTS_INDEX
@@ -82,7 +79,7 @@ define( function( require ) {
         countPicker: null,
         countPickerColor: 'rgb(241,128,48)',
         countPickerPressedColor: 'rgb(211,98,18)',
-        countString: carrotsString,
+        countString: ItemData.CARROTS.pluralName,
         visible: false
       }, {
         // CANDY_INDEX
@@ -161,7 +158,7 @@ define( function( require ) {
     this.contentNode.addChild( divisorLine );
 
     // @private
-    this.unitText = new Text( applesString, {
+    this.unitText = new Text( ItemData.APPLES.pluralName, {
       left: this.itemPickerData[ APPLES_INDEX ].countPicker.right + X_SPACING,
       centerY: this.itemPickerData[ APPLES_INDEX ].countPicker.centerY,
       font: TEXT_FONT,
