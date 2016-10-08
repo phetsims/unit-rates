@@ -40,6 +40,8 @@ define( function( require ) {
   var Y_MARGIN = 0;
   var X_SPACING = 20;
   var Y_SPACING = 10;
+
+  //TODO yuck
   var APPLES_INDEX = 0;
   var CARROTS_INDEX = 1;
   var CANDY_INDEX = 2;
