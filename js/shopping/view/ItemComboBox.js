@@ -21,20 +21,6 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var ComboBox = require( 'SUN/ComboBox' );
 
-  // strings
-  var applesString = require( 'string!UNIT_RATES/apples' );
-  var lemonsString = require( 'string!UNIT_RATES/lemons' );
-  var orangesString = require( 'string!UNIT_RATES/oranges' );
-  var pearsString = require( 'string!UNIT_RATES/pears' );
-  var carrotsString = require( 'string!UNIT_RATES/carrots' );
-  var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
-  var potatoesString = require( 'string!UNIT_RATES/potatoes' );
-  var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
-  var blueCandyString = require( 'string!UNIT_RATES/blueCandy' );
-  var greenCandyString = require( 'string!UNIT_RATES/greenCandy' );
-  var purpleCandyString = require( 'string!UNIT_RATES/purpleCandy' );
-  var redCandyString = require( 'string!UNIT_RATES/redCandy' );
-
   /**
    * @param {SceneMode} sceneMode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
    * @param {Property.<ItemData>} itemDataProperty - the currently selected item
@@ -58,31 +44,30 @@ define( function( require ) {
     switch( sceneMode ) {
 
       case SceneMode.FRUIT:
-        items.push( createItem( applesString, ItemData.APPLES ) );
-        items.push( createItem( lemonsString, ItemData.LEMONS ) );
-        items.push( createItem( orangesString, ItemData.ORANGES ) );
-        items.push( createItem( pearsString, ItemData.PEARS ) );
+        items.push( createItem( ItemData.APPLES ) );
+        items.push( createItem( ItemData.LEMONS ) );
+        items.push( createItem( ItemData.ORANGES ) );
+        items.push( createItem( ItemData.PEARS ) );
         break;
 
       case SceneMode.PRODUCE:
-        items.push( createItem( carrotsString, ItemData.CARROTS ) );
-        items.push( createItem( cucumbersString, ItemData.CUCUMBERS ) );
-        items.push( createItem( potatoesString, ItemData.POTATOES ) );
-        items.push( createItem( tomatoesString, ItemData.TOMATOES ) );
+        items.push( createItem( ItemData.CARROTS ) );
+        items.push( createItem( ItemData.CUCUMBERS ) );
+        items.push( createItem( ItemData.POTATOES ) );
+        items.push( createItem( ItemData.TOMATOES ) );
         break;
 
       case SceneMode.CANDY:
-        items.push( createItem( purpleCandyString, ItemData.PURPLE_CANDY ) );
-        items.push( createItem( redCandyString, ItemData.RED_CANDY ) );
-        items.push( createItem( greenCandyString, ItemData.GREEN_CANDY ) );
-        items.push( createItem( blueCandyString, ItemData.BLUE_CANDY ) );
+        items.push( createItem( ItemData.PURPLE_CANDY ) );
+        items.push( createItem( ItemData.RED_CANDY ) );
+        items.push( createItem( ItemData.GREEN_CANDY ) );
+        items.push( createItem( ItemData.BLUE_CANDY ) );
         break;
 
       default:
-        assert && assert( false, 'Combo box using unrecognized type' );
+        throw new Error( 'invalid sceneMode: ' + sceneMode );
     }
-
-    assert && assert( items.length > 0, 'Item list is empty' );
+    assert && assert( items.length > 0 );
 
     ComboBox.call( this, items, itemDataProperty, parentNode, options );
   }
@@ -92,11 +77,13 @@ define( function( require ) {
   /**
    * Creates an item for the combo box.
    *
-   * @param {string} labelString
    * @param {ItemData} itemData
    * @returns {{node: Node, value: *}}
    */
-  function createItem( labelString, itemData ) {
+  function createItem( itemData ) {
+
+    //TODO because candies don't have pluralName, this is wonky
+    var labelString = itemData.pluralName ?  itemData.pluralName : itemData.singularName;
 
     var itemText = new Text( labelString, {
       font: new PhetFont( 18 ),
