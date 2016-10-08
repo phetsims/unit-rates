@@ -15,6 +15,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   var ItemData = Object( {
+
     APPLES: {
       type: 'apple',
       rate: 0.5,
@@ -26,6 +27,7 @@ define( function( require ) {
         [ 15, 4, 9 ]      // set D
       ]
     },
+
     LEMONS: {
       type: 'lemon',
       rate: 0.25,
@@ -37,6 +39,7 @@ define( function( require ) {
         [ 15, 6, 12 ]
       ]
     },
+
     ORANGES: {
       type: 'orange',
       rate: 0.75,
@@ -48,6 +51,7 @@ define( function( require ) {
         [ 15, 6, 12 ]
       ]
     },
+
     PEARS: {
       type: 'pear',
       rate: 0.4,
@@ -59,6 +63,7 @@ define( function( require ) {
         [ 15, 11, 13 ]
       ]
     },
+
     CARROTS: {
       type: 'carrot',
       rate: 0.15,
@@ -70,6 +75,7 @@ define( function( require ) {
         [ 14, 18, 28 ]
       ]
     },
+
     CUCUMBERS: {
       type: 'cucumber',
       rate: 0.22,
@@ -81,6 +87,7 @@ define( function( require ) {
         [ 13, 23, 22 ]
       ]
     },
+
     POTATOES: {
       type: 'potato',
       rate: 0.45,
@@ -92,6 +99,7 @@ define( function( require ) {
         [ 13, 25, 22 ]
       ]
     },
+
     TOMATOES: {
       type: 'tomato',
       rate: 0.3,
@@ -103,6 +111,7 @@ define( function( require ) {
         [ 6, 21, 19 ]
       ]
     },
+
     PURPLE_CANDY: {
       type: 'purpleCandy',
       rate: 5.40,
@@ -114,6 +123,7 @@ define( function( require ) {
         [ 1.3, 2.1, 2.5 ]
       ]
     },
+
     RED_CANDY: {
       type: 'redCandy',
       rate: 3.80,
@@ -125,6 +135,7 @@ define( function( require ) {
         [ 1.3, 2.4, 2.8 ]
       ]
     },
+
     GREEN_CANDY: {
       type: 'greenCandy',
       rate: 8.20,
@@ -136,6 +147,7 @@ define( function( require ) {
         [ 1.5, 2.1, 1.8 ]
       ]
     },
+
     BLUE_CANDY: {
       type: 'blueCandy',
       rate: 1.30,
