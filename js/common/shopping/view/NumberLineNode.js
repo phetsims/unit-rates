@@ -14,6 +14,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLineNode = require( 'UNIT_RATES/common/view/URNumberLineNode' );
 
+  //TODO get these strings from ItemData
   // strings
   var applesString = require( 'string!UNIT_RATES/apples' );
   var dollarsString = require( 'string!UNIT_RATES/dollars' );
@@ -50,34 +51,39 @@ define( function( require ) {
 
     numberLine.removeAllMarkers();
 
-    // refresh on item type change
-    numberLine.itemTypeProperty.link( function( itemType, oldType ) {
+    numberLine.itemTypeProperty.link( function( itemType ) {
 
-      // set number line labels
+      // axis labels
+      var topLabel = dollarsString; // default for fruits and vegetables
+      var bottomLabel = poundsString; // default for candy
       switch( itemType ) {
+
+        // fruits
         case ItemData.APPLES.type:
-          self.setLineLabels( dollarsString, applesString );
+          bottomLabel = applesString;
           break;
         case ItemData.LEMONS.type:
-          self.setLineLabels( dollarsString, lemonsString );
+          bottomLabel = lemonsString;
           break;
         case ItemData.ORANGES.type:
-          self.setLineLabels( dollarsString, orangesString );
+          bottomLabel = orangesString;
           break;
         case ItemData.PEARS.type:
-          self.setLineLabels( dollarsString, pearsString );
+          bottomLabel = pearsString;
           break;
+
+        // vegetables
         case ItemData.CARROTS.type:
-          self.setLineLabels( dollarsString, carrotsString );
+          bottomLabel = carrotsString;
           break;
         case ItemData.CUCUMBERS.type:
-          self.setLineLabels( dollarsString, cucumbersString );
+          bottomLabel = cucumbersString;
           break;
         case ItemData.POTATOES.type:
-          self.setLineLabels( dollarsString, potatoesString );
+          bottomLabel = potatoesString;
           break;
         case ItemData.TOMATOES.type:
-          self.setLineLabels( dollarsString, tomatoesString );
+          bottomLabel = tomatoesString;
           break;
 
         // candy cases are identical cases below here
@@ -85,13 +91,14 @@ define( function( require ) {
         case ItemData.PURPLE_CANDY.type:
         case ItemData.GREEN_CANDY.type:
         case ItemData.BLUE_CANDY.type:
-          self.setLineLabels( dollarsString, poundsString );
+          topLabel = dollarsString;
           break;
 
         default:
-          assert && assert( false, 'Number line using unrecognized type' );
+          throw new Error( 'invalid itemType: ' + itemType );
       }
 
+      self.setLineLabels( topLabel, bottomLabel );
       self.removeAllMarkerNodes();
       self.populate();
     } );
