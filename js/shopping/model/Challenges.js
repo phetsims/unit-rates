@@ -82,6 +82,7 @@ define( function( require ) {
 
       var questionSet = -1;
       do {
+        //TODO use phet.joist.random
         questionSet = RAND.nextInt( 4 );  // 4 sets of data available - see ChallengeData.js
       }
       while ( questionSet === this.questionSet );
