@@ -78,7 +78,8 @@ define( function( require ) {
 
       var questionSet = -1;
       do {
-        questionSet = phet.joist.random.nextInt( 4 );  // 4 sets of data available - see ChallengeData.js
+        //TODO magic number
+        questionSet = phet.joist.random.nextInt( 4 );  // 4 sets of data available - see ItemType.challengeData
       }
       while ( questionSet === this.questionSet );
 
@@ -193,7 +194,7 @@ define( function( require ) {
         } );
 
         // Q: Cost of # <type>?
-        var candyItem2 = this.getPromptItem( itemType, this.questionSet, 0 );
+        var candyItem2 = this.getPromptItem( itemData, this.questionSet, 0 );
         var candyCost2 = Util.toFixedNumber( candyItem2.countProperty.value * itemRate, 2 );
         var candyAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost2, 2 ) ); //TODO i18n
         var candyUnitString2 = candyItem2.countProperty.value + ' ' + poundsString; //TODO i18n
@@ -205,7 +206,7 @@ define( function( require ) {
         } );
 
         // Q: Cost of # <type>?
-        var candyItem3 = this.getPromptItem( itemType, this.questionSet, 1 );
+        var candyItem3 = this.getPromptItem( itemData, this.questionSet, 1 );
         var candyCost3 = Util.toFixedNumber( candyItem3.countProperty.value * itemRate, 2 );
         var candyAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost3, 2 ) ); //TODO i18n
         var candyUnitString3 = candyItem3.countProperty.value + ' ' + poundsString; //TODO i18n
@@ -217,7 +218,7 @@ define( function( require ) {
         } );
 
         // Q: Cost of # <type>?
-        var candyItem4 = this.getPromptItem( itemType, this.questionSet, 2 );
+        var candyItem4 = this.getPromptItem( itemData, this.questionSet, 2 );
         var candyCost4 = Util.toFixedNumber( candyItem4.countProperty.value * itemRate, 2 );
         var candyAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost4, 2 ) ); //TODO i18n
         var candyUnitString4 = candyItem4.countProperty.value + ' ' + poundsString; //TODO i18n
@@ -248,7 +249,7 @@ define( function( require ) {
         } );
 
         // Q: Cost of # <type>?
-        var item2 = this.getPromptItem( itemType, this.questionSet, 0 );
+        var item2 = this.getPromptItem( itemData, this.questionSet, 0 );
         var itemCost2 = Util.toFixedNumber( item2.countProperty.value * itemRate, 2 );
         var itemAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost2, 2 ) ); //TODO i18n
         var itemUnitString2 = item2.countProperty.value + ' ' + namePluralCap; //TODO i18n
@@ -260,7 +261,7 @@ define( function( require ) {
         } );
 
         // Q: Cost of # <type>?
-        var item3 = this.getPromptItem( itemType, this.questionSet, 1 );
+        var item3 = this.getPromptItem( itemData, this.questionSet, 1 );
         var itemCost3 = Util.toFixedNumber( item3.countProperty.value * itemRate, 2 );
         var itemAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost3, 2 ) ); //TODO i18n
         var itemUnitString3 = item3.countProperty.value + ' ' + namePluralCap; //TODO i18n
@@ -272,7 +273,7 @@ define( function( require ) {
         } );
 
         // Q: <type> for $?
-        var item4 = this.getPromptItem( itemType, this.questionSet, 2 );
+        var item4 = this.getPromptItem( itemData, this.questionSet, 2 );
         var itemCost4 = Util.toFixedNumber( item4.countProperty.value * itemRate, 2 );
         var itemAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost4, 2 ) ); //TODO i18n
         var itemUnitString4 = item4.countProperty.value + ' ' + namePluralCap; //TODO i18n
@@ -364,63 +365,22 @@ define( function( require ) {
     },
 
     /**
-     * Generate an item with a count set from the ChallengeData
+     * Generate an item with a count set from the challenge data.
      *
-     * @param {string} itemType
+     * @param {ItemData} itemData
      * @param {number} setNumber - set (0|1|2|3)
      * @param {number} promptNumber - prompt (0|1|2)
      * @return {Item}
      * @private
      */
-    getPromptItem: function( itemType, setNumber, promptNumber ) {
+    getPromptItem: function( itemData, setNumber, promptNumber ) {
 
-      var count = 0;
+      assert && assert( setNumber < 4, 'invalid setNumber: ' + setNumber );
+      assert && assert( (promptNumber < 3), 'invalid promptNumber: ' + promptNumber );
 
-      assert && assert( (setNumber < 4), 'Invalid challenge set number' );
-      assert && assert( (promptNumber < 3), 'Invalid challenge prompt number' );
+      var count = itemData.challengeData[ setNumber ][ promptNumber ];
 
-      switch( itemType ) {
-        case ItemData.APPLES.type:
-          count = ChallengeData.APPLES[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.LEMONS.type:
-          count = ChallengeData.LEMONS[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.ORANGES.type:
-          count = ChallengeData.ORANGES[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.PEARS.type:
-          count = ChallengeData.PEARS[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.CARROTS.type:
-          count = ChallengeData.CARROTS[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.CUCUMBERS.type:
-          count = ChallengeData.CUCUMBERS[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.POTATOES.type:
-          count = ChallengeData.POTATOES[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.TOMATOES.type:
-          count = ChallengeData.TOMATOES[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.RED_CANDY.type:
-          count = ChallengeData.RED_CANDY[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.PURPLE_CANDY.type:
-          count = ChallengeData.PURPLE_CANDY[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.GREEN_CANDY.type:
-          count = ChallengeData.GREEN_CANDY[ setNumber ][ promptNumber ];
-          break;
-        case ItemData.BLUE_CANDY.type:
-          count = ChallengeData.BLUE_CANDY[ setNumber ][ promptNumber ];
-          break;
-        default:
-          assert && assert( false, 'prompt data not available for item type' );
-      }
-
-      return new Item( itemType, count );
+      return new Item( itemData.type, count );
     },
 
     // @public
