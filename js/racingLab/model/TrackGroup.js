@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var Range = require( 'DOT/Range' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
 
@@ -24,8 +24,8 @@ define( function( require ) {
   function TrackGroup( elapsedTimeProperty, flagArrowsVisibleProperty ) {
 
     //TODO these Properties look like they should be constants
-    this.milesRangeProperty = new Property( new RangeWithValue( 20, 100 ) ); // used in rate adjustment spinner
-    this.hoursRangeProperty = new Property( new RangeWithValue( 1, 10 ) ); // used in rate adjustment spinner
+    this.milesRangeProperty = new Property( new Range( 20, 100 ) ); // used in rate adjustment spinner
+    this.hoursRangeProperty = new Property( new Range( 1, 10 ) ); // used in rate adjustment spinner
     this.numberLineMaxHoursProperty = new Property( 1 ); // the number line's maximum bottom value
     this.trackHoursProperty = new Property( 1 ); // the length of the track in hours
 

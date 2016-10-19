@@ -14,7 +14,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberDisplay = require( 'SCENERY_PHET/NumberDisplay' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var Range = require( 'DOT/Range' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -28,7 +28,7 @@ define( function( require ) {
   function EditNumberDisplayNode( keypad, valueProperty, pattern, options ) {
 
     options = _.extend( {
-      numberRange: new RangeWithValue( 0, 200 ),   // valid range for the number display
+      numberRange: new Range( 0, 200 ),   // valid range for the number display
       font: new PhetFont( 10 ),             // font used for the number display
       decimalPlaces: 2,                              // # decimal places for the number display
       buttonPosition: 'left',                         // edit button position (left|right|top|bottom|)

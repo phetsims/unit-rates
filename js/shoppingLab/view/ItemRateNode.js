@@ -18,7 +18,7 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var Range = require( 'DOT/Range' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -56,8 +56,8 @@ define( function( require ) {
     this.itemTypeProperty = itemTypeProperty;
     this.itemRateProperty = itemRateProperty;
     this.itemPickerIndex = APPLES_INDEX;
-    this.costRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
-    this.countRangeProperty = new Property( new RangeWithValue( 1, 20 ) );
+    this.costRangeProperty = new Property( new Range( 1, 20 ) );
+    this.countRangeProperty = new Property( new Range( 1, 20 ) );
 
     // @private
     this.itemPickerData = [
