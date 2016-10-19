@@ -134,15 +134,6 @@ define( function( require ) {
       }
     },
 
-    /**
-     * Moves the node back to the position before the last drag
-     *
-     * @public
-     */
-    restoreLastPosition: function() {
-      this.item.setPosition( this.lastPosition.x, this.lastPosition.y, true );
-    },
-
     // @public
     dispose: function() {
 
