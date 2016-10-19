@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var PropertySet = require( 'AXON/PropertySet' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
@@ -24,18 +23,21 @@ define( function( require ) {
    */
   function TrackGroup( elapsedTimeProperty, flagArrowsVisibleProperty ) {
 
-    PropertySet.call( this, {
-      miles: 100,                            // used in rate adjustment spinner
-      milesRange: new RangeWithValue( 20, 100 ),  // used in rate adjustment spinner
-      hours: 1,                              // used in rate adjustment spinner
-      hoursRange: new RangeWithValue( 1, 10 ),    // used in rate adjustment spinner
-      rate: 200,                            // the unit rate for the track
-      carFinished: false,                          // flag set when the car passes the finish point
-      numberLineMaxHours: 1,                              // the number line's maximum bottom value
-      trackPixelLength: 600,                            // the length of the track in pixels
-      trackMiles: MAX_MILES,                      // the length of the track in miles
-      trackHours: 1                               // the length of the track in hours
-    } );
+    //TODO these Properties look like they should be constants
+    this.milesRangeProperty = new Property( new RangeWithValue( 20, 100 ) ); // used in rate adjustment spinner
+    this.hoursRangeProperty = new Property( new RangeWithValue( 1, 10 ) ); // used in rate adjustment spinner
+    this.numberLineMaxHoursProperty = new Property( 1 ); // the number line's maximum bottom value
+    this.trackHoursProperty = new Property( 1 ); // the length of the track in hours
+
+    this.milesProperty = new Property( 100 ); // used in rate adjustment spinner
+    this.hoursProperty = new Property( 1 ); // used in rate adjustment spinner
+
+    //TODO derive from milesProperty and hoursProperty?
+    this.rateProperty = new Property( 200 ); // the unit rate for the track
+
+    this.carFinishedProperty = new Property( false ); // flag set when the car passes the finish point
+    this.trackPixelLengthProperty = new Property( 600 ); // the length of the track in pixels
+    this.trackMilesProperty = new Property( MAX_MILES ); // the length of the track in miles
 
     var self = this;
 
@@ -69,7 +71,7 @@ define( function( require ) {
 
   unitRates.register( 'TrackGroup', TrackGroup );
 
-  return inherit( PropertySet, TrackGroup, {
+  return inherit( Object, TrackGroup, {
 
     // no dispose, persists for the lifetime of the sim.
 
@@ -84,17 +86,20 @@ define( function( require ) {
 
     // @public
     reset: function() {
+
       this.numberline.reset();
+
+      // reset Properties
       this.milesProperty.reset();
       this.milesRangeProperty.reset();
       this.hoursProperty.reset();
       this.hoursRangeProperty.reset();
       this.rateProperty.reset();
+      this.carFinishedProperty.reset();
       this.numberLineMaxHoursProperty.reset();
       this.trackPixelLengthProperty.reset();
       this.trackMilesProperty.reset();
       this.trackHoursProperty.reset();
-      this.carFinishedProperty.reset();
     }
 
   } ); // inherit
