@@ -12,7 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var NumberLine = require( 'UNIT_RATES/common/shopping/model/NumberLine' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
   var Scale = require( 'UNIT_RATES/common/shopping/model/Scale' );
   var Shelf = require( 'UNIT_RATES/common/shopping/model/Shelf' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -22,12 +22,12 @@ define( function( require ) {
    */
   function URShoppingModel() {
 
-    // @public (all)
-    PropertySet.call( this, {
-      itemData: ItemData.APPLES,      // the currently selected item data type
-      itemType: ItemData.APPLES.type, // the currently selected item type
-      itemRate: ItemData.APPLES.rate  // the currently selected item rate
-    } );
+    // @public
+    this.itemDataProperty = new Property( ItemData.APPLES ); // the currently selected item data type
+
+    //TODO why do we need these 2 Properties? they are fields of this.itemDataProperty.value
+    this.itemTypeProperty = new Property( ItemData.APPLES.type ); // the currently selected item type
+    this.itemRateProperty = new Property( ItemData.APPLES.rate ); // the currently selected item rate
 
     var self = this;
 
@@ -56,9 +56,22 @@ define( function( require ) {
 
   unitRates.register( 'URShoppingModel', URShoppingModel );
 
-  return inherit( PropertySet, URShoppingModel, {
+  return inherit( Object, URShoppingModel, {
 
     // no dispose, persists for the lifetime of the sim.
+
+    // @public
+    reset: function() {
+
+      this.shelf.reset();
+      this.scale.reset();
+      this.numberLine.reset();
+
+      // Properties
+      this.itemDataProperty.reset();
+      this.itemTypeProperty.reset();
+      this.itemRateProperty.reset();
+    },
 
     /**
      * create rate entries for each item type (i.e. apples, carrots, etc..)
@@ -117,14 +130,6 @@ define( function( require ) {
 
         this.numberLine.createMarker( correctCost, correctUnit, {} );
       }
-    },
-
-    // @public
-    reset: function() {
-      this.shelf.reset();
-      this.scale.reset();
-      this.numberLine.reset();
-      PropertySet.prototype.reset.call( this );
     }
 
   } ); // inherit

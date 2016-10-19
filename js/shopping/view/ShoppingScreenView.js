@@ -170,13 +170,13 @@ define( function( require ) {
 
       switch( sceneMode ) {
         case SceneMode.FRUIT:
-          this.model.itemData = fruitItemData;
+          this.model.itemDataProperty.value = fruitItemData;
           break;
         case SceneMode.PRODUCE:
-          this.model.itemData = produceItemData;
+          this.model.itemDataProperty.value = produceItemData;
           break;
         case SceneMode.CANDY:
-          this.model.itemData = candyItemData;
+          this.model.itemDataProperty.value = candyItemData;
           break;
         default:
           assert && assert( false, 'Unrecognized scene' );
