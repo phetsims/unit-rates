@@ -10,15 +10,15 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ChallengesNode = require( 'UNIT_RATES/shopping/view/ChallengesNode' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
+  var Property = require( 'AXON/Property' );
+  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URShoppingScreenView = require( 'UNIT_RATES/common/shopping/view/URShoppingScreenView' );
-  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
-  var ChallengesNode = require( 'UNIT_RATES/shopping/view/ChallengesNode' );
-  var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
-  var Property = require( 'AXON/Property' );
 
   /**
    * @param {ShoppingModel} model

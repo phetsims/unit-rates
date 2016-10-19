@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
   var ShoppingModel = require( 'UNIT_RATES/shopping/model/ShoppingModel' );
   var ShoppingScreenView = require( 'UNIT_RATES/shopping/view/ShoppingScreenView' );

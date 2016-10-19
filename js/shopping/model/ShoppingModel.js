@@ -12,8 +12,8 @@ define( function( require ) {
   // modules
   var Challenges = require( 'UNIT_RATES/shopping/model/Challenges' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URShoppingModel = require( 'UNIT_RATES/common/shopping/model/URShoppingModel' );
 
   /**

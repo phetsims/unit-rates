@@ -10,9 +10,9 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLineMarker = require( 'UNIT_RATES/common/model/URNumberLineMarker' );
-  var PropertySet = require( 'AXON/PropertySet' );
 
   /**
    * @param {Property.<number>} rateProperty - current unit rate

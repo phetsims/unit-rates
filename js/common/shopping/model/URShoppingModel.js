@@ -10,12 +10,12 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Shelf = require( 'UNIT_RATES/common/shopping/model/Shelf' );
-  var Scale = require( 'UNIT_RATES/common/shopping/model/Scale' );
-  var NumberLine = require( 'UNIT_RATES/common/shopping/model/NumberLine' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var NumberLine = require( 'UNIT_RATES/common/shopping/model/NumberLine' );
+  var PropertySet = require( 'AXON/PropertySet' );
+  var Scale = require( 'UNIT_RATES/common/shopping/model/Scale' );
+  var Shelf = require( 'UNIT_RATES/common/shopping/model/Shelf' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @constructor

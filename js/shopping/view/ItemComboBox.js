@@ -9,17 +9,17 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
-  var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
-  var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
+  var ComboBox = require( 'SUN/ComboBox' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var ComboBox = require( 'SUN/ComboBox' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {SceneMode} sceneMode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )

@@ -13,9 +13,9 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var Movable = require( 'UNIT_RATES/common/model/Movable' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {number} correctTopValue - the correct value for the top X-axis entry

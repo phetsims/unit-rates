@@ -10,11 +10,11 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
-  var Property = require( 'AXON/Property' );
 
   // constants
   var MAX_MILES = 200;    // This is the fixed distance of the track (and top number line axis) in miles

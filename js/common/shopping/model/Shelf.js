@@ -10,9 +10,9 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var ItemCollection = require( 'UNIT_RATES/common/shopping/model/ItemCollection' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {Property.<ItemData>} itemTypeProperty - the currently selected item type

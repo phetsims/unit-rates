@@ -10,8 +10,8 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**

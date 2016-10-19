@@ -11,10 +11,11 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
-  var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
   var Property = require( 'AXON/Property' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URNumberLine = require( 'UNIT_RATES/common/model/URNumberLine' );
+
 
   /**
    * @param {Property.<ItemData>} itemTypeProperty - the currently selected item
