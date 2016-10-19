@@ -64,7 +64,7 @@ define( function( require ) {
 
       // Get the item's image name
       var imageName = null;
-      var singleItem = ( item.countProperty.get() === 1 );
+      var singleItem = ( item.countProperty.value === 1 );
       switch( item.type ) {
 
         // fruits

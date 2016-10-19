@@ -464,10 +464,10 @@ define( function( require ) {
 
         if ( x > ( this.graphBounds.maxX ) ) {
           x = this.outOfRangeMarkerX;
-          markerNode.marker.outOfRangeProperty.set( true );
+          markerNode.marker.outOfRangeProperty.value = true;
         }
         else {
-          markerNode.marker.outOfRangeProperty.set( false );
+          markerNode.marker.outOfRangeProperty.value = false;
         }
       }
 

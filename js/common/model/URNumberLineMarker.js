@@ -130,7 +130,7 @@ define( function( require ) {
       if ( !allCorrect && value >= 0 ) {
         this.topQnA.answerValue = Number( value );
         this.bottomQnA.answerValue = value / this.rateProperty.value;
-        this.bottomQnA.valueProperty.set( Number( -1 ) );
+        this.bottomQnA.valueProperty.value = Number( -1 );
       }
     },
 
@@ -146,7 +146,7 @@ define( function( require ) {
       if ( !allCorrect && value >= 0 ) {
         this.bottomQnA.answerValue = Number( value );
         this.topQnA.answerValue = value * this.rateProperty.value;
-        this.topQnA.valueProperty.set( Number( -1 ) );
+        this.topQnA.valueProperty.value = Number( -1 );
       }
     },
 
@@ -197,11 +197,11 @@ define( function( require ) {
 
       var topPrecision = this.topQnA.getAnswerPrecision();
       var bottomPrecision = this.bottomQnA.getAnswerPrecision();
-      this.highPrecisionProperty.set( topPrecision >= this.topHighPrecision || bottomPrecision >= this.bottomHighPrecision );
+      this.highPrecisionProperty.value = ( topPrecision >= this.topHighPrecision || bottomPrecision >= this.bottomHighPrecision );
 
       var allCorrect = ( this.topQnA.isAnswerCorrect() && this.bottomQnA.isAnswerCorrect() );
 
-      this.editableProperty.set( !allCorrect || this.outOfRangeProperty.value );
+      this.editableProperty.value = ( !allCorrect || this.outOfRangeProperty.value );
 
       return allCorrect;
     },

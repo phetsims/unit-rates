@@ -77,8 +77,8 @@ define( function( require ) {
     this.milesPicker = new NumberPicker( this.groupModel.milesProperty, this.groupModel.milesRangeProperty, _.extend( {
       left: X_MARGIN,
       top: Y_MARGIN,
-      upFunction: function() { return self.groupModel.milesProperty.get() + 5; }, // move miles in increments of 5
-      downFunction: function() { return self.groupModel.milesProperty.get() - 5; }
+      upFunction: function() { return self.groupModel.milesProperty.value + 5; }, // move miles in increments of 5
+      downFunction: function() { return self.groupModel.milesProperty.value - 5; }
     }, pickerOptions ) );
     this.contentNode.addChild( this.milesPicker );
 

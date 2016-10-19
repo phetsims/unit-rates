@@ -205,7 +205,7 @@ define( function( require ) {
      * @public
      */
     setValue: function( value ) {
-      this.keypad.digitStringProperty.set( value );
+      this.keypad.digitStringProperty.value = value;
     },
 
     /**
