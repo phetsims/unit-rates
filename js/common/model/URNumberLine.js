@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URNumberLineMarker = require( 'UNIT_RATES/common/model/URNumberLineMarker' );
 
@@ -30,15 +30,14 @@ define( function( require ) {
       markerBottomHighPrecision: 2     // # decimals which makes a marker a 'high precision', potentially display differently
     }, options );
 
-    PropertySet.call( this, {
+    // @public
+    this.markersProperty = new Property( [] ); //TODO use ObservableArray?
 
-      // @public
-      markers: [],
-      markerTopDecimals: options.markerTopDecimals,
-      markerBottomDecimals: options.markerBottomDecimals,
-      markerTopHighPrecision: options.markerTopHighPrecision,
-      markerBottomHighPrecision: options.markerBottomHighPrecision
-    } );
+    //TODO these appear to be private, should they be constants instead of Properties?
+    this.markerTopDecimalsProperty = new Property( options.markerTopDecimals );
+    this.markerBottomDecimalsProperty = new Property( options.markerBottomDecimals );
+    this.markerTopHighPrecisionProperty = new Property( options.markerTopHighPrecision );
+    this.markerBottomHighPrecisionProperty = new Property( options.markerBottomHighPrecision );
 
     //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.rateProperty = rateProperty;
@@ -48,7 +47,31 @@ define( function( require ) {
 
   unitRates.register( 'URNumberLine', URNumberLine );
 
-  return inherit( PropertySet, URNumberLine, {
+  return inherit( Object, URNumberLine, {
+
+    // @public
+    reset: function() {
+      this.removeAllMarkers();
+
+      // Properties
+      this.markersProperty.reset();
+      this.markerTopDecimalsProperty.reset();
+      this.markerBottomDecimalsProperty.reset();
+      this.markerTopHighPrecisionProperty.reset();
+      this.markerBottomHighPrecisionProperty.reset();
+    },
+
+    // @public
+    dispose: function() {
+      this.removeAllMarkers();
+
+      // Properties
+      this.markersProperty.dispose();
+      this.markerTopDecimalsProperty.dispose();
+      this.markerBottomDecimalsProperty.dispose();
+      this.markerTopHighPrecisionProperty.dispose();
+      this.markerBottomHighPrecisionProperty.dispose();
+    },
 
     /**
      * creates a number line marker
@@ -164,17 +187,6 @@ define( function( require ) {
      */
     forEachMarker: function( callback ) {
       this.markersProperty.value.forEach( callback );
-    },
-
-    // @public
-    reset: function() {
-      this.removeAllMarkers();
-    },
-
-    // @public
-    dispose: function() {
-      this.removeAllMarkers();
-      PropertySet.prototype.dispose.call( this );
     }
 
   } ); // inherit
