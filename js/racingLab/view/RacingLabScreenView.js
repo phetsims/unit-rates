@@ -86,14 +86,14 @@ define( function( require ) {
     this.addChild( this.trackGroup2Node );
 
     // play/pause button
-    this.goStopButton = new BooleanRoundToggleButton(
-      new Image( stopButtonImage, { scale: 0.5 } ),
-      new Image( goButtonIconImage, { scale: 0.5 } ),
-      model.runningProperty, {
-        right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
-        centerY: this.trackGroup2Node.top - URConstants.PANEL_SPACING / 2,
-        radius: 45
-      } );
+    var goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
+    var stopIcon = new Image( stopButtonImage, { scale: 0.5 } );
+    stopIcon.center = goIcon.center;
+    this.goStopButton = new BooleanRoundToggleButton( stopIcon, goIcon, model.runningProperty, {
+      right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
+      centerY: this.trackGroup2Node.top - URConstants.PANEL_SPACING / 2,
+      radius: 45
+    } );
     this.addChild( this.goStopButton );
 
     // restart button which moves the car back to the start line. Is only visible when not racing
