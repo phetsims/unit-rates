@@ -45,6 +45,14 @@ define( function( require ) {
   var MARKER_SIZE = 10;    // interval marker size
   var MARKER_LINE_WIDTH = 1.0;
   var MILEAGE_FONT = new PhetFont( 12 );
+  var ARROW_LENGTH = 28;
+  var ARROW_OPTIONS = {
+    fill: 'rgb( 33, 190, 156 )',
+    lineWidth: 0.5,
+    headWidth: 21,
+    headHeight: 18,
+    tailWidth: 8
+  };
 
   /**
    * @param {TrackGroup} model
@@ -139,19 +147,11 @@ define( function( require ) {
     }
 
     // green arrows around the finish flag
-    var arrowLength = 28;
-    var arrowOptions = {
-      fill: 'rgb( 33, 190, 156 )',
-      lineWidth: 0.5,
-      headWidth: 21,
-      headHeight: 18,
-      tailWidth: 8
-    };
     this.flagArrows = new HBox( {
       spacing: 9,
       children: [
-        new ArrowNode( 0, 0, -arrowLength, 0, arrowOptions ),
-        new ArrowNode( 0, 0, arrowLength, 0, arrowOptions )
+        new ArrowNode( 0, 0, -ARROW_LENGTH, 0, ARROW_OPTIONS ),
+        new ArrowNode( 0, 0, ARROW_LENGTH, 0, ARROW_OPTIONS )
       ],
       centerX: this.finishPoint.x,
       bottom: this.trackOrigin.y - 2
