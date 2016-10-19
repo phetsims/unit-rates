@@ -11,7 +11,6 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
@@ -28,13 +27,11 @@ define( function( require ) {
     //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     // create empty item arrays
     this.initializeArrays();
-
-    Object.call( this );
   }
 
   unitRates.register( 'ItemCollection', ItemCollection );
 
-  return inherit( PropertySet, ItemCollection, {
+  return inherit( Object, ItemCollection, {
 
     /**
      * Creates empty arrays for all item types (i.e. apples, carrots, red candy, etc..)
