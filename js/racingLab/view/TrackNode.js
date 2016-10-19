@@ -167,8 +167,8 @@ define( function( require ) {
     this.checkerFlagNode.addDragListeners(
       function() {
         self.trackGroup.flagArrowsVisibleProperty.value = false;  // start drag
-      }
-      , this.updateTrack.bind( this ),                            // drag
+      },
+      this.updateTrack.bind( this ),                            // drag
       null                                                        // end drag
     );
 
@@ -218,7 +218,7 @@ define( function( require ) {
      */
     updateTrack: function() {
 
-      this.finishPoint.x = this.checkerFlagNode.item.positionProperty.value.x + this.checkerFlagNode.width / 2;
+      this.finishPoint.x = this.checkerFlagNode.item.positionProperty.value.x;
 
       // adjust track lengths
       this.startFinishPath.setShape( new Shape()
