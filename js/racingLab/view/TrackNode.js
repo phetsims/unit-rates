@@ -171,6 +171,7 @@ define( function( require ) {
       this.updateTrack.bind( this ),                            // drag
       null                                                        // end drag
     );
+    this.finishFlagNode.touchArea = this.finishFlagNode.localBounds.dilatedX( 20 );
 
     // mileage text beneath the finish flag
     this.mileageText = new Text( '', {
