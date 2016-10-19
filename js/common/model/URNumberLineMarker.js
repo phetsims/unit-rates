@@ -14,6 +14,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Movable = require( 'UNIT_RATES/common/model/Movable' );
+  var Property = require( 'AXON/Property' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -50,9 +51,9 @@ define( function( require ) {
     this.bottomHighPrecision = options.bottomHighPrecision;
 
     // @public
-    this.addProperty( 'outOfRange', false );
-    this.addProperty( 'highPrecision', false );
-    this.addProperty( 'editable', options.editable );
+    this.outOfRangeProperty = new Property( false );
+    this.highPrecisionProperty = new Property( false );
+    this.editableProperty = new Property( options.editable );
 
     // non-editable markers are automatically 'correct'
     if ( !this.editableProperty.value ) {
@@ -76,6 +77,46 @@ define( function( require ) {
   unitRates.register( 'URNumberLineMarker', URNumberLineMarker );
 
   return inherit( Movable, URNumberLineMarker, {
+
+    // @public
+    reset: function() {
+
+      Movable.prototype.reset.call( this );
+
+      this.outOfRangeProperty.reset();
+      this.highPrecisionProperty.reset();
+      this.editableProperty.reset();
+
+      if ( this.topQnA ) {
+        this.topQnA.answerValue = Number( 0 );
+        this.topQnA.valueProperty.value = Number( 0 );
+      }
+
+      if ( this.bottomQnA ) {
+        this.bottomQnA.answerValue = Number( 0 );
+        this.bottomQnA.valueProperty.value = Number( 0 );
+      }
+    },
+
+    // @public
+    dispose: function() {
+
+      Movable.prototype.dispose.call( this );
+
+      this.topQnA.valueProperty.unlink( this.onTopValueChangeBound );
+      this.topQnA.dispose();
+
+      this.bottomQnA.valueProperty.unlink( this.onBottomValueChangeBound );
+      this.bottomQnA.dispose();
+
+      //TODO call dispose for this Property?
+      this.rateProperty.unlink( this.onRateChangeBound );
+
+      //TODO call dispose for these Properties?
+      this.outOfRangeProperty.unlinkAll();
+      this.highPrecisionProperty.unlinkAll();
+      this.editableProperty.unlinkAll();
+    },
 
     /**
      * On incorrect top values, assign new correct bottom answers
@@ -174,40 +215,6 @@ define( function( require ) {
      */
     isRemovable: function() {
       return ( this.editableProperty.value || this.highPrecisionProperty.value );
-    },
-
-    // @public
-    reset: function() {
-
-      if ( this.topQnA ) {
-        this.topQnA.answerValue = Number( 0 );
-        this.topQnA.valueProperty.value = Number( 0 );
-      }
-
-      if ( this.bottomQnA ) {
-        this.bottomQnA.answerValue = Number( 0 );
-        this.bottomQnA.valueProperty.value = Number( 0 );
-      }
-
-      this.highPrecisionProperty.reset();
-      this.editableProperty.reset();
-    },
-
-    // @public
-    dispose: function() {
-      this.topQnA.valueProperty.unlink( this.onTopValueChangeBound );
-      this.topQnA.dispose();
-
-      this.bottomQnA.valueProperty.unlink( this.onBottomValueChangeBound );
-      this.bottomQnA.dispose();
-
-      this.rateProperty.unlink( this.onRateChangeBound );
-
-      this.outOfRangeProperty.unlinkAll();
-      this.highPrecisionProperty.unlinkAll();
-      this.editableProperty.unlinkAll();
-
-      Movable.prototype.dispose.call( this );
     }
 
   } ); // inherit

@@ -288,7 +288,7 @@ define( function( require ) {
 
           // check if the node is in a correct position
           var index = availablePositions.findIndex( function( element, index, array ) {
-            return element.equals( itemNode.item.position );
+            return element.equals( itemNode.item.positionProperty.value );
           }, this );
 
           if ( index < 0 ) {
@@ -325,9 +325,9 @@ define( function( require ) {
           var itemNode = allNodes[ j ];
 
           // only consider nodes that are not on the bottom
-          if ( Util.toFixed( itemNode.item.position.y, 2 ) !== self.stackedYPositions[ 0 ] ) {
+          if ( Util.toFixed( itemNode.item.positionProperty.value.y, 2 ) !== self.stackedYPositions[ 0 ] ) {
 
-            var nodeDistance = itemNode.item.position.distance( position );
+            var nodeDistance = itemNode.item.positionProperty.value.distance( position );
             if ( nodeDistance < 1.5 * itemNode.width ) {
               // move the node
               itemNode.item.setPosition( position.x, position.y, animate );

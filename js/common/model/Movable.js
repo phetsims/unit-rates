@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -27,19 +27,25 @@ define( function( require ) {
       position: new Vector2( 0, 0 ) // default position
     }, options );
 
-    PropertySet.call( this, {
+    // @public
+    this.positionProperty = new Property( options.position );
 
-      // @public
-      xAxisEnabled: options.xAxisEnabled,
-      yAxisEnabled: options.yAxisEnabled,
-      bounds: options.bounds,
-      position: options.position
-    } );
+    //TODO these look like they should be private constants, not Properties
+    this.xAxisEnabledProperty = new Property( options.xAxisEnabled );
+    this.yAxisEnabledProperty = new Property( options.yAxisEnabled );
+    this.boundsProperty = new Property( options.bounds );
   }
 
   unitRates.register( 'Movable', Movable );
 
-  return inherit( PropertySet, Movable, {
+  return inherit( Object, Movable, {
+
+    reset: function() {
+      this.xAxisEnabledProperty.reset();
+      this.yAxisEnabledProperty.reset();
+      this.boundsProperty.reset();
+      this.positionProperty.reset();
+    },
 
     /**
      * Update the item position property, tween if animate specified
@@ -96,8 +102,11 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      this.positionProperty.unlinkAll();
-      PropertySet.prototype.dispose.call( this );
+      this.positionProperty.unlinkAll(); //TODO why is this necessary?
+      this.xAxisEnabledProperty.dispose();
+      this.yAxisEnabledProperty.dispose();
+      this.boundsProperty.dispose();
+      this.positionProperty.dispose();
     }
 
   } ); // inherit
