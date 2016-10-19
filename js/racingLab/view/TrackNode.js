@@ -83,6 +83,7 @@ define( function( require ) {
     this.milesPerPixel = ( this.trackWidth - this.trackStartOffset ) / TRACK_MAX_DISTANCE;
     this.intervalCount = TRACK_MAX_DISTANCE / TRACK_INTERVAL_DISTANCE;
 
+    //TODO this is a hack that obfuscates initialization of startPoint, finishPoint, endPoint
     this.resetTrack();
 
     var childNodes = [];
@@ -158,12 +159,12 @@ define( function( require ) {
     childNodes.push( this.flagArrows );
 
     // checkered finish flag
-    this.checkerFlagNode = new FinishFlagNode( this.finishPoint,
+    this.finishFlagNode = new FinishFlagNode( this.finishPoint,
       new Bounds2( this.startPoint.x, this.startPoint.y, this.trackWidth, this.trackHeight ), {
         imageScale: 0.5
       } );
-    childNodes.push( this.checkerFlagNode );
-    this.checkerFlagNode.addDragListeners(
+    childNodes.push( this.finishFlagNode );
+    this.finishFlagNode.addDragListeners(
       function() {
         self.trackGroup.flagArrowsVisibleProperty.value = false;  // start drag
       },
@@ -174,7 +175,7 @@ define( function( require ) {
     // mileage text beneath the finish flag
     this.mileageText = new Text( '', {
       centerX: this.finishPoint.x,
-      top: this.checkerFlagNode.bottom + MARKER_SIZE + 2,
+      top: this.finishFlagNode.bottom + MARKER_SIZE + 2,
       font: MILEAGE_FONT,
       maxWidth: 2 * options.trackStartOffset
     } );
@@ -183,7 +184,7 @@ define( function( require ) {
     // timer
     this.timer = new TimerDisplayNode( {
       centerX: this.finishPoint.x,
-      bottom: this.checkerFlagNode.top - URConstants.PANEL_SPACING / 2,
+      bottom: this.finishFlagNode.top - URConstants.PANEL_SPACING / 2,
       hiddenTimeText: options.timerTitle
     } );
     childNodes.push( this.timer );
@@ -217,7 +218,7 @@ define( function( require ) {
      */
     updateTrack: function() {
 
-      this.finishPoint.x = this.checkerFlagNode.item.positionProperty.value.x;
+      this.finishPoint.x = this.finishFlagNode.item.positionProperty.value.x;
 
       // adjust track lengths
       this.startFinishPath.setShape( new Shape()
@@ -285,7 +286,7 @@ define( function( require ) {
     reset: function() {
       this.timer.reset();
       this.resetTrack();
-      this.checkerFlagNode.item.setPosition( this.finishPoint.x, this.finishPoint.y, false );
+      this.finishFlagNode.item.setPosition( this.finishPoint.x, this.finishPoint.y, false );
       this.updateTrack();
       this.updateCarTimer( 0 );
     }
