@@ -27,7 +27,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // images
-  var greenFlagImage = require( 'image!UNIT_RATES/green_flag.png' );
+  var startFlagImage = require( 'image!UNIT_RATES/start_flag.png' );
 
   // strings
   var milesString = require( 'string!UNIT_RATES/miles' );
@@ -113,7 +113,7 @@ define( function( require ) {
     childNodes.push( this.finishEndPath );
 
     // start flag
-    this.greenFlagNode = new Image( greenFlagImage, {
+    this.greenFlagNode = new Image( startFlagImage, {
       scale: 0.5,
       left: this.startPoint.x,
       bottom: this.trackOrigin.y
