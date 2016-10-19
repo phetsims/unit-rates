@@ -24,7 +24,7 @@ define( function( require ) {
   function Scale( itemTypeProperty, itemRateProperty ) {
 
     // @public (all)
-    ItemCollection.call( this, {} );
+    ItemCollection.call( this );
 
     var self = this;
 
