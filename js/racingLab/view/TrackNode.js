@@ -113,17 +113,17 @@ define( function( require ) {
     childNodes.push( this.finishEndPath );
 
     // start flag
-    this.greenFlagNode = new Image( startFlagImage, {
+    this.startFlagNode = new Image( startFlagImage, {
       scale: 0.5,
       left: this.startPoint.x,
       bottom: this.trackOrigin.y
     } );
-    childNodes.push( this.greenFlagNode );
+    childNodes.push( this.startFlagNode );
 
     // race car
     this.carNode = new Image( carImageName, {
       scale: 0.5,
-      right: this.greenFlagNode.left,
+      right: this.startFlagNode.left,
       bottom: this.trackOrigin.y
     } );
     childNodes.push( this.carNode );
@@ -262,7 +262,7 @@ define( function( require ) {
     updateCarTimer: function( elapsedTime ) {
 
       // update the car
-      var carPosition = this.greenFlagNode.left + ( this.trackGroup.rateProperty.value * elapsedTime * this.milesPerPixel );
+      var carPosition = this.startFlagNode.left + ( this.trackGroup.rateProperty.value * elapsedTime * this.milesPerPixel );
       this.carNode.right = ( carPosition < this.finishPoint.x ? carPosition : this.finishPoint.x );
 
       // update the timer text
