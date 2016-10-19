@@ -38,6 +38,7 @@ define( function( require ) {
     var adjustedBounds = new Bounds2( bounds.minX - imageNode.width / 2, bounds.minY - imageNode.height,
       bounds.maxX - imageNode.width / 2, bounds.maxY );
 
+    //TODO this should be created in model, not view
     // @public
     this.item = new Movable( {
       yAxisEnabled: false,      // horizontal movement only
@@ -53,18 +54,6 @@ define( function( require ) {
 
   unitRates.register( 'FinishFlagNode', FinishFlagNode );
 
-  return inherit( MovableNode, FinishFlagNode, {
-
-    /**
-     * Returns the position of the flag
-     *
-     * @return {Vector2}
-     * @public
-     */
-    getCurrentPosition: function() {
-      return this.item.positionProperty.value;
-    }
-
-  } ); // inherit
+  return inherit( MovableNode, FinishFlagNode );
 
 } ); //define

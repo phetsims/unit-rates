@@ -218,7 +218,7 @@ define( function( require ) {
      */
     updateTrack: function() {
 
-      this.finishPoint.x = this.checkerFlagNode.getCurrentPosition().x + this.checkerFlagNode.width / 2;
+      this.finishPoint.x = this.checkerFlagNode.item.positionProperty.value.x + this.checkerFlagNode.width / 2;
 
       // adjust track lengths
       this.startFinishPath.setShape( new Shape()
