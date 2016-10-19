@@ -41,12 +41,6 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Mariah Hermsmeyer"
   },
-  "checkered_flag.png": {
-    "text": [ "Copyright 2016 University of Colorado Boulder"],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amy Rouinfar"
-  },
   "cucumber.png": {
     "text": [ "Copyright 2016 University of Colorado Boulder"],
     "projectURL": "http://phet.colorado.edu",
@@ -58,6 +52,12 @@
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Mariah Hermsmeyer"
+  },
+  "finish_flag.png": {
+    "text": [ "Copyright 2016 University of Colorado Boulder"],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Amy Rouinfar"
   },
   "go_button_icon.png": {
     "text": [ "Copyright 2016 University of Colorado Boulder"],

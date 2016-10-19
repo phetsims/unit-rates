@@ -16,22 +16,24 @@ define( function( require ) {
   var MovableNode = require( 'UNIT_RATES/common/view/MovableNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
+  
+  // images
+  var finishFlagImage = require( 'image!UNIT_RATES/finish_flag.png' );
 
   /**
-   * @param {HTMLImageElement} image - flag image
    * @param {Vector2} position - starting position
    * @param {Bounds2} bounds - valid area the flag can be moved
    * @param {Object} [options]
    * @constructor
    */
-  function FinishFlagNode( image, position, bounds, options ) {
+  function FinishFlagNode( position, bounds, options ) {
 
     options = _.extend( {
       imageScale: 1.0,
       cursor: 'pointer'
     }, options );
 
-    var imageNode = new Image( image, { scale: options.imageScale } );
+    var imageNode = new Image( finishFlagImage, { scale: options.imageScale } );
     var origin = new Vector2( position.x - imageNode.width / 2, position.y - imageNode.height );
 
     // adjust the bounds to account for the shape of the flag

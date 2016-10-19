@@ -27,7 +27,6 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // images
-  var checkerFlagImage = require( 'image!UNIT_RATES/checkered_flag.png' );
   var greenFlagImage = require( 'image!UNIT_RATES/green_flag.png' );
 
   // strings
@@ -159,7 +158,7 @@ define( function( require ) {
     childNodes.push( this.flagArrows );
 
     // checkered finish flag
-    this.checkerFlagNode = new FinishFlagNode( checkerFlagImage, this.finishPoint,
+    this.checkerFlagNode = new FinishFlagNode( this.finishPoint,
       new Bounds2( this.startPoint.x, this.startPoint.y, this.trackWidth, this.trackHeight ), {
         imageScale: 0.5
       } );
