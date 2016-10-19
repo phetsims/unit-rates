@@ -9,8 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var FinishFlagNode = require( 'UNIT_RATES/racingLab/view/FinishFlagNode' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -26,7 +28,6 @@ define( function( require ) {
 
   // images
   var checkerFlagImage = require( 'image!UNIT_RATES/checkered_flag.png' );
-  var doubleArrowImage = require( 'image!UNIT_RATES/double_arrow.png' );
   var greenFlagImage = require( 'image!UNIT_RATES/green_flag.png' );
 
   // strings
@@ -137,10 +138,22 @@ define( function( require ) {
       childNodes.push( this.intervalNodes[ i ] );
     }
 
-    // green arrows initial around teh finish flag
-    this.flagArrows = new Image( doubleArrowImage, {
-      scale: 0.5,
-      centerX: this.finishPoint.x + 1,
+    // green arrows around the finish flag
+    var arrowLength = 28;
+    var arrowOptions = {
+      fill: 'rgb( 33, 190, 156 )',
+      lineWidth: 0.5,
+      headWidth: 21,
+      headHeight: 18,
+      tailWidth: 8
+    };
+    this.flagArrows = new HBox( {
+      spacing: 9,
+      children: [
+        new ArrowNode( 0, 0, -arrowLength, 0, arrowOptions ),
+        new ArrowNode( 0, 0, arrowLength, 0, arrowOptions )
+      ],
+      centerX: this.finishPoint.x,
       bottom: this.trackOrigin.y - 2
     } );
     childNodes.push( this.flagArrows );
