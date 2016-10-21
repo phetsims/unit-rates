@@ -16,7 +16,7 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/model/ItemData' );
   var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );

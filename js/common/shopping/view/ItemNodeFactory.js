@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var Image = require( 'SCENERY/nodes/Image' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/model/ItemData' );
   var MovableNode = require( 'UNIT_RATES/common/view/MovableNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );

@@ -12,7 +12,7 @@ define( function( require ) {
   var AccordionBox = require( 'SUN/AccordionBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/model/ItemData' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Path = require( 'SCENERY/nodes/Path' );

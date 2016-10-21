@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/model/ItemData' );
   var QuestionAnswer = require( 'UNIT_RATES/common/model/QuestionAnswer' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );

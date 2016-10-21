@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
+  var ItemData = require( 'UNIT_RATES/common/shopping/model/ItemData' );
   var Movable = require( 'UNIT_RATES/common/model/Movable' );
   var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
