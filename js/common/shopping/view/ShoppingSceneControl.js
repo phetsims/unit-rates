@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function SceneButtonGroupNode( sceneModeProperty, options ) {
+  function ShoppingSceneControl( sceneModeProperty, options ) {
 
     options = _.extend( {
       orientation: 'horizontal',
@@ -47,9 +47,9 @@ define( function( require ) {
     ], options );
   }
 
-  unitRates.register( 'SceneButtonGroupNode', SceneButtonGroupNode );
+  unitRates.register( 'ShoppingSceneControl', ShoppingSceneControl );
 
-  return inherit( RadioButtonGroup, SceneButtonGroupNode, {
+  return inherit( RadioButtonGroup, ShoppingSceneControl, {
 
     // no dispose, persists for the lifetime of the sim.
 

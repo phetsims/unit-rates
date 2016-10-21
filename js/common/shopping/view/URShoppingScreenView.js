@@ -21,7 +21,7 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScaleNode = require( 'UNIT_RATES/common/shopping/view/ScaleNode' );
-  var SceneButtonGroupNode = require( 'UNIT_RATES/common/shopping/view/SceneButtonGroupNode' );
+  var ShoppingSceneControl = require( 'UNIT_RATES/common/shopping/view/ShoppingSceneControl' );
   var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var ShelfNode = require( 'UNIT_RATES/common/shopping/view/ShelfNode' );
@@ -143,11 +143,11 @@ define( function( require ) {
     this.addSubclassScreenNodes();
 
     // scene selection buttons
-    var sceneControlButtons = new SceneButtonGroupNode( this.sceneModeProperty, {
+    var sceneControl = new ShoppingSceneControl( this.sceneModeProperty, {
       right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN
     } );
-    this.addChild( sceneControlButtons );
+    this.addChild( sceneControl );
 
     // select the scene
     this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this ) );
