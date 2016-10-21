@@ -30,9 +30,9 @@ define( function( require ) {
 
     // @private - mapping from scene to item type
     this.sceneItemData = [];
-    this.sceneItemData[ 'fruit' ] = ItemData.APPLES;
-    this.sceneItemData[ 'produce' ] = ItemData.CARROTS;
-    this.sceneItemData[ 'candy' ] = ItemData.PURPLE_CANDY;
+    this.sceneItemData.fruit = ItemData.APPLES;
+    this.sceneItemData.produce = ItemData.CARROTS;
+    this.sceneItemData.candy = ItemData.PURPLE_CANDY;
 
     URShoppingScreenView.call( this, model, true, this.onNumberLineEraseCallback.bind( this ) );
 
