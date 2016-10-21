@@ -4,6 +4,7 @@
  * The 'Racing Lab' screen
  *
  * @author Dave Schmitz (Schmitzware)
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';

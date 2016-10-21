@@ -4,6 +4,7 @@
  * The 'Shopping Lab' screen
  *
  * @author Dave Schmitz (Schmitzware)
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';
@@ -43,5 +44,4 @@ define( function( require ) {
   unitRates.register( 'ShoppingLabScreen', ShoppingLabScreen );
 
   return inherit( Screen, ShoppingLabScreen );
-
-} ); // define
+} );

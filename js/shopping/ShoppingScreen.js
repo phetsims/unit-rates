@@ -4,6 +4,7 @@
  * The 'Shopping' screen
  *
  * @author Dave Schmitz (Schmitzware)
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';
@@ -44,5 +45,4 @@ define( function( require ) {
   unitRates.register( 'ShoppingScreen', ShoppingScreen );
 
   return inherit( Screen, ShoppingScreen );
-
-} ); // define
+} );
