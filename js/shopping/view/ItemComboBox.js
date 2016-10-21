@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var ComboBox = require( 'SUN/ComboBox' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
   var ItemData = require( 'UNIT_RATES/common/shopping/model/ItemData' );
@@ -89,14 +88,13 @@ define( function( require ) {
       maxWidth: 140
     } );
     var itemIcon = ItemNodeFactory.createItemNode( new Item( itemData.type, 1 ) );
-    var hStrut = new HStrut( 175 - itemText.width - itemIcon.width );  //TODO magic constant 175
 
     var itemNode = new HBox( {
-      spacing: 0,
+      spacing: 10,
       top: 0,
       right: 0,
       align: 'center',
-      children: [ itemText, hStrut, itemIcon ]
+      children: [ itemIcon, itemText ]
     } );
 
     return ComboBox.createItem( itemNode, itemData );
