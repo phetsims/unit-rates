@@ -54,6 +54,7 @@ define( function( require ) {
    * Creates the icon for the 1-car scene, scaled to fit a specified width.
    *
    * @param {number} maxCarWidth
+   * @returns {Node}
    */
   function createOneCarIcon( maxCarWidth ) {
     return createCarImage( redCarImage, maxCarWidth );
@@ -63,6 +64,7 @@ define( function( require ) {
    * Creates the icon for the 2-cars scene, scaled to fit a specified width.
    *
    * @param {number} maxCarWidth
+   * @returns {Node}
    */
   function createTwoCarsIcon( maxCarWidth ) {
     return new VBox( {
@@ -75,10 +77,11 @@ define( function( require ) {
   }
 
   /**
-   * Creates a car Image, scaled to fit a specified width.
+   * Creates a car icon, scaled to fit a specified width.
    *
    * @param {HTMLImageElement} imageFile
    * @param {number} maxCarWidth
+   * @returns {Node}
    */
   function createCarImage( imageFile, maxCarWidth ) {
     var carImage = new Image( imageFile );
