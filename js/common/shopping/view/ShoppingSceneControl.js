@@ -14,7 +14,6 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
-  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
@@ -23,7 +22,7 @@ define( function( require ) {
   var purpleCandyImage = require( 'image!UNIT_RATES/purple_candy.png' );
 
   /**
-   * @param {Property.<SceneMode>} sceneProperty
+   * @param {Property.<string>} sceneProperty
    * @param {Object} [options]
    * @constructor
    */
@@ -38,9 +37,9 @@ define( function( require ) {
     }, options );
 
     RadioButtonGroup.call( this, sceneProperty, [
-      { value: SceneMode.FRUIT, node: createIcon( appleImage ) },
-      { value: SceneMode.PRODUCE, node: createIcon( carrotImage ) },
-      { value: SceneMode.CANDY, node: createIcon( purpleCandyImage ) }
+      { value: 'fruit', node: createIcon( appleImage ) },
+      { value: 'produce', node: createIcon( carrotImage ) },
+      { value: 'candy', node: createIcon( purpleCandyImage ) }
     ], options );
   }
 

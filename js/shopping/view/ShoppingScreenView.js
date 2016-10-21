@@ -15,7 +15,6 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var ItemComboBox = require( 'UNIT_RATES/shopping/view/ItemComboBox' );
   var Property = require( 'AXON/Property' );
-  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URShoppingScreenView = require( 'UNIT_RATES/common/shopping/view/URShoppingScreenView' );
@@ -59,25 +58,25 @@ define( function( require ) {
       } );
       this.addChild( this.challengesNode );
 
-      // item selection - 1 combo box for each scene, hidden and shown based on sceneModeProperty
+      // item selection - 1 combo box for each scene, hidden and shown based on sceneProperty
       var itemComboBoxOptions = {
         left: this.layoutBounds.left + URConstants.SCREEN_HORIZONTAL_MARGIN,
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_VERTICAL_MARGIN
       };
-      this.fruitItemsComboBox = new ItemComboBox( SceneMode.FRUIT, this.fruitItemDataProperty,
+      this.fruitItemsComboBox = new ItemComboBox( 'fruit', this.fruitItemDataProperty,
         this, itemComboBoxOptions );
       this.addChild( this.fruitItemsComboBox );
 
-      this.produceItemsComboBox = new ItemComboBox( SceneMode.PRODUCE, this.produceItemDataProperty,
+      this.produceItemsComboBox = new ItemComboBox( 'produce', this.produceItemDataProperty,
         this, itemComboBoxOptions );
       this.addChild( this.produceItemsComboBox );
 
-      this.candyItemsComboBox = new ItemComboBox( SceneMode.CANDY, this.candyItemDataProperty,
+      this.candyItemsComboBox = new ItemComboBox( 'candy', this.candyItemDataProperty,
         this, itemComboBoxOptions );
       this.addChild( this.candyItemsComboBox );
 
       // select the item based on scene & item selection - no dispose as this never goes away
-      Property.multilink( [ this.sceneModeProperty, this.fruitItemDataProperty, this.produceItemDataProperty,
+      Property.multilink( [ this.sceneProperty, this.fruitItemDataProperty, this.produceItemDataProperty,
         this.candyItemDataProperty ], this.itemSelectionChanged.bind( this ) );
     },
 
@@ -122,64 +121,64 @@ define( function( require ) {
     /**
      * Call when the user selected a new scene
      *
-     * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
-     * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
+     * @param {Property.<string>} scene
+     * @param {Property.<string>} oldScene
      * @override
      * @protected
      */
-    sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
+    sceneSelectionChanged: function( scene, oldScene ) {
 
-      this.hideKeypad();
+      URShoppingScreenView.prototype.sceneSelectionChanged.call( this, scene, oldScene );
 
       // hide/show different combo boxes based on scene selection
-      switch( sceneMode ) {
-        case SceneMode.FRUIT:
+      switch( scene ) {
+        case 'fruit':
           this.fruitItemsComboBox.visible = true;
           this.produceItemsComboBox.visible = false;
           this.candyItemsComboBox.visible = false;
           break;
-        case SceneMode.PRODUCE:
+        case 'produce':
           this.fruitItemsComboBox.visible = false;
           this.produceItemsComboBox.visible = true;
           this.candyItemsComboBox.visible = false;
           break;
-        case SceneMode.CANDY:
+        case 'candy':
           this.fruitItemsComboBox.visible = false;
           this.produceItemsComboBox.visible = false;
           this.candyItemsComboBox.visible = true;
           break;
         default:
-          assert && assert( false, 'Unrecognized scene' );
+          throw new Error( 'invalid scene: ' + scene );
       }
     },
 
     /**
      * Called when the user selected a new item type (i.e. 'apples', 'carrots', 'red candy')
      *
-     * @param {Property.<SceneMode>} sceneMode - indicates the scene type
+     * @param {Property.<scene>} scene
      * @param {Property.<ItemData>} fruitItemData - the item data for the selected fruit item
      * @param {Property.<ItemData>} produceItemData - the item data for the selected produce item
      * @param {Property.<ItemData>} candyItemData - the item data for the selected candy item
      * @protected
      */
-    itemSelectionChanged: function( sceneMode, fruitItemData, produceItemData, candyItemData ) {
+    itemSelectionChanged: function( scene, fruitItemData, produceItemData, candyItemData ) {
 
       this.hideKeypad();
 
       this.removeAllItems();
 
-      switch( sceneMode ) {
-        case SceneMode.FRUIT:
+      switch( scene ) {
+        case 'fruit':
           this.model.itemDataProperty.value = fruitItemData;
           break;
-        case SceneMode.PRODUCE:
+        case 'produce':
           this.model.itemDataProperty.value = produceItemData;
           break;
-        case SceneMode.CANDY:
+        case 'candy':
           this.model.itemDataProperty.value = candyItemData;
           break;
         default:
-          assert && assert( false, 'Unrecognized scene' );
+          throw new Error( 'invalid scene: ' + scene );
       }
 
       this.model.addChallengeItemsToNumberLine();

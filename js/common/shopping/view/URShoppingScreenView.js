@@ -22,7 +22,6 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScaleNode = require( 'UNIT_RATES/common/shopping/view/ScaleNode' );
   var ShoppingSceneControl = require( 'UNIT_RATES/common/shopping/view/ShoppingSceneControl' );
-  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var ShelfNode = require( 'UNIT_RATES/common/shopping/view/ShelfNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -46,9 +45,12 @@ define( function( require ) {
     //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.model = model;
 
-    // @public - the scene type (fruit | produce | candy )
-    // FIXME: scene & item randomly chosen @ startup (TBD as per current design document)
-    this.sceneModeProperty = new Property( SceneMode.FRUIT );
+    //TODO move sceneProperty to model
+    //TODO scene & item randomly chosen @ startup (TBD as per current design document)
+    // @public
+    this.sceneProperty = new Property( 'fruit', {
+      validValues: [ 'fruit', 'produce', 'candy' ]
+    } );
 
     // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {
@@ -143,14 +145,14 @@ define( function( require ) {
     this.addSubclassScreenNodes();
 
     // scene selection buttons
-    var sceneControl = new ShoppingSceneControl( this.sceneModeProperty, {
+    var sceneControl = new ShoppingSceneControl( this.sceneProperty, {
       right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( sceneControl );
 
     // select the scene
-    this.sceneModeProperty.link( this.sceneSelectionChanged.bind( this ) );
+    this.sceneProperty.link( this.sceneSelectionChanged.bind( this ) );
 
     // Layer the keypad & draggable nodes for proper rendering/interaction
     this.keypadCloseArea.moveToFront();
@@ -180,13 +182,13 @@ define( function( require ) {
     },
 
     /**
-     * Call when the user selected a new scene
+     * Call when the user selects a new scene
      *
-     * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
-     * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
+     * @param {Property.<string>} scene
+     * @param {Property.<string>} oldScene
      * @protected
      */
-    sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
+    sceneSelectionChanged: function( scene, oldScene ) {
       this.hideKeypad();
     },
 
@@ -221,7 +223,7 @@ define( function( require ) {
         this.numberLineNode.populate();
 
         // Fruit bags should be expanded
-        if ( this.sceneModeProperty.value === SceneMode.FRUIT && itemNode.item.countProperty.value > 1 ) {
+        if ( this.sceneProperty.value === 'fruit' && itemNode.item.countProperty.value > 1 ) {
 
           // remove the bag node & children nodes
           this.itemsLayer.removeChild( itemNode );
@@ -298,7 +300,7 @@ define( function( require ) {
     resetAll: function() {
       this.model.reset();
 
-      this.sceneModeProperty.reset();
+      this.sceneProperty.reset();
       this.hideKeypad();
 
       this.removeAllItems();

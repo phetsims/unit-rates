@@ -17,18 +17,17 @@ define( function( require ) {
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {SceneMode} sceneMode - ( SceneMode.FRUIT | SceneMode.PRODUCE | SceneMode.CANDY )
+   * @param {string} scene
    * @param {Property.<ItemData>} itemDataProperty - the currently selected item
    * @param {Node} parentNode - the parent node of the combo box
    * @param {Object} [options]
    * @constructor
    */
-  function ItemComboBox( sceneMode, itemDataProperty, parentNode, options ) {
+  function ItemComboBox( scene, itemDataProperty, parentNode, options ) {
 
     options = _.extend( {
       listPosition: 'above',
@@ -41,23 +40,23 @@ define( function( require ) {
 
     // populate the menu based on which scene
     var items = [];
-    switch( sceneMode ) {
+    switch( scene ) {
 
-      case SceneMode.FRUIT:
+      case 'fruit':
         items.push( createItem( ItemData.APPLES ) );
         items.push( createItem( ItemData.LEMONS ) );
         items.push( createItem( ItemData.ORANGES ) );
         items.push( createItem( ItemData.PEARS ) );
         break;
 
-      case SceneMode.PRODUCE:
+      case 'produce':
         items.push( createItem( ItemData.CARROTS ) );
         items.push( createItem( ItemData.CUCUMBERS ) );
         items.push( createItem( ItemData.POTATOES ) );
         items.push( createItem( ItemData.TOMATOES ) );
         break;
 
-      case SceneMode.CANDY:
+      case 'candy':
         items.push( createItem( ItemData.PURPLE_CANDY ) );
         items.push( createItem( ItemData.RED_CANDY ) );
         items.push( createItem( ItemData.GREEN_CANDY ) );
@@ -65,7 +64,7 @@ define( function( require ) {
         break;
 
       default:
-        throw new Error( 'invalid sceneMode: ' + sceneMode );
+        throw new Error( 'invalid scene: ' + scene );
     }
     assert && assert( items.length > 0 );
 

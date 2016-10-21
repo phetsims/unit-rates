@@ -13,7 +13,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemData = require( 'UNIT_RATES/common/shopping/enum/ItemData' );
   var ItemRateNode = require( 'UNIT_RATES/shoppingLab/view/ItemRateNode' );
-  var SceneMode = require( 'UNIT_RATES/common/shopping/enum/SceneMode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URShoppingScreenView = require( 'UNIT_RATES/common/shopping/view/URShoppingScreenView' );
@@ -31,9 +30,9 @@ define( function( require ) {
 
     // @private - mapping from scene to item type
     this.sceneItemData = [];
-    this.sceneItemData[ SceneMode.FRUIT ] = ItemData.APPLES;
-    this.sceneItemData[ SceneMode.PRODUCE ] = ItemData.CARROTS;
-    this.sceneItemData[ SceneMode.CANDY ] = ItemData.PURPLE_CANDY;
+    this.sceneItemData[ 'fruit' ] = ItemData.APPLES;
+    this.sceneItemData[ 'produce' ] = ItemData.CARROTS;
+    this.sceneItemData[ 'candy' ] = ItemData.PURPLE_CANDY;
 
     URShoppingScreenView.call( this, model, true, this.onNumberLineEraseCallback.bind( this ) );
 
@@ -96,21 +95,18 @@ define( function( require ) {
     /**
      * Called when the user selects a new scene
      *
-     * @param {Property.<SceneMode>} sceneMode - indicates the new scene type
-     * @param {Property.<SceneMode>} oldSceneMode - indicates the previous scene type
+     * @param {Property.<string>} scene
+     * @param {Property.<string>} oldScene
      * @override @protected
      */
-    sceneSelectionChanged: function( sceneMode, oldSceneMode ) {
+    sceneSelectionChanged: function( scene, oldScene ) {
 
-      this.hideKeypad();
+      URShoppingScreenView.prototype.sceneSelectionChanged.call( this, scene, oldScene );
 
       this.removeAllItems();
 
-      assert && assert( ( sceneMode !== SceneMode.FRUIT || sceneMode !== SceneMode.PRODUCE || sceneMode !== SceneMode.CANDY),
-        'Unrecognized scene' );
-
       // change the item type
-      this.model.itemDataProperty.value = this.sceneItemData[ sceneMode ];
+      this.model.itemDataProperty.value = this.sceneItemData[ scene ];
     }
 
   } ); // inherit
