@@ -30,7 +30,7 @@ define( function( require ) {
 
     var options = {
       name: screenShoppingString,
-      backgroundColor: 'rgb(226,255,249)',
+      backgroundColor: 'rgb( 226, 255, 249 )',
       homeScreenIcon: new Image( screenIcon ),
       pickable: true //TODO explain why this is needed, since it's usually not necessary
     };

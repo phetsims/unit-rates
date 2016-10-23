@@ -30,7 +30,7 @@ define( function( require ) {
 
     var options = {
       name: screenShoppingLabString,
-      backgroundColor: 'rgb(226,255,249)',
+      backgroundColor: 'rgb( 226, 255, 249 )',
       homeScreenIcon: new Image( screenIcon )
     };
 
