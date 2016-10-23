@@ -27,8 +27,8 @@ define( function( require ) {
     }, options );
 
     // validate args and options
-    assert( itemDataArray && itemDataArray.length > 0, 'at least 1 ItemData is required' );
-    assert( options.itemIndex >= 0 && options.itemIndex < itemDataArray.length, 'invalid itemIndex: ' + options.itemIndex );
+    assert && assert( itemDataArray && itemDataArray.length > 0, 'at least 1 ItemData is required' );
+    assert && assert( options.itemIndex >= 0 && options.itemIndex < itemDataArray.length, 'invalid itemIndex: ' + options.itemIndex );
 
     // @public (read-only)
     this.name = name; //TODO should be able to eliminate this
