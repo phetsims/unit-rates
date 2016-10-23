@@ -26,6 +26,8 @@ define( function( require ) {
     assert && assert( itemDataArray && itemDataArray.length > 0, 'at least 1 ItemData is required' );
 
     options = _.extend( {
+
+      //TODO item randomly chosen at startup (TBD as per current design document)
       itemIndex: 0 // index of the item that is initially selected
     }, options );
 
