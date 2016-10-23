@@ -23,21 +23,10 @@ define( function( require ) {
    */
   function ShoppingLabScreenView( model ) {
 
-    var self = this;
-
-    //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
-    this.model = model;
-
-    // @private - mapping from scene to item type
-    this.sceneItemData = [];
-    this.sceneItemData.fruit = ItemData.APPLES;
-    this.sceneItemData.produce = ItemData.CARROTS;
-    this.sceneItemData.candy = ItemData.PURPLE_CANDY;
-
     URShoppingScreenView.call( this, model, true, this.onNumberLineEraseCallback.bind( this ) );
 
-    // refresh on item change
-    this.model.itemRateProperty.link( function( itemRate, oldRate ) {
+    var self = this;
+    model.itemRateProperty.link( function( itemRate, oldRate ) {
       self.refreshNumberLine();
     } );
   }
