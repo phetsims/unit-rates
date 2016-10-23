@@ -62,7 +62,7 @@ define( function( require ) {
     this.addChild( this.numberLineNode );
 
     // keypad layout
-    this.keypad.right = this.numberLineNode.right - 30;
+    this.keypad.right = this.numberLineNode.right - 15;
     this.keypad.top = this.numberLineNode.bottom + 2 * URConstants.PANEL_SPACING;
 
     // @protected - covers entire screen, uses pick to close keypad
@@ -90,7 +90,7 @@ define( function( require ) {
     this.shelfNode = new ShelfNode( model.shelf, this.itemsLayer,
       this.startUpdateItem.bind( this ),
       this.endUpdateItem.bind( this ), {
-        centerX: this.numberLineNode.centerX + 15,
+        centerX: this.numberLineNode.centerX + 30,
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_VERTICAL_MARGIN
       } );
     this.addChild( this.shelfNode );
