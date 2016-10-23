@@ -25,7 +25,7 @@ define( function( require ) {
   function URShoppingModel( scenes, options ) {
 
     // validate args
-    assert( scenes && scenes.length > 0, 'at least 1 scene is required' );
+    assert && assert( scenes && scenes.length > 0, 'at least 1 scene is required' );
 
     options = _.extend( {
 
@@ -34,7 +34,7 @@ define( function( require ) {
     }, options );
 
     // validate options
-    assert( options.sceneIndex >= 0 && options.sceneIndex < scenes.length, 'invalid sceneIndex: ' + options.sceneIndex );
+    assert && assert( options.sceneIndex >= 0 && options.sceneIndex < scenes.length, 'invalid sceneIndex: ' + options.sceneIndex );
 
     this.scenes = scenes; // @public (read-only)
     this.sceneProperty = new Property( scenes[ options.sceneIndex ] ); // @public the selected scene

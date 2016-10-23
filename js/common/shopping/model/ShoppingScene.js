@@ -22,12 +22,14 @@ define( function( require ) {
    */
   function ShoppingScene( name, image, itemDataArray, options ) {
 
+    // validate args
+    assert && assert( itemDataArray && itemDataArray.length > 0, 'at least 1 ItemData is required' );
+
     options = _.extend( {
       itemIndex: 0 // index of the item that is initially selected
     }, options );
 
-    // validate args and options
-    assert && assert( itemDataArray && itemDataArray.length > 0, 'at least 1 ItemData is required' );
+    // validate options
     assert && assert( options.itemIndex >= 0 && options.itemIndex < itemDataArray.length, 'invalid itemIndex: ' + options.itemIndex );
 
     // @public (read-only)
