@@ -73,7 +73,6 @@ define( function( require ) {
      * @public
      */
     itemDataChanged: function( itemData ) {
-      console.log( 'ShelfNode itemDataChanged: ' + itemData.type );//XXX
       this.populate();
     },
 

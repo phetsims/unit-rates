@@ -191,7 +191,6 @@ define( function( require ) {
      * @override
      */
     itemDataChanged: function( itemData, oldItemData ) {
-      console.log( 'URShoppingScreen itemDataChanged: ' + itemData.type );//XXX
       this.hideKeypad();
       this.removeAllItems();
       this.shelfNode.itemDataChanged( itemData );

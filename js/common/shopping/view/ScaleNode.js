@@ -200,7 +200,6 @@ define( function( require ) {
      * @public
      */
     itemDataChanged: function( itemData ) {
-      console.log( 'ScaleNode itemDataChanged: ' + itemData.type );//XXX
 
       var itemType = itemData.type;
 
