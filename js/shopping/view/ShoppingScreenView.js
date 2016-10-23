@@ -23,10 +23,10 @@ define( function( require ) {
    * @constructor
    */
   function ShoppingScreenView( model ) {
-
-    model.onChallengeCallback = this.onChallengeCallback.bind( this );
-
     URShoppingScreenView.call( this, model, false, this.onNumberLineEraseCallback.bind( this ) );
+
+    //TODO use a better method of notifying the view
+    model.onChallengeCallback = this.onChallengeCallback.bind( this );
   }
 
   unitRates.register( 'ShoppingScreenView', ShoppingScreenView );
