@@ -24,9 +24,10 @@ define( function( require ) {
   var purpleCandyImage = require( 'image!UNIT_RATES/purple_candy.png' );
 
   /**
+   * @param {Object} options
    * @constructor
    */
-  function ShoppingModel() {
+  function ShoppingModel( options ) {
 
     var scenes = [
       new ShoppingScene( 'fruit', appleImage, [ ItemData.APPLES, ItemData.LEMONS, ItemData.ORANGES, ItemData.PEARS ] ),
@@ -34,7 +35,7 @@ define( function( require ) {
       new ShoppingScene( 'candy', purpleCandyImage, [ ItemData.PURPLE_CANDY, ItemData.RED_CANDY, ItemData.GREEN_CANDY, ItemData.BLUE_CANDY ] )
     ];
 
-    URShoppingModel.call( this, scenes );
+    URShoppingModel.call( this, scenes, options );
 
     // @public - various callbacks when various challenge events takes place
     this.onChallengeCallback = null;

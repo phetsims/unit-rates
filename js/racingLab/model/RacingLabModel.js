@@ -17,12 +17,20 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
+   * @param {Object} options
    * @constructor
    */
-  function RacingLabModel() {
+  function RacingLabModel( options ) {
+
+    options = _.extend( {
+       trackCount: 1
+    }, options );
+
+    // validate options
+    assert && assert( options.trackCount === 1 || options.trackCount === 2, 'invalid trackCount: ' + options.trackCount );
 
     //TODO visibility annotations
-    this.trackCountProperty = new Property( 1 ); // number of cars or tracks
+    this.trackCountProperty = new Property( options.trackCount ); // number of cars or tracks
     this.runningProperty = new Property( false ); // is a race currently running
     this.elapsedTimeProperty = new Property( 0 ); // elapsed time in hours
     this.flagArrowsVisibleProperty = new Property( true ); // are the green flags around the finish flag visible

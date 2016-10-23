@@ -22,9 +22,10 @@ define( function( require ) {
   var purpleCandyImage = require( 'image!UNIT_RATES/purple_candy.png' );
 
   /**
+   * @param {Object} options
    * @constructor
    */
-  function ShoppingLabModel() {
+  function ShoppingLabModel( options ) {
 
     var scenes = [
       new ShoppingScene( 'fruit', appleImage, [ ItemData.APPLES ] ),
@@ -32,7 +33,7 @@ define( function( require ) {
       new ShoppingScene( 'candy', purpleCandyImage, [ ItemData.PURPLE_CANDY ] )
     ];
 
-    URShoppingModel.call( this, scenes );
+    URShoppingModel.call( this, scenes, options );
   }
 
   unitRates.register( 'ShoppingLabModel', ShoppingLabModel );
