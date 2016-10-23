@@ -99,7 +99,11 @@ define( function( require ) {
         types[ ItemData.LEMONS.type ] = ItemData.LEMONS;
         types[ ItemData.ORANGES.type ] = ItemData.ORANGES;
         types[ ItemData.PEARS.type ] = ItemData.PEARS;
-        if ( item.isFruit() ) {
+
+        var isFruit = ( item.type === ItemData.APPLES.type || item.type === ItemData.LEMONS.type ||
+                        item.type === ItemData.ORANGES.type || item.type === ItemData.PEARS.type );
+
+        if ( isFruit ) {
           for ( var i = 0; i < item.countProperty.value; i++ ) {
             ItemCollection.prototype.addItem.call( this, new Item( item.type, 1 ) );
           }

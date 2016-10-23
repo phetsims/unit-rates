@@ -84,7 +84,8 @@ define( function( require ) {
     },
 
     /**
-     * Searches the type specific array for a matching item. An item is considered if both the type & count match.
+     * Searches the type specific array for a matching item.
+     * An item is considered equal if both the type & count match.
      *
      * @param {Item} item
      * @return {Item} - returns the matching item or null
@@ -96,7 +97,7 @@ define( function( require ) {
 
       var existingItem = null;
       itemArray.forEach( function( arrayItem ) {
-        if ( item.isEqual( arrayItem ) ) {
+        if ( item.type === arrayItem.type && item.countProperty.value === arrayItem.countProperty.value ) {
           existingItem = arrayItem;
         }
       } );
