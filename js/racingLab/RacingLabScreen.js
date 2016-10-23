@@ -31,8 +31,7 @@ define( function( require ) {
     var options = {
       name: screenRacingLabString,
       backgroundColor: 'rgb( 233, 242, 254 )',
-      homeScreenIcon: new Image( screenIcon ),
-      pickable: true //TODO explain why this is needed, since it's usually not necessary
+      homeScreenIcon: new Image( screenIcon )
     };
 
     Screen.call( this,
