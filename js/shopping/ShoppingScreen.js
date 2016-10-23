@@ -24,15 +24,16 @@ define( function( require ) {
   var screenIcon = require( 'image!UNIT_RATES/shopping_screen_icon.png' );
 
   /**
+   * @param {Object} options
    * @constructor
    */
-  function ShoppingScreen() {
+  function ShoppingScreen( options ) {
 
-    var options = {
+    options = _.extend( {
       name: screenShoppingString,
       backgroundColor: 'rgb( 226, 255, 249 )',
       homeScreenIcon: new Image( screenIcon )
-    };
+    }, options );
 
     Screen.call( this,
       function() { return new ShoppingModel(); },

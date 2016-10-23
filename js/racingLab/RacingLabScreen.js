@@ -24,15 +24,16 @@ define( function( require ) {
   var screenIcon = require( 'image!UNIT_RATES/racing_lab_screen_icon.png' );
 
   /**
+   * @param {Object} options
    * @constructor
    */
-  function RacingLabScreen() {
+  function RacingLabScreen( options ) {
 
-    var options = {
+    options = _.extend( {
       name: screenRacingLabString,
       backgroundColor: 'rgb( 233, 242, 254 )',
       homeScreenIcon: new Image( screenIcon )
-    };
+    }, options );
 
     Screen.call( this,
       function() { return new RacingLabModel(); },
