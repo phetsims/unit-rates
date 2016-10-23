@@ -214,13 +214,12 @@ define( function( require ) {
     },
 
     /**
-     * Called when the user selected a new item type (i.e. 'apples', 'carrots', 'red candy')
+     * Called when the selected item type changes (i.e. 'apples', 'carrots', 'red candy')
      *
-     * @param {string} itemType - the currently selected item type
-     * @param {string} oldType - the previously selected item type
+     * @param {string} itemType - the selected item type
      * @private
      */
-    itemTypeChanged: function( itemType, oldType ) {
+    itemTypeChanged: function( itemType ) {
 
       // hide all pickers
       for ( var i = 0; i < this.itemPickerData.length; i++ ) {

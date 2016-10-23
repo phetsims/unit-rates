@@ -101,13 +101,12 @@ define( function( require ) {
      * Call when the user selected a new scene
      *
      * @param {Property.<string>} scene
-     * @param {Property.<string>} oldScene
      * @protected
      * @override
      */
-    sceneChanged: function( scene, oldScene ) {
+    sceneChanged: function( scene ) {
 
-      URShoppingScreenView.prototype.sceneChanged.call( this, scene, oldScene );
+      URShoppingScreenView.prototype.sceneChanged.call( this, scene );
 
       //TODO temporary hack to make the proper combo box visible
       this.comboBoxes.forEach( function( comboBox ) {
@@ -120,12 +119,11 @@ define( function( require ) {
      * Called when the selected item changes.
      *
      * @param {ItemData} itemData
-     * @param {ItemData} oldItemData
      * @protected
      * @override
      */
-    itemDataChanged: function( itemData, oldItemData ) {
-      URShoppingScreenView.prototype.itemDataChanged.call( this, itemData, oldItemData );
+    itemDataChanged: function( itemData ) {
+      URShoppingScreenView.prototype.itemDataChanged.call( this, itemData );
       this.model.addChallengeItemsToNumberLine();
     }
   } );

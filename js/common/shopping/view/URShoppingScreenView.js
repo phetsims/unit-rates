@@ -175,10 +175,9 @@ define( function( require ) {
      * Called when the selected scene changes.
      *
      * @param {Property.<ShoppingScene>} scene
-     * @param {Property.<ShoppingScene>} oldScene
      * @protected
      */
-    sceneChanged: function( scene, oldScene ) {
+    sceneChanged: function( scene ) {
       this.hideKeypad();
     },
 
@@ -186,11 +185,10 @@ define( function( require ) {
      * Called when the selected item changes.
      *
      * @param {ItemData} itemData
-     * @param {ItemData} oldItemData
      * @protected
      * @override
      */
-    itemDataChanged: function( itemData, oldItemData ) {
+    itemDataChanged: function( itemData ) {
       this.hideKeypad();
       this.removeAllItems();
       this.shelfNode.itemDataChanged( itemData );
