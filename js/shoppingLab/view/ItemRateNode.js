@@ -1,5 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
+//TODO This is very hardcoded to apples, carrots, candy. And it's complicated because it switches between them.
+//TODO There should be 1 instance of this for each item in each scene.
 /**
  * A collapsible box node containing (several) spinners for changing the current unit rate
  *
@@ -185,8 +187,7 @@ define( function( require ) {
 
     //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     // refresh on item change
-    this.itemSelectionChangedBound = this.itemSelectionChanged.bind( this );
-    this.itemTypeProperty.link( this.itemSelectionChangedBound );
+    this.itemTypeProperty.link( this.itemTypeChanged.bind( this ) );
 
     this.mutate( options );
   }
@@ -219,7 +220,7 @@ define( function( require ) {
      * @param {string} oldType - the previously selected item type
      * @private
      */
-    itemSelectionChanged: function( itemType, oldType ) {
+    itemTypeChanged: function( itemType, oldType ) {
 
       // hide all pickers
       for ( var i = 0; i < this.itemPickerData.length; i++ ) {

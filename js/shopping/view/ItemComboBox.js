@@ -1,9 +1,9 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * TODO document, https://github.com/phetsims/unit-rates/issues/64
+ * Combo box for selecting shopping items
  *
- * @author Dave Schmitz (Schmitzware)
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';
@@ -13,20 +13,19 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Item = require( 'UNIT_RATES/common/shopping/model/Item' );
-  var ItemData = require( 'UNIT_RATES/common/shopping/model/ItemData' );
   var ItemNodeFactory = require( 'UNIT_RATES/common/shopping/view/ItemNodeFactory' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {string} scene
+   * @param {ItemData[]} itemDataArray
    * @param {Property.<ItemData>} itemDataProperty - the currently selected item
    * @param {Node} parentNode - the parent node of the combo box
    * @param {Object} [options]
    * @constructor
    */
-  function ItemComboBox( scene, itemDataProperty, parentNode, options ) {
+  function ItemComboBox( itemDataArray, itemDataProperty, parentNode, options ) {
 
     options = _.extend( {
       listPosition: 'above',
@@ -37,37 +36,13 @@ define( function( require ) {
       maxWidth: 200
     }, options );
 
-    // populate the menu based on which scene
-    var items = [];
-    switch( scene ) {
+    // describe items in the combo box
+    var contentArray = [];
+    itemDataArray.forEach( function( itemDatum ) {
+      contentArray.push( createItem( itemDatum ) );
+    } );
 
-      case 'fruit':
-        items.push( createItem( ItemData.APPLES ) );
-        items.push( createItem( ItemData.LEMONS ) );
-        items.push( createItem( ItemData.ORANGES ) );
-        items.push( createItem( ItemData.PEARS ) );
-        break;
-
-      case 'produce':
-        items.push( createItem( ItemData.CARROTS ) );
-        items.push( createItem( ItemData.CUCUMBERS ) );
-        items.push( createItem( ItemData.POTATOES ) );
-        items.push( createItem( ItemData.TOMATOES ) );
-        break;
-
-      case 'candy':
-        items.push( createItem( ItemData.PURPLE_CANDY ) );
-        items.push( createItem( ItemData.RED_CANDY ) );
-        items.push( createItem( ItemData.GREEN_CANDY ) );
-        items.push( createItem( ItemData.BLUE_CANDY ) );
-        break;
-
-      default:
-        throw new Error( 'invalid scene: ' + scene );
-    }
-    assert && assert( items.length > 0 );
-
-    ComboBox.call( this, items, itemDataProperty, parentNode, options );
+    ComboBox.call( this, contentArray, itemDataProperty, parentNode, options );
   }
 
   unitRates.register( 'ItemComboBox', ItemComboBox );

@@ -62,8 +62,6 @@ define( function( require ) {
         enableHideCost: false
       };
 
-    var self = this;
-
     //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.scale = scale;
     this.itemLayer = itemLayer;
@@ -125,56 +123,6 @@ define( function( require ) {
     options.children = [ this.scaleNode, this.scaleTopNode, this.dropNode, this.costDisplayNode, this.weightDisplayNode ];
 
     Node.call( this, options );
-
-    // refresh on item change
-    scale.itemTypeProperty.link( function( itemType, oldType ) {
-
-      var isFruit = ( itemType === ItemData.APPLES.type || itemType === ItemData.LEMONS.type ||
-                      itemType === ItemData.ORANGES.type || itemType === ItemData.PEARS.type );
-      var isCandy = ( itemType === ItemData.RED_CANDY.type || itemType === ItemData.PURPLE_CANDY.type ||
-                      itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type );
-
-      // show/hide weight display for candy only
-      self.weightDisplayNode.visible = isCandy;
-
-      // move cost display
-      if ( self.weightDisplayNode.visible ) {
-        self.costDisplayNode.centerX = self.costUnitDisplayX;
-      }
-      else {
-        self.costDisplayNode.centerX = self.costOnlyDisplayX;
-      }
-
-      var itemNode = ItemNodeFactory.createItemNode( new Item( itemType, ( isFruit ? 1 : 2 ) ) );
-
-      // pre-compute stacked item positions
-      var globalDropBounds = self.scaleTopNode.getGlobalBounds();
-      var localDropBounds = self.itemLayer.globalToParentBounds( globalDropBounds );
-      var itemX = localDropBounds.minX - itemNode.width / 2 + NODE_X_SPACING;
-      var itemY = localDropBounds.centerY - itemNode.height + 2;
-
-      // save pre-computed staked positions (array of Vector2)
-      self.stackedPositions = [];
-
-      // save the Y coordinate for moving higher items to lower positions
-      self.stackedYPositions = [ Util.toFixed( itemY, 2 ) ];
-
-      for ( var i = 0; i < MAX_ITEMS; i++ ) {
-
-        self.stackedPositions.push( new Vector2( itemX, itemY ) );
-
-        itemX += itemNode.width + NODE_X_SPACING;
-
-        if ( itemX >= localDropBounds.maxX ) {
-          itemX = localDropBounds.minX + NODE_X_SPACING;
-          itemY -= itemNode.height - NODE_Y_SPACING;
-
-          self.stackedYPositions.push( Util.toFixed( itemY, 2 ) );
-        }
-      }
-
-      self.populate();
-    } );
   }
 
   //TODO this looks like constructor, but returns a Panel. Fix this.
@@ -246,6 +194,61 @@ define( function( require ) {
   unitRates.register( 'ScaleNode', ScaleNode );
 
   return inherit( Node, ScaleNode, {
+
+    /**
+     * @param {ItemData} itemData
+     * @public
+     */
+    itemDataChanged: function( itemData ) {
+      console.log( 'ScaleNode itemDataChanged: ' + itemData.type );//XXX
+
+      var itemType = itemData.type;
+
+      var isFruit = ( itemType === ItemData.APPLES.type || itemType === ItemData.LEMONS.type ||
+                      itemType === ItemData.ORANGES.type || itemType === ItemData.PEARS.type );
+      var isCandy = ( itemType === ItemData.RED_CANDY.type || itemType === ItemData.PURPLE_CANDY.type ||
+                      itemType === ItemData.GREEN_CANDY.type || itemType === ItemData.BLUE_CANDY.type );
+
+      // show/hide weight display for candy only
+      this.weightDisplayNode.visible = isCandy;
+
+      // move cost display
+      if ( this.weightDisplayNode.visible ) {
+        this.costDisplayNode.centerX = this.costUnitDisplayX;
+      }
+      else {
+        this.costDisplayNode.centerX = this.costOnlyDisplayX;
+      }
+
+      var itemNode = ItemNodeFactory.createItemNode( new Item( itemType, ( isFruit ? 1 : 2 ) ) );
+
+      // pre-compute stacked item positions
+      var globalDropBounds = this.scaleTopNode.getGlobalBounds();
+      var localDropBounds = this.itemLayer.globalToParentBounds( globalDropBounds );
+      var itemX = localDropBounds.minX - itemNode.width / 2 + NODE_X_SPACING;
+      var itemY = localDropBounds.centerY - itemNode.height + 2;
+
+      // save pre-computed staked positions (array of Vector2)
+      this.stackedPositions = [];
+
+      // save the Y coordinate for moving higher items to lower positions
+      this.stackedYPositions = [ Util.toFixed( itemY, 2 ) ];
+
+      for ( var i = 0; i < MAX_ITEMS; i++ ) {
+
+        this.stackedPositions.push( new Vector2( itemX, itemY ) );
+
+        itemX += itemNode.width + NODE_X_SPACING;
+
+        if ( itemX >= localDropBounds.maxX ) {
+          itemX = localDropBounds.minX + NODE_X_SPACING;
+          itemY -= itemNode.height - NODE_Y_SPACING;
+
+          this.stackedYPositions.push( Util.toFixed( itemY, 2 ) );
+        }
+      }
+      this.populate();
+    },
 
     // no dispose, persists for the lifetime of the sim.
 

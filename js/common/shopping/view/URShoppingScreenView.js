@@ -16,7 +16,6 @@ define( function( require ) {
   var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberLineNode = require( 'UNIT_RATES/common/shopping/view/NumberLineNode' );
-  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -44,13 +43,6 @@ define( function( require ) {
 
     //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.model = model;
-
-    //TODO move sceneProperty to model
-    //TODO scene & item randomly chosen @ startup (TBD as per current design document)
-    // @public
-    this.sceneProperty = new Property( 'fruit', {
-      validValues: [ 'fruit', 'produce', 'candy' ]
-    } );
 
     // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {
@@ -145,25 +137,23 @@ define( function( require ) {
     this.addSubclassScreenNodes();
 
     // scene selection buttons
-    var sceneControl = new ShoppingSceneControl( this.sceneProperty, {
+    var sceneControl = new ShoppingSceneControl( model.scenes, model.sceneProperty, {
       right: this.layoutBounds.right - URConstants.SCREEN_HORIZONTAL_MARGIN,
       bottom: resetAllButton.top - URConstants.SCREEN_VERTICAL_MARGIN
     } );
     this.addChild( sceneControl );
 
-    // select the scene
-    this.sceneProperty.link( this.sceneSelectionChanged.bind( this ) );
+    model.sceneProperty.link( this.sceneChanged.bind( this ) );
+    model.itemDataProperty.link( this.itemDataChanged.bind( this ) );
 
     // Layer the keypad & draggable nodes for proper rendering/interaction
     this.keypadCloseArea.moveToFront();
     this.keypad.moveToFront();
     this.itemsLayer.moveToFront();
 
+    //TODO addEventListener is deprecated, replace it with whatever is current
     // resize the keypad pick layer on a browser size change
     this.addEventListener( 'bounds', this.onResize.bind( this ) );
-
-    // initialize shelf items
-    this.shelfNode.populate();
   }
 
   unitRates.register( 'URShoppingScreenView', URShoppingScreenView );
@@ -182,14 +172,30 @@ define( function( require ) {
     },
 
     /**
-     * Call when the user selects a new scene
+     * Called when the selected scene changes.
      *
-     * @param {Property.<string>} scene
-     * @param {Property.<string>} oldScene
+     * @param {Property.<ShoppingScene>} scene
+     * @param {Property.<ShoppingScene>} oldScene
      * @protected
      */
-    sceneSelectionChanged: function( scene, oldScene ) {
+    sceneChanged: function( scene, oldScene ) {
       this.hideKeypad();
+    },
+
+    /**
+     * Called when the selected item changes.
+     *
+     * @param {ItemData} itemData
+     * @param {ItemData} oldItemData
+     * @protected
+     * @override
+     */
+    itemDataChanged: function( itemData, oldItemData ) {
+      console.log( 'URShoppingScreen itemDataChanged: ' + itemData.type );//XXX
+      this.hideKeypad();
+      this.removeAllItems();
+      this.shelfNode.itemDataChanged( itemData );
+      this.scaleNode.itemDataChanged( itemData );
     },
 
     /**
@@ -223,7 +229,7 @@ define( function( require ) {
         this.numberLineNode.populate();
 
         // Fruit bags should be expanded
-        if ( this.sceneProperty.value === 'fruit' && itemNode.item.countProperty.value > 1 ) {
+        if ( this.model.sceneProperty.value.name === 'fruit' && itemNode.item.countProperty.value > 1 ) {
 
           // remove the bag node & children nodes
           this.itemsLayer.removeChild( itemNode );
@@ -298,13 +304,11 @@ define( function( require ) {
      * @protected
      */
     resetAll: function() {
+
       this.model.reset();
 
-      this.sceneProperty.reset();
-      this.hideKeypad();
-
       this.removeAllItems();
-
+      this.hideKeypad();
       this.numberLineNode.reset();
       this.scaleNode.reset();
       this.shelfNode.reset();

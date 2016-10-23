@@ -18,16 +18,33 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
+   * @param {ShoppingScene[]} scenes
+   * @param {Object} [options]
    * @constructor
    */
-  function URShoppingModel() {
+  function URShoppingModel( scenes, options ) {
+
+    // validate args
+    assert( scenes && scenes.length > 0, 'at least 1 scene is required' );
+
+    options = _.extend( {
+
+      //TODO scene randomly chosen at startup (TBD as per current design document)
+      sceneIndex: 0 // {number} index of the scene that is initially selected
+    }, options );
+
+    // validate options
+    assert( options.sceneIndex >= 0 && options.sceneIndex < scenes.length, 'invalid sceneIndex: ' + options.sceneIndex );
+
+    this.scenes = scenes; // @public (read-only)
+    this.sceneProperty = new Property( scenes[ options.sceneIndex ] ); // @public the selected scene
 
     // @public
-    this.itemDataProperty = new Property( ItemData.APPLES ); // the currently selected item data type
+    this.itemDataProperty = new Property( this.sceneProperty.value.itemDataProperty.value ); // the currently selected item data
 
     //TODO why do we need these 2 Properties? they are fields of this.itemDataProperty.value
-    this.itemTypeProperty = new Property( ItemData.APPLES.type ); // the currently selected item type
-    this.itemRateProperty = new Property( ItemData.APPLES.rate ); // the currently selected item rate
+    this.itemTypeProperty = new Property( this.itemDataProperty.value.type );
+    this.itemRateProperty = new Property( this.itemDataProperty.value.rate );
 
     var self = this;
 
@@ -39,6 +56,15 @@ define( function( require ) {
     this.shelf = new Shelf( this.itemTypeProperty );
     this.scale = new Scale( this.itemTypeProperty, this.itemRateProperty );
     this.numberLine = new NumberLine( this.itemTypeProperty, this.itemRateProperty );
+
+    // when scene changes, link to its itemDataProperty
+    var itemDataObserver = function( itemData ) {
+      self.itemDataProperty.value = itemData;
+    };
+    this.sceneProperty.link( function( newScene, oldScene ) {
+      oldScene && oldScene.itemDataProperty.unlink( itemDataObserver );
+      newScene.itemDataProperty.link( itemDataObserver );
+    } );
 
     // save the potentially adjusted rate and change the current type and rate on an item data change
     this.itemDataProperty.link( function( itemData, oldItemData ) {
@@ -67,7 +93,13 @@ define( function( require ) {
       this.scale.reset();
       this.numberLine.reset();
 
+      // scenes
+      this.scenes.forEach( function( scene ) {
+        scene.reset();
+      } );
+
       // Properties
+      this.sceneProperty.reset();
       this.itemDataProperty.reset();
       this.itemTypeProperty.reset();
       this.itemRateProperty.reset();

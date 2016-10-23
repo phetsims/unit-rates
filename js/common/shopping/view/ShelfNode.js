@@ -38,8 +38,6 @@ define( function( require ) {
 
     options = options || {};
 
-    var self = this;
-
     //TODO visibility annotations, https://github.com/phetsims/unit-rates/issues/63
     this.shelf = shelf;
     this.itemLayer = itemLayer;
@@ -61,11 +59,6 @@ define( function( require ) {
     assert && assert( !options.children, 'additional children not supported' );
     options.children = [ imageNode, this.topNode ];
 
-    // refresh on item change
-    shelf.itemTypeProperty.lazyLink( function( itemType, oldItemType ) {
-      self.populate();
-    } );
-
     Node.call( this, options );
   }
 
@@ -74,6 +67,15 @@ define( function( require ) {
   return inherit( Node, ShelfNode, {
 
     // no dispose, persists for the lifetime of the sim.
+
+    /**
+     * @param {ItemData} itemData
+     * @public
+     */
+    itemDataChanged: function( itemData ) {
+      console.log( 'ShelfNode itemDataChanged: ' + itemData.type );//XXX
+      this.populate();
+    },
 
     /**
      * Adjusts item nodes bottom center coordinate to be on the topNode of the shelf at all time.

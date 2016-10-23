@@ -83,33 +83,13 @@ define( function( require ) {
     /**
      * Called when the user selects the sim reset button
      *
-     * @override @protected
+     * @protected
+     * @override
      */
     resetAll: function() {
-
       this.itemRateNode.reset();
-
       URShoppingScreenView.prototype.resetAll.call( this );
-    },
-
-    /**
-     * Called when the user selects a new scene
-     *
-     * @param {Property.<string>} scene
-     * @param {Property.<string>} oldScene
-     * @override @protected
-     */
-    sceneSelectionChanged: function( scene, oldScene ) {
-
-      URShoppingScreenView.prototype.sceneSelectionChanged.call( this, scene, oldScene );
-
-      this.removeAllItems();
-
-      // change the item type
-      this.model.itemDataProperty.value = this.sceneItemData[ scene ];
     }
-
-  } ); // inherit
-
-} ); // define
+  } );
+} );
 
