@@ -27,8 +27,8 @@ define( function( require ) {
 
     options = _.extend( {
 
-      //TODO item randomly chosen at startup (TBD as per current design document)
-      itemIndex: 0 // index of the item that is initially selected
+      // index of the item that is initially selected, randomly chosen
+      itemIndex: phet.joist.random.nextIntBetween( 0, itemDataArray.length - 1 )
     }, options );
 
     // validate options
@@ -47,7 +47,10 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.itemDataProperty.reset();
+
+      // Randomly choose an item on reset.
+      var itemIndex = phet.joist.random.nextIntBetween( 0, this.itemDataArray.length - 1 );
+      this.itemDataProperty.value = this.itemDataArray[ itemIndex ];
     }
   } );
 } );

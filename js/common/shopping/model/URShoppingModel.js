@@ -28,8 +28,6 @@ define( function( require ) {
     assert && assert( scenes && scenes.length > 0, 'at least 1 scene is required' );
 
     options = _.extend( {
-
-      //TODO scene randomly chosen at startup (TBD as per current design document)
       sceneIndex: 0 // {number} index of the scene that is initially selected
     }, options );
 
