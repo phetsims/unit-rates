@@ -4,6 +4,7 @@
  * Main entry point for the sim.
  *
  * @author Dave Schmitz (Schmitzware)
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';
