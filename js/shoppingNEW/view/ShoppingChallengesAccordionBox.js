@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * Displays challenges related to an item in the Shopping screen.
+ * Displays challenges in an accordion box, with a refresh button.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -15,6 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var ShoppingChallengesNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingChallengesNode' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
@@ -42,6 +43,8 @@ define( function( require ) {
       buttonYMargin: 10
     }, options );
 
+    var challengesNode = new ShoppingChallengesNode( shoppingItem );
+
     var refreshButton = new RectangularPushButton( {
       baseColor: '#f2f2f2',
       content: new FontAwesomeNode( 'refresh', { scale: 0.38 } ),
@@ -50,21 +53,11 @@ define( function( require ) {
       }
     } );
 
-    //TODO temporary placeholder
-    var challengeNodes = [];
-    shoppingItem.challenges[ 0 ].forEach( function( value ) {
-      challengeNodes.push( new Text( value, { font: new URFont( 24 ) } ) );
-    } );
-
     var contentNode = new VBox( {
       align: 'center', //TODO right justify the refresh button?
       spacing: 10,
       children: [
-        new VBox( {
-          align: 'center',
-          spacing: 25,
-          children: challengeNodes
-        } ),
+        challengesNode,
         new HStrut( 175 ), //TODO temporary
         refreshButton
       ]
