@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * A scene in the 'Shopping' screen.
+ * A category in the 'Shopping' screen. A category is a group of related items.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,13 +14,13 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {string} name - internal name of the scene, not visible to the user
+   * @param {string} name - internal name of the scene, not visible to the user TODO delete this
    * @param {HTMLImageElement} image - image used to represent the scene
    * @param {ShoppingItem[]} shoppingItems - items in this scene
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingSceneNEW( name, image, shoppingItems, options ) {
+  function ShoppingCategory( name, image, shoppingItems, options ) {
 
     assert && assert( shoppingItems.length > 0, 'at least 1 ShoppingItem is required' );
 
@@ -41,9 +41,9 @@ define( function( require ) {
     this.shoppingItemProperty = new Property( shoppingItems[ options.shoppingItemIndex ] );
   }
 
-  unitRates.register( 'ShoppingSceneNEW', ShoppingSceneNEW );
+  unitRates.register( 'ShoppingCategory', ShoppingCategory );
 
-  return inherit( Object, ShoppingSceneNEW, {
+  return inherit( Object, ShoppingCategory, {
 
     // @public
     reset: function() {

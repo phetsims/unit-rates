@@ -12,8 +12,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var ShoppingSceneControlNEW = require( 'UNIT_RATES/shoppingNEW/view/ShoppingSceneControlNEW' );
-  var ShoppingSceneNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingSceneNode' );
+  var ShoppingCategoryControl = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryControl' );
+  var ShoppingCategoryNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -27,17 +27,18 @@ define( function( require ) {
 
     ScreenView.call( this, options );
 
-    // create the view for each scene
-    model.scenes.forEach( function( scene ) {
-      self.addChild( new ShoppingSceneNode( scene, model.sceneProperty, self.layoutBounds ) );
+    //TODO create on demand to reduce startup time?
+    // create the view for each category
+    model.categories.forEach( function( category ) {
+      self.addChild( new ShoppingCategoryNode( category, model.categoryProperty, self.layoutBounds ) );
     } );
 
-    // Scene control
-    var sceneControl = new ShoppingSceneControlNEW( model.scenes, model.sceneProperty, {
+    // Category control
+    var categoryControl = new ShoppingCategoryControl( model.categories, model.categoryProperty, {
       right: this.layoutBounds.maxX - 15,
       bottom: this.layoutBounds.maxY - 80
     } );
-    this.addChild( sceneControl );
+    this.addChild( categoryControl );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {

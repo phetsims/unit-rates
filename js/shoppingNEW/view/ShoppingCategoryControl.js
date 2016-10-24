@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * Control for selecting a ShoppingScene.
+ * Control for selecting a category of items in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -15,12 +15,12 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {ShoppingScene[]} scenes
-   * @param {Property.<string>} sceneProperty
+   * @param {ShoppingCategory[]} categories
+   * @param {Property.<ShoppingCategory>} categoryProperty
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingSceneControlNEW( scenes, sceneProperty, options ) {
+  function ShoppingCategoryControl( categories, categoryProperty, options ) {
 
     options = _.extend( {
       orientation: 'horizontal',
@@ -30,19 +30,19 @@ define( function( require ) {
       buttonContentYMargin: 5
     }, options );
 
-    // describe a radio button for each scene
+    // describe a radio button for each category
     var contentArray = [];
-    scenes.forEach( function( scene ) {
+    categories.forEach( function( category ) {
       contentArray.push( {
-        value: scene,
-        node: new Image( scene.image, { scale: 0.5 } )
+        value: category,
+        node: new Image( category.image, { scale: 0.5 } )
       } );
     } );
 
-    RadioButtonGroup.call( this, sceneProperty, contentArray, options );
+    RadioButtonGroup.call( this, categoryProperty, contentArray, options );
   }
 
-  unitRates.register( 'ShoppingSceneControlNEW', ShoppingSceneControlNEW );
+  unitRates.register( 'ShoppingCategoryControl', ShoppingCategoryControl );
 
-  return inherit( RadioButtonGroup, ShoppingSceneControlNEW );
+  return inherit( RadioButtonGroup, ShoppingCategoryControl );
 } );

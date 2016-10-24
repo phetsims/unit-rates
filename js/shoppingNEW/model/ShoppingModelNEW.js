@@ -12,7 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var ShoppingItem = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItem' );
-  var ShoppingSceneNEW = require( 'UNIT_RATES/shoppingNEW/model/ShoppingSceneNEW' );
+  var ShoppingCategory = require( 'UNIT_RATES/shoppingNEW/model/ShoppingCategory' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
@@ -27,22 +27,29 @@ define( function( require ) {
   function ShoppingModelNEW( options ) {
 
     options = _.extend( {
-      sceneIndex: 0  // {number} index of the scene that is initially selected
+      categoryIndex: 0  // {number} index of the category that is initially selected
     }, options );
 
-    // @public (read-only)
-    this.scenes = [
-      new ShoppingSceneNEW( 'fruits', appleImage, [ ShoppingItem.APPLES, ShoppingItem.LEMONS, ShoppingItem.ORANGES, ShoppingItem.PEARS ] ),
-      new ShoppingSceneNEW( 'vegetables', carrotImage, [ ShoppingItem.CARROTS, ShoppingItem.CUCUMBERS, ShoppingItem.POTATOES, ShoppingItem.TOMATOES ] ),
-      new ShoppingSceneNEW( 'candies', purpleCandyImage, [ ShoppingItem.PURPLE_CANDY, ShoppingItem.RED_CANDY, ShoppingItem.GREEN_CANDY, ShoppingItem.BLUE_CANDY ] )
+    // @public (read-only) items are grouped into categories
+    this.categories = [
+
+      new ShoppingCategory( 'fruits', appleImage,
+        [ ShoppingItem.APPLES, ShoppingItem.LEMONS, ShoppingItem.ORANGES, ShoppingItem.PEARS ] ),
+
+      new ShoppingCategory( 'vegetables', carrotImage,
+        [ ShoppingItem.CARROTS, ShoppingItem.CUCUMBERS, ShoppingItem.POTATOES, ShoppingItem.TOMATOES ] ),
+
+      new ShoppingCategory( 'candies', purpleCandyImage,
+        [ ShoppingItem.PURPLE_CANDY, ShoppingItem.RED_CANDY, ShoppingItem.GREEN_CANDY, ShoppingItem.BLUE_CANDY ] )
     ];
 
     // validate options
-    assert && assert( options.sceneIndex >= 0 && options.sceneIndex < this.scenes.length, 'invalid sceneIndex: ' + options.sceneIndex );
+    assert && assert( options.categoryIndex >= 0 && options.categoryIndex < this.categories.length,
+      'invalid categoryIndex: ' + options.categoryIndex );
 
-    // @public the selected scene
-    this.sceneProperty = new Property( this.scenes[ options.sceneIndex ], {
-      validValues: this.scenes
+    // @public the selected category
+    this.categoryProperty = new Property( this.categories[ options.categoryIndex ], {
+      validValues: this.categories
     } );
   }
 
@@ -52,9 +59,9 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.sceneProperty.reset();
-      this.scenes.forEach( function( scene ) {
-        scene.reset();
+      this.categoryProperty.reset();
+      this.categories.forEach( function( category ) {
+        category.reset();
       } );
     }
   } );
