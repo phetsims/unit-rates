@@ -28,7 +28,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingChallengesNode( shoppingItem, options ) {
+  function ShoppingChallengesAccordionBox( shoppingItem, options ) {
 
     options = _.extend( {
       expandedProperty: new Property( true ),
@@ -73,7 +73,7 @@ define( function( require ) {
     AccordionBox.call( this, contentNode, options );
   }
 
-  unitRates.register( 'ShoppingChallengesNode', ShoppingChallengesNode );
+  unitRates.register( 'ShoppingChallengesAccordionBox', ShoppingChallengesAccordionBox );
 
-  return inherit( AccordionBox, ShoppingChallengesNode );
+  return inherit( AccordionBox, ShoppingChallengesAccordionBox );
 } );

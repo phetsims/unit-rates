@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var ShoppingChallengesNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingChallengesNode' );
+  var ShoppingChallengesAccordionBox = require( 'UNIT_RATES/shoppingNEW/view/ShoppingChallengesAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -28,11 +28,11 @@ define( function( require ) {
 
     Node.call( this );
 
-    var challengesNode = new ShoppingChallengesNode( shoppingItem, {
+    var challengesAccordionBox = new ShoppingChallengesAccordionBox( shoppingItem, {
       expandedProperty: viewProperties.challengesExpandedProperty,
       center: layoutBounds.center
     } );
-    this.addChild( challengesNode );
+    this.addChild( challengesAccordionBox );
 
     this.mutate( options );
 
