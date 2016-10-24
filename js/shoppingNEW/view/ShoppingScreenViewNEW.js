@@ -12,7 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var ShoppingCategoryControl = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryControl' );
+  var ShoppingCategoryRadioButtons = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryRadioButtons' );
   var ShoppingCategoryNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -33,12 +33,12 @@ define( function( require ) {
       self.addChild( new ShoppingCategoryNode( category, model.categoryProperty, self.layoutBounds ) );
     } );
 
-    // Category control
-    var categoryControl = new ShoppingCategoryControl( model.categories, model.categoryProperty, {
+    // Category radio buttons
+    var categoryRadioButtons = new ShoppingCategoryRadioButtons( model.categories, model.categoryProperty, {
       right: this.layoutBounds.maxX - 15,
       bottom: this.layoutBounds.maxY - 80
     } );
-    this.addChild( categoryControl );
+    this.addChild( categoryRadioButtons );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {

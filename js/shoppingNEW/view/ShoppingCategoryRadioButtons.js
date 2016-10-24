@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * Control for selecting a category of items in the 'Shopping' screen.
+ * Radio buttons for selecting a category of items in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,7 +20,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingCategoryControl( categories, categoryProperty, options ) {
+  function ShoppingCategoryRadioButtons( categories, categoryProperty, options ) {
 
     options = _.extend( {
       orientation: 'horizontal',
@@ -42,7 +42,7 @@ define( function( require ) {
     RadioButtonGroup.call( this, categoryProperty, contentArray, options );
   }
 
-  unitRates.register( 'ShoppingCategoryControl', ShoppingCategoryControl );
+  unitRates.register( 'ShoppingCategoryRadioButtons', ShoppingCategoryRadioButtons );
 
-  return inherit( RadioButtonGroup, ShoppingCategoryControl );
+  return inherit( RadioButtonGroup, ShoppingCategoryRadioButtons );
 } );
