@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -31,7 +32,7 @@ define( function( require ) {
 
     options = _.extend( {
       expandedProperty: new Property( true ),
-      titleNode: new Text( challengesString, { font: new URFont( 16 ), maxWidth: 100 } ),
+      titleNode: new Text( challengesString, { font: new URFont( 14 ), maxWidth: 100 } ),
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       fill: 'white',
@@ -57,13 +58,14 @@ define( function( require ) {
 
     var contentNode = new VBox( {
       align: 'center', //TODO right justify the refresh button?
-      spacing: 15,
+      spacing: 10,
       children: [
         new VBox( {
           align: 'center',
-          spacing: 15,
+          spacing: 25,
           children: challengeNodes
         } ),
+        new HStrut( 175 ), //TODO temporary
         refreshButton
       ]
     } );
