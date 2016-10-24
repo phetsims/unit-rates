@@ -1,5 +1,11 @@
 // Copyright 2016, University of Colorado Boulder
 
+//TODO move to common, use in all Screens
+/**
+ * Displays a double number line.
+ *
+ * @author Chris Malley (PixelZoom, Inc.)
+ */
 define( function( require ) {
   'use strict';
 
