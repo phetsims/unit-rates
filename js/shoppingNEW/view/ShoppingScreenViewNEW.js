@@ -14,6 +14,7 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var ShoppingCategoryRadioButtons = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryRadioButtons' );
   var ShoppingCategoryNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryNode' );
+  var ShoppingViewProperties = require( 'UNIT_RATES/shoppingNEW/view/ShoppingViewProperties' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -27,10 +28,12 @@ define( function( require ) {
 
     ScreenView.call( this, options );
 
+    var viewProperties = new ShoppingViewProperties();
+
     //TODO create on demand to reduce startup time?
     // create the view for each category
     model.categories.forEach( function( category ) {
-      self.addChild( new ShoppingCategoryNode( category, model.categoryProperty, self.layoutBounds ) );
+      self.addChild( new ShoppingCategoryNode( category, model.categoryProperty, self.layoutBounds, viewProperties ) );
     } );
 
     // Category radio buttons
@@ -44,6 +47,7 @@ define( function( require ) {
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
+        viewProperties.reset();
       },
       right: this.layoutBounds.maxX - 15,
       bottom: this.layoutBounds.maxY - 15

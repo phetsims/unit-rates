@@ -11,29 +11,28 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  var ShoppingChallengesNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingChallengesNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
 
   /**
    * @param {ShoppingItem} shoppingItem
    * @param {Property.<ShoppingItem>} shoppingItemProperty
    * @param {Bounds2} layoutBounds
+   * @param {ShoppingViewProperties} viewProperties
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingItemNode( shoppingItem, shoppingItemProperty, layoutBounds, options ) {
+  function ShoppingItemNode( shoppingItem, shoppingItemProperty, layoutBounds, viewProperties, options ) {
 
     var self = this;
 
     Node.call( this );
 
-    //TODO temporary
-    var nameNode = new Text( shoppingItem.pluralName || shoppingItem.singularName, {
-      font: new URFont( 24 ),
+    var challengesNode = new ShoppingChallengesNode( shoppingItem, {
+      expandedProperty: viewProperties.challengesExpandedProperty,
       center: layoutBounds.center
     } );
-    this.addChild( nameNode );
+    this.addChild( challengesNode );
 
     this.mutate( options );
 
