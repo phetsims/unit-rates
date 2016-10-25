@@ -21,12 +21,12 @@ define( function( require ) {
 
     options = _.extend( {
       doubleNumberLineExpanded: true,
-      challengesExpanded: true
+      questionsExpanded: true
     }, options );
 
     // @public
     this.doubleNumberLineExpandedProperty = new Property( options.doubleNumberLineExpanded );
-    this.challengesExpandedProperty = new Property( options.challengesExpanded );
+    this.questionsExpandedProperty = new Property( options.questionsExpanded );
   }
 
   unitRates.register( 'ShoppingViewProperties', ShoppingViewProperties );
@@ -36,7 +36,7 @@ define( function( require ) {
     // @public
     reset: function() {
       this.doubleNumberLineExpandedProperty.reset();
-      this.challengesExpandedProperty.reset();
+      this.questionsExpandedProperty.reset();
     }
   } );
 } );

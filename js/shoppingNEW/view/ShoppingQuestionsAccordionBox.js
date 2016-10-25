@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * Displays challenges in an accordion box, with a refresh button.
+ * Displays questions in an accordion box, with a refresh button.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -43,7 +43,7 @@ define( function( require ) {
       buttonYMargin: 10
     }, options );
 
-    var challengesNode = new ShoppingQuestionsNode( shoppingItem );
+    var questionsNode = new ShoppingQuestionsNode( shoppingItem );
 
     var refreshButton = new RectangularPushButton( {
       baseColor: '#f2f2f2',
@@ -57,7 +57,7 @@ define( function( require ) {
       align: 'center', //TODO right justify the refresh button?
       spacing: 10,
       children: [
-        challengesNode,
+        questionsNode,
         new HStrut( 175 ), //TODO temporary
         refreshButton
       ]

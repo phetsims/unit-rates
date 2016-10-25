@@ -21,7 +21,7 @@ define( function( require ) {
   var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
 
   // constants
-  var CHALLENGE_TEXT_OPTIONS = {
+  var QUESTION_TEXT_OPTIONS = {
     font: new URFont( 18 )
   };
 
@@ -40,9 +40,9 @@ define( function( require ) {
     options.children = [];
 
     //TODO temporary placeholder
-    options.children.push( new Text( toCurrency( shoppingItem.unitRate ), CHALLENGE_TEXT_OPTIONS ) );
+    options.children.push( new Text( toCurrency( shoppingItem.unitRate ), QUESTION_TEXT_OPTIONS ) );
     shoppingItem.questions[ 0 ].forEach( function( value ) {
-      options.children.push( new Text( toCurrency( value ), CHALLENGE_TEXT_OPTIONS ) );
+      options.children.push( new Text( toCurrency( value ), QUESTION_TEXT_OPTIONS ) );
     } );
 
     VBox.call( this, options );
