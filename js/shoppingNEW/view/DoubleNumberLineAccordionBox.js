@@ -54,6 +54,7 @@ define( function( require ) {
     } );
 
     var eraserButton = new EraserButton( {
+      baseColor: 'rgb( 255, 255, 219 )',
       listener: function() {
         //TODO
       }
