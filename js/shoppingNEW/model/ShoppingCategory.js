@@ -14,13 +14,12 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {string} name - internal name of the scene, not visible to the user TODO delete this
    * @param {HTMLImageElement} image - image used to represent the scene
    * @param {ShoppingItem[]} shoppingItems - items in this scene
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingCategory( name, image, shoppingItems, options ) {
+  function ShoppingCategory( image, shoppingItems, options ) {
 
     assert && assert( shoppingItems.length > 0, 'at least 1 ShoppingItem is required' );
 
@@ -35,7 +34,6 @@ define( function( require ) {
       'invalid shoppingItemIndex: ' + options.shoppingItemIndex );
 
     // @public (read-only)
-    this.name = name;
     this.image = image;
     this.shoppingItems = shoppingItems;
     this.shoppingItemProperty = new Property( shoppingItems[ options.shoppingItemIndex ] );

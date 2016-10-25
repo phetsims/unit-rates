@@ -20,15 +20,17 @@ define( function( require ) {
   var purpleCandyString = require( 'string!UNIT_RATES/purpleCandy' );
   var redCandyString = require( 'string!UNIT_RATES/redCandy' );
 
-  // images
-  var blueCandyBagImage = require( 'image!UNIT_RATES/blue_candy_bag.png' );
+  // item images
   var blueCandyImage = require( 'image!UNIT_RATES/blue_candy.png' );
-  var greenCandyBagImage = require( 'image!UNIT_RATES/green_candy_bag.png' );
   var greenCandyImage = require( 'image!UNIT_RATES/green_candy.png' );
-  var purpleCandyBagImage = require( 'image!UNIT_RATES/purple_candy_bag.png' );
   var purpleCandyImage = require( 'image!UNIT_RATES/purple_candy.png' );
-  var redCandyBagImage = require( 'image!UNIT_RATES/red_candy_bag.png' );
   var redCandyImage = require( 'image!UNIT_RATES/red_candy.png' );
+
+  // bag images
+  var blueCandyBagImage = require( 'image!UNIT_RATES/blue_candy_bag.png' );
+  var greenCandyBagImage = require( 'image!UNIT_RATES/green_candy_bag.png' );
+  var purpleCandyBagImage = require( 'image!UNIT_RATES/purple_candy_bag.png' );
+  var redCandyBagImage = require( 'image!UNIT_RATES/red_candy_bag.png' );
 
   /**
    * @param {Object} itemDescription - see one of the static instances for an example

@@ -34,15 +34,9 @@ define( function( require ) {
 
     // @public (read-only) items are grouped into categories
     this.categories = [
-
-      new ShoppingCategory( 'fruits', appleImage,
-        [ Fruit.APPLES, Fruit.LEMONS, Fruit.ORANGES, Fruit.PEARS ] ),
-
-      new ShoppingCategory( 'vegetables', carrotImage,
-        [ Vegetable.CARROTS, Vegetable.CUCUMBERS, Vegetable.POTATOES, Vegetable.TOMATOES ] ),
-
-      new ShoppingCategory( 'candies', purpleCandyImage,
-        [ Candy.PURPLE_CANDY, Candy.RED_CANDY, Candy.GREEN_CANDY, Candy.BLUE_CANDY ] )
+      new ShoppingCategory( appleImage, [ Fruit.APPLES, Fruit.LEMONS, Fruit.ORANGES, Fruit.PEARS ] ),
+      new ShoppingCategory( carrotImage, [ Vegetable.CARROTS, Vegetable.CUCUMBERS, Vegetable.POTATOES, Vegetable.TOMATOES ] ),
+      new ShoppingCategory( purpleCandyImage, [ Candy.PURPLE_CANDY, Candy.RED_CANDY, Candy.GREEN_CANDY, Candy.BLUE_CANDY ] )
     ];
 
     // validate options
