@@ -24,8 +24,10 @@ define( function( require ) {
       questionsExpanded: true
     }, options );
 
-    // @public
+    // @public is the 'Double Number Line' accordion box expanded?
     this.doubleNumberLineExpandedProperty = new Property( options.doubleNumberLineExpanded );
+
+    // @public is the 'Questions' accordion box expanded?
     this.questionsExpandedProperty = new Property( options.questionsExpanded );
   }
 
