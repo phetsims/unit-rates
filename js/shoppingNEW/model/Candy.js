@@ -14,9 +14,10 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
-  var poundsString = require( 'string!UNIT_RATES/pounds' );
   var blueCandyString = require( 'string!UNIT_RATES/blueCandy' );
+  var dollarsString = require( 'string!UNIT_RATES/dollars' );
   var greenCandyString = require( 'string!UNIT_RATES/greenCandy' );
+  var poundsString = require( 'string!UNIT_RATES/pounds' );
   var purpleCandyString = require( 'string!UNIT_RATES/purpleCandy' );
   var redCandyString = require( 'string!UNIT_RATES/redCandy' );
 
@@ -49,7 +50,8 @@ define( function( require ) {
     bagRate: 2.16, // dollars per bag
     numberOfBags: 4,
     singularName: purpleCandyString,
-    pluralName: null,
+    pluralName: purpleCandyString,
+    numeratorName: dollarsString,
     denominatorName: poundsString,
     itemImage: purpleCandyImage,
     bagImage: purpleCandyBagImage,
@@ -66,7 +68,8 @@ define( function( require ) {
     bagRate: 1.14, // dollars per bag
     numberOfBags: 4,
     singularName: redCandyString,
-    pluralName: null,
+    pluralName: redCandyString,
+    numeratorName: dollarsString,
     denominatorName: poundsString,
     itemImage: redCandyImage,
     bagImage: redCandyBagImage,
@@ -83,7 +86,8 @@ define( function( require ) {
     bagRate: 2.46, // dollars per bag
     numberOfBags: 4,
     singularName: greenCandyString,
-    pluralName: null,
+    pluralName: greenCandyString,
+    numeratorName: dollarsString,
     denominatorName: poundsString,
     itemImage: greenCandyImage,
     bagImage: greenCandyBagImage,
@@ -100,7 +104,8 @@ define( function( require ) {
     bagRate: 0.52, // dollars per bag
     numberOfBags: 4,
     singularName: blueCandyString,
-    pluralName: null,
+    pluralName: blueCandyString,
+    numeratorName: dollarsString,
     denominatorName: poundsString,
     itemImage: blueCandyImage,
     bagImage: blueCandyBagImage,

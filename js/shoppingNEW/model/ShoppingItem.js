@@ -23,6 +23,8 @@ define( function( require ) {
     this.bagRate = itemDescription.bagRate;
     this.numberOfBags = itemDescription.numberOfBags;
     this.singularName = itemDescription.singularName;
+    this.pluralName = itemDescription.pluralName;
+    this.denominatorName = itemDescription.denominatorName;
     this.itemImage = itemDescription.itemImage;
     this.bagImage = itemDescription.bagImage;
     this.questions = itemDescription.questions;

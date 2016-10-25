@@ -16,6 +16,7 @@ define( function( require ) {
   // strings
   var appleString = require( 'string!UNIT_RATES/apple' );
   var applesString = require( 'string!UNIT_RATES/apples' );
+  var dollarsString = require( 'string!UNIT_RATES/dollars' );
   var lemonString = require( 'string!UNIT_RATES/lemon' );
   var lemonsString = require( 'string!UNIT_RATES/lemons' );
   var orangeString = require( 'string!UNIT_RATES/orange' );
@@ -53,6 +54,8 @@ define( function( require ) {
     numberOfBags: 3,
     singularName: appleString,
     pluralName: applesString,
+    numeratorName: dollarsString,
+    denominatorName: applesString,
     itemImage: appleImage,
     bagImage: appleBagImage,
     questions: [
@@ -69,6 +72,8 @@ define( function( require ) {
     numberOfBags: 3,
     singularName: lemonString,
     pluralName: lemonsString,
+    numeratorName: dollarsString,
+    denominatorName: lemonsString,
     itemImage: lemonImage,
     bagImage: lemonBagImage,
     questions: [
@@ -85,6 +90,8 @@ define( function( require ) {
     numberOfBags: 3,
     singularName: orangeString,
     pluralName: orangesString,
+    numeratorName: dollarsString,
+    denominatorName: orangesString,
     itemImage: orangeImage,
     bagImage: orangeBagImage,
     questions: [
@@ -101,6 +108,8 @@ define( function( require ) {
     numberOfBags: 3,
     singularName: pearString,
     pluralName: pearsString,
+    numeratorName: dollarsString,
+    denominatorName: pearsString,
     itemImage: pearImage,
     bagImage: pearBagImage,
     questions: [

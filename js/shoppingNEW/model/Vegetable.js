@@ -18,6 +18,7 @@ define( function( require ) {
   var carrotsString = require( 'string!UNIT_RATES/carrots' );
   var cucumberString = require( 'string!UNIT_RATES/cucumber' );
   var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
+  var dollarsString = require( 'string!UNIT_RATES/dollars' );
   var potatoString = require( 'string!UNIT_RATES/potato' );
   var potatoesString = require( 'string!UNIT_RATES/potatoes' );
   var tomatoString = require( 'string!UNIT_RATES/tomato' );
@@ -53,6 +54,8 @@ define( function( require ) {
     numberOfBags: 4,
     singularName: carrotString,
     pluralName: carrotsString,
+    numeratorName: dollarsString,
+    denominatorName: carrotsString,
     itemImage: carrotImage,
     bagImage: carrotBagImage,
     questions: [
@@ -69,6 +72,8 @@ define( function( require ) {
     numberOfBags: 4,
     singularName: cucumberString,
     pluralName: cucumbersString,
+    numeratorName: dollarsString,
+    denominatorName: cucumbersString,
     itemImage: cucumberImage,
     bagImage: cucumberBagImage,
     questions: [
@@ -80,11 +85,13 @@ define( function( require ) {
   };
 
   Vegetable.POTATOES = {
-    singularName: potatoString,
-    pluralName: potatoesString,
     unitRate: 0.45, // dollars per item
     bagRate: 1.35, // dollars per bag
     numberOfBags: 4,
+    singularName: potatoString,
+    pluralName: potatoesString,
+    numeratorName: dollarsString,
+    denominatorName: potatoesString,
     itemImage: potatoImage,
     bagImage: potatoBagImage,
     questions: [
@@ -101,6 +108,8 @@ define( function( require ) {
     numberOfBags: 4,
     singularName: tomatoString,
     pluralName: tomatoesString,
+    numeratorName: dollarsString,
+    denominatorName: tomatoesString,
     itemImage: tomatoImage,
     bagImage: tomatoBagImage,
     questions: [
