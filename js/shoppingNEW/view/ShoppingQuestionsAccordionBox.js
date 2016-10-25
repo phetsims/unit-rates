@@ -61,11 +61,6 @@ define( function( require ) {
       ]
     } );
 
-    //TODO temporary for debugging
-    shoppingItem.questionsProperty.lazyLink( function( questions ) {
-      console.log( 'ShoppingQuestionsAccordionBox questions=' + JSON.stringify( questions ) );
-    } );
-
     AccordionBox.call( this, contentNode, options );
   }
 

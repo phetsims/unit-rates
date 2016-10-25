@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -43,10 +44,25 @@ define( function( require ) {
 
     //TODO temporary placeholder
     options.children.push( new Text( toCurrency( shoppingItem.unitRate ), QUESTION_TEXT_OPTIONS ) );
-    shoppingItem.questionsProperty.value.forEach( function( value ) {
-      options.children.push( new Text( toCurrency( value ), QUESTION_TEXT_OPTIONS ) );
+
+    var questionsParent = new Node();
+    options.children.push( questionsParent );
+
+    options.children.push( new HStrut( 175 ) ); //TODO temporary
+
+    //TODO temporary placeholder
+    shoppingItem.questionsProperty.link( function( questions ) {
+      questionsParent.removeAllChildren();
+      var questionNodes = [];
+      questions.forEach( function( value ) {
+        questionNodes.push( new Text( toCurrency( value ), QUESTION_TEXT_OPTIONS ) );
+      } );
+      questionsParent.addChild( new VBox( {
+        align: 'center',
+        spacing: 25,
+        children: questionNodes
+      } ) );
     } );
-    options.children.push( new HStrut( 175 ) );
 
     VBox.call( this, options );
   }
