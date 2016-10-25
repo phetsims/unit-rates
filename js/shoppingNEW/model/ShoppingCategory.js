@@ -14,8 +14,8 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {HTMLImageElement} image - image used to represent the scene
-   * @param {ShoppingItem[]} shoppingItems - items in this scene
+   * @param {HTMLImageElement} image - image used to represent the category
+   * @param {ShoppingItem[]} shoppingItems - items in the category
    * @param {Object} [options]
    * @constructor
    */
