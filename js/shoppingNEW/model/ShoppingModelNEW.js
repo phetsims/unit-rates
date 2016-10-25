@@ -9,11 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Candy = require( 'UNIT_RATES/shoppingNEW/model/Candy' );
+  var Fruit = require( 'UNIT_RATES/shoppingNEW/model/Fruit' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var ShoppingItem = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItem' );
   var ShoppingCategory = require( 'UNIT_RATES/shoppingNEW/model/ShoppingCategory' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var Vegetable = require( 'UNIT_RATES/shoppingNEW/model/Vegetable' );
 
   // images
   var appleImage = require( 'image!UNIT_RATES/apple.png' );
@@ -34,13 +36,13 @@ define( function( require ) {
     this.categories = [
 
       new ShoppingCategory( 'fruits', appleImage,
-        [ ShoppingItem.APPLES, ShoppingItem.LEMONS, ShoppingItem.ORANGES, ShoppingItem.PEARS ] ),
+        [ Fruit.APPLES, Fruit.LEMONS, Fruit.ORANGES, Fruit.PEARS ] ),
 
       new ShoppingCategory( 'vegetables', carrotImage,
-        [ ShoppingItem.CARROTS, ShoppingItem.CUCUMBERS, ShoppingItem.POTATOES, ShoppingItem.TOMATOES ] ),
+        [ Vegetable.CARROTS, Vegetable.CUCUMBERS, Vegetable.POTATOES, Vegetable.TOMATOES ] ),
 
       new ShoppingCategory( 'candies', purpleCandyImage,
-        [ ShoppingItem.PURPLE_CANDY, ShoppingItem.RED_CANDY, ShoppingItem.GREEN_CANDY, ShoppingItem.BLUE_CANDY ] )
+        [ Candy.PURPLE_CANDY, Candy.RED_CANDY, Candy.GREEN_CANDY, Candy.BLUE_CANDY ] )
     ];
 
     // validate options
