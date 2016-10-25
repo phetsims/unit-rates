@@ -15,7 +15,7 @@
     "value": "Carrots"
   },
   "challenges": {
-    "value": "Challenges"
+    "value": "Questions"
   },
   "cost": {
     "value": "Cost"
@@ -97,6 +97,9 @@
   },
   "purpleCandy": {
     "value": "Purple Candy"
+  },
+  "questions": {
+    "value": "Questions"
   },
   "rate": {
     "value": "Rate"

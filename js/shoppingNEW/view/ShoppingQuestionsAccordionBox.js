@@ -15,25 +15,25 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var ShoppingChallengesNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingChallengesNode' );
+  var ShoppingQuestionsNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingQuestionsNode' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var challengesString = require( 'string!UNIT_RATES/challenges' );
+  var questionsString = require( 'string!UNIT_RATES/questions' );
 
   /**
    * @param {ShoppingItem} shoppingItem
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingChallengesAccordionBox( shoppingItem, options ) {
+  function ShoppingQuestionsAccordionBox( shoppingItem, options ) {
 
     options = _.extend( {
       expandedProperty: new Property( true ),
-      titleNode: new Text( challengesString, { font: new URFont( 18 ), maxWidth: 100 } ),
+      titleNode: new Text( questionsString, { font: new URFont( 18 ), maxWidth: 100 } ),
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       fill: 'white',
@@ -43,7 +43,7 @@ define( function( require ) {
       buttonYMargin: 10
     }, options );
 
-    var challengesNode = new ShoppingChallengesNode( shoppingItem );
+    var challengesNode = new ShoppingQuestionsNode( shoppingItem );
 
     var refreshButton = new RectangularPushButton( {
       baseColor: '#f2f2f2',
@@ -66,7 +66,7 @@ define( function( require ) {
     AccordionBox.call( this, contentNode, options );
   }
 
-  unitRates.register( 'ShoppingChallengesAccordionBox', ShoppingChallengesAccordionBox );
+  unitRates.register( 'ShoppingQuestionsAccordionBox', ShoppingQuestionsAccordionBox );
 
-  return inherit( AccordionBox, ShoppingChallengesAccordionBox );
+  return inherit( AccordionBox, ShoppingQuestionsAccordionBox );
 } );

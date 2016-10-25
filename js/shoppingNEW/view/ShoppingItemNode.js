@@ -12,7 +12,7 @@ define( function( require ) {
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/shoppingNEW/view/DoubleNumberLineAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var ShoppingChallengesAccordionBox = require( 'UNIT_RATES/shoppingNEW/view/ShoppingChallengesAccordionBox' );
+  var ShoppingQuestionsAccordionBox = require( 'UNIT_RATES/shoppingNEW/view/ShoppingQuestionsAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -36,12 +36,12 @@ define( function( require ) {
     } );
     this.addChild( doubleNumberLineAccordionBox );
 
-    var challengesAccordionBox = new ShoppingChallengesAccordionBox( shoppingItem, {
+    var questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingItem, {
       expandedProperty: viewProperties.challengesExpandedProperty,
       left: doubleNumberLineAccordionBox.right + 20,
       top: doubleNumberLineAccordionBox.top
     } );
-    this.addChild( challengesAccordionBox );
+    this.addChild( questionsAccordionBox );
 
     this.mutate( options );
 

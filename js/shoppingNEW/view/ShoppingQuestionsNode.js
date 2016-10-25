@@ -30,7 +30,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingChallengesNode( shoppingItem, options ) {
+  function ShoppingQuestionsNode( shoppingItem, options ) {
 
     options = _.extend( {
       spacing: 25
@@ -41,14 +41,14 @@ define( function( require ) {
 
     //TODO temporary placeholder
     options.children.push( new Text( toCurrency( shoppingItem.unitRate ), CHALLENGE_TEXT_OPTIONS ) );
-    shoppingItem.challenges[ 0 ].forEach( function( value ) {
+    shoppingItem.questions[ 0 ].forEach( function( value ) {
       options.children.push( new Text( toCurrency( value ), CHALLENGE_TEXT_OPTIONS ) );
     } );
 
     VBox.call( this, options );
   }
 
-  unitRates.register( 'ShoppingChallengesNode', ShoppingChallengesNode );
+  unitRates.register( 'ShoppingQuestionsNode', ShoppingQuestionsNode );
 
   /**
    * Converts a number to a currency string.
@@ -59,5 +59,5 @@ define( function( require ) {
     return StringUtils.format( currencyValueString, Util.toFixed( value, 2 ) );
   }
 
-  return inherit( VBox, ShoppingChallengesNode );
+  return inherit( VBox, ShoppingQuestionsNode );
 } );
