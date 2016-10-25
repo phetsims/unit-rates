@@ -46,7 +46,7 @@ define( function( require ) {
     shoppingItem.questionsProperty.value.forEach( function( value ) {
       options.children.push( new Text( toCurrency( value ), QUESTION_TEXT_OPTIONS ) );
     } );
-    options.children.push( new HStrut( 175 ) ); //TODO temporary
+    options.children.push( new HStrut( 175 ) );
 
     VBox.call( this, options );
   }
