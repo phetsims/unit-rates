@@ -40,7 +40,7 @@ define( function( require ) {
     // @public the current set of questions
     this.questionsProperty = new Property( itemDescription.questions[ options.questionIndex ] );
 
-    // @private sets of questions that are available
+    // @private sets of questions that are available for selection
     this.availableQuestionSets = itemDescription.questions.slice();
     this.availableQuestionSets.splice( options.questionIndex, 1 );
 
