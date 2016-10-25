@@ -39,7 +39,7 @@ define( function( require ) {
 
     options = _.extend( {
       expandedProperty: new Property( true ),
-      titleNode: new Text( doubleNumberLineString, { font: new URFont( 14 ), maxWidth: 300 } ),
+      titleNode: new Text( doubleNumberLineString, { font: new URFont( 18 ), maxWidth: 300 } ),
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       fill: 'white',

@@ -33,7 +33,7 @@ define( function( require ) {
 
     options = _.extend( {
       expandedProperty: new Property( true ),
-      titleNode: new Text( challengesString, { font: new URFont( 14 ), maxWidth: 100 } ),
+      titleNode: new Text( challengesString, { font: new URFont( 18 ), maxWidth: 100 } ),
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
       fill: 'white',
