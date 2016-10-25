@@ -34,9 +34,27 @@ define( function( require ) {
 
     // @public (read-only) items are grouped into categories
     this.categories = [
-      new ShoppingCategory( appleImage, [ Fruit.APPLES, Fruit.LEMONS, Fruit.ORANGES, Fruit.PEARS ] ),
-      new ShoppingCategory( carrotImage, [ Vegetable.CARROTS, Vegetable.CUCUMBERS, Vegetable.POTATOES, Vegetable.TOMATOES ] ),
-      new ShoppingCategory( purpleCandyImage, [ Candy.PURPLE_CANDY, Candy.RED_CANDY, Candy.GREEN_CANDY, Candy.BLUE_CANDY ] )
+
+      new ShoppingCategory( appleImage, [
+        new Fruit( Fruit.APPLES ),
+        new Fruit( Fruit.LEMONS ),
+        new Fruit( Fruit.ORANGES ),
+        new Fruit( Fruit.PEARS )
+      ] ),
+
+      new ShoppingCategory( carrotImage, [
+        new Vegetable( Vegetable.CARROTS ),
+        new Vegetable( Vegetable.CUCUMBERS ),
+        new Vegetable( Vegetable.POTATOES ),
+        new Vegetable( Vegetable.TOMATOES )
+      ] ),
+
+      new ShoppingCategory( purpleCandyImage, [
+        new Candy( Candy.PURPLE_CANDY ),
+        new Candy( Candy.RED_CANDY ),
+        new Candy( Candy.GREEN_CANDY ),
+        new Candy( Candy.BLUE_CANDY )
+      ] )
     ];
 
     // validate options

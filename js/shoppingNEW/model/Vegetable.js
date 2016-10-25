@@ -47,7 +47,7 @@ define( function( require ) {
 
   inherit( ShoppingItem, Vegetable );
 
-  Vegetable.CARROTS = new Vegetable( {
+  Vegetable.CARROTS = {
     unitRate: 0.15, // dollars per item
     bagRate: 0.60, // dollars per bag
     numberOfBags: 4,
@@ -61,9 +61,9 @@ define( function( require ) {
       [ 6, 21, 36 ],
       [ 14, 18, 28 ]
     ]
-  } );
+  };
 
-  Vegetable.CUCUMBERS = new Vegetable( {
+  Vegetable.CUCUMBERS = {
     unitRate: 0.22, // dollars per item
     bagRate: 0.66, // dollars
     numberOfBags: 4,
@@ -77,9 +77,9 @@ define( function( require ) {
       [ 8, 17, 27 ],
       [ 13, 23, 22 ]
     ]
-  } );
+  };
 
-  Vegetable.POTATOES = new Vegetable( {
+  Vegetable.POTATOES = {
     singularName: potatoString,
     pluralName: potatoesString,
     unitRate: 0.45, // dollars per item
@@ -93,9 +93,9 @@ define( function( require ) {
       [ 11, 23, 25 ],
       [ 13, 25, 22 ]
     ]
-  } );
+  };
 
-  Vegetable.TOMATOES = new Vegetable( {
+  Vegetable.TOMATOES = {
     unitRate: 0.3, // dollars per item
     bagRate: 1.20, // dollars per bag
     numberOfBags: 4,
@@ -109,7 +109,7 @@ define( function( require ) {
       [ 14, 35, 26 ],
       [ 6, 21, 19 ]
     ]
-  } );
+  };
 
   return Vegetable;
 } );

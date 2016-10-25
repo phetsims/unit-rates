@@ -47,7 +47,7 @@ define( function( require ) {
 
   inherit( ShoppingItem, Fruit );
 
-  Fruit.APPLES = new Fruit( {
+  Fruit.APPLES = {
     unitRate: 0.5, // dollars per item
     bagRate: 2.50, // dollars per bag
     numberOfBags: 3,
@@ -61,9 +61,9 @@ define( function( require ) {
       [ 15, 9, 7 ],     // set C
       [ 15, 4, 9 ]      // set D
     ]
-  } );
+  };
 
-  Fruit.LEMONS = new Fruit( {
+  Fruit.LEMONS = {
     unitRate: 0.25, // dollars per item
     bagRate: 1.25, // dollars per bag
     numberOfBags: 3,
@@ -77,9 +77,9 @@ define( function( require ) {
       [ 15, 6, 11 ],
       [ 15, 6, 12 ]
     ]
-  } );
+  };
 
-  Fruit.ORANGES = new Fruit( {
+  Fruit.ORANGES = {
     unitRate: 0.75, // dollars per item
     bagRate: 3.75, // dollars per bag
     numberOfBags: 3,
@@ -93,9 +93,9 @@ define( function( require ) {
       [ 15, 9, 14 ],
       [ 15, 6, 12 ]
     ]
-  } );
+  };
 
-  Fruit.PEARS = new Fruit( {
+  Fruit.PEARS = {
     unitRate: 0.40, // dollars per item
     bagRate: 2.00, // dollars
     numberOfBags: 3,
@@ -109,7 +109,7 @@ define( function( require ) {
       [ 15, 4, 8 ],
       [ 15, 11, 13 ]
     ]
-  } );
+  };
 
   return Fruit;
 } );

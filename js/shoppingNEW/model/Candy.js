@@ -44,7 +44,7 @@ define( function( require ) {
 
   inherit( ShoppingItem, Candy );
 
-  Candy.PURPLE_CANDY = new Candy( {
+  Candy.PURPLE_CANDY = {
     unitRate: 5.40, // dollars per pound
     bagRate: 2.16, // dollars per bag
     numberOfBags: 4,
@@ -59,9 +59,9 @@ define( function( require ) {
       [ 0.3, 2.4, 2.3 ],
       [ 1.3, 2.1, 2.5 ]
     ]
-  } );
+  };
 
-  Candy.RED_CANDY = new Candy( {
+  Candy.RED_CANDY = {
     unitRate: 3.80, // dollars per pound
     bagRate: 1.14, // dollars per bag
     numberOfBags: 4,
@@ -76,9 +76,9 @@ define( function( require ) {
       [ 0.8, 1.7, 1.9 ],
       [ 1.3, 2.4, 2.8 ]
     ]
-  } );
+  };
 
-  Candy.GREEN_CANDY = new Candy( {
+  Candy.GREEN_CANDY = {
     unitRate: 8.20, // dollars per pound
     bagRate: 2.46, // dollars per bag
     numberOfBags: 4,
@@ -93,9 +93,9 @@ define( function( require ) {
       [ 0.4, 1.8, 1.9 ],
       [ 1.5, 2.1, 1.8 ]
     ]
-  } );
+  };
 
-  Candy.BLUE_CANDY = new Candy( {
+  Candy.BLUE_CANDY = {
     unitRate: 1.30, // dollars per pound
     bagRate: 0.52, // dollars per bag
     numberOfBags: 4,
@@ -110,7 +110,7 @@ define( function( require ) {
       [ 1.3, 2.6, 2.4 ],
       [ 1.4, 2.8, 2.9 ]
     ]
-  } );
+  };
 
   return Candy;
 } );
