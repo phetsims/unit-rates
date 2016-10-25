@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -33,7 +34,8 @@ define( function( require ) {
   function ShoppingQuestionsNode( shoppingItem, options ) {
 
     options = _.extend( {
-      spacing: 25
+      spacing: 25,
+      align: 'center'
     }, options );
 
     assert && assert( !options.children, 'decoration not supported' );
@@ -44,6 +46,7 @@ define( function( require ) {
     shoppingItem.questionsProperty.value.forEach( function( value ) {
       options.children.push( new Text( toCurrency( value ), QUESTION_TEXT_OPTIONS ) );
     } );
+    options.children.push( new HStrut( 175 ) ); //TODO temporary
 
     VBox.call( this, options );
   }

@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -54,11 +53,10 @@ define( function( require ) {
     } );
 
     var contentNode = new VBox( {
-      align: 'center', //TODO right justify the refresh button?
-      spacing: 10,
+      align: 'right',
+      spacing: 0,
       children: [
         questionsNode,
-        new HStrut( 175 ), //TODO temporary
         refreshButton
       ]
     } );
