@@ -12,7 +12,7 @@ define( function( require ) {
   // modules
   var RacingLabScreen = require( 'UNIT_RATES/racingLab/RacingLabScreen' );
   var ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
-  var ShoppingScreenNEW = require( 'UNIT_RATES/shoppingnew/ShoppingScreenNEW' );
+  var ShoppingScreenNEW = require( 'UNIT_RATES/shoppingNEW/ShoppingScreenNEW' );
   var ShoppingLabScreen = require( 'UNIT_RATES/shoppingLab/ShoppingLabScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
