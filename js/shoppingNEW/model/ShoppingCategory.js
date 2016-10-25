@@ -48,7 +48,7 @@ define( function( require ) {
 
       // Reset all shopping items
       this.shoppingItems.forEach( function( shoppingItem ) {
-        //TODO shoppingItem.reset();
+        shoppingItem.reset();
       } );
 
       // Randomly choose an item

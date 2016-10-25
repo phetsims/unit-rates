@@ -33,5 +33,10 @@ define( function( require ) {
 
   unitRates.register( 'ShoppingItem', ShoppingItem );
 
-  return inherit( Object, ShoppingItem );
+  return inherit( Object, ShoppingItem, {
+
+    reset: function() {
+      //TODO
+    }
+  } );
 } );
