@@ -49,7 +49,7 @@ define( function( require ) {
       baseColor: '#f2f2f2',
       content: new FontAwesomeNode( 'refresh', { scale: 0.38 } ),
       listener: function() {
-        //TODO
+        shoppingItem.nextQuestions();
       }
     } );
 
@@ -61,6 +61,11 @@ define( function( require ) {
         new HStrut( 175 ), //TODO temporary
         refreshButton
       ]
+    } );
+
+    //TODO temporary for debugging
+    shoppingItem.questionsProperty.lazyLink( function( questions ) {
+      console.log( 'ShoppingQuestionsAccordionBox questions=' + JSON.stringify( questions ) );
     } );
 
     AccordionBox.call( this, contentNode, options );

@@ -41,7 +41,7 @@ define( function( require ) {
 
     //TODO temporary placeholder
     options.children.push( new Text( toCurrency( shoppingItem.unitRate ), QUESTION_TEXT_OPTIONS ) );
-    shoppingItem.questions[ 0 ].forEach( function( value ) {
+    shoppingItem.questionsProperty.value.forEach( function( value ) {
       options.children.push( new Text( toCurrency( value ), QUESTION_TEXT_OPTIONS ) );
     } );
 
