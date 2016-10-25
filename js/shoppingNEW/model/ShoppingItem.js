@@ -26,6 +26,7 @@ define( function( require ) {
   var pearsString = require( 'string!UNIT_RATES/pears' );
   var potatoString = require( 'string!UNIT_RATES/potato' );
   var potatoesString = require( 'string!UNIT_RATES/potatoes' );
+  var poundsString = require( 'string!UNIT_RATES/pounds' );
   var tomatoString = require( 'string!UNIT_RATES/tomato' );
   var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
   var blueCandyString = require( 'string!UNIT_RATES/blueCandy' );
@@ -197,6 +198,7 @@ define( function( require ) {
       numberOfBags: 4,
       singularName: purpleCandyString,
       pluralName: null,
+      denominatorName: poundsString,
       itemImage: purpleCandyImage,
       bagImage: purpleCandyBagImage,
       challenges: [
@@ -213,6 +215,7 @@ define( function( require ) {
       numberOfBags: 4,
       singularName: redCandyString,
       pluralName: null,
+      denominatorName: poundsString,
       itemImage: redCandyImage,
       bagImage: redCandyBagImage,
       challenges: [
@@ -229,6 +232,7 @@ define( function( require ) {
       numberOfBags: 4,
       singularName: greenCandyString,
       pluralName: null,
+      denominatorName: poundsString,
       itemImage: greenCandyImage,
       bagImage: greenCandyBagImage,
       challenges: [
@@ -245,6 +249,7 @@ define( function( require ) {
       numberOfBags: 4,
       singularName: blueCandyString,
       pluralName: null,
+      denominatorName: poundsString,
       itemImage: blueCandyImage,
       bagImage: blueCandyBagImage,
       challenges: [

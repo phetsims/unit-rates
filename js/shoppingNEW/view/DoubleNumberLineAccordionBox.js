@@ -21,7 +21,14 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
+  var dollarsString = require( 'string!UNIT_RATES/dollars' );
   var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
+
+  // constants
+  var AXIS_LABEL_OPTIONS = {
+    font: new URFont( 14 ),
+    fill: 'black'
+  };
 
   /**
    * @param {ShoppingItem} shoppingItem
@@ -42,8 +49,9 @@ define( function( require ) {
       buttonYMargin: 10
     }, options );
 
-    var doubleNumberLineNode = new DoubleNumberLineNode( shoppingItem, {
-      //TODO topLabel, bottomLabel
+    var doubleNumberLineNode = new DoubleNumberLineNode( {
+      topLabel: new Text( dollarsString, AXIS_LABEL_OPTIONS ),
+      bottomLabel: new Text( shoppingItem.denominatorName || shoppingItem.pluralName, AXIS_LABEL_OPTIONS )
     } );
 
     var eraserButton = new EraserButton( {

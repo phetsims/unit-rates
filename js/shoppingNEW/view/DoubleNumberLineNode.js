@@ -31,11 +31,11 @@ define( function( require ) {
       verticalAxisLineWidth: 1.5,
       
       // common to both horizontal axes
-      horizontalAxisLength: 725,
+      horizontalAxisLength: 675,
       horizontalAxisLineWidth: 1.5,
       arrowSize: new Dimension2( 8, 8 ),
       horizontalAxisYSpacing: 20, // vertical spacing between top and bottom axes
-      labelXSpacing: 2, // horizontal spacing between axis and its label
+      labelXSpacing: 4, // horizontal spacing between axis and its label
       
       // top horizontal axis
       topLabel: null, // {Node|null} label on the top axis
@@ -67,9 +67,9 @@ define( function( require ) {
     this.addChild( topAxisNode );
     
     if ( options.topLabel ) {
+      this.addChild( options.topLabel );
       options.topLabel.left = topAxisNode.right + options.labelXSpacing;
       options.topLabel.centerY =  topAxisNode.centerY;
-      this.addChild( options.topLabel );
     }
 
     var bottomAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
@@ -83,9 +83,9 @@ define( function( require ) {
     this.addChild( bottomAxisNode );
 
     if ( options.bottomLabel ) {
+      this.addChild( options.bottomLabel );
       options.bottomLabel.left = bottomAxisNode.right + options.labelXSpacing;
       options.bottomLabel.centerY =  bottomAxisNode.centerY;
-      this.addChild( options.bottomLabel );
     }
 
     this.mutate( options );
