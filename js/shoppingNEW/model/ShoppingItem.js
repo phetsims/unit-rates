@@ -13,7 +13,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {Object} itemDescription - see one of the static instances for an example
+   * @param {Object} itemDescription - see Fruit.APPLES for an example
    * @constructor
    */
   function ShoppingItem( itemDescription ) {

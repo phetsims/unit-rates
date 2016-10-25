@@ -23,15 +23,17 @@ define( function( require ) {
   var tomatoString = require( 'string!UNIT_RATES/tomato' );
   var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
 
-  // images
-  var carrotBagImage = require( 'image!UNIT_RATES/carrot_bag.png' );
+  // item images
   var carrotImage = require( 'image!UNIT_RATES/carrot.png' );
-  var cucumberBagImage = require( 'image!UNIT_RATES/cucumber_bag.png' );
   var cucumberImage = require( 'image!UNIT_RATES/cucumber.png' );
-  var potatoBagImage = require( 'image!UNIT_RATES/potato_bag.png' );
   var potatoImage = require( 'image!UNIT_RATES/potato.png' );
-  var tomatoBagImage = require( 'image!UNIT_RATES/tomato_bag.png' );
   var tomatoImage = require( 'image!UNIT_RATES/tomato.png' );
+
+  // bag images
+  var carrotBagImage = require( 'image!UNIT_RATES/carrot_bag.png' );
+  var cucumberBagImage = require( 'image!UNIT_RATES/cucumber_bag.png' );
+  var potatoBagImage = require( 'image!UNIT_RATES/potato_bag.png' );
+  var tomatoBagImage = require( 'image!UNIT_RATES/tomato_bag.png' );
 
   /**
    * @param {Object} itemDescription - see one of the static instances for an example
