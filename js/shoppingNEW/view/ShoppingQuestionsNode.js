@@ -48,7 +48,7 @@ define( function( require ) {
     var questionsParent = new Node();
     options.children.push( questionsParent );
 
-    options.children.push( new HStrut( 175 ) ); //TODO temporary
+    options.children.push( new HStrut( 175 ) ); //TODO temporary solution for uniform width
 
     //TODO temporary placeholder
     shoppingItem.questionsProperty.link( function( questions ) {

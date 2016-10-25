@@ -13,6 +13,7 @@ define( function( require ) {
   var AccordionBox = require( 'SUN/AccordionBox' );
   var DoubleNumberLineNode = require( 'UNIT_RATES/shoppingNEW/view/DoubleNumberLineNode' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -66,7 +67,14 @@ define( function( require ) {
       align: 'right',
       spacing: 10,
       children: [
-        doubleNumberLineNode,
+        new VBox( {
+          align: 'left',
+          spacing: 0,
+          children: [
+            doubleNumberLineNode,
+            new HStrut( 745 ) //TODO temporary solution for uniform width
+          ]
+        } ),
         eraserButton
       ]
     } );
