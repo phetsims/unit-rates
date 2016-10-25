@@ -35,6 +35,7 @@ define( function( require ) {
     // @public (read-only) items are grouped into categories
     this.categories = [
 
+      // fruits
       new ShoppingCategory( appleImage, [
         new Fruit( Fruit.APPLES ),
         new Fruit( Fruit.LEMONS ),
@@ -42,6 +43,7 @@ define( function( require ) {
         new Fruit( Fruit.PEARS )
       ] ),
 
+      // vegetables
       new ShoppingCategory( carrotImage, [
         new Vegetable( Vegetable.CARROTS ),
         new Vegetable( Vegetable.CUCUMBERS ),
@@ -49,6 +51,7 @@ define( function( require ) {
         new Vegetable( Vegetable.TOMATOES )
       ] ),
 
+      // candies
       new ShoppingCategory( purpleCandyImage, [
         new Candy( Candy.PURPLE_CANDY ),
         new Candy( Candy.RED_CANDY ),
