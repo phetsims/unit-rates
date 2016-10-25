@@ -35,31 +35,31 @@ define( function( require ) {
 
   // item images
   var appleImage = require( 'image!UNIT_RATES/apple.png' );
+  var blueCandyImage = require( 'image!UNIT_RATES/blue_candy.png' );
+  var carrotImage = require( 'image!UNIT_RATES/carrot.png' );
+  var cucumberImage = require( 'image!UNIT_RATES/cucumber.png' );
+  var greenCandyImage = require( 'image!UNIT_RATES/green_candy.png' );
   var lemonImage = require( 'image!UNIT_RATES/lemon.png' );
   var orangeImage = require( 'image!UNIT_RATES/orange.png' );
   var pearImage = require( 'image!UNIT_RATES/pear.png' );
-  var carrotImage = require( 'image!UNIT_RATES/carrot.png' );
-  var cucumberImage = require( 'image!UNIT_RATES/cucumber.png' );
   var potatoImage = require( 'image!UNIT_RATES/potato.png' );
-  var tomatoImage = require( 'image!UNIT_RATES/tomato.png' );
-  var blueCandyImage = require( 'image!UNIT_RATES/blue_candy.png' );
-  var greenCandyImage = require( 'image!UNIT_RATES/green_candy.png' );
   var purpleCandyImage = require( 'image!UNIT_RATES/purple_candy.png' );
   var redCandyImage = require( 'image!UNIT_RATES/red_candy.png' );
+  var tomatoImage = require( 'image!UNIT_RATES/tomato.png' );
 
   // bag images
   var appleBagImage = require( 'image!UNIT_RATES/apple_bag.png' );
+  var blueCandyBagImage = require( 'image!UNIT_RATES/blue_candy_bag.png' );
+  var carrotBagImage = require( 'image!UNIT_RATES/carrot_bag.png' );
+  var cucumberBagImage = require( 'image!UNIT_RATES/cucumber_bag.png' );
+  var greenCandyBagImage = require( 'image!UNIT_RATES/green_candy_bag.png' );
   var lemonBagImage = require( 'image!UNIT_RATES/lemon_bag.png' );
   var orangeBagImage = require( 'image!UNIT_RATES/orange_bag.png' );
   var pearBagImage = require( 'image!UNIT_RATES/pear_bag.png' );
-  var carrotBagImage = require( 'image!UNIT_RATES/carrot_bag.png' );
-  var cucumberBagImage = require( 'image!UNIT_RATES/cucumber_bag.png' );
-  var potatoBagImage = require( 'image!UNIT_RATES/potato_bag.png' );
-  var tomatoBagImage = require( 'image!UNIT_RATES/tomato_bag.png' );
-  var blueCandyBagImage = require( 'image!UNIT_RATES/blue_candy_bag.png' );
-  var greenCandyBagImage = require( 'image!UNIT_RATES/green_candy_bag.png' );
   var purpleCandyBagImage = require( 'image!UNIT_RATES/purple_candy_bag.png' );
+  var potatoBagImage = require( 'image!UNIT_RATES/potato_bag.png' );
   var redCandyBagImage = require( 'image!UNIT_RATES/red_candy_bag.png' );
+  var tomatoBagImage = require( 'image!UNIT_RATES/tomato_bag.png' );
 
   var ShoppingItem = {
 
