@@ -32,6 +32,9 @@
   "currencySymbol": {
     "value": "$"
   },
+  "currencyValue": {
+    "value": "${0}"
+  },
   "dollars": {
     "value": "dollars"
   },
