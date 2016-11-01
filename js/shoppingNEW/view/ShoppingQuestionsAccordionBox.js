@@ -52,9 +52,10 @@ define( function( require ) {
       }
     } );
 
+    //TODO contentNode is not centered in AccordionBox
     var contentNode = new VBox( {
       align: 'right',
-      spacing: 0,
+      spacing: 15,
       children: [
         questionsNode,
         refreshButton

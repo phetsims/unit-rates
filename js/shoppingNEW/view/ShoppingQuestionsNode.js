@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * Displays challenges for a ShoppingItem.
+ * Displays questions for a ShoppingItem.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -9,23 +9,17 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var QuestionAndAnswerNode = require( 'UNIT_RATES/shoppingNEW/view/QuestionAndAnswerNode' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
-  var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
-
-  // constants
-  var QUESTION_TEXT_OPTIONS = {
-    font: new URFont( 18 )
-  };
+  var costOfNItemsString = require( 'string!UNIT_RATES/costOfNItems' );
+  var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
+  var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   /**
    * @param {ShoppingItem} shoppingItem
@@ -35,32 +29,42 @@ define( function( require ) {
   function ShoppingQuestionsNode( shoppingItem, options ) {
 
     options = _.extend( {
-      spacing: 25,
-      align: 'center'
+      align: 'center',
+      spacing: 15
     }, options );
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [];
 
-    //TODO temporary placeholder
-    options.children.push( new Text( toCurrency( shoppingItem.unitRate ), QUESTION_TEXT_OPTIONS ) );
+    // 'Unit Rate?' question is at the top.
+    var unitRateNode = new QuestionAndAnswerNode(
+      unitRateQuestionString,
+      shoppingItem.unitRate,
+      StringUtils.format( valueUnitsString, 1, shoppingItem.singularName ), {
+        denominatorVisible: true
+      } );
+    options.children.push( unitRateNode );
 
+    // Below the 'Unit Rate?' questions is a set of questions that can be updated dynamically.
     var questionsParent = new Node();
     options.children.push( questionsParent );
-
-    options.children.push( new HStrut( 175 ) ); //TODO temporary solution for uniform width
-
-    //TODO temporary placeholder
     shoppingItem.questionsProperty.link( function( questions ) {
+
       questionsParent.removeAllChildren();
+
       var questionNodes = [];
-      questions.forEach( function( value ) {
-        questionNodes.push( new Text( toCurrency( value ), QUESTION_TEXT_OPTIONS ) );
+      questions.forEach( function( numberOfItems ) {
+        var units = ( numberOfItems > 1 ? shoppingItem.pluralName : shoppingItem.singularName );
+        var questionString = StringUtils.format( costOfNItemsString, numberOfItems, units );
+        var denominatorString = StringUtils.format( valueUnitsString, numberOfItems, units );
+        var answer = numberOfItems * shoppingItem.unitRate;
+        questionNodes.push( new QuestionAndAnswerNode( questionString, answer, denominatorString ) );
       } );
+
       questionsParent.addChild( new VBox( {
-        align: 'center',
-        spacing: 25,
-        children: questionNodes
+        children: questionNodes,
+        align: options.align,
+        spacing: options.spacing
       } ) );
     } );
 
@@ -68,15 +72,6 @@ define( function( require ) {
   }
 
   unitRates.register( 'ShoppingQuestionsNode', ShoppingQuestionsNode );
-
-  /**
-   * Converts a number to a currency string.
-   * @param {number} value
-   * @returns {*|string}
-   */
-  function toCurrency( value ) {
-    return StringUtils.format( currencyValueString, Util.toFixed( value, 2 ) );
-  }
 
   return inherit( VBox, ShoppingQuestionsNode );
 } );

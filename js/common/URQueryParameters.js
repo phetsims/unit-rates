@@ -14,7 +14,10 @@ define( function( require ) {
   var URQueryParameters = QueryStringMachine.getAll( {
 
     // enables developer-only features
-    dev: { type: 'flag' }
+    dev: { type: 'flag' },
+
+    // shows answers to Shopping questions
+    showAnswers: { type: 'flag' }
   } );
 
   unitRates.register( 'URQueryParameters', URQueryParameters );
