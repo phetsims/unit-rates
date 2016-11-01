@@ -58,7 +58,7 @@ define( function( require ) {
     },
 
     /**
-     * Randomly chooses the next set of questions. The same set will not be selected consecutivel,
+     * Randomly chooses the next set of questions. The same set will not be selected consecutively,
      * and a selected set will not be re-selected until all sets have been selected.
      *
      * @public
