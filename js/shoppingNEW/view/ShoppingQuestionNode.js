@@ -53,7 +53,7 @@ define( function( require ) {
       valueFont: DEFAULT_VALUE_FONT,
       valueXMargin: 5,
       valueYMargin: 3,
-      xSpacing: 25,
+      xSpacing: 35,
       ySpacing: 5
     }, options );
 

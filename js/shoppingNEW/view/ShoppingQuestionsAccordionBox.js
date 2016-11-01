@@ -44,7 +44,7 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 15,
       buttonYMargin: 10,
-      contentYSpacing: 15, // vertical spacing between UI elements in the accordion box's content
+      contentYSpacing: 18, // vertical spacing between UI elements in the accordion box's content
       contentAlign: 'right' // alignment of UI elements in the accordion box's content
     }, options );
 
