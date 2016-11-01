@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * Displays question and associated answer in the Shopping screen.
+ * Displays a question and associated answer in the Shopping screen.
  * Values are entered via a keypad.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -38,7 +38,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function QuestionAndAnswerNode( questionString, answer, denominatorString, options ) {
+  function ShoppingQuestionNode( questionString, answer, denominatorString, options ) {
 
     options = _.extend( {
       maxValue: 99.99,
@@ -169,7 +169,7 @@ define( function( require ) {
     } ) );
   }
 
-  unitRates.register( 'QuestionAndAnswerNode', QuestionAndAnswerNode );
+  unitRates.register( 'ShoppingQuestionNode', ShoppingQuestionNode );
 
-  return inherit( Node, QuestionAndAnswerNode );
+  return inherit( Node, ShoppingQuestionNode );
 } );

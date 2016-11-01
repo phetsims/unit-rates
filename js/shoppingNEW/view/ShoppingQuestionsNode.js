@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var QuestionAndAnswerNode = require( 'UNIT_RATES/shoppingNEW/view/QuestionAndAnswerNode' );
+  var ShoppingQuestionNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingQuestionNode' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -37,7 +37,7 @@ define( function( require ) {
     options.children = [];
 
     // 'Unit Rate?' question is at the top.
-    var unitRateNode = new QuestionAndAnswerNode(
+    var unitRateNode = new ShoppingQuestionNode(
       unitRateQuestionString,
       shoppingItem.unitRate,
       StringUtils.format( valueUnitsString, 1, shoppingItem.singularName ), {
@@ -58,7 +58,7 @@ define( function( require ) {
         var questionString = StringUtils.format( costOfNItemsString, numberOfItems, units );
         var denominatorString = StringUtils.format( valueUnitsString, numberOfItems, units );
         var answer = numberOfItems * shoppingItem.unitRate;
-        questionNodes.push( new QuestionAndAnswerNode( questionString, answer, denominatorString ) );
+        questionNodes.push( new ShoppingQuestionNode( questionString, answer, denominatorString ) );
       } );
 
       questionsParent.addChild( new VBox( {
