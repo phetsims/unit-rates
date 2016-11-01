@@ -14,14 +14,18 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var ShoppingQuestionsNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingQuestionsNode' );
+  var ShoppingQuestionNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingQuestionNode' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
+  var costOfNItemsString = require( 'string!UNIT_RATES/costOfNItems' );
   var questionsString = require( 'string!UNIT_RATES/questions' );
+  var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
+  var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   /**
    * @param {ShoppingItem} shoppingItem
@@ -39,10 +43,39 @@ define( function( require ) {
       cornerRadius: 10,
       buttonLength: 20,
       buttonXMargin: 15,
-      buttonYMargin: 10
+      buttonYMargin: 10,
+      contentYSpacing: 15, // vertical spacing between UI elements in the accordion box's content
+      contentAlign: 'right' // alignment of UI elements in the accordion box's content
     }, options );
 
-    var questionsNode = new ShoppingQuestionsNode( shoppingItem );
+    // 'Unit Rate?' question is at the top.
+    var unitRateNode = new ShoppingQuestionNode(
+      unitRateQuestionString,
+      shoppingItem.unitRate,
+      StringUtils.format( valueUnitsString, 1, shoppingItem.singularName ), {
+        denominatorVisible: true
+      } );
+
+    // Below the 'Unit Rate?' questions is a set of questions that can be updated dynamically.
+    var questionsParent = new VBox( {
+      align: options.contentAlign,
+      spacing: options.contentYSpacing
+    } );
+    shoppingItem.questionsProperty.link( function( questions ) {
+
+      questionsParent.removeAllChildren();
+
+      var questionNodes = [];
+      questions.forEach( function( numberOfItems ) {
+        var units = ( numberOfItems > 1 ? shoppingItem.pluralName : shoppingItem.singularName );
+        var questionString = StringUtils.format( costOfNItemsString, numberOfItems, units );
+        var denominatorString = StringUtils.format( valueUnitsString, numberOfItems, units );
+        var answer = numberOfItems * shoppingItem.unitRate;
+        questionNodes.push( new ShoppingQuestionNode( questionString, answer, denominatorString ) );
+      } );
+
+      questionsParent.setChildren( questionNodes );
+    } );
 
     var refreshButton = new RectangularPushButton( {
       baseColor: '#f2f2f2',
@@ -52,12 +85,12 @@ define( function( require ) {
       }
     } );
 
-    //TODO contentNode is not centered in AccordionBox
     var contentNode = new VBox( {
-      align: 'right',
-      spacing: 15,
+      align: options.contentAlign,
+      spacing: options.contentYSpacing,
       children: [
-        questionsNode,
+        unitRateNode,
+        questionsParent,
         refreshButton
       ]
     } );
