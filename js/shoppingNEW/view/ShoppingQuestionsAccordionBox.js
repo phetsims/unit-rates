@@ -77,6 +77,7 @@ define( function( require ) {
       questionsParent.setChildren( questionNodes );
     } );
 
+    // Refresh button update the set of dynamic questions
     var refreshButton = new RectangularPushButton( {
       baseColor: '#f2f2f2',
       content: new FontAwesomeNode( 'refresh', { scale: 0.38 } ),
@@ -85,6 +86,7 @@ define( function( require ) {
       }
     } );
 
+    // AccordionBox content
     var contentNode = new VBox( {
       align: options.contentAlign,
       spacing: options.contentYSpacing,
