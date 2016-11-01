@@ -19,7 +19,7 @@ define( function( require ) {
 
   // strings - lots of 'em
   var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
-  var costOfQuestionString = require( 'string!UNIT_RATES/costOfQuestion' );
+  var costOfNItemsString = require( 'string!UNIT_RATES/costOfNItems' );
   var itemsForAmountString = require( 'string!UNIT_RATES/itemsForAmount' );
   var poundString = require( 'string!UNIT_RATES/pound' );
   var poundsString = require( 'string!UNIT_RATES/pounds' );
@@ -181,7 +181,7 @@ define( function( require ) {
         var candyCost2 = Util.toFixedNumber( candyItem2.countProperty.value * itemRate, 2 );
         var candyAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost2, 2 ) ); //TODO i18n
         var candyUnitString2 = candyItem2.countProperty.value + ' ' + poundsString; //TODO i18n
-        var costOfCandyQuestionString2 = StringUtils.format( costOfQuestionString, candyItem2.countProperty.value, poundsString );
+        var costOfCandyQuestionString2 = StringUtils.format( costOfNItemsString, candyItem2.countProperty.value, poundsString );
         var c2 = new QuestionAnswer( candyItem2, candyCost2, candyAnswerText2, {
           questionString: costOfCandyQuestionString2,
           unitString: candyUnitString2,
@@ -193,7 +193,7 @@ define( function( require ) {
         var candyCost3 = Util.toFixedNumber( candyItem3.countProperty.value * itemRate, 2 );
         var candyAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost3, 2 ) ); //TODO i18n
         var candyUnitString3 = candyItem3.countProperty.value + ' ' + poundsString; //TODO i18n
-        var costOfCandyQuestionString3 = StringUtils.format( costOfQuestionString, candyItem3.countProperty.value, poundsString );
+        var costOfCandyQuestionString3 = StringUtils.format( costOfNItemsString, candyItem3.countProperty.value, poundsString );
         var c3 = new QuestionAnswer( candyItem3, candyCost3, candyAnswerText3, {
           questionString: costOfCandyQuestionString3,
           unitString: candyUnitString3,
@@ -205,7 +205,7 @@ define( function( require ) {
         var candyCost4 = Util.toFixedNumber( candyItem4.countProperty.value * itemRate, 2 );
         var candyAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( candyCost4, 2 ) ); //TODO i18n
         var candyUnitString4 = candyItem4.countProperty.value + ' ' + poundsString; //TODO i18n
-        var costOfCandyQuestionString4 = StringUtils.format( costOfQuestionString, candyItem4.countProperty.value, poundsString );
+        var costOfCandyQuestionString4 = StringUtils.format( costOfNItemsString, candyItem4.countProperty.value, poundsString );
         var c4 = new QuestionAnswer( candyItem4, candyCost4, candyAnswerText4, {
           questionString: costOfCandyQuestionString4,
           unitString: candyUnitString4,
@@ -233,7 +233,7 @@ define( function( require ) {
         var itemCost2 = Util.toFixedNumber( item2.countProperty.value * itemRate, 2 );
         var itemAnswerText2 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost2, 2 ) ); //TODO i18n
         var itemUnitString2 = item2.countProperty.value + ' ' + pluralName; //TODO i18n
-        var costOfItemQuestionString2 = StringUtils.format( costOfQuestionString, item2.countProperty.value, pluralName );
+        var costOfItemQuestionString2 = StringUtils.format( costOfNItemsString, item2.countProperty.value, pluralName );
         var i2 = new QuestionAnswer( item2, itemCost2, itemAnswerText2, {
           questionString: costOfItemQuestionString2,
           unitString: itemUnitString2,
@@ -245,7 +245,7 @@ define( function( require ) {
         var itemCost3 = Util.toFixedNumber( item3.countProperty.value * itemRate, 2 );
         var itemAnswerText3 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost3, 2 ) ); //TODO i18n
         var itemUnitString3 = item3.countProperty.value + ' ' + pluralName; //TODO i18n
-        var costOfItemQuestionString3 = StringUtils.format( costOfQuestionString, item3.countProperty.value, pluralName );
+        var costOfItemQuestionString3 = StringUtils.format( costOfNItemsString, item3.countProperty.value, pluralName );
         var i3 = new QuestionAnswer( item3, itemCost3, itemAnswerText3, {
           questionString: costOfItemQuestionString3,
           unitString: itemUnitString3,

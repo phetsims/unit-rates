@@ -23,9 +23,6 @@
   "costOfNItems": {
     "value": "Cost of {0} {1}?"
   },
-  "costOfQuestion": {
-    "value": "Cost of {0} {1}?"
-  },
   "cucumber": {
     "value": "Cucumber"
   },
