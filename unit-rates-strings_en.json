@@ -20,6 +20,9 @@
   "cost": {
     "value": "Cost"
   },
+  "costOfNItems": {
+    "value": "Cost of {0} {1}?"
+  },
   "costOfQuestion": {
     "value": "Cost of {0} {1}?"
   },
@@ -58,6 +61,9 @@
   },
   "hours": {
     "value": "hours"
+  },
+  "itemsForAmount": {
+    "value": "{0} for {1}?"
   },
   "lbs": {
     "value": "lbs"
