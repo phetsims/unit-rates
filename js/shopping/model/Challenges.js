@@ -20,7 +20,7 @@ define( function( require ) {
   // strings - lots of 'em
   var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
   var costOfQuestionString = require( 'string!UNIT_RATES/costOfQuestion' );
-  var forQuestionString = require( 'string!UNIT_RATES/forQuestion' );
+  var itemsForAmountString = require( 'string!UNIT_RATES/itemsForAmount' );
   var poundString = require( 'string!UNIT_RATES/pound' );
   var poundsString = require( 'string!UNIT_RATES/pounds' );
   var currencySymbolString = require( 'string!UNIT_RATES/currencySymbol' );
@@ -257,7 +257,7 @@ define( function( require ) {
         var itemCost4 = Util.toFixedNumber( item4.countProperty.value * itemRate, 2 );
         var itemAnswerText4 = StringUtils.format( '{0}{1}', currencySymbolString, Util.toFixed( itemCost4, 2 ) ); //TODO i18n
         var itemUnitString4 = item4.countProperty.value + ' ' + pluralName; //TODO i18n
-        var itemForQuestionString4 = StringUtils.format( forQuestionString, pluralName, Util.toFixed( itemCost4, 2 ) );
+        var itemForQuestionString4 = StringUtils.format( itemsForAmountString, pluralName, Util.toFixed( itemCost4, 2 ) );
         var i4 = new QuestionAnswer( item4, item4.countProperty.value, itemAnswerText4, {
           questionString: itemForQuestionString4,
           unitString: itemUnitString4,
