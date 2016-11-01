@@ -67,6 +67,8 @@ define( function( require ) {
 
       var questionNodes = [];
       questions.forEach( function( numberOfItems ) {
+
+        //TODO last question should be different for Fruit and Vegetable, and questions are totally different for Candy
         var units = ( numberOfItems > 1 ? shoppingItem.pluralName : shoppingItem.singularName );
         var questionString = StringUtils.format( costOfNItemsString, numberOfItems, units );
         var denominatorString = StringUtils.format( valueUnitsString, numberOfItems, units );
