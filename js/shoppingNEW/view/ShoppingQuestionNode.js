@@ -148,7 +148,7 @@ define( function( require ) {
       answerNode.center = valueBox.center;
       answerNode.fill = correct ? options.correctColor : options.wrongColor;
 
-      fractionLineNode.fill = denominatorNode.fill = correct ? options.correctColor : options.neutralColor;
+      fractionLineNode.stroke = denominatorNode.fill = correct ? options.correctColor : options.neutralColor;
       if ( !options.denominatorVisible ) {
         fractionLineNode.visible = denominatorNode.visible = correct;
       }
