@@ -155,7 +155,7 @@ define( function( require ) {
     this.mutate( options );
 
     //TODO move functions below here to prototype
-    // Begins an edit sequence
+    // Begins an edit
     var beginEdit = function() {
       URQueryParameters.log && console.log( 'beginEdit' );
       assert && assert( !keypadLayer.visible, 'invalid state for endEdit' );
@@ -168,7 +168,7 @@ define( function( require ) {
       keypadLayer.visible = true;
     };
 
-    // Ends an edit sequence
+    // Ends an edit
     var endEdit = function() {
       URQueryParameters.log && console.log( 'endEdit' );
       assert && assert( keypadLayer.visible, 'invalid state for endEdit' );
@@ -180,7 +180,7 @@ define( function( require ) {
       valueBox.stroke = options.neutralColor; // unhighlight the value box to indicate the edit is done
     };
 
-    // Commits an edit value
+    // Ends and commits an edit
     var commitEdit = function() {
       URQueryParameters.log && console.log( 'commitEdit' );
       var valueString = keypad.valueStringProperty.value;
@@ -194,7 +194,7 @@ define( function( require ) {
       }
     };
 
-    // Cancels an edit
+    // Ends and cancels an edit
     var cancelEdit = function() {
       URQueryParameters.log && console.log( 'cancelEdit' );
       endEdit();
