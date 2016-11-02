@@ -17,7 +17,10 @@ define( function( require ) {
     dev: { type: 'flag' },
 
     // shows answers to Shopping questions
-    showAnswers: { type: 'flag' }
+    showAnswers: { type: 'flag' },
+
+    // enables console logging
+    log: { type: 'flag' }
   } );
 
   unitRates.register( 'URQueryParameters', URQueryParameters );
