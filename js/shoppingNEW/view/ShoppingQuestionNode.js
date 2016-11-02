@@ -32,9 +32,6 @@ define( function( require ) {
   var DEFAULT_QUESTION_FONT = new URFont( 14 );
   var DEFAULT_VALUE_FONT = new URFont( 14 );
   
-  //TODO fix this, keypadLayer.addInputListener causes keypad to close when clicking anywhere
-  var KEYPAD_LAYER_ADD_LISTENER = false;
-
   /**
    * @param {string} questionString
    * @param {number} answer
@@ -149,7 +146,11 @@ define( function( require ) {
 
     // Clicking outside the keypad cancels the edit
     var keypadLayerListener = new DownUpListener( {
-      down: function() { cancelEdit(); }
+      down: function( event ) {
+        if ( event.trail.lastNode() === keypadLayer ) {
+          cancelEdit();
+        }
+      }
     } );
 
     this.mutate( options );
@@ -162,9 +163,7 @@ define( function( require ) {
       valueBox.stroke = options.editColor; // highlight the value box to indicate an edit is in progress
       keypad.valueStringProperty.value = '';
       keypadLayer.addChild( keypad );
-      if ( KEYPAD_LAYER_ADD_LISTENER ) {
-        keypadLayer.addInputListener( keypadLayerListener );
-      }
+      keypadLayer.addInputListener( keypadLayerListener );
       keypadLayer.visible = true;
     };
 
@@ -174,9 +173,7 @@ define( function( require ) {
       assert && assert( keypadLayer.visible, 'invalid state for endEdit' );
       keypadLayer.visible = false;
       keypadLayer.removeChild( keypad );
-      if ( KEYPAD_LAYER_ADD_LISTENER ) {
-        keypadLayer.removeInputListener( keypadLayerListener );
-      }
+      keypadLayer.removeInputListener( keypadLayerListener );
       valueBox.stroke = options.neutralColor; // unhighlight the value box to indicate the edit is done
     };
 
