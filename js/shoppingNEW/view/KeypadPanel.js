@@ -46,6 +46,7 @@ define( function( require ) {
 
     var valueStringProperty = new Property( options.valueString );
 
+    //TODO background should be sized to maximum value, with some margins
     var valueBackgroundNode = new Rectangle( 0, 0, 85, 30, {
       cornerRadius: 3,
       fill: 'white',
