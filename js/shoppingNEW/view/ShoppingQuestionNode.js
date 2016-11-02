@@ -142,7 +142,7 @@ define( function( require ) {
     var keypad = new KeypadPanel( {
       enterButtonListener: function() { commitEdit(); },
 
-      //TODO
+      //TODO add an option for position the keypad relative to the questions
       centerX: 500,
       centerY: 400
     } );
