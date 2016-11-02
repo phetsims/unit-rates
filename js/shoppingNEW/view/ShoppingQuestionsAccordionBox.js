@@ -29,10 +29,11 @@ define( function( require ) {
 
   /**
    * @param {ShoppingItem} shoppingItem
+   * @param {Node} keypadLayer
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingQuestionsAccordionBox( shoppingItem, options ) {
+  function ShoppingQuestionsAccordionBox( shoppingItem, keypadLayer, options ) {
 
     options = _.extend( {
       expandedProperty: new Property( true ),
@@ -52,7 +53,8 @@ define( function( require ) {
     var unitRateNode = new ShoppingQuestionNode(
       unitRateQuestionString,
       shoppingItem.unitRate,
-      StringUtils.format( valueUnitsString, 1, shoppingItem.singularName ), {
+      StringUtils.format( valueUnitsString, 1, shoppingItem.singularName ),
+      keypadLayer, {
         denominatorVisible: true
       } );
 
@@ -73,7 +75,7 @@ define( function( require ) {
         var questionString = StringUtils.format( costOfNItemsString, numberOfItems, units );
         var denominatorString = StringUtils.format( valueUnitsString, numberOfItems, units );
         var answer = numberOfItems * shoppingItem.unitRate;
-        questionNodes.push( new ShoppingQuestionNode( questionString, answer, denominatorString ) );
+        questionNodes.push( new ShoppingQuestionNode( questionString, answer, denominatorString, keypadLayer ) );
       } );
 
       questionsParent.setChildren( questionNodes );

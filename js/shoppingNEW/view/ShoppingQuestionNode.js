@@ -35,10 +35,11 @@ define( function( require ) {
    * @param {string} questionString
    * @param {number} answer
    * @param {string} denominatorString
+   * @param {Node} keypadLayer
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingQuestionNode( questionString, answer, denominatorString, options ) {
+  function ShoppingQuestionNode( questionString, answer, denominatorString, keypadLayer, options ) {
 
     options = _.extend( {
       maxValue: 99.99,

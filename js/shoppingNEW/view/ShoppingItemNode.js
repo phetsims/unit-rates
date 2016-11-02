@@ -19,11 +19,12 @@ define( function( require ) {
    * @param {ShoppingItem} shoppingItem
    * @param {Property.<ShoppingItem>} shoppingItemProperty
    * @param {Bounds2} layoutBounds
+   * @param {Node} keypadLayer
    * @param {ShoppingViewProperties} viewProperties
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingItemNode( shoppingItem, shoppingItemProperty, layoutBounds, viewProperties, options ) {
+  function ShoppingItemNode( shoppingItem, shoppingItemProperty, layoutBounds, keypadLayer, viewProperties, options ) {
 
     var self = this;
 
@@ -36,7 +37,7 @@ define( function( require ) {
     } );
     this.addChild( doubleNumberLineAccordionBox );
 
-    var questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingItem, {
+    var questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingItem, keypadLayer, {
       expandedProperty: viewProperties.questionsExpandedProperty,
       left: doubleNumberLineAccordionBox.right + 10,
       top: doubleNumberLineAccordionBox.top

@@ -19,11 +19,12 @@ define( function( require ) {
    * @param {ShoppingCategory} category
    * @param {Property.<ShoppingCategory>} categoryProperty
    * @param {Bounds2} layoutBounds
+   * @param {Node} keypadLayer
    * @param {ShoppingViewProperties} viewProperties
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingCategoryNode( category, categoryProperty, layoutBounds, viewProperties, options ) {
+  function ShoppingCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties, options ) {
 
     var self = this;
 
@@ -32,7 +33,7 @@ define( function( require ) {
     //TODO create on demand to reduce startup time?
     // create the view for each item
     category.shoppingItems.forEach( function( shoppingItem ) {
-      self.addChild( new ShoppingItemNode( shoppingItem, category.shoppingItemProperty, layoutBounds, viewProperties ) );
+      self.addChild( new ShoppingItemNode( shoppingItem, category.shoppingItemProperty, layoutBounds, keypadLayer, viewProperties ) );
     } );
 
     // Item combo box
