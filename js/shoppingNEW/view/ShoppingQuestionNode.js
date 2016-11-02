@@ -14,6 +14,7 @@ define( function( require ) {
   var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var KeypadPanel = require( 'UNIT_RATES/shoppingNEW/view/KeypadPanel' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -30,6 +31,9 @@ define( function( require ) {
   // constants
   var DEFAULT_QUESTION_FONT = new URFont( 14 );
   var DEFAULT_VALUE_FONT = new URFont( 14 );
+  
+  //TODO fix this, keypadLayer.addInputListener causes keypad to close when clicking anywhere
+  var KEYPAD_LAYER_ADD_LISTENER = false;
 
   /**
    * @param {string} questionString
@@ -40,6 +44,8 @@ define( function( require ) {
    * @constructor
    */
   function ShoppingQuestionNode( questionString, answer, denominatorString, keypadLayer, options ) {
+
+    assert && assert( typeof answer === 'number', 'answer must be a number: ' + answer );
 
     options = _.extend( {
       maxValue: 99.99,
@@ -107,7 +113,6 @@ define( function( require ) {
 
     // show the answer, if query parameter is set
     if ( URQueryParameters.showAnswers ) {
-      //TODO duplicated code here
       answerNode.text = StringUtils.format( options.valueFormat, Util.toFixed( answer, options.valueDecimalPlaces ) );
       answerNode.center = valueBox.center;
       answerNode.fill = options.correctColor;
@@ -133,19 +138,82 @@ define( function( require ) {
     } );
     this.addChild( denominatorNode );
 
+    // keypad for entering numbers, added dynamically to keypadLayer
+    var keypad = new KeypadPanel( {
+      enterButtonListener: function() { commitEdit(); },
+
+      //TODO
+      centerX: 500,
+      centerY: 400
+    } );
+
     this.mutate( options );
 
-    // Updates the state of this node based on what the user entered on the keypad
-    var updateState = function() {
+    // Begins an edit sequence
+    var beginEdit = function() {
+      URQueryParameters.log && console.log( 'beginEdit' );
+      assert && assert( !keypadLayer.visible, 'invalid state for endEdit' );
+      valueBox.stroke = options.editColor; // highlight the value box to indicate an edit is in progress
+      keypad.valueStringProperty.value = '';
+      keypadLayer.addChild( keypad );
+      if ( KEYPAD_LAYER_ADD_LISTENER ) {
+        keypadLayer.addInputListener( keypadLayerListener );
+      }
+      keypadLayer.visible = true;
+    };
 
-      var correct = phet.joist.random.nextBoolean(); //TODO read the value on the keypad, compare to answer
+    // Ends an edit sequence
+    var endEdit = function() {
+      URQueryParameters.log && console.log( 'endEdit' );
+      assert && assert( keypadLayer.visible, 'invalid state for endEdit' );
+      keypadLayer.visible = false;
+      keypadLayer.removeChild( keypad );
+      if ( KEYPAD_LAYER_ADD_LISTENER ) {
+        keypadLayer.removeInputListener( keypadLayerListener );
+      }
+      valueBox.stroke = options.neutralColor;
+    };
+
+    // Commits an edit value
+    var commitEdit = function() {
+      URQueryParameters.log && console.log( 'commitEdit' );
+      endEdit();
+      var valueString = keypad.valueStringProperty.value;
+      if ( valueString ) {
+        var valueNumber = ( 1 * keypad.valueStringProperty.value ); // string -> number conversion
+        setValue( valueNumber );
+      }
+      else {
+        // absence of a value is treated like canceling the edit
+      }
+    };
+
+    // Cancels and edit
+    var cancelEdit = function() {
+      URQueryParameters.log && console.log( 'cancelEdit' );
+      endEdit();
+    };
+
+    // Clicking outside the keypad cancels the edit
+    var keypadLayerListener = new DownUpListener( { down: cancelEdit } );
+
+    /**
+     * Updates the state of this node based on what the user entered on the keypad
+     *
+     * @param {number} value
+     */
+    var setValue = function( value ) {
+
+      assert && assert( typeof value === 'number', 'value must be a number: ' + value );
+
+      var correct = ( value === answer );
 
       editButton.visible = !correct;
 
       valueBox.visible = !correct;
       valueBox.stroke = correct ? options.neutralColor : options.wrongColor;
 
-      answerNode.text = StringUtils.format( options.valueFormat, Util.toFixed( answer, options.valueDecimalPlaces ) );
+      answerNode.text = StringUtils.format( options.valueFormat, Util.toFixed( value, options.valueDecimalPlaces ) );
       answerNode.center = valueBox.center;
       answerNode.fill = correct ? options.correctColor : options.wrongColor;
 
@@ -161,12 +229,12 @@ define( function( require ) {
       else {
         faceNode.frown();
       }
-    };
+    }; // setValue
 
     // Clicking on editButton or valueBox opens the keypad
-    editButton.addListener( updateState );
+    editButton.addListener( beginEdit );
     valueBox.addInputListener( new DownUpListener( {
-      down: updateState.bind( this )
+      down: beginEdit.bind( this )
     } ) );
   }
 

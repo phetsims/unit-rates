@@ -11,16 +11,13 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Plane = require( 'SCENERY/nodes/Plane' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var ShoppingCategoryRadioButtons = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryRadioButtons' );
   var ShoppingCategoryNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryNode' );
   var ShoppingViewProperties = require( 'UNIT_RATES/shoppingNEW/view/ShoppingViewProperties' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-
-  // constants
-  var SHOW_KEYPAD_LAYER_BOUNDS = true;
 
   /**
    * @param {ShoppingModelNEW} model
@@ -38,8 +35,8 @@ define( function( require ) {
     var playAreaLayer = new Node();
     this.addChild( playAreaLayer );
 
-    var keypadLayer = new Rectangle( 0, 0, this.layoutBounds.width, this.layoutBounds.height, {
-      stroke: SHOW_KEYPAD_LAYER_BOUNDS ? 'green' : null,
+    var keypadLayer = new Plane( {
+      fill: 'rgba( 0, 0, 0, 0.1 )',
       visible: false
     } );
     this.addChild( keypadLayer );
@@ -67,8 +64,6 @@ define( function( require ) {
       bottom: this.layoutBounds.maxY - 15
     } );
     playAreaLayer.addChild( resetAllButton );
-
-    keypadLayer.moveToFront();
   }
 
   unitRates.register( 'ShoppingScreenViewNEW', ShoppingScreenViewNEW );
