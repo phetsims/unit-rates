@@ -177,24 +177,24 @@ define( function( require ) {
       if ( KEYPAD_LAYER_ADD_LISTENER ) {
         keypadLayer.removeInputListener( keypadLayerListener );
       }
-      valueBox.stroke = options.neutralColor;
+      valueBox.stroke = options.neutralColor; // unhighlight the value box to indicate the edit is done
     };
 
     // Commits an edit value
     var commitEdit = function() {
       URQueryParameters.log && console.log( 'commitEdit' );
-      endEdit();
       var valueString = keypad.valueStringProperty.value;
       if ( valueString ) {
+        endEdit();
         var valueNumber = ( 1 * keypad.valueStringProperty.value ); // string -> number conversion
         setValue( valueNumber );
       }
       else {
-        // absence of a value is treated like canceling the edit
+        cancelEdit();
       }
     };
 
-    // Cancels and edit
+    // Cancels an edit
     var cancelEdit = function() {
       URQueryParameters.log && console.log( 'cancelEdit' );
       endEdit();
