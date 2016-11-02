@@ -147,6 +147,11 @@ define( function( require ) {
       centerY: 400
     } );
 
+    // Clicking outside the keypad cancels the edit
+    var keypadLayerListener = new DownUpListener( {
+      down: function() { cancelEdit(); }
+    } );
+
     this.mutate( options );
 
     //TODO move functions below here to prototype
@@ -194,9 +199,6 @@ define( function( require ) {
       URQueryParameters.log && console.log( 'cancelEdit' );
       endEdit();
     };
-
-    // Clicking outside the keypad cancels the edit
-    var keypadLayerListener = new DownUpListener( { down: cancelEdit } );
 
     /**
      * Updates the state of this node based on what the user entered on the keypad
