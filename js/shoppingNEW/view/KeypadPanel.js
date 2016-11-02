@@ -46,15 +46,15 @@ define( function( require ) {
 
     var valueStringProperty = new Property( options.valueString );
 
+    var valueNode = new Text( valueStringProperty.value, {
+      font: new URFont( 16 )
+    } );
+
     //TODO background should be sized to maximum value, with some margins
     var valueBackgroundNode = new Rectangle( 0, 0, 85, 30, {
       cornerRadius: 3,
       fill: 'white',
       stroke: 'black'
-    } );
-
-    var valueNode = new Text( valueStringProperty.value, {
-      font: new URFont( 16 )
     } );
 
     var valueParent = new Node( {
