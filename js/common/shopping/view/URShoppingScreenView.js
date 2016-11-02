@@ -73,7 +73,7 @@ define( function( require ) {
       self.keypadCloseArea.visible = value;
     } );
 
-    // Click on pickCloseArea to close keypad
+    // Click on keypadCloseArea to close keypad
     this.keypadCloseArea.addInputListener( {
       down: function( event ) {
         self.keypad.hide();
