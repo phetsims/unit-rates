@@ -36,7 +36,7 @@ define( function( require ) {
     this.addChild( playAreaLayer );
 
     var keypadLayer = new Plane( {
-      fill: 'rgba( 0, 0, 0, 0.1 )',
+      fill: 'rgba( 0, 0, 0, 0.2 )',
       visible: false
     } );
     this.addChild( keypadLayer );
