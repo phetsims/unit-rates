@@ -149,6 +149,7 @@ define( function( require ) {
 
     this.mutate( options );
 
+    //TODO move functions below here to prototype
     // Begins an edit sequence
     var beginEdit = function() {
       URQueryParameters.log && console.log( 'beginEdit' );
