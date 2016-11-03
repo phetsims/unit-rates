@@ -201,7 +201,7 @@ define( function( require ) {
     /**
      * Sets the current keypad value
      *
-     * @param {Number} value - the value to set the keypad to
+     * @param {number} value - the value to set the keypad to
      * @public
      */
     setValue: function( value ) {
@@ -211,7 +211,7 @@ define( function( require ) {
     /**
      * Gets the current keypad value
      *
-     * @returns {Number}
+     * @returns {number}
      * @public
      */
     getValue: function() {
