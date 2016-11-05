@@ -19,6 +19,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
 
   // strings
   var enterString = require( 'string!UNIT_RATES/enter' );
@@ -78,7 +79,7 @@ define( function( require ) {
     // @protected
     this.enterButton = new TextPushButton( enterString, {
       font: new PhetFont( 18 ),
-      baseColor: '#F2E916',
+      baseColor: PhetColorScheme.PHET_YELLOW,
       maxWidth: TEXT_MAX_WIDTH,
       cornerRadius: 4
     } );
