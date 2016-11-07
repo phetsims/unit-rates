@@ -70,8 +70,8 @@ define( function( require ) {
     this.readoutText = new Text( '', { font: READOUT_FONT } );
 
     // update the value on keypad user interaction
-    this.onKeypadDigitStringChangeBound = this.onKeypadDigitStringChange.bind( this );
-    this.keypad.digitStringProperty.link( this.onKeypadDigitStringChangeBound );
+    this.onKeypadValueStringChangeBound = this.onKeypadValueStringChange.bind( this );
+    this.keypad.valueStringProperty.link( this.onKeypadValueStringChangeBound );
 
     // Layout
     this.keypad.top = this.readoutBackground.bottom + SPACING;
@@ -134,11 +134,11 @@ define( function( require ) {
     /**
      * Callback for the keypad string change
      *
-     * @param {string} digitString - called when the keypad listener changes
+     * @param {string} valueString - called when the keypad string changes
      * @public
      */
-    onKeypadDigitStringChange: function( digitString ) {
-      this.readoutText.text = digitString;
+    onKeypadValueStringChange: function( valueString ) {
+      this.readoutText.text = valueString;
       this.readoutText.center = this.readoutBackground.center;
     },
 
@@ -206,7 +206,7 @@ define( function( require ) {
      * @public
      */
     setValue: function( value ) {
-      this.keypad.digitStringProperty.value = value;
+      this.keypad.valueStringProperty.value = value;
     },
 
     /**
@@ -216,7 +216,7 @@ define( function( require ) {
      * @public
      */
     getValue: function() {
-      return Number( this.keypad.digitStringProperty.value );
+      return Number( this.keypad.valueStringProperty.value );
     },
 
     /**
@@ -230,7 +230,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      this.keypad.digitStringProperty.unlink( this.onKeypadDigitStringChangeBound );
+      this.keypad.valueStringProperty.unlink( this.onKeypadValueStringChangeBound );
     }
 
   } ); // inherit

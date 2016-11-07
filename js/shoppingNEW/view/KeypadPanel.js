@@ -64,7 +64,7 @@ define( function( require ) {
     var keypadNode = new NumberKeypad( {
       decimalPointKey: options.decimalPointKey,
       maxDigits: options.maxDigits,
-      digitStringProperty: valueStringProperty
+      valueStringProperty: valueStringProperty
     } );
 
     var enterButton = new RectangularPushButton( {
