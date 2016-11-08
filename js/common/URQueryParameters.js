@@ -13,8 +13,8 @@ define( function( require ) {
 
   var URQueryParameters = QueryStringMachine.getAll( {
 
-    // enables developer-only features
-    dev: { type: 'flag' },
+    // show screens related to new development, see https://github.com/phetsims/unit-rates/issues/120
+    new: { type: 'flag' },
 
     // shows answers to Shopping questions
     showAnswers: { type: 'flag' },
