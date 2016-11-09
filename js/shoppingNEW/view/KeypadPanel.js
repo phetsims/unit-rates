@@ -37,9 +37,6 @@ define( function( require ) {
       xMargin: 10,
       yMargin: 10,
 
-      // NumberKeypad options
-      maxDigits: 4,
-
       // RectangularPushButton options
       enterButtonListener: null
     }, options );
@@ -63,7 +60,7 @@ define( function( require ) {
 
     var keypadNode = new NumberKeypad( {
       decimalPointKey: options.decimalPointKey,
-      maxDigits: options.maxDigits,
+      validateKey: NumberKeypad.validateMaxDigits( { maxDigits: 4 } ),
       valueStringProperty: valueStringProperty
     } );
 

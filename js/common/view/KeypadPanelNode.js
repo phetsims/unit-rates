@@ -48,7 +48,7 @@ define( function( require ) {
 
     // @protected
     this.keypad = new NumberKeypad( {
-      maxDigits: options.maxDigits,
+      validateKey: NumberKeypad.validateMaxDigits( { maxDigits: options.maxDigits } ),
       decimalPointKey: true
     } );
 

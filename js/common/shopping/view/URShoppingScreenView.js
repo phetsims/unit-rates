@@ -46,7 +46,6 @@ define( function( require ) {
 
     // shared keypad which becomes visible when an edit number display button is selected.
     this.keypad = new KeypadPanelNode( {
-      maxDigits: 4,
       visible: false
     } );
     this.addChild( this.keypad );
