@@ -150,9 +150,8 @@ define( function( require ) {
     this.keypad.moveToFront();
     this.itemsLayer.moveToFront();
 
-    //TODO addEventListener is deprecated, replace it with whatever is current
     // resize the keypad pick layer on a browser size change
-    this.addEventListener( 'bounds', this.onResize.bind( this ) );
+    this.on( 'bounds', this.onResize.bind( this ) );
   }
 
   unitRates.register( 'URShoppingScreenView', URShoppingScreenView );
