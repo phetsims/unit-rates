@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
-  var Bounds2 = require( 'DOT/Bounds2' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadPanelNode = require( 'UNIT_RATES/common/view/KeypadPanelNode' );
@@ -213,7 +212,7 @@ define( function( require ) {
      */
     onResize: function() {
       // resize the pick area to match the screen
-      this.keypadCloseArea.setRectBounds( new Bounds2( 0, 0, window.innerWidth, window.innerHeight ) );
+      this.keypadCloseArea.setRect( 0, 0, window.innerWidth, window.innerHeight );
     }
 
   } ); // inherit
