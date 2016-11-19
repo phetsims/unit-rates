@@ -119,7 +119,7 @@ define( function( require ) {
      * @public
      */
     removeMarker: function( marker ) {
-      var index = this.markers.indexOf( marker );
+      var index = this.markersProperty.value.indexOf( marker );
       if ( index > -1 ) {
 
         // get the marker array
