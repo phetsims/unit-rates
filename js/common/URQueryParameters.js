@@ -20,7 +20,13 @@ define( function( require ) {
     showAnswers: { type: 'flag' },
 
     // enables console logging
-    log: { type: 'flag' }
+    log: { type: 'flag' },
+
+    // enables random selection of scenes, items, questions, etc.
+    randomEnabled: {
+      type: 'boolean',
+      defaultValue: true
+    }
   } );
 
   unitRates.register( 'URQueryParameters', URQueryParameters );

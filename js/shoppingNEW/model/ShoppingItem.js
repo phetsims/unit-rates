@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {Object} itemDescription - see Fruit.APPLES for an example
@@ -23,7 +24,7 @@ define( function( require ) {
     options = _.extend( {
 
       // index of the question that is initially selected, randomly chosen
-      questionIndex: phet.joist.random.nextIntBetween( 0, itemDescription.questions.length - 1 )
+      questionIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, itemDescription.questions.length - 1 ) : 0
     }, options );
 
     // @public (read-only)
@@ -74,7 +75,7 @@ define( function( require ) {
       }
 
       // randomly select a set of questions
-      var nextIndex = phet.joist.random.nextIntBetween( 0, this.availableQuestionSets.length - 1 );
+      var nextIndex = URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, this.availableQuestionSets.length - 1 ) : 0;
       var nextQuestionSet = this.availableQuestionSets[ nextIndex ];
       assert && assert( nextQuestionSet, 'nextQuestionSet is null, nextIndex=' + nextIndex );
       assert && assert( nextQuestionSet !== this.questionsProperty.value, 'repeated questions' );

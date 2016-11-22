@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {HTMLImageElement} image - image used to represent the category
@@ -26,7 +27,7 @@ define( function( require ) {
     options = _.extend( {
 
       // index of the item that is initially selected, randomly chosen
-      shoppingItemIndex: phet.joist.random.nextIntBetween( 0, shoppingItems.length - 1 )
+      shoppingItemIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, shoppingItems.length - 1 ) : 0
     }, options );
 
     // validate options
@@ -52,7 +53,7 @@ define( function( require ) {
       } );
 
       // Randomly choose an item
-      var shoppingItemIndex = phet.joist.random.nextIntBetween( 0, this.shoppingItems.length - 1 );
+      var shoppingItemIndex = URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, this.shoppingItems.length - 1 ) : 0;
       this.shoppingItemProperty.value = this.shoppingItems[ shoppingItemIndex ];
     }
   } );
