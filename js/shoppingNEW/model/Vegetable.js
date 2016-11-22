@@ -58,7 +58,7 @@ define( function( require ) {
     denominatorName: carrotsString,
     itemImage: carrotImage,
     bagImage: carrotBagImage,
-    questions: [
+    questionSets: [
       [ 9, 19, 21 ],
       [ 15, 25, 23 ],
       [ 6, 21, 36 ],
@@ -76,7 +76,7 @@ define( function( require ) {
     denominatorName: cucumbersString,
     itemImage: cucumberImage,
     bagImage: cucumberBagImage,
-    questions: [
+    questionSets: [
       [ 7, 19, 18 ],
       [ 11, 25, 23 ],
       [ 8, 17, 27 ],
@@ -94,7 +94,7 @@ define( function( require ) {
     denominatorName: potatoesString,
     itemImage: potatoImage,
     bagImage: potatoBagImage,
-    questions: [
+    questionSets: [
       [ 7, 17, 21 ],
       [ 8, 19, 18 ],
       [ 11, 23, 25 ],
@@ -112,7 +112,7 @@ define( function( require ) {
     denominatorName: tomatoesString,
     itemImage: tomatoImage,
     bagImage: tomatoBagImage,
-    questions: [
+    questionSets: [
       [ 7, 23, 28 ],
       [ 13, 25, 23 ],
       [ 14, 35, 26 ],

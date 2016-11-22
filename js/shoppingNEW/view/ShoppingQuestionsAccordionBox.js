@@ -63,12 +63,12 @@ define( function( require ) {
       align: options.contentAlign,
       spacing: options.contentYSpacing
     } );
-    shoppingItem.questionsProperty.link( function( questions ) {
+    shoppingItem.questionSetProperty.link( function( questionSet ) {
 
       questionsParent.removeAllChildren();
 
       var questionNodes = [];
-      questions.forEach( function( numberOfItems ) {
+      questionSet.forEach( function( numberOfItems ) {
 
         //TODO last question should be different for Fruit and Vegetable, and questions are totally different for Candy
         var units = ( numberOfItems > 1 ? shoppingItem.pluralName : shoppingItem.singularName );
@@ -86,7 +86,7 @@ define( function( require ) {
       baseColor: '#f2f2f2',
       content: new FontAwesomeNode( 'refresh', { scale: 0.38 } ),
       listener: function() {
-        shoppingItem.nextQuestions();
+        shoppingItem.nextQuestionSet();
       }
     } );
 

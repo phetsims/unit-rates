@@ -23,8 +23,8 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // index of the question that is initially selected, randomly chosen
-      questionIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, itemDescription.questions.length - 1 ) : 0
+      // index of the question set that is initially selected, randomly chosen
+      questionSetIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, itemDescription.questionSets.length - 1 ) : 0
     }, options );
 
     // @public (read-only)
@@ -39,14 +39,14 @@ define( function( require ) {
     this.bagImage = itemDescription.bagImage;
 
     // @public the current set of questions
-    this.questionsProperty = new Property( itemDescription.questions[ options.questionIndex ] );
+    this.questionSetProperty = new Property( itemDescription.questionSets[ options.questionSetIndex ] );
 
     // @private sets of questions that are available for selection
-    this.availableQuestionSets = itemDescription.questions.slice();
-    this.availableQuestionSets.splice( options.questionIndex, 1 );
+    this.availableQuestionSets = itemDescription.questionSets.slice();
+    this.availableQuestionSets.splice( options.questionSetIndex, 1 );
 
     // @private sets of question that have already been selected
-    this.selectedQuestionSets = [ this.questionsProperty.value ];
+    this.selectedQuestionSets = [ this.questionSetProperty.value ];
   }
 
   unitRates.register( 'ShoppingItem', ShoppingItem );
@@ -55,7 +55,7 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.nextQuestions();
+      this.nextQuestionSet();
     },
 
     /**
@@ -64,11 +64,11 @@ define( function( require ) {
      *
      * @public
      */
-    nextQuestions: function() {
+    nextQuestionSet: function() {
 
       // replenish the available sets of questions, excluding the current set of questions
       if ( this.availableQuestionSets.length === 0 ) {
-        var currentQuestionSet = this.questionsProperty.value;
+        var currentQuestionSet = this.questionSetProperty.value;
         this.availableQuestionSets = this.selectedQuestionSets;
         this.availableQuestionSets.splice( this.availableQuestionSets.indexOf( currentQuestionSet ), 1 );
         this.selectedQuestionSets = [ currentQuestionSet ];
@@ -78,13 +78,13 @@ define( function( require ) {
       var nextIndex = URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, this.availableQuestionSets.length - 1 ) : 0;
       var nextQuestionSet = this.availableQuestionSets[ nextIndex ];
       assert && assert( nextQuestionSet, 'nextQuestionSet is null, nextIndex=' + nextIndex );
-      assert && assert( nextQuestionSet !== this.questionsProperty.value, 'repeated questions' );
+      assert && assert( nextQuestionSet !== this.questionSetProperty.value, 'repeated questions' );
 
       // move the set of questions from available to selected
       this.availableQuestionSets.splice( this.availableQuestionSets.indexOf( nextQuestionSet ), 1 );
       this.selectedQuestionSets.push( nextQuestionSet );
 
-      this.questionsProperty.value = nextQuestionSet;
+      this.questionSetProperty.value = nextQuestionSet;
     }
   } );
 } );

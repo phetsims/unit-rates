@@ -58,7 +58,7 @@ define( function( require ) {
     denominatorName: applesString,
     itemImage: appleImage,
     bagImage: appleBagImage,
-    questions: [
+    questionSets: [
       [ 10, 6, 8 ],     // set A - [ question#2, question#3, question#4 ]
       [ 10, 16, 13 ],   // set B
       [ 15, 9, 7 ],     // set C
@@ -76,7 +76,7 @@ define( function( require ) {
     denominatorName: lemonsString,
     itemImage: lemonImage,
     bagImage: lemonBagImage,
-    questions: [
+    questionSets: [
       [ 10, 4, 14 ],
       [ 10, 14, 7 ],
       [ 15, 6, 11 ],
@@ -94,7 +94,7 @@ define( function( require ) {
     denominatorName: orangesString,
     itemImage: orangeImage,
     bagImage: orangeBagImage,
-    questions: [
+    questionSets: [
       [ 10, 4, 11 ],
       [ 10, 16, 8 ],
       [ 15, 9, 14 ],
@@ -112,7 +112,7 @@ define( function( require ) {
     denominatorName: pearsString,
     itemImage: pearImage,
     bagImage: pearBagImage,
-    questions: [
+    questionSets: [
       [ 10, 6, 16 ],
       [ 10, 14, 12 ],
       [ 15, 4, 8 ],

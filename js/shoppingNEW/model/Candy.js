@@ -55,7 +55,7 @@ define( function( require ) {
     denominatorName: poundsString,
     itemImage: purpleCandyImage,
     bagImage: purpleCandyBagImage,
-    questions: [
+    questionSets: [
       [ 0.6, 2.2, 2.4 ],
       [ 1.5, 3.1, 3.1 ],
       [ 0.3, 2.4, 2.3 ],
@@ -73,7 +73,7 @@ define( function( require ) {
     denominatorName: poundsString,
     itemImage: redCandyImage,
     bagImage: redCandyBagImage,
-    questions: [
+    questionSets: [
       [ 0.4, 2.3, 2 ],
       [ 0.7, 2.1, 2.4 ],
       [ 0.8, 1.7, 1.9 ],
@@ -91,7 +91,7 @@ define( function( require ) {
     denominatorName: poundsString,
     itemImage: greenCandyImage,
     bagImage: greenCandyBagImage,
-    questions: [
+    questionSets: [
       [ 0.7, 1.9, 2.2 ],
       [ 1.3, 2.5, 2.4 ],
       [ 0.4, 1.8, 1.9 ],
@@ -109,7 +109,7 @@ define( function( require ) {
     denominatorName: poundsString,
     itemImage: blueCandyImage,
     bagImage: blueCandyBagImage,
-    questions: [
+    questionSets: [
       [ 0.3, 1.9, 3.2 ],
       [ 0.7, 2.2, 2.3 ],
       [ 1.3, 2.6, 2.4 ],
