@@ -40,7 +40,7 @@ define( function( require ) {
       new RacingLabScreen()
     ];
 
-    if ( URQueryParameters.new ) {
+    if ( URQueryParameters.newScreen ) {
       screens.push( new ShoppingScreenNEW() );
     }
 
