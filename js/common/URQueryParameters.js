@@ -14,7 +14,7 @@ define( function( require ) {
   var URQueryParameters = QueryStringMachine.getAll( {
 
     // show screens related to new development, see https://github.com/phetsims/unit-rates/issues/120
-    newScreen: { type: 'flag' },
+    showNew: { type: 'flag' },
 
     // shows answers to Shopping questions
     showAnswers: { type: 'flag' },
