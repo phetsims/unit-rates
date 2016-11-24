@@ -16,6 +16,8 @@ define( function( require ) {
   var ShoppingModelNEW = require( 'UNIT_RATES/shoppingNEW/model/ShoppingModelNEW' );
   var ShoppingScreenViewNEW = require( 'UNIT_RATES/shoppingNEW/view/ShoppingScreenViewNEW' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var Property = require( 'AXON/Property' );
+  var Color = require( 'SCENERY/util/Color' );
 
   // strings
   var screenShoppingString = require( 'string!UNIT_RATES/screen.shopping' );
@@ -31,7 +33,7 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenShoppingString,
-      backgroundColor: 'rgb( 226, 255, 249 )',
+      backgroundColorProperty: new Property( Color.toColor( 'rgb( 226, 255, 249 )' ) ),
       homeScreenIcon: new Image( screenIcon )
     }, options );
 

@@ -16,6 +16,8 @@ define( function( require ) {
   var RacingLabScreenView = require( 'UNIT_RATES/racingLab/view/RacingLabScreenView' );
   var Screen = require( 'JOIST/Screen' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var Property = require( 'AXON/Property' );
+  var Color = require( 'SCENERY/util/Color' );
 
   // strings
   var screenRacingLabString = require( 'string!UNIT_RATES/screen.racingLab' );
@@ -31,7 +33,7 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenRacingLabString,
-      backgroundColor: 'rgb( 233, 242, 254 )',
+      backgroundColorProperty: new Property( Color.toColor( 'rgb( 233, 242, 254 )' ) ),
       homeScreenIcon: new Image( screenIcon )
     }, options );
 
