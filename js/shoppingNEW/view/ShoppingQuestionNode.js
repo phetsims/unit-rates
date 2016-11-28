@@ -54,6 +54,7 @@ define( function( require ) {
 
     options = _.extend( {
       maxValue: 99.99, // {number} for computing value width
+      minValueBoxWidth: 60, // {number} minimum width of the value field
       valueFormat: '{0}', // {string} must contain {0} placeholder for value
       valueDecimalPlaces: 2, // number of decimal places in value
       denominatorVisible: false, // is the denominator visible before the answer is visible?
@@ -66,8 +67,7 @@ define( function( require ) {
       valueXMargin: 5,
       valueYMargin: 3,
       xSpacing: 35,
-      ySpacing: 5,
-      minValueBoxWidth: 60
+      ySpacing: 5
     }, options );
 
     Node.call( this );
