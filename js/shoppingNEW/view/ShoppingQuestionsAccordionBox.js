@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var Candy = require( 'UNIT_RATES/shoppingNEW/model/Candy' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
@@ -19,10 +20,15 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
+  var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var costOfNItemsString = require( 'string!UNIT_RATES/costOfNItems' );
+  var costOfNUnitsString = require( 'string!UNIT_RATES/costOfNUnits' );
+  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
+  var itemsForAmountString = require( 'string!UNIT_RATES/itemsForAmount' );
+  var poundString = require( 'string!UNIT_RATES/pound' );
+  var poundsString = require( 'string!UNIT_RATES/pounds' );
   var questionsString = require( 'string!UNIT_RATES/questions' );
   var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
@@ -53,12 +59,13 @@ define( function( require ) {
     var unitRateNode = new ShoppingQuestionNode(
       unitRateQuestionString,
       shoppingItem.unitRate,
-      StringUtils.format( valueUnitsString, 1, shoppingItem.singularName ),
+      Util.toFixed( shoppingItem.unitRate, 2 ),
+      StringUtils.format( valueUnitsString, 1, ( shoppingItem instanceof Candy ) ? poundString : shoppingItem.singularName ),
       keypadLayer, {
         denominatorVisible: true
       } );
 
-    // Below the 'Unit Rate?' questions is a set of questions that can be updated dynamically.
+    // Below the 'Unit Rate?' question is a set of questions that change when the refresh button is pressed.
     var questionsParent = new VBox( {
       align: options.contentAlign,
       spacing: options.contentYSpacing
@@ -67,16 +74,56 @@ define( function( require ) {
 
       questionsParent.removeAllChildren();
 
-      var questionNodes = [];
-      questionSet.forEach( function( numberOfItems ) {
+      // explicitly hoist these vars
+      var numberOfItems;
+      var units;
+      var questionString;
+      var numeratorString;
+      var denominatorString;
+      var answer;
 
-        //TODO last question should be different for Fruit and Vegetable, and questions are totally different for Candy
-        var units = ( numberOfItems > 1 ? shoppingItem.pluralName : shoppingItem.singularName );
-        var questionString = StringUtils.format( costOfNItemsString, numberOfItems, units );
-        var denominatorString = StringUtils.format( valueUnitsString, numberOfItems, units );
-        var answer = numberOfItems * shoppingItem.unitRate;
-        questionNodes.push( new ShoppingQuestionNode( questionString, answer, denominatorString, keypadLayer ) );
-      } );
+      var questionNodes = []; // {ShoppingQuestionNode[]}
+
+      if ( shoppingItem instanceof Candy ) {
+
+        // all Candy questions are of the form 'Cost of 3 pounds?'
+        questionSet.forEach( function( numberOfPounds ) {
+          answer = Util.toFixedNumber( numberOfPounds * shoppingItem.unitRate, 2 );
+          units = ( numberOfPounds > 1 ? poundsString : poundString );
+          questionString = StringUtils.format( costOfNUnitsString, numberOfPounds, units );
+          numeratorString = Util.toFixed( answer, 2 );
+          denominatorString = StringUtils.format( valueUnitsString, numberOfPounds, units );
+          questionNodes.push( new ShoppingQuestionNode( questionString, answer, numeratorString, denominatorString, keypadLayer, {
+            valueFormat: currencyValueString
+          } ) );
+        } );
+      }
+      else {
+
+        // other items types (Fruit, Vegetable) have questions of the form 'Cost of 3 Apples?'
+        for ( var i = 0; i < questionSet.length - 1; i++ ) {
+          numberOfItems = questionSet[ i ];
+          answer = Util.toFixedNumber( numberOfItems * shoppingItem.unitRate, 2 );
+          units = ( numberOfItems > 1 ? shoppingItem.pluralName : shoppingItem.singularName );
+          questionString = StringUtils.format( costOfNUnitsString, numberOfItems, units );
+          numeratorString = StringUtils.format( currencyValueString, Util.toFixed( answer, 2 ) );
+          denominatorString = StringUtils.format( valueUnitsString, numberOfItems, units );
+          questionNodes.push( new ShoppingQuestionNode( questionString, answer, numeratorString, denominatorString, keypadLayer, {
+            valueFormat: currencyValueString
+          } ) );
+        }
+
+        // ... followed by 1 question of the form 'Apples for $3.00?'
+        numberOfItems = questionSet[ questionSet.length - 1 ];
+        assert && assert( Util.isInteger( numberOfItems ), 'by design, numberOfItems should be integer: ' + numberOfItems );
+        answer = numberOfItems;
+        var costString = StringUtils.format( currencyValueString, Util.toFixed( numberOfItems * shoppingItem.unitRate, 2 ) );
+        units = ( numberOfItems > 1 ? shoppingItem.pluralName : shoppingItem.singularName );
+        questionString = StringUtils.format( itemsForAmountString, shoppingItem.pluralName, costString );
+        numeratorString = costString;
+        denominatorString = StringUtils.format( valueUnitsString, numberOfItems, units );
+        questionNodes.push( new ShoppingQuestionNode( questionString, answer, numeratorString, denominatorString, keypadLayer ) );
+      }
 
       questionsParent.setChildren( questionNodes );
     } );

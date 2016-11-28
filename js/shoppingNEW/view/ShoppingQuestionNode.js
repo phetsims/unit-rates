@@ -25,9 +25,6 @@ define( function( require ) {
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var Util = require( 'DOT/Util' );
 
-  // strings
-  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
-
   // constants
   var DEFAULT_QUESTION_FONT = new URFont( 14 );
   var DEFAULT_VALUE_FONT = new URFont( 14 );
@@ -35,18 +32,19 @@ define( function( require ) {
   /**
    * @param {string} questionString
    * @param {number} answer
+   * @param {string} numeratorString
    * @param {string} denominatorString
    * @param {Node} keypadLayer
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingQuestionNode( questionString, answer, denominatorString, keypadLayer, options ) {
+  function ShoppingQuestionNode( questionString, answer, numeratorString, denominatorString, keypadLayer, options ) {
 
     assert && assert( typeof answer === 'number', 'answer must be a number: ' + answer );
 
     options = _.extend( {
-      maxValue: 99.99,
-      valueFormat: currencyValueString, // {string} must contain {0} placeholder for value
+      maxValue: 99.99, // {number} for computing value width
+      valueFormat: '{0}', // {string} must contain {0} placeholder for value
       valueDecimalPlaces: 2, // number of decimal places in value
       denominatorVisible: false, // is the denominator visible before the answer is visible?
       correctColor: 'green',
@@ -58,7 +56,8 @@ define( function( require ) {
       valueXMargin: 5,
       valueYMargin: 3,
       xSpacing: 35,
-      ySpacing: 5
+      ySpacing: 5,
+      minValueBoxWidth: 60
     }, options );
 
     Node.call( this );
@@ -67,7 +66,7 @@ define( function( require ) {
     var maxValueNode = new Text( maxValueString, { font: options.valueFont } );
 
     // box that is either empty or displays an incorrect value. clicking in the box opens the keypad.
-    var valueBoxWidth = maxValueNode.width + 2 * options.valueXMargin;
+    var valueBoxWidth = Math.max( options.minValueBoxWidth, maxValueNode.width + 2 * options.valueXMargin );
     var valueBoxHeight = maxValueNode.height + 2 * options.valueYMargin;
     var valueBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, {
       stroke: 'black',
@@ -100,20 +99,29 @@ define( function( require ) {
     } );
     this.addChild( questionTextNode );
 
-    // displays the correct or wrong answer
-    var answerNode = new Text( '', {
+    // displays the user's guess
+    var guessNode = new Text( '', {
       fill: options.neutralColor,
       font: options.valueFont,
       center: valueBox.center
     } );
-    this.addChild( answerNode );
+    this.addChild( guessNode );
 
     // show the answer, if query parameter is set
     if ( URQueryParameters.showAnswers ) {
-      answerNode.text = StringUtils.format( options.valueFormat, Util.toFixed( answer, options.valueDecimalPlaces ) );
-      answerNode.center = valueBox.center;
-      answerNode.fill = options.correctColor;
+      guessNode.text = StringUtils.format( options.valueFormat, Util.toFixed( answer, options.valueDecimalPlaces ) );
+      guessNode.center = valueBox.center;
+      guessNode.fill = options.correctColor;
     }
+
+    // numerator
+    var numeratorNode = new Text( numeratorString, {
+      fill: options.correctColor,
+      font: options.valueFont,
+      center: valueBox.center,
+      visible: false
+    } );
+    this.addChild( numeratorNode );
 
     // horizontal line in the fraction
     var fractionLineNode = new Line( 0, 0, 1.2 * valueBox.width, 0, {
@@ -130,7 +138,7 @@ define( function( require ) {
       fill: options.neutralColor,
       font: options.valueFont,
       centerX: valueBox.centerX,
-      top: fractionLineNode.bottom + ( fractionLineNode.top - answerNode.bottom ),
+      top: fractionLineNode.bottom + ( fractionLineNode.top - guessNode.bottom ),
       visible: options.denominatorVisible
     } );
     this.addChild( denominatorNode );
@@ -206,18 +214,21 @@ define( function( require ) {
 
       assert && assert( typeof value === 'number', 'value must be a number: ' + value );
 
-      var correct = ( value === answer );
+      // compare guess to answer using the desired number of decimal places
+      var correct = ( Util.toFixedNumber( value, options.valueDecimalPlaces ) === Util.toFixedNumber( answer, options.valueDecimalPlaces ) );
 
       editButton.visible = !correct;
 
       valueBox.visible = !correct;
       valueBox.stroke = correct ? options.neutralColor : options.wrongColor;
 
-      answerNode.text = StringUtils.format( options.valueFormat, Util.toFixed( value, options.valueDecimalPlaces ) );
-      answerNode.center = valueBox.center;
-      answerNode.fill = correct ? options.correctColor : options.wrongColor;
+      guessNode.visible = !correct;
+      guessNode.text = StringUtils.format( options.valueFormat, Util.toFixed( value, options.valueDecimalPlaces ) );
+      guessNode.center = valueBox.center;
+      guessNode.fill = correct ? options.correctColor : options.wrongColor;
 
-      fractionLineNode.stroke = denominatorNode.fill = correct ? options.correctColor : options.neutralColor;
+      numeratorNode.visible = correct;
+      fractionLineNode.stroke = denominatorNode.fill = ( correct ? options.correctColor : options.neutralColor );
       if ( !options.denominatorVisible ) {
         fractionLineNode.visible = denominatorNode.visible = correct;
       }
