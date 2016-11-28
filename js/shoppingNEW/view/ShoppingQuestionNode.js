@@ -240,7 +240,7 @@ define( function( require ) {
       else {
         faceNode.frown();
       }
-    }; // setValue
+    };
 
     // Clicking on editButton or valueBox opens the keypad
     editButton.addListener( beginEdit );
