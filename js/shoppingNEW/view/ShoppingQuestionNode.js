@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Candy = require( 'UNIT_RATES/shoppingNEW/model/Candy' );
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
@@ -25,10 +26,19 @@ define( function( require ) {
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var Util = require( 'DOT/Util' );
 
+  // strings
+  var costOfNUnitsString = require( 'string!UNIT_RATES/costOfNUnits' );
+  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
+  var itemsForAmountString = require( 'string!UNIT_RATES/itemsForAmount' );
+  var poundString = require( 'string!UNIT_RATES/pound' );
+  var poundsString = require( 'string!UNIT_RATES/pounds' );
+  var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
+  var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
+
   // constants
   var DEFAULT_QUESTION_FONT = new URFont( 14 );
   var DEFAULT_VALUE_FONT = new URFont( 14 );
-  
+
   /**
    * @param {string} questionString
    * @param {number} answer
@@ -251,5 +261,85 @@ define( function( require ) {
 
   unitRates.register( 'ShoppingQuestionNode', ShoppingQuestionNode );
 
-  return inherit( Node, ShoppingQuestionNode );
+  return inherit( Node, ShoppingQuestionNode, {}, {
+
+    /**
+     * Creates a question of the form 'Unit Rate?'
+     * @param {ShoppingItem} shoppingItem
+     * @param {Node} keypadLayer
+     * @returns {ShoppingQuestionNode}
+     */
+    createUnitRateNode: function( shoppingItem, keypadLayer ) {
+
+      // Candy unit rate is per pound, other types are per item
+      var units = ( shoppingItem instanceof Candy ) ? poundString : shoppingItem.singularName;
+
+      // args for ShoppingQuestionNode constructor
+      var questionString = unitRateQuestionString;
+      var answer = Util.toFixedNumber( shoppingItem.unitRate, 2 );
+      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( shoppingItem.unitRate, 2 ) );
+      var denominatorString = StringUtils.format( valueUnitsString, 1, units );
+
+      return new ShoppingQuestionNode( questionString, answer, numeratorString, denominatorString, keypadLayer, {
+        valueFormat: currencyValueString,
+        denominatorVisible: true
+      } );
+    },
+
+    /**
+     * Creates a question node of the form 'Cost of 3 Apples?' or 'Cost of 2 pounds?'
+     * @param {number} quantity
+     * @param {ShoppingItem} shoppingItem
+     * @param {Node} keypadLayer
+     * @returns {ShoppingQuestionNode}
+     * @public
+     * @static
+     */
+    createCostOfNode: function( quantity, shoppingItem, keypadLayer ) {
+
+      // Candy quantity is in pounds, other types are in number of items
+      var units;
+      if ( shoppingItem instanceof Candy ) {
+        units = ( quantity > 1 ) ? poundsString : poundString;
+      }
+      else {
+        units = ( quantity > 1 ) ? shoppingItem.pluralName : shoppingItem.singularName;
+      }
+
+      // args for ShoppingQuestionNode constructor
+      var answer = Util.toFixedNumber( quantity * shoppingItem.unitRate, 2 );
+      var questionString = StringUtils.format( costOfNUnitsString, quantity, units );
+      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( answer, 2 ) );
+      var denominatorString = StringUtils.format( valueUnitsString, quantity, units );
+
+      return new ShoppingQuestionNode( questionString, answer, numeratorString, denominatorString, keypadLayer, {
+        valueFormat: currencyValueString
+      } );
+    },
+
+    /**
+     * Creates a question node of the form 'Apples for $3.00?'
+     * @param {number} quantity
+     * @param {ShoppingItem} shoppingItem
+     * @param {Node} keypadLayer
+     * @returns {ShoppingQuestionNode}
+     * @public
+     * @static
+     */
+    createAmountOfNode: function( quantity, shoppingItem, keypadLayer ) {
+      assert && assert( Util.isInteger( quantity ), 'quantity should be an integer: ' + quantity );
+
+      var units = ( quantity > 1 ) ? shoppingItem.pluralName : shoppingItem.singularName;
+
+      // args for ShoppingQuestionNode constructor
+      var answer = quantity;
+      var costString = StringUtils.format( currencyValueString, Util.toFixed( quantity * shoppingItem.unitRate, 2 ) );
+      var questionString = StringUtils.format( itemsForAmountString, shoppingItem.pluralName, costString );
+      var numeratorString = costString;
+      var denominatorString = StringUtils.format( valueUnitsString, quantity, units );
+
+      return new ShoppingQuestionNode( questionString, answer, numeratorString, denominatorString, keypadLayer );
+    }
+
+  } );
 } );
