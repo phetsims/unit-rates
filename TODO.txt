@@ -5,3 +5,5 @@ Reset All takes a long time because ShoppingItem.reset changes the selected ques
 Constrain the keypad to 2 decimal places for currency, 1 decimal place for pounds, ? decimal places for quantity
 
 Answering a question correctly should place a corresponding marker on the DNL
+
+Change 3rd value in each questionSet to be the question value, instead of the answer?
