@@ -79,7 +79,7 @@ define( function( require ) {
     // @protected
     this.enterButton = new TextPushButton( enterString, {
       font: new PhetFont( 18 ),
-      baseColor: PhetColorScheme.PHET_YELLOW,
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       maxWidth: TEXT_MAX_WIDTH,
       cornerRadius: 4
     } );
