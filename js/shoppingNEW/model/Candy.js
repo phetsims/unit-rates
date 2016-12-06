@@ -57,7 +57,7 @@ define( function( require ) {
     bagImage: purpleCandyBagImage,
     questionSets: [
       [ 0.6, 2.2, 2.4 ],
-      [ 1.5, 3.1, 3.1 ],
+      [ 1.5, 3.2, 3.1 ],
       [ 0.3, 2.4, 2.3 ],
       [ 1.3, 2.1, 2.5 ]
     ]
