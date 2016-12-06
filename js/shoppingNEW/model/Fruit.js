@@ -60,7 +60,7 @@ define( function( require ) {
     bagImage: appleBagImage,
     questionSets: [
       [ 10, 6, 8 ],     // set A - [ question#2, question#3, question#4 ]
-      [ 10, 16, 13 ],   // set B
+      [ 10, 14, 13 ],   // set B
       [ 15, 9, 7 ],     // set C
       [ 15, 4, 9 ]      // set D
     ]
@@ -80,7 +80,7 @@ define( function( require ) {
       [ 10, 4, 14 ],
       [ 10, 14, 7 ],
       [ 15, 6, 11 ],
-      [ 15, 6, 12 ]
+      [ 15, 11, 9 ]
     ]
   };
 
@@ -96,7 +96,7 @@ define( function( require ) {
     bagImage: orangeBagImage,
     questionSets: [
       [ 10, 4, 11 ],
-      [ 10, 16, 8 ],
+      [ 10, 14, 8 ],
       [ 15, 9, 14 ],
       [ 15, 6, 12 ]
     ]
@@ -113,7 +113,7 @@ define( function( require ) {
     itemImage: pearImage,
     bagImage: pearBagImage,
     questionSets: [
-      [ 10, 6, 16 ],
+      [ 10, 6, 7 ],
       [ 10, 14, 12 ],
       [ 15, 4, 8 ],
       [ 15, 11, 13 ]
