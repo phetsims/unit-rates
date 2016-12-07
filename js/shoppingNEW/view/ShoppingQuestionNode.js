@@ -13,12 +13,12 @@ define( function( require ) {
   var Candy = require( 'UNIT_RATES/shoppingNEW/model/Candy' );
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
-  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadPanel = require( 'UNIT_RATES/shoppingNEW/view/KeypadPanel' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var ShadowText = require( 'SCENERY_PHET/ShadowText' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -38,6 +38,7 @@ define( function( require ) {
   // constants
   var DEFAULT_QUESTION_FONT = new URFont( 14 );
   var DEFAULT_VALUE_FONT = new URFont( 14 );
+  var ICON_FONT = new URFont( 36 );
 
   /**
    * @param {string} questionString
@@ -59,7 +60,7 @@ define( function( require ) {
       valueDecimalPlaces: 2, // number of decimal places in value
       denominatorVisible: false, // is the denominator visible before the answer is visible?
       correctColor: 'green',
-      wrongColor: 'red',
+      incorrectColor: 'red',
       neutralColor: 'black',
       editColor: 'orange',
       questionFont: DEFAULT_QUESTION_FONT,
@@ -92,20 +93,34 @@ define( function( require ) {
     editButton.right = valueBox.left - options.xSpacing;
     editButton.centerY = valueBox.centerY;
 
-    // face that smiles or frowns depending on whether the answer is correct or incorrect
-    var faceNode = new FaceNode( valueBox.height, {
+    // @private check mark to indicate correct answer
+    var correctIconNode = new ShadowText( '\u2713', {
+      // fill: 'rgb( 102, 183, 0 )',
+      fill: options.correctColor,
+      font: ICON_FONT,
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY,
       visible: false
     } );
-    this.addChild( faceNode );
+    this.addChild( correctIconNode );
+
+    // @private red 'X' to indicate incorrect answer
+    var incorrectIconNode = new ShadowText( '\u2718', {
+      // fill: 'rgb( 252, 104, 0)',
+      fill: options.incorrectColor,
+      font: ICON_FONT,
+      left: valueBox.right + options.xSpacing,
+      centerY: valueBox.centerY,
+      visible: false
+    } );
+    this.addChild( incorrectIconNode );
 
     // the question
     var questionTextNode = new Text( questionString, {
       font: options.questionFont,
       centerX: valueBox.centerX,
       bottom: valueBox.top - options.ySpacing,
-      maxWidth: faceNode.right - editButton.left
+      maxWidth: Math.max( correctIconNode.right, incorrectIconNode.right ) - editButton.left
     } );
     this.addChild( questionTextNode );
 
@@ -230,12 +245,12 @@ define( function( require ) {
       editButton.visible = !correct;
 
       valueBox.visible = !correct;
-      valueBox.stroke = correct ? options.neutralColor : options.wrongColor;
+      valueBox.stroke = correct ? options.neutralColor : options.incorrectColor;
 
       guessNode.visible = !correct;
       guessNode.text = StringUtils.format( options.valueFormat, Util.toFixed( value, options.valueDecimalPlaces ) );
       guessNode.center = valueBox.center;
-      guessNode.fill = correct ? options.correctColor : options.wrongColor;
+      guessNode.fill = correct ? options.correctColor : options.incorrectColor;
 
       numeratorNode.visible = correct;
       fractionLineNode.stroke = denominatorNode.fill = ( correct ? options.correctColor : options.neutralColor );
@@ -243,13 +258,8 @@ define( function( require ) {
         fractionLineNode.visible = denominatorNode.visible = correct;
       }
 
-      faceNode.visible = true;
-      if ( correct ) {
-        faceNode.smile();
-      }
-      else {
-        faceNode.frown();
-      }
+      correctIconNode.visible = correct;
+      incorrectIconNode.visible = !correct;
     };
 
     // Clicking on editButton or valueBox opens the keypad
