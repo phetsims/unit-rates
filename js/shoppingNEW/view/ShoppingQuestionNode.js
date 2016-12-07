@@ -336,7 +336,7 @@ define( function( require ) {
       var costString = StringUtils.format( currencyValueString, Util.toFixed( quantity * shoppingItem.unitRate, 2 ) );
       var questionString = StringUtils.format( itemsForAmountString, shoppingItem.pluralName, costString );
       var numeratorString = costString;
-      var denominatorString = StringUtils.format( valueUnitsString, quantity, units );
+      var denominatorString = StringUtils.format( valueUnitsString, Util.toFixed( quantity, 0 ), units );
 
       return new ShoppingQuestionNode( questionString, answer, numeratorString, denominatorString, keypadLayer );
     }
