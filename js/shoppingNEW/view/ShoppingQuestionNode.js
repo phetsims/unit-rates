@@ -62,7 +62,7 @@ define( function( require ) {
       correctColor: 'green',
       incorrectColor: 'red',
       neutralColor: 'black',
-      editColor: 'orange',
+      editColor: 'yellow',
       questionFont: DEFAULT_QUESTION_FONT,
       valueFont: DEFAULT_VALUE_FONT,
       valueXMargin: 5,
@@ -193,7 +193,7 @@ define( function( require ) {
     var beginEdit = function() {
       URQueryParameters.log && console.log( 'beginEdit' );
       assert && assert( !keypadLayer.visible, 'invalid state for endEdit' );
-      valueBox.stroke = options.editColor; // highlight the value box to indicate an edit is in progress
+      valueBox.fill = options.editColor; // highlight the value box to indicate an edit is in progress
       keypad.valueStringProperty.value = '';
       keypadLayer.addChild( keypad );
       keypadLayer.addInputListener( keypadLayerListener );
@@ -207,7 +207,7 @@ define( function( require ) {
       keypadLayer.visible = false;
       keypadLayer.removeChild( keypad );
       keypadLayer.removeInputListener( keypadLayerListener );
-      valueBox.stroke = options.neutralColor; // unhighlight the value box to indicate the edit is done
+      valueBox.fill = 'white';
     };
 
     // Ends and commits an edit
@@ -245,7 +245,6 @@ define( function( require ) {
       editButton.visible = !correct;
 
       valueBox.visible = !correct;
-      valueBox.stroke = correct ? options.neutralColor : options.incorrectColor;
 
       guessNode.visible = !correct;
       guessNode.text = StringUtils.format( options.valueFormat, Util.toFixed( value, options.valueDecimalPlaces ) );
