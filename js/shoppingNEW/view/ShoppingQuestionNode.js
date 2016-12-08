@@ -104,23 +104,12 @@ define( function( require ) {
     } );
     this.addChild( correctIconNode );
 
-    // @private red 'X' to indicate incorrect answer
-    var incorrectIconNode = new ShadowText( '\u2718', {
-      // fill: 'rgb( 252, 104, 0)',
-      fill: options.incorrectColor,
-      font: ICON_FONT,
-      left: valueBox.right + options.xSpacing,
-      centerY: valueBox.centerY,
-      visible: false
-    } );
-    this.addChild( incorrectIconNode );
-
     // the question
     var questionTextNode = new Text( questionString, {
       font: options.questionFont,
       centerX: valueBox.centerX,
       bottom: valueBox.top - options.ySpacing,
-      maxWidth: Math.max( correctIconNode.right, incorrectIconNode.right ) - editButton.left
+      maxWidth: correctIconNode.right - editButton.left
     } );
     this.addChild( questionTextNode );
 
@@ -258,7 +247,6 @@ define( function( require ) {
       }
 
       correctIconNode.visible = correct;
-      incorrectIconNode.visible = !correct;
     };
 
     // Clicking on editButton or valueBox opens the keypad
