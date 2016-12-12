@@ -30,11 +30,10 @@ define( function( require ) {
 
     Node.call( this );
 
-    //TODO create on demand to reduce startup time?
-    // create the view for each item
-    category.shoppingItems.forEach( function( shoppingItem ) {
-      self.addChild( new ShoppingItemNode( shoppingItem, category.shoppingItemProperty, layoutBounds, keypadLayer, viewProperties ) );
-    } );
+    // parent for stuff that's specific to shopping item type, to maintain rendering order
+    var shoppingItemNode = null; // created below
+    var shoppingItemParent = new Node();
+    this.addChild( shoppingItemParent );
 
     // Item combo box
     var comboBox = new ShoppingItemComboBox( category.shoppingItems, category.shoppingItemProperty, this, {
@@ -48,6 +47,17 @@ define( function( require ) {
     // Show this category when it's selected.
     categoryProperty.link( function( newCategory ) {
       self.visible = ( newCategory === category );
+    } );
+
+    category.shoppingItemProperty.link( function( shoppingItem ) {
+
+      if ( shoppingItemNode ) {
+        shoppingItemParent.removeChild( shoppingItemNode );
+        shoppingItemNode.dispose();
+      }
+
+      shoppingItemNode = new ShoppingItemNode( shoppingItem, layoutBounds, keypadLayer, viewProperties );
+      shoppingItemParent.addChild( shoppingItemNode );
     } );
   }
 

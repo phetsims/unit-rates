@@ -99,7 +99,7 @@ define( function( require ) {
         assert && assert( child instanceof ShoppingQuestionNode );
         child.dispose();
       } );
-    }
+    };
   }
 
   unitRates.register( 'ShoppingQuestionsAccordionBox', ShoppingQuestionsAccordionBox );

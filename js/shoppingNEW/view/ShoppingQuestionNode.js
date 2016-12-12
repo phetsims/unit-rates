@@ -241,7 +241,7 @@ define( function( require ) {
     // @private cleanup that's specific to this Node
     this.disposeShoppingQuestionNode = function() {
       question.guessProperty.unlink( guessObserver );
-    }
+    };
   }
 
   unitRates.register( 'ShoppingQuestionNode', ShoppingQuestionNode );

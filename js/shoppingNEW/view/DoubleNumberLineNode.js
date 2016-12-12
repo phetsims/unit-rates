@@ -89,9 +89,20 @@ define( function( require ) {
     }
 
     this.mutate( options );
+
+    // @private
+    this.disposeDoubleNumberLineNode = function() {
+      //TODO
+    };
   }
 
   unitRates.register( 'DoubleNumberLineNode', DoubleNumberLineNode );
 
-  return inherit( Node, DoubleNumberLineNode );
+  return inherit( Node, DoubleNumberLineNode, {
+
+    // @public
+    dispose: function() {
+      this.disposeDoubleNumberLineNode();
+    }
+  } );
 } );

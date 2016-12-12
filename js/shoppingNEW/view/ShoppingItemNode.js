@@ -17,16 +17,13 @@ define( function( require ) {
 
   /**
    * @param {ShoppingItem} shoppingItem
-   * @param {Property.<ShoppingItem>} shoppingItemProperty
    * @param {Bounds2} layoutBounds
    * @param {Node} keypadLayer
    * @param {ShoppingViewProperties} viewProperties
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingItemNode( shoppingItem, shoppingItemProperty, layoutBounds, keypadLayer, viewProperties, options ) {
-
-    var self = this;
+  function ShoppingItemNode( shoppingItem, layoutBounds, keypadLayer, viewProperties, options ) {
 
     Node.call( this );
 
@@ -46,13 +43,21 @@ define( function( require ) {
 
     this.mutate( options );
 
-    // Show this item when it's selected.
-    shoppingItemProperty.link( function( newShoppingItem ) {
-      self.visible = ( newShoppingItem === shoppingItem );
-    } );
+    // @private
+    this.disposeShoppingItemNode = function() {
+      doubleNumberLineAccordionBox.dispose();
+      questionsAccordionBox.dispose();
+    };
   }
 
   unitRates.register( 'ShoppingItemNode', ShoppingItemNode );
 
-  return inherit( Node, ShoppingItemNode );
+  return inherit( Node, ShoppingItemNode, {
+
+    // @public
+    dispose: function() {
+      console.log( 'ShoppingItemNode.dispose' );//XXX
+      this.disposeShoppingItemNode();
+    }
+  } );
 } );

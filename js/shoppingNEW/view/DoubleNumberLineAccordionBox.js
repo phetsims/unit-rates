@@ -80,9 +80,22 @@ define( function( require ) {
     } );
 
     AccordionBox.call( this, contentNode, options );
+
+    // @private
+    this.disposeDoubleNumberLineAccordionBox = function() {
+      doubleNumberLineNode.dispose();
+      //TODO
+    };
   }
 
   unitRates.register( 'DoubleNumberLineAccordionBox', DoubleNumberLineAccordionBox );
 
-  return inherit( AccordionBox, DoubleNumberLineAccordionBox );
+  return inherit( AccordionBox, DoubleNumberLineAccordionBox, {
+
+    // @public
+    dispose: function() {
+      AccordionBox.prototype.dispose.call( this );
+      this.disposeDoubleNumberLineAccordionBox();
+    }
+  } );
 } );
