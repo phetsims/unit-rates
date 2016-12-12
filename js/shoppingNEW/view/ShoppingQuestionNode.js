@@ -39,10 +39,7 @@ define( function( require ) {
   function ShoppingQuestionNode( question, keypadLayer, options ) {
 
     options = _.extend( {
-
-      //TODO maxValue should be computed from Question model
-      maxValue: 99.99, // {number} for computing value width
-      minValueBoxWidth: 60, // {number} minimum width of the value field
+      valueBoxWidth: 70, // {number} minimum width of the value field
       denominatorVisible: false, // is the denominator visible before the answer is visible?
       correctColor: 'green',
       incorrectColor: 'red',
@@ -52,7 +49,7 @@ define( function( require ) {
       valueFont: DEFAULT_VALUE_FONT,
       valueXMargin: 5,
       valueYMargin: 3,
-      xSpacing: 30,
+      xSpacing: 25,
       ySpacing: 5
     }, options );
 
@@ -63,12 +60,9 @@ define( function( require ) {
     var guessFormat = question.guessFormat;
     var decimalPlaces = question.decimalPlaces;
 
-    var maxValueString = StringUtils.format( guessFormat, Util.toFixed( options.maxValue, decimalPlaces ) );
-    var maxValueNode = new Text( maxValueString, { font: options.valueFont } );
-
     // box that is either empty or displays an incorrect value. clicking in the box opens the keypad.
-    var valueBoxWidth = Math.max( options.minValueBoxWidth, maxValueNode.width + 2 * options.valueXMargin );
-    var valueBoxHeight = maxValueNode.height + 2 * options.valueYMargin;
+    var valueBoxWidth = options.valueBoxWidth;
+    var valueBoxHeight = new Text( '0', { font: options.valueFont } ).height + ( 2 * options.valueYMargin );
     var valueBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, {
       stroke: 'black',
       fill: 'white',
