@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Question = require( 'UNIT_RATES/shoppingNEW/model/Question' );
   var ShoppingItem = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItem' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -17,6 +18,7 @@ define( function( require ) {
   var blueCandyString = require( 'string!UNIT_RATES/blueCandy' );
   var dollarsString = require( 'string!UNIT_RATES/dollars' );
   var greenCandyString = require( 'string!UNIT_RATES/greenCandy' );
+  var poundString = require( 'string!UNIT_RATES/pound' );
   var poundsString = require( 'string!UNIT_RATES/pounds' );
   var purpleCandyString = require( 'string!UNIT_RATES/purpleCandy' );
   var redCandyString = require( 'string!UNIT_RATES/redCandy' );
@@ -34,20 +36,35 @@ define( function( require ) {
   var redCandyBagImage = require( 'image!UNIT_RATES/red_candy_bag.png' );
 
   /**
-   * @param {Object} itemDescription - see one of the static instances for an example
+   * @param {Object} itemData - data structure that describes a type of candy, see for example Candy.PURPLE_CANDY
    * @constructor
    */
-  function Candy( itemDescription ) {
-    ShoppingItem.call( this, itemDescription );
+  function Candy( itemData ) {
+
+    // {Question} 'Unit Rate?'
+    var unitRateQuestion = Question.createUnitRate( itemData.unitRate, poundString );
+
+    // {Question[][]} instantiate Questions, grouped into sets
+    var questionSets = [];
+    itemData.questionQuantities.forEach( function( quantities ) {
+      var questions = [];
+      quantities.forEach( function( quantity ) {
+        questions.push( Question.createCostOf( quantity, itemData.unitRate, poundString, poundsString ) );
+      } );
+      questionSets.push( questions );
+    } );
+
+    ShoppingItem.call( this, itemData, unitRateQuestion, questionSets );
   }
 
   unitRates.register( 'Candy', Candy );
 
   inherit( ShoppingItem, Candy );
 
+  // Data structure that describes a type of Candy
   Candy.PURPLE_CANDY = {
-    unitRate: 5.40, // dollars per pound
-    bagRate: 2.16, // dollars per bag
+    unitRate: 5.40, // cost per pound
+    bagRate: 2.16, // cost per bag
     numberOfBags: 4,
     singularName: purpleCandyString,
     pluralName: purpleCandyString,
@@ -56,8 +73,8 @@ define( function( require ) {
     itemImage: purpleCandyImage,
     bagImage: purpleCandyBagImage,
 
-    // Number of items for each challenge. See 'Unit Rates & Challenge Prompts' section of design document.
-    questionSets: [
+    // Number of pounds for each challenge. See 'Unit Rates & Challenge Prompts' section of design document.
+    questionQuantities: [
       [ 0.6, 2.2, 2.4 ],
       [ 1.5, 3.2, 3.1 ],
       [ 0.3, 2.4, 2.3 ],
@@ -66,8 +83,8 @@ define( function( require ) {
   };
 
   Candy.RED_CANDY = {
-    unitRate: 3.80, // dollars per pound
-    bagRate: 1.14, // dollars per bag
+    unitRate: 3.80,
+    bagRate: 1.14,
     numberOfBags: 4,
     singularName: redCandyString,
     pluralName: redCandyString,
@@ -75,7 +92,7 @@ define( function( require ) {
     denominatorName: poundsString,
     itemImage: redCandyImage,
     bagImage: redCandyBagImage,
-    questionSets: [
+    questionQuantities: [
       [ 0.4, 2.3, 2 ],
       [ 0.7, 2.1, 2.4 ],
       [ 0.8, 1.7, 1.9 ],
@@ -84,8 +101,8 @@ define( function( require ) {
   };
 
   Candy.GREEN_CANDY = {
-    unitRate: 8.20, // dollars per pound
-    bagRate: 2.46, // dollars per bag
+    unitRate: 8.20,
+    bagRate: 2.46,
     numberOfBags: 4,
     singularName: greenCandyString,
     pluralName: greenCandyString,
@@ -93,7 +110,7 @@ define( function( require ) {
     denominatorName: poundsString,
     itemImage: greenCandyImage,
     bagImage: greenCandyBagImage,
-    questionSets: [
+    questionQuantities: [
       [ 0.7, 1.9, 2.2 ],
       [ 1.3, 2.5, 2.4 ],
       [ 0.4, 1.8, 1.9 ],
@@ -102,8 +119,8 @@ define( function( require ) {
   };
 
   Candy.BLUE_CANDY = {
-    unitRate: 1.30, // dollars per pound
-    bagRate: 0.52, // dollars per bag
+    unitRate: 1.30,
+    bagRate: 0.52,
     numberOfBags: 4,
     singularName: blueCandyString,
     pluralName: blueCandyString,
@@ -111,7 +128,7 @@ define( function( require ) {
     denominatorName: poundsString,
     itemImage: blueCandyImage,
     bagImage: blueCandyBagImage,
-    questionSets: [
+    questionQuantities: [
       [ 0.3, 1.9, 3.2 ],
       [ 0.7, 2.2, 2.3 ],
       [ 1.3, 2.6, 2.4 ],

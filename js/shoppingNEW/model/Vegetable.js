@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Question = require( 'UNIT_RATES/shoppingNEW/model/Question' );
   var ShoppingItem = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItem' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -37,20 +38,47 @@ define( function( require ) {
   var tomatoBagImage = require( 'image!UNIT_RATES/tomato_bag.png' );
 
   /**
-   * @param {Object} itemDescription - see one of the static instances for an example
+   * @param {Object} itemData - data structure that describes a type of Vegetable, see for example Vegetable.CARROTS
    * @constructor
    */
-  function Vegetable( itemDescription ) {
-    ShoppingItem.call( this, itemDescription );
+  function Vegetable( itemData ) {
+
+    //TODO copied from Fruit constructor
+    // {Question} 'Unit Rate?'
+    var unitRateQuestion = Question.createUnitRate( itemData.unitRate, itemData.singularName );
+
+    //TODO copied from Fruit constructor
+    // {Question[][]} instantiate Questions, grouped into sets
+    var questionSets = [];
+    itemData.questionQuantities.forEach( function( quantities ) {
+      var questions = [];
+      for ( var i = 0; i < quantities.length; i++ ) {
+        var quantity = quantities[ i ];
+        if ( i < quantities.length - 1 ) {
+
+          // E.g., 'Cost of 3 Carrots?'
+          questions.push( Question.createCostOf( quantity, itemData.unitRate, itemData.singularName, itemData.pluralName ) );
+        }
+        else {
+
+          // E.g., 'Carrots for $3.00?'
+          questions.push( Question.createItemsFor( quantity, itemData.unitRate, itemData.singularName, itemData.pluralName ) );
+        }
+      }
+      questionSets.push( questions );
+    } );
+
+    ShoppingItem.call( this, itemData, unitRateQuestion, questionSets );
   }
 
   unitRates.register( 'Vegetable', Vegetable );
 
   inherit( ShoppingItem, Vegetable );
 
+  // Data structure that describes a type of Vegetable
   Vegetable.CARROTS = {
-    unitRate: 0.15, // dollars per item
-    bagRate: 0.60, // dollars per bag
+    unitRate: 0.15, // cost per item
+    bagRate: 0.60, // cost per bag
     numberOfBags: 4,
     singularName: carrotString,
     pluralName: carrotsString,
@@ -59,8 +87,8 @@ define( function( require ) {
     itemImage: carrotImage,
     bagImage: carrotBagImage,
 
-    // Number of items for each challenge. See 'Unit Rates & Challenge Prompts' section of design document.
-    questionSets: [
+    // Number of items for each question. See 'Unit Rates & Challenge Prompts' section of design document.
+    questionQuantities: [
       [ 9, 19, 21 ],
       [ 15, 25, 23 ],
       [ 6, 21, 36 ],
@@ -69,8 +97,8 @@ define( function( require ) {
   };
 
   Vegetable.CUCUMBERS = {
-    unitRate: 0.22, // dollars per item
-    bagRate: 0.66, // dollars
+    unitRate: 0.22,
+    bagRate: 0.66,
     numberOfBags: 4,
     singularName: cucumberString,
     pluralName: cucumbersString,
@@ -78,7 +106,7 @@ define( function( require ) {
     denominatorName: cucumbersString,
     itemImage: cucumberImage,
     bagImage: cucumberBagImage,
-    questionSets: [
+    questionQuantities: [
       [ 7, 19, 18 ],
       [ 11, 25, 23 ],
       [ 8, 17, 27 ],
@@ -87,8 +115,8 @@ define( function( require ) {
   };
 
   Vegetable.POTATOES = {
-    unitRate: 0.45, // dollars per item
-    bagRate: 1.35, // dollars per bag
+    unitRate: 0.45,
+    bagRate: 1.35,
     numberOfBags: 4,
     singularName: potatoString,
     pluralName: potatoesString,
@@ -96,7 +124,7 @@ define( function( require ) {
     denominatorName: potatoesString,
     itemImage: potatoImage,
     bagImage: potatoBagImage,
-    questionSets: [
+    questionQuantities: [
       [ 7, 17, 21 ],
       [ 8, 19, 18 ],
       [ 11, 23, 25 ],
@@ -105,8 +133,8 @@ define( function( require ) {
   };
 
   Vegetable.TOMATOES = {
-    unitRate: 0.3, // dollars per item
-    bagRate: 1.20, // dollars per bag
+    unitRate: 0.3,
+    bagRate: 1.20,
     numberOfBags: 4,
     singularName: tomatoString,
     pluralName: tomatoesString,
@@ -114,7 +142,7 @@ define( function( require ) {
     denominatorName: tomatoesString,
     itemImage: tomatoImage,
     bagImage: tomatoBagImage,
-    questionSets: [
+    questionQuantities: [
       [ 7, 23, 28 ],
       [ 13, 25, 23 ],
       [ 14, 35, 26 ],

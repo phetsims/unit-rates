@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Question = require( 'UNIT_RATES/shoppingNEW/model/Question' );
   var ShoppingItem = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItem' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -37,20 +38,45 @@ define( function( require ) {
   var pearBagImage = require( 'image!UNIT_RATES/pear_bag.png' );
 
   /**
-   * @param {Object} itemDescription - see one of the static instances for an example
+   * @param {Object} itemData - data structure that describes a type of Fruit, see for example Fruit.APPLES
    * @constructor
    */
-  function Fruit( itemDescription ) {
-    ShoppingItem.call( this, itemDescription );
+  function Fruit( itemData ) {
+
+    // {Question} 'Unit Rate?'
+    var unitRateQuestion = Question.createUnitRate( itemData.unitRate, itemData.singularName );
+
+    // {Question[][]} instantiate Questions, grouped into sets
+    var questionSets = [];
+    itemData.questionQuantities.forEach( function( quantities ) {
+      var questions = [];
+      for ( var i = 0; i < quantities.length; i++ ) {
+        var quantity = quantities[ i ];
+        if ( i < quantities.length - 1 ) {
+
+          // E.g., 'Cost of 3 Apples?'
+          questions.push( Question.createCostOf( quantity, itemData.unitRate, itemData.singularName, itemData.pluralName ) );
+        }
+        else {
+
+          // E.g., 'Apples for $3.00?'
+          questions.push( Question.createItemsFor( quantity, itemData.unitRate, itemData.singularName, itemData.pluralName ) );
+        }
+      }
+      questionSets.push( questions );
+    } );
+
+    ShoppingItem.call( this, itemData, unitRateQuestion, questionSets );
   }
 
   unitRates.register( 'Fruit', Fruit );
 
   inherit( ShoppingItem, Fruit );
 
+  // Data structure that describes a type of Fruit
   Fruit.APPLES = {
-    unitRate: 0.5, // dollars per item
-    bagRate: 2.50, // dollars per bag
+    unitRate: 0.5, // cost per item
+    bagRate: 2.50, // cost per bag
     numberOfBags: 3,
     singularName: appleString,
     pluralName: applesString,
@@ -59,8 +85,8 @@ define( function( require ) {
     itemImage: appleImage,
     bagImage: appleBagImage,
 
-    // Number of items for each challenge. See 'Unit Rates & Challenge Prompts' section of design document.
-    questionSets: [
+    // Number of items for each question. See 'Unit Rates & Challenge Prompts' section of design document.
+    questionQuantities: [
       [ 10, 6, 8 ],
       [ 10, 14, 13 ],
       [ 15, 9, 7 ],
@@ -78,7 +104,7 @@ define( function( require ) {
     denominatorName: lemonsString,
     itemImage: lemonImage,
     bagImage: lemonBagImage,
-    questionSets: [
+    questionQuantities: [
       [ 10, 4, 14 ],
       [ 10, 14, 7 ],
       [ 15, 6, 11 ],
@@ -96,7 +122,7 @@ define( function( require ) {
     denominatorName: orangesString,
     itemImage: orangeImage,
     bagImage: orangeBagImage,
-    questionSets: [
+    questionQuantities: [
       [ 10, 4, 11 ],
       [ 10, 14, 8 ],
       [ 15, 9, 14 ],
@@ -114,7 +140,7 @@ define( function( require ) {
     denominatorName: pearsString,
     itemImage: pearImage,
     bagImage: pearBagImage,
-    questionSets: [
+    questionQuantities: [
       [ 10, 6, 7 ],
       [ 10, 14, 12 ],
       [ 15, 4, 8 ],

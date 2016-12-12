@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var Candy = require( 'UNIT_RATES/shoppingNEW/model/Candy' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
@@ -47,7 +46,9 @@ define( function( require ) {
     }, options );
 
     // 'Unit Rate?' question
-    var unitRateNode = ShoppingQuestionNode.createUnitRateNode( shoppingItem, keypadLayer );
+    var unitRateNode = new ShoppingQuestionNode( shoppingItem.unitRateQuestion, keypadLayer, {
+      denominatorVisible: true
+    } );
 
     // Below the 'Unit Rate?' question is a set of questions that change when the refresh button is pressed.
     var questionsParent = new VBox( {
@@ -56,38 +57,16 @@ define( function( require ) {
     } );
     shoppingItem.questionSetProperty.link( function( questionSet ) {
 
+      // remove previous questions
       questionsParent.removeAllChildren();
 
-      var questionNodes = []; // {ShoppingQuestionNode[]}
-
-      if ( shoppingItem instanceof Candy ) {
-
-        // all Candy questions are of the form 'Cost of 3 pounds?'
-        questionSet.forEach( function( numberOfPounds ) {
-          questionNodes.push( ShoppingQuestionNode.createCostOfNode( numberOfPounds, shoppingItem, keypadLayer ) );
-        } );
+      // add new questions
+      var questionNodes = [];
+      for ( var i = 0; i < questionSet.length; i++ ) {
+        questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], keypadLayer ) );
       }
-      else {
-
-        // Other items types have questions of the form 'Cost of 3 Apples?',
-        // followed by 1 question of the form 'Apples for $3.00?'
-        for ( var i = 0; i < questionSet.length; i++ ) {
-          var numberOfItems = questionSet[ i ];
-          if ( i < questionSet.length - 1 ) {
-
-            // E.g., 'Cost of 3 Apples?'
-            questionNodes.push( ShoppingQuestionNode.createCostOfNode( numberOfItems, shoppingItem, keypadLayer ) );
-          }
-          else {
-
-            // E.g., 'Apples for $3.00?'
-            questionNodes.push( ShoppingQuestionNode.createAmountOfNode( numberOfItems, shoppingItem, keypadLayer ) );
-          }
-        }
-      }
-
       questionsParent.setChildren( questionNodes );
-  } );
+    } );
 
     // Refresh button update the set of dynamic questions
     var refreshButton = new RectangularPushButton( {

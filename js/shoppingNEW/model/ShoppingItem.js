@@ -15,37 +15,43 @@ define( function( require ) {
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
-   * @param {Object} itemDescription - see Fruit.APPLES for an example
+   * @param {Object} itemData - data structure that describes a type of item, see for example Fruit.APPLES
+   * @param {Question} unitRateQuestion - 'Unit Rate?' question
+   * @param {Question[][]} questionSets - sets of questions
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingItem( itemDescription, options ) {
+  function ShoppingItem( itemData, unitRateQuestion, questionSets, options ) {
 
     options = _.extend( {
 
       // index of the question set that is initially selected, randomly chosen
-      questionSetIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, itemDescription.questionSets.length - 1 ) : 0
+      questionSetIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, questionSets.length - 1 ) : 0
     }, options );
 
     // @public (read-only)
-    this.unitRate = itemDescription.unitRate;
-    this.bagRate = itemDescription.bagRate;
-    this.numberOfBags = itemDescription.numberOfBags;
-    this.singularName = itemDescription.singularName;
-    this.pluralName = itemDescription.pluralName;
-    this.numeratorName = itemDescription.numeratorName;
-    this.denominatorName = itemDescription.denominatorName;
-    this.itemImage = itemDescription.itemImage;
-    this.bagImage = itemDescription.bagImage;
+    this.unitRate = itemData.unitRate;
+    this.bagRate = itemData.bagRate;
+    this.numberOfBags = itemData.numberOfBags;
+    this.singularName = itemData.singularName;
+    this.pluralName = itemData.pluralName;
+    this.numeratorName = itemData.numeratorName;
+    this.denominatorName = itemData.denominatorName;
+    this.itemImage = itemData.itemImage;
+    this.bagImage = itemData.bagImage;
+    this.unitRateQuestion = unitRateQuestion;
 
-    // @public the current set of questions
-    this.questionSetProperty = new Property( itemDescription.questionSets[ options.questionSetIndex ] );
+    // @private
+    this.questionSets = questionSets;
 
-    // @private sets of questions that are available for selection
-    this.availableQuestionSets = itemDescription.questionSets.slice();
+    // @public {Property.<Question[]>} the current set of questions
+    this.questionSetProperty = new Property( questionSets[ options.questionSetIndex ] );
+
+    // @private {Question[][]} sets of questions that are available for selection
+    this.availableQuestionSets = questionSets.slice();
     this.availableQuestionSets.splice( options.questionSetIndex, 1 );
 
-    // @private sets of question that have already been selected
+    // @private {Question[][]} sets of question that have already been selected
     this.selectedQuestionSets = [ this.questionSetProperty.value ];
   }
 
@@ -55,13 +61,22 @@ define( function( require ) {
 
     // @public
     reset: function() {
+
+      // reset all Questions
+      this.unitRateQuestion.reset();
+      this.questionSets.forEach( function( questionSet ) {
+        questionSet.forEach( function( question ) {
+            question.reset();
+        } );
+      } );
+
+      // choose the next set of questions
       this.nextQuestionSet();
     },
 
     /**
      * Randomly chooses the next set of questions. The same set will not be selected consecutively,
      * and a selected set will not be re-selected until all sets have been selected.
-     *
      * @public
      */
     nextQuestionSet: function() {
