@@ -39,18 +39,18 @@ define( function( require ) {
   function ShoppingQuestionNode( question, keypadLayer, options ) {
 
     options = _.extend( {
-      valueBoxWidth: 70, // {number} minimum width of the value field
-      denominatorVisible: false, // is the denominator visible before the answer is visible?
-      correctColor: 'green',
-      incorrectColor: 'red',
-      neutralColor: 'black',
-      editColor: 'yellow',
-      questionFont: DEFAULT_QUESTION_FONT,
-      valueFont: DEFAULT_VALUE_FONT,
-      valueXMargin: 5,
-      valueYMargin: 3,
-      xSpacing: 25,
-      ySpacing: 5
+      valueBoxWidth: 70, // {number} width of the value field
+      denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
+      correctColor: 'green', // {Color|string} color for the correct answer
+      incorrectColor: 'red', // {Color|string} color for an incorrect guess
+      neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
+      editColor: 'yellow', // {Color|string} value box is filled with this color while editing
+      questionFont: DEFAULT_QUESTION_FONT, // {Font} font for the question
+      valueFont: DEFAULT_VALUE_FONT, // {Font} font for the value
+      valueXMargin: 5, // {number} horizontal margin inside the value box
+      valueYMargin: 3, // {number} vertical margin inside the value box
+      xSpacing: 25, // {number} horizontal spacing between UI elements
+      ySpacing: 5  // {number} vertical spacing between UI elements
     }, options );
 
     Node.call( this );
@@ -145,7 +145,7 @@ define( function( require ) {
     var keypad = new KeypadPanel( {
       enterButtonListener: function() { commitEdit(); },
 
-      //TODO add an option for position the keypad relative to the questions
+      //TODO add an option for positioning the keypad relative to the questions
       centerX: 500,
       centerY: 400
     } );
