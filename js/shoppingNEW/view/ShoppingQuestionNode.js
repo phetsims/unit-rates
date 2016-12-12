@@ -107,7 +107,8 @@ define( function( require ) {
 
     // show the answer, if query parameter is set
     if ( URQueryParameters.showAnswers ) {
-      guessNode.text = StringUtils.format( guessFormat, Util.toFixed( answer, maxDecimals ) );
+      var guessInitialText = ( question.restrictGuessDecimalPlaces ) ? Util.toFixed( answer, maxDecimals ) : answer;
+      guessNode.text = StringUtils.format( guessFormat, guessInitialText );
       guessNode.center = valueBox.center;
       guessNode.fill = options.correctColor;
     }
