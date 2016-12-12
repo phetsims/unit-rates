@@ -1,5 +1,10 @@
 // Copyright 2016, University of Colorado Boulder
 
+/***
+ * Temporary keypad for Unit Rates. TODO replace with new common keypad
+ *
+ * @author Chris Malley (PixelZoom, Inc.)
+ */
 define( function( require ) {
   'use strict';
 
