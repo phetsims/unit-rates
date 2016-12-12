@@ -35,8 +35,8 @@ define( function( require ) {
 
     options = _.extend( {
       maxDigits: 4, // {number} maximum number of digits to enter on the keypad
-      decimalPlaces: 2, // {number} maximum number of decimal places to enter on the keypad
-      restrictGuessDecimalPlaces: true, // {boolean} whether to restrict display of guess to show exactly options.decimalPlaces
+      maxDecimals: 2, // {number} maximum number of decimal places to enter on the keypad
+      restrictGuessDecimalPlaces: true, // {boolean} whether to restrict display of guess to show exactly options.maxDecimals
       guessFormat: '{0}' // {string} format used by StringUtils.format to format the guess
     }, options );
 
@@ -48,7 +48,7 @@ define( function( require ) {
     this.numeratorString = numeratorString;
     this.denominatorString = denominatorString;
     this.maxDigits = options.maxDigits;
-    this.decimalPlaces = options.decimalPlaces;
+    this.maxDecimals = options.maxDecimals;
     this.restrictGuessDecimalPlaces = options.restrictGuessDecimalPlaces;
     this.guessFormat = options.guessFormat;
 
@@ -89,7 +89,7 @@ define( function( require ) {
 
       options = _.extend( {
         guessFormat: currencyValueString, // {string} format for the guessed value
-        decimalPlaces: 2
+        maxDecimals: 2
       }, options );
 
       // 'Unit Rate?'
@@ -119,7 +119,7 @@ define( function( require ) {
 
       options = _.extend( {
         guessFormat: currencyValueString, // {string} format for the guessed value
-        decimalPlaces: 2
+        maxDecimals: 2
       }, options );
 
       // 'Apples' or 'Apple'
@@ -156,7 +156,7 @@ define( function( require ) {
       options = _.extend( {
         guessFormat: '{0}', // {string} format for the guessed value
         maxDigits: 3,
-        decimalPlaces: 1,
+        maxDecimals: 1,
         restrictGuessDecimalPlaces: false
       }, options );
 

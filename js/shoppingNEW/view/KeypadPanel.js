@@ -24,6 +24,9 @@ define( function( require ) {
   // strings
   var enterString = require( 'string!UNIT_RATES/enter' );
 
+  // constants
+  var DECIMAL_POINT_STRING = '.'; //TODO this should be in NumberKeypad
+
   /**
    * @param {Object} [options]
    * @constructor
@@ -36,6 +39,7 @@ define( function( require ) {
       valueString: '',
       decimalPointKey: true,
       maxDigits: 4,
+      maxDecimals: 2,
 
       // Panel options
       fill: 'rgb( 230, 230, 230 )',
@@ -65,10 +69,12 @@ define( function( require ) {
     } );
 
     var keypadNode = new NumberKeypad( {
-
+      valueStringProperty: valueStringProperty,
       decimalPointKey: options.decimalPointKey,
-      validateKey: NumberKeypad.validateMaxDigits( { maxDigits: options.maxDigits } ),
-      valueStringProperty: valueStringProperty
+      validateKey: validateDigitsAndDecimals( {
+        maxDigits: options.maxDigits,
+        maxDecimals: options.maxDecimals
+      } )
     } );
 
     var enterButton = new RectangularPushButton( {
@@ -98,6 +104,78 @@ define( function( require ) {
   }
 
   unitRates.register( 'KeypadPanel', KeypadPanel );
+
+  /**
+   * Creates a validation function that constrains the value have:
+   * - to a maximum number of digits (with 1 leading zero)
+   * - a maximum number of decimal places.
+   *
+   * @param {Object} [options]
+   * @returns {function(string, string)}
+   */
+  var validateDigitsAndDecimals = function( options ) {
+
+    options = _.extend( {
+      maxDigits: 8, // {number} the maximum number of digits (numbers)
+      maxDecimals: 4 // {number} the maximum number of decimal places
+    }, options );
+    assert && assert( options.maxDigits > 0, 'invalid maxDigits: ' + options.maxDigits );
+    assert && assert( options.maxDecimals >= 0, 'invalid maxDecimals: ' + options.maxDecimals );
+
+    /**
+     * Creates the new string that results from pressing a key.
+     * @param {string} keyString - string associated with the key that was pressed
+     * @param {string} valueString - string that corresponds to the sequence of keys that have been pressed
+     * @returns {string} the result
+     */
+    return function( keyString, valueString ) {
+
+      console.log( 'keyString=' + keyString + ', valueString=' + valueString );
+
+      // start by assuming that keyString will be ignored
+      var newValueString = valueString;
+
+      var hasDecimalPoint = valueString.indexOf( DECIMAL_POINT_STRING ) !== -1;
+      var numberOfDigits = hasDecimalPoint ? valueString.length - 1 : valueString.length;
+      var numberOfDecimals = !hasDecimalPoint ? 0 : ( valueString.length - valueString.indexOf( DECIMAL_POINT_STRING ) - 1 );
+
+      if ( valueString === '0' && keyString === '0' ) {
+
+        // ignore multiple leading zeros
+      }
+      else if ( valueString === '0' && keyString !== '0' && keyString !== DECIMAL_POINT_STRING ) {
+
+        // replace a leading 0 that's not followed by a decimal point with this key
+        newValueString = keyString;
+      }
+      else if ( numberOfDigits === options.maxDigits ) {
+
+        // maxDigits reached, ignore key
+      }
+      else if ( keyString === DECIMAL_POINT_STRING ) {
+        if ( !hasDecimalPoint ) {
+
+          // allow one decimal point
+          newValueString = valueString + keyString;
+        }
+        else {
+
+          // ignore additional decimal points
+        }
+      }
+      else if ( hasDecimalPoint &&  numberOfDecimals === options.maxDecimals ) {
+
+        // maxDecimals reached, ignore key
+      }
+      else {
+
+        // add digit
+        newValueString = valueString + keyString;
+      }
+
+      return newValueString;
+    };
+  };
 
   return inherit( Panel, KeypadPanel );
 } );

@@ -58,7 +58,7 @@ define( function( require ) {
     // local vars to improve readability
     var answer = question.answer;
     var guessFormat = question.guessFormat;
-    var decimalPlaces = question.decimalPlaces;
+    var maxDecimals = question.maxDecimals;
 
     // box that is either empty or displays an incorrect value. clicking in the box opens the keypad.
     var valueBoxWidth = options.valueBoxWidth;
@@ -107,7 +107,7 @@ define( function( require ) {
 
     // show the answer, if query parameter is set
     if ( URQueryParameters.showAnswers ) {
-      guessNode.text = StringUtils.format( guessFormat, Util.toFixed( answer, decimalPlaces ) );
+      guessNode.text = StringUtils.format( guessFormat, Util.toFixed( answer, maxDecimals ) );
       guessNode.center = valueBox.center;
       guessNode.fill = options.correctColor;
     }
@@ -144,6 +144,7 @@ define( function( require ) {
     // keypad for entering numbers, added dynamically to keypadLayer
     var keypad = new KeypadPanel( {
       maxDigits: question.maxDigits,
+      maxDecimals: question.maxDecimals,
       enterButtonListener: function() { commitEdit(); },
 
       //TODO add an option for positioning the keypad relative to the questions
@@ -219,7 +220,7 @@ define( function( require ) {
       valueBox.visible = !correct;
 
       guessNode.visible = !correct;
-      var guessDisplayed = ( question.restrictGuessDecimalPlaces ) ?  Util.toFixed( guess, decimalPlaces ) : guess;
+      var guessDisplayed = ( question.restrictGuessDecimalPlaces ) ?  Util.toFixed( guess, maxDecimals ) : guess;
       guessNode.text = StringUtils.format( guessFormat, guessDisplayed );
       guessNode.center = valueBox.center;
       guessNode.fill = correct ? options.correctColor : options.incorrectColor;
