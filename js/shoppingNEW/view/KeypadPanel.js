@@ -30,6 +30,7 @@ define( function( require ) {
       // KeypadPanel options
       valueString: '',
       decimalPointKey: true,
+      maxDigits: 4,
 
       // Panel options
       fill: 'rgb( 230, 230, 230 )',
@@ -59,8 +60,9 @@ define( function( require ) {
     } );
 
     var keypadNode = new NumberKeypad( {
+
       decimalPointKey: options.decimalPointKey,
-      validateKey: NumberKeypad.validateMaxDigits( { maxDigits: 4 } ),
+      validateKey: NumberKeypad.validateMaxDigits( { maxDigits: options.maxDigits } ),
       valueStringProperty: valueStringProperty
     } );
 

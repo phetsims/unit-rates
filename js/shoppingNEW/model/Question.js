@@ -34,8 +34,9 @@ define( function( require ) {
   function Question( questionString, answer, numeratorString, denominatorString, options ) {
 
     options = _.extend( {
-      keypadMaxDigits: 4, //TODO should this be max digits to left of decimal place?
-      decimalPlaces: 2,
+      maxDigits: 4, // {number} maximum number of digits to enter on the keypad
+      decimalPlaces: 2, // {number} maximum number of decimal places to enter on the keypad
+      restrictGuessDecimalPlaces: true, // {boolean} whether to restrict display of guess to show exactly options.decimalPlaces
       guessFormat: '{0}' // {string} format used by StringUtils.format to format the guess
     }, options );
 
@@ -46,11 +47,12 @@ define( function( require ) {
     this.answer = answer;
     this.numeratorString = numeratorString;
     this.denominatorString = denominatorString;
-    this.keypadMaxDigits = options.keypadMaxDigits;
+    this.maxDigits = options.maxDigits;
     this.decimalPlaces = options.decimalPlaces;
+    this.restrictGuessDecimalPlaces = options.restrictGuessDecimalPlaces;
     this.guessFormat = options.guessFormat;
 
-    // @public {Property.<string|null>, null indicates no guess
+    // @public {Property.<number|null>, null indicates no guess
     this.guessProperty = new Property( null );
 
     // @public emit1(this) is called when the question is answered correctly
@@ -58,8 +60,7 @@ define( function( require ) {
 
     // Notify observers when the question is answered correctly
     this.guessProperty.link( function( guess ) {
-      var guessValue = Number( guess );
-      if ( guessValue === answer ) {
+      if ( guess === answer ) {
         self.correctEmitter.emit1( self );
       }
     } );
@@ -154,7 +155,9 @@ define( function( require ) {
 
       options = _.extend( {
         guessFormat: '{0}', // {string} format for the guessed value
-        decimalPlaces: 1
+        maxDigits: 3,
+        decimalPlaces: 1,
+        restrictGuessDecimalPlaces: false
       }, options );
 
       // 'Apples' or 'Apple'

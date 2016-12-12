@@ -143,6 +143,7 @@ define( function( require ) {
 
     // keypad for entering numbers, added dynamically to keypadLayer
     var keypad = new KeypadPanel( {
+      maxDigits: question.maxDigits,
       enterButtonListener: function() { commitEdit(); },
 
       //TODO add an option for positioning the keypad relative to the questions
@@ -189,8 +190,7 @@ define( function( require ) {
       var valueString = keypad.valueStringProperty.value;
       if ( valueString ) {
         endEdit();
-        var valueNumber = ( 1 * keypad.valueStringProperty.value ); // string -> number conversion
-        setValue( valueNumber );
+        question.guessProperty.value = ( 1 * keypad.valueStringProperty.value ); // string -> number conversion
       }
       else {
         cancelEdit();
@@ -208,19 +208,19 @@ define( function( require ) {
      *
      * @param {number} value
      */
-    var setValue = function( value ) {
+    question.guessProperty.lazyLink( function( guess ) {
 
-      assert && assert( typeof value === 'number', 'value must be a number: ' + value );
+      assert && assert( typeof guess === 'number', 'guess must be a number: ' + guess );
 
       // compare guess to answer using the desired number of decimal places
-      var correct = ( Util.toFixedNumber( value, decimalPlaces ) === Util.toFixedNumber( answer, decimalPlaces ) );
+      var correct = ( guess === answer );
 
       editButton.visible = !correct;
-
       valueBox.visible = !correct;
 
       guessNode.visible = !correct;
-      guessNode.text = StringUtils.format( guessFormat, Util.toFixed( value, decimalPlaces ) );
+      var guessDisplayed = ( question.restrictGuessDecimalPlaces ) ?  Util.toFixed( guess, decimalPlaces ) : guess;
+      guessNode.text = StringUtils.format( guessFormat, guessDisplayed );
       guessNode.center = valueBox.center;
       guessNode.fill = correct ? options.correctColor : options.incorrectColor;
 
@@ -231,7 +231,7 @@ define( function( require ) {
       }
 
       correctIconNode.visible = correct;
-    };
+    } );
 
     // Clicking on editButton or valueBox opens the keypad
     editButton.addListener( beginEdit );
