@@ -154,7 +154,7 @@ define( function( require ) {
 
       options = _.extend( {
         guessFormat: '{0}', // {string} format for the guessed value
-        decimalPlaces: 0
+        decimalPlaces: 1
       }, options );
 
       // 'Apples' or 'Apple'
