@@ -56,7 +56,6 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      console.log( 'ShoppingItemNode.dispose' );//XXX
       this.disposeShoppingItemNode();
     }
   } );
