@@ -130,8 +130,6 @@ define( function( require ) {
      */
     return function( keyString, valueString ) {
 
-      console.log( 'keyString=' + keyString + ', valueString=' + valueString );
-
       // start by assuming that keyString will be ignored
       var newValueString = valueString;
 
