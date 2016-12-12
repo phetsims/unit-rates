@@ -46,7 +46,7 @@ define( function( require ) {
     }, options );
 
     // 'Unit Rate?' question
-    var unitRateNode = new ShoppingQuestionNode( shoppingItem.unitRateQuestion, keypadLayer, {
+    var unitRateQuestionNode = new ShoppingQuestionNode( shoppingItem.unitRateQuestion, keypadLayer, {
       denominatorVisible: true
     } );
 
@@ -55,7 +55,7 @@ define( function( require ) {
       align: options.contentAlign,
       spacing: options.contentYSpacing
     } );
-    shoppingItem.questionSetProperty.link( function( questionSet ) {
+    var questionSetObserver = function( questionSet ) {
 
       // remove previous questions
       questionsParent.removeAllChildren();
@@ -66,7 +66,8 @@ define( function( require ) {
         questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], keypadLayer ) );
       }
       questionsParent.setChildren( questionNodes );
-    } );
+    };
+    shoppingItem.questionSetProperty.link( questionSetObserver );
 
     // Refresh button update the set of dynamic questions
     var refreshButton = new RectangularPushButton( {
@@ -82,16 +83,32 @@ define( function( require ) {
       align: options.contentAlign,
       spacing: options.contentYSpacing,
       children: [
-        unitRateNode,
+        unitRateQuestionNode,
         questionsParent,
         refreshButton
       ]
     } );
 
     AccordionBox.call( this, contentNode, options );
+
+    // @private cleanup that's specific to this Node
+    this.disposeShoppingQuestionsAccordionBox = function() {
+      shoppingItem.questionSetProperty.unlink( questionSetObserver );
+      unitRateQuestionNode.dispose();
+      questionsParent.getChildren().forEach( function( child ) {
+        assert && assert( child instanceof ShoppingQuestionNode );
+        child.dispose();
+      } );
+    }
   }
 
   unitRates.register( 'ShoppingQuestionsAccordionBox', ShoppingQuestionsAccordionBox );
 
-  return inherit( AccordionBox, ShoppingQuestionsAccordionBox );
+  return inherit( AccordionBox, ShoppingQuestionsAccordionBox, {
+
+    dispose: function() {
+      AccordionBox.prototype.dispose.call( this );
+      this.disposeShoppingQuestionsAccordionBox();
+    }
+  } );
 } );

@@ -204,12 +204,8 @@ define( function( require ) {
       endEdit();
     };
 
-    /**
-     * Updates the state of this node based on what the user entered on the keypad
-     *
-     * @param {number} value
-     */
-    question.guessProperty.lazyLink( function( guess ) {
+    // Update when the guess changes
+    var guessObserver = function( guess ) {
 
       assert && assert( typeof guess === 'number', 'guess must be a number: ' + guess );
 
@@ -220,7 +216,7 @@ define( function( require ) {
       valueBox.visible = !correct;
 
       guessNode.visible = !correct;
-      var guessDisplayed = ( question.restrictGuessDecimalPlaces ) ?  Util.toFixed( guess, maxDecimals ) : guess;
+      var guessDisplayed = ( question.restrictGuessDecimalPlaces ) ? Util.toFixed( guess, maxDecimals ) : guess;
       guessNode.text = StringUtils.format( guessFormat, guessDisplayed );
       guessNode.center = valueBox.center;
       guessNode.fill = correct ? options.correctColor : options.incorrectColor;
@@ -232,16 +228,28 @@ define( function( require ) {
       }
 
       correctIconNode.visible = correct;
-    } );
+    };
+    question.guessProperty.lazyLink( guessObserver );
 
     // Clicking on editButton or valueBox opens the keypad
     editButton.addListener( beginEdit );
     valueBox.addInputListener( new DownUpListener( {
       down: beginEdit.bind( this )
     } ) );
+
+    // @private cleanup that's specific to this Node
+    this.disposeShoppingQuestionNode = function() {
+      question.guessProperty.unlink( guessObserver );
+    }
   }
 
   unitRates.register( 'ShoppingQuestionNode', ShoppingQuestionNode );
 
-  return inherit( Node, ShoppingQuestionNode );
+  return inherit( Node, ShoppingQuestionNode, {
+
+    // @public
+    dispose: function() {
+      this.disposeShoppingQuestionNode();
+    }
+  } );
 } );
