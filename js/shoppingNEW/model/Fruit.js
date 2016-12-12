@@ -58,11 +58,13 @@ define( function( require ) {
     denominatorName: applesString,
     itemImage: appleImage,
     bagImage: appleBagImage,
+
+    // Number of items for each challenge. See 'Unit Rates & Challenge Prompts' section of design document.
     questionSets: [
-      [ 10, 6, 8 ],     // set A - [ question#2, question#3, question#4 ]
-      [ 10, 14, 13 ],   // set B
-      [ 15, 9, 7 ],     // set C
-      [ 15, 4, 9 ]      // set D
+      [ 10, 6, 8 ],
+      [ 10, 14, 13 ],
+      [ 15, 9, 7 ],
+      [ 15, 4, 9 ]
     ]
   };
 

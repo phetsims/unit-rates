@@ -55,6 +55,8 @@ define( function( require ) {
     denominatorName: poundsString,
     itemImage: purpleCandyImage,
     bagImage: purpleCandyBagImage,
+
+    // Number of items for each challenge. See 'Unit Rates & Challenge Prompts' section of design document.
     questionSets: [
       [ 0.6, 2.2, 2.4 ],
       [ 1.5, 3.2, 3.1 ],

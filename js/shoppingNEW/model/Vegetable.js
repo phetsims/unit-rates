@@ -58,6 +58,8 @@ define( function( require ) {
     denominatorName: carrotsString,
     itemImage: carrotImage,
     bagImage: carrotBagImage,
+
+    // Number of items for each challenge. See 'Unit Rates & Challenge Prompts' section of design document.
     questionSets: [
       [ 9, 19, 21 ],
       [ 15, 25, 23 ],
