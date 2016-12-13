@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Question = require( 'UNIT_RATES/shoppingNEW/model/Question' );
   var ShoppingItem = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItem' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -40,21 +39,11 @@ define( function( require ) {
    * @constructor
    */
   function Candy( itemData ) {
-
-    // {Question} 'Unit Rate?'
-    var unitRateQuestion = Question.createUnitRate( itemData.unitRate, poundString );
-
-    // {Question[][]} instantiate Questions, grouped into sets
-    var questionSets = [];
-    itemData.questionQuantities.forEach( function( quantities ) {
-      var questions = [];
-      quantities.forEach( function( quantity ) {
-        questions.push( Question.createCostOf( quantity, itemData.unitRate, poundString, poundsString ) );
-      } );
-      questionSets.push( questions );
+    ShoppingItem.call( this, itemData, {
+      questionSingularUnits: poundString,
+      questionPluralUnits: poundsString,
+      uniformQuestions: true
     } );
-
-    ShoppingItem.call( this, itemData, unitRateQuestion, questionSets );
   }
 
   unitRates.register( 'Candy', Candy );
@@ -73,7 +62,7 @@ define( function( require ) {
     itemImage: purpleCandyImage,
     bagImage: purpleCandyBagImage,
 
-    // Number of pounds for each challenge. See 'Unit Rates & Challenge Prompts' section of design document.
+    // Number of pounds for each question. See 'Unit Rates & Challenge Prompts' section of design document.
     questionQuantities: [
       [ 0.6, 2.2, 2.4 ],
       [ 1.5, 3.2, 3.1 ],

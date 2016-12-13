@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Question = require( 'UNIT_RATES/shoppingNEW/model/Question' );
   var ShoppingItem = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItem' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -42,31 +41,9 @@ define( function( require ) {
    * @constructor
    */
   function Fruit( itemData ) {
-
-    // {Question} 'Unit Rate?'
-    var unitRateQuestion = Question.createUnitRate( itemData.unitRate, itemData.singularName );
-
-    // {Question[][]} instantiate Questions, grouped into sets
-    var questionSets = [];
-    itemData.questionQuantities.forEach( function( quantities ) {
-      var questions = [];
-      for ( var i = 0; i < quantities.length; i++ ) {
-        var quantity = quantities[ i ];
-        if ( i < quantities.length - 1 ) {
-
-          // E.g., 'Cost of 3 Apples?'
-          questions.push( Question.createCostOf( quantity, itemData.unitRate, itemData.singularName, itemData.pluralName ) );
-        }
-        else {
-
-          // E.g., 'Apples for $3.00?'
-          questions.push( Question.createItemsFor( quantity, itemData.unitRate, itemData.singularName, itemData.pluralName ) );
-        }
-      }
-      questionSets.push( questions );
+    ShoppingItem.call( this, itemData, {
+      uniformQuestions: false // the last question has a different form
     } );
-
-    ShoppingItem.call( this, itemData, unitRateQuestion, questionSets );
   }
 
   unitRates.register( 'Fruit', Fruit );

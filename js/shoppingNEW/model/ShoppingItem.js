@@ -10,23 +10,26 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Question = require( 'UNIT_RATES/shoppingNEW/model/Question' );
   var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {Object} itemData - data structure that describes a type of item, see for example Fruit.APPLES
-   * @param {Question} unitRateQuestion - 'Unit Rate?' question
-   * @param {Question[][]} questionSets - sets of questions
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingItem( itemData, unitRateQuestion, questionSets, options ) {
+  function ShoppingItem( itemData, options ) {
 
     options = _.extend( {
+      questionSingularUnits: itemData.singularName, // {string} units to use for questions with singular quantities
+      questionPluralUnits: itemData.pluralName,  // {string} units to use for questions with plural quantities
+      uniformQuestions: true, // {boolean} are all Questions of the same form? see createQuestionSets
 
-      // index of the question set that is initially selected, randomly chosen
-      questionSetIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, questionSets.length - 1 ) : 0
+      // {number} index of the question set that is initially selected, randomly chosen
+      questionSetIndex: URQueryParameters.randomEnabled ?
+                        phet.joist.random.nextIntBetween( 0, itemData.questionQuantities.length - 1 ) : 0
     }, options );
 
     // @public (read-only)
@@ -39,16 +42,19 @@ define( function( require ) {
     this.denominatorName = itemData.denominatorName;
     this.itemImage = itemData.itemImage;
     this.bagImage = itemData.bagImage;
-    this.unitRateQuestion = unitRateQuestion;
 
-    // @private
-    this.questionSets = questionSets;
+    // @public {Question} 'Unit Rate?'
+    this.unitRateQuestion = Question.createUnitRate( itemData.unitRate, options.questionSingularUnits );
+
+    // @private {Question[][]} instantiate Questions, grouped into sets
+    this.questionSets = createQuestionSets( itemData.questionQuantities, itemData.unitRate,
+      options.questionSingularUnits, options.questionPluralUnits, options.uniformQuestions );
 
     // @public {Property.<Question[]>} the current set of questions
-    this.questionSetProperty = new Property( questionSets[ options.questionSetIndex ] );
+    this.questionSetProperty = new Property( this.questionSets[ options.questionSetIndex ] );
 
     // @private {Question[][]} sets of questions that are available for selection
-    this.availableQuestionSets = questionSets.slice();
+    this.availableQuestionSets = this.questionSets.slice();
     this.availableQuestionSets.splice( options.questionSetIndex, 1 );
 
     // @private {Question[][]} sets of question that have already been selected
@@ -56,6 +62,43 @@ define( function( require ) {
   }
 
   unitRates.register( 'ShoppingItem', ShoppingItem );
+
+  /**
+   * Creates question sets from raw data.
+   *
+   * @param {number[][]} questionQuantities - number of items for each question, see for example Fruit.APPLES
+   * @param {number} unitRate
+   * @param {string} singularUnits - units to use for questions with singular quantities
+   * @param {string} pluralUnits - units to use for questions with plural quantities
+   * @param {boolean} uniformQuestions -
+   *        true: all questions are of the same form, e.g. 'Cost of 3 Apples?'
+   *        false: the last question is different, e.g. 'Apples for $3.00?'
+   * @returns {Question[][]}
+   */
+  function createQuestionSets( questionQuantities, unitRate, singularUnits, pluralUnits, uniformQuestions ) {
+
+    var questionSets = [];  // {Question[][]}
+
+    questionQuantities.forEach( function( quantities ) {
+      var questions = [];
+      for ( var i = 0; i < quantities.length; i++ ) {
+        var quantity = quantities[ i ];
+        if ( i < quantities.length - 1 || uniformQuestions ) {
+
+          // E.g., 'Cost of 3 Apples?'
+          questions.push( Question.createCostOf( quantity, unitRate, singularUnits, pluralUnits ) );
+        }
+        else {
+
+          // E.g., 'Apples for $3.00?'
+          questions.push( Question.createItemsFor( quantity, unitRate, singularUnits, pluralUnits ) );
+        }
+      }
+      questionSets.push( questions );
+    } );
+
+    return questionSets;
+  }
 
   return inherit( Object, ShoppingItem, {
 
@@ -66,7 +109,7 @@ define( function( require ) {
       this.unitRateQuestion.reset();
       this.questionSets.forEach( function( questionSet ) {
         questionSet.forEach( function( question ) {
-            question.reset();
+          question.reset();
         } );
       } );
 
