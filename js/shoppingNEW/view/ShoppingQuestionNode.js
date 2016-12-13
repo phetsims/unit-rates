@@ -141,8 +141,8 @@ define( function( require ) {
       enterButtonListener: function() { commitEdit(); },
 
       //TODO add an option for positioning the keypad relative to the questions
-      centerX: 500,
-      centerY: 400
+      centerX: 715,
+      centerY: 340
     } );
 
     // Clicking outside the keypad cancels the edit
