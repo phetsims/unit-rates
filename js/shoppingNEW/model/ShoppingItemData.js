@@ -76,15 +76,15 @@ define( function( require ) {
 
       // NOTE: This instance is assumed to be representative of 'item data', see assertIsItemData
       APPLES: {
-        unitRate: 0.5, // cost per item
-        bagRate: 2.50, // cost per bag
-        numberOfBags: 3,
-        singularName: appleString,
-        pluralName: applesString,
-        itemImage: appleImage,
-        bagImage: appleBagImage,
+        unitRate: 0.5, // {number} cost per item, in $
+        bagRate: 2.50, // {number} cost per bag, in $
+        numberOfBags: 3, // {number} number of bags initially on the shelf
+        singularName: appleString, // {string} name to use for singular quantities (e.g. '1 Apple')
+        pluralName: applesString, // {string} name to use for plural quantities (e.g. '2 Apples')
+        itemImage: appleImage, // {HTMLImageElement} image for individual items
+        bagImage: appleBagImage, // {HTMLImageElement} image for a bag of items
 
-        // Number of items for each question. See 'Unit Rates & Challenge Prompts' section of design document.
+        // {number[][]} Number of items for each question. See 'Unit Rates & Challenge Prompts' in design document.
         questionQuantities: [
           [ 10, 6, 8 ],
           [ 10, 14, 13 ],
@@ -154,7 +154,7 @@ define( function( require ) {
         itemImage: carrotImage,
         bagImage: carrotBagImage,
 
-        // Number of items for each question. See 'Unit Rates & Challenge Prompts' section of design document.
+        // {number[][]} Number of items for each question. See 'Unit Rates & Challenge Prompts' in design document.
         questionQuantities: [
           [ 9, 19, 21 ],
           [ 15, 25, 23 ],
@@ -224,7 +224,7 @@ define( function( require ) {
         itemImage: purpleCandyImage,
         bagImage: purpleCandyBagImage,
 
-        // Number of pounds for each question. See 'Unit Rates & Challenge Prompts' section of design document.
+        // {number[][]} Number of pounds for each question. See 'Unit Rates & Challenge Prompts' in design document.
         questionQuantities: [
           [ 0.6, 2.2, 2.4 ],
           [ 1.5, 3.2, 3.1 ],
