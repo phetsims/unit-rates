@@ -54,6 +54,7 @@ define( function( require ) {
       bottomLabel: new Text( shoppingItem.denominatorName, AXIS_LABEL_OPTIONS )
     } );
 
+    //TODO erase markers that were created using the marker editor, or by putting items on the scale
     var eraserButton = new EraserButton( {
       baseColor: 'rgb( 255, 255, 219 )',
       listener: function() {
