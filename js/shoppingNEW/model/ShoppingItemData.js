@@ -84,7 +84,8 @@ define( function( require ) {
         itemImage: appleImage, // {HTMLImageElement} image for individual items
         bagImage: appleBagImage, // {HTMLImageElement} image for a bag of items
 
-        // {number[][]} Number of items for each question. See 'Unit Rates & Challenge Prompts' in design document.
+        // {number[][]} Number of items for each question, grouped into 'question sets'.
+        // See 'Unit Rates & Challenge Prompts' in design document.
         questionQuantities: [
           [ 10, 6, 8 ],
           [ 10, 14, 13 ],
@@ -94,8 +95,8 @@ define( function( require ) {
       },
 
       LEMONS: {
-        unitRate: 0.25, // dollars per item
-        bagRate: 1.25, // dollars per bag
+        unitRate: 0.25,
+        bagRate: 1.25,
         numberOfBags: 3,
         singularName: lemonString,
         pluralName: lemonsString,
@@ -110,8 +111,8 @@ define( function( require ) {
       },
 
       ORANGES: {
-        unitRate: 0.75, // dollars per item
-        bagRate: 3.75, // dollars per bag
+        unitRate: 0.75,
+        bagRate: 3.75,
         numberOfBags: 3,
         singularName: orangeString,
         pluralName: orangesString,
@@ -126,8 +127,8 @@ define( function( require ) {
       },
 
       PEARS: {
-        unitRate: 0.40, // dollars per item
-        bagRate: 2.00, // dollars
+        unitRate: 0.40,
+        bagRate: 2.00,
         numberOfBags: 3,
         singularName: pearString,
         pluralName: pearsString,
@@ -146,15 +147,15 @@ define( function( require ) {
     Vegetable: {
 
       CARROTS: {
-        unitRate: 0.15, // cost per item
-        bagRate: 0.60, // cost per bag
+        unitRate: 0.15,
+        bagRate: 0.60,
         numberOfBags: 4,
         singularName: carrotString,
         pluralName: carrotsString,
         itemImage: carrotImage,
         bagImage: carrotBagImage,
 
-        // {number[][]} Number of items for each question. See 'Unit Rates & Challenge Prompts' in design document.
+        // {number[][]} number of items for each question
         questionQuantities: [
           [ 9, 19, 21 ],
           [ 15, 25, 23 ],
@@ -216,15 +217,15 @@ define( function( require ) {
     Candy: {
 
       PURPLE_CANDY: {
-        unitRate: 5.40, // cost per pound
-        bagRate: 2.16, // cost per bag
+        unitRate: 5.40,
+        bagRate: 2.16,
         numberOfBags: 4,
         singularName: purpleCandyString,
         pluralName: purpleCandyString,
         itemImage: purpleCandyImage,
         bagImage: purpleCandyBagImage,
 
-        // {number[][]} Number of pounds for each question. See 'Unit Rates & Challenge Prompts' in design document.
+        // {number[][]} number of pounds for each question
         questionQuantities: [
           [ 0.6, 2.2, 2.4 ],
           [ 1.5, 3.2, 3.1 ],
