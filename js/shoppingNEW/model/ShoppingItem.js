@@ -72,7 +72,7 @@ define( function( require ) {
    * @param {string} pluralUnits - units to use for questions with plural quantities
    * @param {boolean} uniformQuestions -
    *        true: all questions are of the same form, e.g. 'Cost of 3 Apples?'
-   *        false: the last question is different, e.g. 'Apples for $3.00?'
+   *        false: the last question will have a different form, e.g. 'Apples for $3.00?'
    * @returns {Question[][]}
    */
   function createQuestionSets( questionQuantities, unitRate, singularUnits, pluralUnits, uniformQuestions ) {
@@ -85,12 +85,12 @@ define( function( require ) {
         var quantity = quantities[ i ];
         if ( i < quantities.length - 1 || uniformQuestions ) {
 
-          // E.g., 'Cost of 3 Apples?'
+          // e.g. 'Cost of 3 Apples?'
           questions.push( Question.createCostOf( quantity, unitRate, singularUnits, pluralUnits ) );
         }
         else {
 
-          // E.g., 'Apples for $3.00?'
+          // optionally, the last question has a different form, e.g. 'Apples for $3.00?'
           questions.push( Question.createItemsFor( quantity, unitRate, singularUnits, pluralUnits ) );
         }
       }
