@@ -24,7 +24,6 @@ define( function( require ) {
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var Util = require( 'DOT/Util' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var DEFAULT_QUESTION_FONT = new URFont( 14 );
@@ -56,8 +55,6 @@ define( function( require ) {
     }, options );
 
     Node.call( this );
-
-    var self = this;
 
     // local vars to improve readability
     var answer = question.answer;
