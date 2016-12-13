@@ -105,14 +105,6 @@ define( function( require ) {
     } );
     this.addChild( guessNode );
 
-    // show the answer, if query parameter is set
-    if ( URQueryParameters.showAnswers ) {
-      var guessInitialText = ( question.restrictGuessDecimalPlaces ) ? Util.toFixed( answer, maxDecimals ) : answer;
-      guessNode.text = StringUtils.format( guessFormat, guessInitialText );
-      guessNode.center = valueBox.center;
-      guessNode.fill = options.correctColor;
-    }
-
     // numerator
     var numeratorNode = new Text( question.numeratorString, {
       fill: options.correctColor,
@@ -208,29 +200,37 @@ define( function( require ) {
     // Update when the guess changes
     var guessObserver = function( guess ) {
 
-      assert && assert( typeof guess === 'number', 'guess must be a number: ' + guess );
-
       // compare guess to answer using the desired number of decimal places
       var correct = ( guess === answer );
 
+      // update the guess
+      if ( guess ) {
+        var guessDisplayed = ( question.restrictGuessDecimalPlaces ) ? Util.toFixed( guess, maxDecimals ) : guess;
+        guessNode.text = StringUtils.format( guessFormat, guessDisplayed );
+        guessNode.fill = correct ? options.correctColor : options.incorrectColor;
+      }
+      else if ( URQueryParameters.showAnswers ) {
+        // show the answer, if query parameter is set
+        guessNode.text = StringUtils.format( guessFormat, ( question.restrictGuessDecimalPlaces ) ? Util.toFixed( answer, maxDecimals ) : answer );
+        guessNode.fill = options.neutralColor;
+      }
+      else {
+        guessNode.text = '';
+      }
+      guessNode.visible = !correct;
+      guessNode.center = valueBox.center;
+
+      // update other UI elements
       editButton.visible = !correct;
       valueBox.visible = !correct;
-
-      guessNode.visible = !correct;
-      var guessDisplayed = ( question.restrictGuessDecimalPlaces ) ? Util.toFixed( guess, maxDecimals ) : guess;
-      guessNode.text = StringUtils.format( guessFormat, guessDisplayed );
-      guessNode.center = valueBox.center;
-      guessNode.fill = correct ? options.correctColor : options.incorrectColor;
-
+      correctIconNode.visible = correct;
       numeratorNode.visible = correct;
       fractionLineNode.stroke = denominatorNode.fill = ( correct ? options.correctColor : options.neutralColor );
       if ( !options.denominatorVisible ) {
         fractionLineNode.visible = denominatorNode.visible = correct;
       }
-
-      correctIconNode.visible = correct;
     };
-    question.guessProperty.lazyLink( guessObserver );
+    question.guessProperty.link( guessObserver );
 
     // Clicking on editButton or valueBox opens the keypad
     editButton.addListener( beginEdit );
