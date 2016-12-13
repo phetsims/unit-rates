@@ -40,8 +40,12 @@ define( function( require ) {
    */
   function Candy( itemData ) {
     ShoppingItem.call( this, itemData, {
+
+      // Candy questions use 'pound' and 'pounds' for the units, e.g. 'Cost of 2.2 pounds?'
       questionSingularUnits: poundString,
       questionPluralUnits: poundsString,
+
+      // All Candy questions have the same form, i.e. 'Cost of N pounds?'
       uniformQuestions: true
     } );
   }

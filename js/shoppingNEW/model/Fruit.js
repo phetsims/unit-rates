@@ -42,7 +42,9 @@ define( function( require ) {
    */
   function Fruit( itemData ) {
     ShoppingItem.call( this, itemData, {
-      uniformQuestions: false // the last question has a different form
+
+      // Fruit questions have 2 forms, e.g. 'Cost of 3 Apples?' and 'Apples for $3.00?'
+      uniformQuestions: false
     } );
   }
 
