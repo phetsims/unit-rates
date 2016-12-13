@@ -20,13 +20,14 @@ define( function( require ) {
   var dollarsString = require( 'string!UNIT_RATES/dollars' );
 
   /**
-   * @param {Object} itemData - data structure that describes a type of item, see for example Fruit.APPLES
+   * @param {Object} itemData - data structure that describes a type of item, see for example Fruit.APPLES.
+   *   Using a data structure like this is an alternative to having a large number of constructor parameters.
    * @param {Object} [options]
    * @constructor
    */
   function ShoppingItem( itemData, options ) {
 
-    // verify that itemData is a complete specification
+    // verify that itemData has all required properties
     assert && ShoppingItemData.assertIsItemData( itemData );
 
     options = _.extend( {
