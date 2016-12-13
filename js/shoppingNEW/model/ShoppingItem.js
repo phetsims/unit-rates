@@ -30,11 +30,13 @@ define( function( require ) {
     assert && ShoppingItemData.assertIsItemData( itemData );
 
     options = _.extend( {
+
+      topAxisLabel: dollarsString, // {string} label for the top axis of the double number line
+      bottomAxisLabel: itemData.pluralName, // {string} label for the bottom axis of the double number line
+
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
       questionPluralUnits: itemData.pluralName,  // {string} units for questions with plural quantities
       uniformQuestions: true, // {boolean} are all Questions of the same form? see createQuestionSets
-      topAxisLabel: dollarsString, // {string} label for the top axis of the double number line
-      bottomAxisLabel: itemData.pluralName, // {string} label for the bottom axis of the double number line
 
       // {number} index of the question set that is initially selected, randomly chosen
       questionSetIndex: URQueryParameters.randomEnabled ?
