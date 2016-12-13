@@ -74,7 +74,7 @@ define( function( require ) {
     // Data structures that describe types of Fruit
     Fruit: {
 
-      // NOTE: This instance is assumed to be representative of 'item data', see assertItemData
+      // NOTE: This instance is assumed to be representative of 'item data', see assertIsItemData
       APPLES: {
         unitRate: 0.5, // cost per item
         bagRate: 2.50, // cost per bag
@@ -288,7 +288,10 @@ define( function( require ) {
      * @param {*} itemData
      */
     assertIsItemData: function( itemData ) {
-      var keys = _.keys( ShoppingItemData.Fruit.APPLES ); // assumes that the APPLES instance is representative
+
+      // Instead of keeping a separate list of property names, assume that the APPLES instance is representative.
+      var keys = _.keys( ShoppingItemData.Fruit.APPLES );
+
       keys.forEach( function( key ) {
         assert && assert( _.has( itemData, key ), 'missing property: ' + key );
       } );
