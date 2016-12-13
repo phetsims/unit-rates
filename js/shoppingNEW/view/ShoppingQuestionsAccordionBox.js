@@ -45,8 +45,10 @@ define( function( require ) {
       contentAlign: 'right' // alignment of UI elements in the accordion box's content
     }, options );
 
+    var self = this;
+
     // 'Unit Rate?' question
-    var unitRateQuestionNode = new ShoppingQuestionNode( shoppingItem.unitRateQuestion, keypadLayer, {
+    var unitRateQuestionNode = new ShoppingQuestionNode( shoppingItem.unitRateQuestion, this, keypadLayer, {
       denominatorVisible: true
     } );
 
@@ -63,7 +65,7 @@ define( function( require ) {
       // add new questions
       var questionNodes = [];
       for ( var i = 0; i < questionSet.length; i++ ) {
-        questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], keypadLayer ) );
+        questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], self, keypadLayer ) );
       }
       questionsParent.setChildren( questionNodes );
     };

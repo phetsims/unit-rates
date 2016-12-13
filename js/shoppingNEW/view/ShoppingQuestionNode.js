@@ -24,6 +24,7 @@ define( function( require ) {
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var Util = require( 'DOT/Util' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var DEFAULT_QUESTION_FONT = new URFont( 14 );
@@ -31,12 +32,13 @@ define( function( require ) {
   var ICON_FONT = new URFont( 36 );
 
   /**
-   * @param {Question} question
-   * @param {Node} keypadLayer
+   * @param {Question} question - model element for the question
+   * @param {Node} parentPanel - panel that contains the question, for positioning the keypad
+   * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingQuestionNode( question, keypadLayer, options ) {
+  function ShoppingQuestionNode( question, parentPanel, keypadLayer, options ) {
 
     options = _.extend( {
       valueBoxWidth: 70, // {number} width of the value field
@@ -54,6 +56,8 @@ define( function( require ) {
     }, options );
 
     Node.call( this );
+
+    var self = this;
 
     // local vars to improve readability
     var answer = question.answer;
@@ -138,11 +142,9 @@ define( function( require ) {
     var keypad = new KeypadPanel( {
       maxDigits: question.maxDigits,
       maxDecimals: question.maxDecimals,
-      enterButtonListener: function() { commitEdit(); },
-
-      //TODO add an option for positioning the keypad relative to the questions
-      centerX: 715,
-      centerY: 340
+      enterButtonListener: function() {
+        commitEdit();
+      }
     } );
 
     // Clicking outside the keypad cancels the edit
@@ -156,16 +158,21 @@ define( function( require ) {
 
     this.mutate( options );
 
-    //TODO move functions below here to prototype
     // Begins an edit
     var beginEdit = function() {
       URQueryParameters.log && console.log( 'beginEdit' );
       assert && assert( !keypadLayer.visible, 'invalid state for endEdit' );
+
       valueBox.fill = options.editColor; // highlight the value box to indicate an edit is in progress
       keypad.valueStringProperty.value = '';
       keypadLayer.addChild( keypad );
       keypadLayer.addInputListener( keypadLayerListener );
       keypadLayer.visible = true;
+
+      // position the keypad relative to the parent panel
+      var parentPanelBounds = keypad.globalToParentBounds( parentPanel.localToGlobalBounds( parentPanel.localBounds ) );
+      keypad.right = parentPanelBounds.minX - 10;
+      keypad.bottom = parentPanelBounds.maxY;
     };
 
     // Ends an edit
