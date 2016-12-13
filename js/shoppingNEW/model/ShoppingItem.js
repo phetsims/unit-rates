@@ -29,6 +29,7 @@ define( function( require ) {
 
     // verify that itemData has all required properties
     assert && ShoppingItemData.assertIsItemData( itemData );
+    assert && assert( itemData.questionQuantities.length > 1, 'more than 1 set of questions is required' );
 
     options = _.extend( {
 
