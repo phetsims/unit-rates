@@ -56,12 +56,14 @@ define( function( require ) {
 
     Node.call( this );
 
+    var self = this;
+
     // local vars to improve readability
     var answer = question.answer;
     var guessFormat = question.guessFormat;
     var maxDecimals = question.maxDecimals;
 
-    // box that is either empty or displays an incorrect value. clicking in the box opens the keypad.
+    // box that is either empty or displays an incorrect value
     var valueBoxWidth = options.valueBoxWidth;
     var valueBoxHeight = new Text( '0', { font: options.valueFont } ).height + ( 2 * options.valueYMargin );
     var valueBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, {
@@ -71,14 +73,14 @@ define( function( require ) {
     } );
     this.addChild( valueBox );
 
-    // edit button opens the keypad
+    // edit button
     var editButton = new EditButton();
     this.addChild( editButton );
     editButton.setScaleMagnitude( valueBox.height / editButton.height );
     editButton.right = valueBox.left - options.xSpacing;
     editButton.centerY = valueBox.centerY;
 
-    // @private check mark to indicate correct answer
+    // check mark to indicate that the question has been correctly answered
     var correctIconNode = new ShadowText( '\u2713', {
       // fill: 'rgb( 102, 183, 0 )',
       fill: options.correctColor,
@@ -98,7 +100,7 @@ define( function( require ) {
     } );
     this.addChild( questionTextNode );
 
-    // displays the user's guess
+    // the user's guess, as entered via the keypad
     var guessNode = new Text( '', {
       fill: options.neutralColor,
       font: options.valueFont,
@@ -106,7 +108,7 @@ define( function( require ) {
     } );
     this.addChild( guessNode );
 
-    // numerator
+    // numerator in the revealed answer
     var numeratorNode = new Text( question.numeratorString, {
       fill: options.correctColor,
       font: options.valueFont,
@@ -115,7 +117,7 @@ define( function( require ) {
     } );
     this.addChild( numeratorNode );
 
-    // horizontal line in the fraction
+    // fraction line in the revealed answer
     var fractionLineNode = new Line( 0, 0, 1.2 * valueBox.width, 0, {
       stroke: options.neutralColor,
       lineWidth: 1,
@@ -125,7 +127,7 @@ define( function( require ) {
     } );
     this.addChild( fractionLineNode );
 
-    // denominator in the fraction
+    // denominator in the revealed answer
     var denominatorNode = new Text( question.denominatorString, {
       fill: options.neutralColor,
       font: options.valueFont,
@@ -140,7 +142,7 @@ define( function( require ) {
       maxDigits: question.maxDigits,
       maxDecimals: question.maxDecimals,
       enterButtonListener: function() {
-        commitEdit();
+        self.commitEdit();
       }
     } );
 
@@ -148,58 +150,12 @@ define( function( require ) {
     var keypadLayerListener = new DownUpListener( {
       down: function( event ) {
         if ( event.trail.lastNode() === keypadLayer ) {
-          cancelEdit();
+          self.cancelEdit();
         }
       }
     } );
 
     this.mutate( options );
-
-    // Begins an edit
-    var beginEdit = function() {
-      URQueryParameters.log && console.log( 'beginEdit' );
-      assert && assert( !keypadLayer.visible, 'invalid state for endEdit' );
-
-      valueBox.fill = options.editColor; // highlight the value box to indicate an edit is in progress
-      keypad.valueStringProperty.value = '';
-      keypadLayer.addChild( keypad );
-      keypadLayer.addInputListener( keypadLayerListener );
-      keypadLayer.visible = true;
-
-      // position the keypad relative to the Questions panel
-      var questionsPanelBounds = keypad.globalToParentBounds( questionsPanel.localToGlobalBounds( questionsPanel.localBounds ) );
-      keypad.right = questionsPanelBounds.minX - 10;
-      keypad.bottom = questionsPanelBounds.maxY;
-    };
-
-    // Ends an edit
-    var endEdit = function() {
-      URQueryParameters.log && console.log( 'endEdit' );
-      assert && assert( keypadLayer.visible, 'invalid state for endEdit' );
-      keypadLayer.visible = false;
-      keypadLayer.removeChild( keypad );
-      keypadLayer.removeInputListener( keypadLayerListener );
-      valueBox.fill = 'white';
-    };
-
-    // Ends and commits an edit
-    var commitEdit = function() {
-      URQueryParameters.log && console.log( 'commitEdit' );
-      var valueString = keypad.valueStringProperty.value;
-      if ( valueString ) {
-        endEdit();
-        question.guessProperty.value = ( 1 * keypad.valueStringProperty.value ); // string -> number conversion
-      }
-      else {
-        cancelEdit();
-      }
-    };
-
-    // Ends and cancels an edit
-    var cancelEdit = function() {
-      URQueryParameters.log && console.log( 'cancelEdit' );
-      endEdit();
-    };
 
     // Update when the guess changes
     var guessObserver = function( guess ) {
@@ -236,16 +192,26 @@ define( function( require ) {
     };
     question.guessProperty.link( guessObserver );
 
-    // Clicking on editButton or valueBox opens the keypad
-    editButton.addListener( beginEdit );
+    // Click on editButton or in valueBox to begin editing the value
+    var beginEditBound = this.beginEdit.bind( this );
+    editButton.addListener( beginEditBound );
     valueBox.addInputListener( new DownUpListener( {
-      down: beginEdit.bind( this )
+      down: beginEditBound
     } ) );
 
     // @private cleanup that's specific to this Node
     this.disposeShoppingQuestionNode = function() {
       question.guessProperty.unlink( guessObserver );
     };
+
+    // @private properties required by private functions related to keypad editing
+    this.valueBox = valueBox;
+    this.editColor = options.editColor;
+    this.keypad = keypad;
+    this.keypadLayer = keypadLayer;
+    this.keypadLayerListener = keypadLayerListener;
+    this.question = question;
+    this.questionsPanel = questionsPanel;
   }
 
   unitRates.register( 'ShoppingQuestionNode', ShoppingQuestionNode );
@@ -255,6 +221,59 @@ define( function( require ) {
     // @public
     dispose: function() {
       this.disposeShoppingQuestionNode();
+    },
+
+    // @private begins an edit
+    beginEdit: function() {
+      URQueryParameters.log && console.log( 'beginEdit' );
+      assert && assert( !this.keypadLayer.visible, 'invalid state for beginEdit' );
+
+      // highlight the value box to indicate that an edit is in progress
+      this.valueBox.fill = this.editColor;
+
+      // display the keypad
+      this.keypad.valueStringProperty.value = '';
+      this.keypadLayer.addChild( this.keypad );
+      this.keypadLayer.addInputListener( this.keypadLayerListener );
+      this.keypadLayer.visible = true;
+
+      // position the keypad relative to the Questions panel
+      var questionsPanelBounds = this.keypad.globalToParentBounds( this.questionsPanel.localToGlobalBounds( this.questionsPanel.localBounds ) );
+      this.keypad.right = questionsPanelBounds.minX - 10;
+      this.keypad.bottom = questionsPanelBounds.maxY;
+    },
+
+    // @private ends an edit
+    endEdit: function() {
+      URQueryParameters.log && console.log( 'endEdit' );
+      assert && assert( this.keypadLayer.visible, 'invalid state for endEdit' );
+
+      // hide the keypad
+      this.keypadLayer.visible = false;
+      this.keypadLayer.removeChild( this.keypad );
+      this.keypadLayer.removeInputListener( this.keypadLayerListener );
+
+      // unhighlight the value box
+      this.valueBox.fill = 'white';
+    },
+
+    // @private commits an edit
+    commitEdit: function() {
+      URQueryParameters.log && console.log( 'commitEdit' );
+      var valueString = this.keypad.valueStringProperty.value;
+      if ( valueString ) {
+        this.endEdit();
+        this.question.guessProperty.value = ( 1 * this.keypad.valueStringProperty.value ); // string -> number conversion
+      }
+      else {
+        this.cancelEdit();
+      }
+    },
+
+    // @private cancels an edit
+    cancelEdit: function() {
+      URQueryParameters.log && console.log( 'cancelEdit' );
+      this.endEdit();
     }
   } );
 } );
