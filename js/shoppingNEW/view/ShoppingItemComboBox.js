@@ -66,20 +66,14 @@ define( function( require ) {
    */
   function createItem( shoppingItem, iconSize ) {
 
-    // Prefer the plural name, if there is one.
-    var labelString = shoppingItem.pluralName ?  shoppingItem.pluralName : shoppingItem.singularName;
-
-    var labelNode = new Text( labelString, {
-      font: new PhetFont( 18 ),
-      maxWidth: 140
-    } );
-
+    // Scale the image down if it's larger than iconSize
     var imageNode = new Image( shoppingItem.itemImage );
     if ( imageNode.width > iconSize.width || imageNode.height > iconSize.height ) {
       var scale = Math.min(  iconSize.width / imageNode.width, iconSize.height / imageNode.height );
       imageNode.setScaleMagnitude( scale );
     }
 
+    // Create uniform icon size by centering the image on a transparent rectangle
     var iconNode = new Node( {
       children: [
         imageNode,
@@ -87,11 +81,16 @@ define( function( require ) {
       ]
     } );
 
+    // Use the plural name to label the item
+    var labelNode = new Text( shoppingItem.pluralName, {
+      font: new PhetFont( 18 ),
+      maxWidth: 140
+    } );
+
+    // icon to the left of label
     var itemNode = new HBox( {
-      spacing: 10,
-      top: 0,
-      right: 0,
       align: 'center',
+      spacing: 10,
       children: [ iconNode, labelNode ]
     } );
 
