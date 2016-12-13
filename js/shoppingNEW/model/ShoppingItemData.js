@@ -13,9 +13,6 @@ define( function( require ) {
   // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
-  // strings
-  var dollarsString = require( 'string!UNIT_RATES/dollars' );
-
   // Fruit strings
   var appleString = require( 'string!UNIT_RATES/apple' );
   var applesString = require( 'string!UNIT_RATES/apples' );
@@ -59,7 +56,6 @@ define( function( require ) {
   // Candy strings
   var blueCandyString = require( 'string!UNIT_RATES/blueCandy' );
   var greenCandyString = require( 'string!UNIT_RATES/greenCandy' );
-  var poundsString = require( 'string!UNIT_RATES/pounds' );
   var purpleCandyString = require( 'string!UNIT_RATES/purpleCandy' );
   var redCandyString = require( 'string!UNIT_RATES/redCandy' );
 
@@ -85,8 +81,6 @@ define( function( require ) {
         numberOfBags: 3,
         singularName: appleString,
         pluralName: applesString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: applesString,
         itemImage: appleImage,
         bagImage: appleBagImage,
 
@@ -105,8 +99,6 @@ define( function( require ) {
         numberOfBags: 3,
         singularName: lemonString,
         pluralName: lemonsString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: lemonsString,
         itemImage: lemonImage,
         bagImage: lemonBagImage,
         questionQuantities: [
@@ -123,8 +115,6 @@ define( function( require ) {
         numberOfBags: 3,
         singularName: orangeString,
         pluralName: orangesString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: orangesString,
         itemImage: orangeImage,
         bagImage: orangeBagImage,
         questionQuantities: [
@@ -141,8 +131,6 @@ define( function( require ) {
         numberOfBags: 3,
         singularName: pearString,
         pluralName: pearsString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: pearsString,
         itemImage: pearImage,
         bagImage: pearBagImage,
         questionQuantities: [
@@ -163,8 +151,6 @@ define( function( require ) {
         numberOfBags: 4,
         singularName: carrotString,
         pluralName: carrotsString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: carrotsString,
         itemImage: carrotImage,
         bagImage: carrotBagImage,
 
@@ -183,8 +169,6 @@ define( function( require ) {
         numberOfBags: 4,
         singularName: cucumberString,
         pluralName: cucumbersString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: cucumbersString,
         itemImage: cucumberImage,
         bagImage: cucumberBagImage,
         questionQuantities: [
@@ -201,8 +185,6 @@ define( function( require ) {
         numberOfBags: 4,
         singularName: potatoString,
         pluralName: potatoesString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: potatoesString,
         itemImage: potatoImage,
         bagImage: potatoBagImage,
         questionQuantities: [
@@ -219,8 +201,6 @@ define( function( require ) {
         numberOfBags: 4,
         singularName: tomatoString,
         pluralName: tomatoesString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: tomatoesString,
         itemImage: tomatoImage,
         bagImage: tomatoBagImage,
         questionQuantities: [
@@ -241,8 +221,6 @@ define( function( require ) {
         numberOfBags: 4,
         singularName: purpleCandyString,
         pluralName: purpleCandyString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: poundsString,
         itemImage: purpleCandyImage,
         bagImage: purpleCandyBagImage,
 
@@ -261,8 +239,6 @@ define( function( require ) {
         numberOfBags: 4,
         singularName: redCandyString,
         pluralName: redCandyString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: poundsString,
         itemImage: redCandyImage,
         bagImage: redCandyBagImage,
         questionQuantities: [
@@ -279,8 +255,6 @@ define( function( require ) {
         numberOfBags: 4,
         singularName: greenCandyString,
         pluralName: greenCandyString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: poundsString,
         itemImage: greenCandyImage,
         bagImage: greenCandyBagImage,
         questionQuantities: [
@@ -297,8 +271,6 @@ define( function( require ) {
         numberOfBags: 4,
         singularName: blueCandyString,
         pluralName: blueCandyString,
-        numeratorUnits: dollarsString,
-        denominatorUnits: poundsString,
         itemImage: blueCandyImage,
         bagImage: blueCandyBagImage,
         questionQuantities: [

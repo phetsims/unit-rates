@@ -16,6 +16,9 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
+  // strings
+  var dollarsString = require( 'string!UNIT_RATES/dollars' );
+
   /**
    * @param {Object} itemData - data structure that describes a type of item, see for example Fruit.APPLES
    * @param {Object} [options]
@@ -27,25 +30,29 @@ define( function( require ) {
     assert && ShoppingItemData.assertIsItemData( itemData );
 
     options = _.extend( {
-      questionSingularUnits: itemData.singularName, // {string} units to use for questions with singular quantities
-      questionPluralUnits: itemData.pluralName,  // {string} units to use for questions with plural quantities
+      questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
+      questionPluralUnits: itemData.pluralName,  // {string} units for questions with plural quantities
       uniformQuestions: true, // {boolean} are all Questions of the same form? see createQuestionSets
+      topAxisLabel: dollarsString, // {string} label for the top axis of the double number line
+      bottomAxisLabel: itemData.pluralName, // {string} label for the bottom axis of the double number line
 
       // {number} index of the question set that is initially selected, randomly chosen
       questionSetIndex: URQueryParameters.randomEnabled ?
                         phet.joist.random.nextIntBetween( 0, itemData.questionQuantities.length - 1 ) : 0
     }, options );
 
-    // @public (read-only)
+    // @public (read-only) unpack imageData
     this.unitRate = itemData.unitRate;
     this.bagRate = itemData.bagRate;
     this.numberOfBags = itemData.numberOfBags;
     this.singularName = itemData.singularName;
     this.pluralName = itemData.pluralName;
-    this.numeratorUnits = itemData.numeratorUnits;
-    this.denominatorUnits = itemData.denominatorUnits;
     this.itemImage = itemData.itemImage;
     this.bagImage = itemData.bagImage;
+
+    // @public (read-only) unpack options
+    this.topAxisLabel = options.topAxisLabel;
+    this.bottomAxisLabel = options.bottomAxisLabel;
 
     // @public {Question} 'Unit Rate?'
     this.unitRateQuestion = Question.createUnitRate( itemData.unitRate, options.questionSingularUnits );
@@ -66,28 +73,6 @@ define( function( require ) {
   }
 
   unitRates.register( 'ShoppingItem', ShoppingItem );
-
-  /**
-   * Verifies that an object has all of the properties required to be considered 'item data'.
-   * This verification occurs only when assertions are enabled. The first missing property
-   * results in an assertion failure. For an example of itemData, see Fruit.APPLES.
-   * @param {*} itemData
-   */
-  function assertItemData( itemData ) {
-
-    // itemData requires these properties
-    var propertyNames = [
-      'unitRate', 'bagRate', 'numberOfBags',
-      'singularName', 'pluralName',
-      'numeratorUnits', 'denominatorUnits',
-      'itemImage', 'bagImage',
-      'questionQuantities'
-    ];
-
-    propertyNames.forEach( function( propertyName ) {
-      assert && assert( _.has( itemData, propertyName ), 'missing property: ' + propertyName );
-    } );
-  }
 
   /**
    * Creates question sets from raw data.

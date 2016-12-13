@@ -28,6 +28,9 @@ define( function( require ) {
       questionSingularUnits: poundString,
       questionPluralUnits: poundsString,
 
+      // Bottom axis of the double number line is 'pounds'
+      bottomAxisLabel: poundsString,
+
       // All Candy questions have the same form, i.e. 'Cost of N pounds?'
       uniformQuestions: true
     } );
