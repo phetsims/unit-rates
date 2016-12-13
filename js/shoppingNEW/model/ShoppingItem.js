@@ -22,6 +22,8 @@ define( function( require ) {
    */
   function ShoppingItem( itemData, options ) {
 
+    assert && assertItemData( itemData );
+
     options = _.extend( {
       questionSingularUnits: itemData.singularName, // {string} units to use for questions with singular quantities
       questionPluralUnits: itemData.pluralName,  // {string} units to use for questions with plural quantities
@@ -62,6 +64,28 @@ define( function( require ) {
   }
 
   unitRates.register( 'ShoppingItem', ShoppingItem );
+
+  /**
+   * Verifies that an object has all of the properties required to be considered 'item data'.
+   * This verification occurs only when assertions are enabled. The first missing property
+   * results in an assertion failure.
+   * @param {*} itemData
+   */
+  function assertItemData( itemData ) {
+
+    // itemData requires these properties
+    var propertyNames = [
+      'unitRate', 'bagRate', 'numberOfBags',
+      'singularName', 'pluralName',
+      'numeratorName', 'denominatorName',
+      'itemImage', 'bagImage',
+      'questionQuantities'
+    ];
+
+    propertyNames.forEach( function( propertyName ) {
+      assert && assert( _.has( itemData, propertyName ), 'missing property: ' + propertyName );
+    } );
+  }
 
   /**
    * Creates question sets from raw data.
