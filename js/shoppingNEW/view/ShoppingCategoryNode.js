@@ -35,7 +35,7 @@ define( function( require ) {
     var shoppingItemParent = new Node();
     this.addChild( shoppingItemParent );
 
-    // Item combo box
+    // combo box, for selecting a ShoppingItem
     var comboBox = new ShoppingItemComboBox( category.shoppingItems, category.shoppingItemProperty, this, {
       left: layoutBounds.left + 15,
       bottom: layoutBounds.bottom - 15
@@ -49,6 +49,7 @@ define( function( require ) {
       self.visible = ( newCategory === category );
     } );
 
+    // When the selected item changes, replace the UI elements that are item-specific
     category.shoppingItemProperty.link( function( shoppingItem ) {
 
       if ( shoppingItemNode ) {
