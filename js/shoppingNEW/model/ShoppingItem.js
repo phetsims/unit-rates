@@ -68,7 +68,7 @@ define( function( require ) {
   /**
    * Verifies that an object has all of the properties required to be considered 'item data'.
    * This verification occurs only when assertions are enabled. The first missing property
-   * results in an assertion failure.
+   * results in an assertion failure. For an example of itemData, see Fruit.APPLES.
    * @param {*} itemData
    */
   function assertItemData( itemData ) {
