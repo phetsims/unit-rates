@@ -33,12 +33,12 @@ define( function( require ) {
 
   /**
    * @param {Question} question - model element for the question
-   * @param {Node} parentPanel - panel that contains the question, for positioning the keypad
+   * @param {Node} questionsPanel - panel that contains the question, for positioning the keypad
    * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingQuestionNode( question, parentPanel, keypadLayer, options ) {
+  function ShoppingQuestionNode( question, questionsPanel, keypadLayer, options ) {
 
     options = _.extend( {
       valueBoxWidth: 70, // {number} width of the value field
@@ -169,10 +169,10 @@ define( function( require ) {
       keypadLayer.addInputListener( keypadLayerListener );
       keypadLayer.visible = true;
 
-      // position the keypad relative to the parent panel
-      var parentPanelBounds = keypad.globalToParentBounds( parentPanel.localToGlobalBounds( parentPanel.localBounds ) );
-      keypad.right = parentPanelBounds.minX - 10;
-      keypad.bottom = parentPanelBounds.maxY;
+      // position the keypad relative to the Questions panel
+      var questionsPanelBounds = keypad.globalToParentBounds( questionsPanel.localToGlobalBounds( questionsPanel.localBounds ) );
+      keypad.right = questionsPanelBounds.minX - 10;
+      keypad.bottom = questionsPanelBounds.maxY;
     };
 
     // Ends an edit
