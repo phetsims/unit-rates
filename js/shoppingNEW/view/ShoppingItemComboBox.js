@@ -13,13 +13,12 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var VStrut = require( 'SCENERY/nodes/VStrut' );
 
   /**
    * @param {ShoppingItem[]} shoppingItems
@@ -84,8 +83,7 @@ define( function( require ) {
     var iconNode = new Node( {
       children: [
         imageNode,
-        new HStrut( iconSize.width, { center: imageNode.center } ),
-        new VStrut( iconSize.height, { center: imageNode.center } )
+        new Rectangle( 0, 0, iconSize.width, iconSize.height, { center: imageNode.center } )
       ]
     } );
 
