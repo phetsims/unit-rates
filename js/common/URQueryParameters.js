@@ -13,6 +13,10 @@ define( function( require ) {
 
   var URQueryParameters = QueryStringMachine.getAll( {
 
+    //TODO delete this when development is done
+    // Don't use this, it's for the exclusive use of CM during development
+    cm: { type: 'flag' },
+
     // show screens related to new development, see https://github.com/phetsims/unit-rates/issues/120
     showNew: { type: 'flag' },
 
@@ -30,6 +34,14 @@ define( function( require ) {
   } );
 
   unitRates.register( 'URQueryParameters', URQueryParameters );
+
+  //TODO delete this when development is done
+  // Convenience during development, make 'cm' override other query parameters.
+  if ( URQueryParameters.cm ) {
+    URQueryParameters.showNew = true;
+    URQueryParameters.showAnswers = true;
+    URQueryParameters.randomEnabled = false;
+  }
 
   return URQueryParameters;
 } );
