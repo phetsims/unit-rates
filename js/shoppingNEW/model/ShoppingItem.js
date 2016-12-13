@@ -61,7 +61,7 @@ define( function( require ) {
     this.questionSets = createQuestionSets( itemData.questionQuantities, itemData.unitRate,
       options.questionSingularUnits, options.questionPluralUnits, options.uniformQuestions );
 
-    // @public {Property.<Question[]>} the current set of questions
+    // @public (read-only) {Property.<Question[]>} the current set of questions
     this.questionSetProperty = new Property( this.questionSets[ options.questionSetIndex ] );
 
     // @private {Question[][]} sets of questions that are available for selection
