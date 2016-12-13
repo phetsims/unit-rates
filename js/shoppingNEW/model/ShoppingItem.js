@@ -42,8 +42,8 @@ define( function( require ) {
     this.numberOfBags = itemData.numberOfBags;
     this.singularName = itemData.singularName;
     this.pluralName = itemData.pluralName;
-    this.numeratorName = itemData.numeratorName;
-    this.denominatorName = itemData.denominatorName;
+    this.numeratorUnits = itemData.numeratorUnits;
+    this.denominatorUnits = itemData.denominatorUnits;
     this.itemImage = itemData.itemImage;
     this.bagImage = itemData.bagImage;
 
@@ -79,7 +79,7 @@ define( function( require ) {
     var propertyNames = [
       'unitRate', 'bagRate', 'numberOfBags',
       'singularName', 'pluralName',
-      'numeratorName', 'denominatorName',
+      'numeratorUnits', 'denominatorUnits',
       'itemImage', 'bagImage',
       'questionQuantities'
     ];

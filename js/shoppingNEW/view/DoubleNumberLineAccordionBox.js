@@ -50,8 +50,8 @@ define( function( require ) {
     }, options );
 
     var doubleNumberLineNode = new DoubleNumberLineNode( {
-      topLabel: new Text( shoppingItem.numeratorName, AXIS_LABEL_OPTIONS ),
-      bottomLabel: new Text( shoppingItem.denominatorName, AXIS_LABEL_OPTIONS )
+      topLabel: new Text( shoppingItem.numeratorUnits, AXIS_LABEL_OPTIONS ),
+      bottomLabel: new Text( shoppingItem.denominatorUnits, AXIS_LABEL_OPTIONS )
     } );
 
     //TODO erase markers that were created using the marker editor, or by putting items on the scale
