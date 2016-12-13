@@ -266,7 +266,7 @@ define( function( require ) {
         this.question.guessProperty.value = ( 1 * this.keypad.valueStringProperty.value ); // string -> number conversion
       }
       else {
-        this.cancelEdit();
+        this.cancelEdit(); // not entering a value in the keypad is effectively a cancel
       }
     },
 
