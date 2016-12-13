@@ -1,7 +1,8 @@
 // Copyright 2016, University of Colorado Boulder
 
+//TODO replace with new common-code keypad
 /***
- * Temporary keypad for Unit Rates. TODO replace with new common keypad
+ * Temporary keypad for Unit Rates.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
