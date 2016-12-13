@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Question = require( 'UNIT_RATES/shoppingNEW/model/Question' );
   var Property = require( 'AXON/Property' );
+  var ShoppingItemData = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItemData' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
@@ -22,7 +23,8 @@ define( function( require ) {
    */
   function ShoppingItem( itemData, options ) {
 
-    assert && assertItemData( itemData );
+    // verify that itemData is a complete specification
+    assert && ShoppingItemData.assertIsItemData( itemData );
 
     options = _.extend( {
       questionSingularUnits: itemData.singularName, // {string} units to use for questions with singular quantities

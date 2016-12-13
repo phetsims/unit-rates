@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var ShoppingCategory = require( 'UNIT_RATES/shoppingNEW/model/ShoppingCategory' );
+  var ShoppingItemData = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItemData' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vegetable = require( 'UNIT_RATES/shoppingNEW/model/Vegetable' );
 
@@ -37,26 +38,26 @@ define( function( require ) {
 
       // fruits
       new ShoppingCategory( appleImage, [
-        new Fruit( Fruit.APPLES ),
-        new Fruit( Fruit.LEMONS ),
-        new Fruit( Fruit.ORANGES ),
-        new Fruit( Fruit.PEARS )
+        new Fruit( ShoppingItemData.Fruit.APPLES ),
+        new Fruit( ShoppingItemData.Fruit.LEMONS ),
+        new Fruit( ShoppingItemData.Fruit.ORANGES ),
+        new Fruit( ShoppingItemData.Fruit.PEARS )
       ] ),
 
       // vegetables
       new ShoppingCategory( carrotImage, [
-        new Vegetable( Vegetable.CARROTS ),
-        new Vegetable( Vegetable.CUCUMBERS ),
-        new Vegetable( Vegetable.POTATOES ),
-        new Vegetable( Vegetable.TOMATOES )
+        new Vegetable( ShoppingItemData.Vegetable.CARROTS ),
+        new Vegetable( ShoppingItemData.Vegetable.CUCUMBERS ),
+        new Vegetable( ShoppingItemData.Vegetable.POTATOES ),
+        new Vegetable( ShoppingItemData.Vegetable.TOMATOES )
       ] ),
 
       // candies
       new ShoppingCategory( purpleCandyImage, [
-        new Candy( Candy.PURPLE_CANDY ),
-        new Candy( Candy.RED_CANDY ),
-        new Candy( Candy.GREEN_CANDY ),
-        new Candy( Candy.BLUE_CANDY )
+        new Candy( ShoppingItemData.Candy.PURPLE_CANDY ),
+        new Candy( ShoppingItemData.Candy.RED_CANDY ),
+        new Candy( ShoppingItemData.Candy.GREEN_CANDY ),
+        new Candy( ShoppingItemData.Candy.BLUE_CANDY )
       ] )
     ];
 
