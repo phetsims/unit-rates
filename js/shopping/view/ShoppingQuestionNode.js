@@ -37,7 +37,7 @@ define( function( require ) {
   function ShoppingQuestionNode( question, questionsPanel, keypadLayer, options ) {
 
     options = _.extend( {
-      valueBoxWidth: 70, // {number} width of the value field
+      valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
       correctColor: 'green', // {Color|string} color for the correct answer
       incorrectColor: 'red', // {Color|string} color for an incorrect guess
