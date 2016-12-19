@@ -39,6 +39,7 @@ define( function( require ) {
     options = _.extend( {
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
+      editButtonScale: 0.5, // {number} scale applied to the edit button
       correctColor: 'green', // {Color|string} color for the correct answer
       incorrectColor: 'red', // {Color|string} color for an incorrect guess
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
@@ -71,11 +72,12 @@ define( function( require ) {
     this.addChild( valueBox );
 
     // edit button
-    var editButton = new EditButton();
+    var editButton = new EditButton( {
+      scale: options.editButtonScale,
+      right: valueBox.left - options.xSpacing,
+      centerY: valueBox.centerY
+    } );
     this.addChild( editButton );
-    editButton.setScaleMagnitude( valueBox.height / editButton.height );
-    editButton.right = valueBox.left - options.xSpacing;
-    editButton.centerY = valueBox.centerY;
 
     // check mark to indicate that the question has been correctly answered
     var checkMarkNode = new ShadowText( '\u2713', {
@@ -236,8 +238,8 @@ define( function( require ) {
 
       // position the keypad relative to the Questions panel
       var questionsPanelBounds = this.keypad.globalToParentBounds( this.questionsPanel.localToGlobalBounds( this.questionsPanel.localBounds ) );
-      this.keypad.right = questionsPanelBounds.minX - 10;
-      this.keypad.bottom = questionsPanelBounds.maxY;
+      this.keypad.right = questionsPanelBounds.left - 10;
+      this.keypad.bottom = questionsPanelBounds.bottom;
     },
 
     // @private ends an edit
@@ -260,7 +262,7 @@ define( function( require ) {
       var valueString = this.keypad.valueStringProperty.value;
       if ( valueString ) {
         this.endEdit();
-        this.question.guessProperty.value = ( 1 * this.keypad.valueStringProperty.value ); // string -> number conversion
+        this.question.guessProperty.value = ( 1 * valueString ); // string -> number conversion
       }
       else {
         this.cancelEdit(); // not entering a value in the keypad is effectively a cancel
