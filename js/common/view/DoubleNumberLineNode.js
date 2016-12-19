@@ -1,6 +1,5 @@
 // Copyright 2016, University of Colorado Boulder
 
-//TODO move to common, use in all Screens
 /**
  * Displays a double number line.
  *
@@ -17,13 +16,16 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   // sim modules
+  var MarkerEditor = require( 'UNIT_RATES/common/view/MarkerEditor' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
+   * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
+   * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineNode( options ) {
+  function DoubleNumberLineNode( doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
 
@@ -90,11 +92,18 @@ define( function( require ) {
       options.bottomLabel.centerY =  bottomAxisNode.centerY;
     }
 
+    //TODO
+    var markerEditor = new MarkerEditor( doubleNumberLinePanel, keypadLayer, {
+      center: verticalAxis.center //TODO
+    } );
+    this.addChild( markerEditor );
+
     this.mutate( options );
 
     // @private
     this.disposeDoubleNumberLineNode = function() {
       //TODO
+      markerEditor.dispose();
     };
   }
 

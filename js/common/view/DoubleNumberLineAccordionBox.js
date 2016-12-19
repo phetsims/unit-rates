@@ -34,10 +34,11 @@ define( function( require ) {
 
   /**
    * @param {ShoppingItem} shoppingItem
+   * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineAccordionBox( shoppingItem, options ) {
+  function DoubleNumberLineAccordionBox( shoppingItem, keypadLayer, options ) {
 
     options = _.extend( {
       expandedProperty: new Property( true ),
@@ -51,7 +52,7 @@ define( function( require ) {
       buttonYMargin: 10
     }, options );
 
-    var doubleNumberLineNode = new DoubleNumberLineNode( {
+    var doubleNumberLineNode = new DoubleNumberLineNode( this, keypadLayer, {
       topLabel: new Text( shoppingItem.topAxisLabel, AXIS_LABEL_OPTIONS ),
       bottomLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS )
     } );
