@@ -19,7 +19,7 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // sim modules
-  var DoubleNumberLineNode = require( 'UNIT_RATES/shopping/view/DoubleNumberLineNode' );
+  var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
 

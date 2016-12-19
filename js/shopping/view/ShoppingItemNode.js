@@ -13,7 +13,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   // sim modules
-  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/shopping/view/DoubleNumberLineAccordionBox' );
+  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var ShoppingQuestionsAccordionBox = require( 'UNIT_RATES/shopping/view/ShoppingQuestionsAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 

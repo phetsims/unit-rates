@@ -22,7 +22,7 @@ define( function( require ) {
 
   // sim modules
   var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
-  var KeypadPanel = require( 'UNIT_RATES/shopping/view/KeypadPanel' );
+  var KeypadPanel = require( 'UNIT_RATES/common/view/KeypadPanel' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
