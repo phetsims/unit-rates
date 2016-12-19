@@ -242,7 +242,7 @@ define( function( require ) {
       if ( this.keypad.left < doubleNumberLinePanelBounds.left ) {
         this.keypad.left = doubleNumberLinePanelBounds.left;
       }
-      else if ( this.keypad.right < doubleNumberLinePanelBounds.right ) {
+      else if ( this.keypad.right > doubleNumberLinePanelBounds.right ) {
         this.keypad.right = doubleNumberLinePanelBounds.right;
       }
 
