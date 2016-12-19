@@ -8,11 +8,13 @@
 define( function( require ) {
   'use strict';
 
-  // modules
-  var Candy = require( 'UNIT_RATES/shopping/model/Candy' );
-  var Fruit = require( 'UNIT_RATES/shopping/model/Fruit' );
+  // common modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
+
+  // sim modules
+  var Candy = require( 'UNIT_RATES/shopping/model/Candy' );
+  var Fruit = require( 'UNIT_RATES/shopping/model/Fruit' );
   var ShoppingCategory = require( 'UNIT_RATES/shopping/model/ShoppingCategory' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var unitRates = require( 'UNIT_RATES/unitRates' );

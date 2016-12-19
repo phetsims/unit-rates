@@ -8,7 +8,7 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var ComboBox = require( 'SUN/ComboBox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -18,6 +18,8 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
+
+  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**

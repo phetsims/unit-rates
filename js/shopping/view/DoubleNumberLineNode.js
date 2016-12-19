@@ -9,12 +9,14 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
+
+  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**

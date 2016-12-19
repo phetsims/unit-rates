@@ -9,17 +9,19 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var DoubleNumberLineNode = require( 'UNIT_RATES/shopping/view/DoubleNumberLineNode' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
+
+  // sim modules
+  var DoubleNumberLineNode = require( 'UNIT_RATES/shopping/view/DoubleNumberLineNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
   var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );

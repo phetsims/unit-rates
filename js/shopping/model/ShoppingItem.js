@@ -8,10 +8,12 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Question = require( 'UNIT_RATES/shopping/model/Question' );
   var Property = require( 'AXON/Property' );
+
+  // sim modules
+  var Question = require( 'UNIT_RATES/shopping/model/Question' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );

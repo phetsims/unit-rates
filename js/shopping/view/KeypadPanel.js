@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
@@ -18,9 +18,11 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
+
+  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
   var enterString = require( 'string!UNIT_RATES/enter' );

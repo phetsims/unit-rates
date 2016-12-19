@@ -8,13 +8,15 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var Util = require( 'DOT/Util' );
+
+  // sim modules
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
   var costOfNUnitsString = require( 'string!UNIT_RATES/costOfNUnits' );

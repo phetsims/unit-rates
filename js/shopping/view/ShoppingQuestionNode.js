@@ -11,19 +11,21 @@ define( function( require ) {
 
   // modules
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
-  var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadPanel = require( 'UNIT_RATES/shopping/view/KeypadPanel' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ShadowText = require( 'SCENERY_PHET/ShadowText' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
+
+  // sim modules
+  var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
+  var KeypadPanel = require( 'UNIT_RATES/shopping/view/KeypadPanel' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
-  var Util = require( 'DOT/Util' );
 
   // constants
   var DEFAULT_QUESTION_FONT = new URFont( 14 );
