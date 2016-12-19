@@ -27,11 +27,6 @@ define( function( require ) {
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
-  // constants
-  var DEFAULT_QUESTION_FONT = new URFont( 14 );
-  var DEFAULT_VALUE_FONT = new URFont( 14 );
-  var ICON_FONT = new URFont( 36 );
-
   /**
    * @param {Question} question - model element for the question
    * @param {Node} questionsPanel - panel that contains the question, for positioning the keypad
@@ -48,8 +43,9 @@ define( function( require ) {
       incorrectColor: 'red', // {Color|string} color for an incorrect guess
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
       editColor: 'yellow', // {Color|string} value box is filled with this color while editing
-      questionFont: DEFAULT_QUESTION_FONT, // {Font} font for the question
-      valueFont: DEFAULT_VALUE_FONT, // {Font} font for the value
+      questionFont: new URFont( 14 ), // {Font} font for the question
+      valueFont: new URFont( 14 ), // {Font} font for the value
+      checkMarkFont: new URFont( 36 ), // {Font} font for check mark
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: 3, // {number} vertical margin inside the value box
       xSpacing: 25, // {number} horizontal spacing between UI elements
@@ -83,22 +79,22 @@ define( function( require ) {
     editButton.centerY = valueBox.centerY;
 
     // check mark to indicate that the question has been correctly answered
-    var correctIconNode = new ShadowText( '\u2713', {
+    var checkMarkNode = new ShadowText( '\u2713', {
       // fill: 'rgb( 102, 183, 0 )',
       fill: options.correctColor,
-      font: ICON_FONT,
+      font: options.checkMarkFont,
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY,
       visible: false
     } );
-    this.addChild( correctIconNode );
+    this.addChild( checkMarkNode );
 
     // the question
     var questionTextNode = new Text( question.questionString, {
       font: options.questionFont,
       centerX: valueBox.centerX,
       bottom: valueBox.top - options.ySpacing,
-      maxWidth: correctIconNode.right - editButton.left
+      maxWidth: checkMarkNode.right - editButton.left
     } );
     this.addChild( questionTextNode );
 
@@ -185,7 +181,7 @@ define( function( require ) {
       // update other UI elements
       editButton.visible = !correct;
       valueBox.visible = !correct;
-      correctIconNode.visible = correct;
+      checkMarkNode.visible = correct;
       numeratorNode.visible = correct;
       fractionLineNode.stroke = denominatorNode.fill = ( correct ? options.correctColor : options.neutralColor );
       if ( !options.denominatorVisible ) {
