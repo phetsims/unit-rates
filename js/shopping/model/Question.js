@@ -36,9 +36,9 @@ define( function( require ) {
   function Question( questionString, answer, numeratorString, denominatorString, options ) {
 
     options = _.extend( {
-      maxDigits: 4, // {number} maximum number of digits to enter on the keypad
-      maxDecimals: 2, // {number} maximum number of decimal places to enter on the keypad
-      restrictGuessDecimalPlaces: true, // {boolean} whether to restrict display of guess to show exactly options.maxDecimals
+      maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
+      maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
+      trimZeros: false, // {boolean} whether to trim zeros that appear to the right of the decimal point
       guessFormat: '{0}' // {string} format used by StringUtils.format to format the guess
     }, options );
 
@@ -51,7 +51,7 @@ define( function( require ) {
     this.denominatorString = denominatorString;
     this.maxDigits = options.maxDigits;
     this.maxDecimals = options.maxDecimals;
-    this.restrictGuessDecimalPlaces = options.restrictGuessDecimalPlaces;
+    this.trimZeros = options.trimZeros;
     this.guessFormat = options.guessFormat;
 
     // @public {Property.<number|null>, null indicates no guess
@@ -159,7 +159,7 @@ define( function( require ) {
         guessFormat: '{0}', // {string} format for the guessed value
         maxDigits: 3,
         maxDecimals: 1,
-        restrictGuessDecimalPlaces: false
+        trimZeros: true
       }, options );
 
       // 'Apples' or 'Apple'

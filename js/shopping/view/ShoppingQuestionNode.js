@@ -162,13 +162,13 @@ define( function( require ) {
 
       // update the guess
       if ( guess ) {
-        var guessDisplayed = ( question.restrictGuessDecimalPlaces ) ? Util.toFixed( guess, maxDecimals ) : guess;
+        var guessDisplayed = ( question.trimZeros ) ? guess : Util.toFixed( guess, maxDecimals );
         guessNode.text = StringUtils.format( guessFormat, guessDisplayed );
         guessNode.fill = correct ? options.correctColor : options.incorrectColor;
       }
       else if ( URQueryParameters.showAnswers ) {
         // show the answer, if query parameter is set
-        guessNode.text = StringUtils.format( guessFormat, ( question.restrictGuessDecimalPlaces ) ? Util.toFixed( answer, maxDecimals ) : answer );
+        guessNode.text = StringUtils.format( guessFormat, ( question.trimZeros ) ? answer : Util.toFixed( answer, maxDecimals ) );
         guessNode.fill = options.neutralColor;
       }
       else {
