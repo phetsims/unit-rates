@@ -46,7 +46,6 @@ define( function( require ) {
       questionFont: new URFont( 14 ), // {Font} font for the question
       valueFont: new URFont( 14 ), // {Font} font for the value
       checkMarkFont: new URFont( 36 ), // {Font} font for check mark
-      valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: 3, // {number} vertical margin inside the value box
       xSpacing: 25, // {number} horizontal spacing between UI elements
       ySpacing: 5  // {number} vertical spacing between UI elements
