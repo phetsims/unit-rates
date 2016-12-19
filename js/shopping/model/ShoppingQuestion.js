@@ -33,7 +33,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function Question( questionString, answer, numeratorString, denominatorString, options ) {
+  function ShoppingQuestion( questionString, answer, numeratorString, denominatorString, options ) {
 
     options = _.extend( {
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
@@ -68,9 +68,9 @@ define( function( require ) {
     } );
   }
 
-  unitRates.register( 'Question', Question );
+  unitRates.register( 'ShoppingQuestion', ShoppingQuestion );
 
-  return inherit( Object, Question, {
+  return inherit( Object, ShoppingQuestion, {
 
     // @public
     reset: function() {
@@ -82,8 +82,8 @@ define( function( require ) {
      * Creates a question of the form 'Unit Rate?'
      * @param {number} unitRate
      * @param {string} units
-     * @param {Object} [options] - options to Question constructor
-     * @returns {Question}
+     * @param {Object} [options] - options to ShoppingQuestion constructor
+     * @returns {ShoppingQuestion}
      * @public
      * @static
      */
@@ -103,7 +103,7 @@ define( function( require ) {
       // '1 Apple'
       var denominatorString = StringUtils.format( valueUnitsString, 1, units );
 
-      return new Question( questionString, unitRate, numeratorString, denominatorString, options );
+      return new ShoppingQuestion( questionString, unitRate, numeratorString, denominatorString, options );
     },
 
     /**
@@ -112,8 +112,8 @@ define( function( require ) {
      * @param {number} unitRate
      * @param {string} singularName
      * @param {string} pluralName
-     * @param {Object} [options] - options to Question constructor
-     * @returns {Question}
+     * @param {Object} [options] - options to ShoppingQuestion constructor
+     * @returns {ShoppingQuestion}
      * @public
      * @static
      */
@@ -139,7 +139,7 @@ define( function( require ) {
       // '10 Apples'
       var denominatorString = StringUtils.format( valueUnitsString, quantity, units );
 
-      return new Question( questionString, answer, numeratorString, denominatorString, options );
+      return new ShoppingQuestion( questionString, answer, numeratorString, denominatorString, options );
     },
 
     /**
@@ -148,8 +148,8 @@ define( function( require ) {
      * @param {number} unitRate
      * @param {string} singularName
      * @param {string} pluralName
-     * @param {Object} [options] - options to Question constructor
-     * @returns {Question}
+     * @param {Object} [options] - options to ShoppingQuestion constructor
+     * @returns {ShoppingQuestion}
      * @public
      * @static
      */
@@ -174,7 +174,7 @@ define( function( require ) {
       // 'Apples for $4.00?'
       var questionString = StringUtils.format( itemsForAmountString, pluralName, numeratorString );
 
-      return new Question( questionString, quantity, numeratorString, denominatorString, options );
+      return new ShoppingQuestion( questionString, quantity, numeratorString, denominatorString, options );
     }
   } );
 } );

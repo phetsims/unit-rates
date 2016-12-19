@@ -13,8 +13,8 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // sim modules
-  var Question = require( 'UNIT_RATES/shopping/model/Question' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
+  var ShoppingQuestion = require( 'UNIT_RATES/shopping/model/ShoppingQuestion' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
@@ -40,7 +40,7 @@ define( function( require ) {
 
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
       questionPluralUnits: itemData.pluralName,  // {string} units for questions with plural quantities
-      uniformQuestions: true, // {boolean} are all Questions of the same form? see createQuestionSets
+      uniformQuestions: true, // {boolean} are all questions of the same form? see createQuestionSets
 
       // {number} index of the question set that is initially selected, randomly chosen
       questionSetIndex: URQueryParameters.randomEnabled ?
@@ -60,21 +60,21 @@ define( function( require ) {
     this.topAxisLabel = options.topAxisLabel;
     this.bottomAxisLabel = options.bottomAxisLabel;
 
-    // @public {Question} 'Unit Rate?'
-    this.unitRateQuestion = Question.createUnitRate( itemData.unitRate, options.questionSingularUnits );
+    // @public {ShoppingQuestion} 'Unit Rate?'
+    this.unitRateQuestion = ShoppingQuestion.createUnitRate( itemData.unitRate, options.questionSingularUnits );
 
-    // @private {Question[][]} instantiate Questions, grouped into sets
+    // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
     this.questionSets = createQuestionSets( itemData.questionQuantities, itemData.unitRate,
       options.questionSingularUnits, options.questionPluralUnits, options.uniformQuestions );
 
-    // @public (read-only) {Property.<Question[]>} the current set of questions
+    // @public (read-only) {Property.<ShoppingQuestion[]>} the current set of questions
     this.questionSetProperty = new Property( this.questionSets[ options.questionSetIndex ] );
 
-    // @private {Question[][]} sets of questions that are available for selection
+    // @private {ShoppingQuestion[][]} sets of questions that are available for selection
     this.availableQuestionSets = this.questionSets.slice();
     this.availableQuestionSets.splice( options.questionSetIndex, 1 );
 
-    // @private {Question[][]} sets of question that have already been selected
+    // @private {ShoppingQuestion[][]} sets of question that have already been selected
     this.selectedQuestionSets = [ this.questionSetProperty.value ];
   }
 
@@ -90,11 +90,11 @@ define( function( require ) {
    * @param {boolean} uniformQuestions -
    *        true: all questions are of the same form, e.g. 'Cost of 3 Apples?'
    *        false: the last question will have a different form, e.g. 'Apples for $3.00?'
-   * @returns {Question[][]}
+   * @returns {ShoppingQuestion[][]}
    */
   function createQuestionSets( questionQuantities, unitRate, singularUnits, pluralUnits, uniformQuestions ) {
 
-    var questionSets = [];  // {Question[][]}
+    var questionSets = [];  // {ShoppingQuestion[][]}
 
     questionQuantities.forEach( function( quantities ) {
       var questions = [];
@@ -103,12 +103,12 @@ define( function( require ) {
         if ( i < quantities.length - 1 || uniformQuestions ) {
 
           // e.g. 'Cost of 3 Apples?'
-          questions.push( Question.createCostOf( quantity, unitRate, singularUnits, pluralUnits ) );
+          questions.push( ShoppingQuestion.createCostOf( quantity, unitRate, singularUnits, pluralUnits ) );
         }
         else {
 
           // optionally, the last question has a different form, e.g. 'Apples for $3.00?'
-          questions.push( Question.createItemsFor( quantity, unitRate, singularUnits, pluralUnits ) );
+          questions.push( ShoppingQuestion.createItemsFor( quantity, unitRate, singularUnits, pluralUnits ) );
         }
       }
       questionSets.push( questions );
@@ -122,7 +122,7 @@ define( function( require ) {
     // @public
     reset: function() {
 
-      // reset all Questions
+      // reset all ShoppingQuestions
       this.unitRateQuestion.reset();
       this.questionSets.forEach( function( questionSet ) {
         questionSet.forEach( function( question ) {
