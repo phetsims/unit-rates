@@ -13,7 +13,7 @@ define( function( require ) {
   var OLDRacingLabScreen = require( 'UNIT_RATES/old/racingLab/OLDRacingLabScreen' );
   var OLDShoppingScreen = require( 'UNIT_RATES/old/shopping/OLDShoppingScreen' );
   var OLDShoppingLabScreen = require( 'UNIT_RATES/old/shoppingLab/OLDShoppingLabScreen' );
-  var ShoppingScreenNEW = require( 'UNIT_RATES/shoppingNEW/ShoppingScreenNEW' );
+  var ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
@@ -41,7 +41,7 @@ define( function( require ) {
     ];
 
     if ( URQueryParameters.showNew ) {
-      screens.push( new ShoppingScreenNEW() );
+      screens.push( new ShoppingScreen() );
     }
 
     var sim = new Sim( unitRatesTitleString, screens, simOptions );

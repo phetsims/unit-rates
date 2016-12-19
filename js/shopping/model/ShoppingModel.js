@@ -9,14 +9,14 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Candy = require( 'UNIT_RATES/shoppingNEW/model/Candy' );
-  var Fruit = require( 'UNIT_RATES/shoppingNEW/model/Fruit' );
+  var Candy = require( 'UNIT_RATES/shopping/model/Candy' );
+  var Fruit = require( 'UNIT_RATES/shopping/model/Fruit' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var ShoppingCategory = require( 'UNIT_RATES/shoppingNEW/model/ShoppingCategory' );
-  var ShoppingItemData = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItemData' );
+  var ShoppingCategory = require( 'UNIT_RATES/shopping/model/ShoppingCategory' );
+  var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Vegetable = require( 'UNIT_RATES/shoppingNEW/model/Vegetable' );
+  var Vegetable = require( 'UNIT_RATES/shopping/model/Vegetable' );
 
   // images
   var appleImage = require( 'image!UNIT_RATES/apple.png' );
@@ -27,7 +27,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingModelNEW( options ) {
+  function ShoppingModel( options ) {
 
     options = _.extend( {
       categoryIndex: 0  // {number} index of the category that is initially selected
@@ -71,9 +71,9 @@ define( function( require ) {
     } );
   }
 
-  unitRates.register( 'ShoppingModelNEW', ShoppingModelNEW );
+  unitRates.register( 'ShoppingModel', ShoppingModel );
 
-  return inherit( Object, ShoppingModelNEW, {
+  return inherit( Object, ShoppingModel, {
 
     // @public
     reset: function() {

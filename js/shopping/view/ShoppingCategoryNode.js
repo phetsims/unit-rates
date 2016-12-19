@@ -11,8 +11,8 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var ShoppingItemComboBox = require( 'UNIT_RATES/shoppingNEW/view/ShoppingItemComboBox' );
-  var ShoppingItemNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingItemNode' );
+  var ShoppingItemComboBox = require( 'UNIT_RATES/shopping/view/ShoppingItemComboBox' );
+  var ShoppingItemNode = require( 'UNIT_RATES/shopping/view/ShoppingItemNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**

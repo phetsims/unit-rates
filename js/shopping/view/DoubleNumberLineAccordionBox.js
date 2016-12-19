@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var DoubleNumberLineNode = require( 'UNIT_RATES/shoppingNEW/view/DoubleNumberLineNode' );
+  var DoubleNumberLineNode = require( 'UNIT_RATES/shopping/view/DoubleNumberLineNode' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );

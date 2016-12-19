@@ -13,7 +13,7 @@ define( function( require ) {
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadPanel = require( 'UNIT_RATES/shoppingNEW/view/KeypadPanel' );
+  var KeypadPanel = require( 'UNIT_RATES/shopping/view/KeypadPanel' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );

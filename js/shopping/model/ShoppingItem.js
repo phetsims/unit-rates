@@ -10,9 +10,9 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Question = require( 'UNIT_RATES/shoppingNEW/model/Question' );
+  var Question = require( 'UNIT_RATES/shopping/model/Question' );
   var Property = require( 'AXON/Property' );
-  var ShoppingItemData = require( 'UNIT_RATES/shoppingNEW/model/ShoppingItemData' );
+  var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 

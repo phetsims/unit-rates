@@ -14,17 +14,17 @@ define( function( require ) {
   var Plane = require( 'SCENERY/nodes/Plane' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var ShoppingCategoryRadioButtons = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryRadioButtons' );
-  var ShoppingCategoryNode = require( 'UNIT_RATES/shoppingNEW/view/ShoppingCategoryNode' );
-  var ShoppingViewProperties = require( 'UNIT_RATES/shoppingNEW/view/ShoppingViewProperties' );
+  var ShoppingCategoryRadioButtons = require( 'UNIT_RATES/shopping/view/ShoppingCategoryRadioButtons' );
+  var ShoppingCategoryNode = require( 'UNIT_RATES/shopping/view/ShoppingCategoryNode' );
+  var ShoppingViewProperties = require( 'UNIT_RATES/shopping/view/ShoppingViewProperties' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {ShoppingModelNEW} model
+   * @param {ShoppingModel} model
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingScreenViewNEW( model, options ) {
+  function ShoppingScreenView( model, options ) {
 
     var self = this;
 
@@ -66,8 +66,8 @@ define( function( require ) {
     playAreaLayer.addChild( resetAllButton );
   }
 
-  unitRates.register( 'ShoppingScreenViewNEW', ShoppingScreenViewNEW );
+  unitRates.register( 'ShoppingScreenView', ShoppingScreenView );
 
-  return inherit( ScreenView, ShoppingScreenViewNEW );
+  return inherit( ScreenView, ShoppingScreenView );
 } );
 

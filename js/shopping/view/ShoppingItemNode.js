@@ -9,10 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/shoppingNEW/view/DoubleNumberLineAccordionBox' );
+  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/shopping/view/DoubleNumberLineAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var ShoppingQuestionsAccordionBox = require( 'UNIT_RATES/shoppingNEW/view/ShoppingQuestionsAccordionBox' );
+  var ShoppingQuestionsAccordionBox = require( 'UNIT_RATES/shopping/view/ShoppingQuestionsAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**

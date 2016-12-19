@@ -10,26 +10,26 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Color = require( 'SCENERY/util/Color' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Screen = require( 'JOIST/Screen' );
-  var ShoppingModelNEW = require( 'UNIT_RATES/shoppingNEW/model/ShoppingModelNEW' );
-  var ShoppingScreenViewNEW = require( 'UNIT_RATES/shoppingNEW/view/ShoppingScreenViewNEW' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
   var Property = require( 'AXON/Property' );
-  var Color = require( 'SCENERY/util/Color' );
-
-  // strings
-  var screenShoppingString = require( 'string!UNIT_RATES/screen.shopping' );
+  var Screen = require( 'JOIST/Screen' );
+  var ShoppingModel = require( 'UNIT_RATES/shopping/model/ShoppingModel' );
+  var ShoppingScreenView = require( 'UNIT_RATES/shopping/view/ShoppingScreenView' );
+  var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
   var screenIcon = require( 'image!UNIT_RATES/shopping_screen_icon.png' );
+
+  // strings
+  var screenShoppingString = require( 'string!UNIT_RATES/screen.shopping' );
 
   /**
    * @param {Object} options
    * @constructor
    */
-  function ShoppingScreenNEW( options ) {
+  function ShoppingScreen( options ) {
 
     options = _.extend( {
       name: screenShoppingString,
@@ -38,13 +38,13 @@ define( function( require ) {
     }, options );
 
     Screen.call( this,
-      function() { return new ShoppingModelNEW(); },
-      function( model ) { return new ShoppingScreenViewNEW( model ); },
+      function() { return new ShoppingModel(); },
+      function( model ) { return new ShoppingScreenView( model ); },
       options
     );
   }
 
-  unitRates.register( 'ShoppingScreenNEW', ShoppingScreenNEW );
+  unitRates.register( 'ShoppingScreen', ShoppingScreen );
 
-  return inherit( Screen, ShoppingScreenNEW );
+  return inherit( Screen, ShoppingScreen );
 } );
