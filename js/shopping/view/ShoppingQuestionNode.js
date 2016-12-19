@@ -28,7 +28,7 @@ define( function( require ) {
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
-   * @param {Question} question - model element for the question
+   * @param {ShoppingQuestion} question - model element for the question
    * @param {Node} questionsPanel - panel that contains the question, for positioning the keypad
    * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
