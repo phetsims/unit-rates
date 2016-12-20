@@ -201,6 +201,8 @@ define( function( require ) {
     // display numerator
     this.numeratorProperty.link( function( numerator ) {
 
+      var denominator = numerator / unitRateProperty.value;
+
       if ( numerator === null ) {
         numeratorNode.text = '';
       }
@@ -209,7 +211,6 @@ define( function( require ) {
 
         // show the denominator that corresponds to this numerator
         if ( URQueryParameters.showAnswers ) {
-          var denominator = numerator / unitRateProperty.value;
           denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator, options.denominatorMaxDecimals, options.denominatorTrimZeros );
           denominatorNode.fill = options.showAnswersColor;
           denominatorNode.center = denominatorBox.center;
@@ -218,11 +219,13 @@ define( function( require ) {
       numeratorNode.fill = options.valueColor;
       numeratorNode.center = numeratorBox.center;
 
-      //TODO if ( numerator/denominator === unitRateProperty.value ) { create a marker } else { animate to numerator & clear denominator }
+      //TODO if ( denominator === denominatorProperty.value ) { create a marker } else { animate to numerator & clear denominator }
     } );
 
     // display denominator
     this.denominatorProperty.link( function( denominator ) {
+
+      var numerator = denominator * unitRateProperty.value;
 
       if ( denominator === null ) {
         denominatorNode.text = '';
@@ -232,7 +235,6 @@ define( function( require ) {
 
         // show the numerator that corresponds to this denominator
         if ( URQueryParameters.showAnswers ) {
-          var numerator = denominator * unitRateProperty.value;
           numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator, options.numeratorMaxDecimals, options.numeratorTrimZeros );
           numeratorNode.fill = options.showAnswersColor;
           numeratorNode.center = numeratorBox.center;
@@ -241,7 +243,7 @@ define( function( require ) {
       denominatorNode.fill = options.valueColor;
       denominatorNode.center = denominatorBox.center;
 
-      //TODO if ( numerator/denominator === unitRateProperty.value ) { create a marker } else { animate to denominator & clear numerator }
+      //TODO if ( numerator === numeratorProperty.value ) { create a marker } else { animate to denominator & clear numerator }
     } );
 
     var unitRateObserver = function() {
