@@ -22,9 +22,11 @@ define( function( require ) {
 
   // sim modules
   var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
-  var KeypadPanel = require( 'UNIT_RATES/common/view/KeypadPanel' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
+
+  // strings
+  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
 
   /**
    * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
@@ -36,11 +38,15 @@ define( function( require ) {
 
     options = _.extend( {
       unitRate: 1, // {number} unit rate, used to compute whether numerator and denominator are a valid marker
-      maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
-      maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
-      trimZeros: true, // {boolean} whether to trim zeros that appear to the right of the decimal place
+      numeratorMaxDigits: 4, // {number} maximum number of numerator digits that can be entered on the keypad
+      numeratorMaxDecimals: 2, // {number} maximum number of numerator decimal places that can be entered on the keypad
+      denominatorMaxDigits: 4, // {number} maximum number of denominator digits that can be entered on the keypad
+      denominatorMaxDecimals: 1, // {number} maximum number of denominator decimal places that can be entered on the keypad
+      numeratorTrimZeros: false, // {boolean} whether to trim zeros in numerator that appear to the right of the decimal place
+      denominatorTrimZeros: true, // {boolean} whether to trim zeros in denominator that appear to the right of the decimal place
       editButtonScale: 0.5, // {number} scale applied to the edit button
-      valueFormat: '{0}', // {string} format for displaying the value
+      numeratorFormat: currencyValueString, // {string} format for displaying the numerator
+      denominatorFormat: '{0}', // {string} format for displaying the denominator
       lineLength: 40, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 14 ), // {Font} font for the value
@@ -119,32 +125,14 @@ define( function( require ) {
     } );
     this.addChild( denominatorEditButton );
 
-    // keypad for entering numbers, added dynamically to keypadLayer
-    var keypad = new KeypadPanel( {
-      maxDigits: options.maxDigits,
-      maxDecimals: options.maxDecimals,
-      enterButtonListener: function() {
-        self.commitEdit();
-      }
-    } );
-
-    // Clicking outside the keypad cancels the edit
-    var keypadLayerListener = new DownUpListener( {
-      down: function( event ) {
-        if ( event.trail.lastNode() === keypadLayer ) {
-          self.cancelEdit();
-        }
-      }
-    } );
-
     // display numerator
     this.numeratorProperty.link( function( numerator ) {
       if ( numerator === null ) {
         numeratorNode.text = '';
       }
       else {
-        var valueDisplayed = ( options.trimZeros ) ? numerator : Util.toFixed( numerator, options.maxDecimals );
-        numeratorNode.text = StringUtils.format( options.valueFormat, valueDisplayed );
+        var valueDisplayed = ( options.numeratorTrimZeros ) ? numerator : Util.toFixed( numerator, options.numeratorMaxDecimals );
+        numeratorNode.text = StringUtils.format( options.numeratorFormat, valueDisplayed );
       }
       numeratorNode.center = numeratorBox.center;
     } );
@@ -155,32 +143,72 @@ define( function( require ) {
         denominatorNode.text = '';
       }
       else {
-        var valueDisplayed = ( options.trimZeros ) ? denominator : Util.toFixed( denominator, options.maxDecimals );
-        denominatorNode.text = StringUtils.format( options.valueFormat, valueDisplayed );
+        var valueDisplayed = ( options.denominatorTrimZeros ) ? denominator : Util.toFixed( denominator, options.denominatorMaxDecimals );
+        denominatorNode.text = StringUtils.format( options.denominatorFormat, valueDisplayed );
       }
       denominatorNode.center = denominatorBox.center;
     } );
 
-    // Click on an edit button or in a box to begin editing the value
-    var beginEditNumerator = function() {
-      self.valueProperty = self.numeratorProperty;
-      self.valueBox = numeratorBox;
-      self.editButton = numeratorEditButton;
-      self.beginEdit();
+    // Sets the location of the keypad
+    var setKeypadLocation = function( keypad ) {
+
+      // This algorithm assumes that both buttons have the same centerX,
+      // so either button can be used for horizontal positioning.
+      assert && assert( numeratorEditButton.centerX === denominatorEditButton.centerX );
+
+      // position the keypad relative to edit button and double number line panel
+      var doubleNumberLinePanelBounds = keypad.globalToParentBounds( doubleNumberLinePanel.localToGlobalBounds( doubleNumberLinePanel.localBounds ) );
+      var editButtonBounds = keypad.globalToParentBounds( numeratorEditButton.localToGlobalBounds( numeratorEditButton.localBounds ) );
+
+      // Try to horizontally center the keypad on the edit button,
+      // but don't let it go past the ends of the double number line panel.
+      keypad.centerX = editButtonBounds.centerX;
+      if ( keypad.left < doubleNumberLinePanelBounds.left ) {
+        keypad.left = doubleNumberLinePanelBounds.left;
+      }
+      else if ( keypad.right > doubleNumberLinePanelBounds.right ) {
+        keypad.right = doubleNumberLinePanelBounds.right;
+      }
+
+      // Put the key pad above or below the double number line panel.
+      if ( options.keypadLocation === 'above' ) {
+        keypad.bottom = doubleNumberLinePanelBounds.top - 10;
+      }
+      else { // 'below'
+        keypad.top = doubleNumberLinePanelBounds.bottom + 10;
+      }
     };
-    numeratorEditButton.addListener( beginEditNumerator.bind( this ) );
+
+    // opens a keypad for editing the numerator
+    var editNumerator = function() {
+      keypadLayer.beginEdit( self.numeratorProperty, {
+        onBeginEdit: function() { numeratorBox.fill = options.editColor; },
+        onEndEdit: function() { numeratorBox.fill = 'white'; },
+        setKeypadLocation: setKeypadLocation,
+        maxDigits: options.numeratorMaxDigits,
+        maxDecimals: options.numeratorMaxDecimals
+      } );
+    };
+
+    // opens a keypad for editing the denominator
+    var editDenominator = function() {
+      keypadLayer.beginEdit( self.denominatorProperty, {
+        onBeginEdit: function() { denominatorBox.fill = options.editColor; },
+        onEndEdit: function() { denominatorBox.fill = 'white'; },
+        setKeypadLocation: setKeypadLocation,
+        maxDigits: options.denominatorMaxDigits,
+        maxDecimals: options.denominatorMaxDecimals
+      } );
+    };
+
+    // Click on an edit button or box to begin editing
+    numeratorEditButton.addListener( editNumerator );
     numeratorBox.addInputListener( new DownUpListener( {
-      down: beginEditNumerator.bind( this )
+      down: editNumerator
     } ) );
-    var beginEditDenominator = function() {
-      self.valueProperty = self.denominatorProperty;
-      self.valueBox = denominatorBox;
-      self.editButton = denominatorEditButton;
-      self.beginEdit();
-    };
-    denominatorEditButton.addListener( beginEditDenominator.bind( this ) );
+    denominatorEditButton.addListener( editDenominator );
     denominatorBox.addInputListener( new DownUpListener( {
-      down: beginEditDenominator.bind( this )
+      down: editDenominator
     } ) );
 
     this.mutate( options );
@@ -189,17 +217,6 @@ define( function( require ) {
     this.disposeMarkerEditor = function() {
       //TODO
     };
-
-    // @private properties required by private functions related to keypad editing
-    this.valueProperty = null; // will be set to the value Property that is currently being edited
-    this.valueBox = null; // will be set to the value box that's currently being edited
-    this.editButton = null; // will be set to the edit button that started the current edit
-    this.editColor = options.editColor;
-    this.keypadLocation = options.keypadLocation;
-    this.keypad = keypad;
-    this.keypadLayer = keypadLayer;
-    this.keypadLayerListener = keypadLayerListener;
-    this.doubleNumberLinePanel = doubleNumberLinePanel;
   }
 
   unitRates.register( 'MarkerEditor', MarkerEditor );
@@ -216,73 +233,6 @@ define( function( require ) {
     // @public
     dispose: function() {
       this.disposeMarkerEditor();
-    },
-
-    //TODO lots of keypad stuff in common with ShoppingQuestionNode, should be factored out
-    // @private begins an edit
-    beginEdit: function() {
-      assert && assert( !this.keypadLayer.visible, 'invalid state for beginEdit' );
-
-      // highlight the value box to indicate that an edit is in progress
-      this.valueBox.fill = this.editColor;
-
-      // display the keypad
-      this.keypad.valueStringProperty.value = '';
-      this.keypadLayer.addChild( this.keypad );
-      this.keypadLayer.addInputListener( this.keypadLayerListener );
-      this.keypadLayer.visible = true;
-
-      // position the keypad relative to edit button and double number line panel
-      var doubleNumberLinePanelBounds = this.keypad.globalToParentBounds( this.doubleNumberLinePanel.localToGlobalBounds( this.doubleNumberLinePanel.localBounds ) );
-      var editButtonBounds = this.keypad.globalToParentBounds( this.editButton.localToGlobalBounds( this.editButton.localBounds ) );
-
-      // Try to horizontally center the keypad on the edit button,
-      // but don't let it go past the ends of the double number line panel. 
-      this.keypad.centerX = editButtonBounds.centerX;
-      if ( this.keypad.left < doubleNumberLinePanelBounds.left ) {
-        this.keypad.left = doubleNumberLinePanelBounds.left;
-      }
-      else if ( this.keypad.right > doubleNumberLinePanelBounds.right ) {
-        this.keypad.right = doubleNumberLinePanelBounds.right;
-      }
-
-      // Put the key pad above or below the double number line panel.
-      if ( this.keypadLocation === 'above' ) {
-        this.keypad.bottom = doubleNumberLinePanelBounds.top - 10;
-      }
-      else { // 'below'
-        this.keypad.top = doubleNumberLinePanelBounds.bottom + 10;
-      }
-    },
-
-    // @private ends an edit
-    endEdit: function() {
-      assert && assert( this.keypadLayer.visible, 'invalid state for endEdit' );
-
-      // hide the keypad
-      this.keypadLayer.visible = false;
-      this.keypadLayer.removeChild( this.keypad );
-      this.keypadLayer.removeInputListener( this.keypadLayerListener );
-
-      // unhighlight the value box
-      this.valueBox.fill = 'white';
-    },
-
-    // @private commits an edit
-    commitEdit: function() {
-      var valueString = this.keypad.valueStringProperty.value;
-      if ( valueString ) {
-        this.endEdit();
-        this.valueProperty.value = ( 1 * valueString ); // string -> number conversion
-      }
-      else {
-        this.cancelEdit(); // not entering a value in the keypad is effectively a cancel
-      }
-    },
-
-    // @private cancels an edit
-    cancelEdit: function() {
-      this.endEdit();
     }
   } );
 } );
