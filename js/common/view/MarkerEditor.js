@@ -211,6 +211,7 @@ define( function( require ) {
           denominatorNode.text = StringUtils.format( options.denominatorFormat,
             ( options.denominatorTrimZeros ) ? denominator : Util.toFixed( denominator, options.denominatorMaxDecimals ) );
           denominatorNode.fill = options.showAnswersColor;
+          denominatorNode.center = denominatorBox.center;
         }
       }
       numeratorNode.fill = options.valueColor;
@@ -234,6 +235,7 @@ define( function( require ) {
           numeratorNode.text = StringUtils.format( options.numeratorFormat,
             ( options.numeratorTrimZeros ) ? numerator : Util.toFixed( numerator, options.numeratorMaxDecimals ) );
           numeratorNode.fill = options.showAnswersColor;
+          numeratorNode.center = numeratorBox.center;
         }
       }
       denominatorNode.fill = options.valueColor;
