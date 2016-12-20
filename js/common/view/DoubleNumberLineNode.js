@@ -94,7 +94,7 @@ define( function( require ) {
     }
 
     //TODO
-    var markerEditor = new MarkerEditor( shoppingItem, doubleNumberLinePanel, keypadLayer, {
+    var markerEditor = new MarkerEditor( shoppingItem.unitRate, doubleNumberLinePanel, keypadLayer, {
       centerX: verticalAxis.centerX + 200, //TODO
       centerY: verticalAxis.centerY //TODO
     } );
