@@ -52,7 +52,7 @@ define( function( require ) {
   return inherit( Plane, KeypadLayer, {
 
     /**
-     * Begins an edit, by opening a keypad.
+     * Begins an edit, by opening a modal keypad.
      * @param {Property.<number>} valueProperty - the Property to be set by the keypad
      * @param {Object} [options]
      */
