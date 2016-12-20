@@ -125,29 +125,7 @@ define( function( require ) {
     } );
     this.addChild( denominatorEditButton );
 
-    // display numerator
-    this.numeratorProperty.link( function( numerator ) {
-      if ( numerator === null ) {
-        numeratorNode.text = '';
-      }
-      else {
-        var valueDisplayed = ( options.numeratorTrimZeros ) ? numerator : Util.toFixed( numerator, options.numeratorMaxDecimals );
-        numeratorNode.text = StringUtils.format( options.numeratorFormat, valueDisplayed );
-      }
-      numeratorNode.center = numeratorBox.center;
-    } );
-
-    // display denominator
-    this.denominatorProperty.link( function( denominator ) {
-      if ( denominator === null ) {
-        denominatorNode.text = '';
-      }
-      else {
-        var valueDisplayed = ( options.denominatorTrimZeros ) ? denominator : Util.toFixed( denominator, options.denominatorMaxDecimals );
-        denominatorNode.text = StringUtils.format( options.denominatorFormat, valueDisplayed );
-      }
-      denominatorNode.center = denominatorBox.center;
-    } );
+    this.mutate( options );
 
     // Sets the location of the keypad
     var setKeypadLocation = function( keypad ) {
@@ -211,7 +189,33 @@ define( function( require ) {
       down: editDenominator
     } ) );
 
-    this.mutate( options );
+    // display numerator
+    this.numeratorProperty.link( function( numerator ) {
+      if ( numerator === null ) {
+        numeratorNode.text = '';
+      }
+      else {
+        var valueDisplayed = ( options.numeratorTrimZeros ) ? numerator : Util.toFixed( numerator, options.numeratorMaxDecimals );
+        numeratorNode.text = StringUtils.format( options.numeratorFormat, valueDisplayed );
+      }
+      numeratorNode.center = numeratorBox.center;
+
+      //TODO if ( numerator/denominator === options.unitRate ) { create a marker } else { animate to numerator & clear denominator }
+    } );
+
+    // display denominator
+    this.denominatorProperty.link( function( denominator ) {
+      if ( denominator === null ) {
+        denominatorNode.text = '';
+      }
+      else {
+        var valueDisplayed = ( options.denominatorTrimZeros ) ? denominator : Util.toFixed( denominator, options.denominatorMaxDecimals );
+        denominatorNode.text = StringUtils.format( options.denominatorFormat, valueDisplayed );
+      }
+      denominatorNode.center = denominatorBox.center;
+
+      //TODO if ( numerator/denominator === options.unitRate ) { create a marker } else { animate to denominator & clear numerator }
+    } );
 
     // @private
     this.disposeMarkerEditor = function() {
@@ -225,7 +229,6 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      //TODO
       this.numeratorProperty.reset();
       this.denominatorProperty.reset();
     },
