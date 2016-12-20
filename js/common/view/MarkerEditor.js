@@ -60,6 +60,10 @@ define( function( require ) {
       keypadLocation: 'below' // {string} 'above' or 'below' doubleNumberLinePanel
     }, options );
 
+    assert && assert( options.numeratorFormat.indexOf( '{0}' ) !== -1,
+      'missing {0} in numeratorFormat: ' + options.numeratorFormat );
+    assert && assert( options.denominatorFormat.indexOf( '{0}' ) !== -1,
+      'missing {0} in denominatorFormat: ' + options.denominatorFormat );
     assert && assert( options.keypadLocation.options === 'above' || options.keypadLocation === 'below',
       'invalid keypadLocation: ' + options.keypadLocation );
 
