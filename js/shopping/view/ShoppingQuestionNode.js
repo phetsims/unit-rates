@@ -187,7 +187,7 @@ define( function( require ) {
       keypad.bottom = questionsPanelBounds.bottom;
     };
 
-    // opens a modal keypad
+    // opens a keypad to edit the user's guess
     var editValue = function() {
       keypadLayer.beginEdit( question.guessProperty, {
         onBeginEdit: onBeginEdit,
@@ -198,7 +198,7 @@ define( function( require ) {
       } );
     };
 
-    // Click on editButton or in valueBox to begin editing the value
+    // Click on editButton or in valueBox to begin editing
     editButton.addListener( editValue );
     valueBox.addInputListener( new DownUpListener( {
       down: editValue
