@@ -38,7 +38,7 @@ define( function( require ) {
     options = _.extend( {
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
       maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
-      trimZeros: false, // {boolean} whether to trim zeros that appear to the right of the decimal point
+      trimZeros: false, // {boolean} whether to trim trailing zeros in the decimal places
       guessFormat: '{0}' // {string} format used by StringUtils.format to format the guess
     }, options );
 

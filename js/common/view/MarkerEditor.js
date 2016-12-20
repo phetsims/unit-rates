@@ -38,15 +38,21 @@ define( function( require ) {
   function MarkerEditor( unitRateProperty, doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
+
+      // numerator
+      numeratorFormat: currencyValueString, // {string} format for displaying the numerator
       numeratorMaxDigits: 4, // {number} maximum number of numerator digits that can be entered on the keypad
       numeratorMaxDecimals: 2, // {number} maximum number of numerator decimal places that can be entered on the keypad
+      numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros in numerator's decimal places
+
+      // denominator
+      denominatorFormat: '{0}', // {string} format for displaying the denominator
       denominatorMaxDigits: 4, // {number} maximum number of denominator digits that can be entered on the keypad
       denominatorMaxDecimals: 1, // {number} maximum number of denominator decimal places that can be entered on the keypad
-      numeratorTrimZeros: false, // {boolean} whether to trim zeros in numerator that appear to the right of the decimal place
-      denominatorTrimZeros: true, // {boolean} whether to trim zeros in denominator that appear to the right of the decimal place
+      denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros in denominator's decimal places
+
+      // general
       editButtonScale: 0.5, // {number} scale applied to the edit button
-      numeratorFormat: currencyValueString, // {string} format for displaying the numerator
-      denominatorFormat: '{0}', // {string} format for displaying the denominator
       lineLength: 40, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 14 ), // {Font} font for the value
@@ -57,6 +63,7 @@ define( function( require ) {
       valueYMargin: 3, // {number} vertical margin inside the value box
       ySpacing: 5,  // {number} vertical spacing between UI elements
       keypadLocation: 'below' // {string} 'above' or 'below' doubleNumberLinePanel
+
     }, options );
 
     assert && assert( options.keypadLocation.options === 'above' || options.keypadLocation === 'below',
