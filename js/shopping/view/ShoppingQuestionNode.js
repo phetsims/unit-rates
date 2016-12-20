@@ -142,7 +142,7 @@ define( function( require ) {
       var correct = ( guess === answer );
 
       // update the guess
-      if ( guess ) {
+      if ( guess !== null ) {
         guessNode.text = URUtil.formatNumber( guessFormat, guess, maxDecimals, question.trimZeros );
         guessNode.fill = correct ? options.correctColor : options.incorrectColor;
       }
