@@ -15,12 +15,12 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URFont = require( 'UNIT_RATES/common/URFont' );
 
   /**
    * @param {ShoppingItem[]} shoppingItems
@@ -85,7 +85,7 @@ define( function( require ) {
 
     // Use the plural name to label the item
     var labelNode = new Text( shoppingItem.pluralName, {
-      font: new PhetFont( 18 ),
+      font: new URFont( 18 ),
       maxWidth: 140
     } );
 
