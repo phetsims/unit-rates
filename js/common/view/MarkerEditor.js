@@ -203,14 +203,14 @@ define( function( require ) {
         numeratorNode.text = '';
       }
       else {
-        var valueDisplayed = ( options.numeratorTrimZeros ) ? numerator : Util.toFixed( numerator, options.numeratorMaxDecimals );
+        var valueDisplayed = ( options.numeratorTrimZeros ) ? Util.toFixedNumber( numerator, options.numeratorMaxDecimals ) : Util.toFixed( numerator, options.numeratorMaxDecimals );
         numeratorNode.text = StringUtils.format( options.numeratorFormat, valueDisplayed );
 
         // show the denominator that corresponds to this numerator
         if ( URQueryParameters.showAnswers ) {
           var denominator = numerator / unitRateProperty.value;
           denominatorNode.text = StringUtils.format( options.denominatorFormat,
-            ( options.denominatorTrimZeros ) ? denominator : Util.toFixed( denominator, options.denominatorMaxDecimals ) );
+            ( options.denominatorTrimZeros ) ? Util.toFixedNumber( denominator, options.denominatorMaxDecimals ) : Util.toFixed( denominator, options.denominatorMaxDecimals ) );
           denominatorNode.fill = options.showAnswersColor;
           denominatorNode.center = denominatorBox.center;
         }
@@ -228,14 +228,14 @@ define( function( require ) {
         denominatorNode.text = '';
       }
       else {
-        var valueDisplayed = ( options.denominatorTrimZeros ) ? denominator : Util.toFixed( denominator, options.denominatorMaxDecimals );
+        var valueDisplayed = ( options.denominatorTrimZeros ) ? Util.toFixedNumber( denominator, options.denominatorMaxDecimals ) : Util.toFixed( denominator, options.denominatorMaxDecimals );
         denominatorNode.text = StringUtils.format( options.denominatorFormat, valueDisplayed );
 
         // show the numerator that corresponds to this denominator
         if ( URQueryParameters.showAnswers ) {
           var numerator = denominator * unitRateProperty.value;
           numeratorNode.text = StringUtils.format( options.numeratorFormat,
-            ( options.numeratorTrimZeros ) ? numerator : Util.toFixed( numerator, options.numeratorMaxDecimals ) );
+            ( options.numeratorTrimZeros ) ? Util.toFixedNumber( numerator, options.numeratorMaxDecimals ) : Util.toFixed( numerator, options.numeratorMaxDecimals ) );
           numeratorNode.fill = options.showAnswersColor;
           numeratorNode.center = numeratorBox.center;
         }
