@@ -24,20 +24,21 @@ define( function( require ) {
   var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
+  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   // strings
   var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
 
   /**
+   * @param {ShoppingItem} shoppingItem
    * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
    * @param {KeypadLayer} keypadLayer - layer that manages the keypad
    * @param {Object} [options]
    * @constructor
    */
-  function MarkerEditor( doubleNumberLinePanel, keypadLayer, options ) {
+  function MarkerEditor( shoppingItem, doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
-      unitRate: 1, // {number} unit rate, used to compute whether numerator and denominator are a valid marker
       numeratorMaxDigits: 4, // {number} maximum number of numerator digits that can be entered on the keypad
       numeratorMaxDecimals: 2, // {number} maximum number of numerator decimal places that can be entered on the keypad
       denominatorMaxDigits: 4, // {number} maximum number of denominator digits that can be entered on the keypad
@@ -50,6 +51,8 @@ define( function( require ) {
       lineLength: 40, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 14 ), // {Font} font for the value
+      valueColor: 'black', // {Color|string} color of the value
+      showAnswersColor: 'lightGray', // {Color|string} color of the value when 'showAnswers' query parameter is present
       editColor: 'yellow', // {Color|string} value box is filled with this color while editing
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: 3, // {number} vertical margin inside the value box
@@ -191,30 +194,48 @@ define( function( require ) {
 
     // display numerator
     this.numeratorProperty.link( function( numerator ) {
+
       if ( numerator === null ) {
         numeratorNode.text = '';
       }
       else {
         var valueDisplayed = ( options.numeratorTrimZeros ) ? numerator : Util.toFixed( numerator, options.numeratorMaxDecimals );
         numeratorNode.text = StringUtils.format( options.numeratorFormat, valueDisplayed );
+
+        if ( URQueryParameters.showAnswers ) {
+          var denominator = numerator / shoppingItem.unitRate;
+          denominatorNode.text = StringUtils.format( options.denominatorFormat,
+            ( options.denominatorTrimZeros ) ? denominator : Util.toFixed( denominator, options.denominatorMaxDecimals ) );
+          denominatorNode.fill = options.showAnswersColor;
+        }
       }
+      numeratorNode.fill = options.valueColor;
       numeratorNode.center = numeratorBox.center;
 
-      //TODO if ( numerator/denominator === options.unitRate ) { create a marker } else { animate to numerator & clear denominator }
+      //TODO if ( numerator/denominator === shoppingItem.unitRate ) { create a marker } else { animate to numerator & clear denominator }
     } );
 
     // display denominator
     this.denominatorProperty.link( function( denominator ) {
+
       if ( denominator === null ) {
         denominatorNode.text = '';
       }
       else {
         var valueDisplayed = ( options.denominatorTrimZeros ) ? denominator : Util.toFixed( denominator, options.denominatorMaxDecimals );
         denominatorNode.text = StringUtils.format( options.denominatorFormat, valueDisplayed );
+
+        if ( URQueryParameters.showAnswers ) {
+          var numerator = denominator * shoppingItem.unitRate;
+          numeratorNode.text = StringUtils.format( options.numeratorFormat,
+            ( options.numeratorTrimZeros ) ? numerator : Util.toFixed( numerator, options.numeratorMaxDecimals ) );
+          numeratorNode.fill = options.showAnswersColor;
+        }
       }
+      denominatorNode.fill = options.valueColor;
       denominatorNode.center = denominatorBox.center;
 
-      //TODO if ( numerator/denominator === options.unitRate ) { create a marker } else { animate to denominator & clear numerator }
+      //TODO if ( numerator/denominator === shoppingItem.unitRate ) { create a marker } else { animate to denominator & clear numerator }
     } );
 
     // @private

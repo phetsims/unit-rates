@@ -52,7 +52,7 @@ define( function( require ) {
       buttonYMargin: 10
     }, options );
 
-    var doubleNumberLineNode = new DoubleNumberLineNode( this, keypadLayer, {
+    var doubleNumberLineNode = new DoubleNumberLineNode( shoppingItem, this, keypadLayer, {
       topLabel: new Text( shoppingItem.topAxisLabel, AXIS_LABEL_OPTIONS ),
       bottomLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS )
     } );

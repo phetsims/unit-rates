@@ -20,12 +20,13 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
+   * @param {ShoppingItem} shoppingItem
    * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
    * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineNode( doubleNumberLinePanel, keypadLayer, options ) {
+  function DoubleNumberLineNode( shoppingItem, doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
 
@@ -93,7 +94,7 @@ define( function( require ) {
     }
 
     //TODO
-    var markerEditor = new MarkerEditor( doubleNumberLinePanel, keypadLayer, {
+    var markerEditor = new MarkerEditor( shoppingItem, doubleNumberLinePanel, keypadLayer, {
       centerX: verticalAxis.centerX + 200, //TODO
       centerY: verticalAxis.centerY //TODO
     } );
