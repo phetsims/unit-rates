@@ -206,6 +206,7 @@ define( function( require ) {
         var valueDisplayed = ( options.numeratorTrimZeros ) ? numerator : Util.toFixed( numerator, options.numeratorMaxDecimals );
         numeratorNode.text = StringUtils.format( options.numeratorFormat, valueDisplayed );
 
+        // show the denominator that corresponds to this numerator
         if ( URQueryParameters.showAnswers ) {
           var denominator = numerator / unitRateProperty.value;
           denominatorNode.text = StringUtils.format( options.denominatorFormat,
@@ -230,6 +231,7 @@ define( function( require ) {
         var valueDisplayed = ( options.denominatorTrimZeros ) ? denominator : Util.toFixed( denominator, options.denominatorMaxDecimals );
         denominatorNode.text = StringUtils.format( options.denominatorFormat, valueDisplayed );
 
+        // show the numerator that corresponds to this denominator
         if ( URQueryParameters.showAnswers ) {
           var numerator = denominator * unitRateProperty.value;
           numeratorNode.text = StringUtils.format( options.numeratorFormat,
