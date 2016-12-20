@@ -28,7 +28,7 @@ define( function( require ) {
   var enterString = require( 'string!UNIT_RATES/enter' );
 
   // constants
-  var DECIMAL_POINT_STRING = '.'; //TODO this should be in NumberKeypad
+  var DECIMAL_POINT = NumberKeypad.DECIMAL_POINT;
 
   /**
    * @param {Object} [options]
@@ -136,15 +136,15 @@ define( function( require ) {
       // start by assuming that keyString will be ignored
       var newValueString = valueString;
 
-      var hasDecimalPoint = valueString.indexOf( DECIMAL_POINT_STRING ) !== -1;
+      var hasDecimalPoint = valueString.indexOf( DECIMAL_POINT ) !== -1;
       var numberOfDigits = hasDecimalPoint ? valueString.length - 1 : valueString.length;
-      var numberOfDecimals = !hasDecimalPoint ? 0 : ( valueString.length - valueString.indexOf( DECIMAL_POINT_STRING ) - 1 );
+      var numberOfDecimals = !hasDecimalPoint ? 0 : ( valueString.length - valueString.indexOf( DECIMAL_POINT ) - 1 );
 
       if ( valueString === '0' && keyString === '0' ) {
 
         // ignore multiple leading zeros
       }
-      else if ( valueString === '0' && keyString !== '0' && keyString !== DECIMAL_POINT_STRING ) {
+      else if ( valueString === '0' && keyString !== '0' && keyString !== DECIMAL_POINT ) {
 
         // replace a leading 0 that's not followed by a decimal point with this key
         newValueString = keyString;
@@ -153,7 +153,7 @@ define( function( require ) {
 
         // maxDigits reached, ignore key
       }
-      else if ( keyString === DECIMAL_POINT_STRING ) {
+      else if ( keyString === DECIMAL_POINT ) {
         if ( !hasDecimalPoint ) {
 
           // allow one decimal point
