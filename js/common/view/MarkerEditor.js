@@ -25,6 +25,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
   var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
@@ -60,10 +61,6 @@ define( function( require ) {
       keypadLocation: 'below' // {string} 'above' or 'below' doubleNumberLinePanel
     }, options );
 
-    assert && assert( options.numeratorFormat.indexOf( '{0}' ) !== -1,
-      'missing {0} in numeratorFormat: ' + options.numeratorFormat );
-    assert && assert( options.denominatorFormat.indexOf( '{0}' ) !== -1,
-      'missing {0} in denominatorFormat: ' + options.denominatorFormat );
     assert && assert( options.keypadLocation.options === 'above' || options.keypadLocation === 'below',
       'invalid keypadLocation: ' + options.keypadLocation );
 
@@ -203,14 +200,12 @@ define( function( require ) {
         numeratorNode.text = '';
       }
       else {
-        var valueDisplayed = ( options.numeratorTrimZeros ) ? Util.toFixedNumber( numerator, options.numeratorMaxDecimals ) : Util.toFixed( numerator, options.numeratorMaxDecimals );
-        numeratorNode.text = StringUtils.format( options.numeratorFormat, valueDisplayed );
+        numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator, options.numeratorMaxDecimals, options.numeratorTrimZeros );
 
         // show the denominator that corresponds to this numerator
         if ( URQueryParameters.showAnswers ) {
           var denominator = numerator / unitRateProperty.value;
-          denominatorNode.text = StringUtils.format( options.denominatorFormat,
-            ( options.denominatorTrimZeros ) ? Util.toFixedNumber( denominator, options.denominatorMaxDecimals ) : Util.toFixed( denominator, options.denominatorMaxDecimals ) );
+          denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator, options.denominatorMaxDecimals, options.denominatorTrimZeros );
           denominatorNode.fill = options.showAnswersColor;
           denominatorNode.center = denominatorBox.center;
         }
@@ -228,14 +223,12 @@ define( function( require ) {
         denominatorNode.text = '';
       }
       else {
-        var valueDisplayed = ( options.denominatorTrimZeros ) ? Util.toFixedNumber( denominator, options.denominatorMaxDecimals ) : Util.toFixed( denominator, options.denominatorMaxDecimals );
-        denominatorNode.text = StringUtils.format( options.denominatorFormat, valueDisplayed );
+        denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator, options.denominatorMaxDecimals, options.denominatorTrimZeros );
 
         // show the numerator that corresponds to this denominator
         if ( URQueryParameters.showAnswers ) {
           var numerator = denominator * unitRateProperty.value;
-          numeratorNode.text = StringUtils.format( options.numeratorFormat,
-            ( options.numeratorTrimZeros ) ? Util.toFixedNumber( numerator, options.numeratorMaxDecimals ) : Util.toFixed( numerator, options.numeratorMaxDecimals ) );
+          numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator, options.numeratorMaxDecimals, options.numeratorTrimZeros );
           numeratorNode.fill = options.showAnswersColor;
           numeratorNode.center = numeratorBox.center;
         }

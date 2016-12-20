@@ -16,15 +16,14 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ShadowText = require( 'SCENERY_PHET/ShadowText' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
 
   // sim modules
   var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   /**
    * @param {ShoppingQuestion} question - model element for the question
@@ -144,13 +143,13 @@ define( function( require ) {
 
       // update the guess
       if ( guess ) {
-        var guessDisplayed = ( question.trimZeros ) ? Util.toFixedNumber( guess, maxDecimals ) : Util.toFixed( guess, maxDecimals );
-        guessNode.text = StringUtils.format( guessFormat, guessDisplayed );
+        guessNode.text = URUtil.formatNumber( guessFormat, guess, maxDecimals, question.trimZeros );
         guessNode.fill = correct ? options.correctColor : options.incorrectColor;
       }
       else if ( URQueryParameters.showAnswers ) {
         // show the answer, if query parameter is set
-        guessNode.text = StringUtils.format( guessFormat, ( question.trimZeros ) ? Util.toFixedNumber( answer, maxDecimals ) : Util.toFixed( answer, maxDecimals ) );
+        guessNode.text = URUtil.formatNumber( guessFormat, answer, maxDecimals, question.trimZeros );
+        guessNode.text = URUtil.formatNumber( guessFormat, answer, maxDecimals, question.trimZeros );
         guessNode.fill = options.showAnswersColor;
       }
       else {
