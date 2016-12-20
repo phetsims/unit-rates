@@ -22,7 +22,7 @@ define( function( require ) {
      * @param {string} format - the format, which must contain a '{0}' placeholder for the value
      * @param {number} value - the number
      * @param {number} maxDecimals - the maximum number of decimal places
-     * @param {boolean} trimZeros - whether to trim trailing zeros from the decimal portion
+     * @param {boolean} trimZeros - whether to trim trailing zeros from the decimal places
      * @returns {string}
      */
     formatNumber: function( format, value, maxDecimals, trimZeros ) {
@@ -34,12 +34,12 @@ define( function( require ) {
      * Converts a number to a string, using nearest-neighbor rounding.
      * @param {number} value - the number
      * @param {number} maxDecimals - the maximum number of decimal places
-     * @param {boolean} trimZeros - whether to trim trailing zeros from the decimal portion
+     * @param {boolean} trimZeros - whether to trim trailing zeros from the decimal places
      * @returns {string}
      */
     numberToString: function( value, maxDecimals, trimZeros ) {
       if ( trimZeros ) {
-        return '' + Util.toFixedNumber( value, maxDecimals );
+        return Util.toFixedNumber( value, maxDecimals ).toString();
       }
       else {
         return Util.toFixed( value, maxDecimals );
