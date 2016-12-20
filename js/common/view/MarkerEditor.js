@@ -126,6 +126,7 @@ define( function( require ) {
       bottom: numeratorBox.top - options.ySpacing
     } );
     this.addChild( numeratorEditButton );
+    numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 10 );
 
     var denominatorEditButton = new EditButton( {
       scale: options.editButtonScale,
@@ -133,6 +134,7 @@ define( function( require ) {
       top: denominatorBox.bottom + options.ySpacing
     } );
     this.addChild( denominatorEditButton );
+    denominatorEditButton.touchArea = denominatorEditButton.localBounds.dilatedXY( 10, 10 );
 
     this.mutate( options );
 

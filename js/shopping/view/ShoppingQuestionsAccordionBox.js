@@ -44,7 +44,9 @@ define( function( require ) {
       buttonXMargin: 15,
       buttonYMargin: 10,
       contentYSpacing: 18, // vertical spacing between UI elements in the accordion box's content
-      contentAlign: 'right' // alignment of UI elements in the accordion box's content
+      contentAlign: 'right', // alignment of UI elements in the accordion box's content
+      buttonTouchAreaXDilation: 5,
+      buttonTouchAreaYDilation: 5
     }, options );
 
     var self = this;
@@ -81,6 +83,7 @@ define( function( require ) {
         shoppingItem.nextQuestionSet();
       }
     } );
+    refreshButton.touchArea = refreshButton.localBounds.dilatedXY( 5, 5 );
 
     // AccordionBox content
     var contentNode = new VBox( {

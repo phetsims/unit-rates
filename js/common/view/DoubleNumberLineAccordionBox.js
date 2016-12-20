@@ -48,7 +48,9 @@ define( function( require ) {
       cornerRadius: 10,
       buttonLength: 20,
       buttonXMargin: 15,
-      buttonYMargin: 10
+      buttonYMargin: 10,
+      buttonTouchAreaXDilation: 5,
+      buttonTouchAreaYDilation: 5
     }, options );
 
     //TODO in ShoppingLabScreen, unit rate is mutable, and should be part of the ShoppingLabItem model element
@@ -67,6 +69,7 @@ define( function( require ) {
         //TODO
       }
     } );
+    eraserButton.touchArea = eraserButton.localBounds.dilatedXY( 5, 5 );
 
     var contentNode = new VBox( {
       align: 'right',

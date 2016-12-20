@@ -67,6 +67,7 @@ define( function( require ) {
       cursor: 'pointer'
     } );
     this.addChild( valueBox );
+    valueBox.touchArea = valueBox.localBounds.dilatedXY( 5, 5 );
 
     // edit button
     var editButton = new EditButton( {
@@ -75,6 +76,7 @@ define( function( require ) {
       centerY: valueBox.centerY
     } );
     this.addChild( editButton );
+    editButton.touchArea = editButton.localBounds.dilatedXY( 10, 10 );
 
     // check mark to indicate that the question has been correctly answered
     var checkMarkNode = new ShadowText( '\u2713', {
