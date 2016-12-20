@@ -1,3 +1,5 @@
 TODO list for unit-rates
 
 Answering a question correctly should place a corresponding marker on the DNL
+
+MarkerEditor: use options.denominatorMaxDecimals:2 for candy
