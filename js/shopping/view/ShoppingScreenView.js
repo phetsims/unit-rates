@@ -11,11 +11,11 @@ define( function( require ) {
   // sim modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Plane = require( 'SCENERY/nodes/Plane' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
 
   // common modules
+  var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
   var ShoppingCategoryRadioButtons = require( 'UNIT_RATES/shopping/view/ShoppingCategoryRadioButtons' );
   var ShoppingCategoryNode = require( 'UNIT_RATES/shopping/view/ShoppingCategoryNode' );
   var ShoppingViewProperties = require( 'UNIT_RATES/shopping/view/ShoppingViewProperties' );
@@ -37,10 +37,7 @@ define( function( require ) {
     var playAreaLayer = new Node();
     this.addChild( playAreaLayer );
 
-    var keypadLayer = new Plane( {
-      fill: 'rgba( 0, 0, 0, 0.2 )',
-      visible: false
-    } );
+    var keypadLayer = new KeypadLayer();
     this.addChild( keypadLayer );
 
     //TODO create on demand to reduce startup time?

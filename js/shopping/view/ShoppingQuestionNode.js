@@ -22,7 +22,6 @@ define( function( require ) {
 
   // sim modules
   var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
-  var KeypadPanel = require( 'UNIT_RATES/common/view/KeypadPanel' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
@@ -30,7 +29,7 @@ define( function( require ) {
   /**
    * @param {ShoppingQuestion} question - model element for the question
    * @param {Node} questionsPanel - panel that contains the question, for positioning the keypad
-   * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
+   * @param {KeypadLayer} keypadLayer - layer that manages the keypad
    * @param {Object} [options]
    * @constructor
    */
@@ -53,8 +52,6 @@ define( function( require ) {
     }, options );
 
     Node.call( this );
-
-    var self = this;
 
     // local vars to improve readability
     var answer = question.answer;
@@ -136,24 +133,6 @@ define( function( require ) {
     } );
     this.addChild( denominatorNode );
 
-    // keypad for entering numbers, added dynamically to keypadLayer
-    var keypad = new KeypadPanel( {
-      maxDigits: question.maxDigits,
-      maxDecimals: question.maxDecimals,
-      enterButtonListener: function() {
-        self.commitEdit();
-      }
-    } );
-
-    // Clicking outside the keypad cancels the edit
-    var keypadLayerListener = new DownUpListener( {
-      down: function( event ) {
-        if ( event.trail.lastNode() === keypadLayer ) {
-          self.cancelEdit();
-        }
-      }
-    } );
-
     this.mutate( options );
 
     // Update when the guess changes
@@ -191,26 +170,44 @@ define( function( require ) {
     };
     question.guessProperty.link( guessObserver );
 
+    // highlight the value box to indicate that an edit is in progress
+    var onBeginEdit = function() {
+      valueBox.fill = options.editColor;
+    };
+
+    // clear highlight to indicate that the edit is completed
+    var onEndEdit = function() {
+      valueBox.fill = 'white';
+    };
+
+    // position the keypad relative to the Questions panel
+    var setKeypadLocation = function( keypad ) {
+      var questionsPanelBounds = keypad.globalToParentBounds( questionsPanel.localToGlobalBounds( questionsPanel.localBounds ) );
+      keypad.right = questionsPanelBounds.left - 10;
+      keypad.bottom = questionsPanelBounds.bottom;
+    };
+
+    // opens a modal keypad
+    var editValue = function() {
+      keypadLayer.beginEdit( question.guessProperty, {
+        onBeginEdit: onBeginEdit,
+        onEndEdit: onEndEdit,
+        setKeypadLocation: setKeypadLocation,
+        maxDigits: question.maxDigits,
+        maxDecimals: question.maxDecimals
+      } );
+    };
+
     // Click on editButton or in valueBox to begin editing the value
-    var beginEditBound = this.beginEdit.bind( this );
-    editButton.addListener( beginEditBound );
+    editButton.addListener( editValue );
     valueBox.addInputListener( new DownUpListener( {
-      down: beginEditBound
+      down: editValue
     } ) );
 
     // @private cleanup that's specific to this Node
     this.disposeShoppingQuestionNode = function() {
       question.guessProperty.unlink( guessObserver );
     };
-
-    // @private properties required by private functions related to keypad editing
-    this.valueBox = valueBox;
-    this.editColor = options.editColor;
-    this.keypad = keypad;
-    this.keypadLayer = keypadLayer;
-    this.keypadLayerListener = keypadLayerListener;
-    this.question = question;
-    this.questionsPanel = questionsPanel;
   }
 
   unitRates.register( 'ShoppingQuestionNode', ShoppingQuestionNode );
@@ -220,59 +217,6 @@ define( function( require ) {
     // @public
     dispose: function() {
       this.disposeShoppingQuestionNode();
-    },
-
-    // @private begins an edit
-    beginEdit: function() {
-      URQueryParameters.log && console.log( 'beginEdit' );
-      assert && assert( !this.keypadLayer.visible, 'invalid state for beginEdit' );
-
-      // highlight the value box to indicate that an edit is in progress
-      this.valueBox.fill = this.editColor;
-
-      // display the keypad
-      this.keypad.valueStringProperty.value = '';
-      this.keypadLayer.addChild( this.keypad );
-      this.keypadLayer.addInputListener( this.keypadLayerListener );
-      this.keypadLayer.visible = true;
-
-      // position the keypad relative to the Questions panel
-      var questionsPanelBounds = this.keypad.globalToParentBounds( this.questionsPanel.localToGlobalBounds( this.questionsPanel.localBounds ) );
-      this.keypad.right = questionsPanelBounds.left - 10;
-      this.keypad.bottom = questionsPanelBounds.bottom;
-    },
-
-    // @private ends an edit
-    endEdit: function() {
-      URQueryParameters.log && console.log( 'endEdit' );
-      assert && assert( this.keypadLayer.visible, 'invalid state for endEdit' );
-
-      // hide the keypad
-      this.keypadLayer.visible = false;
-      this.keypadLayer.removeChild( this.keypad );
-      this.keypadLayer.removeInputListener( this.keypadLayerListener );
-
-      // unhighlight the value box
-      this.valueBox.fill = 'white';
-    },
-
-    // @private commits an edit
-    commitEdit: function() {
-      URQueryParameters.log && console.log( 'commitEdit' );
-      var valueString = this.keypad.valueStringProperty.value;
-      if ( valueString ) {
-        this.endEdit();
-        this.question.guessProperty.value = ( 1 * valueString ); // string -> number conversion
-      }
-      else {
-        this.cancelEdit(); // not entering a value in the keypad is effectively a cancel
-      }
-    },
-
-    // @private cancels an edit
-    cancelEdit: function() {
-      URQueryParameters.log && console.log( 'cancelEdit' );
-      this.endEdit();
     }
   } );
 } );

@@ -28,7 +28,7 @@ define( function( require ) {
 
   /**
    * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
-   * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
+   * @param {KeypadLayer} keypadLayer - layer that manages the keypad
    * @param {Object} [options]
    * @constructor
    */

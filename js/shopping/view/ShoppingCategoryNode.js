@@ -21,7 +21,7 @@ define( function( require ) {
    * @param {ShoppingCategory} category
    * @param {Property.<ShoppingCategory>} categoryProperty
    * @param {Bounds2} layoutBounds
-   * @param {Node} keypadLayer
+   * @param {KeypadLayer} keypadLayer
    * @param {ShoppingViewProperties} viewProperties
    * @param {Object} [options]
    * @constructor

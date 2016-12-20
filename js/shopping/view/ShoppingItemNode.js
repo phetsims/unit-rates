@@ -20,7 +20,7 @@ define( function( require ) {
   /**
    * @param {ShoppingItem} shoppingItem
    * @param {Bounds2} layoutBounds
-   * @param {Node} keypadLayer
+   * @param {KeypadLayer} keypadLayer
    * @param {ShoppingViewProperties} viewProperties
    * @param {Object} [options]
    * @constructor
