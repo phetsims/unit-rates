@@ -1,6 +1,5 @@
 // Copyright 2016, University of Colorado Boulder
 
-//TODO move to common, generalize to be usable in all Screens
 /**
  * Displays a double number line in an accordion box, with a marker editor and eraser button.
  *
