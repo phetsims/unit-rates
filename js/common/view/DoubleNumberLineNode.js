@@ -20,13 +20,13 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {ShoppingItem} shoppingItem
+   * @param {Property.<number>} unitRateProperty
    * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
    * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineNode( shoppingItem, doubleNumberLinePanel, keypadLayer, options ) {
+  function DoubleNumberLineNode( unitRateProperty, doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
 
@@ -94,7 +94,7 @@ define( function( require ) {
     }
 
     //TODO
-    var markerEditor = new MarkerEditor( shoppingItem.unitRate, doubleNumberLinePanel, keypadLayer, {
+    var markerEditor = new MarkerEditor( unitRateProperty, doubleNumberLinePanel, keypadLayer, {
       centerX: verticalAxis.centerX + 200, //TODO
       centerY: verticalAxis.centerY //TODO
     } );
@@ -102,9 +102,14 @@ define( function( require ) {
 
     this.mutate( options );
 
+    var unitRateObserver = function() {
+      //TODO
+    };
+    unitRateProperty.link( unitRateObserver );
+
     // @private
     this.disposeDoubleNumberLineNode = function() {
-      //TODO
+      unitRateProperty.unlink( unitRateObserver );
       markerEditor.dispose();
     };
   }

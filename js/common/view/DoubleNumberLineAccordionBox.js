@@ -51,20 +51,21 @@ define( function( require ) {
       buttonYMargin: 10
     }, options );
 
-    var doubleNumberLineNode = new DoubleNumberLineNode( shoppingItem, this, keypadLayer, {
+    //TODO in ShoppingLabScreen, unit rate is mutable, and should be part of the ShoppingLabItem model element
+    var unitRateProperty = new Property( shoppingItem.unitRate );
+
+    var doubleNumberLineNode = new DoubleNumberLineNode( unitRateProperty, this, keypadLayer, {
       topLabel: new Text( shoppingItem.topAxisLabel, AXIS_LABEL_OPTIONS ),
       bottomLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS )
     } );
 
-    //TODO erase markers that were created using the marker editor, or by putting items on the scale
+    //TODO erase markers that were created using the marker editor or by interacting with the scale
     var eraserButton = new EraserButton( {
       baseColor: 'rgb( 255, 255, 219 )',
       listener: function() {
         //TODO
       }
     } );
-
-    //TODO add marker editor
 
     var contentNode = new VBox( {
       align: 'right',
@@ -87,7 +88,6 @@ define( function( require ) {
     // @private
     this.disposeDoubleNumberLineAccordionBox = function() {
       doubleNumberLineNode.dispose();
-      //TODO
     };
   }
 

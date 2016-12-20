@@ -30,13 +30,13 @@ define( function( require ) {
   var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
 
   /**
-   * @param {number} unitRate
+   * @param {Property.<number>} unitRateProperty
    * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
    * @param {KeypadLayer} keypadLayer - layer that manages the keypad
    * @param {Object} [options]
    * @constructor
    */
-  function MarkerEditor( unitRate, doubleNumberLinePanel, keypadLayer, options ) {
+  function MarkerEditor( unitRateProperty, doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
       numeratorMaxDigits: 4, // {number} maximum number of numerator digits that can be entered on the keypad
@@ -207,7 +207,7 @@ define( function( require ) {
         numeratorNode.text = StringUtils.format( options.numeratorFormat, valueDisplayed );
 
         if ( URQueryParameters.showAnswers ) {
-          var denominator = numerator / unitRate;
+          var denominator = numerator / unitRateProperty.value;
           denominatorNode.text = StringUtils.format( options.denominatorFormat,
             ( options.denominatorTrimZeros ) ? denominator : Util.toFixed( denominator, options.denominatorMaxDecimals ) );
           denominatorNode.fill = options.showAnswersColor;
@@ -217,7 +217,7 @@ define( function( require ) {
       numeratorNode.fill = options.valueColor;
       numeratorNode.center = numeratorBox.center;
 
-      //TODO if ( numerator/denominator === unitRate ) { create a marker } else { animate to numerator & clear denominator }
+      //TODO if ( numerator/denominator === unitRateProperty.value ) { create a marker } else { animate to numerator & clear denominator }
     } );
 
     // display denominator
@@ -231,7 +231,7 @@ define( function( require ) {
         denominatorNode.text = StringUtils.format( options.denominatorFormat, valueDisplayed );
 
         if ( URQueryParameters.showAnswers ) {
-          var numerator = denominator * unitRate;
+          var numerator = denominator * unitRateProperty.value;
           numeratorNode.text = StringUtils.format( options.numeratorFormat,
             ( options.numeratorTrimZeros ) ? numerator : Util.toFixed( numerator, options.numeratorMaxDecimals ) );
           numeratorNode.fill = options.showAnswersColor;
@@ -241,12 +241,17 @@ define( function( require ) {
       denominatorNode.fill = options.valueColor;
       denominatorNode.center = denominatorBox.center;
 
-      //TODO if ( numerator/denominator === unitRate ) { create a marker } else { animate to denominator & clear numerator }
+      //TODO if ( numerator/denominator === unitRateProperty.value ) { create a marker } else { animate to denominator & clear numerator }
     } );
+
+    var unitRateObserver = function() {
+      //TODO
+    };
+    unitRateProperty.link( unitRateObserver );
 
     // @private
     this.disposeMarkerEditor = function() {
-      //TODO
+      unitRateProperty.unlink( unitRateObserver );
     };
   }
 
