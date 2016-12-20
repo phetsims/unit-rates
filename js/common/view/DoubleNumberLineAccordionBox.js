@@ -55,8 +55,9 @@ define( function( require ) {
     var unitRateProperty = new Property( shoppingItem.unitRate );
 
     var doubleNumberLineNode = new DoubleNumberLineNode( unitRateProperty, this, keypadLayer, {
-      topLabel: new Text( shoppingItem.topAxisLabel, AXIS_LABEL_OPTIONS ),
-      bottomLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS )
+      topAxisLabel: new Text( shoppingItem.topAxisLabel, AXIS_LABEL_OPTIONS ),
+      bottomAxisLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS ),
+      bottomAxisMaxDecimals: shoppingItem.bottomAxisMaxDecimals
     } );
 
     //TODO erase markers that were created using the marker editor or by interacting with the scale

@@ -43,11 +43,12 @@ define( function( require ) {
       labelXSpacing: 4, // horizontal spacing between axis and its label
       
       // top horizontal axis
-      topLabel: null, // {Node|null} label on the top axis
+      topAxisLabel: null, // {Node|null} label on the top axis
       topAxisColor: 'black',
       
       // bottom horizontal axis
-      bottomLabel: null, // {Node|null} label on the bottom axis
+      bottomAxisLabel: null, // {Node|null} label on the bottom axis
+      bottomAxisMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
       bottomAxisColor: 'black'
 
     }, options );
@@ -71,10 +72,10 @@ define( function( require ) {
     } );
     this.addChild( topAxisNode );
     
-    if ( options.topLabel ) {
-      this.addChild( options.topLabel );
-      options.topLabel.left = topAxisNode.right + options.labelXSpacing;
-      options.topLabel.centerY =  topAxisNode.centerY;
+    if ( options.topAxisLabel ) {
+      this.addChild( options.topAxisLabel );
+      options.topAxisLabel.left = topAxisNode.right + options.labelXSpacing;
+      options.topAxisLabel.centerY =  topAxisNode.centerY;
     }
 
     var bottomAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
@@ -87,14 +88,14 @@ define( function( require ) {
     } );
     this.addChild( bottomAxisNode );
 
-    if ( options.bottomLabel ) {
-      this.addChild( options.bottomLabel );
-      options.bottomLabel.left = bottomAxisNode.right + options.labelXSpacing;
-      options.bottomLabel.centerY =  bottomAxisNode.centerY;
+    if ( options.bottomAxisLabel ) {
+      this.addChild( options.bottomAxisLabel );
+      options.bottomAxisLabel.left = bottomAxisNode.right + options.labelXSpacing;
+      options.bottomAxisLabel.centerY =  bottomAxisNode.centerY;
     }
 
-    //TODO
     var markerEditor = new MarkerEditor( unitRateProperty, doubleNumberLinePanel, keypadLayer, {
+      denominatorMaxDecimals: options.bottomAxisMaxDecimals,
       centerX: verticalAxis.centerX + 200, //TODO
       centerY: verticalAxis.centerY //TODO
     } );
