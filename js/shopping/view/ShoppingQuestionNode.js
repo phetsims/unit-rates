@@ -42,6 +42,7 @@ define( function( require ) {
       correctColor: 'green', // {Color|string} color for the correct answer
       incorrectColor: 'red', // {Color|string} color for an incorrect guess
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
+      showAnswersColor: 'lightGray', // {Color|string} when 'showAnswers' query parameter is present, show the answer in this color
       editColor: 'yellow', // {Color|string} value box is filled with this color while editing
       questionFont: new URFont( 14 ), // {Font} font for the question
       valueFont: new URFont( 14 ), // {Font} font for the value
@@ -150,7 +151,7 @@ define( function( require ) {
       else if ( URQueryParameters.showAnswers ) {
         // show the answer, if query parameter is set
         guessNode.text = StringUtils.format( guessFormat, ( question.trimZeros ) ? answer : Util.toFixed( answer, maxDecimals ) );
-        guessNode.fill = options.neutralColor;
+        guessNode.fill = options.showAnswersColor;
       }
       else {
         guessNode.text = '';
