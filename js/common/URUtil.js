@@ -26,8 +26,11 @@ define( function( require ) {
      * @returns {string}
      */
     formatNumber: function( format, value, maxDecimals, trimZeros ) {
-      //TODO this assertion fails with stringTest
-      // assert && assert( format.indexOf( '{0}' ) !== -1, 'missing {0} in format: ' + format );
+
+      // stringTest indiscriminately replaces all strings, with no regard to formatting placeholders.
+      if ( !phet.chipper.queryParameters.stringTest ) {
+        assert && assert( format.indexOf( '{0}' ) !== -1, 'missing {0} in format: ' + format );
+      }
       return StringUtils.format( format, URUtil.numberToString( value, maxDecimals, trimZeros ) );
     },
 
