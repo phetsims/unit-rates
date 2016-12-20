@@ -40,7 +40,7 @@ define( function( require ) {
       horizontalAxisLineWidth: 1.5,
       arrowSize: new Dimension2( 8, 8 ),
       horizontalAxisYSpacing: 20, // vertical spacing between top and bottom axes
-      labelXSpacing: 4, // horizontal spacing between axis and its label
+      labelXSpacing: 12, // horizontal spacing between axis and its label
       
       // top horizontal axis
       topAxisLabel: null, // {Node|null} label on the top axis
