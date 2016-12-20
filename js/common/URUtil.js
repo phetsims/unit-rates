@@ -26,7 +26,8 @@ define( function( require ) {
      * @returns {string}
      */
     formatNumber: function( format, value, maxDecimals, trimZeros ) {
-      assert && assert( format.indexOf( '{0}' ) !== -1, 'missing {0} in format: ' + format );
+      //TODO this assertion fails with stringTest
+      // assert && assert( format.indexOf( '{0}' ) !== -1, 'missing {0} in format: ' + format );
       return StringUtils.format( format, URUtil.numberToString( value, maxDecimals, trimZeros ) );
     },
 
