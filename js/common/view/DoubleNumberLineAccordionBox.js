@@ -75,7 +75,7 @@ define( function( require ) {
       y: 0
     } );
 
-    var markerEditorHomeX = doubleNumberLineNode.left - 25;
+    var markerEditorHomeX = doubleNumberLineNode.left - 40;
     var undoButtonHomePosition = new Vector2( markerEditorHomeX, doubleNumberLineNode.centerY );
 
     var markerEditor = new MarkerEditor( unitRateProperty, this, keypadLayer, {
