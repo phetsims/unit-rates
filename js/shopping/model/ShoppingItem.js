@@ -14,6 +14,7 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
 
   // sim modules
+  var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingQuestion = require( 'UNIT_RATES/shopping/model/ShoppingQuestion' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -64,6 +65,9 @@ define( function( require ) {
     this.bottomAxisLabel = options.bottomAxisLabel;
     this.bottomAxisRange = options.bottomAxisRange;
     this.bottomAxisMaxDecimals = options.bottomAxisMaxDecimals;
+
+    // @public {DoubleNumberLine} double number line associated with this item
+    this.doubleNumberLine = new DoubleNumberLine();
 
     // @public {ShoppingQuestion} 'Unit Rate?'
     this.unitRateQuestion = ShoppingQuestion.createUnitRate( itemData.unitRate, options.questionSingularUnits );
@@ -126,6 +130,8 @@ define( function( require ) {
 
     // @public
     reset: function() {
+
+      this.doubleNumberLine.reset();
 
       // reset all ShoppingQuestions
       this.unitRateQuestion.reset();

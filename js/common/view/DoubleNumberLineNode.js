@@ -20,11 +20,12 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
+   * @param {DoubleNumberLine} doubleNumberLine
    * @param {Property.<number>} unitRateProperty
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineNode( unitRateProperty, options ) {
+  function DoubleNumberLineNode( doubleNumberLine, unitRateProperty, options ) {
 
     options = _.extend( {
 
@@ -99,6 +100,23 @@ define( function( require ) {
       //TODO
     };
     unitRateProperty.link( unitRateObserver );
+
+    doubleNumberLine.scaleMarkerProperty.link( function( marker ) {
+       //TODO
+      console.log( 'scaleMarker=' + marker );
+    } );
+    doubleNumberLine.undoMarkerProperty.link( function( marker ) {
+       //TODO
+      console.log( 'undoMarker=' + marker );
+    } );
+    doubleNumberLine.questionMarkers.addItemAddedListener( function( marker ) {
+       //TODO
+      console.log( 'questionMarker=' + marker );
+    } );
+    doubleNumberLine.otherMarkers.addItemAddedListener( function( marker ) {
+       //TODO
+      console.log( 'otherMarker=' + marker );
+    } );
 
     // @private
     this.disposeDoubleNumberLineNode = function() {

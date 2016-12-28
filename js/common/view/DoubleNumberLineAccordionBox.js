@@ -65,7 +65,7 @@ define( function( require ) {
     //TODO in ShoppingLabScreen, unit rate is mutable, and should be part of the ShoppingLabItem model element
     var unitRateProperty = new Property( shoppingItem.unitRate );
 
-    var doubleNumberLineNode = new DoubleNumberLineNode( unitRateProperty, {
+    var doubleNumberLineNode = new DoubleNumberLineNode( shoppingItem.doubleNumberLine, unitRateProperty, {
       horizontalAxisLength: options.horizontalAxisLength,
       topAxisLabel: new Text( shoppingItem.topAxisLabel, AXIS_LABEL_OPTIONS ),
       bottomAxisLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS ),
@@ -100,7 +100,7 @@ define( function( require ) {
       baseColor: 'rgb( 242, 242, 242 )',
       listener: function() {
         markerEditor.reset();
-        //TODO erase markers that were created using the marker editor or by interacting with the scale
+        shoppingItem.doubleNumberLine.erase();
       }
     } );
     eraserButton.touchArea = eraserButton.localBounds.dilatedXY( 5, 5 );
@@ -135,7 +135,8 @@ define( function( require ) {
 
         if ( markerEditor.denominatorProperty.value <= shoppingItem.bottomAxisRange.max ) {
 
-          //TODO create a marker on the double number line
+          // create a marker on the double number line
+          shoppingItem.doubleNumberLine.undoMarkerProperty.value = markerEditor.denominatorProperty.value;
 
           // return the marker editor to its home position
           markerEditor.reset();
