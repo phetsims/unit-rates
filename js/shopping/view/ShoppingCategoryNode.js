@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * View for a category of items in the 'Shopping' screen.
+ * View components that are specific to a category of items in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

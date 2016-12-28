@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * View for a ShoppingItem and its related components (including a shelf, scale, double number line and challenges).
+ * View components that are specific to a type of item in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
