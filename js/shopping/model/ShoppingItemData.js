@@ -85,7 +85,7 @@ define( function( require ) {
         bagImage: appleBagImage, // {HTMLImageElement} image for a bag of items
 
         // {number[][]} Number of items for each question, grouped into 'question sets'.
-        // See 'Unit Rates & Challenge Prompts' in design document.
+        // See 'Unit Rates & Challenge Prompts' table in design document.
         questionQuantities: [
           [ 10, 6, 8 ],
           [ 10, 14, 13 ],
