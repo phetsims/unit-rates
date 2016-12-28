@@ -40,6 +40,7 @@ require.config( {
     SCENERY_PHET: '../../scenery-phet/js',
     SUN: '../../sun/js',
     TANDEM: '../../tandem/js',
+    TWIXT: '../../twixt/js',
 
     // this sim
     UNIT_RATES: '.'

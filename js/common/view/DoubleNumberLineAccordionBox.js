@@ -13,11 +13,13 @@ define( function( require ) {
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LinearFunction = require( 'DOT/LinearFunction' );
+  var MoveTo = require( 'TWIXT/MoveTo' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
   var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
@@ -116,13 +118,18 @@ define( function( require ) {
       shoppingItem.bottomAxisRange.min, shoppingItem.bottomAxisRange.max,
       0, 0.96 * options.horizontalAxisLength );
 
+    // animation for marker editor
+    var markerEditorAnimation = null;
+
     // Observe marker editor, to position the editor and create markers.
     var markerEditorObserver = function() {
+
+      var destinationX = 0;
 
       if ( markerEditor.numeratorProperty.value === null && markerEditor.denominatorProperty.value === null ) {
 
         // move marker editor back to home position
-        markerEditor.right = doubleNumberLineNode.left - 5;
+        destinationX = doubleNumberLineNode.left - 15;
       }
       else {
         var denominator = markerEditor.denominatorProperty.value;
@@ -134,18 +141,29 @@ define( function( require ) {
         if ( denominator > shoppingItem.bottomAxisRange.max ) {
 
           // move marker editor to right of axis arrows
-          markerEditor.centerX = doubleNumberLineNode.x + options.horizontalAxisLength + 5;
+          destinationX = doubleNumberLineNode.x + options.horizontalAxisLength + 5;
         }
         else {
-          markerEditor.centerX = doubleNumberLineNode.x + modelToView( denominator );
+          destinationX = doubleNumberLineNode.x + modelToView( denominator );
         }
       }
+
+      //TODO add query parameter to control markerEditorAnimation speed
+      markerEditorAnimation = new MoveTo( markerEditor, new Vector2( destinationX, markerEditor.y ), {
+
+        // marker editor is not interactive while animating
+        onStart: function() { markerEditor.pickable = false; },
+        onComplete: function() { markerEditor.pickable = true; },
+        onStop: function() { markerEditor.pickable = true; }
+      } );
+      markerEditorAnimation.start();
     };
     markerEditor.numeratorProperty.link( markerEditorObserver );
     markerEditor.denominatorProperty.link( markerEditorObserver );
 
     // @private
     this.disposeDoubleNumberLineAccordionBox = function() {
+      markerEditorAnimation && markerEditorAnimation.stop(); //TODO is this sufficient?
       markerEditor.numeratorProperty.unlink( markerEditorObserver );
       markerEditor.denominatorProperty.unlink( markerEditorObserver );
       markerEditor.dispose();
