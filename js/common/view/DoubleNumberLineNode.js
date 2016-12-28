@@ -14,17 +14,17 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Range = require( 'DOT/Range' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {Property.<number>} unitRateProperty
-   * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineNode( unitRateProperty, keypadLayer, options ) {
+  function DoubleNumberLineNode( unitRateProperty, options ) {
 
     options = _.extend( {
 
@@ -47,6 +47,7 @@ define( function( require ) {
       // bottom horizontal axis
       bottomAxisLabel: null, // {Node|null} label on the bottom axis
       bottomAxisMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
+      bottomAxisRange: new Range( 0, 10 ), // {Range} of the bottom axis
       bottomAxisColor: 'black'
 
     }, options );

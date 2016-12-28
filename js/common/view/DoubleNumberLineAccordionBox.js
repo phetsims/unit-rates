@@ -54,7 +54,8 @@ define( function( require ) {
       buttonYMargin: 10,
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5,
-      bottomAxisMaxDecimals: 1
+      bottomAxisMaxDecimals: 1,
+      horizontalAxisLength: 575
     }, options );
 
     //TODO in ShoppingLabScreen, unit rate is mutable, and should be part of the ShoppingLabItem model element
@@ -74,10 +75,12 @@ define( function( require ) {
     } );
     undoButton.touchArea = undoButton.localBounds.dilatedXY( 5, 5 );
 
-    var doubleNumberLineNode = new DoubleNumberLineNode( unitRateProperty, keypadLayer, {
+    var doubleNumberLineNode = new DoubleNumberLineNode( unitRateProperty, {
+      horizontalAxisLength: options.horizontalAxisLength,
       topAxisLabel: new Text( shoppingItem.topAxisLabel, AXIS_LABEL_OPTIONS ),
       bottomAxisLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS ),
       bottomAxisMaxDecimals: shoppingItem.bottomAxisMaxDecimals,
+      bottomAxisRange: shoppingItem.bottomAxisMaxRange,
       left: markerEditor.right + 5,
       centerY: markerEditor.centerY
     } );
