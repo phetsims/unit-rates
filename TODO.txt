@@ -1,3 +1,13 @@
 TODO list for unit-rates
 
-Answering a question correctly should place a corresponding marker on the DNL
+DoubleNumberLineNode: observe DoubleNumberLine Properties and create markers
+
+ShoppingQuestion: when correctEmitter fires, add marker to DoubleNumberLine.questionMarkers
+
+DoubleNumberLineAccordionBox: clear DoubleNumberLine.undoMarkerProperty when undo button is moved to home position
+
+Test DoubleNumberLine.scaleoMarkerProperty, even though we don't have a scale yet.
+
+Put icons under markers on DNL, to tie them to scale or questions?
+
+
