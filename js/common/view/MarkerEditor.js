@@ -245,7 +245,7 @@ define( function( require ) {
         denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator, options.denominatorMaxDecimals, options.denominatorTrimZeros );
 
         // compute the corresponding numerator
-        var numerator = Util.toFixedNumber( denominator * unitRateProperty.value, options.denominatorMaxDecimals );
+        var numerator = Util.toFixedNumber( denominator * unitRateProperty.value, options.numeratorMaxDecimals );
 
         // clear the numerator if it doesn't match the denominator
         if ( numerator !== self.numeratorProperty.value ) {
