@@ -30,6 +30,13 @@ define( function( require ) {
     randomEnabled: {
       type: 'boolean',
       defaultValue: true
+    },
+
+    // duration of animations, 1 is 'production' speed, larger values make animations run slower
+    animationDuration: {
+      type: 'number',
+      defaultValue: 1,
+      isValidValue: function( value ) { return value > 0; }
     }
   } );
 

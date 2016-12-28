@@ -26,6 +26,7 @@ define( function( require ) {
   var MarkerEditor = require( 'UNIT_RATES/common/view/MarkerEditor' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
+  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   // strings
   var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
@@ -175,8 +176,13 @@ define( function( require ) {
         }
       }
 
-      //TODO add query parameter to control markerEditorAnimation speed
+      // stop any animation that is in progress
+      markerEditorAnimation && markerEditorAnimation.stop();
+
       markerEditorAnimation = new MoveTo( markerEditor, new Vector2( destinationX, markerEditor.y ), {
+
+        // animation duration is controllable via query parameter
+        duration: URQueryParameters.animationDuration,
 
         // marker editor is not interactive while animating
         onStart: function() { markerEditor.pickable = false; },
@@ -190,7 +196,7 @@ define( function( require ) {
 
     // @private
     this.disposeDoubleNumberLineAccordionBox = function() {
-      markerEditorAnimation && markerEditorAnimation.stop(); //TODO is this sufficient?
+      markerEditorAnimation && markerEditorAnimation.stop();
       markerEditor.numeratorProperty.unlink( markerEditorObserver );
       markerEditor.denominatorProperty.unlink( markerEditorObserver );
       markerEditor.dispose();
