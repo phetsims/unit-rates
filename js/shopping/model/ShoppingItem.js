@@ -50,7 +50,7 @@ define( function( require ) {
                         phet.joist.random.nextIntBetween( 0, itemData.questionQuantities.length - 1 ) : 0
     }, options );
 
-    // @public (read-only) unpack imageData
+    // @public (read-only) unpack itemData
     this.unitRate = itemData.unitRate;
     this.bagRate = itemData.bagRate;
     this.numberOfBags = itemData.numberOfBags;
