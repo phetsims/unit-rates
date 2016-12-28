@@ -137,6 +137,7 @@ define( function( require ) {
 
           //TODO create a marker on the double number line
 
+          // return the marker editor to its home position
           markerEditor.reset();
 
           //TODO move undo button below new marker and make it visible
