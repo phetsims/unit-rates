@@ -43,13 +43,13 @@ define( function( require ) {
       // numerator
       numeratorFormat: currencyValueString, // {string} format for displaying the numerator
       numeratorMaxDigits: 4, // {number} maximum number of numerator digits that can be entered on the keypad
-      numeratorMaxDecimals: 2, // {number} maximum number of numerator decimal places that can be entered on the keypad
+      numeratorMaxDecimals: 2, // {number} maximum number of numerator decimal places that can be entered on keypad
       numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros in numerator's decimal places
 
       // denominator
       denominatorFormat: '{0}', // {string} format for displaying the denominator
       denominatorMaxDigits: 4, // {number} maximum number of denominator digits that can be entered on the keypad
-      denominatorMaxDecimals: 1, // {number} maximum number of denominator decimal places that can be entered on the keypad
+      denominatorMaxDecimals: 1, // {number} maximum number of denominator decimal places that can be entered on keypad
       denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros in denominator's decimal places
 
       // general
@@ -152,8 +152,10 @@ define( function( require ) {
       assert && assert( numeratorEditButton.centerX === denominatorEditButton.centerX );
 
       // position the keypad relative to edit button and double number line panel
-      var doubleNumberLinePanelBounds = keypad.globalToParentBounds( doubleNumberLinePanel.localToGlobalBounds( doubleNumberLinePanel.localBounds ) );
-      var editButtonBounds = keypad.globalToParentBounds( numeratorEditButton.localToGlobalBounds( numeratorEditButton.localBounds ) );
+      var doubleNumberLinePanelBounds =
+        keypad.globalToParentBounds( doubleNumberLinePanel.localToGlobalBounds( doubleNumberLinePanel.localBounds ) );
+      var editButtonBounds =
+        keypad.globalToParentBounds( numeratorEditButton.localToGlobalBounds( numeratorEditButton.localBounds ) );
 
       // Try to horizontally center the keypad on the edit button,
       // but don't let it go past the ends of the double number line panel.
@@ -213,8 +215,8 @@ define( function( require ) {
         numeratorNode.text = '';
       }
       else {
-
-        numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator, options.numeratorMaxDecimals, options.numeratorTrimZeros );
+        numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator,
+          options.numeratorMaxDecimals, options.numeratorTrimZeros );
 
         // compute the corresponding denominator
         var denominator = Util.toFixedNumber( numerator / unitRateProperty.value, options.denominatorMaxDecimals );
@@ -225,7 +227,8 @@ define( function( require ) {
 
           // show the denominator that corresponds to this numerator
           if ( URQueryParameters.showAnswers ) {
-            denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator, options.denominatorMaxDecimals, options.denominatorTrimZeros );
+            denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator,
+              options.denominatorMaxDecimals, options.denominatorTrimZeros );
             denominatorNode.fill = options.showAnswersColor;
             denominatorNode.center = denominatorBox.center;
           }
@@ -242,7 +245,8 @@ define( function( require ) {
         denominatorNode.text = '';
       }
       else {
-        denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator, options.denominatorMaxDecimals, options.denominatorTrimZeros );
+        denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator,
+          options.denominatorMaxDecimals, options.denominatorTrimZeros );
 
         // compute the corresponding numerator
         var numerator = Util.toFixedNumber( denominator * unitRateProperty.value, options.numeratorMaxDecimals );
@@ -253,7 +257,8 @@ define( function( require ) {
 
           // show the numerator that corresponds to this denominator
           if ( URQueryParameters.showAnswers ) {
-            numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator, options.numeratorMaxDecimals, options.numeratorTrimZeros );
+            numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator,
+              options.numeratorMaxDecimals, options.numeratorTrimZeros );
             numeratorNode.fill = options.showAnswersColor;
             numeratorNode.center = numeratorBox.center;
           }
