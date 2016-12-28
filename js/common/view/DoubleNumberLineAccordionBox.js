@@ -11,6 +11,7 @@ define( function( require ) {
   // common modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
@@ -19,6 +20,7 @@ define( function( require ) {
 
   // sim modules
   var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
+  var UndoButton = require( 'UNIT_RATES/common/view/UndoButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
@@ -62,6 +64,10 @@ define( function( require ) {
       bottomAxisMaxDecimals: shoppingItem.bottomAxisMaxDecimals
     } );
 
+    //TODO cancel current editing, or erase the marker that was most recently added using the editor
+    var undoButton = new UndoButton();
+    undoButton.touchArea = undoButton.localBounds.dilatedXY( 5, 5 );
+
     //TODO erase markers that were created using the marker editor or by interacting with the scale
     var eraserButton = new EraserButton( {
       baseColor: 'rgb( 255, 255, 219 )',
@@ -79,8 +85,12 @@ define( function( require ) {
           align: 'left',
           spacing: 0,
           children: [
-            doubleNumberLineNode,
-            new HStrut( 745 ) //TODO temporary solution for uniform width
+            new HBox( {
+              align: 'center',
+              spacing: 10,
+              children: [ undoButton, doubleNumberLineNode ]
+            } ),
+            new HStrut( 725 ) //TODO temporary solution for uniform width
           ]
         } ),
         eraserButton

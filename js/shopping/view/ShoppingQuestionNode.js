@@ -37,7 +37,6 @@ define( function( require ) {
     options = _.extend( {
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
-      editButtonScale: 0.5, // {number} scale applied to the edit button
       correctColor: 'green', // {Color|string} color for the correct answer
       incorrectColor: 'red', // {Color|string} color for an incorrect guess
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
@@ -71,7 +70,6 @@ define( function( require ) {
 
     // edit button
     var editButton = new EditButton( {
-      scale: options.editButtonScale,
       right: valueBox.left - options.xSpacing,
       centerY: valueBox.centerY
     } );

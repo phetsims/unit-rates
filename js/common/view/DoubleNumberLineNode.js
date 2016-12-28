@@ -36,7 +36,7 @@ define( function( require ) {
       verticalAxisLineWidth: 1.5,
       
       // common to both horizontal axes
-      horizontalAxisLength: 660,
+      horizontalAxisLength: 620,
       horizontalAxisLineWidth: 1.5,
       arrowSize: new Dimension2( 8, 8 ),
       horizontalAxisYSpacing: 20, // vertical spacing between top and bottom axes

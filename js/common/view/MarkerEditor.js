@@ -52,7 +52,6 @@ define( function( require ) {
       denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros in denominator's decimal places
 
       // general
-      editButtonScale: 0.5, // {number} scale applied to the edit button
       lineLength: 40, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 14 ), // {Font} font for the value
@@ -121,7 +120,6 @@ define( function( require ) {
     this.addChild( denominatorNode );
 
     var numeratorEditButton = new EditButton( {
-      scale: options.editButtonScale,
       centerX: verticalLine.centerX,
       bottom: numeratorBox.top - options.ySpacing
     } );
@@ -129,7 +127,6 @@ define( function( require ) {
     numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 10 );
 
     var denominatorEditButton = new EditButton( {
-      scale: options.editButtonScale,
       centerX: verticalLine.centerX,
       top: denominatorBox.bottom + options.ySpacing
     } );

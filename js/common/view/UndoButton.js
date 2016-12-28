@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * The 'edit' button, used to open a keypad in this sim.
+ * The 'undo' button, used to remove a marker from the double number line. 
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,19 +20,19 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function EditButton( options ) {
+  function UndoButton( options ) {
 
     options = _.extend( {
-      baseColor: 'yellow'
+      baseColor: '#f2f2f2'
     }, options );
 
     assert && assert( !options.content, 'decoration not supported' );
-    options.content = new FontAwesomeNode( 'pencil_square_o', { scale: 0.5 } );
+    options.content = new FontAwesomeNode( 'undo', { scale: 0.4 } );
 
     RectangularPushButton.call( this, options );
   }
 
-  unitRates.register( 'EditButton', EditButton );
+  unitRates.register( 'UndoButton', UndoButton );
 
-  return inherit( RectangularPushButton, EditButton );
+  return inherit( RectangularPushButton, UndoButton );
 } );

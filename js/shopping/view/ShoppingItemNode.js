@@ -38,7 +38,7 @@ define( function( require ) {
 
     var questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingItem, keypadLayer, {
       expandedProperty: viewProperties.questionsExpandedProperty,
-      left: doubleNumberLineAccordionBox.right + 10,
+      right: layoutBounds.right - 15,
       top: doubleNumberLineAccordionBox.top
     } );
     this.addChild( questionsAccordionBox );
