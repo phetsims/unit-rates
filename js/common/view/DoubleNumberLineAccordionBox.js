@@ -129,7 +129,7 @@ define( function( require ) {
     // Observe marker editor, to position the editor and create markers.
     var markerEditorObserver = function() {
 
-      var destinationX = 0; // destination for horizontal animation of marker editor
+      var destinationX = null; // destination for horizontal animation of marker editor
 
       if ( markerEditor.isValidMarker() ) {
 
@@ -137,11 +137,10 @@ define( function( require ) {
 
           //TODO create a marker on the double number line
 
+          markerEditor.reset();
+
           //TODO move undo button below new marker and make it visible
           undoButton.visible = false;
-
-          // move marker editor back to home position
-          destinationX = markerEditorHomeX;
         }
         else {
 
@@ -176,20 +175,23 @@ define( function( require ) {
         }
       }
 
-      // stop any animation that is in progress
-      markerEditorAnimation && markerEditorAnimation.stop();
+      if ( destinationX !== null ) {
 
-      markerEditorAnimation = new MoveTo( markerEditor, new Vector2( destinationX, markerEditor.y ), {
+        // stop any animation that is in progress
+        markerEditorAnimation && markerEditorAnimation.stop();
 
-        // animation duration is controllable via query parameter
-        duration: URQueryParameters.animationDuration,
+        markerEditorAnimation = new MoveTo( markerEditor, new Vector2( destinationX, markerEditor.y ), {
 
-        // marker editor is not interactive while animating
-        onStart: function() { markerEditor.pickable = false; },
-        onComplete: function() { markerEditor.pickable = true; },
-        onStop: function() { markerEditor.pickable = true; }
-      } );
-      markerEditorAnimation.start();
+          // animation duration is controllable via query parameter
+          duration: URQueryParameters.animationDuration,
+
+          // marker editor is not interactive while animating
+          onStart: function() { markerEditor.pickable = false; },
+          onComplete: function() { markerEditor.pickable = true; },
+          onStop: function() { markerEditor.pickable = true; }
+        } );
+        markerEditorAnimation.start();
+      }
     };
     markerEditor.numeratorProperty.link( markerEditorObserver );
     markerEditor.denominatorProperty.link( markerEditorObserver );

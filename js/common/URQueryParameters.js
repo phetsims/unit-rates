@@ -32,10 +32,10 @@ define( function( require ) {
       defaultValue: true
     },
 
-    // duration of animations, 1 is 'production' speed, larger values make animations run slower
+    // duration of animations, larger values make animations run slower
     animationDuration: {
       type: 'number',
-      defaultValue: 1,
+      defaultValue: 1.25,
       isValidValue: function( value ) { return value > 0; }
     }
   } );
