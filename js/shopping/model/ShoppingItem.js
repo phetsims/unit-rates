@@ -11,6 +11,7 @@ define( function( require ) {
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
 
   // sim modules
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
@@ -37,6 +38,7 @@ define( function( require ) {
 
       topAxisLabel: dollarsString, // {string} label for the top axis of the double number line
       bottomAxisLabel: itemData.pluralName, // {string} label for the bottom axis of the double number line
+      bottomAxisMaxRange: new Range( 0, 10 ), // {Range} range of bottom axis
       bottomAxisMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
 
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
@@ -60,6 +62,7 @@ define( function( require ) {
     // @public (read-only) unpack options
     this.topAxisLabel = options.topAxisLabel;
     this.bottomAxisLabel = options.bottomAxisLabel;
+    this.bottomAxisMaxRange = options.bottomAxisMaxRange;
     this.bottomAxisMaxDecimals = options.bottomAxisMaxDecimals;
 
     // @public {ShoppingQuestion} 'Unit Rate?'

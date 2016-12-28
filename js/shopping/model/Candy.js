@@ -10,6 +10,7 @@ define( function( require ) {
 
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Range = require( 'DOT/Range' );
 
   // sim modules
   var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
@@ -33,6 +34,7 @@ define( function( require ) {
       // Bottom axis of the double number line
       bottomAxisLabel: poundsString,
       bottomAxisMaxDecimals: 2,
+      bottomAxisRange: new Range( 0, 1.6 ),
 
       // All Candy questions have the same form, i.e. 'Cost of N pounds?'
       uniformQuestions: true

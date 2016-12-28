@@ -10,6 +10,7 @@ define( function( require ) {
 
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Range = require( 'DOT/Range' );
 
   // sim modules
   var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
@@ -23,7 +24,10 @@ define( function( require ) {
     ShoppingItem.call( this, itemData, {
 
       // Fruit questions have 2 forms, e.g. 'Cost of 3 Apples?' and 'Apples for $3.00?'
-      uniformQuestions: false
+      uniformQuestions: false,
+
+      // Range of bottom axis
+      bottomAxisRange: new Range( 0, 16 )
     } );
   }
 
