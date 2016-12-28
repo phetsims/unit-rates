@@ -17,6 +17,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
 
   // sim modules
   var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
@@ -204,31 +205,34 @@ define( function( require ) {
     // display numerator
     this.numeratorProperty.link( function( numerator ) {
 
-      var denominator = numerator / unitRateProperty.value;
-
       if ( numerator === null ) {
         numeratorNode.text = '';
       }
       else {
+
         numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator, options.numeratorMaxDecimals, options.numeratorTrimZeros );
 
-        // show the denominator that corresponds to this numerator
-        if ( URQueryParameters.showAnswers ) {
-          denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator, options.denominatorMaxDecimals, options.denominatorTrimZeros );
-          denominatorNode.fill = options.showAnswersColor;
-          denominatorNode.center = denominatorBox.center;
+        // compute the corresponding denominator
+        var denominator = Util.toFixedNumber( numerator / unitRateProperty.value, options.denominatorMaxDecimals );
+
+        // clear the denominator if it doesn't match the numerator
+        if ( denominator !== self.denominatorProperty.value ) {
+          self.denominatorProperty.value = null;
+
+          // show the denominator that corresponds to this numerator
+          if ( URQueryParameters.showAnswers ) {
+            denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator, options.denominatorMaxDecimals, options.denominatorTrimZeros );
+            denominatorNode.fill = options.showAnswersColor;
+            denominatorNode.center = denominatorBox.center;
+          }
         }
       }
       numeratorNode.fill = options.valueColor;
       numeratorNode.center = numeratorBox.center;
-
-      //TODO if ( denominator === denominatorProperty.value ) { create a marker } else { animate to numerator & clear denominator }
     } );
 
     // display denominator
     this.denominatorProperty.link( function( denominator ) {
-
-      var numerator = denominator * unitRateProperty.value;
 
       if ( denominator === null ) {
         denominatorNode.text = '';
@@ -236,17 +240,23 @@ define( function( require ) {
       else {
         denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator, options.denominatorMaxDecimals, options.denominatorTrimZeros );
 
-        // show the numerator that corresponds to this denominator
-        if ( URQueryParameters.showAnswers ) {
-          numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator, options.numeratorMaxDecimals, options.numeratorTrimZeros );
-          numeratorNode.fill = options.showAnswersColor;
-          numeratorNode.center = numeratorBox.center;
+        // compute the corresponding numerator
+        var numerator = Util.toFixedNumber( denominator * unitRateProperty.value, options.denominatorMaxDecimals );
+
+        // clear the numerator if it doesn't match the denominator
+        if ( numerator !== self.numeratorProperty.value ) {
+          self.numeratorProperty.value = null;
+
+          // show the numerator that corresponds to this denominator
+          if ( URQueryParameters.showAnswers ) {
+            numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator, options.numeratorMaxDecimals, options.numeratorTrimZeros );
+            numeratorNode.fill = options.showAnswersColor;
+            numeratorNode.center = numeratorBox.center;
+          }
         }
       }
       denominatorNode.fill = options.valueColor;
       denominatorNode.center = denominatorBox.center;
-
-      //TODO if ( numerator === numeratorProperty.value ) { create a marker } else { animate to denominator & clear numerator }
     } );
 
     var unitRateObserver = function() {
@@ -257,6 +267,8 @@ define( function( require ) {
     // @private
     this.disposeMarkerEditor = function() {
       unitRateProperty.unlink( unitRateObserver );
+      this.numeratorProperty.unlinkAll();
+      this.denominatorProperty.unlinkAll();
     };
   }
 

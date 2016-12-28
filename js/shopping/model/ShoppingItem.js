@@ -38,7 +38,7 @@ define( function( require ) {
 
       topAxisLabel: dollarsString, // {string} label for the top axis of the double number line
       bottomAxisLabel: itemData.pluralName, // {string} label for the bottom axis of the double number line
-      bottomAxisMaxRange: new Range( 0, 10 ), // {Range} range of bottom axis
+      bottomAxisRange: new Range( 0, 10 ), // {Range} range of bottom axis
       bottomAxisMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
 
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
@@ -62,7 +62,7 @@ define( function( require ) {
     // @public (read-only) unpack options
     this.topAxisLabel = options.topAxisLabel;
     this.bottomAxisLabel = options.bottomAxisLabel;
-    this.bottomAxisMaxRange = options.bottomAxisMaxRange;
+    this.bottomAxisRange = options.bottomAxisRange;
     this.bottomAxisMaxDecimals = options.bottomAxisMaxDecimals;
 
     // @public {ShoppingQuestion} 'Unit Rate?'
