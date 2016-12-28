@@ -19,7 +19,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // sim modules
-  var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
+  var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
@@ -69,7 +69,9 @@ define( function( require ) {
     valueBox.touchArea = valueBox.localBounds.dilatedXY( 5, 5 );
 
     // edit button
-    var editButton = new EditButton( {
+    var editButton = new FontAwesomeButton( 'pencil_square_o', {
+      baseColor: 'yellow',
+      iconScale: 0.5,
       right: valueBox.left - options.xSpacing,
       centerY: valueBox.centerY
     } );

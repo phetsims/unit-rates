@@ -19,8 +19,8 @@ define( function( require ) {
 
   // sim modules
   var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
+  var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var MarkerEditor = require( 'UNIT_RATES/common/view/MarkerEditor' );
-  var UndoButton = require( 'UNIT_RATES/common/view/UndoButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
@@ -53,7 +53,8 @@ define( function( require ) {
       buttonXMargin: 15,
       buttonYMargin: 10,
       buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5
+      buttonTouchAreaYDilation: 5,
+      bottomAxisMaxDecimals: 1
     }, options );
 
     //TODO in ShoppingLabScreen, unit rate is mutable, and should be part of the ShoppingLabItem model element
@@ -63,7 +64,9 @@ define( function( require ) {
       denominatorMaxDecimals: options.bottomAxisMaxDecimals
     } );
 
-    var undoButton = new UndoButton( {
+    var undoButton = new FontAwesomeButton( 'undo', {
+      baseColor: 'rgb( 242, 242, 242 )',
+      iconScale: 0.5,
       listener: function() {
         //TODO cancel current editing, or erase the marker that was most recently added using the editor
       },
@@ -80,7 +83,7 @@ define( function( require ) {
     } );
 
     var eraserButton = new EraserButton( {
-      baseColor: '#f2f2f2',
+      baseColor: 'rgb( 242, 242, 242 )',
       listener: function() {
         //TODO erase markers that were created using the marker editor or by interacting with the scale
       }

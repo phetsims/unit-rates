@@ -19,7 +19,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // sim modules
-  var EditButton = require( 'UNIT_RATES/common/view/EditButton' );
+  var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
@@ -119,14 +119,18 @@ define( function( require ) {
     } );
     this.addChild( denominatorNode );
 
-    var numeratorEditButton = new EditButton( {
+    var numeratorEditButton = new FontAwesomeButton( 'pencil_square_o', {
+      baseColor: 'yellow',
+      iconScale: 0.5,
       centerX: verticalLine.centerX,
       bottom: numeratorBox.top - options.ySpacing
     } );
     this.addChild( numeratorEditButton );
     numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 10 );
 
-    var denominatorEditButton = new EditButton( {
+    var denominatorEditButton = new FontAwesomeButton( 'pencil_square_o', {
+      baseColor: 'yellow',
+      iconScale: 0.5,
       centerX: verticalLine.centerX,
       top: denominatorBox.bottom + options.ySpacing
     } );

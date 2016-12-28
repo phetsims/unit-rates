@@ -1,7 +1,8 @@
 // Copyright 2016, University of Colorado Boulder
 
+//TODO move to scenery-phet?
 /**
- * The 'refresh' button, used to open a keypad in this sim.
+ * Convenience type for creating a rectangular push button with a fontawesome icon.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -17,22 +18,23 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
+   * @param {string} iconName - the fontawesome icon name
    * @param {Object} [options]
    * @constructor
    */
-  function RefreshButton( options ) {
+  function FontAwesomeButton( iconName, options ) {
 
     options = _.extend( {
-      baseColor: '#f2f2f2'
+      iconScale: 1 // scale for the icon
     }, options );
 
-    assert && assert( !options.content, 'decoration not supported' );
-    options.content = new FontAwesomeNode( 'refresh', { scale: 0.5 } );
+    assert && assert( !options.content, 'this button creates its own content' );
+    options.content = new FontAwesomeNode( iconName, { scale: options.iconScale } );
 
     RectangularPushButton.call( this, options );
   }
 
-  unitRates.register( 'RefreshButton', RefreshButton );
+  unitRates.register( 'FontAwesomeButton', FontAwesomeButton );
 
-  return inherit( RectangularPushButton, RefreshButton );
+  return inherit( RectangularPushButton, FontAwesomeButton );
 } );
