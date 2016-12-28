@@ -17,7 +17,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -63,7 +62,7 @@ define( function( require ) {
     }, options );
 
     //TODO in ShoppingLabScreen, unit rate is mutable, and should be part of the ShoppingLabItem model element
-     var unitRateProperty = new Property( shoppingItem.unitRate );
+    var unitRateProperty = new Property( shoppingItem.unitRate );
 
     var doubleNumberLineNode = new DoubleNumberLineNode( unitRateProperty, {
       horizontalAxisLength: options.horizontalAxisLength,
@@ -75,26 +74,31 @@ define( function( require ) {
       y: 0
     } );
 
+    var markerEditorHomeX = doubleNumberLineNode.left - 25;
+    var undoButtonHomePosition = new Vector2( markerEditorHomeX, doubleNumberLineNode.centerY );
+
     var markerEditor = new MarkerEditor( unitRateProperty, this, keypadLayer, {
       denominatorMaxDecimals: options.bottomAxisMaxDecimals,
-      right: doubleNumberLineNode.left - 5,
+      x: markerEditorHomeX,
       centerY: doubleNumberLineNode.centerY
     } );
 
     var undoButton = new FontAwesomeButton( 'undo', {
+      visible: false,
       baseColor: 'rgb( 242, 242, 242 )',
       iconScale: 0.5,
       listener: function() {
         markerEditor.reset();
-        //TODO erase the marker that was most recently added using the editor
+        undoButton.visible = false;
       },
-      center: markerEditor.center
+      center: undoButtonHomePosition
     } );
     undoButton.touchArea = undoButton.localBounds.dilatedXY( 5, 5 );
 
     var eraserButton = new EraserButton( {
       baseColor: 'rgb( 242, 242, 242 )',
       listener: function() {
+        markerEditor.reset();
         //TODO erase markers that were created using the marker editor or by interacting with the scale
       }
     } );
@@ -124,27 +128,50 @@ define( function( require ) {
     // Observe marker editor, to position the editor and create markers.
     var markerEditorObserver = function() {
 
-      var destinationX = 0;
+      var destinationX = 0; // destination for horizontal animation of marker editor
 
-      if ( markerEditor.numeratorProperty.value === null && markerEditor.denominatorProperty.value === null ) {
+      if ( markerEditor.isValidMarker() ) {
 
-        // move marker editor back to home position
-        destinationX = doubleNumberLineNode.left - 15;
-      }
-      else {
-        var denominator = markerEditor.denominatorProperty.value;
-        if ( denominator === null ) {
-          denominator = Util.toFixedNumber( markerEditor.numeratorProperty.value / unitRateProperty.value, options.bottomAxisMaxDecimals );
-        }
-        assert && assert( denominator >= 0, 'invalid denominator: ' + denominator );
+        if ( markerEditor.denominatorProperty.value <= shoppingItem.bottomAxisRange.max ) {
 
-        if ( denominator > shoppingItem.bottomAxisRange.max ) {
+          //TODO create a marker on the double number line
 
-          // move marker editor to right of axis arrows
-          destinationX = doubleNumberLineNode.x + options.horizontalAxisLength + 5;
+          //TODO move undo button below new marker and make it visible
+          undoButton.visible = false;
+
+          // move marker editor back to home position
+          destinationX = markerEditorHomeX;
         }
         else {
-          destinationX = doubleNumberLineNode.x + modelToView( denominator );
+
+          // marker is out of range, move editor to right of axis arrows
+          destinationX = doubleNumberLineNode.x + options.horizontalAxisLength + 5;
+        }
+      }
+      else { // marker is invalid
+
+        if ( markerEditor.numeratorProperty.value === null && markerEditor.denominatorProperty.value === null ) {
+
+          // both values are empty, move marker editor back to home position
+          destinationX = markerEditorHomeX;
+        }
+        else {
+
+          // one value is empty, move marker to position of the non-empty value
+          var denominator = markerEditor.getValidDenominator();
+          assert && assert( denominator >= 0, 'invalid denominator: ' + denominator );
+
+          if ( denominator > shoppingItem.bottomAxisRange.max ) {
+
+            // move marker editor to right of axis arrows
+            destinationX = doubleNumberLineNode.x + options.horizontalAxisLength + 5;
+          }
+          else {
+            destinationX = doubleNumberLineNode.x + modelToView( denominator );
+          }
+
+          undoButton.center = undoButtonHomePosition;
+          undoButton.visible = true;
         }
       }
 

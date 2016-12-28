@@ -73,6 +73,10 @@ define( function( require ) {
 
     var self = this;
 
+    // @private
+    this.unitRateProperty = unitRateProperty;
+    this.denominatorMaxDecimals = options.denominatorMaxDecimals;
+
     // @public (read-only)
     this.numeratorProperty = new Property( null );
     this.denominatorProperty = new Property( null );
@@ -275,6 +279,32 @@ define( function( require ) {
   unitRates.register( 'MarkerEditor', MarkerEditor );
 
   return inherit( Node, MarkerEditor, {
+
+    /**
+     * Do the numerator and denominator values represent a valid marker?
+     * @returns {boolean}
+     * @public
+     */
+    isValidMarker: function() {
+      return ( this.numeratorProperty.value !== null && this.denominatorProperty.value !== null );
+    },
+
+    /**
+     * Gets a valid denominator for what is currently entered in the editor.
+     * @return {number|null} - null indicates no valid denominator
+     */
+    getValidDenominator: function() {
+      if ( this.numeratorProperty.value === null && this.denominatorProperty.value === null ) {
+        return null;
+      }
+      else {
+        var denominator = this.denominatorProperty.value;
+        if ( denominator === null ) {
+          denominator = this.numeratorProperty.value / this.unitRateProperty.value;
+        }
+        return Util.toFixedNumber( denominator, this.denominatorMaxDecimals );
+      }
+    },
 
     // @public
     reset: function() {
