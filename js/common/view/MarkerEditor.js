@@ -52,7 +52,7 @@ define( function( require ) {
       denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros in denominator's decimal places
 
       // general
-      lineLength: 40, // {number} length of the vertical line between numerator and denominator values
+      lineLength: 55, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 14 ), // {Font} font for the value
       valueColor: 'black', // {Color|string} color of the value

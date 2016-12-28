@@ -10,14 +10,13 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // sim modules
+  var RefreshButton = require( 'UNIT_RATES/common/view/RefreshButton' );
   var ShoppingQuestionNode = require( 'UNIT_RATES/shopping/view/ShoppingQuestionNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
@@ -76,9 +75,7 @@ define( function( require ) {
     shoppingItem.questionSetProperty.link( questionSetObserver );
 
     // Refresh button update the set of dynamic questions
-    var refreshButton = new RectangularPushButton( {
-      baseColor: '#f2f2f2',
-      content: new FontAwesomeNode( 'refresh', { scale: 0.38 } ),
+    var refreshButton = new RefreshButton( {
       listener: function() {
         shoppingItem.nextQuestionSet();
       }

@@ -11,15 +11,15 @@ define( function( require ) {
   // common modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // sim modules
   var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
+  var MarkerEditor = require( 'UNIT_RATES/common/view/MarkerEditor' );
   var UndoButton = require( 'UNIT_RATES/common/view/UndoButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
@@ -30,7 +30,8 @@ define( function( require ) {
   // constants
   var AXIS_LABEL_OPTIONS = {
     font: new URFont( 14 ),
-    fill: 'black'
+    fill: 'black',
+    maxWidth: 50 // determined empirically
   };
 
   /**
@@ -58,41 +59,38 @@ define( function( require ) {
     //TODO in ShoppingLabScreen, unit rate is mutable, and should be part of the ShoppingLabItem model element
     var unitRateProperty = new Property( shoppingItem.unitRate );
 
-    var doubleNumberLineNode = new DoubleNumberLineNode( unitRateProperty, this, keypadLayer, {
-      topAxisLabel: new Text( shoppingItem.topAxisLabel, AXIS_LABEL_OPTIONS ),
-      bottomAxisLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS ),
-      bottomAxisMaxDecimals: shoppingItem.bottomAxisMaxDecimals
+    var markerEditor = new MarkerEditor( unitRateProperty, this, keypadLayer, {
+      denominatorMaxDecimals: options.bottomAxisMaxDecimals
     } );
 
-    //TODO cancel current editing, or erase the marker that was most recently added using the editor
-    var undoButton = new UndoButton();
+    var undoButton = new UndoButton( {
+      listener: function() {
+        //TODO cancel current editing, or erase the marker that was most recently added using the editor
+      },
+      center: markerEditor.center
+    } );
     undoButton.touchArea = undoButton.localBounds.dilatedXY( 5, 5 );
 
-    //TODO erase markers that were created using the marker editor or by interacting with the scale
+    var doubleNumberLineNode = new DoubleNumberLineNode( unitRateProperty, keypadLayer, {
+      topAxisLabel: new Text( shoppingItem.topAxisLabel, AXIS_LABEL_OPTIONS ),
+      bottomAxisLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS ),
+      bottomAxisMaxDecimals: shoppingItem.bottomAxisMaxDecimals,
+      left: markerEditor.right + 5,
+      centerY: markerEditor.centerY
+    } );
+
     var eraserButton = new EraserButton( {
-      baseColor: 'rgb( 255, 255, 219 )',
+      baseColor: '#f2f2f2',
       listener: function() {
-        //TODO
+        //TODO erase markers that were created using the marker editor or by interacting with the scale
       }
     } );
     eraserButton.touchArea = eraserButton.localBounds.dilatedXY( 5, 5 );
 
     var contentNode = new VBox( {
       align: 'right',
-      spacing: 10,
       children: [
-        new VBox( {
-          align: 'left',
-          spacing: 0,
-          children: [
-            new HBox( {
-              align: 'center',
-              spacing: 10,
-              children: [ undoButton, doubleNumberLineNode ]
-            } ),
-            new HStrut( 725 ) //TODO temporary solution for uniform width
-          ]
-        } ),
+        new Node( { children: [ doubleNumberLineNode, undoButton, markerEditor ] } ),
         eraserButton
       ]
     } );
@@ -101,6 +99,7 @@ define( function( require ) {
 
     // @private
     this.disposeDoubleNumberLineAccordionBox = function() {
+      markerEditor.dispose();
       doubleNumberLineNode.dispose();
     };
   }

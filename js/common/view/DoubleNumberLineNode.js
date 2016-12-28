@@ -16,27 +16,25 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   // sim modules
-  var MarkerEditor = require( 'UNIT_RATES/common/view/MarkerEditor' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {Property.<number>} unitRateProperty
-   * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
    * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineNode( unitRateProperty, doubleNumberLinePanel, keypadLayer, options ) {
+  function DoubleNumberLineNode( unitRateProperty, keypadLayer, options ) {
 
     options = _.extend( {
 
       // vertical axis
-      verticalAxisLength: 60,
+      verticalAxisLength: 50,
       verticalAxisColor: 'black',
       verticalAxisLineWidth: 1.5,
       
       // common to both horizontal axes
-      horizontalAxisLength: 620,
+      horizontalAxisLength: 575,
       horizontalAxisLineWidth: 1.5,
       arrowSize: new Dimension2( 8, 8 ),
       horizontalAxisYSpacing: 20, // vertical spacing between top and bottom axes
@@ -53,7 +51,7 @@ define( function( require ) {
 
     }, options );
 
-    Node.call( this, options );
+    Node.call( this );
 
     var verticalAxis = new Line( 0, 0, 0, options.verticalAxisLength, {
       stroke: options.verticalAxisColor,
@@ -94,13 +92,6 @@ define( function( require ) {
       options.bottomAxisLabel.centerY =  bottomAxisNode.centerY;
     }
 
-    var markerEditor = new MarkerEditor( unitRateProperty, doubleNumberLinePanel, keypadLayer, {
-      denominatorMaxDecimals: options.bottomAxisMaxDecimals,
-      centerX: verticalAxis.centerX + 200, //TODO
-      centerY: verticalAxis.centerY //TODO
-    } );
-    this.addChild( markerEditor );
-
     this.mutate( options );
 
     var unitRateObserver = function() {
@@ -111,7 +102,6 @@ define( function( require ) {
     // @private
     this.disposeDoubleNumberLineNode = function() {
       unitRateProperty.unlink( unitRateObserver );
-      markerEditor.dispose();
     };
   }
 
