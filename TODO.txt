@@ -6,7 +6,7 @@ ShoppingQuestion: when correctEmitter fires, add marker to DoubleNumberLine.ques
 
 DoubleNumberLineAccordionBox: clear DoubleNumberLine.undoMarkerProperty when undo button is moved to home position
 
-Test DoubleNumberLine.scaleoMarkerProperty, even though we don't have a scale yet.
+Test DoubleNumberLine.scaleMarkerProperty, even though we don't have a scale yet.
 
 Put icons under markers on DNL, to tie them to scale or questions?
 
