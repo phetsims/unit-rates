@@ -291,7 +291,8 @@ define( function( require ) {
 
     /**
      * Gets a valid denominator for what is currently entered in the editor.
-     * @return {number|null} - null indicates no valid denominator
+     * @return {number|null} - null indicates that a valid denominator cannot be determined
+     * @public
      */
     getValidDenominator: function() {
       if ( this.numeratorProperty.value === null && this.denominatorProperty.value === null ) {
