@@ -83,7 +83,8 @@ define( function( require ) {
       baseColor: 'rgb( 242, 242, 242 )',
       iconScale: 0.5,
       listener: function() {
-        //TODO cancel current editing, or erase the marker that was most recently added using the editor
+        markerEditor.reset();
+        //TODO erase the marker that was most recently added using the editor
       },
       center: markerEditor.center
     } );
