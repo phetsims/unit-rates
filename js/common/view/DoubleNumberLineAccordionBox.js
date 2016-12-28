@@ -117,7 +117,7 @@ define( function( require ) {
 
     AccordionBox.call( this, contentNode, options );
 
-    // maps the denominator to a view coordinate on the double number line
+    // maps the denominator to a horizontal location on the double number line
     assert && assert( doubleNumberLineNode.x === 0 );
     var modelToView = new LinearFunction(
       shoppingItem.bottomAxisRange.min, shoppingItem.bottomAxisRange.max,
