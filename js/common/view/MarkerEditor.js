@@ -263,8 +263,9 @@ define( function( require ) {
       denominatorNode.center = denominatorBox.center;
     } );
 
+    // if the unit rate changes, cancel any edit that is in progress
     var unitRateObserver = function() {
-      //TODO
+      self.reset();
     };
     unitRateProperty.link( unitRateObserver );
 
