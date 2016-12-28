@@ -29,6 +29,7 @@ define( function( require ) {
 
     Node.call( this );
 
+    // Double number line
     var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingItem, keypadLayer, {
       expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
       left: layoutBounds.minX + 15,
@@ -36,6 +37,7 @@ define( function( require ) {
     } );
     this.addChild( doubleNumberLineAccordionBox );
 
+    // Questions
     var questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingItem, keypadLayer, {
       expandedProperty: viewProperties.questionsExpandedProperty,
       right: layoutBounds.right - 15,
