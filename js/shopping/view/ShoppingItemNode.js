@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * View components that are specific to a type of item in the 'Shopping' screen.
+ * View components that are specific to a type of item (e.g. Apples) in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
