@@ -18,7 +18,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {string} iconName - the fontawesome icon name
+   * @param {string} iconName - the fontawesome icon name, see FontAwesome.ICONS
    * @param {Object} [options]
    * @constructor
    */
