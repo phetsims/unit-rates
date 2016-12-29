@@ -21,7 +21,6 @@ define( function( require ) {
   var MarkerNode = require( 'UNIT_RATES/common/view/MarkerNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine
