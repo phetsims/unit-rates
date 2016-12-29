@@ -51,5 +51,7 @@ define( function( require ) {
     URQueryParameters.randomEnabled = false;
   }
 
+  URQueryParameters.log && console.log( 'enabling logging' );
+
   return URQueryParameters;
 } );
