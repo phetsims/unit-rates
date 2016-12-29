@@ -18,6 +18,7 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine
@@ -101,21 +102,32 @@ define( function( require ) {
     };
     unitRateProperty.link( unitRateObserver );
 
-    doubleNumberLine.scaleMarkerProperty.link( function( marker ) {
+    doubleNumberLine.scaleMarkerProperty.link( function( newMarker, oldMarker ) {
        //TODO
-      console.log( 'scaleMarker=' + marker );
+      URQueryParameters.log && console.log( 'scaleMarker: add ' + newMarker + ', remove ' + oldMarker );
     } );
-    doubleNumberLine.undoMarkerProperty.link( function( marker ) {
+
+    doubleNumberLine.undoMarkerProperty.link( function( newMarker, oldMarker ) {
        //TODO
-      console.log( 'undoMarker=' + marker );
+      URQueryParameters.log && console.log( 'undoMarker: add ' + newMarker + ', remove ' + oldMarker );
     } );
+
     doubleNumberLine.questionMarkers.addItemAddedListener( function( marker ) {
        //TODO
-      console.log( 'questionMarker=' + marker );
+      URQueryParameters.log && console.log( 'questionMarker: add ' + marker );
     } );
+    doubleNumberLine.questionMarkers.addItemRemovedListener( function( marker ) {
+        //TODO
+       URQueryParameters.log && console.log( 'questionMarker: remove ' + marker );
+     } );
+
     doubleNumberLine.otherMarkers.addItemAddedListener( function( marker ) {
        //TODO
-      console.log( 'otherMarker=' + marker );
+      URQueryParameters.log && console.log( 'otherMarker: add' + marker );
+    } );
+    doubleNumberLine.otherMarkers.addItemRemovedListener( function( marker ) {
+       //TODO
+      URQueryParameters.log && console.log( 'otherMarker: remove ' + marker );
     } );
 
     // @private

@@ -58,7 +58,6 @@ define( function( require ) {
       buttonYMargin: 10,
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5,
-      bottomAxisMaxDecimals: 1,
       horizontalAxisLength: 575
     }, options );
 
@@ -79,7 +78,7 @@ define( function( require ) {
     var undoButtonHomePosition = new Vector2( markerEditorHomeX, doubleNumberLineNode.centerY );
 
     var markerEditor = new MarkerEditor( unitRateProperty, this, keypadLayer, {
-      denominatorMaxDecimals: options.bottomAxisMaxDecimals,
+      denominatorMaxDecimals: shoppingItem.bottomAxisMaxDecimals,
       x: markerEditorHomeX,
       centerY: doubleNumberLineNode.centerY
     } );
