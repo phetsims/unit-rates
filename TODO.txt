@@ -2,6 +2,8 @@ TODO list for unit-rates
 
 Standardize terminology: numerator + top, denominator + bottom
 
+Add specification of DNL options to ShoppingItem
+
 DoubleNumberLineNode: observe DoubleNumberLine Properties and create markers
 
 ShoppingQuestion: when correctEmitter fires, add marker to DoubleNumberLine.questionMarkers
