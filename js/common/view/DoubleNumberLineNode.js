@@ -13,12 +13,15 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var LinearFunction = require( 'DOT/LinearFunction' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Range = require( 'DOT/Range' );
 
   // sim modules
+  var MarkerNode = require( 'UNIT_RATES/common/view/MarkerNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine
@@ -50,7 +53,17 @@ define( function( require ) {
       bottomAxisLabel: null, // {Node|null} label on the bottom axis
       bottomAxisMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
       bottomAxisRange: new Range( 0, 10 ), // {Range} of the bottom axis
-      bottomAxisColor: 'black'
+      bottomAxisColor: 'black',
+      bottomAxisMajorMarkerDecimalPlaces: 1,
+
+      // markers
+      majorMarkerLength: 50,
+      minorMarkerLength: 30,
+      majorMarkerColor: 'black',
+      minorMarkerColor: 'gray',
+      scaleMarkerColor: 'red',
+      undoMarkerColor: 'blue',
+      questionMarkerColor: 'green'
 
     }, options );
 
@@ -95,7 +108,17 @@ define( function( require ) {
       options.bottomAxisLabel.centerY =  bottomAxisNode.centerY;
     }
 
+    // parent for markers, to maintain rendering order
+    var markersParent = new Node();
+    this.addChild( markersParent );
+
     this.mutate( options );
+
+    //TODO this is duplicated in DoubleNumberLineAccordionBox
+    // maps the denominator to a horizontal location on the double number line
+    var modelToView = new LinearFunction(
+      options.bottomAxisRange.min, options.bottomAxisRange.max,
+      0, 0.96 * options.horizontalAxisLength );
 
     var unitRateObserver = function() {
       //TODO
@@ -110,6 +133,16 @@ define( function( require ) {
     doubleNumberLine.undoMarkerProperty.link( function( newMarker, oldMarker ) {
        //TODO
       URQueryParameters.log && console.log( 'undoMarker: add ' + newMarker + ', remove ' + oldMarker );
+
+      //TODO this is a test, need to keep track of this marker for removal, etc.
+      if ( newMarker !== null ) {
+        var denominator = newMarker;
+        var markerNode = new MarkerNode( denominator * unitRateProperty.value, denominator, {
+          centerX: modelToView( denominator ),
+          centerY: verticalAxis.centerY
+        } );
+        markersParent.addChild( markerNode );
+      }
     } );
 
     doubleNumberLine.questionMarkers.addItemAddedListener( function( marker ) {
