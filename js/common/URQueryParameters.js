@@ -17,6 +17,7 @@ define( function( require ) {
     // Don't use this, it's for the exclusive use of CM during development
     cm: { type: 'flag' },
 
+    //TODO delete this when development is done
     // show screens related to new development, see https://github.com/phetsims/unit-rates/issues/120
     showNew: { type: 'flag' },
 
@@ -51,7 +52,12 @@ define( function( require ) {
     URQueryParameters.randomEnabled = false;
   }
 
-  URQueryParameters.log && console.log( 'enabling logging' );
+  if ( URQueryParameters.log ) {
+    console.log( 'enabling logging' );
+    console.log( 'showAnswers=' + URQueryParameters.showAnswers );
+    console.log( 'randomEnabled=' + URQueryParameters.randomEnabled );
+    console.log( 'animationDuration=' + URQueryParameters.animationDuration );
+  }
 
   return URQueryParameters;
 } );
