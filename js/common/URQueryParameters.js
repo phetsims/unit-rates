@@ -45,6 +45,7 @@ define( function( require ) {
   //TODO delete this when development is done
   // Convenience during development, make 'cm' override other query parameters.
   if ( URQueryParameters.cm ) {
+    URQueryParameters.log = true;
     URQueryParameters.showNew = true;
     URQueryParameters.showAnswers = true;
     URQueryParameters.randomEnabled = false;
