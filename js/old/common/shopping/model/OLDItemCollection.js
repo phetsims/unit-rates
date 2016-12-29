@@ -12,7 +12,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  
+
   // sim modules
   var OLDItem = require( 'UNIT_RATES/old/common/shopping/model/OLDItem' );
   var OLDItemData = require( 'UNIT_RATES/old/common/shopping/model/OLDItemData' );
@@ -117,7 +117,8 @@ define( function( require ) {
     addListeners: function( itemAddedListener, itemRemovedListener ) {
       for ( var type in this.itemsMap ) {
         var itemArray = this.getItemsWithType( type );
-        itemArray.addListeners( itemAddedListener, itemRemovedListener );
+        itemArray.addItemAddedListener( itemAddedListener );
+        itemArray.addItemRemovedListener( itemRemovedListener );
       }
     },
 
