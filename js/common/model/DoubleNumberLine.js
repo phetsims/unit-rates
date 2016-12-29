@@ -68,10 +68,10 @@ define( function( require ) {
     } );
 
     // @public {number[]} makers that correspond to questions that have been answered correctly
-    this.questionMarkers = new ObservableArray();
+    this.questionMarkers = new ObservableArray( [] );
 
     // @public {number[]} other markers that aren't described by any of the above
-    this.otherMarkers = new ObservableArray();
+    this.otherMarkers = new ObservableArray( [] );
   }
 
   unitRates.register( 'DoubleNumberLine', DoubleNumberLine );
@@ -82,8 +82,8 @@ define( function( require ) {
     reset: function() {
       this.scaleMarkerProperty.reset();
       this.undoMarkerProperty.reset();
-      this.questionMarkers.removeAll();
-      this.otherMarkers.removeAll();
+      this.questionMarkers.reset();
+      this.otherMarkers.reset();
     },
 
     /**
@@ -94,7 +94,7 @@ define( function( require ) {
      */
     erase: function() {
       this.undoMarkerProperty.reset();
-      this.otherMarkers.removeAll();
+      this.otherMarkers.reset();
     }
   } );
 } );
