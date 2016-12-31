@@ -49,12 +49,10 @@ define( function( require ) {
       buttonXMargin: 15,
       buttonYMargin: 10,
       buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5,
-      horizontalAxisLength: 575
+      buttonTouchAreaYDilation: 5
     }, options );
 
     var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
-      horizontalAxisLength: options.horizontalAxisLength,
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
       x: 0,
@@ -107,6 +105,9 @@ define( function( require ) {
     // animation for marker editor
     var markerEditorAnimation = null;
 
+    // when the marker editor exceeds the range of the axes, move it to the right of the axes
+    var markerEditorOutOfRangeX = doubleNumberLineNode.x + doubleNumberLine.horizontalAxisLength + 5;
+
     // Observe marker editor, to position the editor and create markers.
     var markerEditorObserver = function() {
 
@@ -128,7 +129,7 @@ define( function( require ) {
         else {
 
           // marker is out of range, move editor to right of axis arrows
-          destinationX = doubleNumberLineNode.x + options.horizontalAxisLength + 5;
+          destinationX = markerEditorOutOfRangeX;
         }
       }
       else { // marker is invalid
@@ -147,7 +148,7 @@ define( function( require ) {
           if ( denominator > doubleNumberLine.denominatorOptions.axisRange.max ) {
 
             // move marker editor to right of axis arrows
-            destinationX = doubleNumberLineNode.x + options.horizontalAxisLength + 5;
+            destinationX = markerEditorOutOfRangeX;
           }
           else {
             destinationX = doubleNumberLineNode.x + doubleNumberLine.modelToView( denominator );

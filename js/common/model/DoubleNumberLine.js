@@ -61,7 +61,7 @@ define( function( require ) {
     // @public (read-only) maps the denominator to the view coordinate frame
     this.modelToView = new LinearFunction(
       this.denominatorOptions.axisRange.min, this.denominatorOptions.axisRange.max,
-      0, 0.96 * options.horizontalAxisLength );
+      0, 0.96 * this.horizontalAxisLength );
 
     var self = this;
 
