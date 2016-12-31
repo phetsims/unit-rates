@@ -31,13 +31,6 @@ define( function( require ) {
   // strings
   var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
 
-  // constants
-  var AXIS_LABEL_OPTIONS = {
-    font: new URFont( 14 ),
-    fill: 'black',
-    maxWidth: 50 // determined empirically
-  };
-
   /**
    * @param {ShoppingItem} shoppingItem
    * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
@@ -66,11 +59,24 @@ define( function( require ) {
 
     var doubleNumberLineNode = new DoubleNumberLineNode( shoppingItem.doubleNumberLine, unitRateProperty, {
       horizontalAxisLength: options.horizontalAxisLength,
-      numeratorAxisLabel: new Text( shoppingItem.numeratorAxisLabel, AXIS_LABEL_OPTIONS ),
-      denominatorAxisLabel: new Text( shoppingItem.denominatorAxisLabel, AXIS_LABEL_OPTIONS ),
+
+      // numerator
+      numeratorAxisLabel: shoppingItem.numeratorAxisLabel,
+      numeratorFormat: shoppingItem.numeratorFormat,
+      numeratorMaxDigits: shoppingItem.numeratorMaxDigits,
+      numeratorMaxDecimals: shoppingItem.numeratorMaxDecimals,
+      numeratorTrimZeros: shoppingItem.numeratorTrimZeros,
+
+      // denominator
+      denominatorAxisLabel: shoppingItem.denominatorAxisLabel,
+      denominatorFormat: shoppingItem.denominatorFormat,
+      denominatorMaxDigits: shoppingItem.denominatorMaxDigits,
       denominatorMaxDecimals: shoppingItem.denominatorMaxDecimals,
+      denominatorTrimZeros: shoppingItem.denominatorTrimZeros,
       denominatorAxisRange: shoppingItem.denominatorAxisRange,
       denominatorMajorMarkerDecimals: shoppingItem.denominatorMajorMarkerDecimals,
+
+      // location
       x: 0,
       y: 0
     } );
@@ -79,7 +85,20 @@ define( function( require ) {
     var undoButtonHomePosition = new Vector2( markerEditorHomeX, doubleNumberLineNode.centerY );
 
     var markerEditor = new MarkerEditor( unitRateProperty, this, keypadLayer, {
+
+      // numerator
+      numeratorFormat: shoppingItem.numeratorFormat,
+      numeratorMaxDigits: shoppingItem.numeratorMaxDigits,
+      numeratorMaxDecimals: shoppingItem.numeratorMaxDecimals,
+      numeratorTrimZeros: shoppingItem.numeratorTrimZeros,
+
+      // denominator
+      denominatorFormat: shoppingItem.denominatorFormat,
+      denominatorMaxDigits: shoppingItem.denominatorMaxDigits,
       denominatorMaxDecimals: shoppingItem.denominatorMaxDecimals,
+      denominatorTrimZeros: shoppingItem.denominatorTrimZeros,
+
+      // location
       x: markerEditorHomeX,
       centerY: doubleNumberLineNode.centerY
     } );

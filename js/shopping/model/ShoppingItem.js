@@ -21,6 +21,7 @@ define( function( require ) {
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   // strings
+  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
   var dollarsString = require( 'string!UNIT_RATES/dollars' );
 
   /**
@@ -37,13 +38,20 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // top axis of the double number line
-      numeratorAxisLabel: dollarsString, // {string} label for the top axis of the double number line
+      // numerator
+      numeratorAxisLabel: dollarsString, // {string} label for the axis on the double number line
+      numeratorFormat: currencyValueString, // {string} format with '{0}' placeholder for value
+      numeratorMaxDigits: 4, // {number} number of digits that can be entered via the keypad
+      numeratorMaxDecimals: 2, // {number} maximum number of decimal places
+      numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
 
-      // bottom axis of the double number line
-      denominatorAxisLabel: itemData.pluralName, // {string} label for the bottom axis of the double number line
+      // denominator
+      denominatorAxisLabel: itemData.pluralName, // {string} label for the axis on the double number line
+      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      denominatorMaxDigits: 4, // {number} number of digits that can be entered via the keypad
+      denominatorMaxDecimals: 1, // {number} maximum number of decimal places
+      denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
       denominatorAxisRange: new Range( 0, 10 ), // {Range} range of bottom axis
-      denominatorMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
       denominatorMajorMarkerDecimals: 0, // {number} number of decimal places for major markers
 
       // questions
@@ -65,11 +73,20 @@ define( function( require ) {
     this.itemImage = itemData.itemImage;
     this.bagImage = itemData.bagImage;
 
-    // @public (read-only) unpack options
+    // @public (read-only) unpack numerator options
     this.numeratorAxisLabel = options.numeratorAxisLabel;
+    this.numeratorFormat = options.numeratorFormat;
+    this.numeratorMaxDigits = options.numeratorMaxDigits;
+    this.numeratorMaxDecimals = options.numeratorMaxDecimals;
+    this.numeratorTrimZeros = options.numeratorTrimZeros;
+
+    // @public (read-only) unpack denominator options
     this.denominatorAxisLabel = options.denominatorAxisLabel;
-    this.denominatorAxisRange = options.denominatorAxisRange;
+    this.denominatorFormat = options.denominatorFormat;
+    this.denominatorMaxDigits = options.denominatorMaxDigits;
     this.denominatorMaxDecimals = options.denominatorMaxDecimals;
+    this.denominatorTrimZeros = options.denominatorTrimZeros;
+    this.denominatorAxisRange = options.denominatorAxisRange;
     this.denominatorMajorMarkerDecimals = options.denominatorMajorMarkerDecimals;
 
     // @public {DoubleNumberLine} double number line associated with this item

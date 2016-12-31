@@ -16,10 +16,12 @@ define( function( require ) {
   var LinearFunction = require( 'DOT/LinearFunction' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Range = require( 'DOT/Range' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   // sim modules
   var MarkerNode = require( 'UNIT_RATES/common/view/MarkerNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
@@ -40,20 +42,28 @@ define( function( require ) {
       // common to both horizontal axes
       horizontalAxisLength: 575,
       horizontalAxisLineWidth: 1.5,
-      arrowSize: new Dimension2( 8, 8 ),
-      horizontalAxisYSpacing: 20, // vertical spacing between top and bottom axes
+      arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
+      horizontalAxisYSpacing: 20, // {number} vertical spacing between top and bottom axes
+      labelFont: new URFont( 14 ), // {Font} for axis labels
+      labelColor: 'black', // {Color|string} color of axis labels
+      labelMaxWidth: 50, // determined empirically
       labelXSpacing: 12, // horizontal spacing between axis and its label
-      
-      // top horizontal axis
-      numeratorAxisLabel: null, // {Node|null} label on the top axis
-      numeratorAxisColor: 'black',
-      
-      // bottom horizontal axis
-      denominatorAxisLabel: null, // {Node|null} label on the bottom axis
-      denominatorMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
-      denominatorAxisRange: new Range( 0, 10 ), // {Range} of the bottom axis
-      denominatorAxisColor: 'black',
-      denominatorMajorMarkerDecimals: 1,
+
+      // numerator (top) axis
+      numeratorAxisColor: 'black', // {Color|string} color of the axis
+      numeratorAxisLabel: null, // {string|null} label for the axis
+      numeratorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      numeratorMaxDecimals: 1, // {number} maximum number of decimal places
+      numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
+
+      // denominator (bottom) axis
+      denominatorAxisColor: 'black', // {Color|string} color of the axis
+      denominatorAxisLabel: null, // {Node|null} label for the axis
+      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      denominatorMaxDecimals: 1, // {number} maximum number of decimal places
+      denominatorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
+      denominatorAxisRange: new Range( 0, 10 ), // {Range} range of axis
+      denominatorMajorMarkerDecimals: 0, // {number} number of decimal places for major markers
 
       // markers
       majorMarkerLength: 50,
@@ -86,9 +96,13 @@ define( function( require ) {
     this.addChild( numeratorAxisNode );
 
     if ( options.numeratorAxisLabel ) {
-      this.addChild( options.numeratorAxisLabel );
-      options.numeratorAxisLabel.left = numeratorAxisNode.right + options.labelXSpacing;
-      options.numeratorAxisLabel.centerY = numeratorAxisNode.centerY;
+      this.addChild( new Text( options.numeratorAxisLabel, {
+        font: options.labelFont,
+        fill: options.labelColor,
+        maxWidth: options.labelMaxWidth,
+        left: numeratorAxisNode.right + options.labelXSpacing,
+        centerY: numeratorAxisNode.centerY
+      } ) );
     }
 
     var denominatorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
@@ -102,9 +116,13 @@ define( function( require ) {
     this.addChild( denominatorAxisNode );
 
     if ( options.denominatorAxisLabel ) {
-      this.addChild( options.denominatorAxisLabel );
-      options.denominatorAxisLabel.left = denominatorAxisNode.right + options.labelXSpacing;
-      options.denominatorAxisLabel.centerY = denominatorAxisNode.centerY;
+      this.addChild( new Text( options.denominatorAxisLabel, {
+        font: options.labelFont,
+        fill: options.labelColor,
+        maxWidth: options.labelMaxWidth,
+        left: denominatorAxisNode.right + options.labelXSpacing,
+        centerY: denominatorAxisNode.centerY
+      } ) );
     }
 
     // parent for markers, to maintain rendering order
@@ -137,6 +155,18 @@ define( function( require ) {
       if ( newMarker !== null ) {
         var denominator = newMarker;
         var markerNode = new MarkerNode( denominator * unitRateProperty.value, denominator, {
+
+          // numerator
+          numeratorFormat: options.numeratorFormat,
+          numeratorMaxDecimals: options.numeratorMaxDecimals,
+          numeratorTrimZeros: options.numeratorTrimZeros,
+
+          // denominator
+          denominatorFormat: options.denominatorFormat,
+          denominatorMaxDecimals: options.denominatorMaxDecimals,
+          denominatorTrimZeros: options.denominatorTrimZeros,
+
+          // location
           centerX: modelToView( denominator ),
           centerY: verticalAxis.centerY
         } );

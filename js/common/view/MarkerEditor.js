@@ -26,9 +26,6 @@ define( function( require ) {
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
-  // strings
-  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
-
   /**
    * @param {Property.<number>} unitRateProperty
    * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
@@ -41,16 +38,16 @@ define( function( require ) {
     options = _.extend( {
 
       // numerator
-      numeratorFormat: currencyValueString, // {string} format with '{0}' placeholder for valuer
+      numeratorFormat: '{0}', // {string} format with '{0}' placeholder for value
       numeratorMaxDigits: 4, // {number} maximum number of digits that can be entered via keypad
-      numeratorMaxDecimals: 2, // {number} maximum number of decimal places that can be entered via keypad
+      numeratorMaxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
       numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
 
       // denominator
       denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
       denominatorMaxDigits: 4, // {number} maximum number of digits that can be entered via keypad
       denominatorMaxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
-      denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
+      denominatorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
 
       // general
       lineLength: 55, // {number} length of the vertical line between numerator and denominator values
