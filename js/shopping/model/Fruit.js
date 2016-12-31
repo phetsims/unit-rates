@@ -27,7 +27,7 @@ define( function( require ) {
       uniformQuestions: false,
 
       // Range of bottom axis
-      bottomAxisRange: new Range( 0, 16 )
+      denominatorAxisRange: new Range( 0, 16 )
     } );
   }
 

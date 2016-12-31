@@ -45,15 +45,15 @@ define( function( require ) {
       labelXSpacing: 12, // horizontal spacing between axis and its label
       
       // top horizontal axis
-      topAxisLabel: null, // {Node|null} label on the top axis
+      numeratorAxisLabel: null, // {Node|null} label on the top axis
       topAxisColor: 'black',
       
       // bottom horizontal axis
-      bottomAxisLabel: null, // {Node|null} label on the bottom axis
-      bottomAxisMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
-      bottomAxisRange: new Range( 0, 10 ), // {Range} of the bottom axis
+      denominatorAxisLabel: null, // {Node|null} label on the bottom axis
+      denominatorMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
+      denominatorAxisRange: new Range( 0, 10 ), // {Range} of the bottom axis
       bottomAxisColor: 'black',
-      bottomAxisMajorMarkerDecimals: 1,
+      denominatorMajorMarkerDecimals: 1,
 
       // markers
       majorMarkerLength: 50,
@@ -84,11 +84,11 @@ define( function( require ) {
       y: verticalAxis.centerY - ( options.horizontalAxisYSpacing / 2 )
     } );
     this.addChild( topAxisNode );
-    
-    if ( options.topAxisLabel ) {
-      this.addChild( options.topAxisLabel );
-      options.topAxisLabel.left = topAxisNode.right + options.labelXSpacing;
-      options.topAxisLabel.centerY =  topAxisNode.centerY;
+
+    if ( options.numeratorAxisLabel ) {
+      this.addChild( options.numeratorAxisLabel );
+      options.numeratorAxisLabel.left = topAxisNode.right + options.labelXSpacing;
+      options.numeratorAxisLabel.centerY = topAxisNode.centerY;
     }
 
     var bottomAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
@@ -101,10 +101,10 @@ define( function( require ) {
     } );
     this.addChild( bottomAxisNode );
 
-    if ( options.bottomAxisLabel ) {
-      this.addChild( options.bottomAxisLabel );
-      options.bottomAxisLabel.left = bottomAxisNode.right + options.labelXSpacing;
-      options.bottomAxisLabel.centerY =  bottomAxisNode.centerY;
+    if ( options.denominatorAxisLabel ) {
+      this.addChild( options.denominatorAxisLabel );
+      options.denominatorAxisLabel.left = bottomAxisNode.right + options.labelXSpacing;
+      options.denominatorAxisLabel.centerY = bottomAxisNode.centerY;
     }
 
     // parent for markers, to maintain rendering order
@@ -116,7 +116,7 @@ define( function( require ) {
     //TODO this is duplicated in DoubleNumberLineAccordionBox
     // maps the denominator to a horizontal location on the double number line
     var modelToView = new LinearFunction(
-      options.bottomAxisRange.min, options.bottomAxisRange.max,
+      options.denominatorAxisRange.min, options.denominatorAxisRange.max,
       0, 0.96 * options.horizontalAxisLength );
 
     var unitRateObserver = function() {

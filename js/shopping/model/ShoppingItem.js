@@ -38,13 +38,13 @@ define( function( require ) {
     options = _.extend( {
 
       // top axis of the double number line
-      topAxisLabel: dollarsString, // {string} label for the top axis of the double number line
+      numeratorAxisLabel: dollarsString, // {string} label for the top axis of the double number line
 
       // bottom axis of the double number line
-      bottomAxisLabel: itemData.pluralName, // {string} label for the bottom axis of the double number line
-      bottomAxisRange: new Range( 0, 10 ), // {Range} range of bottom axis
-      bottomAxisMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
-      bottomAxisMajorMarkerDecimals: 0, // {number} number of decimal places for major markers
+      denominatorAxisLabel: itemData.pluralName, // {string} label for the bottom axis of the double number line
+      denominatorAxisRange: new Range( 0, 10 ), // {Range} range of bottom axis
+      denominatorMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
+      denominatorMajorMarkerDecimals: 0, // {number} number of decimal places for major markers
 
       // questions
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
@@ -66,11 +66,11 @@ define( function( require ) {
     this.bagImage = itemData.bagImage;
 
     // @public (read-only) unpack options
-    this.topAxisLabel = options.topAxisLabel;
-    this.bottomAxisLabel = options.bottomAxisLabel;
-    this.bottomAxisRange = options.bottomAxisRange;
-    this.bottomAxisMaxDecimals = options.bottomAxisMaxDecimals;
-    this.bottomAxisMajorMarkerDecimals = options.bottomAxisMajorMarkerDecimals;
+    this.numeratorAxisLabel = options.numeratorAxisLabel;
+    this.denominatorAxisLabel = options.denominatorAxisLabel;
+    this.denominatorAxisRange = options.denominatorAxisRange;
+    this.denominatorMaxDecimals = options.denominatorMaxDecimals;
+    this.denominatorMajorMarkerDecimals = options.denominatorMajorMarkerDecimals;
 
     // @public {DoubleNumberLine} double number line associated with this item
     this.doubleNumberLine = new DoubleNumberLine();

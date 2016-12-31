@@ -66,11 +66,11 @@ define( function( require ) {
 
     var doubleNumberLineNode = new DoubleNumberLineNode( shoppingItem.doubleNumberLine, unitRateProperty, {
       horizontalAxisLength: options.horizontalAxisLength,
-      topAxisLabel: new Text( shoppingItem.topAxisLabel, AXIS_LABEL_OPTIONS ),
-      bottomAxisLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS ),
-      bottomAxisMaxDecimals: shoppingItem.bottomAxisMaxDecimals,
-      bottomAxisRange: shoppingItem.bottomAxisRange,
-      bottomAxisMajorMarkerDecimals: shoppingItem.bottomAxisMajorMarkerDecimals,
+      numeratorAxisLabel: new Text( shoppingItem.numeratorAxisLabel, AXIS_LABEL_OPTIONS ),
+      denominatorAxisLabel: new Text( shoppingItem.denominatorAxisLabel, AXIS_LABEL_OPTIONS ),
+      denominatorMaxDecimals: shoppingItem.denominatorMaxDecimals,
+      denominatorAxisRange: shoppingItem.denominatorAxisRange,
+      denominatorMajorMarkerDecimals: shoppingItem.denominatorMajorMarkerDecimals,
       x: 0,
       y: 0
     } );
@@ -79,7 +79,7 @@ define( function( require ) {
     var undoButtonHomePosition = new Vector2( markerEditorHomeX, doubleNumberLineNode.centerY );
 
     var markerEditor = new MarkerEditor( unitRateProperty, this, keypadLayer, {
-      denominatorMaxDecimals: shoppingItem.bottomAxisMaxDecimals,
+      denominatorMaxDecimals: shoppingItem.denominatorMaxDecimals,
       x: markerEditorHomeX,
       centerY: doubleNumberLineNode.centerY
     } );
@@ -120,7 +120,7 @@ define( function( require ) {
     // maps the denominator to a horizontal location on the double number line
     assert && assert( doubleNumberLineNode.x === 0 );
     var modelToView = new LinearFunction(
-      shoppingItem.bottomAxisRange.min, shoppingItem.bottomAxisRange.max,
+      shoppingItem.denominatorAxisRange.min, shoppingItem.denominatorAxisRange.max,
       0, 0.96 * options.horizontalAxisLength );
 
     // animation for marker editor
@@ -133,7 +133,7 @@ define( function( require ) {
 
       if ( markerEditor.isValidMarker() ) {
 
-        if ( markerEditor.denominatorProperty.value <= shoppingItem.bottomAxisRange.max ) {
+        if ( markerEditor.denominatorProperty.value <= shoppingItem.denominatorAxisRange.max ) {
 
           // create a marker on the double number line
           shoppingItem.doubleNumberLine.undoMarkerProperty.value = markerEditor.denominatorProperty.value;
@@ -163,7 +163,7 @@ define( function( require ) {
           var denominator = markerEditor.getValidDenominator();
           assert && assert( denominator >= 0, 'invalid denominator: ' + denominator );
 
-          if ( denominator > shoppingItem.bottomAxisRange.max ) {
+          if ( denominator > shoppingItem.denominatorAxisRange.max ) {
 
             // move marker editor to right of axis arrows
             destinationX = doubleNumberLineNode.x + options.horizontalAxisLength + 5;

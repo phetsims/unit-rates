@@ -32,10 +32,10 @@ define( function( require ) {
       questionPluralUnits: poundsString,
 
       // Bottom axis of the double number line
-      bottomAxisLabel: poundsString,
-      bottomAxisMaxDecimals: 2,
-      bottomAxisRange: new Range( 0, 1.6 ),
-      bottomAxisMajorMarkerDecimals: 1,
+      denominatorAxisLabel: poundsString,
+      denominatorMaxDecimals: 2,
+      denominatorAxisRange: new Range( 0, 1.6 ),
+      denominatorMajorMarkerDecimals: 1,
 
       // All Candy questions have the same form, i.e. 'Cost of N pounds?'
       uniformQuestions: true
