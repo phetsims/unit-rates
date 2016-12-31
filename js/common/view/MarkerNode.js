@@ -40,13 +40,13 @@ define( function( require ) {
       lineWidth: 1,
 
       // numerator
-      numeratorFormat: '{0}',
-      numeratorMaxDecimals: 2,
+      numeratorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      numeratorMaxDecimals: 2, // {number} maximum number of decimal places
       numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros in the decimal places
 
       // denominator
-      denominatorFormat: '{0}',
-      denominatorMaxDecimals: 2,
+      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      denominatorMaxDecimals: 2, // {number} maximum number of decimal places
       denominatorTrimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
 
     }, options );

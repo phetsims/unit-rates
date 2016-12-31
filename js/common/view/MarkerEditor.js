@@ -41,16 +41,16 @@ define( function( require ) {
     options = _.extend( {
 
       // numerator
-      numeratorFormat: currencyValueString, // {string} format for displaying the numerator
-      numeratorMaxDigits: 4, // {number} maximum number of numerator digits that can be entered on the keypad
-      numeratorMaxDecimals: 2, // {number} maximum number of numerator decimal places that can be entered on keypad
-      numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros in numerator's decimal places
+      numeratorFormat: currencyValueString, // {string} format with '{0}' placeholder for valuer
+      numeratorMaxDigits: 4, // {number} maximum number of digits that can be entered via keypad
+      numeratorMaxDecimals: 2, // {number} maximum number of decimal places that can be entered via keypad
+      numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
 
       // denominator
-      denominatorFormat: '{0}', // {string} format for displaying the denominator
-      denominatorMaxDigits: 4, // {number} maximum number of denominator digits that can be entered on the keypad
-      denominatorMaxDecimals: 1, // {number} maximum number of denominator decimal places that can be entered on keypad
-      denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros in denominator's decimal places
+      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      denominatorMaxDigits: 4, // {number} maximum number of digits that can be entered via keypad
+      denominatorMaxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
+      denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
 
       // general
       lineLength: 55, // {number} length of the vertical line between numerator and denominator values
@@ -58,7 +58,7 @@ define( function( require ) {
       valueFont: new URFont( 14 ), // {Font} font for the value
       valueColor: 'black', // {Color|string} color of the value
       showAnswersColor: 'lightGray', // {Color|string} color of the value when 'showAnswers' query parameter is present
-      editColor: 'yellow', // {Color|string} value box is filled with this color while editing
+      editColor: 'yellow', // {Color|string} box is filled with this color while editing value
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: 3, // {number} vertical margin inside the value box
       ySpacing: 5,  // {number} vertical spacing between UI elements
