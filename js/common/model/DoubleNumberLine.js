@@ -27,15 +27,15 @@ define( function( require ) {
   function DoubleNumberLine( options ) {
 
     options = _.extend( {
-      topFormat: currencyValueString,
-      bottomFormat: '{0}'
+      numeratorFormat: currencyValueString,
+      denominatorFormat: '{0}'
     }, options );
 
     var self = this;
 
     // @public (read-only) formats for marker values
-    this.topFormat = options.topFormat;
-    this.bottomFormat = options.bottomFormat;
+    this.numeratorFormat = options.numeratorFormat;
+    this.denominatorFormat = options.denominatorFormat;
 
     // @public {Property.<number|null>} marker that corresponds to what is on the scale
     this.scaleMarkerProperty = new Property( null );

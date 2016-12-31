@@ -34,9 +34,9 @@ define( function( require ) {
 
       // vertical axis
       verticalAxisLength: 50,
-      verticalAxisColor: 'black',
       verticalAxisLineWidth: 1.5,
-      
+      verticalAxisColor: 'black',
+
       // common to both horizontal axes
       horizontalAxisLength: 575,
       horizontalAxisLineWidth: 1.5,
@@ -46,13 +46,13 @@ define( function( require ) {
       
       // top horizontal axis
       numeratorAxisLabel: null, // {Node|null} label on the top axis
-      topAxisColor: 'black',
+      numeratorAxisColor: 'black',
       
       // bottom horizontal axis
       denominatorAxisLabel: null, // {Node|null} label on the bottom axis
       denominatorMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
       denominatorAxisRange: new Range( 0, 10 ), // {Range} of the bottom axis
-      bottomAxisColor: 'black',
+      denominatorAxisColor: 'black',
       denominatorMajorMarkerDecimals: 1,
 
       // markers
@@ -74,8 +74,8 @@ define( function( require ) {
     } );
     this.addChild( verticalAxis );
 
-    var topAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
-      fill: options.topAxisColor,
+    var numeratorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
+      fill: options.numeratorAxisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
@@ -83,28 +83,28 @@ define( function( require ) {
       x: verticalAxis.x,
       y: verticalAxis.centerY - ( options.horizontalAxisYSpacing / 2 )
     } );
-    this.addChild( topAxisNode );
+    this.addChild( numeratorAxisNode );
 
     if ( options.numeratorAxisLabel ) {
       this.addChild( options.numeratorAxisLabel );
-      options.numeratorAxisLabel.left = topAxisNode.right + options.labelXSpacing;
-      options.numeratorAxisLabel.centerY = topAxisNode.centerY;
+      options.numeratorAxisLabel.left = numeratorAxisNode.right + options.labelXSpacing;
+      options.numeratorAxisLabel.centerY = numeratorAxisNode.centerY;
     }
 
-    var bottomAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
-      fill: options.bottomAxisColor,
+    var denominatorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
+      fill: options.denominatorAxisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
       tailWidth: options.horizontalAxisLineWidth,
       y: verticalAxis.centerY + ( options.horizontalAxisYSpacing / 2 )
     } );
-    this.addChild( bottomAxisNode );
+    this.addChild( denominatorAxisNode );
 
     if ( options.denominatorAxisLabel ) {
       this.addChild( options.denominatorAxisLabel );
-      options.denominatorAxisLabel.left = bottomAxisNode.right + options.labelXSpacing;
-      options.denominatorAxisLabel.centerY = bottomAxisNode.centerY;
+      options.denominatorAxisLabel.left = denominatorAxisNode.right + options.labelXSpacing;
+      options.denominatorAxisLabel.centerY = denominatorAxisNode.centerY;
     }
 
     // parent for markers, to maintain rendering order
