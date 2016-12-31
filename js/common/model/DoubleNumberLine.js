@@ -11,6 +11,7 @@ define( function( require ) {
 
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var LinearFunction = require( 'DOT/LinearFunction' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
 
@@ -18,14 +19,49 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
+   * @param {Property.<number>} unitRateProperty
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLine( options ) {
+  function DoubleNumberLine( unitRateProperty, options ) {
 
     options = _.extend( {
-      //TODO
+      horizontalAxisLength: 575, // {number} length of horizontal axes in view coordinate frame
+      numerationOptions: null, // {*} options specific to the rate's numerator, see below
+      denominatorOptions: null // {*} options specific to the rate's denominator, see below
     }, options );
+
+    // @public (read-only) options for the numerator (top) number line
+    this.numeratorOptions = _.extend( {
+      axisLabel: null, // {string|null} label for the axis
+      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
+      maxDecimals: 1, // {number} maximum number of decimal places
+      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+    }, options.numeratorOptions );
+
+    // @public (read-only) options for the denominator (bottom) number line
+    this.denominatorOptions = _.extend( {
+      axisLabel: null, // {Node|null} label for the axis
+      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
+      maxDecimals: 1, // {number} maximum number of decimal places
+      trimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
+      axisRange: new Range( 0, 10 ), // {Range} range of axis
+      majorMarkerDecimals: 0 // {number} number of decimal places for major markers
+    }, options.denominatorOptions );
+
+    // @public (read-only)
+    this.unitRateProperty = unitRateProperty;
+    this.horizontalAxisLength = options.horizontalAxisLength;
+
+    var unitRateObserver = function() {
+      //TODO adjust the numerator of all markers
+    };
+    this.unitRateProperty.link( unitRateObserver );
+
+    // @public (read-only) maps the denominator to the view coordinate frame
+    this.modelToView = new LinearFunction(
+      this.denominatorOptions.axisRange.min, this.denominatorOptions.axisRange.max,
+      0, 0.96 * options.horizontalAxisLength );
 
     var self = this;
 
@@ -64,11 +100,21 @@ define( function( require ) {
 
     // @public {number[]} other markers that aren't described by any of the above
     this.otherMarkers = new ObservableArray( [] );
+
+    // @private
+    this.disposeDoubleNumberLine = function() {
+      unitRateProperty.unlink( unitRateObserver );
+    };
   }
 
   unitRates.register( 'DoubleNumberLine', DoubleNumberLine );
 
   return inherit( Object, DoubleNumberLine, {
+
+    // @public
+    dispose: function() {
+      this.disposeDoubleNumberLine();
+    },
 
     // @public
     reset: function() {

@@ -12,7 +12,6 @@ define( function( require ) {
   var AccordionBox = require( 'SUN/AccordionBox' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LinearFunction = require( 'DOT/LinearFunction' );
   var MoveTo = require( 'TWIXT/MoveTo' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
@@ -32,12 +31,12 @@ define( function( require ) {
   var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
 
   /**
-   * @param {ShoppingItem} shoppingItem
+   * @param {DoubleNumberLine} doubleNumberLine
    * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineAccordionBox( shoppingItem, keypadLayer, options ) {
+  function DoubleNumberLineAccordionBox( doubleNumberLine, keypadLayer, options ) {
 
     options = _.extend( {
       expandedProperty: new Property( true ),
@@ -54,13 +53,10 @@ define( function( require ) {
       horizontalAxisLength: 575
     }, options );
 
-    //TODO in ShoppingLabScreen, unit rate is mutable, and should be part of the ShoppingLabItem model element
-    var unitRateProperty = new Property( shoppingItem.unitRate );
-
-    var doubleNumberLineNode = new DoubleNumberLineNode( shoppingItem.doubleNumberLine, unitRateProperty, {
+    var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
       horizontalAxisLength: options.horizontalAxisLength,
-      numeratorOptions: shoppingItem.numeratorOptions,
-      denominatorOptions: shoppingItem.denominatorOptions,
+      numeratorOptions: doubleNumberLine.numeratorOptions,
+      denominatorOptions: doubleNumberLine.denominatorOptions,
       x: 0,
       y: 0
     } );
@@ -68,9 +64,9 @@ define( function( require ) {
     var markerEditorHomeX = doubleNumberLineNode.left - 40;
     var undoButtonHomePosition = new Vector2( markerEditorHomeX, doubleNumberLineNode.centerY );
 
-    var markerEditor = new MarkerEditor( unitRateProperty, this, keypadLayer, {
-      numeratorOptions: shoppingItem.numeratorOptions,
-      denominatorOptions: shoppingItem.denominatorOptions,
+    var markerEditor = new MarkerEditor( doubleNumberLine.unitRateProperty, this, keypadLayer, {
+      numeratorOptions: doubleNumberLine.numeratorOptions,
+      denominatorOptions: doubleNumberLine.denominatorOptions,
       x: markerEditorHomeX,
       centerY: doubleNumberLineNode.centerY
     } );
@@ -91,7 +87,7 @@ define( function( require ) {
       baseColor: 'rgb( 242, 242, 242 )',
       listener: function() {
         markerEditor.reset();
-        shoppingItem.doubleNumberLine.erase();
+        doubleNumberLine.erase();
       }
     } );
     eraserButton.touchArea = eraserButton.localBounds.dilatedXY( 5, 5 );
@@ -108,12 +104,6 @@ define( function( require ) {
 
     AccordionBox.call( this, contentNode, options );
 
-    // maps the denominator to a horizontal location on the double number line
-    assert && assert( doubleNumberLineNode.x === 0 );
-    var modelToView = new LinearFunction(
-      shoppingItem.denominatorOptions.axisRange.min, shoppingItem.denominatorOptions.axisRange.max,
-      0, 0.96 * options.horizontalAxisLength );
-
     // animation for marker editor
     var markerEditorAnimation = null;
 
@@ -124,10 +114,10 @@ define( function( require ) {
 
       if ( markerEditor.isValidMarker() ) {
 
-        if ( markerEditor.denominatorProperty.value <= shoppingItem.denominatorOptions.axisRange.max ) {
+        if ( markerEditor.denominatorProperty.value <= doubleNumberLine.denominatorOptions.axisRange.max ) {
 
           // create a marker on the double number line
-          shoppingItem.doubleNumberLine.undoMarkerProperty.value = markerEditor.denominatorProperty.value;
+          doubleNumberLine.undoMarkerProperty.value = markerEditor.denominatorProperty.value;
 
           // return the marker editor to its home position
           markerEditor.reset();
@@ -154,13 +144,13 @@ define( function( require ) {
           var denominator = markerEditor.getValidDenominator();
           assert && assert( denominator >= 0, 'invalid denominator: ' + denominator );
 
-          if ( denominator > shoppingItem.denominatorOptions.axisRange.max ) {
+          if ( denominator > doubleNumberLine.denominatorOptions.axisRange.max ) {
 
             // move marker editor to right of axis arrows
             destinationX = doubleNumberLineNode.x + options.horizontalAxisLength + 5;
           }
           else {
-            destinationX = doubleNumberLineNode.x + modelToView( denominator );
+            destinationX = doubleNumberLineNode.x + doubleNumberLine.modelToView( denominator );
           }
 
           undoButton.center = undoButtonHomePosition;

@@ -81,7 +81,10 @@ define( function( require ) {
     this.bagImage = itemData.bagImage;
 
     // @public {DoubleNumberLine} double number line associated with this item
-    this.doubleNumberLine = new DoubleNumberLine();
+    this.doubleNumberLine = new DoubleNumberLine( new Property( this.unitRate ), {
+      numeratorOptions: this.numeratorOptions,
+      denominatorOptions: this.denominatorOptions
+    } );
 
     // @public {ShoppingQuestion} 'Unit Rate?'
     this.unitRateQuestion = ShoppingQuestion.createUnitRate( itemData.unitRate, options.questionSingularUnits, {

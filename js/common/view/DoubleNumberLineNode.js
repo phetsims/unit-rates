@@ -13,9 +13,7 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var LinearFunction = require( 'DOT/LinearFunction' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Range = require( 'DOT/Range' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // sim modules
@@ -26,11 +24,10 @@ define( function( require ) {
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine
-   * @param {Property.<number>} unitRateProperty
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineNode( doubleNumberLine, unitRateProperty, options ) {
+  function DoubleNumberLineNode( doubleNumberLine, options ) {
 
     options = _.extend( {
 
@@ -40,17 +37,14 @@ define( function( require ) {
       verticalAxisColor: 'black',
 
       // common to both horizontal axes
-      horizontalAxisLength: 575,
       horizontalAxisLineWidth: 1.5,
+      horizontalAxisColor: 'black',
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
       horizontalAxisYSpacing: 20, // {number} vertical spacing between top and bottom axes
       labelFont: new URFont( 14 ), // {Font} for axis labels
       labelColor: 'black', // {Color|string} color of axis labels
       labelMaxWidth: 50, // determined empirically
       labelXSpacing: 12, // horizontal spacing between axis and its label
-
-      numerationOptions: null, // {*} options specific to the rate's numerator, see below
-      denominatorOptions: null, // {*} options specific to the rate's denominator, see below
 
       // markers
       majorMarkerLength: 50,
@@ -63,24 +57,6 @@ define( function( require ) {
 
     }, options );
 
-    var numeratorOptions = _.extend( {
-      axisColor: 'black', // {Color|string} color of the axis
-      axisLabel: null, // {string|null} label for the axis
-      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
-      maxDecimals: 1, // {number} maximum number of decimal places
-      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
-    }, options.numeratorOptions );
-
-    var denominatorOptions = _.extend( {
-      axisColor: 'black', // {Color|string} color of the axis
-      axisLabel: null, // {Node|null} label for the axis
-      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
-      maxDecimals: 1, // {number} maximum number of decimal places
-      trimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
-      axisRange: new Range( 0, 10 ), // {Range} range of axis
-      majorMarkerDecimals: 0 // {number} number of decimal places for major markers
-    }, options.denominatorOptions );
-
     Node.call( this );
 
     var verticalAxis = new Line( 0, 0, 0, options.verticalAxisLength, {
@@ -89,8 +65,8 @@ define( function( require ) {
     } );
     this.addChild( verticalAxis );
 
-    var numeratorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
-      fill: numeratorOptions.axisColor,
+    var numeratorAxisNode = new ArrowNode( 0, 0, doubleNumberLine.horizontalAxisLength, 0, {
+      fill: options.horizontalAxisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
@@ -100,8 +76,8 @@ define( function( require ) {
     } );
     this.addChild( numeratorAxisNode );
 
-    if ( numeratorOptions.axisLabel ) {
-      this.addChild( new Text( numeratorOptions.axisLabel, {
+    if ( doubleNumberLine.numeratorOptions.axisLabel ) {
+      this.addChild( new Text( doubleNumberLine.numeratorOptions.axisLabel, {
         font: options.labelFont,
         fill: options.labelColor,
         maxWidth: options.labelMaxWidth,
@@ -110,8 +86,8 @@ define( function( require ) {
       } ) );
     }
 
-    var denominatorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
-      fill: denominatorOptions.axisColor,
+    var denominatorAxisNode = new ArrowNode( 0, 0, doubleNumberLine.horizontalAxisLength, 0, {
+      fill: options.horizontalAxisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
@@ -120,8 +96,8 @@ define( function( require ) {
     } );
     this.addChild( denominatorAxisNode );
 
-    if ( denominatorOptions.axisLabel ) {
-      this.addChild( new Text( denominatorOptions.axisLabel, {
+    if ( doubleNumberLine.denominatorOptions.axisLabel ) {
+      this.addChild( new Text( doubleNumberLine.denominatorOptions.axisLabel, {
         font: options.labelFont,
         fill: options.labelColor,
         maxWidth: options.labelMaxWidth,
@@ -136,16 +112,10 @@ define( function( require ) {
 
     this.mutate( options );
 
-    //TODO this is duplicated in DoubleNumberLineAccordionBox
-    // maps the denominator to a horizontal location on the double number line
-    var modelToView = new LinearFunction(
-      denominatorOptions.axisRange.min, denominatorOptions.axisRange.max,
-      0, 0.96 * options.horizontalAxisLength );
-
     var unitRateObserver = function() {
       //TODO
     };
-    unitRateProperty.link( unitRateObserver );
+    doubleNumberLine.unitRateProperty.link( unitRateObserver );
 
     doubleNumberLine.scaleMarkerProperty.link( function( newMarker, oldMarker ) {
        //TODO
@@ -158,11 +128,14 @@ define( function( require ) {
 
       //TODO this is a test, need to keep track of this marker for removal, etc.
       if ( newMarker !== null ) {
+
         var denominator = newMarker;
-        var markerNode = new MarkerNode( denominator * unitRateProperty.value, denominator, {
-          numeratorOptions: numeratorOptions,
-          denominatorOptions: denominatorOptions,
-          centerX: modelToView( denominator ),
+        var numerator = denominator * doubleNumberLine.unitRateProperty.value;
+
+        var markerNode = new MarkerNode( numerator, denominator, {
+          numeratorOptions: doubleNumberLine.numeratorOptions,
+          denominatorOptions: doubleNumberLine.denominatorOptions,
+          centerX: doubleNumberLine.modelToView( denominator ),
           centerY: verticalAxis.centerY
         } );
         markersParent.addChild( markerNode );
@@ -189,7 +162,7 @@ define( function( require ) {
 
     // @private
     this.disposeDoubleNumberLineNode = function() {
-      unitRateProperty.unlink( unitRateObserver );
+      doubleNumberLine.unitRateProperty.unlink( unitRateObserver );
     };
   }
 
