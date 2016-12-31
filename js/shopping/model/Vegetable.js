@@ -28,7 +28,7 @@ define( function( require ) {
 
       // denominator
       denominatorOptions: {
-        denominatorAxisRange: new Range( 0, 16 )
+        axisRange: new Range( 0, 16 )
       }
     } );
   }

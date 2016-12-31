@@ -53,22 +53,22 @@ define( function( require ) {
 
     // @public (read-only) options specific to the rate's numerator
     this.numeratorOptions = _.extend( {
-      numeratorAxisLabel: dollarsString, // {string} label for the axis on the double number line
-      numeratorFormat: currencyValueString, // {string} format with '{0}' placeholder for value
-      numeratorMaxDigits: 4, // {number} number of digits that can be entered via the keypad
-      numeratorMaxDecimals: 2, // {number} maximum number of decimal places
-      numeratorTrimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+      axisLabel: dollarsString, // {string} label for the axis on the double number line
+      valueFormat: currencyValueString, // {string} format with '{0}' placeholder for value
+      maxDigits: 4, // {number} number of digits that can be entered via the keypad
+      maxDecimals: 2, // {number} maximum number of decimal places
+      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.numeratorOptions );
 
     // @public (read-only) options specific to the rate's denominator
     this.denominatorOptions = _.extend( {
-      denominatorAxisLabel: itemData.pluralName, // {string} label for the axis on the double number line
-      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
-      denominatorMaxDigits: 4, // {number} number of digits that can be entered via the keypad
-      denominatorMaxDecimals: 1, // {number} maximum number of decimal places
-      denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
-      denominatorAxisRange: new Range( 0, 10 ), // {Range} range of bottom axis
-      denominatorMajorMarkerDecimals: 0 // {number} number of decimal places for major markers
+      axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
+      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
+      maxDigits: 4, // {number} number of digits that can be entered via the keypad
+      maxDecimals: 1, // {number} maximum number of decimal places
+      trimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
+      axisRange: new Range( 0, 10 ), // {Range} range of bottom axis
+      majorMarkerDecimals: 0 // {number} number of decimal places for major markers
     }, options.denominatorOptions );
 
     // @public (read-only) unpack itemData
@@ -85,10 +85,10 @@ define( function( require ) {
 
     // @public {ShoppingQuestion} 'Unit Rate?'
     this.unitRateQuestion = ShoppingQuestion.createUnitRate( itemData.unitRate, options.questionSingularUnits, {
-      guessFormat: this.numeratorOptions.numeratorFormat,
-      maxDigits: this.numeratorOptions.numeratorMaxDigits,
-      maxDecimals: this.numeratorOptions.numeratorMaxDecimals,
-      trimZeros: this.numeratorOptions.numeratorTrimZeros
+      guessFormat: this.numeratorOptions.valueFormat,
+      maxDigits: this.numeratorOptions.maxDigits,
+      maxDecimals: this.numeratorOptions.maxDecimals,
+      trimZeros: this.numeratorOptions.trimZeros
     } );
 
     // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
@@ -135,20 +135,20 @@ define( function( require ) {
 
           // e.g. 'Cost of 3 Apples?'
           questions.push( ShoppingQuestion.createCostOf( quantity, unitRate, singularUnits, pluralUnits, {
-            guessFormat: numeratorOptions.numeratorFormat,
-            maxDigits: numeratorOptions.numeratorMaxDigits,
-            maxDecimals: numeratorOptions.numeratorMaxDecimals,
-            trimZeros: numeratorOptions.numeratorTrimZeros
+            guessFormat: numeratorOptions.valueFormat,
+            maxDigits: numeratorOptions.maxDigits,
+            maxDecimals: numeratorOptions.maxDecimals,
+            trimZeros: numeratorOptions.trimZeros
           } ) );
         }
         else {
 
           // optionally, the last question has a different form, e.g. 'Apples for $3.00?'
           questions.push( ShoppingQuestion.createItemsFor( quantity, unitRate, singularUnits, pluralUnits, {
-            guessFormat: denominatorOptions.denominatorFormat,
-            maxDigits: denominatorOptions.denominatorMaxDigits,
-            maxDecimals: denominatorOptions.denominatorMaxDecimals,
-            trimZeros: denominatorOptions.denominatorTrimZeros
+            guessFormat: denominatorOptions.valueFormat,
+            maxDigits: denominatorOptions.maxDigits,
+            maxDecimals: denominatorOptions.maxDecimals,
+            trimZeros: denominatorOptions.trimZeros
           } ) );
         }
       }

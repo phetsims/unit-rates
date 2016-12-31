@@ -17,9 +17,6 @@ define( function( require ) {
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
-  // strings
-  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
-
   /**
    * @param {Object} [options]
    * @constructor
@@ -27,15 +24,10 @@ define( function( require ) {
   function DoubleNumberLine( options ) {
 
     options = _.extend( {
-      numeratorFormat: currencyValueString,
-      denominatorFormat: '{0}'
+      //TODO
     }, options );
 
     var self = this;
-
-    // @public (read-only) formats for marker values
-    this.numeratorFormat = options.numeratorFormat;
-    this.denominatorFormat = options.denominatorFormat;
 
     // @public {Property.<number|null>} marker that corresponds to what is on the scale
     this.scaleMarkerProperty = new Property( null );

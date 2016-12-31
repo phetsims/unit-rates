@@ -33,10 +33,10 @@ define( function( require ) {
 
       // Bottom axis of the double number line
       denominatorOptions: {
-        denominatorAxisLabel: poundsString,
-        denominatorMaxDecimals: 2,
-        denominatorAxisRange: new Range( 0, 1.6 ),
-        denominatorMajorMarkerDecimals: 1
+        axisLabel: poundsString,
+        maxDecimals: 2,
+        axisRange: new Range( 0, 1.6 ),
+        majorMarkerDecimals: 1
       },
 
       // All Candy questions have the same form, i.e. 'Cost of N pounds?'

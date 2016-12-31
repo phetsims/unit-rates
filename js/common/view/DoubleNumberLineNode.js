@@ -64,21 +64,21 @@ define( function( require ) {
     }, options );
 
     var numeratorOptions = _.extend( {
-      numeratorAxisColor: 'black', // {Color|string} color of the axis
-      numeratorAxisLabel: null, // {string|null} label for the axis
-      numeratorFormat: '{0}', // {string} format with '{0}' placeholder for value
-      numeratorMaxDecimals: 1, // {number} maximum number of decimal places
-      numeratorTrimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+      axisColor: 'black', // {Color|string} color of the axis
+      axisLabel: null, // {string|null} label for the axis
+      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
+      maxDecimals: 1, // {number} maximum number of decimal places
+      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.numeratorOptions );
 
     var denominatorOptions = _.extend( {
-      denominatorAxisColor: 'black', // {Color|string} color of the axis
-      denominatorAxisLabel: null, // {Node|null} label for the axis
-      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
-      denominatorMaxDecimals: 1, // {number} maximum number of decimal places
-      denominatorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
-      denominatorAxisRange: new Range( 0, 10 ), // {Range} range of axis
-      denominatorMajorMarkerDecimals: 0 // {number} number of decimal places for major markers
+      axisColor: 'black', // {Color|string} color of the axis
+      axisLabel: null, // {Node|null} label for the axis
+      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
+      maxDecimals: 1, // {number} maximum number of decimal places
+      trimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
+      axisRange: new Range( 0, 10 ), // {Range} range of axis
+      majorMarkerDecimals: 0 // {number} number of decimal places for major markers
     }, options.denominatorOptions );
 
     Node.call( this );
@@ -90,7 +90,7 @@ define( function( require ) {
     this.addChild( verticalAxis );
 
     var numeratorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
-      fill: numeratorOptions.numeratorAxisColor,
+      fill: numeratorOptions.axisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
@@ -100,8 +100,8 @@ define( function( require ) {
     } );
     this.addChild( numeratorAxisNode );
 
-    if ( numeratorOptions.numeratorAxisLabel ) {
-      this.addChild( new Text( numeratorOptions.numeratorAxisLabel, {
+    if ( numeratorOptions.axisLabel ) {
+      this.addChild( new Text( numeratorOptions.axisLabel, {
         font: options.labelFont,
         fill: options.labelColor,
         maxWidth: options.labelMaxWidth,
@@ -111,7 +111,7 @@ define( function( require ) {
     }
 
     var denominatorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
-      fill: denominatorOptions.denominatorAxisColor,
+      fill: denominatorOptions.axisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
@@ -120,8 +120,8 @@ define( function( require ) {
     } );
     this.addChild( denominatorAxisNode );
 
-    if ( denominatorOptions.denominatorAxisLabel ) {
-      this.addChild( new Text( denominatorOptions.denominatorAxisLabel, {
+    if ( denominatorOptions.axisLabel ) {
+      this.addChild( new Text( denominatorOptions.axisLabel, {
         font: options.labelFont,
         fill: options.labelColor,
         maxWidth: options.labelMaxWidth,
@@ -139,7 +139,7 @@ define( function( require ) {
     //TODO this is duplicated in DoubleNumberLineAccordionBox
     // maps the denominator to a horizontal location on the double number line
     var modelToView = new LinearFunction(
-      denominatorOptions.denominatorAxisRange.min, denominatorOptions.denominatorAxisRange.max,
+      denominatorOptions.axisRange.min, denominatorOptions.axisRange.max,
       0, 0.96 * options.horizontalAxisLength );
 
     var unitRateObserver = function() {
