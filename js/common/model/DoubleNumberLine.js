@@ -14,6 +14,7 @@ define( function( require ) {
   var LinearFunction = require( 'DOT/LinearFunction' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
