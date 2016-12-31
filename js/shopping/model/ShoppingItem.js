@@ -44,7 +44,7 @@ define( function( require ) {
       bottomAxisLabel: itemData.pluralName, // {string} label for the bottom axis of the double number line
       bottomAxisRange: new Range( 0, 10 ), // {Range} range of bottom axis
       bottomAxisMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
-      bottomAxisMajorMarkerDecimalPlaces: 0, // {number} number of decimal places for major markers
+      bottomAxisMajorMarkerDecimals: 0, // {number} number of decimal places for major markers
 
       // questions
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
@@ -70,7 +70,7 @@ define( function( require ) {
     this.bottomAxisLabel = options.bottomAxisLabel;
     this.bottomAxisRange = options.bottomAxisRange;
     this.bottomAxisMaxDecimals = options.bottomAxisMaxDecimals;
-    this.bottomAxisMajorMarkerDecimalPlaces = options.bottomAxisMajorMarkerDecimalPlaces;
+    this.bottomAxisMajorMarkerDecimals = options.bottomAxisMajorMarkerDecimals;
 
     // @public {DoubleNumberLine} double number line associated with this item
     this.doubleNumberLine = new DoubleNumberLine();

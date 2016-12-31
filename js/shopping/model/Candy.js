@@ -35,7 +35,7 @@ define( function( require ) {
       bottomAxisLabel: poundsString,
       bottomAxisMaxDecimals: 2,
       bottomAxisRange: new Range( 0, 1.6 ),
-      bottomAxisMajorMarkerDecimalPlaces: 1,
+      bottomAxisMajorMarkerDecimals: 1,
 
       // All Candy questions have the same form, i.e. 'Cost of N pounds?'
       uniformQuestions: true

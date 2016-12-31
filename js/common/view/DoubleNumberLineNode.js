@@ -53,7 +53,7 @@ define( function( require ) {
       bottomAxisMaxDecimals: 1, // {number} maximum number of decimal places for the bottom axis
       bottomAxisRange: new Range( 0, 10 ), // {Range} of the bottom axis
       bottomAxisColor: 'black',
-      bottomAxisMajorMarkerDecimalPlaces: 1,
+      bottomAxisMajorMarkerDecimals: 1,
 
       // markers
       majorMarkerLength: 50,

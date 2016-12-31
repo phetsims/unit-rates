@@ -70,7 +70,7 @@ define( function( require ) {
       bottomAxisLabel: new Text( shoppingItem.bottomAxisLabel, AXIS_LABEL_OPTIONS ),
       bottomAxisMaxDecimals: shoppingItem.bottomAxisMaxDecimals,
       bottomAxisRange: shoppingItem.bottomAxisRange,
-      bottomAxisMajorMarkerDecimalPlaces: shoppingItem.bottomAxisMajorMarkerDecimalPlaces,
+      bottomAxisMajorMarkerDecimals: shoppingItem.bottomAxisMajorMarkerDecimals,
       x: 0,
       y: 0
     } );
