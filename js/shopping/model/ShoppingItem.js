@@ -38,21 +38,8 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // numerator
-      numeratorAxisLabel: dollarsString, // {string} label for the axis on the double number line
-      numeratorFormat: currencyValueString, // {string} format with '{0}' placeholder for value
-      numeratorMaxDigits: 4, // {number} number of digits that can be entered via the keypad
-      numeratorMaxDecimals: 2, // {number} maximum number of decimal places
-      numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
-
-      // denominator
-      denominatorAxisLabel: itemData.pluralName, // {string} label for the axis on the double number line
-      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
-      denominatorMaxDigits: 4, // {number} number of digits that can be entered via the keypad
-      denominatorMaxDecimals: 1, // {number} maximum number of decimal places
-      denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
-      denominatorAxisRange: new Range( 0, 10 ), // {Range} range of bottom axis
-      denominatorMajorMarkerDecimals: 0, // {number} number of decimal places for major markers
+      numerationOptions: null, // {*} options specific to the rate's numerator, see below
+      denominatorOptions: null, // {*} options specific to the rate's denominator, see below
 
       // questions
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
@@ -64,6 +51,26 @@ define( function( require ) {
                         phet.joist.random.nextIntBetween( 0, itemData.questionQuantities.length - 1 ) : 0
     }, options );
 
+    // @public (read-only) options specific to the rate's numerator
+    this.numeratorOptions = _.extend( {
+      numeratorAxisLabel: dollarsString, // {string} label for the axis on the double number line
+      numeratorFormat: currencyValueString, // {string} format with '{0}' placeholder for value
+      numeratorMaxDigits: 4, // {number} number of digits that can be entered via the keypad
+      numeratorMaxDecimals: 2, // {number} maximum number of decimal places
+      numeratorTrimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+    }, options.numeratorOptions );
+
+    // @public (read-only) options specific to the rate's denominator
+    this.denominatorOptions = _.extend( {
+      denominatorAxisLabel: itemData.pluralName, // {string} label for the axis on the double number line
+      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      denominatorMaxDigits: 4, // {number} number of digits that can be entered via the keypad
+      denominatorMaxDecimals: 1, // {number} maximum number of decimal places
+      denominatorTrimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
+      denominatorAxisRange: new Range( 0, 10 ), // {Range} range of bottom axis
+      denominatorMajorMarkerDecimals: 0 // {number} number of decimal places for major markers
+    }, options.denominatorOptions );
+
     // @public (read-only) unpack itemData
     this.unitRate = itemData.unitRate;
     this.bagRate = itemData.bagRate;
@@ -73,31 +80,21 @@ define( function( require ) {
     this.itemImage = itemData.itemImage;
     this.bagImage = itemData.bagImage;
 
-    // @public (read-only) unpack numerator options
-    this.numeratorAxisLabel = options.numeratorAxisLabel;
-    this.numeratorFormat = options.numeratorFormat;
-    this.numeratorMaxDigits = options.numeratorMaxDigits;
-    this.numeratorMaxDecimals = options.numeratorMaxDecimals;
-    this.numeratorTrimZeros = options.numeratorTrimZeros;
-
-    // @public (read-only) unpack denominator options
-    this.denominatorAxisLabel = options.denominatorAxisLabel;
-    this.denominatorFormat = options.denominatorFormat;
-    this.denominatorMaxDigits = options.denominatorMaxDigits;
-    this.denominatorMaxDecimals = options.denominatorMaxDecimals;
-    this.denominatorTrimZeros = options.denominatorTrimZeros;
-    this.denominatorAxisRange = options.denominatorAxisRange;
-    this.denominatorMajorMarkerDecimals = options.denominatorMajorMarkerDecimals;
-
     // @public {DoubleNumberLine} double number line associated with this item
     this.doubleNumberLine = new DoubleNumberLine();
 
     // @public {ShoppingQuestion} 'Unit Rate?'
-    this.unitRateQuestion = ShoppingQuestion.createUnitRate( itemData.unitRate, options.questionSingularUnits );
+    this.unitRateQuestion = ShoppingQuestion.createUnitRate( itemData.unitRate, options.questionSingularUnits, {
+      guessFormat: this.numeratorOptions.numeratorFormat,
+      maxDigits: this.numeratorOptions.numeratorMaxDigits,
+      maxDecimals: this.numeratorOptions.numeratorMaxDecimals,
+      trimZeros: this.numeratorOptions.numeratorTrimZeros
+    } );
 
     // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
     this.questionSets = createQuestionSets( itemData.questionQuantities, itemData.unitRate,
-      options.questionSingularUnits, options.questionPluralUnits, options.uniformQuestions );
+      options.questionSingularUnits, options.questionPluralUnits, options.uniformQuestions,
+      this.numeratorOptions, this.denominatorOptions );
 
     // @public (read-only) {Property.<ShoppingQuestion[]>} the current set of questions
     this.questionSetProperty = new Property( this.questionSets[ options.questionSetIndex ] );
@@ -122,9 +119,11 @@ define( function( require ) {
    * @param {boolean} uniformQuestions -
    *        true: all questions are of the same form, e.g. 'Cost of 3 Apples?'
    *        false: the last question will have a different form, e.g. 'Apples for $3.00?'
+   * @param {*} numeratorOptions - see ShoppingItem.numeratorOptions
+   * @param {*} denominatorOptions - see ShoppingItem.denominatorOptions
    * @returns {ShoppingQuestion[][]}
    */
-  function createQuestionSets( questionQuantities, unitRate, singularUnits, pluralUnits, uniformQuestions ) {
+  function createQuestionSets( questionQuantities, unitRate, singularUnits, pluralUnits, uniformQuestions, numeratorOptions, denominatorOptions ) {
 
     var questionSets = [];  // {ShoppingQuestion[][]}
 
@@ -135,12 +134,22 @@ define( function( require ) {
         if ( i < quantities.length - 1 || uniformQuestions ) {
 
           // e.g. 'Cost of 3 Apples?'
-          questions.push( ShoppingQuestion.createCostOf( quantity, unitRate, singularUnits, pluralUnits ) );
+          questions.push( ShoppingQuestion.createCostOf( quantity, unitRate, singularUnits, pluralUnits, {
+            guessFormat: numeratorOptions.numeratorFormat,
+            maxDigits: numeratorOptions.numeratorMaxDigits,
+            maxDecimals: numeratorOptions.numeratorMaxDecimals,
+            trimZeros: numeratorOptions.numeratorTrimZeros
+          } ) );
         }
         else {
 
           // optionally, the last question has a different form, e.g. 'Apples for $3.00?'
-          questions.push( ShoppingQuestion.createItemsFor( quantity, unitRate, singularUnits, pluralUnits ) );
+          questions.push( ShoppingQuestion.createItemsFor( quantity, unitRate, singularUnits, pluralUnits, {
+            guessFormat: denominatorOptions.denominatorFormat,
+            maxDigits: denominatorOptions.denominatorMaxDigits,
+            maxDecimals: denominatorOptions.denominatorMaxDecimals,
+            trimZeros: denominatorOptions.denominatorTrimZeros
+          } ) );
         }
       }
       questionSets.push( questions );

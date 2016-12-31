@@ -36,20 +36,6 @@ define( function( require ) {
   function MarkerEditor( unitRateProperty, doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
-
-      // numerator
-      numeratorFormat: '{0}', // {string} format with '{0}' placeholder for value
-      numeratorMaxDigits: 4, // {number} maximum number of digits that can be entered via keypad
-      numeratorMaxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
-      numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
-
-      // denominator
-      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
-      denominatorMaxDigits: 4, // {number} maximum number of digits that can be entered via keypad
-      denominatorMaxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
-      denominatorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
-
-      // general
       lineLength: 55, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 14 ), // {Font} font for the value
@@ -59,9 +45,24 @@ define( function( require ) {
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: 3, // {number} vertical margin inside the value box
       ySpacing: 5,  // {number} vertical spacing between UI elements
-      keypadLocation: 'below' // {string} 'above' or 'below' doubleNumberLinePanel
-
+      keypadLocation: 'below', // {string} 'above' or 'below' doubleNumberLinePanel
+      numerationOptions: null, // {*} options specific to the rate's numerator, see below
+      denominatorOptions: null // {*} options specific to the rate's denominator, see below
     }, options );
+
+    var numeratorOptions = _.extend( {
+      numeratorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      numeratorMaxDigits: 4, // {number} maximum number of digits that can be entered via keypad
+      numeratorMaxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
+      numeratorTrimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+    }, options.numeratorOptions );
+
+    var denominatorOptions = _.extend( {
+      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      denominatorMaxDigits: 4, // {number} maximum number of digits that can be entered via keypad
+      denominatorMaxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
+      denominatorTrimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+    }, options.denominatorOptions );
 
     assert && assert( options.keypadLocation.options === 'above' || options.keypadLocation === 'below',
       'invalid keypadLocation: ' + options.keypadLocation );
@@ -72,7 +73,7 @@ define( function( require ) {
 
     // @private
     this.unitRateProperty = unitRateProperty;
-    this.denominatorMaxDecimals = options.denominatorMaxDecimals;
+    this.denominatorMaxDecimals = denominatorOptions.denominatorMaxDecimals;
 
     // @public (read-only)
     this.numeratorProperty = new Property( null );
@@ -179,8 +180,8 @@ define( function( require ) {
         onBeginEdit: function() { numeratorBox.fill = options.editColor; },
         onEndEdit: function() { numeratorBox.fill = 'white'; },
         setKeypadLocation: setKeypadLocation,
-        maxDigits: options.numeratorMaxDigits,
-        maxDecimals: options.numeratorMaxDecimals
+        maxDigits: numeratorOptions.numeratorMaxDigits,
+        maxDecimals: numeratorOptions.numeratorMaxDecimals
       } );
     };
 
@@ -190,8 +191,8 @@ define( function( require ) {
         onBeginEdit: function() { denominatorBox.fill = options.editColor; },
         onEndEdit: function() { denominatorBox.fill = 'white'; },
         setKeypadLocation: setKeypadLocation,
-        maxDigits: options.denominatorMaxDigits,
-        maxDecimals: options.denominatorMaxDecimals
+        maxDigits: denominatorOptions.denominatorMaxDigits,
+        maxDecimals: denominatorOptions.denominatorMaxDecimals
       } );
     };
 
@@ -212,11 +213,11 @@ define( function( require ) {
         numeratorNode.text = '';
       }
       else {
-        numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator,
-          options.numeratorMaxDecimals, options.numeratorTrimZeros );
+        numeratorNode.text = URUtil.formatNumber( numeratorOptions.numeratorFormat, numerator,
+          numeratorOptions.numeratorMaxDecimals, numeratorOptions.numeratorTrimZeros );
 
         // compute the corresponding denominator
-        var denominator = Util.toFixedNumber( numerator / unitRateProperty.value, options.denominatorMaxDecimals );
+        var denominator = Util.toFixedNumber( numerator / unitRateProperty.value, denominatorOptions.denominatorMaxDecimals );
 
         // clear the denominator if it doesn't match the numerator
         if ( denominator !== self.denominatorProperty.value ) {
@@ -224,8 +225,8 @@ define( function( require ) {
 
           // show the denominator that corresponds to this numerator
           if ( URQueryParameters.showAnswers ) {
-            denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator,
-              options.denominatorMaxDecimals, options.denominatorTrimZeros );
+            denominatorNode.text = URUtil.formatNumber( denominatorOptions.denominatorFormat, denominator,
+              denominatorOptions.denominatorMaxDecimals, denominatorOptions.denominatorTrimZeros );
             denominatorNode.fill = options.showAnswersColor;
             denominatorNode.center = denominatorBox.center;
           }
@@ -242,11 +243,11 @@ define( function( require ) {
         denominatorNode.text = '';
       }
       else {
-        denominatorNode.text = URUtil.formatNumber( options.denominatorFormat, denominator,
-          options.denominatorMaxDecimals, options.denominatorTrimZeros );
+        denominatorNode.text = URUtil.formatNumber( denominatorOptions.denominatorFormat, denominator,
+          denominatorOptions.denominatorMaxDecimals, denominatorOptions.denominatorTrimZeros );
 
         // compute the corresponding numerator
-        var numerator = Util.toFixedNumber( denominator * unitRateProperty.value, options.numeratorMaxDecimals );
+        var numerator = Util.toFixedNumber( denominator * unitRateProperty.value, numeratorOptions.numeratorMaxDecimals );
 
         // clear the numerator if it doesn't match the denominator
         if ( numerator !== self.numeratorProperty.value ) {
@@ -254,8 +255,8 @@ define( function( require ) {
 
           // show the numerator that corresponds to this denominator
           if ( URQueryParameters.showAnswers ) {
-            numeratorNode.text = URUtil.formatNumber( options.numeratorFormat, numerator,
-              options.numeratorMaxDecimals, options.numeratorTrimZeros );
+            numeratorNode.text = URUtil.formatNumber( numeratorOptions.numeratorFormat, numerator,
+              numeratorOptions.numeratorMaxDecimals, numeratorOptions.numeratorTrimZeros );
             numeratorNode.fill = options.showAnswersColor;
             numeratorNode.center = numeratorBox.center;
           }

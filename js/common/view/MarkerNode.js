@@ -33,23 +33,27 @@ define( function( require ) {
       spacing: 2,
       align: 'center',
 
-      // numerator & denominator options
+      // MarkerNode options
       color: 'black',
       font: new URFont( 14 ),
       lineLength: 55,
       lineWidth: 1,
+      numerationOptions: null, // {*} options specific to the rate's numerator, see below
+      denominatorOptions: null // {*} options specific to the rate's denominator, see below
 
-      // numerator
+    }, options );
+
+    var numeratorOptions = _.extend( {
       numeratorFormat: '{0}', // {string} format with '{0}' placeholder for value
       numeratorMaxDecimals: 2, // {number} maximum number of decimal places
-      numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros in the decimal places
+      numeratorTrimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
+    }, options.numeratorOptions );
 
-      // denominator
+    var denominatorOptions = _.extend( {
       denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
       denominatorMaxDecimals: 2, // {number} maximum number of decimal places
       denominatorTrimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
-
-    }, options );
+    }, options.denominatorOptions );
 
     // vertical line
     var lineNode = new Line( 0, 0, 0, options.lineLength, {
@@ -63,11 +67,11 @@ define( function( require ) {
     };
 
     // numerator
-    var numeratorString = URUtil.formatNumber( options.numeratorFormat, numerator, options.numeratorMaxDecimals, options.numeratorTrimZeros );
+    var numeratorString = URUtil.formatNumber( numeratorOptions.numeratorFormat, numerator, numeratorOptions.numeratorMaxDecimals, numeratorOptions.numeratorTrimZeros );
     var numeratorNode = new Text( numeratorString, textOptions );
 
     // denominator
-    var denominatorString = URUtil.formatNumber( options.denominatorFormat, denominator, options.denominatorMaxDecimals, options.denominatorTrimZeros );
+    var denominatorString = URUtil.formatNumber( denominatorOptions.denominatorFormat, denominator, denominatorOptions.denominatorMaxDecimals, denominatorOptions.denominatorTrimZeros );
     var denominatorNode = new Text( denominatorString, textOptions );
 
     assert && assert( !options.children, 'decoration not supported' );

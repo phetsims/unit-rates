@@ -26,8 +26,10 @@ define( function( require ) {
       // Vegetables questions have 2 forms, e.g. 'Cost of 3 Carrots?' and 'Carrots for $3.00?'
       uniformQuestions: false,
 
-      // Range of bottom axis
-      denominatorAxisRange: new Range( 0, 16 )
+      // denominator
+      denominatorOptions: {
+        denominatorAxisRange: new Range( 0, 16 )
+      }
     } );
   }
 

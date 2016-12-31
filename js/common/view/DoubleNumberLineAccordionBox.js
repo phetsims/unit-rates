@@ -59,24 +59,8 @@ define( function( require ) {
 
     var doubleNumberLineNode = new DoubleNumberLineNode( shoppingItem.doubleNumberLine, unitRateProperty, {
       horizontalAxisLength: options.horizontalAxisLength,
-
-      // numerator
-      numeratorAxisLabel: shoppingItem.numeratorAxisLabel,
-      numeratorFormat: shoppingItem.numeratorFormat,
-      numeratorMaxDigits: shoppingItem.numeratorMaxDigits,
-      numeratorMaxDecimals: shoppingItem.numeratorMaxDecimals,
-      numeratorTrimZeros: shoppingItem.numeratorTrimZeros,
-
-      // denominator
-      denominatorAxisLabel: shoppingItem.denominatorAxisLabel,
-      denominatorFormat: shoppingItem.denominatorFormat,
-      denominatorMaxDigits: shoppingItem.denominatorMaxDigits,
-      denominatorMaxDecimals: shoppingItem.denominatorMaxDecimals,
-      denominatorTrimZeros: shoppingItem.denominatorTrimZeros,
-      denominatorAxisRange: shoppingItem.denominatorAxisRange,
-      denominatorMajorMarkerDecimals: shoppingItem.denominatorMajorMarkerDecimals,
-
-      // location
+      numeratorOptions: shoppingItem.numeratorOptions,
+      denominatorOptions: shoppingItem.denominatorOptions,
       x: 0,
       y: 0
     } );
@@ -85,20 +69,8 @@ define( function( require ) {
     var undoButtonHomePosition = new Vector2( markerEditorHomeX, doubleNumberLineNode.centerY );
 
     var markerEditor = new MarkerEditor( unitRateProperty, this, keypadLayer, {
-
-      // numerator
-      numeratorFormat: shoppingItem.numeratorFormat,
-      numeratorMaxDigits: shoppingItem.numeratorMaxDigits,
-      numeratorMaxDecimals: shoppingItem.numeratorMaxDecimals,
-      numeratorTrimZeros: shoppingItem.numeratorTrimZeros,
-
-      // denominator
-      denominatorFormat: shoppingItem.denominatorFormat,
-      denominatorMaxDigits: shoppingItem.denominatorMaxDigits,
-      denominatorMaxDecimals: shoppingItem.denominatorMaxDecimals,
-      denominatorTrimZeros: shoppingItem.denominatorTrimZeros,
-
-      // location
+      numeratorOptions: shoppingItem.numeratorOptions,
+      denominatorOptions: shoppingItem.denominatorOptions,
       x: markerEditorHomeX,
       centerY: doubleNumberLineNode.centerY
     } );
@@ -139,7 +111,7 @@ define( function( require ) {
     // maps the denominator to a horizontal location on the double number line
     assert && assert( doubleNumberLineNode.x === 0 );
     var modelToView = new LinearFunction(
-      shoppingItem.denominatorAxisRange.min, shoppingItem.denominatorAxisRange.max,
+      shoppingItem.denominatorOptions.denominatorAxisRange.min, shoppingItem.denominatorOptions.denominatorAxisRange.max,
       0, 0.96 * options.horizontalAxisLength );
 
     // animation for marker editor
@@ -152,7 +124,7 @@ define( function( require ) {
 
       if ( markerEditor.isValidMarker() ) {
 
-        if ( markerEditor.denominatorProperty.value <= shoppingItem.denominatorAxisRange.max ) {
+        if ( markerEditor.denominatorProperty.value <= shoppingItem.denominatorOptions.denominatorAxisRange.max ) {
 
           // create a marker on the double number line
           shoppingItem.doubleNumberLine.undoMarkerProperty.value = markerEditor.denominatorProperty.value;
@@ -182,7 +154,7 @@ define( function( require ) {
           var denominator = markerEditor.getValidDenominator();
           assert && assert( denominator >= 0, 'invalid denominator: ' + denominator );
 
-          if ( denominator > shoppingItem.denominatorAxisRange.max ) {
+          if ( denominator > shoppingItem.denominatorOptions.denominatorAxisRange.max ) {
 
             // move marker editor to right of axis arrows
             destinationX = doubleNumberLineNode.x + options.horizontalAxisLength + 5;

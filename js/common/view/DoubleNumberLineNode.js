@@ -49,21 +49,8 @@ define( function( require ) {
       labelMaxWidth: 50, // determined empirically
       labelXSpacing: 12, // horizontal spacing between axis and its label
 
-      // numerator (top) axis
-      numeratorAxisColor: 'black', // {Color|string} color of the axis
-      numeratorAxisLabel: null, // {string|null} label for the axis
-      numeratorFormat: '{0}', // {string} format with '{0}' placeholder for value
-      numeratorMaxDecimals: 1, // {number} maximum number of decimal places
-      numeratorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
-
-      // denominator (bottom) axis
-      denominatorAxisColor: 'black', // {Color|string} color of the axis
-      denominatorAxisLabel: null, // {Node|null} label for the axis
-      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
-      denominatorMaxDecimals: 1, // {number} maximum number of decimal places
-      denominatorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
-      denominatorAxisRange: new Range( 0, 10 ), // {Range} range of axis
-      denominatorMajorMarkerDecimals: 0, // {number} number of decimal places for major markers
+      numerationOptions: null, // {*} options specific to the rate's numerator, see below
+      denominatorOptions: null, // {*} options specific to the rate's denominator, see below
 
       // markers
       majorMarkerLength: 50,
@@ -76,6 +63,24 @@ define( function( require ) {
 
     }, options );
 
+    var numeratorOptions = _.extend( {
+      numeratorAxisColor: 'black', // {Color|string} color of the axis
+      numeratorAxisLabel: null, // {string|null} label for the axis
+      numeratorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      numeratorMaxDecimals: 1, // {number} maximum number of decimal places
+      numeratorTrimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+    }, options.numeratorOptions );
+
+    var denominatorOptions = _.extend( {
+      denominatorAxisColor: 'black', // {Color|string} color of the axis
+      denominatorAxisLabel: null, // {Node|null} label for the axis
+      denominatorFormat: '{0}', // {string} format with '{0}' placeholder for value
+      denominatorMaxDecimals: 1, // {number} maximum number of decimal places
+      denominatorTrimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
+      denominatorAxisRange: new Range( 0, 10 ), // {Range} range of axis
+      denominatorMajorMarkerDecimals: 0 // {number} number of decimal places for major markers
+    }, options.denominatorOptions );
+
     Node.call( this );
 
     var verticalAxis = new Line( 0, 0, 0, options.verticalAxisLength, {
@@ -85,7 +90,7 @@ define( function( require ) {
     this.addChild( verticalAxis );
 
     var numeratorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
-      fill: options.numeratorAxisColor,
+      fill: numeratorOptions.numeratorAxisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
@@ -95,8 +100,8 @@ define( function( require ) {
     } );
     this.addChild( numeratorAxisNode );
 
-    if ( options.numeratorAxisLabel ) {
-      this.addChild( new Text( options.numeratorAxisLabel, {
+    if ( numeratorOptions.numeratorAxisLabel ) {
+      this.addChild( new Text( numeratorOptions.numeratorAxisLabel, {
         font: options.labelFont,
         fill: options.labelColor,
         maxWidth: options.labelMaxWidth,
@@ -106,7 +111,7 @@ define( function( require ) {
     }
 
     var denominatorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
-      fill: options.denominatorAxisColor,
+      fill: denominatorOptions.denominatorAxisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
@@ -115,8 +120,8 @@ define( function( require ) {
     } );
     this.addChild( denominatorAxisNode );
 
-    if ( options.denominatorAxisLabel ) {
-      this.addChild( new Text( options.denominatorAxisLabel, {
+    if ( denominatorOptions.denominatorAxisLabel ) {
+      this.addChild( new Text( denominatorOptions.denominatorAxisLabel, {
         font: options.labelFont,
         fill: options.labelColor,
         maxWidth: options.labelMaxWidth,
@@ -134,7 +139,7 @@ define( function( require ) {
     //TODO this is duplicated in DoubleNumberLineAccordionBox
     // maps the denominator to a horizontal location on the double number line
     var modelToView = new LinearFunction(
-      options.denominatorAxisRange.min, options.denominatorAxisRange.max,
+      denominatorOptions.denominatorAxisRange.min, denominatorOptions.denominatorAxisRange.max,
       0, 0.96 * options.horizontalAxisLength );
 
     var unitRateObserver = function() {
@@ -155,18 +160,8 @@ define( function( require ) {
       if ( newMarker !== null ) {
         var denominator = newMarker;
         var markerNode = new MarkerNode( denominator * unitRateProperty.value, denominator, {
-
-          // numerator
-          numeratorFormat: options.numeratorFormat,
-          numeratorMaxDecimals: options.numeratorMaxDecimals,
-          numeratorTrimZeros: options.numeratorTrimZeros,
-
-          // denominator
-          denominatorFormat: options.denominatorFormat,
-          denominatorMaxDecimals: options.denominatorMaxDecimals,
-          denominatorTrimZeros: options.denominatorTrimZeros,
-
-          // location
+          numeratorOptions: numeratorOptions,
+          denominatorOptions: denominatorOptions,
           centerX: modelToView( denominator ),
           centerY: verticalAxis.centerY
         } );

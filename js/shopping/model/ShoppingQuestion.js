@@ -89,19 +89,14 @@ define( function( require ) {
      */
     createUnitRate: function( unitRate, units, options ) {
 
-      options = _.extend( {
-        guessFormat: currencyValueString, // {string} format for the guessed value
-        maxDecimals: 2
-      }, options );
-
       // 'Unit Rate?'
       var questionString = unitRateQuestionString;
 
       // '$0.50'
-      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( unitRate, 2 ) );
+      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( unitRate, 2 ) );//TODO move into ShoppingQuestion
 
       // '1 Apple'
-      var denominatorString = StringUtils.format( valueUnitsString, 1, units );
+      var denominatorString = StringUtils.format( valueUnitsString, 1, units );//TODO move into ShoppingQuestion
 
       return new ShoppingQuestion( questionString, unitRate, numeratorString, denominatorString, options );
     },
@@ -128,16 +123,16 @@ define( function( require ) {
       var units = ( quantity > 1 ) ? pluralName : singularName;
 
       // cost
-      var answer = Util.toFixedNumber( quantity * unitRate, 2 );
+      var answer = Util.toFixedNumber( quantity * unitRate, 2 );//TODO move into ShoppingQuestion
 
       // 'Cost of 10 Apples?'
-      var questionString = StringUtils.format( costOfNUnitsString, quantity, units );
+      var questionString = StringUtils.format( costOfNUnitsString, quantity, units );//TODO move into ShoppingQuestion
 
       // '$3.00'
-      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( answer, 2 ) );
+      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( answer, 2 ) );//TODO move into ShoppingQuestion
 
       // '10 Apples'
-      var denominatorString = StringUtils.format( valueUnitsString, quantity, units );
+      var denominatorString = StringUtils.format( valueUnitsString, quantity, units );//TODO move into ShoppingQuestion
 
       return new ShoppingQuestion( questionString, answer, numeratorString, denominatorString, options );
     },
@@ -166,13 +161,13 @@ define( function( require ) {
       var units = ( quantity > 1 ) ? pluralName : singularName;
 
       // '$4.00'
-      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( quantity * unitRate, 2 ) );
+      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( quantity * unitRate, 2 ) );//TODO move into ShoppingQuestion
 
       // '8 Apples'
-      var denominatorString = StringUtils.format( valueUnitsString, Util.toFixed( quantity, 0 ), units );
+      var denominatorString = StringUtils.format( valueUnitsString, Util.toFixed( quantity, 0 ), units );//TODO move into ShoppingQuestion
 
       // 'Apples for $4.00?'
-      var questionString = StringUtils.format( itemsForAmountString, pluralName, numeratorString );
+      var questionString = StringUtils.format( itemsForAmountString, pluralName, numeratorString );//TODO move into ShoppingQuestion
 
       return new ShoppingQuestion( questionString, quantity, numeratorString, denominatorString, options );
     }
