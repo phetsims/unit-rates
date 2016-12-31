@@ -52,7 +52,7 @@ define( function( require ) {
     }, options );
 
     // @public (read-only) options specific to the rate's numerator
-    this.numeratorOptions = _.extend( {
+    var numeratorOptions = _.extend( {
       axisLabel: dollarsString, // {string} label for the axis on the double number line
       valueFormat: currencyValueString, // {string} format with '{0}' placeholder for value
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
@@ -61,7 +61,7 @@ define( function( require ) {
     }, options.numeratorOptions );
 
     // @public (read-only) options specific to the rate's denominator
-    this.denominatorOptions = _.extend( {
+    var denominatorOptions = _.extend( {
       axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
       valueFormat: '{0}', // {string} format with '{0}' placeholder for value
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
@@ -82,22 +82,22 @@ define( function( require ) {
 
     // @public {DoubleNumberLine} double number line associated with this item
     this.doubleNumberLine = new DoubleNumberLine( new Property( this.unitRate ), {
-      numeratorOptions: this.numeratorOptions,
-      denominatorOptions: this.denominatorOptions
+      numeratorOptions: numeratorOptions,
+      denominatorOptions: denominatorOptions
     } );
 
     // @public {ShoppingQuestion} 'Unit Rate?'
     this.unitRateQuestion = ShoppingQuestion.createUnitRate( itemData.unitRate, options.questionSingularUnits, {
-      guessFormat: this.numeratorOptions.valueFormat,
-      maxDigits: this.numeratorOptions.maxDigits,
-      maxDecimals: this.numeratorOptions.maxDecimals,
-      trimZeros: this.numeratorOptions.trimZeros
+      guessFormat: numeratorOptions.valueFormat,
+      maxDigits: numeratorOptions.maxDigits,
+      maxDecimals: numeratorOptions.maxDecimals,
+      trimZeros: numeratorOptions.trimZeros
     } );
 
     // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
     this.questionSets = createQuestionSets( itemData.questionQuantities, itemData.unitRate,
       options.questionSingularUnits, options.questionPluralUnits, options.uniformQuestions,
-      this.numeratorOptions, this.denominatorOptions );
+      numeratorOptions, denominatorOptions );
 
     // @public (read-only) {Property.<ShoppingQuestion[]>} the current set of questions
     this.questionSetProperty = new Property( this.questionSets[ options.questionSetIndex ] );
