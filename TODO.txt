@@ -16,4 +16,6 @@ Test DoubleNumberLine.scaleMarkerProperty, even though we don't have a scale yet
 
 Put icons under markers on DNL, to tie them to scale or questions?
 
+Keypad lets you enter 0 for denominator, division-by-zero problem?
+
 
