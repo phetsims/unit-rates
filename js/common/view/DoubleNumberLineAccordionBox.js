@@ -59,6 +59,7 @@ define( function( require ) {
       y: 0
     } );
 
+    // home locations of UI components that move around
     var markerEditorHomeX = doubleNumberLineNode.left - 40;
     var undoButtonHomePosition = new Vector2( markerEditorHomeX, doubleNumberLineNode.centerY );
 
