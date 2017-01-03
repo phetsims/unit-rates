@@ -267,7 +267,7 @@ define( function( require ) {
     var unitRateObserver = function() {
       self.reset();
     };
-    unitRateProperty.link( unitRateObserver );
+    unitRateProperty.lazyLink( unitRateObserver );
 
     // @private
     this.disposeMarkerEditor = function() {
@@ -275,6 +275,10 @@ define( function( require ) {
       this.numeratorProperty.unlinkAll();
       this.denominatorProperty.unlinkAll();
     };
+
+    // @private fields required by prototype functions
+    this.numeratorNode = numeratorNode;
+    this.denominatorNode = denominatorNode;
   }
 
   unitRates.register( 'MarkerEditor', MarkerEditor );
@@ -312,6 +316,12 @@ define( function( require ) {
     reset: function() {
       this.numeratorProperty.reset();
       this.denominatorProperty.reset();
+
+      // clear the answers, in case associated Property values didn't change
+      if ( URQueryParameters.showAnswers ) {
+        this.numeratorNode.text = '';
+        this.denominatorNode.text = '';
+      }
     },
 
     // @public
