@@ -65,7 +65,7 @@ define( function( require ) {
       axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
       valueFormat: '{0}', // {string} format with '{0}' placeholder for value
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
-      maxDecimals: 1, // {number} maximum number of decimal places
+      maxDecimals: 2, // {number} maximum number of decimal places
       trimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
       axisRange: new Range( 0, 10 ), // {Range} range of bottom axis
       majorMarkerDecimals: 0 // {number} number of decimal places for major markers

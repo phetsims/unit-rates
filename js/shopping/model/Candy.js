@@ -34,7 +34,6 @@ define( function( require ) {
       // Bottom axis of the double number line
       denominatorOptions: {
         axisLabel: poundsString,
-        maxDecimals: 2,
         axisRange: new Range( 0, 1.6 ),
         majorMarkerDecimals: 1
       },
