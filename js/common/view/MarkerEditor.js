@@ -67,6 +67,11 @@ define( function( require ) {
     assert && assert( options.keypadLocation.options === 'above' || options.keypadLocation === 'below',
       'invalid keypadLocation: ' + options.keypadLocation );
 
+    // numerator and denominator must have the same number of decimal places,
+    // or we will end up with rates that share a common numerator or denominator.
+    assert && assert( numeratorOptions.maxDecimals === denominatorOptions.maxDecimals,
+      'maxDecimals must be the same for numerator and denominator' );
+
     Node.call( this );
 
     var self = this;

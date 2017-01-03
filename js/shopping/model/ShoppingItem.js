@@ -71,6 +71,11 @@ define( function( require ) {
       majorMarkerDecimals: 0 // {number} number of decimal places for major markers
     }, options.denominatorOptions );
 
+    // numerator and denominator must have the same number of decimal places,
+    // or we will end up with rates that share a common numerator or denominator.
+    assert && assert( numeratorOptions.maxDecimals === denominatorOptions.maxDecimals,
+      'maxDecimals must be the same for numerator and denominator' );
+
     // @public (read-only) unpack itemData
     this.unitRate = itemData.unitRate;
     this.bagRate = itemData.bagRate;

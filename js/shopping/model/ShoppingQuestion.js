@@ -153,7 +153,7 @@ define( function( require ) {
       options = _.extend( {
         guessFormat: '{0}', // {string} format for the guessed value
         maxDigits: 3,
-        maxDecimals: 1,
+        maxDecimals: 2,
         trimZeros: true
       }, options );
 
