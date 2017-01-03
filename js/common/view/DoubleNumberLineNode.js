@@ -31,14 +31,14 @@ define( function( require ) {
 
     options = _.extend( {
 
+      // common to all axes
+      axisColor: 'black',
+      axisLineWidth: 1.5,
+
       // vertical axis
       verticalAxisLength: 40,
-      verticalAxisLineWidth: 1.5,
-      verticalAxisColor: 'black',
 
-      // common to both horizontal axes
-      horizontalAxisLineWidth: 1.5,
-      horizontalAxisColor: 'black',
+      // horizontal axes
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
       horizontalAxisYSpacing: 20, // {number} vertical spacing between top and bottom axes
       labelFont: new URFont( 14 ), // {Font} for axis labels
@@ -47,8 +47,8 @@ define( function( require ) {
       labelXSpacing: 12, // horizontal spacing between axis and its label
 
       // markers
-      majorMarkerLength: 50,
-      minorMarkerLength: 30,
+      majorMarkerLength: 75,
+      minorMarkerLength: 40,
       majorMarkerColor: 'black',
       minorMarkerColor: 'gray',
       scaleMarkerColor: 'red',
@@ -60,17 +60,17 @@ define( function( require ) {
     Node.call( this );
 
     var verticalAxis = new Line( 0, 0, 0, options.verticalAxisLength, {
-      stroke: options.verticalAxisColor,
-      lineWidth: options.verticalAxisLineWidth
+      stroke: options.axisColor,
+      lineWidth: options.axisLineWidth
     } );
     this.addChild( verticalAxis );
 
     var numeratorAxisNode = new ArrowNode( 0, 0, doubleNumberLine.horizontalAxisLength, 0, {
-      fill: options.horizontalAxisColor,
+      fill: options.axisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
-      tailWidth: options.horizontalAxisLineWidth,
+      tailWidth: options.axisLineWidth,
       x: verticalAxis.x,
       y: verticalAxis.centerY - ( options.horizontalAxisYSpacing / 2 )
     } );
@@ -87,11 +87,11 @@ define( function( require ) {
     }
 
     var denominatorAxisNode = new ArrowNode( 0, 0, doubleNumberLine.horizontalAxisLength, 0, {
-      fill: options.horizontalAxisColor,
+      fill: options.axisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
-      tailWidth: options.horizontalAxisLineWidth,
+      tailWidth: options.axisLineWidth,
       y: verticalAxis.centerY + ( options.horizontalAxisYSpacing / 2 )
     } );
     this.addChild( denominatorAxisNode );
@@ -133,6 +133,8 @@ define( function( require ) {
         var numerator = denominator * doubleNumberLine.unitRateProperty.value;
 
         var markerNode = new MarkerNode( numerator, denominator, {
+          lineLength: options.majorMarkerLength,
+          color: options.majorMarkerColor,
           numeratorOptions: doubleNumberLine.numeratorOptions,
           denominatorOptions: doubleNumberLine.denominatorOptions,
           centerX: doubleNumberLine.modelToView( denominator ),
