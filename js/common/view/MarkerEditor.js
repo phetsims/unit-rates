@@ -211,7 +211,6 @@ define( function( require ) {
 
     // display numerator
     this.numeratorProperty.link( function( numerator ) {
-      console.log( 'numerator=' + numerator );//XXX
       if ( numerator === null ) {
         numeratorNode.text = '';
       }
@@ -239,7 +238,6 @@ define( function( require ) {
 
     // display denominator
     this.denominatorProperty.link( function( denominator ) {
-      console.log( 'denominator=' + denominator );//XXX
       if ( denominator === null ) {
         denominatorNode.text = '';
       }
@@ -312,13 +310,6 @@ define( function( require ) {
 
     // @public
     reset: function() {
-
-      // force the answers to clear
-      if ( URQueryParameters.showAnswers ) {
-        this.numeratorProperty.value = 0;
-        this.denominatorProperty.value = 0;
-      }
-
       this.numeratorProperty.reset();
       this.denominatorProperty.reset();
     },
