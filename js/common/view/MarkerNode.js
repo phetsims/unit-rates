@@ -44,13 +44,11 @@ define( function( require ) {
     }, options );
 
     var numeratorOptions = _.extend( {
-      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
       maxDecimals: 2, // {number} maximum number of decimal places
       trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
     }, options.numeratorOptions );
 
     var denominatorOptions = _.extend( {
-      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
       maxDecimals: 2, // {number} maximum number of decimal places
       trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
     }, options.denominatorOptions );
@@ -67,11 +65,11 @@ define( function( require ) {
     };
 
     // numerator
-    var numeratorString = URUtil.formatNumber( numeratorOptions.valueFormat, numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+    var numeratorString = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
     var numeratorNode = new Text( numeratorString, textOptions );
 
     // denominator
-    var denominatorString = URUtil.formatNumber( denominatorOptions.valueFormat, denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+    var denominatorString = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
     var denominatorNode = new Text( denominatorString, textOptions );
 
     assert && assert( !options.children, 'decoration not supported' );

@@ -51,14 +51,12 @@ define( function( require ) {
     }, options );
 
     var numeratorOptions = _.extend( {
-      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
       maxDigits: 4, // {number} maximum number of digits that can be entered via keypad
       maxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.numeratorOptions );
 
     var denominatorOptions = _.extend( {
-      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
       maxDigits: 4, // {number} maximum number of digits that can be entered via keypad
       maxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
@@ -218,8 +216,7 @@ define( function( require ) {
         numeratorNode.text = '';
       }
       else {
-        numeratorNode.text = URUtil.formatNumber( numeratorOptions.valueFormat, numerator,
-          numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+        numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
 
         // compute the corresponding denominator
         var denominator = Util.toFixedNumber( numerator / unitRateProperty.value, denominatorOptions.maxDecimals );
@@ -230,8 +227,7 @@ define( function( require ) {
 
           // show the denominator that corresponds to this numerator
           if ( URQueryParameters.showAnswers ) {
-            denominatorNode.text = URUtil.formatNumber( denominatorOptions.valueFormat, denominator,
-              denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+            denominatorNode.text = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
             denominatorNode.fill = options.showAnswersColor;
             denominatorNode.center = denominatorBox.center;
           }
@@ -248,8 +244,7 @@ define( function( require ) {
         denominatorNode.text = '';
       }
       else {
-        denominatorNode.text = URUtil.formatNumber( denominatorOptions.valueFormat, denominator,
-          denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+        denominatorNode.text = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
 
         // compute the corresponding numerator
         var numerator = Util.toFixedNumber( denominator * unitRateProperty.value, numeratorOptions.maxDecimals );
@@ -260,8 +255,7 @@ define( function( require ) {
 
           // show the numerator that corresponds to this denominator
           if ( URQueryParameters.showAnswers ) {
-            numeratorNode.text = URUtil.formatNumber( numeratorOptions.valueFormat, numerator,
-              numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+            numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
             numeratorNode.fill = options.showAnswersColor;
             numeratorNode.center = numeratorBox.center;
           }
