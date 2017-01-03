@@ -36,9 +36,9 @@ define( function( require ) {
   function MarkerEditor( unitRateProperty, doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
-      lineLength: 55, // {number} length of the vertical line between numerator and denominator values
+      lineLength: 75, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
-      valueFont: new URFont( 14 ), // {Font} font for the value
+      valueFont: new URFont( 12 ), // {Font} font for the value
       valueColor: 'black', // {Color|string} color of the value
       showAnswersColor: 'lightGray', // {Color|string} color of the value when 'showAnswers' query parameter is present
       editColor: 'yellow', // {Color|string} box is filled with this color while editing value

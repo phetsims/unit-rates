@@ -32,7 +32,7 @@ define( function( require ) {
     options = _.extend( {
 
       // vertical axis
-      verticalAxisLength: 50,
+      verticalAxisLength: 40,
       verticalAxisLineWidth: 1.5,
       verticalAxisColor: 'black',
 

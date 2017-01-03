@@ -35,8 +35,8 @@ define( function( require ) {
 
       // MarkerNode options
       color: 'black',
-      font: new URFont( 14 ),
-      lineLength: 55,
+      font: new URFont( 12 ),
+      lineLength: 75,
       lineWidth: 1,
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
