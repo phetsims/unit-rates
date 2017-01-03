@@ -92,12 +92,8 @@ define( function( require ) {
     } );
 
     // @public {ShoppingQuestion} 'Unit Rate?'
-    this.unitRateQuestion = ShoppingQuestion.createUnitRate( itemData.unitRate, options.questionSingularUnits, {
-      guessFormat: numeratorOptions.valueFormat,
-      maxDigits: numeratorOptions.maxDigits,
-      maxDecimals: numeratorOptions.maxDecimals,
-      trimZeros: numeratorOptions.trimZeros
-    } );
+    this.unitRateQuestion = ShoppingQuestion.createUnitRate( itemData.unitRate,
+      options.questionSingularUnits, numeratorOptions, denominatorOptions );
 
     // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
     this.questionSets = createQuestionSets( itemData.questionQuantities, itemData.unitRate,
@@ -142,22 +138,14 @@ define( function( require ) {
         if ( i < quantities.length - 1 || uniformQuestions ) {
 
           // e.g. 'Cost of 3 Apples?'
-          questions.push( ShoppingQuestion.createCostOf( quantity, unitRate, singularUnits, pluralUnits, {
-            guessFormat: numeratorOptions.valueFormat,
-            maxDigits: numeratorOptions.maxDigits,
-            maxDecimals: numeratorOptions.maxDecimals,
-            trimZeros: numeratorOptions.trimZeros
-          } ) );
+          questions.push( ShoppingQuestion.createCostOf( quantity, unitRate, singularUnits, pluralUnits,
+            numeratorOptions, denominatorOptions ) );
         }
         else {
 
           // optionally, the last question has a different form, e.g. 'Apples for $3.00?'
-          questions.push( ShoppingQuestion.createItemsFor( quantity, unitRate, singularUnits, pluralUnits, {
-            guessFormat: denominatorOptions.valueFormat,
-            maxDigits: denominatorOptions.maxDigits,
-            maxDecimals: denominatorOptions.maxDecimals,
-            trimZeros: denominatorOptions.trimZeros
-          } ) );
+          questions.push( ShoppingQuestion.createItemsFor( quantity, unitRate, singularUnits, pluralUnits,
+            numeratorOptions, denominatorOptions ) );
         }
       }
       questionSets.push( questions );

@@ -17,6 +17,7 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
   var costOfNUnitsString = require( 'string!UNIT_RATES/costOfNUnits' );
@@ -36,10 +37,10 @@ define( function( require ) {
   function ShoppingQuestion( questionString, answer, numeratorString, denominatorString, options ) {
 
     options = _.extend( {
+      guessFormat: '{0}', // {string} format used by StringUtils.format to format the guess
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
       maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
-      trimZeros: false, // {boolean} whether to trim trailing zeros in the decimal places
-      guessFormat: '{0}' // {string} format used by StringUtils.format to format the guess
+      trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
     }, options );
 
     var self = this;
@@ -49,10 +50,12 @@ define( function( require ) {
     this.answer = answer;
     this.numeratorString = numeratorString;
     this.denominatorString = denominatorString;
+
+    // @public (read-only) unpack options
+    this.guessFormat = options.guessFormat;
     this.maxDigits = options.maxDigits;
     this.maxDecimals = options.maxDecimals;
     this.trimZeros = options.trimZeros;
-    this.guessFormat = options.guessFormat;
 
     // @public {Property.<number|null>, null indicates no guess
     this.guessProperty = new Property( null );
@@ -82,23 +85,32 @@ define( function( require ) {
      * Creates a question of the form 'Unit Rate?'
      * @param {number} unitRate
      * @param {string} units
-     * @param {Object} [options] - options to ShoppingQuestion constructor
+     * @param {Object} numeratorOptions - see ShoppingItem options.numeratorOptions
+     * @param {Object} denominatorOptions - see ShoppingItem options.denominatorOptions
      * @returns {ShoppingQuestion}
      * @public
      * @static
      */
-    createUnitRate: function( unitRate, units, options ) {
+    createUnitRate: function( unitRate, units, numeratorOptions, denominatorOptions ) {
 
       // 'Unit Rate?'
       var questionString = unitRateQuestionString;
 
       // '$0.50'
-      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( unitRate, 2 ) );//TODO move into ShoppingQuestion
+      var numeratorString = StringUtils.format( currencyValueString,
+        URUtil.numberToString( unitRate, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '1 Apple'
-      var denominatorString = StringUtils.format( valueUnitsString, 1, units );//TODO move into ShoppingQuestion
+      var denominatorString = StringUtils.format( valueUnitsString,
+        URUtil.numberToString( 1, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+        units );
 
-      return new ShoppingQuestion( questionString, unitRate, numeratorString, denominatorString, options );
+      return new ShoppingQuestion( questionString, unitRate, numeratorString, denominatorString, {
+        guessFormat: numeratorOptions.valueFormat,
+        maxDigits: numeratorOptions.maxDigits,
+        maxDecimals: numeratorOptions.maxDecimals,
+        trimZeros: numeratorOptions.trimZeros
+      } );
     },
 
     /**
@@ -107,34 +119,40 @@ define( function( require ) {
      * @param {number} unitRate
      * @param {string} singularName
      * @param {string} pluralName
-     * @param {Object} [options] - options to ShoppingQuestion constructor
+     * @param {Object} numeratorOptions - see ShoppingItem options.numeratorOptions
+     * @param {Object} denominatorOptions - see ShoppingItem options.denominatorOptions
      * @returns {ShoppingQuestion}
      * @public
      * @static
      */
-    createCostOf: function( quantity, unitRate, singularName, pluralName, options ) {
-
-      options = _.extend( {
-        guessFormat: currencyValueString, // {string} format for the guessed value
-        maxDecimals: 2
-      }, options );
+    createCostOf: function( quantity, unitRate, singularName, pluralName, numeratorOptions, denominatorOptions ) {
 
       // 'Apples' or 'Apple'
       var units = ( quantity > 1 ) ? pluralName : singularName;
 
       // cost
-      var answer = Util.toFixedNumber( quantity * unitRate, 2 );//TODO move into ShoppingQuestion
+      var answer = Util.toFixedNumber( quantity * unitRate, numeratorOptions.maxDecimals );
 
       // 'Cost of 10 Apples?'
-      var questionString = StringUtils.format( costOfNUnitsString, quantity, units );//TODO move into ShoppingQuestion
+      var questionString = StringUtils.format( costOfNUnitsString,
+        URUtil.numberToString( quantity, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+        units );
 
       // '$3.00'
-      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( answer, 2 ) );//TODO move into ShoppingQuestion
+      var numeratorString = StringUtils.format( currencyValueString,
+        URUtil.numberToString( answer, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '10 Apples'
-      var denominatorString = StringUtils.format( valueUnitsString, quantity, units );//TODO move into ShoppingQuestion
+      var denominatorString = StringUtils.format( valueUnitsString,
+        URUtil.numberToString( quantity, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+        units );
 
-      return new ShoppingQuestion( questionString, answer, numeratorString, denominatorString, options );
+      return new ShoppingQuestion( questionString, answer, numeratorString, denominatorString, {
+        guessFormat: numeratorOptions.valueFormat,
+        maxDigits: numeratorOptions.maxDigits,
+        maxDecimals: numeratorOptions.maxDecimals,
+        trimZeros: numeratorOptions.trimZeros
+      } );
     },
 
     /**
@@ -143,33 +161,35 @@ define( function( require ) {
      * @param {number} unitRate
      * @param {string} singularName
      * @param {string} pluralName
-     * @param {Object} [options] - options to ShoppingQuestion constructor
+     * @param {Object} numeratorOptions - see ShoppingItem options.numeratorOptions
+     * @param {Object} denominatorOptions - see ShoppingItem options.denominatorOptions
      * @returns {ShoppingQuestion}
      * @public
      * @static
      */
-    createItemsFor: function( quantity, unitRate, singularName, pluralName, options ) {
-
-      options = _.extend( {
-        guessFormat: '{0}', // {string} format for the guessed value
-        maxDigits: 3,
-        maxDecimals: 2,
-        trimZeros: true
-      }, options );
+    createItemsFor: function( quantity, unitRate, singularName, pluralName, numeratorOptions, denominatorOptions ) {
 
       // 'Apples' or 'Apple'
       var units = ( quantity > 1 ) ? pluralName : singularName;
 
       // '$4.00'
-      var numeratorString = StringUtils.format( currencyValueString, Util.toFixed( quantity * unitRate, 2 ) );//TODO move into ShoppingQuestion
+      var numeratorString = StringUtils.format( currencyValueString,
+        URUtil.numberToString( unitRate, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '8 Apples'
-      var denominatorString = StringUtils.format( valueUnitsString, Util.toFixed( quantity, 0 ), units );//TODO move into ShoppingQuestion
+      var denominatorString = StringUtils.format( valueUnitsString,
+        URUtil.numberToString( quantity, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+        units );
 
       // 'Apples for $4.00?'
-      var questionString = StringUtils.format( itemsForAmountString, pluralName, numeratorString );//TODO move into ShoppingQuestion
+      var questionString = StringUtils.format( itemsForAmountString, pluralName, numeratorString );
 
-      return new ShoppingQuestion( questionString, quantity, numeratorString, denominatorString, options );
+      return new ShoppingQuestion( questionString, quantity, numeratorString, denominatorString, {
+        guessFormat: denominatorOptions.valueFormat,
+        maxDigits: denominatorOptions.maxDigits,
+        maxDecimals: denominatorOptions.maxDecimals,
+        trimZeros: denominatorOptions.trimZeros
+      } );
     }
   } );
 } );
