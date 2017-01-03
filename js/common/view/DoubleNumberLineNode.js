@@ -115,7 +115,7 @@ define( function( require ) {
     var unitRateObserver = function() {
       //TODO
     };
-    doubleNumberLine.unitRateProperty.link( unitRateObserver );
+    doubleNumberLine.unitRateProperty.lazyLink( unitRateObserver );
 
     doubleNumberLine.scaleMarkerProperty.link( function( newMarker, oldMarker ) {
        //TODO

@@ -62,7 +62,7 @@ define( function( require ) {
     var unitRateObserver = function() {
       //TODO adjust the numerator of all markers
     };
-    this.unitRateProperty.link( unitRateObserver );
+    this.unitRateProperty.lazyLink( unitRateObserver );
 
     // @public (read-only) maps the denominator to the view coordinate frame
     this.modelToView = new LinearFunction(
@@ -73,7 +73,7 @@ define( function( require ) {
 
     // @public {Property.<number|null>} marker that corresponds to what is on the scale
     this.scaleMarkerProperty = new Property( null );
-    this.scaleMarkerProperty.link( function( newMarker, oldMarker ) {
+    this.scaleMarkerProperty.lazyLink( function( newMarker, oldMarker ) {
 
       // add the previous scale marker to otherMarkers
       if ( oldMarker && !self.otherMarkers.contains( oldMarker ) ) {
@@ -88,7 +88,7 @@ define( function( require ) {
 
     // @public {Property.<number|null>} marker that can be removed by pressing the undo button
     this.undoMarkerProperty = new Property( null );
-    this.undoMarkerProperty.link( function( newMarker, oldMarker ) {
+    this.undoMarkerProperty.lazyLink( function( newMarker, oldMarker ) {
 
       // add the previous undo marker to otherMarkers
       if ( oldMarker && !self.otherMarkers.contains( oldMarker ) ) {
