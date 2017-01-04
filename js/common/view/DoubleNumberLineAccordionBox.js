@@ -95,7 +95,6 @@ define( function( require ) {
     var eraserButton = new EraserButton( {
       baseColor: 'rgb( 242, 242, 242 )',
       listener: function() {
-        markerEditor.reset();
         doubleNumberLine.erase();
       }
     } );
