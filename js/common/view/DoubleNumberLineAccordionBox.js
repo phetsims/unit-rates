@@ -70,6 +70,8 @@ define( function( require ) {
       centerY: doubleNumberLineNode.centerY
     } );
 
+    // pressing the undo button moves the marker edit back to its home position,
+    // or removes the marker that was most recently added using the editor
     var undoButton = new FontAwesomeButton( 'undo', {
       visible: false,
       baseColor: 'rgb( 242, 242, 242 )',
@@ -77,8 +79,6 @@ define( function( require ) {
       listener: function() {
         if ( doubleNumberLine.undoMarkerProperty.value ) {
           doubleNumberLine.undo();
-          undoButton.center = undoButtonHomePosition;
-          undoButton.visible = ( markerEditor.centerX !== markerEditorHomeX );
         }
         else {
           markerEditor.reset();
@@ -126,16 +126,15 @@ define( function( require ) {
 
           // create a marker on the double number line
           var marker = markerEditor.createMarker();
+
+          // return the marker editor to its home position
+          markerEditor.reset();
+
+          // add marker to double number line
           doubleNumberLine.markers.add( marker );
 
           // allow the new marker to be undone
           doubleNumberLine.undoMarkerProperty.value = marker;
-          undoButton.centerX = doubleNumberLine.modelToView( marker.denominator );
-          undoButton.top = doubleNumberLineNode.bottom + 3;
-          undoButton.visible = true;
-
-          // return the marker editor to its home position
-          markerEditor.reset();
         }
         else {
 
@@ -146,6 +145,13 @@ define( function( require ) {
         }
       }
       else { // marker is invalid
+
+        // undo marker is lost when we start using the editor
+        if ( doubleNumberLine.undoMarkerProperty.value ) {
+          doubleNumberLine.undoMarkerProperty.value = null;
+        }
+
+        undoButton.center = undoButtonHomePosition;
 
         if ( markerEditor.numeratorProperty.value === null && markerEditor.denominatorProperty.value === null ) {
 
@@ -199,8 +205,20 @@ define( function( require ) {
     markerEditor.numeratorProperty.link( markerEditorObserver );
     markerEditor.denominatorProperty.link( markerEditorObserver );
 
-    var undoMarkerObserver = function() {
-      //TODO move the undo button
+    var undoMarkerObserver = function( marker ) {
+      if ( marker ) {
+
+        // Position the undo button below the undoable marker
+        undoButton.centerX = doubleNumberLine.modelToView( marker.denominator );
+        undoButton.top = doubleNumberLineNode.bottom + 3;
+        undoButton.visible = true;
+      }
+      else {
+
+        // Move the undo button back to its home position
+        undoButton.center = undoButtonHomePosition;
+        undoButton.visible = ( markerEditor.centerX !== markerEditorHomeX );
+      }
     };
     doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver );
 
