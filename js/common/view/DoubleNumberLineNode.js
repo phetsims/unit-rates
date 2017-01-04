@@ -120,7 +120,7 @@ define( function( require ) {
     doubleNumberLine.unitRateProperty.lazyLink( unitRateObserver );
 
     // when a Marker is added, add a MarkerNode
-    doubleNumberLine.markers.addItemAddedListener( function( marker ) {
+    var markerAddedListener = function( marker ) {
       self.addMarkerNode( marker, {
         lineLength: options.majorMarkerLength,
         color: options.majorMarkerColor,
@@ -129,16 +129,20 @@ define( function( require ) {
         centerX: doubleNumberLine.modelToView( marker.denominator ),
         centerY: verticalAxis.centerY
       } );
-    } );
+    };
+    doubleNumberLine.markers.addItemAddedListener( markerAddedListener );
 
     // when a Marker is removed, remove the corresponding MarkerNode
-    doubleNumberLine.markers.addItemRemovedListener( function( marker ) {
+    var markerRemovedListener = function( marker ) {
       self.removeMarkerNode( marker );
-    } );
+    };
+    doubleNumberLine.markers.addItemRemovedListener( markerRemovedListener );
 
     // @private
     this.disposeDoubleNumberLineNode = function() {
       doubleNumberLine.unitRateProperty.unlink( unitRateObserver );
+      doubleNumberLine.markers.removeItemAddedListener( markerAddedListener );
+      doubleNumberLine.markers.removeItemRemovedListener( markerRemovedListener );
     };
   }
 
