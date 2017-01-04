@@ -73,7 +73,7 @@ define( function( require ) {
     var undoButton = new FontAwesomeButton( 'undo', {
       visible: false,
       baseColor: 'rgb( 242, 242, 242 )',
-      iconScale: 0.5,
+      iconScale: 0.45,
       listener: function() {
         if ( doubleNumberLine.undoMarkerProperty.value ) {
           doubleNumberLine.undo();
