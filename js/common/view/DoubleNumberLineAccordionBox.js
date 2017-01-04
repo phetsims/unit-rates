@@ -127,7 +127,8 @@ define( function( require ) {
           // create a marker on the double number line
           var marker = markerEditor.createMarker();
 
-          // return the marker editor to its home position
+          // return the marker editor to its home position.
+          // Do this before adding marker so that undo button ends up below the marker.
           markerEditor.reset();
 
           // add marker to double number line
