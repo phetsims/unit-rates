@@ -141,6 +141,8 @@ define( function( require ) {
 
           // marker is out of range, move editor to right of axis arrows
           destinationX = markerEditorOutOfRangeX;
+
+          // undo button is visible to left of axes
           undoButton.center = undoButtonHomePosition;
           undoButton.visible = true;
         }
@@ -152,13 +154,12 @@ define( function( require ) {
           doubleNumberLine.undoMarkerProperty.value = null;
         }
 
-        undoButton.center = undoButtonHomePosition;
-
         if ( markerEditor.numeratorProperty.value === null && markerEditor.denominatorProperty.value === null ) {
 
           // both values are empty, move marker editor back to home position
           destinationX = markerEditorHomeX;
 
+          // hide undo button, unless it's associated with a marker
           if ( !doubleNumberLine.undoMarkerProperty.value ) {
             undoButton.visible = false;
           }
@@ -178,10 +179,9 @@ define( function( require ) {
             destinationX = doubleNumberLineNode.x + doubleNumberLine.modelToView( denominator );
           }
 
-          if ( !doubleNumberLine.undoMarkerProperty.value ) {
-            undoButton.center = undoButtonHomePosition;
-            undoButton.visible = true;
-          }
+          // undo button is visible to left of axes
+          undoButton.center = undoButtonHomePosition;
+          undoButton.visible = true;
         }
       }
 
