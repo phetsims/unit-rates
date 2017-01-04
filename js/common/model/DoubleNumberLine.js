@@ -116,12 +116,12 @@ define( function( require ) {
       this.undoMarkerProperty.reset();
 
       // remove all markers that are erasable
-      var markers = this.markers.get();
-      for ( var i = 0; i < markers.length; i++ ) {
-        if ( markers[ i ].erasable ) {
-          this.markers.remove( markers[ i ] );
+      var self = this;
+      this.markers.forEach( function( marker ) {
+        if ( marker.erasable ) {
+          self.markers.remove( marker );
         }
-      }
+      } );
     }
   } );
 } );
