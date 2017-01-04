@@ -1,7 +1,7 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
 /**
- * Displays a double number line in an accordion box, with a marker editor and eraser button.
+ * Displays a double number line in an accordion box, with a marker editor, undo button and eraser button.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
