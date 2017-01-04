@@ -127,6 +127,8 @@ define( function( require ) {
 
     // when a Marker is added, add a MarkerNode
     var markerAddedListener = function( marker ) {
+
+      //TODO duplicate of above code
       self.addMarkerNode( marker, {
         lineLength: options.majorMarkerLength, //TODO determine whether the marker is major or minor
         numeratorOptions: doubleNumberLine.numeratorOptions,
