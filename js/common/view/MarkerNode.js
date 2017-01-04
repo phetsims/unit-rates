@@ -33,7 +33,6 @@ define( function( require ) {
       align: 'center',
 
       // MarkerNode options
-      color: 'black',
       font: new URFont( 12 ),
       lineLength: 75,
       lineWidth: 1,
@@ -57,13 +56,13 @@ define( function( require ) {
 
     // vertical line
     var lineNode = new Line( 0, 0, 0, options.lineLength, {
-      stroke: options.color,
+      stroke: marker.color,
       lineWidth: options.lineWidth
     } );
 
     var textOptions = {
       font: options.font,
-      fill: options.color
+      fill: marker.color
     };
 
     // numerator

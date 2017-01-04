@@ -23,12 +23,14 @@ define( function( require ) {
   function Marker( numerator, denominator, options ) {
 
     options = _.extend( {
+      color: 'black', // {Color|string} color used to render the marker
       erasable: true // {boolean} is this marker erased when the Eraser button is pressed?
     }, options );
 
     // @public (read-only)
     this.numerator = numerator;
     this.denominator = denominator;
+    this.color = options.color;
     this.erasable = options.erasable;
   }
 

@@ -127,6 +127,8 @@ define( function( require ) {
 
         if ( markerEditor.denominatorProperty.value <= doubleNumberLine.denominatorOptions.axisRange.max ) {
 
+          //TODO add the marker only if one doesn't already exist
+
           // create a marker on the double number line
           var marker = markerEditor.createMarker();
 

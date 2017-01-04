@@ -48,12 +48,7 @@ define( function( require ) {
 
       // markers
       majorMarkerLength: 75,
-      minorMarkerLength: 40,
-      majorMarkerColor: 'black',
-      minorMarkerColor: 'gray',
-      scaleMarkerColor: 'red',
-      undoMarkerColor: 'blue',
-      questionMarkerColor: 'green'
+      minorMarkerLength: 40
 
     }, options );
 
@@ -122,8 +117,7 @@ define( function( require ) {
     // when a Marker is added, add a MarkerNode
     var markerAddedListener = function( marker ) {
       self.addMarkerNode( marker, {
-        lineLength: options.majorMarkerLength,
-        color: options.majorMarkerColor,
+        lineLength: options.majorMarkerLength, //TODO determine whether the marker is major or minor
         numeratorOptions: doubleNumberLine.numeratorOptions,
         denominatorOptions: doubleNumberLine.denominatorOptions,
         centerX: doubleNumberLine.modelToView( marker.denominator ),
