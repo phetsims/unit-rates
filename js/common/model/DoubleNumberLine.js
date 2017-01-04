@@ -35,7 +35,6 @@ define( function( require ) {
     // @public (read-only) options for the numerator (top) number line
     this.numeratorOptions = _.extend( {
       axisLabel: null, // {string|null} label for the axis
-      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
       maxDecimals: 1, // {number} maximum number of decimal places
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.numeratorOptions );
@@ -43,7 +42,6 @@ define( function( require ) {
     // @public (read-only) options for the denominator (bottom) number line
     this.denominatorOptions = _.extend( {
       axisLabel: null, // {Node|null} label for the axis
-      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
       maxDecimals: 1, // {number} maximum number of decimal places
       trimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
       axisRange: new Range( 0, 10 ), // {Range} range of axis
