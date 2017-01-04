@@ -114,6 +114,17 @@ define( function( require ) {
     };
     doubleNumberLine.unitRateProperty.lazyLink( unitRateObserver );
 
+    // Add a MarkNode for each initial Marker
+    doubleNumberLine.markers.forEach( function( marker ) {
+      self.addMarkerNode( marker, {
+        lineLength: options.majorMarkerLength, //TODO determine whether the marker is major or minor
+        numeratorOptions: doubleNumberLine.numeratorOptions,
+        denominatorOptions: doubleNumberLine.denominatorOptions,
+        centerX: doubleNumberLine.modelToView( marker.denominator ),
+        centerY: verticalAxis.centerY
+      } );
+    } );
+
     // when a Marker is added, add a MarkerNode
     var markerAddedListener = function( marker ) {
       self.addMarkerNode( marker, {

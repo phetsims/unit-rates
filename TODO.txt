@@ -1,7 +1,5 @@
 TODO list for unit-rates
 
-Restore markers when switching back to an item via combo box.
-
 ShoppingQuestion: when correctEmitter fires, add Marker( { erasable:false, color:'green' } )
 
 Keypad lets you enter 0 for denominator, division-by-zero problem?
