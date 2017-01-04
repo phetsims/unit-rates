@@ -57,53 +57,21 @@ define( function( require ) {
     this.unitRateProperty = unitRateProperty;
     this.horizontalAxisLength = options.horizontalAxisLength;
 
-    var unitRateObserver = function() {
-      //TODO adjust the numerator of all markers
-    };
-    this.unitRateProperty.lazyLink( unitRateObserver );
-
     // @public (read-only) maps the denominator to the view coordinate frame
     this.modelToView = new LinearFunction(
       this.denominatorOptions.axisRange.min, this.denominatorOptions.axisRange.max,
       0, 0.96 * this.horizontalAxisLength );
 
-    var self = this;
-
-    // @public {Property.<number|null>} marker that corresponds to what is on the scale
-    this.scaleMarkerProperty = new Property( null );
-    this.scaleMarkerProperty.lazyLink( function( newMarker, oldMarker ) {
-
-      // add the previous scale marker to otherMarkers
-      if ( oldMarker && !self.otherMarkers.contains( oldMarker ) ) {
-        self.otherMarkers.add( oldMarker );
-      }
-
-      // remove the current scale marker from otherMarkers
-      if ( newMarker && self.otherMarkers.contains( newMarker ) ) {
-        self.otherMarkers.remove( newMarker );
-      }
-    } );
+    // @public {Array[]}
+    this.markers = new ObservableArray( [] );
 
     // @public {Property.<number|null>} marker that can be removed by pressing the undo button
     this.undoMarkerProperty = new Property( null );
-    this.undoMarkerProperty.lazyLink( function( newMarker, oldMarker ) {
 
-      // add the previous undo marker to otherMarkers
-      if ( oldMarker && !self.otherMarkers.contains( oldMarker ) ) {
-        self.otherMarkers.add( oldMarker );
-      }
-
-      // remove the current undo marker from otherMarkers
-      if ( newMarker && self.otherMarkers.contains( newMarker ) ) {
-        self.otherMarkers.remove( newMarker );
-      }
-    } );
-
-    // @public {number[]} makers that correspond to questions that have been answered correctly
-    this.questionMarkers = new ObservableArray( [] );
-
-    // @public {number[]} other markers that aren't described by any of the above
-    this.otherMarkers = new ObservableArray( [] );
+    var unitRateObserver = function() {
+      //TODO adjust the numerator of all markers
+    };
+    this.unitRateProperty.lazyLink( unitRateObserver );
 
     // @private
     this.disposeDoubleNumberLine = function() {
@@ -122,21 +90,38 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.scaleMarkerProperty.reset();
+      this.markers.reset();
       this.undoMarkerProperty.reset();
-      this.questionMarkers.reset();
-      this.otherMarkers.reset();
     },
 
     /**
-     * Erases all markers, except for markers that correspond to:
-     * - the number of items currently on the scale
-     * - correctly answered questions, including unit rate
+     * Undoes (removes) the undo marker. If there is no undo marker, this is a no-op.
+     * @public
+     */
+    undo: function() {
+      var undoMarker = this.undoMarkerProperty.value;
+      if ( undoMarker ) {
+        assert && assert( this.markers.contains( undoMarker ), 'unexpected undoMarker: ' + undoMarker );
+        this.undoMarkerProperty.value = null;
+        this.markers.remove( undoMarker );
+      }
+    },
+
+    /**
+     * Erases all markers that are erasable.
      * @public
      */
     erase: function() {
+
       this.undoMarkerProperty.reset();
-      this.otherMarkers.reset();
+
+      // remove all markers that are erasable
+      var markers = this.markers.get();
+      for ( var i = 0; i < markers.length; i++ ) {
+        if ( markers[ i ].erasable ) {
+          this.markers.remove( markers[ i ] );
+        }
+      }
     }
   } );
 } );

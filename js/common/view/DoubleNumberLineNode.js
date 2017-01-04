@@ -1,4 +1,4 @@
-// Copyright 2016, University of Colorado Boulder
+// Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * Displays a double number line.
@@ -57,6 +57,8 @@ define( function( require ) {
 
     }, options );
 
+    var self = this;
+
     Node.call( this );
 
     var verticalAxis = new Line( 0, 0, 0, options.verticalAxisLength, {
@@ -106,9 +108,9 @@ define( function( require ) {
       } ) );
     }
 
-    // parent for markers, to maintain rendering order
-    var markersParent = new Node();
-    this.addChild( markersParent );
+    // @private parent for markers, to maintain rendering order
+    this.markersParent = new Node();
+    this.addChild( this.markersParent );
 
     this.mutate( options );
 
@@ -117,49 +119,21 @@ define( function( require ) {
     };
     doubleNumberLine.unitRateProperty.lazyLink( unitRateObserver );
 
-    doubleNumberLine.scaleMarkerProperty.link( function( newMarker, oldMarker ) {
-       //TODO
-      URQueryParameters.log && console.log( 'scaleMarker: add ' + newMarker + ', remove ' + oldMarker );
+    // when a Marker is added, add a MarkerNode
+    doubleNumberLine.markers.addItemAddedListener( function( marker ) {
+      self.addMarkerNode( marker, {
+        lineLength: options.majorMarkerLength,
+        color: options.majorMarkerColor,
+        numeratorOptions: doubleNumberLine.numeratorOptions,
+        denominatorOptions: doubleNumberLine.denominatorOptions,
+        centerX: doubleNumberLine.modelToView( marker.denominator ),
+        centerY: verticalAxis.centerY
+      } );
     } );
 
-    doubleNumberLine.undoMarkerProperty.link( function( newMarker, oldMarker ) {
-       //TODO
-      URQueryParameters.log && console.log( 'undoMarker: add ' + newMarker + ', remove ' + oldMarker );
-
-      //TODO this is a test, need to keep track of this marker for removal, etc.
-      if ( newMarker !== null ) {
-
-        var denominator = newMarker;
-        var numerator = denominator * doubleNumberLine.unitRateProperty.value;
-
-        var markerNode = new MarkerNode( numerator, denominator, {
-          lineLength: options.majorMarkerLength,
-          color: options.majorMarkerColor,
-          numeratorOptions: doubleNumberLine.numeratorOptions,
-          denominatorOptions: doubleNumberLine.denominatorOptions,
-          centerX: doubleNumberLine.modelToView( denominator ),
-          centerY: verticalAxis.centerY
-        } );
-        markersParent.addChild( markerNode );
-      }
-    } );
-
-    doubleNumberLine.questionMarkers.addItemAddedListener( function( marker ) {
-       //TODO
-      URQueryParameters.log && console.log( 'questionMarker: add ' + marker );
-    } );
-    doubleNumberLine.questionMarkers.addItemRemovedListener( function( marker ) {
-        //TODO
-       URQueryParameters.log && console.log( 'questionMarker: remove ' + marker );
-     } );
-
-    doubleNumberLine.otherMarkers.addItemAddedListener( function( marker ) {
-       //TODO
-      URQueryParameters.log && console.log( 'otherMarker: add' + marker );
-    } );
-    doubleNumberLine.otherMarkers.addItemRemovedListener( function( marker ) {
-       //TODO
-      URQueryParameters.log && console.log( 'otherMarker: remove ' + marker );
+    // when a Marker is removed, remove the corresponding MarkerNode
+    doubleNumberLine.markers.addItemRemovedListener( function( marker ) {
+      self.removeMarkerNode( marker );
     } );
 
     // @private
@@ -175,6 +149,51 @@ define( function( require ) {
     // @public
     dispose: function() {
       this.disposeDoubleNumberLineNode();
+    },
+
+    /**
+     * Adds a MarkerNode to the double number line.
+     * @param {Marker} marker
+     * @param {Object} [options] - MarkerNode constructor options
+     * @private
+     */
+    addMarkerNode: function( marker, options ) {
+      URQueryParameters.log && console.log( 'addMarker ' + marker );
+      assert && assert( !this.getMarkerNode( marker ), 'already have a MarkerNode for ' + marker );
+      var markerNode = new MarkerNode( marker, options );
+      this.markersParent.addChild( markerNode );
+    },
+
+    /**
+     * Removes a MarkerNode from the double number line.
+     * @param {Marker} marker
+     */
+    removeMarkerNode: function( marker ) {
+      URQueryParameters.log && console.log( 'removeMarker ' + marker );
+
+      // find the node that is associated with the marker
+      var markerNode = this.getMarkerNode( marker );
+      assert && assert( markerNode, 'no MarkerNode for ' + marker );
+
+      // remove the node
+      this.markersParent.removeChild( markerNode );
+      markerNode.dispose();
+    },
+
+    /**
+     * Gets the MarkerNode that is associated with marker.
+     * @param {Marker} marker
+     * @returns {MarkerNode|null} - null if there is no MarkerNode associated with marker
+     */
+    getMarkerNode: function( marker ) {
+      var markerNode = null;
+      var markerNodes = this.markersParent.getChildren();
+      for ( var i = 0; i < markerNodes.length && !markerNode; i++ ) {
+        if ( markerNodes[ i ].marker === marker ) {
+          markerNode = markerNodes[ i ];
+        }
+      }
+      return markerNode;
     }
   } );
 } );

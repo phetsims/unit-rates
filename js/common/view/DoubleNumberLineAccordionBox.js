@@ -1,4 +1,4 @@
-// Copyright 2016, University of Colorado Boulder
+// Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * Displays a double number line in an accordion box, with a marker editor and eraser button.
@@ -75,8 +75,14 @@ define( function( require ) {
       baseColor: 'rgb( 242, 242, 242 )',
       iconScale: 0.5,
       listener: function() {
-        markerEditor.reset();
-        undoButton.visible = false;
+        if ( doubleNumberLine.undoMarkerProperty.value ) {
+          doubleNumberLine.undo();
+          undoButton.center = undoButtonHomePosition;
+          undoButton.visible = ( markerEditor.centerX !== markerEditorHomeX );
+        }
+        else {
+          markerEditor.reset();
+        }
       },
       center: undoButtonHomePosition
     } );
@@ -119,18 +125,24 @@ define( function( require ) {
         if ( markerEditor.denominatorProperty.value <= doubleNumberLine.denominatorOptions.axisRange.max ) {
 
           // create a marker on the double number line
-          doubleNumberLine.undoMarkerProperty.value = markerEditor.denominatorProperty.value;
+          var marker = markerEditor.createMarker();
+          doubleNumberLine.markers.add( marker );
+
+          // allow the new marker to be undone
+          doubleNumberLine.undoMarkerProperty.value = marker;
+          undoButton.centerX = doubleNumberLine.modelToView( marker.denominator );
+          undoButton.top = doubleNumberLineNode.bottom + 3;
+          undoButton.visible = true;
 
           // return the marker editor to its home position
           markerEditor.reset();
-
-          //TODO move undo button below new marker and make it visible
-          undoButton.visible = false;
         }
         else {
 
           // marker is out of range, move editor to right of axis arrows
           destinationX = markerEditorOutOfRangeX;
+          undoButton.center = undoButtonHomePosition;
+          undoButton.visible = true;
         }
       }
       else { // marker is invalid
@@ -139,6 +151,10 @@ define( function( require ) {
 
           // both values are empty, move marker editor back to home position
           destinationX = markerEditorHomeX;
+
+          if ( !doubleNumberLine.undoMarkerProperty.value ) {
+            undoButton.visible = false;
+          }
         }
         else {
 
@@ -155,8 +171,10 @@ define( function( require ) {
             destinationX = doubleNumberLineNode.x + doubleNumberLine.modelToView( denominator );
           }
 
-          undoButton.center = undoButtonHomePosition;
-          undoButton.visible = true;
+          if ( !doubleNumberLine.undoMarkerProperty.value ) {
+            undoButton.center = undoButtonHomePosition;
+            undoButton.visible = true;
+          }
         }
       }
 
@@ -181,12 +199,18 @@ define( function( require ) {
     markerEditor.numeratorProperty.link( markerEditorObserver );
     markerEditor.denominatorProperty.link( markerEditorObserver );
 
+    var undoMarkerObserver = function() {
+      //TODO move the undo button
+    };
+    doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver );
+
     // @private
     this.disposeDoubleNumberLineAccordionBox = function() {
       markerEditorAnimation && markerEditorAnimation.stop();
       markerEditor.numeratorProperty.unlink( markerEditorObserver );
       markerEditor.denominatorProperty.unlink( markerEditorObserver );
       markerEditor.dispose();
+      doubleNumberLine.undoMarkerProperty.unlink( undoMarkerObserver );
       doubleNumberLineNode.dispose();
     };
   }

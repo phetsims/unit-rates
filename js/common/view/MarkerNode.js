@@ -1,4 +1,4 @@
-// Copyright 2016, University of Colorado Boulder
+// Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * Marker on the double number line.
@@ -20,12 +20,11 @@ define( function( require ) {
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   /**
-   * @param {number} numerator
-   * @param {number} denominator
+   * @param {Marker} marker
    * @param {Object} [options]
    * @constructor
    */
-  function MarkerNode( numerator, denominator, options ) {
+  function MarkerNode( marker, options ) {
 
     options = _.extend( {
 
@@ -42,6 +41,9 @@ define( function( require ) {
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
 
     }, options );
+
+    // @public (read-only)
+    this.marker = marker;
 
     var numeratorOptions = _.extend( {
       maxDecimals: 2, // {number} maximum number of decimal places
@@ -65,11 +67,11 @@ define( function( require ) {
     };
 
     // numerator
-    var numeratorString = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+    var numeratorString = URUtil.numberToString( marker.numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
     var numeratorNode = new Text( numeratorString, textOptions );
 
     // denominator
-    var denominatorString = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+    var denominatorString = URUtil.numberToString( marker.denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
     var denominatorNode = new Text( denominatorString, textOptions );
 
     assert && assert( !options.children, 'decoration not supported' );
