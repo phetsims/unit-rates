@@ -23,6 +23,7 @@ define( function( require ) {
   function Marker( numerator, denominator, options ) {
 
     options = _.extend( {
+      isMajor: true, // {boolean} true: major marker, false: minor marker
       color: 'black', // {Color|string} color used to render the marker
       erasable: true // {boolean} is this marker erased when the Eraser button is pressed?
     }, options );
@@ -30,6 +31,7 @@ define( function( require ) {
     // @public (read-only)
     this.numerator = numerator;
     this.denominator = denominator;
+    this.isMajor = options.isMajor;
     this.color = options.color;
     this.erasable = options.erasable;
   }

@@ -22,10 +22,12 @@ define( function( require ) {
   // sim modules
   var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
   var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
+  var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/view/MarkerEditor' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
   var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
@@ -59,7 +61,7 @@ define( function( require ) {
       y: 0
     } );
 
-    // home locations of UI components that move around
+    // home positions for marker editor and undo button, to left of axes
     var markerEditorHomeX = doubleNumberLineNode.left - 40;
     var undoButtonHomePosition = new Vector2( markerEditorHomeX, doubleNumberLineNode.centerY );
 
@@ -130,7 +132,12 @@ define( function( require ) {
           //TODO add the marker only if one doesn't already exist
 
           // create a marker on the double number line
-          var marker = markerEditor.createMarker();
+          var isMajor = ( URUtil.decimalPlaces( markerEditor.denominatorProperty.value ) <= doubleNumberLine.denominatorOptions.majorMarkerDecimals );
+          console.log( 'isMajor=' + isMajor );//XXX
+          var marker = new Marker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value, {
+            isMajor: isMajor,
+            color: isMajor ? 'black' : 'gray' //TODO factor out colors
+          } );
 
           // Return the marker editor to its home position.
           // Do this before adding the marker so that the undo button is associated with the marker.
@@ -220,7 +227,7 @@ define( function( require ) {
 
         // Position the undo button below the undoable marker
         undoButton.centerX = doubleNumberLine.modelToView( marker.denominator );
-        undoButton.top = doubleNumberLineNode.bottom + 3;
+        undoButton.bottom = markerEditor.bottom;
         undoButton.visible = true;
       }
       else {

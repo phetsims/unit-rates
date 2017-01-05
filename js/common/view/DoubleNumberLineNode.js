@@ -21,7 +21,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine
@@ -115,28 +114,11 @@ define( function( require ) {
     };
     doubleNumberLine.unitRateProperty.lazyLink( unitRateObserver );
 
-    // Add a MarkNode for each initial Marker
-    doubleNumberLine.markers.forEach( function( marker ) {
-
-      var isMajor = ( URUtil.decimalPlaces( marker.denominator ) === doubleNumberLine.denominatorOptions.majorMarkerDecimals );
-
-      self.addMarkerNode( marker, {
-        lineLength: isMajor ? options.majorMarkerLength : options.minorMarkerLength,
-        numeratorOptions: doubleNumberLine.numeratorOptions,
-        denominatorOptions: doubleNumberLine.denominatorOptions,
-        centerX: doubleNumberLine.modelToView( marker.denominator ),
-        centerY: verticalAxis.centerY
-      } );
-    } );
-
     // when a Marker is added, add a MarkerNode
     var markerAddedListener = function( marker ) {
-
-      //TODO duplicate of above code
-      var isMajor = ( URUtil.decimalPlaces( marker.denominator ) === doubleNumberLine.denominatorOptions.majorMarkerDecimals );
-
+      console.log( 'marker.isMajor=' + marker.isMajor );//XXX
       self.addMarkerNode( marker, {
-        lineLength: isMajor ? options.majorMarkerLength : options.minorMarkerLength,
+        lineLength: marker.isMajor ? options.majorMarkerLength : options.minorMarkerLength,
         numeratorOptions: doubleNumberLine.numeratorOptions,
         denominatorOptions: doubleNumberLine.denominatorOptions,
         centerX: doubleNumberLine.modelToView( marker.denominator ),
@@ -150,6 +132,9 @@ define( function( require ) {
       self.removeMarkerNode( marker );
     };
     doubleNumberLine.markers.addItemRemovedListener( markerRemovedListener );
+
+    // Add a MarkNode for each initial Marker
+    doubleNumberLine.markers.forEach( markerAddedListener.bind( this ) );
 
     // @private
     this.disposeDoubleNumberLineNode = function() {
