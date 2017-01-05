@@ -21,6 +21,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine
@@ -116,8 +117,11 @@ define( function( require ) {
 
     // Add a MarkNode for each initial Marker
     doubleNumberLine.markers.forEach( function( marker ) {
+
+      var isMajor = ( URUtil.decimalPlaces( marker.denominator ) === doubleNumberLine.denominatorOptions.majorMarkerDecimals );
+
       self.addMarkerNode( marker, {
-        lineLength: options.majorMarkerLength, //TODO determine whether the marker is major or minor
+        lineLength: isMajor ? options.majorMarkerLength : options.minorMarkerLength,
         numeratorOptions: doubleNumberLine.numeratorOptions,
         denominatorOptions: doubleNumberLine.denominatorOptions,
         centerX: doubleNumberLine.modelToView( marker.denominator ),
@@ -129,8 +133,10 @@ define( function( require ) {
     var markerAddedListener = function( marker ) {
 
       //TODO duplicate of above code
+      var isMajor = ( URUtil.decimalPlaces( marker.denominator ) === doubleNumberLine.denominatorOptions.majorMarkerDecimals );
+
       self.addMarkerNode( marker, {
-        lineLength: options.majorMarkerLength, //TODO determine whether the marker is major or minor
+        lineLength: isMajor ? options.majorMarkerLength : options.minorMarkerLength,
         numeratorOptions: doubleNumberLine.numeratorOptions,
         denominatorOptions: doubleNumberLine.denominatorOptions,
         centerX: doubleNumberLine.modelToView( marker.denominator ),
