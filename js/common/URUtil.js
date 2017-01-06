@@ -1,4 +1,4 @@
-// Copyright 2016, University of Colorado Boulder
+// Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * Utility functions that are specific to this simulation.
@@ -51,20 +51,31 @@ define( function( require ) {
     },
 
     /**
-     * Gets the number of decimal places in a number.
-     * http://stackoverflow.com/questions/10454518/javascript-how-to-retrieve-the-number-of-decimals-of-a-string-number
-     * @param {number} num
+     * Gets the number of decimal places in a number, or a number that has been converted to a string.
+     * @param {number|string} numberOrString
      * @returns {number}
      */
-    decimalPlaces: function( num ) {
-      assert && assert( typeof num === 'number', 'invalid argument type' );
-      var match = ('' + num).match( /(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/ );
-      if ( !match ) { return 0; }
-      return Math.max( 0,
-        // Number of digits right of decimal point.
-        (match[ 1 ] ? match[ 1 ].length : 0)
-        // Adjust for scientific notation.
-        - (match[ 2 ] ? +match[ 2 ] : 0) );
+    decimalPlaces: function( numberOrString ) {
+      assert && assert( typeof numberOrString === 'number' || typeof numberOrString === 'string', 'invalid argument type' );
+
+      // convert to string
+      var str = ('' + numberOrString);
+      assert && assert( str.length > 0, 'invalid argument: ' + str );
+
+      // find the decimal point
+      assert && assert( ( str.match( /\./g ) || []).length <= 1, 'too many decimal points: ' + str );
+      var decimalIndex = str.indexOf( '.' );
+
+      if ( decimalIndex === -1 ) {
+
+        // no decimal places
+        return 0;
+      }
+      else {
+
+        // count digits to right of decimal point
+        return str.substring( decimalIndex + 1, str.length ).length;
+      }
     }
   };
 

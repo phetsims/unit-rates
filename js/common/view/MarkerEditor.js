@@ -1,4 +1,4 @@
-// Copyright 2016, University of Colorado Boulder
+// Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * Maker editor, used to manually enter markers on the double number line.
@@ -13,7 +13,6 @@ define( function( require ) {
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -311,16 +310,6 @@ define( function( require ) {
         }
         return Util.toFixedNumber( denominator, this.maxDecimals );
       }
-    },
-
-    /**
-     * Creates a Marker from the current values in the editor.
-     * @returns {Marker}
-     * @public
-     */
-    createMarker: function() {
-      assert && assert( this.isValidMarker, 'createMarker called for invalid marker' );
-      return new Marker( this.numeratorProperty.value, this.denominatorProperty.value );
     },
 
     // @public

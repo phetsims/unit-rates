@@ -114,23 +114,11 @@ define( function( require ) {
     };
     doubleNumberLine.unitRateProperty.lazyLink( unitRateObserver );
 
-    // Add a MarkNode for each initial Marker
-    doubleNumberLine.markers.forEach( function( marker ) {
-      self.addMarkerNode( marker, {
-        lineLength: options.majorMarkerLength, //TODO determine whether the marker is major or minor
-        numeratorOptions: doubleNumberLine.numeratorOptions,
-        denominatorOptions: doubleNumberLine.denominatorOptions,
-        centerX: doubleNumberLine.modelToView( marker.denominator ),
-        centerY: verticalAxis.centerY
-      } );
-    } );
-
     // when a Marker is added, add a MarkerNode
     var markerAddedListener = function( marker ) {
-
-      //TODO duplicate of above code
+      console.log( 'marker.isMajor=' + marker.isMajor );//XXX
       self.addMarkerNode( marker, {
-        lineLength: options.majorMarkerLength, //TODO determine whether the marker is major or minor
+        lineLength: marker.isMajor ? options.majorMarkerLength : options.minorMarkerLength,
         numeratorOptions: doubleNumberLine.numeratorOptions,
         denominatorOptions: doubleNumberLine.denominatorOptions,
         centerX: doubleNumberLine.modelToView( marker.denominator ),
@@ -144,6 +132,9 @@ define( function( require ) {
       self.removeMarkerNode( marker );
     };
     doubleNumberLine.markers.addItemRemovedListener( markerRemovedListener );
+
+    // Add a MarkNode for each initial Marker
+    doubleNumberLine.markers.forEach( markerAddedListener.bind( this ) );
 
     // @private
     this.disposeDoubleNumberLineNode = function() {

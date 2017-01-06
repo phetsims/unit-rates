@@ -1,4 +1,4 @@
-// Copyright 2016, University of Colorado Boulder
+// Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * A question that appears in the 'Questions' panel.
@@ -174,7 +174,7 @@ define( function( require ) {
 
       // '$4.00'
       var numeratorString = StringUtils.format( currencyValueString,
-        URUtil.numberToString( unitRate, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+        URUtil.numberToString( quantity * unitRate, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '8 Apples'
       var denominatorString = StringUtils.format( valueUnitsString,
