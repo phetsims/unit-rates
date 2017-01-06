@@ -174,7 +174,7 @@ define( function( require ) {
 
       // '$4.00'
       var numeratorString = StringUtils.format( currencyValueString,
-        URUtil.numberToString( unitRate, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+        URUtil.numberToString( quantity * unitRate, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '8 Apples'
       var denominatorString = StringUtils.format( valueUnitsString,
