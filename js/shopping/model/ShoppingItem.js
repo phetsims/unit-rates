@@ -21,6 +21,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
   var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
@@ -120,6 +121,8 @@ define( function( require ) {
      */
     var questionCorrectListener = function( question ) {
       self.doubleNumberLine.markers.add( new Marker( question.numerator, question.denominator, {
+        creator: 'question',
+        isMajor: ( URUtil.decimalPlaces( question.denominator ) <= denominatorOptions.majorMarkerDecimals ),
         color: URColors.questionMarker,
         erasable: false
       } ) );
