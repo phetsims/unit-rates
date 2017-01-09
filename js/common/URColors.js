@@ -33,7 +33,8 @@ define( function( require ) {
     edit: 'yellow', // corresponding value box is filled with this color while editing
 
     // questions
-    correct: 'green', // correct answer
+    correctUnitRate: 'green', // correct answer for unit-rate question
+    correctQuestion: 'blue', // correct answer for other questions
     incorrect: 'red', // incorrect guess
     showAnswers: 'lightGray' // show answers in this color when 'showAnswers' query parameter is present
   };
