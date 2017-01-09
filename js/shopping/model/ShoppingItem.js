@@ -21,7 +21,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
   var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
@@ -116,18 +115,22 @@ define( function( require ) {
     this.selectedQuestionSets = [ this.questionSetProperty.value ];
 
     /**
+     * When the unit-rate question is answered correctly, create a corresponding marker.
+     * @param {ShoppingQuestion} question
+     */
+    this.unitRateQuestion.correctEmitter.addListener( function( question ) {
+      var marker = Marker.createQuestionMarker( question, URColors.unitRateMarker, denominatorOptions.majorMarkerDecimals );
+      self.doubleNumberLine.markers.add( marker );
+    } );
+
+    /**
      * When a question is answered correctly, create a corresponding marker.
      * @param {ShoppingQuestion} question
      */
     var questionCorrectListener = function( question ) {
-      self.doubleNumberLine.markers.add( new Marker( question.numerator, question.denominator, {
-        creator: 'question',
-        isMajor: ( URUtil.decimalPlaces( question.denominator ) <= denominatorOptions.majorMarkerDecimals ),
-        color: URColors.questionMarker,
-        erasable: false
-      } ) );
+      var marker = Marker.createQuestionMarker( question, URColors.questionMarker, denominatorOptions.majorMarkerDecimals );
+      self.doubleNumberLine.markers.add( marker );
     };
-    this.unitRateQuestion.correctEmitter.addListener( questionCorrectListener );
     this.questionSets.forEach( function( questionSet ) {
       questionSet.forEach( function( question ) {
         question.correctEmitter.addListener( questionCorrectListener );

@@ -23,7 +23,8 @@ define( function( require ) {
     undoButton: 'rgb( 242, 242, 242 )',
 
     // markers
-    questionMarker: 'green', // markers created by answering a question correctly
+    unitRateMarker: 'green', // marker created by answering the unit rate question
+    questionMarker: 'blue', // markers created by answering other (non unit rate) questions
     scaleMarker: 'red', // marker that corresponds to what's on the scale
     majorMarker: 'black', // major marker created by using editor or by putting things on the scale
     minorMarker: 'gray', // minor markers created by using editor
