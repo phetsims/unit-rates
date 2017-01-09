@@ -193,8 +193,9 @@ define( function( require ) {
         } );
       } );
 
-      // choose the next set of questions
-      this.nextQuestionSet();
+      // rest current question set
+      this.questionSetsIndex = 0;
+      this.questionSetProperty.reset();
     },
 
     /**
