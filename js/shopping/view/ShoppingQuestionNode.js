@@ -21,6 +21,7 @@ define( function( require ) {
   // sim modules
   var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
@@ -37,11 +38,11 @@ define( function( require ) {
     options = _.extend( {
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
-      correctColor: 'green', // {Color|string} color for the correct answer
-      incorrectColor: 'red', // {Color|string} color for an incorrect guess
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
-      showAnswersColor: 'lightGray', // {Color|string} when 'showAnswers' query parameter is present, show the answer in this color
-      editColor: 'yellow', // {Color|string} value box is filled with this color while editing
+      correctColor: URColors.correct, // {Color|string} color for the correct answer
+      incorrectColor: URColors.incorrect, // {Color|string} color for an incorrect guess
+      showAnswersColor: URColors.showAnswers, // {Color|string} when 'showAnswers' query parameter is present, show the answer in this color
+      editColor: URColors.edit, // {Color|string} value box is filled with this color while editing
       questionFont: new URFont( 14 ), // {Font} font for the question
       valueFont: new URFont( 14 ), // {Font} font for the value
       checkMarkFont: new URFont( 36 ), // {Font} font for check mark
@@ -70,7 +71,7 @@ define( function( require ) {
 
     // edit button
     var editButton = new FontAwesomeButton( 'pencil_square_o', {
-      baseColor: 'yellow',
+      baseColor: URColors.editButton,
       iconScale: 0.5,
       right: valueBox.left - options.xSpacing,
       centerY: valueBox.centerY

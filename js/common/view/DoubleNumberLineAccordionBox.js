@@ -25,6 +25,7 @@ define( function( require ) {
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/view/MarkerEditor' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
@@ -80,7 +81,7 @@ define( function( require ) {
     // or removes the marker that was most recently added using the editor
     var undoButton = new FontAwesomeButton( 'undo', {
       visible: false,
-      baseColor: 'rgb( 242, 242, 242 )',
+      baseColor: URColors.undoButton,
       iconScale: 0.45,
       listener: function() {
         if ( undoAppliesToEditor ) {
@@ -95,7 +96,7 @@ define( function( require ) {
     undoButton.touchArea = undoButton.localBounds.dilatedXY( 5, 5 );
 
     var eraserButton = new EraserButton( {
-      baseColor: 'rgb( 242, 242, 242 )',
+      baseColor: URColors.eraserButton,
       listener: function() {
         doubleNumberLine.erase();
       }
@@ -133,10 +134,9 @@ define( function( require ) {
 
           // create a marker on the double number line
           var isMajor = ( URUtil.decimalPlaces( markerEditor.denominatorProperty.value ) <= doubleNumberLine.denominatorOptions.majorMarkerDecimals );
-          console.log( 'isMajor=' + isMajor );//XXX
           var marker = new Marker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value, {
             isMajor: isMajor,
-            color: isMajor ? 'black' : 'gray' //TODO factor out colors
+            color: isMajor ? URColors.majorMarker : URColors.minorMarker
           } );
 
           // Return the marker editor to its home position.

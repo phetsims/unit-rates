@@ -29,12 +29,14 @@ define( function( require ) {
   /**
    * @param {string} questionString - the question string to be displayed
    * @param {number} answer - the correct answer
+   * @param {number} numerator
+   * @param {number} denominator
    * @param {string} numeratorString - the numerator to display when the answer is revealed
    * @param {string} denominatorString - the denominator to display when the answer is revealed
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingQuestion( questionString, answer, numeratorString, denominatorString, options ) {
+  function ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, options ) {
 
     options = _.extend( {
       guessFormat: '{0}', // {string} format used by StringUtils.format to format the guess
@@ -48,8 +50,10 @@ define( function( require ) {
     // @public (read-only)
     this.questionString = questionString;
     this.answer = answer;
-    this.numeratorString = numeratorString;
-    this.denominatorString = denominatorString;
+    this.numerator = numerator;
+    this.denominator = denominator;
+    this.numeratorString = numeratorString; //TODO make ShoppingQuestion responsible for creating this
+    this.denominatorString = denominatorString; //TODO make ShoppingQuestion responsible for creating this
 
     // @public (read-only) unpack options
     this.guessFormat = options.guessFormat;
@@ -93,19 +97,18 @@ define( function( require ) {
      */
     createUnitRate: function( unitRate, units, numeratorOptions, denominatorOptions ) {
 
-      // 'Unit Rate?'
-      var questionString = unitRateQuestionString;
-
       // '$0.50'
+      var numerator = unitRate;
       var numeratorString = StringUtils.format( currencyValueString,
-        URUtil.numberToString( unitRate, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+        URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '1 Apple'
+      var denominator = 1;
       var denominatorString = StringUtils.format( valueUnitsString,
-        URUtil.numberToString( 1, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+        URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
         units );
 
-      return new ShoppingQuestion( questionString, unitRate, numeratorString, denominatorString, {
+      return new ShoppingQuestion( unitRateQuestionString, unitRate, numerator, denominator, numeratorString, denominatorString, {
         guessFormat: numeratorOptions.valueFormat,
         maxDigits: numeratorOptions.maxDigits,
         maxDecimals: numeratorOptions.maxDecimals,
@@ -115,7 +118,7 @@ define( function( require ) {
 
     /**
      * Creates a question of the form 'Cost of 10 Apples?' or 'Cost of 2.2 pounds?'
-     * @param {number} quantity
+     * @param {number} denominator
      * @param {number} unitRate
      * @param {string} singularName
      * @param {string} pluralName
@@ -125,29 +128,28 @@ define( function( require ) {
      * @public
      * @static
      */
-    createCostOf: function( quantity, unitRate, singularName, pluralName, numeratorOptions, denominatorOptions ) {
+    createCostOf: function( denominator, unitRate, singularName, pluralName, numeratorOptions, denominatorOptions ) {
 
-      // 'Apples' or 'Apple'
-      var units = ( quantity > 1 ) ? pluralName : singularName;
-
-      // cost
-      var answer = Util.toFixedNumber( quantity * unitRate, numeratorOptions.maxDecimals );
-
-      // 'Cost of 10 Apples?'
-      var questionString = StringUtils.format( costOfNUnitsString,
-        URUtil.numberToString( quantity, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
-        units );
+      // answer
+      var numerator = denominator * unitRate;
+      var answer = Util.toFixedNumber( numerator, numeratorOptions.maxDecimals );
 
       // '$3.00'
       var numeratorString = StringUtils.format( currencyValueString,
-        URUtil.numberToString( answer, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+        URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '10 Apples'
       var denominatorString = StringUtils.format( valueUnitsString,
-        URUtil.numberToString( quantity, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+        URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
         units );
 
-      return new ShoppingQuestion( questionString, answer, numeratorString, denominatorString, {
+      // 'Cost of 10 Apples?'
+      var units = ( denominator > 1 ) ? pluralName : singularName; // 'Apples' or 'Apple'
+      var questionString = StringUtils.format( costOfNUnitsString,
+        URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+        units );
+
+      return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, {
         guessFormat: numeratorOptions.valueFormat,
         maxDigits: numeratorOptions.maxDigits,
         maxDecimals: numeratorOptions.maxDecimals,
@@ -157,7 +159,7 @@ define( function( require ) {
 
     /**
      * Creates a question of the form 'Apples for $3.00?'
-     * @param {number} quantity
+     * @param {number} denominator
      * @param {number} unitRate
      * @param {string} singularName
      * @param {string} pluralName
@@ -167,24 +169,23 @@ define( function( require ) {
      * @public
      * @static
      */
-    createItemsFor: function( quantity, unitRate, singularName, pluralName, numeratorOptions, denominatorOptions ) {
-
-      // 'Apples' or 'Apple'
-      var units = ( quantity > 1 ) ? pluralName : singularName;
+    createItemsFor: function( denominator, unitRate, singularName, pluralName, numeratorOptions, denominatorOptions ) {
 
       // '$4.00'
+      var numerator = denominator * unitRate;
       var numeratorString = StringUtils.format( currencyValueString,
-        URUtil.numberToString( quantity * unitRate, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+        URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '8 Apples'
+      var units = ( denominator > 1 ) ? pluralName : singularName; // 'Apples' or 'Apple'
       var denominatorString = StringUtils.format( valueUnitsString,
-        URUtil.numberToString( quantity, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+        URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
         units );
 
       // 'Apples for $4.00?'
       var questionString = StringUtils.format( itemsForAmountString, pluralName, numeratorString );
 
-      return new ShoppingQuestion( questionString, quantity, numeratorString, denominatorString, {
+      return new ShoppingQuestion( questionString, denominator, numerator, denominator, numeratorString, denominatorString, {
         guessFormat: denominatorOptions.valueFormat,
         maxDigits: denominatorOptions.maxDigits,
         maxDecimals: denominatorOptions.maxDecimals,

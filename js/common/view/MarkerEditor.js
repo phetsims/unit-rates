@@ -22,6 +22,7 @@ define( function( require ) {
   // sim modules
   var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
@@ -40,8 +41,8 @@ define( function( require ) {
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 12 ), // {Font} font for the value
       valueColor: 'black', // {Color|string} color of the value
-      showAnswersColor: 'lightGray', // {Color|string} color of the value when 'showAnswers' query parameter is present
-      editColor: 'yellow', // {Color|string} box is filled with this color while editing value
+      showAnswersColor: URColors.showAnswers, // {Color|string} color of the value when 'showAnswers' query parameter is present
+      editColor: URColors.edit, // {Color|string} box is filled with this color while editing value
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: 3, // {number} vertical margin inside the value box
       ySpacing: 5,  // {number} vertical spacing between UI elements
@@ -126,7 +127,7 @@ define( function( require ) {
     this.addChild( denominatorNode );
 
     var numeratorEditButton = new FontAwesomeButton( 'pencil_square_o', {
-      baseColor: 'yellow',
+      baseColor: URColors.editButton,
       iconScale: 0.5,
       centerX: verticalLine.centerX,
       bottom: numeratorBox.top - options.ySpacing
@@ -135,7 +136,7 @@ define( function( require ) {
     numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 10 );
 
     var denominatorEditButton = new FontAwesomeButton( 'pencil_square_o', {
-      baseColor: 'yellow',
+      baseColor: URColors.editButton,
       iconScale: 0.5,
       centerX: verticalLine.centerX,
       top: denominatorBox.bottom + options.ySpacing

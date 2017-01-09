@@ -22,6 +22,7 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
   // strings
@@ -82,7 +83,7 @@ define( function( require ) {
 
     var enterButton = new RectangularPushButton( {
       listener: options.enterButtonListener,
-      baseColor: 'yellow',
+      baseColor: URColors.enterButton,
       content: new Text( enterString, {
         font: new URFont( 16 ),
         fill: 'black'

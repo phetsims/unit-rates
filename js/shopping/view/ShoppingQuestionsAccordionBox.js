@@ -19,6 +19,7 @@ define( function( require ) {
   var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var ShoppingQuestionNode = require( 'UNIT_RATES/shopping/view/ShoppingQuestionNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
   // strings
@@ -76,7 +77,7 @@ define( function( require ) {
 
     // Refresh button update the set of dynamic questions
     var refreshButton = new FontAwesomeButton( 'refresh', {
-      baseColor: 'rgb( 242, 242, 242 )',
+      baseColor: URColors.refreshButton,
       iconScale: 0.5,
       listener: function() {
         shoppingItem.nextQuestionSet();

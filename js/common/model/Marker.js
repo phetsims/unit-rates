@@ -23,7 +23,7 @@ define( function( require ) {
   function Marker( numerator, denominator, options ) {
 
     options = _.extend( {
-      isMajor: true, // {boolean} true: major marker, false: minor marker
+      isMajor: true, // {boolean} true: major marker, false: minor marker //TODO make MarkerNode responsible for this?
       color: 'black', // {Color|string} color used to render the marker
       erasable: true // {boolean} is this marker erased when the Eraser button is pressed?
     }, options );

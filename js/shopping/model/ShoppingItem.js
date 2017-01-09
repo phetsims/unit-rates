@@ -15,9 +15,11 @@ define( function( require ) {
 
   // sim modules
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
+  var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingQuestion = require( 'UNIT_RATES/shopping/model/ShoppingQuestion' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   // strings
@@ -50,6 +52,8 @@ define( function( require ) {
       questionSetIndex: URQueryParameters.randomEnabled ?
                         phet.joist.random.nextIntBetween( 0, itemData.questionQuantities.length - 1 ) : 0
     }, options );
+
+    var self = this;
 
     // @public (read-only) options specific to the rate's numerator
     var numeratorOptions = _.extend( {
@@ -109,6 +113,23 @@ define( function( require ) {
 
     // @private {ShoppingQuestion[][]} sets of question that have already been selected
     this.selectedQuestionSets = [ this.questionSetProperty.value ];
+
+    /**
+     * When a question is answered correctly, create a corresponding marker.
+     * @param {ShoppingQuestion} question
+     */
+    var questionCorrectListener = function( question ) {
+      self.doubleNumberLine.markers.add( new Marker( question.numerator, question.denominator, {
+        color: URColors.questionMarker,
+        erasable: false
+      } ) );
+    };
+    this.unitRateQuestion.correctEmitter.addListener( questionCorrectListener );
+    this.questionSets.forEach( function( questionSet ) {
+      questionSet.forEach( function( question ) {
+        question.correctEmitter.addListener( questionCorrectListener );
+      } );
+    } );
   }
 
   unitRates.register( 'ShoppingItem', ShoppingItem );

@@ -15,6 +15,7 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
 
   /**
    * @param {ShoppingCategory[]} categories
@@ -26,7 +27,7 @@ define( function( require ) {
 
     options = _.extend( {
       orientation: 'horizontal',
-      baseColor: 'white',
+      baseColor: URColors.categoryButton,
       spacing: 12,
       buttonContentXMargin: 5,
       buttonContentYMargin: 5
