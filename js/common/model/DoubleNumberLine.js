@@ -70,7 +70,7 @@ define( function( require ) {
     this.undoMarkerProperty = new Property( null );
 
     var unitRateObserver = function() {
-      //TODO adjust the numerator of all markers
+      //TODO delete all markers and create new markers with adjusted numerator
     };
     this.unitRateProperty.lazyLink( unitRateObserver );
 
