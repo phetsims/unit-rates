@@ -54,8 +54,8 @@ define( function( require ) {
     this.answer = answer;
     this.numerator = numerator;
     this.denominator = denominator;
-    this.numeratorString = numeratorString; //TODO make ShoppingQuestion responsible for creating this
-    this.denominatorString = denominatorString; //TODO make ShoppingQuestion responsible for creating this
+    this.numeratorString = numeratorString;
+    this.denominatorString = denominatorString;
 
     // @public (read-only) unpack options
     this.guessFormat = options.guessFormat;
