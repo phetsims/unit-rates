@@ -1,7 +1,5 @@
 TODO list for unit-rates
 
-ShoppingQuestion: when correctEmitter fires, add Marker( { erasable:false, color:'green' } )
-
 Don't create a marker if one already exists.
 
 Replace existing marker with a question marker.
