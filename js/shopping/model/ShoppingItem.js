@@ -106,10 +106,14 @@ define( function( require ) {
     }
 
     // @private index of the question set that's being shown
-    this.questionSetsIndex = 0;
+    this.questionSetsIndexProperty = new Property( 0 );
 
     // @public (read-only) {Property.<ShoppingQuestion[]>} the current set of questions
-    this.questionSetProperty = new Property( this.questionSets[ this.questionSetsIndex ] );
+    this.questionSetProperty = new Property( this.questionSets[ this.questionSetsIndexProperty.value ] );
+
+    this.questionSetsIndexProperty.lazyLink( function( questionSetsIndex ) {
+      self.questionSetProperty.value = self.questionSets[ questionSetsIndex ];
+    });
 
     /**
      * When the unit-rate question is answered correctly, create a corresponding marker.
@@ -194,8 +198,7 @@ define( function( require ) {
       } );
 
       // rest current question set
-      this.questionSetsIndex = 0;
-      this.questionSetProperty.reset();
+      this.questionSetsIndexProperty.reset();
     },
 
     /**
@@ -208,15 +211,12 @@ define( function( require ) {
       assert && assert( this.questionSets.length > 1, 'this implementation requires more than 1 question set' );
 
       // adjust the index to point to the next question set
-      if ( this.questionSetsIndex < this.questionSets.length - 1 ) {
-        this.questionSetsIndex++;
+      if ( this.questionSetsIndexProperty.value < this.questionSets.length - 1 ) {
+        this.questionSetsIndexProperty.value = this.questionSetsIndexProperty.value + 1;
       }
       else {
-        this.questionSetsIndex = 0;
+        this.questionSetsIndexProperty.value = 0;
       }
-
-      // set the question set
-      this.questionSetProperty.value = this.questionSets[ this.questionSetsIndex ];
     }
   } );
 } );
