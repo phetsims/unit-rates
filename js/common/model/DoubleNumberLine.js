@@ -26,6 +26,7 @@ define( function( require ) {
    */
   function DoubleNumberLine( unitRateProperty, options ) {
 
+    //TODO move horizontalAxisLength and modelToView to view?
     options = _.extend( {
       horizontalAxisLength: 575, // {number} length of horizontal axes in view coordinate frame
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
