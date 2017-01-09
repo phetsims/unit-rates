@@ -1,9 +1,5 @@
 TODO list for unit-rates
 
-When repeating question sets, should the order continue to be random?  Or same as first time through?
-
-When repeating a question set, should its questions be reset?
-
 Don't create a marker if one already exists.
 
 Replace any existing non-questions marker with a question marker.

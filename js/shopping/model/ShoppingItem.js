@@ -46,11 +46,7 @@ define( function( require ) {
       // questions
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
       questionPluralUnits: itemData.pluralName,  // {string} units for questions with plural quantities
-      uniformQuestions: true, // {boolean} are all questions of the same form? see createQuestionSets
-
-      // {number} index of the question set that is initially selected, randomly chosen
-      questionSetIndex: URQueryParameters.randomEnabled ?
-                        phet.joist.random.nextIntBetween( 0, itemData.questionQuantities.length - 1 ) : 0
+      uniformQuestions: true // {boolean} are all questions of the same form? see createQuestionSets
     }, options );
 
     var self = this;
@@ -104,15 +100,16 @@ define( function( require ) {
       options.questionSingularUnits, options.questionPluralUnits, options.uniformQuestions,
       numeratorOptions, denominatorOptions );
 
+    // Randomize the order of the question sets
+    if ( URQueryParameters.randomEnabled ) {
+      this.questionSets = phet.joist.random.shuffle( this.questionSets );
+    }
+
+    // @private index of the question set that's being shown
+    this.questionSetsIndex = 0;
+
     // @public (read-only) {Property.<ShoppingQuestion[]>} the current set of questions
-    this.questionSetProperty = new Property( this.questionSets[ options.questionSetIndex ] );
-
-    // @private {ShoppingQuestion[][]} sets of questions that are available for selection
-    this.availableQuestionSets = this.questionSets.slice();
-    this.availableQuestionSets.splice( options.questionSetIndex, 1 );
-
-    // @private {ShoppingQuestion[][]} sets of question that have already been selected
-    this.selectedQuestionSets = [ this.questionSetProperty.value ];
+    this.questionSetProperty = new Property( this.questionSets[ this.questionSetsIndex ] );
 
     /**
      * When the unit-rate question is answered correctly, create a corresponding marker.
@@ -201,31 +198,24 @@ define( function( require ) {
     },
 
     /**
-     * Randomly chooses the next set of questions. The same set will not be selected consecutively,
-     * and a selected set will not be re-selected until all sets have been selected.
+     * Gets the next set of questions.
+     * While the order of the sets is random, we cycle through the sets in the same order each time.
      * @public
      */
     nextQuestionSet: function() {
 
-      // replenish the available sets of questions, excluding the current set of questions
-      if ( this.availableQuestionSets.length === 0 ) {
-        var currentQuestionSet = this.questionSetProperty.value;
-        this.availableQuestionSets = this.selectedQuestionSets;
-        this.availableQuestionSets.splice( this.availableQuestionSets.indexOf( currentQuestionSet ), 1 );
-        this.selectedQuestionSets = [ currentQuestionSet ];
+      assert && assert( this.questionSets.length > 1, 'this implementation requires more than 1 question set' );
+
+      // adjust the index to point to the next question set
+      if ( this.questionSetsIndex < this.questionSets.length - 1 ) {
+        this.questionSetsIndex++;
+      }
+      else {
+        this.questionSetsIndex = 0;
       }
 
-      // randomly select a set of questions
-      var nextIndex = URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, this.availableQuestionSets.length - 1 ) : 0;
-      var nextQuestionSet = this.availableQuestionSets[ nextIndex ];
-      assert && assert( nextQuestionSet, 'nextQuestionSet is null, nextIndex=' + nextIndex );
-      assert && assert( nextQuestionSet !== this.questionSetProperty.value, 'repeated questions' );
-
-      // move the set of questions from available to selected
-      this.availableQuestionSets.splice( this.availableQuestionSets.indexOf( nextQuestionSet ), 1 );
-      this.selectedQuestionSets.push( nextQuestionSet );
-
-      this.questionSetProperty.value = nextQuestionSet;
+      // set the question set
+      this.questionSetProperty.value = this.questionSets[ this.questionSetsIndex ];
     }
   } );
 } );
