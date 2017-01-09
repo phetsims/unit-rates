@@ -80,8 +80,7 @@ define( function( require ) {
 
     // check mark to indicate that the question has been correctly answered
     var checkMarkNode = new ShadowText( '\u2713', {
-      // fill: 'rgb( 102, 183, 0 )',
-      fill: question.correctColor,
+      fill: URColors.checkMark,
       font: options.checkMarkFont,
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY,

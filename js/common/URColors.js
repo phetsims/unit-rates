@@ -33,6 +33,7 @@ define( function( require ) {
     edit: 'yellow', // corresponding value box is filled with this color while editing
 
     // questions
+    checkMark: 'green', // check mark for correct answers
     correctUnitRate: 'green', // correct answer for unit-rate question
     correctQuestion: 'blue', // correct answer for other questions
     incorrect: 'red', // incorrect guess
