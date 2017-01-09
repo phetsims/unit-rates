@@ -27,7 +27,7 @@ define( function( require ) {
 
     options = _.extend( {
       creator: null, // {string|null} how the marker was created, see CREATOR_VALUES
-      isMajor: true, // {boolean} true: major marker, false: minor marker //TODO make MarkerNode responsible for this?
+      isMajor: true, // {boolean} true: major marker, false: minor marker
       color: 'black', // {Color|string} color used to render the marker
       erasable: true // {boolean} is this marker erased when the Eraser button is pressed?
     }, options );
