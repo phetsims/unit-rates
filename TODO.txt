@@ -12,4 +12,6 @@ Keypad lets you enter 0 for denominator in "Items for $N" questions. How to prev
 
 Can you create a marker at 0/0 using the marker editor?
 
+Icon on markers for questions and scale?
+
 
