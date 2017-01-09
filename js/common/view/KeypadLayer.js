@@ -44,6 +44,7 @@ define( function( require ) {
     // @private these will be set when the client calls beginEdit
     this.valueProperty = null;
     this.keypad = null;
+    this.allowZeroEntry = true;
     this.onEndEdit = null; // {function} called by endEdit
   }
 
@@ -63,11 +64,13 @@ define( function( require ) {
         onEndEdit: null, // {function} called by endEdit
         setKeypadLocation: null, // {function:KeypadPanel} called by beginEdit to set the keypad location
         maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
-        maxDecimals: 2 // {number} maximum number of decimal places that can be entered on the keypad
+        maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
+        allowZeroEntry: true // {boolean} whether to allow '0' to be entered
       }, options );
 
       this.valueProperty = valueProperty;
       this.onEndEdit = options.onEndEdit;
+      this.allowZeroEntry = options.allowZeroEntry;
 
       // create a keypad
       this.keypad = new KeypadPanel( {
@@ -105,7 +108,7 @@ define( function( require ) {
     // @private commits an edit
     commitEdit: function() {
       var valueString = this.keypad.valueStringProperty.value;
-      if ( valueString ) {
+      if ( valueString && !( !this.allowZeroEntry && valueString === '0' ) ) {
         this.endEdit();
         this.valueProperty.value = ( 1 * valueString ); // string -> number conversion
       }

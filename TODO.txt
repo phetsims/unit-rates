@@ -10,10 +10,6 @@ Replace any existing non-questions marker with a question marker.
 
 Replace any existing non-question marker with scale marker.
 
-Allow zero entry for question denominator, but don't cause divide-by-zero error.
-
-Ignore 0 entries in numerator and denominator for marker editor.
-
 Icon on markers for questions and scale?
 
 
