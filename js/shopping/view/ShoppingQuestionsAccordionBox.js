@@ -82,8 +82,8 @@ define( function( require ) {
 
     // Refresh button update the set of dynamic questions
     var refreshButton = new FontAwesomeButton( 'refresh', {
-      baseColor: URColors.refreshButton,
       iconScale: 0.5,
+      baseColor: URColors.refreshButton,
       listener: function() {
         shoppingItem.nextQuestionSet();
       }

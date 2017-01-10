@@ -128,8 +128,8 @@ define( function( require ) {
     this.addChild( denominatorNode );
 
     var numeratorEditButton = new FontAwesomeButton( 'pencil_square_o', {
-      baseColor: URColors.editButton,
       iconScale: 0.5,
+      baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
       bottom: numeratorBox.top - options.ySpacing
     } );
@@ -137,8 +137,8 @@ define( function( require ) {
     numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 10 );
 
     var denominatorEditButton = new FontAwesomeButton( 'pencil_square_o', {
-      baseColor: URColors.editButton,
       iconScale: 0.5,
+      baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
       top: denominatorBox.bottom + options.ySpacing
     } );

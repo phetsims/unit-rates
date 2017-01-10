@@ -82,9 +82,9 @@ define( function( require ) {
     // pressing the undo button moves the marker edit back to its home position,
     // or removes the marker that was most recently added using the editor
     var undoButton = new FontAwesomeButton( 'undo', {
+      iconScale: 0.45,
       visible: false,
       baseColor: URColors.undoButton,
-      iconScale: 0.45,
       listener: function() {
         if ( undoAppliesToEditor ) {
           markerEditor.reset();

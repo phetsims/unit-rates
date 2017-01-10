@@ -70,8 +70,8 @@ define( function( require ) {
 
     // edit button
     var editButton = new FontAwesomeButton( 'pencil_square_o', {
-      baseColor: URColors.editButton,
       iconScale: 0.5,
+      baseColor: URColors.editButton,
       right: valueBox.left - options.xSpacing,
       centerY: valueBox.centerY
     } );
