@@ -119,7 +119,7 @@ define( function( require ) {
     var markerEditorAnimation = null;
 
     // when the marker editor exceeds the range of the axes, move it to the right of the axes
-    var markerEditorOutOfRangeX = doubleNumberLineNode.x + doubleNumberLine.horizontalAxisLength + 5;
+    var markerEditorOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
 
     // Observe marker editor, to position the editor and create markers.
     var markerEditorObserver = function() {
@@ -190,7 +190,7 @@ define( function( require ) {
             destinationX = markerEditorOutOfRangeX;
           }
           else {
-            destinationX = doubleNumberLineNode.x + doubleNumberLine.modelToView( denominator );
+            destinationX = doubleNumberLineNode.x + doubleNumberLineNode.modelToView( denominator );
           }
 
           // undo button is visible to left of axes
@@ -227,7 +227,7 @@ define( function( require ) {
         undoAppliesToEditor = false;
 
         // Position the undo button below the undoable marker
-        undoButton.centerX = doubleNumberLine.modelToView( marker.denominator );
+        undoButton.centerX = doubleNumberLineNode.modelToView( marker.denominator );
         undoButton.bottom = markerEditor.bottom;
         undoButton.visible = true;
       }

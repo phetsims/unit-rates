@@ -26,9 +26,7 @@ define( function( require ) {
    */
   function DoubleNumberLine( unitRateProperty, options ) {
 
-    //TODO move horizontalAxisLength and modelToView to view?
     options = _.extend( {
-      horizontalAxisLength: 575, // {number} length of horizontal axes in view coordinate frame
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
     }, options );
@@ -56,12 +54,6 @@ define( function( require ) {
 
     // @public (read-only)
     this.unitRateProperty = unitRateProperty;
-    this.horizontalAxisLength = options.horizontalAxisLength;
-
-    // @public (read-only) maps the denominator to the view coordinate frame
-    this.modelToView = new LinearFunction(
-      this.denominatorOptions.axisRange.min, this.denominatorOptions.axisRange.max,
-      0, 0.96 * this.horizontalAxisLength );
 
     // @public {Array[]}
     this.markers = new ObservableArray( [] );

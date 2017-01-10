@@ -13,6 +13,7 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var LinearFunction = require( 'DOT/LinearFunction' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -39,6 +40,7 @@ define( function( require ) {
       verticalAxisLength: 40,
 
       // horizontal axes
+      horizontalAxisLength: 575, // {number} length of horizontal axes in view coordinate frame
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
       horizontalAxisYSpacing: 20, // {number} vertical spacing between top and bottom axes
       labelFont: new URFont( 14 ), // {Font} for axis labels
@@ -56,13 +58,18 @@ define( function( require ) {
 
     Node.call( this );
 
+    // @public (read-only) maps the denominator to an x coordinate on this node
+    this.modelToView = new LinearFunction(
+      doubleNumberLine.denominatorOptions.axisRange.min, doubleNumberLine.denominatorOptions.axisRange.max,
+      0, 0.96 * options.horizontalAxisLength );
+
     var verticalAxis = new Line( 0, 0, 0, options.verticalAxisLength, {
       stroke: options.axisColor,
       lineWidth: options.axisLineWidth
     } );
     this.addChild( verticalAxis );
 
-    var numeratorAxisNode = new ArrowNode( 0, 0, doubleNumberLine.horizontalAxisLength, 0, {
+    var numeratorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
       fill: options.axisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
@@ -83,7 +90,7 @@ define( function( require ) {
       } ) );
     }
 
-    var denominatorAxisNode = new ArrowNode( 0, 0, doubleNumberLine.horizontalAxisLength, 0, {
+    var denominatorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
       fill: options.axisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
@@ -109,6 +116,9 @@ define( function( require ) {
 
     this.mutate( options );
 
+    // @public (read-only) position for things that are "out of range", halfway between arrows and labels
+    this.outOfRangeXOffset = options.horizontalAxisLength + options.labelXSpacing / 2;
+
     var unitRateObserver = function() {
       //TODO
     };
@@ -123,7 +133,7 @@ define( function( require ) {
           lineLength: marker.isMajor ? options.majorMarkerLength : options.minorMarkerLength,
           numeratorOptions: doubleNumberLine.numeratorOptions,
           denominatorOptions: doubleNumberLine.denominatorOptions,
-          centerX: doubleNumberLine.modelToView( marker.denominator ),
+          centerX: self.modelToView( marker.denominator ),
           centerY: verticalAxis.centerY
         } );
       }
