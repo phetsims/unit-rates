@@ -1,6 +1,6 @@
 TODO list for unit-rates
 
-Next/previous buttons for Questions panel
+Next/previous buttons for Questions panel (prototype in ShoppingQuestionsAccordionBox)
 
 Create question marker only if it fits on DNL scale.
 
