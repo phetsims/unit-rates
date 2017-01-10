@@ -10,7 +10,6 @@ define( function( require ) {
 
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var LinearFunction = require( 'DOT/LinearFunction' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
