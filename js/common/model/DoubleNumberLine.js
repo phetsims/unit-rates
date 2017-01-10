@@ -51,10 +51,10 @@ define( function( require ) {
     assert && assert( this.numeratorOptions.maxDecimals === this.denominatorOptions.maxDecimals,
       'maxDecimals must be the same for numerator and denominator' );
 
-    // @public (read-only)
+    // @public (read-only) {Property.<number>}
     this.unitRateProperty = unitRateProperty;
 
-    // @public {Array[]}
+    // @public {Marker[]}
     this.markers = new ObservableArray( [] );
 
     // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
