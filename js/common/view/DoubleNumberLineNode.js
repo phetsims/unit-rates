@@ -42,7 +42,7 @@ define( function( require ) {
       // horizontal axes
       horizontalAxisLength: 575, // {number} length of horizontal axes, including the arrow heads
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
-      horizontalAxisYSpacing: 20, // {number} vertical spacing between top and bottom axes
+      axisYSpacing: 20, // {number} vertical spacing between top and bottom axes
       labelFont: new URFont( 14 ), // {Font} for axis labels
       labelColor: 'black', // {Color|string} color of axis labels
       labelMaxWidth: 50, // determined empirically
@@ -77,7 +77,7 @@ define( function( require ) {
       headHeight: options.arrowSize.height,
       tailWidth: options.axisLineWidth,
       x: verticalAxis.x,
-      y: verticalAxis.centerY - ( options.horizontalAxisYSpacing / 2 )
+      y: verticalAxis.centerY - ( options.axisYSpacing / 2 )
     } );
     this.addChild( numeratorAxisNode );
 
@@ -97,7 +97,7 @@ define( function( require ) {
       headWidth: options.arrowSize.width,
       headHeight: options.arrowSize.height,
       tailWidth: options.axisLineWidth,
-      y: verticalAxis.centerY + ( options.horizontalAxisYSpacing / 2 )
+      y: verticalAxis.centerY + ( options.axisYSpacing / 2 )
     } );
     this.addChild( denominatorAxisNode );
 
