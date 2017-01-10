@@ -57,7 +57,8 @@ define( function( require ) {
     // @public {Array[]}
     this.markers = new ObservableArray( [] );
 
-    // @public {Property.<number|null>} marker that can be removed by pressing the undo button
+    // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
+    // A single level of undo is supported.
     this.undoMarkerProperty = new Property( null );
 
     var unitRateObserver = function() {
