@@ -40,7 +40,7 @@ define( function( require ) {
       verticalAxisLength: 40,
 
       // horizontal axes
-      horizontalAxisLength: 575, // {number} length of horizontal axes in view coordinate frame
+      horizontalAxisLength: 575, // {number} length of horizontal axes, including the arrow heads
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
       horizontalAxisYSpacing: 20, // {number} vertical spacing between top and bottom axes
       labelFont: new URFont( 14 ), // {Font} for axis labels
@@ -61,7 +61,7 @@ define( function( require ) {
     // @public (read-only) maps the denominator to an x coordinate on this node
     this.modelToView = new LinearFunction(
       doubleNumberLine.denominatorOptions.axisRange.min, doubleNumberLine.denominatorOptions.axisRange.max,
-      0, 0.96 * options.horizontalAxisLength );
+      0, options.horizontalAxisLength - options.arrowSize.height - 10 );
 
     // All other nodes are positioned relative to this one
     var verticalAxis = new Line( 0, -options.verticalAxisLength / 2, 0, options.verticalAxisLength / 2, {
