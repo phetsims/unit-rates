@@ -57,7 +57,7 @@
     "value": "hours"
   },
   "itemsForAmount": {
-    "value": "{0} for {1}?"
+    "value": "{0} for ${1}?"
   },
   "lbs": {
     "value": "lbs"

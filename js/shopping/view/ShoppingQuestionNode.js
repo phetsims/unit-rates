@@ -39,7 +39,6 @@ define( function( require ) {
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
-      correctColor: URColors.correct, // {Color|string} color for the correct answer
       incorrectColor: URColors.incorrect, // {Color|string} color for an incorrect guess
       showAnswersColor: URColors.showAnswers, // {Color|string} when 'showAnswers' query parameter is present, show the answer in this color
       editColor: URColors.edit, // {Color|string} value box is filled with this color while editing
@@ -81,8 +80,7 @@ define( function( require ) {
 
     // check mark to indicate that the question has been correctly answered
     var checkMarkNode = new ShadowText( '\u2713', {
-      // fill: 'rgb( 102, 183, 0 )',
-      fill: options.correctColor,
+      fill: URColors.checkMark,
       font: options.checkMarkFont,
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY,
@@ -109,7 +107,7 @@ define( function( require ) {
 
     // numerator in the revealed answer
     var numeratorNode = new Text( question.numeratorString, {
-      fill: options.correctColor,
+      fill: question.correctColor,
       font: options.valueFont,
       center: valueBox.center,
       visible: false
@@ -147,7 +145,7 @@ define( function( require ) {
       // update the guess
       if ( guess !== null ) {
         guessNode.text = URUtil.formatNumber( guessFormat, guess, maxDecimals, question.trimZeros );
-        guessNode.fill = correct ? options.correctColor : options.incorrectColor;
+        guessNode.fill = correct ? question.correctColor : options.incorrectColor;
       }
       else if ( URQueryParameters.showAnswers ) {
         // show the answer, if query parameter is set
@@ -166,7 +164,7 @@ define( function( require ) {
       valueBox.visible = !correct;
       checkMarkNode.visible = correct;
       numeratorNode.visible = correct;
-      fractionLineNode.stroke = denominatorNode.fill = ( correct ? options.correctColor : options.neutralColor );
+      fractionLineNode.stroke = denominatorNode.fill = ( correct ? question.correctColor : options.neutralColor );
       if ( !options.denominatorVisible ) {
         fractionLineNode.visible = denominatorNode.visible = correct;
       }

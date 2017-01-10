@@ -17,6 +17,7 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
@@ -40,6 +41,7 @@ define( function( require ) {
 
     options = _.extend( {
       guessFormat: '{0}', // {string} format used by StringUtils.format to format the guess
+      correctColor: URColors.correctQuestion, // {Color|string} color for correct answer
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
       maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
       trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
@@ -52,11 +54,12 @@ define( function( require ) {
     this.answer = answer;
     this.numerator = numerator;
     this.denominator = denominator;
-    this.numeratorString = numeratorString; //TODO make ShoppingQuestion responsible for creating this
-    this.denominatorString = denominatorString; //TODO make ShoppingQuestion responsible for creating this
+    this.numeratorString = numeratorString;
+    this.denominatorString = denominatorString;
 
     // @public (read-only) unpack options
     this.guessFormat = options.guessFormat;
+    this.correctColor = options.correctColor;
     this.maxDigits = options.maxDigits;
     this.maxDecimals = options.maxDecimals;
     this.trimZeros = options.trimZeros;
@@ -110,6 +113,7 @@ define( function( require ) {
 
       return new ShoppingQuestion( unitRateQuestionString, unitRate, numerator, denominator, numeratorString, denominatorString, {
         guessFormat: numeratorOptions.valueFormat,
+        correctColor: URColors.correctUnitRate,
         maxDigits: numeratorOptions.maxDigits,
         maxDecimals: numeratorOptions.maxDecimals,
         trimZeros: numeratorOptions.trimZeros
@@ -134,6 +138,9 @@ define( function( require ) {
       var numerator = denominator * unitRate;
       var answer = Util.toFixedNumber( numerator, numeratorOptions.maxDecimals );
 
+      // 'Apples' or 'Apple'
+      var units = ( denominator > 1 ) ? pluralName : singularName;
+
       // '$3.00'
       var numeratorString = StringUtils.format( currencyValueString,
         URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
@@ -144,7 +151,6 @@ define( function( require ) {
         units );
 
       // 'Cost of 10 Apples?'
-      var units = ( denominator > 1 ) ? pluralName : singularName; // 'Apples' or 'Apple'
       var questionString = StringUtils.format( costOfNUnitsString,
         URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
         units );
@@ -171,19 +177,23 @@ define( function( require ) {
      */
     createItemsFor: function( denominator, unitRate, singularName, pluralName, numeratorOptions, denominatorOptions ) {
 
+      // 'Apples' or 'Apple'
+      var units = ( denominator > 1 ) ? pluralName : singularName;
+
       // '$4.00'
       var numerator = denominator * unitRate;
       var numeratorString = StringUtils.format( currencyValueString,
         URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '8 Apples'
-      var units = ( denominator > 1 ) ? pluralName : singularName; // 'Apples' or 'Apple'
       var denominatorString = StringUtils.format( valueUnitsString,
         URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
         units );
 
       // 'Apples for $4.00?'
-      var questionString = StringUtils.format( itemsForAmountString, pluralName, numeratorString );
+      var questionString = StringUtils.format( itemsForAmountString,
+        pluralName,
+        URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       return new ShoppingQuestion( questionString, denominator, numerator, denominator, numeratorString, denominatorString, {
         guessFormat: denominatorOptions.valueFormat,

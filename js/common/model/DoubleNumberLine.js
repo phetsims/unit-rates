@@ -26,6 +26,7 @@ define( function( require ) {
    */
   function DoubleNumberLine( unitRateProperty, options ) {
 
+    //TODO move horizontalAxisLength and modelToView to view?
     options = _.extend( {
       horizontalAxisLength: 575, // {number} length of horizontal axes in view coordinate frame
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
@@ -69,7 +70,7 @@ define( function( require ) {
     this.undoMarkerProperty = new Property( null );
 
     var unitRateObserver = function() {
-      //TODO adjust the numerator of all markers
+      //TODO delete all markers and create new markers with adjusted numerator
     };
     this.unitRateProperty.lazyLink( unitRateObserver );
 

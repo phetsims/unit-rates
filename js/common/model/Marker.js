@@ -13,6 +13,7 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // constants
   var CREATOR_VALUES = [ 'editor', 'question', 'scale' ]; // how the marker was created
@@ -33,7 +34,7 @@ define( function( require ) {
     }, options );
 
     assert && assert( !options.creator || _.contains( CREATOR_VALUES, options.creator ),
-    'invalid creator: ' + options.creator );
+      'invalid creator: ' + options.creator );
 
     // @public (read-only)
     this.numerator = numerator;
@@ -66,6 +67,24 @@ define( function( require ) {
      */
     equals: function( object ) {
       return ( object instanceof Marker ) && ( object.numerator === this.numerator ) && ( object.denominator === this.denominator );
+    }
+  }, {
+
+    /**
+     * Creates a marker for a question.
+     * @param {ShoppingQuestion} question
+     * @param {Color|string} color
+     * @param {number} majorMarkerDecimals - major markers have a most this number of decimal places
+     * @returns {Marker}
+     * @static
+     */
+    createQuestionMarker: function( question, color, majorMarkerDecimals ) {
+      return new Marker( question.numerator, question.denominator, {
+        creator: 'question',
+        isMajor: ( URUtil.decimalPlaces( question.denominator ) <= majorMarkerDecimals ),
+        color: color,
+        erasable: false
+      } );
     }
   } );
 } );

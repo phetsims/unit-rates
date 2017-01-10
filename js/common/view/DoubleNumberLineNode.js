@@ -116,14 +116,17 @@ define( function( require ) {
 
     // when a Marker is added, add a MarkerNode
     var markerAddedListener = function( marker ) {
-      console.log( 'marker.isMajor=' + marker.isMajor );//XXX
-      self.addMarkerNode( marker, {
-        lineLength: marker.isMajor ? options.majorMarkerLength : options.minorMarkerLength,
-        numeratorOptions: doubleNumberLine.numeratorOptions,
-        denominatorOptions: doubleNumberLine.denominatorOptions,
-        centerX: doubleNumberLine.modelToView( marker.denominator ),
-        centerY: verticalAxis.centerY
-      } );
+
+      // The model may contain markers that don't fit on the view scale
+      if ( doubleNumberLine.denominatorOptions.axisRange.contains( marker.denominator ) ) {
+        self.addMarkerNode( marker, {
+          lineLength: marker.isMajor ? options.majorMarkerLength : options.minorMarkerLength,
+          numeratorOptions: doubleNumberLine.numeratorOptions,
+          denominatorOptions: doubleNumberLine.denominatorOptions,
+          centerX: doubleNumberLine.modelToView( marker.denominator ),
+          centerY: verticalAxis.centerY
+        } );
+      }
     };
     doubleNumberLine.markers.addItemAddedListener( markerAddedListener );
 
@@ -175,11 +178,12 @@ define( function( require ) {
 
       // find the node that is associated with the marker
       var markerNode = this.getMarkerNode( marker );
-      assert && assert( markerNode, 'no MarkerNode for ' + marker );
 
-      // remove the node
-      this.markersParent.removeChild( markerNode );
-      markerNode.dispose();
+      // the model may contain markers that don't fit on the view, due to scale
+      if ( markerNode ) {
+        this.markersParent.removeChild( markerNode );
+        markerNode.dispose();
+      }
     },
 
     /**

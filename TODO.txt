@@ -1,14 +1,14 @@
 TODO list for unit-rates
 
+Create question marker only if it fits on DNL scale.
+
+Create scale marker only if it fits on DNL scale.
+
 Don't create a marker if one already exists.
 
-Replace existing marker with a question marker.
+Replace any existing non-questions marker with a question marker.
 
-What to do when what's on the scale matches a question marker? Should question marker take precedence?
-
-Keypad lets you enter 0 for denominator in "Items for $N" questions. How to prevent user from entering zero? Or just ignore zero?
-
-Can you create a marker at 0/0 using the marker editor?
+Replace any existing non-question marker with scale marker.
 
 Icon on markers for questions and scale?
 

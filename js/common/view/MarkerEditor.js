@@ -43,6 +43,7 @@ define( function( require ) {
       valueColor: 'black', // {Color|string} color of the value
       showAnswersColor: URColors.showAnswers, // {Color|string} color of the value when 'showAnswers' query parameter is present
       editColor: URColors.edit, // {Color|string} box is filled with this color while editing value
+      allowZeroEntry: false, // {boolean} whether to allow '0' to be entered in the keypad
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: 3, // {number} vertical margin inside the value box
       ySpacing: 5,  // {number} vertical spacing between UI elements
@@ -185,7 +186,8 @@ define( function( require ) {
         onEndEdit: function() { numeratorBox.fill = 'white'; },
         setKeypadLocation: setKeypadLocation,
         maxDigits: numeratorOptions.maxDigits,
-        maxDecimals: numeratorOptions.maxDecimals
+        maxDecimals: numeratorOptions.maxDecimals,
+        allowZeroEntry: options.allowZeroEntry
       } );
     };
 
@@ -196,7 +198,8 @@ define( function( require ) {
         onEndEdit: function() { denominatorBox.fill = 'white'; },
         setKeypadLocation: setKeypadLocation,
         maxDigits: denominatorOptions.maxDigits,
-        maxDecimals: denominatorOptions.maxDecimals
+        maxDecimals: denominatorOptions.maxDecimals,
+        allowZeroEntry: options.allowZeroEntry
       } );
     };
 
