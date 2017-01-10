@@ -120,11 +120,6 @@ define( function( require ) {
     // @public (read-only) position for things that are "out of range", halfway between arrows and labels
     this.outOfRangeXOffset = options.horizontalAxisLength + options.labelXSpacing / 2;
 
-    var unitRateObserver = function() {
-      //TODO
-    };
-    doubleNumberLine.unitRateProperty.lazyLink( unitRateObserver );
-
     // when a Marker is added, add a MarkerNode
     var markerAddedListener = function( marker ) {
 
@@ -152,7 +147,6 @@ define( function( require ) {
 
     // @private
     this.disposeDoubleNumberLineNode = function() {
-      doubleNumberLine.unitRateProperty.unlink( unitRateObserver );
       doubleNumberLine.markers.removeItemAddedListener( markerAddedListener );
       doubleNumberLine.markers.removeItemRemovedListener( markerRemovedListener );
     };

@@ -132,9 +132,7 @@ define( function( require ) {
 
         if ( markerEditor.denominatorProperty.value <= doubleNumberLine.denominatorOptions.axisRange.max ) {
 
-          //TODO add the marker only if one doesn't already exist
-
-          // create a marker on the double number line
+          // create a marker
           var isMajor = ( URUtil.decimalPlaces( markerEditor.denominatorProperty.value ) <= doubleNumberLine.denominatorOptions.majorMarkerDecimals );
           var marker = new Marker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value, 'editor', {
             isMajor: isMajor,
@@ -247,12 +245,22 @@ define( function( require ) {
     };
     doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver );
 
+    // Observe the unit rate
+    var unitRateObserver = function( unitRate ) {
+
+      //TODO test this in context of ShoppingLabScreen
+      // cancel any edit that is in progress
+      markerEditor.reset();
+    };
+    doubleNumberLine.unitRateProperty.link( unitRateObserver );
+
     // @private
     this.disposeDoubleNumberLineAccordionBox = function() {
       markerEditorAnimation && markerEditorAnimation.stop();
       markerEditor.numeratorProperty.unlink( markerEditorObserver );
       markerEditor.denominatorProperty.unlink( markerEditorObserver );
       markerEditor.dispose();
+      doubleNumberLine.unitRateProperty.unlink( unitRateObserver );
       doubleNumberLine.undoMarkerProperty.unlink( undoMarkerObserver );
       doubleNumberLineNode.dispose();
     };
