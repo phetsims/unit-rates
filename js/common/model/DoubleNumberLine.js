@@ -2,8 +2,7 @@
 
 /**
  * Model for the double number line.
- * A marker is represented by its denominator value, and the numerator is computed by the client using the unit rate.
- *
+` *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {

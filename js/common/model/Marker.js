@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Model of a marker on the double number line.
+ * Model of a marker, used to indicate a rate on the double number line.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
