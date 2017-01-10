@@ -16,4 +16,6 @@ Icon on markers for questions and scale?
 
 Refine implementation of ShoppingQuestion
 
+Scale & shelf
+
 
