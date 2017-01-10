@@ -136,8 +136,7 @@ define( function( require ) {
 
           // create a marker on the double number line
           var isMajor = ( URUtil.decimalPlaces( markerEditor.denominatorProperty.value ) <= doubleNumberLine.denominatorOptions.majorMarkerDecimals );
-          var marker = new Marker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value, {
-            creator: 'editor',
+          var marker = new Marker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value, 'editor', {
             isMajor: isMajor,
             color: isMajor ? URColors.majorMarker : URColors.minorMarker
           } );
@@ -147,10 +146,11 @@ define( function( require ) {
           markerEditor.reset();
 
           // add marker to double number line
-          doubleNumberLine.markers.add( marker );
+          if ( doubleNumberLine.addMarker( marker ) ) {
 
-          // allow the new marker to be undone
-          doubleNumberLine.undoMarkerProperty.value = marker;
+            // allow the new marker to be undone
+            doubleNumberLine.undoMarkerProperty.value = marker;
+          }
         }
         else {
 

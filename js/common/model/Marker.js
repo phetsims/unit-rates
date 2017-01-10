@@ -16,32 +16,32 @@ define( function( require ) {
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // constants
-  var CREATOR_VALUES = [ 'editor', 'question', 'scale' ]; // how the marker was created
+  // how the marker was created determines, ordered by ascending precedence
+  var CREATOR_VALUES = [ 'editor', 'scale', 'question' ];
 
   /**
    * @param {number} numerator
    * @param {number} denominator
+   * @param {string} creator - indicates how the marker was created, see CREATOR_VALUES
    * @param {Object} [options]
    * @constructor
    */
-  function Marker( numerator, denominator, options ) {
+  function Marker( numerator, denominator, creator, options ) {
 
     options = _.extend( {
-      creator: null, // {string|null} how the marker was created, see CREATOR_VALUES
       isMajor: true, // {boolean} true: major marker, false: minor marker
       color: 'black', // {Color|string} color used to render the marker
       erasable: true // {boolean} is this marker erased when the Eraser button is pressed?
     }, options );
 
-    assert && assert( !options.creator || _.contains( CREATOR_VALUES, options.creator ),
-      'invalid creator: ' + options.creator );
+    assert && assert( _.contains( CREATOR_VALUES, creator ), 'invalid creator: ' + creator );
 
     // @public (read-only)
     this.numerator = numerator;
     this.denominator = denominator;
+    this.creator = creator;
 
     // @public (read-only) unpack options
-    this.creator = options.creator;
     this.isMajor = options.isMajor;
     this.color = options.color;
     this.erasable = options.erasable;
@@ -69,6 +69,33 @@ define( function( require ) {
     rateEquals: function( marker ) {
       assert && assert( marker instanceof Marker );
       return ( marker.numerator === this.numerator ) && ( marker.denominator === this.denominator );
+    },
+
+    /**
+     * Gets the precedence of the specified marker, relative to this marker.
+     * @param {Marker} marker
+     * @returns {number}
+     *    1 : marker has higher precedence
+     *   -1 : marker has lower precedence
+     *    0 : marker has same precedence
+     */
+    precedenceOf: function( marker ) {
+
+      var thisIndex = CREATOR_VALUES.indexOf( this.creator );
+      assert && assert( thisIndex !== - 1, 'invalid creator: ' + this.creator );
+
+      var thatIndex = CREATOR_VALUES.indexOf( marker.creator );
+      assert && assert( thatIndex !== - 1, 'invalid creator: ' + marker.creator );
+
+      if ( thatIndex > thisIndex ) {
+        return 1;
+      }
+      else if ( thatIndex < thisIndex ) {
+        return -1;
+      }
+      else {
+        return 0;
+      }
     }
   }, {
 
@@ -81,8 +108,7 @@ define( function( require ) {
      * @static
      */
     createQuestionMarker: function( question, color, majorMarkerDecimals ) {
-      return new Marker( question.numerator, question.denominator, {
-        creator: 'question',
+      return new Marker( question.numerator, question.denominator, 'question', {
         isMajor: ( URUtil.decimalPlaces( question.denominator ) <= majorMarkerDecimals ),
         color: color,
         erasable: false

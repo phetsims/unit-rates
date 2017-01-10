@@ -16,6 +16,7 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {Property.<number>} unitRateProperty
@@ -53,7 +54,7 @@ define( function( require ) {
     // @public (read-only) {Property.<number>}
     this.unitRateProperty = unitRateProperty;
 
-    // @public {Marker[]}
+    // @public (read-only) {Marker[]} markers should be added via addMarker!
     this.markers = new ObservableArray( [] );
 
     // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
@@ -74,6 +75,61 @@ define( function( require ) {
   unitRates.register( 'DoubleNumberLine', DoubleNumberLine );
 
   return inherit( Object, DoubleNumberLine, {
+
+    /**
+     * This is a request to add a marker, subject to rules about uniqueness and marker precedence.
+     * The rules are complicated to describe, so please consult the implementation.
+     * Calling this function may result in a lower precedence marker being deleted as a side effect.
+     * @param {Marker} marker
+     * @returns {boolean} true if the marker was added, false if the request was ignored
+     */
+    addMarker: function( marker ) {
+
+      var wasAdded = false;
+
+      // look for a marker with the same rate
+      var markerWithSameRate = this.getMarkerWithSameRate( marker );
+
+      if ( !markerWithSameRate ) {
+
+        // if there is no marker with the same rate, then simply add the marker
+        this.markers.add( marker );
+        wasAdded = true;
+      }
+      else if ( markerWithSameRate.precedenceOf( marker ) > 0 ) {
+
+        // replace with higher precedence marker
+        this.markers.remove( markerWithSameRate );
+        if ( this.undoMarkerProperty.value === markerWithSameRate ) {
+          this.undoMarkerProperty.value = null;
+        }
+        this.markers.add( marker );
+        wasAdded = true;
+      }
+      else {
+
+        // ignore lower precedence marker
+        URQueryParameters.log && console.log( 'ignoring lower precedence marker: ' + marker.toString() );
+      }
+
+      return wasAdded;
+    },
+
+    /**
+     * Gets a marker with the same rate as the specified marker.
+     * @param {Marker} marker
+     * @returns {Marker|null} null if there is no marker with the same rate
+     */
+    getMarkerWithSameRate: function( marker ) {
+      var markerWithSameRate = null;
+      var markers = this.markers.getArray();
+      for ( var i = 0; i < markers.length && !markerWithSameRate; i++ ) {
+        if ( marker.rateEquals( markers[ i ] ) ) {
+          markerWithSameRate = markers[ i ];
+        }
+      }
+      return markerWithSameRate;
+    },
 
     // @public
     dispose: function() {

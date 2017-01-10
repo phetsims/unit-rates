@@ -121,7 +121,7 @@ define( function( require ) {
      */
     this.unitRateQuestion.correctEmitter.addListener( function( question ) {
       var marker = Marker.createQuestionMarker( question, URColors.unitRateMarker, denominatorOptions.majorMarkerDecimals );
-      self.doubleNumberLine.markers.add( marker );
+      self.doubleNumberLine.addMarker( marker );
     } );
 
     /**
@@ -130,7 +130,7 @@ define( function( require ) {
      */
     var questionCorrectListener = function( question ) {
       var marker = Marker.createQuestionMarker( question, URColors.questionMarker, denominatorOptions.majorMarkerDecimals );
-      self.doubleNumberLine.markers.add( marker );
+      self.doubleNumberLine.addMarker( marker );
     };
     this.questionSets.forEach( function( questionSet ) {
       questionSet.forEach( function( question ) {
