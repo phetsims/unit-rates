@@ -245,11 +245,9 @@ define( function( require ) {
     };
     doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver );
 
-    // Observe the unit rate
+    //TODO test this in context of ShoppingLabScreen
+    // When the unit rate changes, cancel any edit that is in progress
     var unitRateObserver = function( unitRate ) {
-
-      //TODO test this in context of ShoppingLabScreen
-      // cancel any edit that is in progress
       markerEditor.reset();
     };
     doubleNumberLine.unitRateProperty.link( unitRateObserver );
