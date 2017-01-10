@@ -34,6 +34,8 @@ define( function( require ) {
   function ShoppingQuestionsAccordionBox( shoppingItem, keypadLayer, options ) {
 
     options = _.extend( {
+
+      // AccordionBox options
       expandedProperty: new Property( true ),
       titleNode: new Text( questionsString, { font: new URFont( 18 ), maxWidth: 100 } ),
       titleAlignX: 'left',
@@ -43,10 +45,13 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 15,
       buttonYMargin: 10,
-      contentYSpacing: 18, // vertical spacing between UI elements in the accordion box's content
-      contentAlign: 'right', // alignment of UI elements in the accordion box's content
       buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5
+      buttonTouchAreaYDilation: 5,
+
+      // VBox options
+      contentYSpacing: 18, // vertical spacing between UI elements in the accordion box's content
+      contentAlign: 'right' // alignment of UI elements in the accordion box's content
+
     }, options );
 
     var self = this;

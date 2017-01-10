@@ -26,6 +26,8 @@ define( function( require ) {
   function ShoppingCategoryRadioButtons( categories, categoryProperty, options ) {
 
     options = _.extend( {
+
+      // RadioButtonGroup options
       orientation: 'horizontal',
       baseColor: URColors.categoryButton,
       spacing: 12,

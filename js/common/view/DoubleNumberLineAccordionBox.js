@@ -42,6 +42,8 @@ define( function( require ) {
   function DoubleNumberLineAccordionBox( doubleNumberLine, keypadLayer, options ) {
 
     options = _.extend( {
+
+      // AccordionBox options
       expandedProperty: new Property( true ),
       titleNode: new Text( doubleNumberLineString, { font: new URFont( 18 ), maxWidth: 300 } ),
       titleAlignX: 'left',
@@ -220,6 +222,8 @@ define( function( require ) {
     markerEditor.numeratorProperty.link( markerEditorObserver );
     markerEditor.denominatorProperty.link( markerEditorObserver );
 
+    // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
+    // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
     var undoMarkerObserver = function( marker ) {
       if ( marker ) {
 
