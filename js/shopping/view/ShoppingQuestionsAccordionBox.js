@@ -80,7 +80,7 @@ define( function( require ) {
     };
     shoppingItem.questionSetProperty.link( questionSetObserver );
 
-    // Refresh button update the set of dynamic questions
+    // Refresh button, advances to the next question set
     var refreshButton = new FontAwesomeButton( 'refresh', {
       iconScale: 0.5,
       baseColor: URColors.refreshButton,
