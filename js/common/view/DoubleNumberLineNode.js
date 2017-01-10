@@ -63,7 +63,8 @@ define( function( require ) {
       doubleNumberLine.denominatorOptions.axisRange.min, doubleNumberLine.denominatorOptions.axisRange.max,
       0, 0.96 * options.horizontalAxisLength );
 
-    var verticalAxis = new Line( 0, 0, 0, options.verticalAxisLength, {
+    // All other nodes are positioned relative to this one
+    var verticalAxis = new Line( 0, -options.verticalAxisLength / 2, 0, options.verticalAxisLength / 2, {
       stroke: options.axisColor,
       lineWidth: options.axisLineWidth
     } );
