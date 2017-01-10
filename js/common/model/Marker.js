@@ -62,11 +62,13 @@ define( function( require ) {
     },
 
     /**
-     * @param {Object} object
+     * Does the specified marker have the same rate?
+     * @param {Marker} marker
      * @returns {boolean}
      */
-    equals: function( object ) {
-      return ( object instanceof Marker ) && ( object.numerator === this.numerator ) && ( object.denominator === this.denominator );
+    rateEquals: function( marker ) {
+      assert && assert( marker instanceof Marker );
+      return ( marker.numerator === this.numerator ) && ( marker.denominator === this.denominator );
     }
   }, {
 
@@ -74,7 +76,7 @@ define( function( require ) {
      * Creates a marker for a question.
      * @param {ShoppingQuestion} question
      * @param {Color|string} color
-     * @param {number} majorMarkerDecimals - major markers have a most this number of decimal places
+     * @param {number} majorMarkerDecimals - major markers have at most this number of decimal places
      * @returns {Marker}
      * @static
      */
