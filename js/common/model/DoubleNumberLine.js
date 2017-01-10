@@ -96,9 +96,10 @@ define( function( require ) {
         this.markers.add( marker );
         wasAdded = true;
       }
-      else if ( markerWithSameRate.precedenceOf( marker ) > 0 ) {
+      else if ( markerWithSameRate.precedenceOf( marker ) >= 0 ) {
 
-        // replace with higher precedence marker
+        // Replace with higher or same precedence marker.
+        // Need to replace same precedence marker so that undo marker is properly set.
         this.markers.remove( markerWithSameRate );
         if ( this.undoMarkerProperty.value === markerWithSameRate ) {
           this.undoMarkerProperty.value = null;
