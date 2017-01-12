@@ -1,7 +1,5 @@
 TODO list for unit-rates
 
-Refine implementation of ShoppingQuestion
-
 Scale & shelf
 
 

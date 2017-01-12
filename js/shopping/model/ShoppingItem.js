@@ -17,7 +17,7 @@ define( function( require ) {
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
-  var ShoppingQuestion = require( 'UNIT_RATES/shopping/model/ShoppingQuestion' );
+  var ShoppingQuestionFactory = require( 'UNIT_RATES/shopping/model/ShoppingQuestionFactory' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
@@ -92,11 +92,11 @@ define( function( require ) {
     } );
 
     // @public {ShoppingQuestion} 'Unit Rate?'
-    this.unitRateQuestion = ShoppingQuestion.createUnitRate( itemData.unitRate,
+    this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( itemData.unitRate,
       options.questionSingularUnits, numeratorOptions, denominatorOptions );
 
     // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
-    this.questionSets = createQuestionSets( itemData.questionQuantities, itemData.unitRate,
+    this.questionSets = ShoppingQuestionFactory.createQuestionSets( itemData.questionQuantities, itemData.unitRate,
       options.questionSingularUnits, options.questionPluralUnits, options.uniformQuestions,
       numeratorOptions, denominatorOptions );
 
@@ -132,47 +132,6 @@ define( function( require ) {
   }
 
   unitRates.register( 'ShoppingItem', ShoppingItem );
-
-  /**
-   * Creates question sets from raw data.
-   *
-   * @param {number[][]} questionQuantities - number of items for each question, see for example Fruit.APPLES
-   * @param {number} unitRate
-   * @param {string} singularUnits - units to use for questions with singular quantities
-   * @param {string} pluralUnits - units to use for questions with plural quantities
-   * @param {boolean} uniformQuestions -
-   *        true: all questions are of the same form, e.g. 'Cost of 3 Apples?'
-   *        false: the last question will have a different form, e.g. 'Apples for $3.00?'
-   * @param {*} numeratorOptions - see ShoppingItem.numeratorOptions
-   * @param {*} denominatorOptions - see ShoppingItem.denominatorOptions
-   * @returns {ShoppingQuestion[][]}
-   */
-  function createQuestionSets( questionQuantities, unitRate, singularUnits, pluralUnits, uniformQuestions, numeratorOptions, denominatorOptions ) {
-
-    var questionSets = [];  // {ShoppingQuestion[][]}
-
-    questionQuantities.forEach( function( quantities ) {
-      var questions = [];
-      for ( var i = 0; i < quantities.length; i++ ) {
-        var quantity = quantities[ i ];
-        if ( i < quantities.length - 1 || uniformQuestions ) {
-
-          // e.g. 'Cost of 3 Apples?'
-          questions.push( ShoppingQuestion.createCostOf( quantity, unitRate, singularUnits, pluralUnits,
-            numeratorOptions, denominatorOptions ) );
-        }
-        else {
-
-          // optionally, the last question has a different form, e.g. 'Apples for $3.00?'
-          questions.push( ShoppingQuestion.createItemsFor( quantity, unitRate, singularUnits, pluralUnits,
-            numeratorOptions, denominatorOptions ) );
-        }
-      }
-      questionSets.push( questions );
-    } );
-
-    return questionSets;
-  }
 
   return inherit( Object, ShoppingItem, {
 
