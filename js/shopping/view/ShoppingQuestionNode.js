@@ -169,7 +169,7 @@ define( function( require ) {
         fractionLineNode.visible = denominatorNode.visible = correct;
       }
     };
-    question.guessProperty.link( guessObserver );
+    question.guessProperty.link( guessObserver ); // unlink in dispose
 
     // highlight the value box to indicate that an edit is in progress
     var onBeginEdit = function() {
@@ -200,8 +200,8 @@ define( function( require ) {
     };
 
     // Click on editButton or in valueBox to begin editing
-    editButton.addListener( editValue );
-    valueBox.addInputListener( new DownUpListener( {
+    editButton.addListener( editValue ); // no removeListener required
+    valueBox.addInputListener( new DownUpListener( { // no removeInputListener required
       down: editValue
     } ) );
 

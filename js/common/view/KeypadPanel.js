@@ -98,7 +98,7 @@ define( function( require ) {
 
     Panel.call( this, contentNode, options );
 
-    valueStringProperty.link( function( valueString ) {
+    valueStringProperty.link( function( valueString ) { // no unlink required
       valueNode.text = valueString;
       valueNode.center = valueBackgroundNode.center;
     } );

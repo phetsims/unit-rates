@@ -204,17 +204,17 @@ define( function( require ) {
     };
 
     // Click on an edit button or box to begin editing
-    numeratorEditButton.addListener( editNumerator );
-    numeratorBox.addInputListener( new DownUpListener( {
+    numeratorEditButton.addListener( editNumerator ); // no removeListener required
+    numeratorBox.addInputListener( new DownUpListener( { // no removeInputListener required
       down: editNumerator
     } ) );
-    denominatorEditButton.addListener( editDenominator );
-    denominatorBox.addInputListener( new DownUpListener( {
+    denominatorEditButton.addListener( editDenominator ); // no removeListener required
+    denominatorBox.addInputListener( new DownUpListener( { // no removeInputListener required
       down: editDenominator
     } ) );
 
     // display numerator
-    this.numeratorProperty.link( function( numerator ) {
+    this.numeratorProperty.link( function( numerator ) { // no unlink required
       if ( numerator === null ) {
         numeratorNode.text = '';
       }
@@ -241,7 +241,7 @@ define( function( require ) {
     } );
 
     // display denominator
-    this.denominatorProperty.link( function( denominator ) {
+    this.denominatorProperty.link( function( denominator ) { // no unlink required
       if ( denominator === null ) {
         denominatorNode.text = '';
       }
@@ -271,13 +271,11 @@ define( function( require ) {
     var unitRateObserver = function() {
       self.reset();
     };
-    unitRateProperty.lazyLink( unitRateObserver );
+    unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose
 
     // @private
     this.disposeMarkerEditor = function() {
       unitRateProperty.unlink( unitRateObserver );
-      this.numeratorProperty.unlinkAll();
-      this.denominatorProperty.unlinkAll();
     };
 
     // @private fields required by prototype functions

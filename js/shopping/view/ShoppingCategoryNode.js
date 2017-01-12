@@ -47,12 +47,13 @@ define( function( require ) {
     this.mutate( options );
 
     // Show this category when it's selected.
-    categoryProperty.link( function( newCategory ) {
+    var categoryObserver = function( newCategory ) {
       self.visible = ( newCategory === category );
-    } );
+    };
+    categoryProperty.link( categoryObserver ); // unlink in dispose
 
     // When the selected item changes, replace the UI elements that are item-specific
-    category.shoppingItemProperty.link( function( shoppingItem ) {
+    var shoppingItemObserver = function( shoppingItem ) {
 
       if ( shoppingItemNode ) {
         shoppingItemParent.removeChild( shoppingItemNode );
@@ -61,10 +62,22 @@ define( function( require ) {
 
       shoppingItemNode = new ShoppingItemNode( shoppingItem, layoutBounds, keypadLayer, viewProperties );
       shoppingItemParent.addChild( shoppingItemNode );
-    } );
+    };
+    category.shoppingItemProperty.link( shoppingItemObserver ); // unlink in dispose
+
+    this.diposeShoppingCategoryNode = function() {
+      categoryProperty.unlink( categoryObserver );
+      category.shoppingItemProperty.unlink( shoppingItemObserver );
+    }
   }
 
   unitRates.register( 'ShoppingCategoryNode', ShoppingCategoryNode );
 
-  return inherit( Node, ShoppingCategoryNode );
+  return inherit( Node, ShoppingCategoryNode, {
+
+    // @public
+    dispose: function() {
+      this.diposeShoppingCategoryNode();
+    }
+  } );
 } );

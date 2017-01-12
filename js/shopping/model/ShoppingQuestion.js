@@ -71,7 +71,7 @@ define( function( require ) {
     this.correctEmitter = new Emitter();
 
     // Notify observers when the question is answered correctly
-    this.guessProperty.link( function( guess ) {
+    this.guessProperty.link( function( guess ) { // no unlink required
       if ( guess === answer ) {
         self.correctEmitter.emit1( self );
       }

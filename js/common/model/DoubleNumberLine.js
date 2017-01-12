@@ -64,7 +64,7 @@ define( function( require ) {
     var unitRateObserver = function() {
       //TODO delete all markers and create new markers with adjusted numerator
     };
-    this.unitRateProperty.lazyLink( unitRateObserver );
+    unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose
 
     // @private
     this.disposeDoubleNumberLine = function() {

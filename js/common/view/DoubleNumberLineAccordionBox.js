@@ -217,8 +217,8 @@ define( function( require ) {
         markerEditorAnimation.start();
       }
     };
-    markerEditor.numeratorProperty.lazyLink( markerEditorObserver );
-    markerEditor.denominatorProperty.lazyLink( markerEditorObserver );
+    markerEditor.numeratorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
+    markerEditor.denominatorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
 
     // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
     // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
@@ -243,14 +243,14 @@ define( function( require ) {
         undoButton.visible = ( markerEditor.centerX !== markerEditorHomeX );
       }
     };
-    doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver );
+    doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver ); // unlink in dispose
 
     //TODO test this in context of ShoppingLabScreen
     // When the unit rate changes, cancel any edit that is in progress
     var unitRateObserver = function( unitRate ) {
       markerEditor.reset();
     };
-    doubleNumberLine.unitRateProperty.link( unitRateObserver );
+    doubleNumberLine.unitRateProperty.link( unitRateObserver ); // unlink in dispose
 
     // @private
     this.disposeDoubleNumberLineAccordionBox = function() {

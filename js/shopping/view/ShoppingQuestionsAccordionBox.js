@@ -78,7 +78,7 @@ define( function( require ) {
       }
       questionsParent.setChildren( questionNodes );
     };
-    shoppingItem.questionSetProperty.link( questionSetObserver );
+    shoppingItem.questionSetProperty.link( questionSetObserver );// unlink in dispose
 
     // Refresh button, advances to the next question set
     var refreshButton = new FontAwesomeButton( 'refresh', {
