@@ -1,5 +1,7 @@
 TODO list for unit-rates
 
+numeratorProperty for Marker, observed by MarkerNode
+
 Scale & shelf
 
 
