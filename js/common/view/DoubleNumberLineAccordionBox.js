@@ -254,12 +254,16 @@ define( function( require ) {
 
     // @private
     this.disposeDoubleNumberLineAccordionBox = function() {
+
+      // model cleanup
+      doubleNumberLine.unitRateProperty.unlink( unitRateObserver );
+      doubleNumberLine.undoMarkerProperty.unlink( undoMarkerObserver );
+
+      // view cleanup
       markerEditorAnimation && markerEditorAnimation.stop();
       markerEditor.numeratorProperty.unlink( markerEditorObserver );
       markerEditor.denominatorProperty.unlink( markerEditorObserver );
       markerEditor.dispose();
-      doubleNumberLine.unitRateProperty.unlink( unitRateObserver );
-      doubleNumberLine.undoMarkerProperty.unlink( undoMarkerObserver );
       doubleNumberLineNode.dispose();
     };
   }
