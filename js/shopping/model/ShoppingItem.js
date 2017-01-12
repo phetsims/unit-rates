@@ -111,7 +111,7 @@ define( function( require ) {
     // @public (read-only) {Property.<ShoppingQuestion[]>} the current set of questions
     this.questionSetProperty = new Property( this.questionSets[ this.questionSetsIndexProperty.value ] );
 
-    this.questionSetsIndexProperty.lazyLink( function( questionSetsIndex ) {
+    this.questionSetsIndexProperty.lazyLink( function( questionSetsIndex ) { // no unlink required
       self.questionSetProperty.value = self.questionSets[ questionSetsIndex ];
     } );
 
@@ -123,10 +123,10 @@ define( function( require ) {
       var marker = Marker.createQuestionMarker( question, URColors.questionMarker, denominatorOptions.majorMarkerDecimals );
       self.doubleNumberLine.addMarker( marker );
     };
-    this.unitRateQuestion.correctEmitter.addListener( questionCorrectListener );
+    this.unitRateQuestion.correctEmitter.addListener( questionCorrectListener ); // no removeListener required
     this.questionSets.forEach( function( questionSet ) {
       questionSet.forEach( function( question ) {
-        question.correctEmitter.addListener( questionCorrectListener );
+        question.correctEmitter.addListener( questionCorrectListener ); // no removeListener required
       } );
     } );
   }
