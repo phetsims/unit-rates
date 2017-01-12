@@ -1,13 +1,5 @@
 TODO list for unit-rates
 
-Next/previous buttons for Questions panel (prototype in ShoppingQuestionsAccordionBox)
-
-Icon on markers for questions and scale?
-
-Green for all question markers?
-
-Color for scale marker?
-
 Refine implementation of ShoppingQuestion
 
 Scale & shelf
