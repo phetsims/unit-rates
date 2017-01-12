@@ -27,6 +27,9 @@ define( function( require ) {
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
+  // constants
+  var KEYPAD_LOCATION_VALUES = [ 'above', 'below' ];
+
   /**
    * @param {Property.<number>} unitRateProperty
    * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
@@ -41,8 +44,6 @@ define( function( require ) {
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 12 ), // {Font} font for the value
       valueColor: 'black', // {Color|string} color of the value
-      showAnswersColor: URColors.showAnswers, // {Color|string} color of the value when 'showAnswers' query parameter is present
-      editColor: URColors.edit, // {Color|string} box is filled with this color while editing value
       allowZeroEntry: false, // {boolean} whether to allow '0' to be entered in the keypad
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: 3, // {number} vertical margin inside the value box
@@ -64,7 +65,7 @@ define( function( require ) {
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.denominatorOptions );
 
-    assert && assert( options.keypadLocation.options === 'above' || options.keypadLocation === 'below',
+    assert && assert( _.contains( KEYPAD_LOCATION_VALUES, options.keypadLocation ),
       'invalid keypadLocation: ' + options.keypadLocation );
 
     // numerator and denominator must have the same number of decimal places,
@@ -182,7 +183,7 @@ define( function( require ) {
     // opens a keypad for editing the numerator
     var editNumerator = function() {
       keypadLayer.beginEdit( self.numeratorProperty, {
-        onBeginEdit: function() { numeratorBox.fill = options.editColor; },
+        onBeginEdit: function() { numeratorBox.fill = URColors.edit; },
         onEndEdit: function() { numeratorBox.fill = 'white'; },
         setKeypadLocation: setKeypadLocation,
         maxDigits: numeratorOptions.maxDigits,
@@ -194,7 +195,7 @@ define( function( require ) {
     // opens a keypad for editing the denominator
     var editDenominator = function() {
       keypadLayer.beginEdit( self.denominatorProperty, {
-        onBeginEdit: function() { denominatorBox.fill = options.editColor; },
+        onBeginEdit: function() { denominatorBox.fill = URColors.edit; },
         onEndEdit: function() { denominatorBox.fill = 'white'; },
         setKeypadLocation: setKeypadLocation,
         maxDigits: denominatorOptions.maxDigits,
@@ -231,7 +232,7 @@ define( function( require ) {
           // show the denominator that corresponds to this numerator
           if ( URQueryParameters.showAnswers ) {
             denominatorNode.text = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
-            denominatorNode.fill = options.showAnswersColor;
+            denominatorNode.fill = URColors.showAnswers;
             denominatorNode.center = denominatorBox.center;
           }
         }
@@ -258,7 +259,7 @@ define( function( require ) {
           // show the numerator that corresponds to this denominator
           if ( URQueryParameters.showAnswers ) {
             numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
-            numeratorNode.fill = options.showAnswersColor;
+            numeratorNode.fill = URColors.showAnswers;
             numeratorNode.center = numeratorBox.center;
           }
         }

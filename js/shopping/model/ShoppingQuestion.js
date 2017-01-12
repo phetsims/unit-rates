@@ -17,7 +17,6 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings

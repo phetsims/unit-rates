@@ -39,10 +39,6 @@ define( function( require ) {
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
-      correctColor: URColors.correctQuestion, // {Color|string} color for a correct guess
-      incorrectColor: URColors.incorrectQuestion, // {Color|string} color for an incorrect guess
-      showAnswersColor: URColors.showAnswers, // {Color|string} when 'showAnswers' query parameter is present, show the answer in this color
-      editColor: URColors.edit, // {Color|string} value box is filled with this color while editing
       questionFont: new URFont( 14 ), // {Font} font for the question
       valueFont: new URFont( 14 ), // {Font} font for the value
       checkMarkFont: new URFont( 36 ), // {Font} font for check mark
@@ -146,13 +142,13 @@ define( function( require ) {
       // update the guess
       if ( guess !== null ) {
         guessNode.text = URUtil.formatNumber( guessFormat, guess, maxDecimals, question.trimZeros );
-        guessNode.fill = correct ? options.correctColor : options.incorrectColor;
+        guessNode.fill = correct ? URColors.correctQuestion : URColors.incorrectQuestion;
       }
       else if ( URQueryParameters.showAnswers ) {
         // show the answer, if query parameter is set
         guessNode.text = URUtil.formatNumber( guessFormat, answer, maxDecimals, question.trimZeros );
         guessNode.text = URUtil.formatNumber( guessFormat, answer, maxDecimals, question.trimZeros );
-        guessNode.fill = options.showAnswersColor;
+        guessNode.fill = URColors.showAnswers;
       }
       else {
         guessNode.text = '';
@@ -165,7 +161,7 @@ define( function( require ) {
       valueBox.visible = !correct;
       checkMarkNode.visible = correct;
       numeratorNode.visible = correct;
-      fractionLineNode.stroke = denominatorNode.fill = ( correct ? options.correctColor : options.neutralColor );
+      fractionLineNode.stroke = denominatorNode.fill = ( correct ? URColors.correctQuestion : options.neutralColor );
       if ( !options.denominatorVisible ) {
         fractionLineNode.visible = denominatorNode.visible = correct;
       }
@@ -174,7 +170,7 @@ define( function( require ) {
 
     // highlight the value box to indicate that an edit is in progress
     var onBeginEdit = function() {
-      valueBox.fill = options.editColor;
+      valueBox.fill = URColors.edit;
     };
 
     // clear highlight to indicate that the edit is completed
