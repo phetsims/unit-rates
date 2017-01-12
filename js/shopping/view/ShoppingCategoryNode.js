@@ -68,7 +68,7 @@ define( function( require ) {
     this.diposeShoppingCategoryNode = function() {
       categoryProperty.unlink( categoryObserver );
       category.shoppingItemProperty.unlink( shoppingItemObserver );
-    }
+    };
   }
 
   unitRates.register( 'ShoppingCategoryNode', ShoppingCategoryNode );
