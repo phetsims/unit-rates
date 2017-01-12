@@ -16,7 +16,6 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {Property.<number>} unitRateProperty
@@ -110,7 +109,7 @@ define( function( require ) {
       else {
 
         // ignore lower precedence marker
-        URQueryParameters.log && console.log( 'ignoring lower precedence marker: ' + marker.toString() );
+        unitRates.log && unitRates.log( 'ignoring lower precedence marker: ' + marker.toString() );
       }
 
       return wasAdded;

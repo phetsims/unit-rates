@@ -52,11 +52,17 @@ define( function( require ) {
     URQueryParameters.randomEnabled = false;
   }
 
+  // enable logging output to the console
   if ( URQueryParameters.log ) {
-    console.log( 'enabling logging' );
-    console.log( 'showAnswers=' + URQueryParameters.showAnswers );
-    console.log( 'randomEnabled=' + URQueryParameters.randomEnabled );
-    console.log( 'animationDuration=' + URQueryParameters.animationDuration );
+
+    console.log( 'enabling log' );
+    unitRates.log = function( message ) {
+      console.log( '%clog: ' + message, 'color: #009900' ); // display messages in green
+    };
+
+    unitRates.log( 'showAnswers=' + URQueryParameters.showAnswers );
+    unitRates.log( 'randomEnabled=' + URQueryParameters.randomEnabled );
+    unitRates.log( 'animationDuration=' + URQueryParameters.animationDuration );
   }
 
   return URQueryParameters;

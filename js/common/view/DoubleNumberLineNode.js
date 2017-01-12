@@ -21,7 +21,6 @@ define( function( require ) {
   var MarkerNode = require( 'UNIT_RATES/common/view/MarkerNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
-  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine
@@ -168,7 +167,7 @@ define( function( require ) {
      * @private
      */
     addMarkerNode: function( marker, options ) {
-      URQueryParameters.log && console.log( 'addMarker ' + marker );
+      unitRates.log && unitRates.log( 'addMarker ' + marker );
       assert && assert( !this.getMarkerNode( marker ), 'already have a MarkerNode for ' + marker );
       var markerNode = new MarkerNode( marker, options );
       this.markersParent.addChild( markerNode );
@@ -179,7 +178,7 @@ define( function( require ) {
      * @param {Marker} marker
      */
     removeMarkerNode: function( marker ) {
-      URQueryParameters.log && console.log( 'removeMarker ' + marker );
+      unitRates.log && unitRates.log( 'removeMarker ' + marker );
 
       // find the node that is associated with the marker
       var markerNode = this.getMarkerNode( marker );
