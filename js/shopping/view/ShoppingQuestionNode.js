@@ -51,8 +51,7 @@ define( function( require ) {
 
     // local vars to improve readability
     var answer = question.answer;
-    var guessFormat = question.guessFormat;
-    var maxDecimals = question.maxDecimals;
+    var answerOptions = question.answerOptions;
 
     // box that is either empty or displays an incorrect value
     var valueBoxWidth = options.valueBoxWidth;
@@ -141,13 +140,13 @@ define( function( require ) {
 
       // update the guess
       if ( guess !== null ) {
-        guessNode.text = URUtil.formatNumber( guessFormat, guess, maxDecimals, question.trimZeros );
+        guessNode.text = URUtil.formatNumber( answerOptions.valueFormat, guess, answerOptions.maxDecimals, answerOptions.trimZeros );
         guessNode.fill = correct ? URColors.correctQuestion : URColors.incorrectQuestion;
       }
       else if ( URQueryParameters.showAnswers ) {
         // show the answer, if query parameter is set
-        guessNode.text = URUtil.formatNumber( guessFormat, answer, maxDecimals, question.trimZeros );
-        guessNode.text = URUtil.formatNumber( guessFormat, answer, maxDecimals, question.trimZeros );
+        guessNode.text = URUtil.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
+        guessNode.text = URUtil.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
         guessNode.fill = URColors.showAnswers;
       }
       else {
@@ -191,8 +190,8 @@ define( function( require ) {
         onBeginEdit: onBeginEdit,
         onEndEdit: onEndEdit,
         setKeypadLocation: setKeypadLocation,
-        maxDigits: question.maxDigits,
-        maxDecimals: question.maxDecimals
+        maxDigits: answerOptions.maxDigits,
+        maxDecimals: answerOptions.maxDecimals
       } );
     };
 

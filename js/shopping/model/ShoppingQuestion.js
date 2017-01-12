@@ -23,17 +23,18 @@ define( function( require ) {
    * @param {number} denominator
    * @param {string} numeratorString - the numerator to display when the answer is revealed
    * @param {string} denominatorString - the denominator to display when the answer is revealed
-   * @param {Object} [options]
+   * @param {Object} [answerOptions] - formatting for the answer (and guesses)
    * @constructor
    */
-  function ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, options ) {
+  function ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, answerOptions ) {
 
-    options = _.extend( {
-      guessFormat: '{0}', // {string} format used by StringUtils.format to format the guess
+    // @public (read-only)
+    this.answerOptions = _.extend( {
+      valueFormat: '{0}', // {string} format used by StringUtils.format to format the guess
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
       maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
       trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
-    }, options );
+    }, answerOptions );
 
     var self = this;
 
@@ -45,13 +46,7 @@ define( function( require ) {
     this.numeratorString = numeratorString;
     this.denominatorString = denominatorString;
 
-    // @public (read-only) unpack options
-    this.guessFormat = options.guessFormat;
-    this.maxDigits = options.maxDigits;
-    this.maxDecimals = options.maxDecimals;
-    this.trimZeros = options.trimZeros;
-
-    // @public {Property.<number|null>, null indicates no guess
+    // @public {Property.<number|null>, the user's guess, null indicates no guess
     this.guessProperty = new Property( null );
 
     // @public emit1(this) is called when the question is answered correctly
