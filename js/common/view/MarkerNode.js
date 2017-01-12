@@ -84,7 +84,7 @@ define( function( require ) {
     // @private
     this.disposeMarkerNode = function() {
       marker.numeratorProperty.unlink( numeratorObserver );
-    }
+    };
   }
 
   unitRates.register( 'MarkerNode', MarkerNode );
