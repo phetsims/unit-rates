@@ -24,8 +24,8 @@ define( function( require ) {
 
     // markers
     unitRateMarker: 'green', // marker created by answering the unit rate question
-    questionMarker: 'blue', // markers created by answering other (non unit rate) questions
-    scaleMarker: 'red', // marker that corresponds to what's on the scale
+    questionMarker: 'green', // markers created by answering other (non unit rate) questions
+    scaleMarker: 'blue', // marker that corresponds to what's on the scale
     majorMarker: 'black', // major marker created by using editor or by putting things on the scale
     minorMarker: 'gray', // minor markers created by using editor
 
@@ -35,7 +35,7 @@ define( function( require ) {
     // questions
     checkMark: 'green', // check mark for correct answers
     correctUnitRate: 'green', // correct answer for unit-rate question
-    correctQuestion: 'blue', // correct answer for other questions
+    correctQuestion: 'green', // correct answer for other questions
     incorrect: 'red', // incorrect guess
     showAnswers: 'lightGray' // show answers in this color when 'showAnswers' query parameter is present
   };
