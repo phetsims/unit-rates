@@ -113,15 +113,6 @@ define( function( require ) {
 
     this.questionSetsIndexProperty.lazyLink( function( questionSetsIndex ) {
       self.questionSetProperty.value = self.questionSets[ questionSetsIndex ];
-    });
-
-    /**
-     * When the unit-rate question is answered correctly, create a corresponding marker.
-     * @param {ShoppingQuestion} question
-     */
-    this.unitRateQuestion.correctEmitter.addListener( function( question ) {
-      var marker = Marker.createQuestionMarker( question, URColors.unitRateMarker, denominatorOptions.majorMarkerDecimals );
-      self.doubleNumberLine.addMarker( marker );
     } );
 
     /**
@@ -132,6 +123,7 @@ define( function( require ) {
       var marker = Marker.createQuestionMarker( question, URColors.questionMarker, denominatorOptions.majorMarkerDecimals );
       self.doubleNumberLine.addMarker( marker );
     };
+    this.unitRateQuestion.correctEmitter.addListener( questionCorrectListener );
     this.questionSets.forEach( function( questionSet ) {
       questionSet.forEach( function( question ) {
         question.correctEmitter.addListener( questionCorrectListener );
