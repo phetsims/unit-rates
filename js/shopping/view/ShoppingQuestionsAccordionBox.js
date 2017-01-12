@@ -90,46 +90,6 @@ define( function( require ) {
     } );
     refreshButton.touchArea = refreshButton.localBounds.dilatedXY( 5, 5 );
 
-    //TODO next/previous buttons - delete this if AR doesn't like this proposed change
-    // var HBox = require( 'SCENERY/nodes/HBox' );
-    // var Path = require( 'SCENERY/nodes/Path' );
-    // var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-    // var Shape = require( 'KITE/Shape' );
-    // var rightArrowShape = new Shape()
-    //   .moveTo( 0, 0 )
-    //   .lineTo( 10, 10 )
-    //   .lineTo( 0, 20 );
-    // var rightArrowNode = new Path( rightArrowShape, {
-    //   scale: 0.8,
-    //   stroke: 'black',
-    //   lineWidth: 2
-    // } );
-    // var nextButton = new RectangularPushButton( {
-    //   xMargin: 12,
-    //   yMargin: 8,
-    //   baseColor: URColors.refreshButton,
-    //   content: rightArrowNode
-    // } );
-    // var leftArrowShape = new Shape()
-    //   .moveTo( 0, 0 )
-    //   .lineTo( -10, 10 )
-    //   .lineTo( 0, 20 );
-    // var leftArrowNode = new Path( leftArrowShape, {
-    //   scale: 0.8,
-    //   stroke: 'black',
-    //   lineWidth: 2
-    // } );
-    // var previousButton = new RectangularPushButton( {
-    //   xMargin: 12,
-    //   yMargin: 8,
-    //   baseColor: URColors.refreshButton,
-    //   content: leftArrowNode
-    // } );
-    // var buttonsParent = new HBox( {
-    //   spacing: 5,
-    //   children: [ previousButton, nextButton ]
-    // });
-
     // AccordionBox content
     var contentNode = new VBox( {
       align: options.contentAlign,
