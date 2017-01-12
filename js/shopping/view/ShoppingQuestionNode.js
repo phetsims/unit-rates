@@ -39,7 +39,8 @@ define( function( require ) {
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
-      incorrectColor: URColors.incorrect, // {Color|string} color for an incorrect guess
+      correctColor: URColors.correctQuestion, // {Color|string} color for a correct guess
+      incorrectColor: URColors.incorrectQuestion, // {Color|string} color for an incorrect guess
       showAnswersColor: URColors.showAnswers, // {Color|string} when 'showAnswers' query parameter is present, show the answer in this color
       editColor: URColors.edit, // {Color|string} value box is filled with this color while editing
       questionFont: new URFont( 14 ), // {Font} font for the question
@@ -107,7 +108,7 @@ define( function( require ) {
 
     // numerator in the revealed answer
     var numeratorNode = new Text( question.numeratorString, {
-      fill: question.correctColor,
+      fill: URColors.correctQuestion,
       font: options.valueFont,
       center: valueBox.center,
       visible: false
@@ -145,7 +146,7 @@ define( function( require ) {
       // update the guess
       if ( guess !== null ) {
         guessNode.text = URUtil.formatNumber( guessFormat, guess, maxDecimals, question.trimZeros );
-        guessNode.fill = correct ? question.correctColor : options.incorrectColor;
+        guessNode.fill = correct ? options.correctColor : options.incorrectColor;
       }
       else if ( URQueryParameters.showAnswers ) {
         // show the answer, if query parameter is set
@@ -164,7 +165,7 @@ define( function( require ) {
       valueBox.visible = !correct;
       checkMarkNode.visible = correct;
       numeratorNode.visible = correct;
-      fractionLineNode.stroke = denominatorNode.fill = ( correct ? question.correctColor : options.neutralColor );
+      fractionLineNode.stroke = denominatorNode.fill = ( correct ? options.correctColor : options.neutralColor );
       if ( !options.denominatorVisible ) {
         fractionLineNode.visible = denominatorNode.visible = correct;
       }

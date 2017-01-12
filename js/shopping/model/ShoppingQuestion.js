@@ -41,7 +41,6 @@ define( function( require ) {
 
     options = _.extend( {
       guessFormat: '{0}', // {string} format used by StringUtils.format to format the guess
-      correctColor: URColors.correctQuestion, // {Color|string} color for correct answer
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
       maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
       trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
@@ -59,7 +58,6 @@ define( function( require ) {
 
     // @public (read-only) unpack options
     this.guessFormat = options.guessFormat;
-    this.correctColor = options.correctColor;
     this.maxDigits = options.maxDigits;
     this.maxDecimals = options.maxDecimals;
     this.trimZeros = options.trimZeros;
@@ -113,7 +111,6 @@ define( function( require ) {
 
       return new ShoppingQuestion( unitRateQuestionString, unitRate, numerator, denominator, numeratorString, denominatorString, {
         guessFormat: numeratorOptions.valueFormat,
-        correctColor: URColors.correctUnitRate,
         maxDigits: numeratorOptions.maxDigits,
         maxDecimals: numeratorOptions.maxDecimals,
         trimZeros: numeratorOptions.trimZeros

@@ -33,9 +33,8 @@ define( function( require ) {
 
     // questions
     checkMark: 'green', // check mark for correct answers
-    correctUnitRate: 'green', // correct answer for unit-rate question
     correctQuestion: 'green', // correct answer for other questions
-    incorrect: 'red', // incorrect guess
+    incorrectQuestion: 'red', // incorrect guess
     showAnswers: 'lightGray' // show answers in this color when 'showAnswers' query parameter is present
   };
 
