@@ -166,6 +166,7 @@ define( function( require ) {
 
         // undo marker is lost when we start using the editor
         if ( doubleNumberLine.undoMarkerProperty.value ) {
+          //TODO this is getting called when switching back to an item, and we lose the undo marker
           doubleNumberLine.undoMarkerProperty.value = null;
         }
 
