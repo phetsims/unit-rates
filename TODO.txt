@@ -1,5 +1,7 @@
 TODO list for unit-rates
 
+Restore undoMarker when switching back to an item
+
 Next/previous buttons for Questions panel (prototype in ShoppingQuestionsAccordionBox)
 
 Icon on markers for questions and scale?
