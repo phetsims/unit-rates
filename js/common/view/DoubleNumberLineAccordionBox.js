@@ -166,7 +166,6 @@ define( function( require ) {
 
         // undo marker is lost when we start using the editor
         if ( doubleNumberLine.undoMarkerProperty.value ) {
-          //TODO this is getting called when switching back to an item, and we lose the undo marker
           doubleNumberLine.undoMarkerProperty.value = null;
         }
 
@@ -218,8 +217,8 @@ define( function( require ) {
         markerEditorAnimation.start();
       }
     };
-    markerEditor.numeratorProperty.link( markerEditorObserver );
-    markerEditor.denominatorProperty.link( markerEditorObserver );
+    markerEditor.numeratorProperty.lazyLink( markerEditorObserver );
+    markerEditor.denominatorProperty.lazyLink( markerEditorObserver );
 
     // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
     // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
