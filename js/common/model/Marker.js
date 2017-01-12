@@ -10,6 +10,7 @@ define( function( require ) {
 
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -36,8 +37,10 @@ define( function( require ) {
 
     assert && assert( _.contains( CREATOR_VALUES, creator ), 'invalid creator: ' + creator );
 
+    // @public
+    this.numeratorProperty = new Property( numerator );
+
     // @public (read-only)
-    this.numerator = numerator;
     this.denominator = denominator;
     this.creator = creator;
 

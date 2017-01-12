@@ -53,7 +53,7 @@ define( function( require ) {
     // @public (read-only) {Property.<number>}
     this.unitRateProperty = unitRateProperty;
 
-    // @public (read-only) {Marker[]} markers should be added via addMarker!
+    // @public (read-only) {Marker[]} markers must be added/removed via addMarker/removeMarker
     this.markers = new ObservableArray( [] );
 
     // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
@@ -61,7 +61,7 @@ define( function( require ) {
     this.undoMarkerProperty = new Property( null );
 
     var unitRateObserver = function() {
-      //TODO delete all markers and create new markers with adjusted numerator
+      //TODO adjust numeratorProperty for all markers
     };
     unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose
 
@@ -84,6 +84,8 @@ define( function( require ) {
      */
     addMarker: function( marker ) {
 
+      assert && assert( !this.markers.contains( marker ), 'attempt to add marker again: ' + marker );
+
       var wasAdded = false;
 
       // look for a marker with the same rate
@@ -99,7 +101,7 @@ define( function( require ) {
 
         // Replace with higher or same precedence marker.
         // Need to replace same precedence marker so that undo marker is properly set.
-        this.markers.remove( markerWithSameRate );
+        this.removeMarker( markerWithSameRate );
         if ( this.undoMarkerProperty.value === markerWithSameRate ) {
           this.undoMarkerProperty.value = null;
         }
@@ -113,6 +115,15 @@ define( function( require ) {
       }
 
       return wasAdded;
+    },
+
+    /**
+     * Removes a marker.
+     * @param {Marker} marker
+     */
+    removeMarker: function( marker ) {
+      assert && assert( this.markers.contains( marker ), 'attempt to remove an unknown marker: ' + marker );
+      this.markers.remove( marker );
     },
 
     /**
@@ -151,7 +162,7 @@ define( function( require ) {
       if ( undoMarker ) {
         assert && assert( this.markers.contains( undoMarker ), 'unexpected undoMarker: ' + undoMarker );
         this.undoMarkerProperty.value = null;
-        this.markers.remove( undoMarker );
+        this.removeMarker( undoMarker );
       }
     },
 
@@ -167,7 +178,7 @@ define( function( require ) {
       var self = this;
       this.markers.forEach( function( marker ) {
         if ( marker.erasable ) {
-          self.markers.remove( marker );
+          self.removeMarker( marker );
         }
       } );
     }

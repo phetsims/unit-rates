@@ -77,6 +77,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
+      Node.prototype.dispose && Node.prototype.dispose.call( this );
       this.diposeShoppingCategoryNode();
     }
   } );

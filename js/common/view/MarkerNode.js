@@ -65,9 +65,12 @@ define( function( require ) {
       fill: marker.color
     };
 
-    // numerator
-    var numeratorString = URUtil.numberToString( marker.numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
-    var numeratorNode = new Text( numeratorString, textOptions );
+    // numerator, which will be updated if the unit rate changes
+    var numeratorNode = new Text( '', textOptions );
+    var numeratorObserver = function( numerator ) {
+      numeratorNode.text = URUtil.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+    };
+    marker.numeratorProperty.link( numeratorObserver ); // unlink in dispose
 
     // denominator
     var denominatorString = URUtil.numberToString( marker.denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
@@ -77,9 +80,21 @@ define( function( require ) {
     options.children = [ numeratorNode, lineNode, denominatorNode ];
 
     VBox.call( this, options );
+
+    // @private
+    this.disposeMarkerNode = function() {
+      marker.numeratorProperty.unlink( numeratorObserver );
+    }
   }
 
   unitRates.register( 'MarkerNode', MarkerNode );
 
-  return inherit( VBox, MarkerNode );
+  return inherit( VBox, MarkerNode, {
+
+    // @public
+    dispose: function() {
+      VBox.prototype.dispose && VBox.prototype.dispose.call( this );
+      this.disposeMarkerNode();
+    }
+  } );
 } );

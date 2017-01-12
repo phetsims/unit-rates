@@ -157,6 +157,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
+      Node.prototype.dispose && Node.prototype.dispose.call( this );
       this.disposeDoubleNumberLineNode();
     },
 
@@ -183,7 +184,7 @@ define( function( require ) {
       // find the node that is associated with the marker
       var markerNode = this.getMarkerNode( marker );
 
-      // the model may contain markers that don't fit on the view, due to scale
+      // the model may contain markers that aren't displayed, because they are outside the range of the view axes
       if ( markerNode ) {
         this.markersParent.removeChild( markerNode );
         markerNode.dispose();
