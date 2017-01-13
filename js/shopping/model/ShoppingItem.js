@@ -86,14 +86,17 @@ define( function( require ) {
     this.itemImage = itemData.itemImage;
     this.bagImage = itemData.bagImage;
 
+    // unit rate is constant in this model, but some model elements require a Property
+    var unitRateProperty = new Property( this.unitRate );
+
     // @public {DoubleNumberLine} double number line associated with this item
-    this.doubleNumberLine = new DoubleNumberLine( new Property( this.unitRate ), {
+    this.doubleNumberLine = new DoubleNumberLine( unitRateProperty, {
       numeratorOptions: numeratorOptions,
       denominatorOptions: denominatorOptions
     } );
 
     // @public
-    this.markerEditor = new MarkerEditor( new Property( this.unitRate ), {
+    this.markerEditor = new MarkerEditor( unitRateProperty, {
       numeratorMaxDecimals: numeratorOptions.maxDecimals,
       denominatorMaxDecimals: denominatorOptions.maxDecimals
     } );
