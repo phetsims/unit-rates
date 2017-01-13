@@ -21,7 +21,7 @@ define( function( require ) {
     // show screens related to new development, see https://github.com/phetsims/unit-rates/issues/120
     showNew: { type: 'flag' },
 
-    // shows answers to Shopping questions
+    // shows answers for Shopping questions and marker editor
     showAnswers: { type: 'flag' },
 
     // enables console logging
