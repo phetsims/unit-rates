@@ -35,11 +35,12 @@ define( function( require ) {
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine
+   * @param {MarkerEditor} markerEditor
    * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
    * @param {Object} [options]
    * @constructor
    */
-  function DoubleNumberLineAccordionBox( doubleNumberLine, keypadLayer, options ) {
+  function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLayer, options ) {
 
     options = _.extend( {
 
@@ -68,7 +69,7 @@ define( function( require ) {
     var markerEditorNodeHomeX = doubleNumberLineNode.left - 40;
     var undoButtonHomePosition = new Vector2( markerEditorNodeHomeX, doubleNumberLineNode.centerY );
 
-    var markerEditorNode = new MarkerEditorNode( doubleNumberLine.unitRateProperty, this, keypadLayer, {
+    var markerEditorNode = new MarkerEditorNode( markerEditor, this, keypadLayer, {
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
       x: markerEditorNodeHomeX,
@@ -87,7 +88,7 @@ define( function( require ) {
       baseColor: URColors.undoButton,
       listener: function() {
         if ( undoAppliesToEditor ) {
-          markerEditorNode.reset();
+          markerEditor.reset();
         }
         else {
           doubleNumberLine.undo();
@@ -124,24 +125,24 @@ define( function( require ) {
     var markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
 
     // Observe marker editor, to position the editor and create markers.
-    var markerEditorNodeObserver = function() {
+    var markerEditorObserver = function() {
 
       var destinationX = null; // destination for horizontal animation of marker editor
 
-      if ( markerEditorNode.isValidMarker() ) {
+      if ( markerEditor.isValidMarker() ) {
 
-        if ( markerEditorNode.denominatorProperty.value <= doubleNumberLine.denominatorOptions.axisRange.max ) {
+        if ( markerEditor.denominatorProperty.value <= doubleNumberLine.denominatorOptions.axisRange.max ) {
 
           // create a marker
-          var isMajor = ( URUtil.decimalPlaces( markerEditorNode.denominatorProperty.value ) <= doubleNumberLine.denominatorOptions.majorMarkerDecimals );
-          var marker = new Marker( markerEditorNode.numeratorProperty.value, markerEditorNode.denominatorProperty.value, 'editor', {
+          var isMajor = ( URUtil.decimalPlaces( markerEditor.denominatorProperty.value ) <= doubleNumberLine.denominatorOptions.majorMarkerDecimals );
+          var marker = new Marker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value, 'editor', {
             isMajor: isMajor,
             color: isMajor ? URColors.majorMarker : URColors.minorMarker
           } );
 
           // Return the marker editor to its home position.
           // Do this before adding the marker so that the undo button is associated with the marker.
-          markerEditorNode.reset();
+          markerEditor.reset();
 
           // add marker to double number line
           if ( doubleNumberLine.addMarker( marker ) ) {
@@ -169,7 +170,7 @@ define( function( require ) {
           doubleNumberLine.undoMarkerProperty.value = null;
         }
 
-        if ( markerEditorNode.numeratorProperty.value === null && markerEditorNode.denominatorProperty.value === null ) {
+        if ( markerEditor.numeratorProperty.value === null && markerEditor.denominatorProperty.value === null ) {
 
           // both values are empty, move marker editor back to home position
           destinationX = markerEditorNodeHomeX;
@@ -181,7 +182,7 @@ define( function( require ) {
         else {
 
           // one value is empty, move marker to position of the non-empty value
-          var denominator = markerEditorNode.getValidDenominator();
+          var denominator = markerEditor.getValidDenominator();
           assert && assert( denominator >= 0, 'invalid denominator: ' + denominator );
 
           if ( denominator > doubleNumberLine.denominatorOptions.axisRange.max ) {
@@ -217,8 +218,8 @@ define( function( require ) {
         markerEditorNodeAnimation.start();
       }
     };
-    markerEditorNode.numeratorProperty.lazyLink( markerEditorNodeObserver ); // unlink in dispose
-    markerEditorNode.denominatorProperty.lazyLink( markerEditorNodeObserver ); // unlink in dispose
+    markerEditor.numeratorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
+    markerEditor.denominatorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
 
     // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
     // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
@@ -245,10 +246,10 @@ define( function( require ) {
     };
     doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver ); // unlink in dispose
 
-    //TODO test this in context of ShoppingLabScreen
+    //TODO move this to ShoppingLabModel
     // When the unit rate changes, cancel any edit that is in progress
     var unitRateObserver = function( unitRate ) {
-      markerEditorNode.reset();
+      markerEditor.reset();
     };
     doubleNumberLine.unitRateProperty.link( unitRateObserver ); // unlink in dispose
 
@@ -258,11 +259,11 @@ define( function( require ) {
       // model cleanup
       doubleNumberLine.unitRateProperty.unlink( unitRateObserver );
       doubleNumberLine.undoMarkerProperty.unlink( undoMarkerObserver );
+      markerEditor.numeratorProperty.unlink( markerEditorObserver );
+      markerEditor.denominatorProperty.unlink( markerEditorObserver );
 
       // view cleanup
       markerEditorNodeAnimation && markerEditorNodeAnimation.stop();
-      markerEditorNode.numeratorProperty.unlink( markerEditorNodeObserver );
-      markerEditorNode.denominatorProperty.unlink( markerEditorNodeObserver );
       markerEditorNode.dispose();
       doubleNumberLineNode.dispose();
     };

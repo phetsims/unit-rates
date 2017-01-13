@@ -30,7 +30,7 @@ define( function( require ) {
     Node.call( this );
 
     // Double number line
-    var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingItem.doubleNumberLine, keypadLayer, {
+    var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingItem.doubleNumberLine, shoppingItem.markerEditor, keypadLayer, {
       expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
       left: layoutBounds.minX + 15,
       top: layoutBounds.minY + 15

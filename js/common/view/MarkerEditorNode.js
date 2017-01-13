@@ -31,13 +31,13 @@ define( function( require ) {
   var KEYPAD_LOCATION_VALUES = [ 'above', 'below' ];
 
   /**
-   * @param {Property.<number>} unitRateProperty
+   * @param {MarkerEditor} markerEditor
    * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
    * @param {KeypadLayer} keypadLayer - layer that manages the keypad
    * @param {Object} [options]
    * @constructor
    */
-  function MarkerEditorNode( unitRateProperty, doubleNumberLinePanel, keypadLayer, options ) {
+  function MarkerEditorNode( markerEditor, doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
       lineLength: 75, // {number} length of the vertical line between numerator and denominator values
@@ -75,10 +75,7 @@ define( function( require ) {
 
     Node.call( this );
 
-    var self = this;
-
     // @private
-    this.unitRateProperty = unitRateProperty;
     this.maxDecimals = denominatorOptions.maxDecimals;
 
     // @public (read-only)
@@ -182,7 +179,7 @@ define( function( require ) {
 
     // opens a keypad for editing the numerator
     var editNumerator = function() {
-      keypadLayer.beginEdit( self.numeratorProperty, {
+      keypadLayer.beginEdit( markerEditor.numeratorProperty, {
         onBeginEdit: function() { numeratorBox.fill = URColors.edit; },
         onEndEdit: function() { numeratorBox.fill = 'white'; },
         setKeypadLocation: setKeypadLocation,
@@ -194,7 +191,7 @@ define( function( require ) {
 
     // opens a keypad for editing the denominator
     var editDenominator = function() {
-      keypadLayer.beginEdit( self.denominatorProperty, {
+      keypadLayer.beginEdit( markerEditor.denominatorProperty, {
         onBeginEdit: function() { denominatorBox.fill = URColors.edit; },
         onEndEdit: function() { denominatorBox.fill = 'white'; },
         setKeypadLocation: setKeypadLocation,
@@ -214,69 +211,66 @@ define( function( require ) {
       down: editDenominator
     } ) );
 
-    // display numerator
-    this.numeratorProperty.link( function( numerator ) { // no unlink required
-      if ( numerator === null ) {
-        numeratorNode.text = '';
+    // Observe edits to the numerator
+    var numeratorObserver = function( numerator ) {
+
+      // update the numerator
+      if ( numerator ) {
+        numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
       }
       else {
-        numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
-
-        // compute the corresponding denominator
-        var denominator = Util.toFixedNumber( numerator / unitRateProperty.value, denominatorOptions.maxDecimals );
-
-        // clear the denominator if it doesn't match the numerator
-        if ( denominator !== self.denominatorProperty.value ) {
-          self.denominatorProperty.value = null;
-
-          // show the denominator that corresponds to this numerator
-          if ( URQueryParameters.showAnswers ) {
-            denominatorNode.text = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
-            denominatorNode.fill = URColors.showAnswers;
-            denominatorNode.center = denominatorBox.center;
-          }
-        }
+        numeratorNode.text = '';
       }
       numeratorNode.fill = options.valueColor;
       numeratorNode.center = numeratorBox.center;
-    } );
 
-    // display denominator
-    this.denominatorProperty.link( function( denominator ) { // no unlink required
-      if ( denominator === null ) {
-        denominatorNode.text = '';
+      // show the corresponding denominator
+      if ( URQueryParameters.showAnswers && !markerEditor.denominatorProperty.value ) {
+        if ( numerator ) {
+          var denominator = Util.toFixedNumber( markerEditor.numeratorProperty.value / markerEditor.unitRateProperty.value, denominatorOptions.maxDecimals );
+          denominatorNode.text = URUtil.numberToString( numerator, denominator.maxDecimals, denominatorOptions.trimZeros );
+        }
+        else {
+          denominatorNode.text = '';
+        }
+        denominatorNode.fill = URColors.showAnswers;
+        denominatorNode.center = denominatorBox.center;
+      }
+    };
+    markerEditor.numeratorProperty.link( numeratorObserver ); // unlink in dispose
+
+    // Observe edits to the denominator
+    var denominatorObserver = function( denominator ) {
+
+      // update the denominator
+      if ( denominator ) {
+        denominatorNode.text = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
       }
       else {
-        denominatorNode.text = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
-
-        // compute the corresponding numerator
-        var numerator = Util.toFixedNumber( denominator * unitRateProperty.value, numeratorOptions.maxDecimals );
-
-        // clear the numerator if it doesn't match the denominator
-        if ( numerator !== self.numeratorProperty.value ) {
-          self.numeratorProperty.value = null;
-
-          // show the numerator that corresponds to this denominator
-          if ( URQueryParameters.showAnswers ) {
-            numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
-            numeratorNode.fill = URColors.showAnswers;
-            numeratorNode.center = numeratorBox.center;
-          }
-        }
+        denominatorNode.text = '';
       }
       denominatorNode.fill = options.valueColor;
       denominatorNode.center = denominatorBox.center;
-    } );
 
-    // if the unit rate changes, cancel any edit that is in progress
-    var unitRateObserver = function() {
-      self.reset();
+      // show the corresponding numerator
+      if ( URQueryParameters.showAnswers && !markerEditor.numeratorProperty.value ) {
+        if ( denominator ) {
+          var numerator = Util.toFixedNumber( markerEditor.denominatorProperty.value * markerEditor.unitRateProperty.value, numeratorOptions.maxDecimals );
+          numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+        }
+        else {
+          numeratorNode.text = '';
+        }
+        numeratorNode.fill = URColors.showAnswers;
+        numeratorNode.center = numeratorBox.center;
+      }
     };
-    unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose
+    markerEditor.denominatorProperty.link( denominatorObserver ); // unlink in dispose
 
     // @private
     this.disposeMarkerEditorNode = function() {
-      unitRateProperty.unlink( unitRateObserver );
+      markerEditor.numeratorProperty.unlink( numeratorObserver );
+      markerEditor.denominatorProperty.unlink( denominatorObserver );
     };
 
     // @private fields required by prototype functions
@@ -287,45 +281,6 @@ define( function( require ) {
   unitRates.register( 'MarkerEditorNode', MarkerEditorNode );
 
   return inherit( Node, MarkerEditorNode, {
-
-    /**
-     * Do the numerator and denominator values represent a valid marker?
-     * @returns {boolean}
-     * @public
-     */
-    isValidMarker: function() {
-      return ( this.numeratorProperty.value !== null && this.denominatorProperty.value !== null );
-    },
-
-    /**
-     * Gets a valid denominator for what is currently entered in the editor.
-     * @return {number|null} - null indicates that a valid denominator cannot be determined
-     * @public
-     */
-    getValidDenominator: function() {
-      if ( this.numeratorProperty.value === null && this.denominatorProperty.value === null ) {
-        return null;
-      }
-      else {
-        var denominator = this.denominatorProperty.value;
-        if ( denominator === null ) {
-          denominator = this.numeratorProperty.value / this.unitRateProperty.value;
-        }
-        return Util.toFixedNumber( denominator, this.maxDecimals );
-      }
-    },
-
-    // @public
-    reset: function() {
-      this.numeratorProperty.reset();
-      this.denominatorProperty.reset();
-
-      // clear the answers, in case associated Property values didn't change
-      if ( URQueryParameters.showAnswers ) {
-        this.numeratorNode.text = '';
-        this.denominatorNode.text = '';
-      }
-    },
 
     // @public
     dispose: function() {

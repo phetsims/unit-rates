@@ -16,6 +16,7 @@ define( function( require ) {
   // sim modules
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
+  var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingQuestionFactory = require( 'UNIT_RATES/shopping/model/ShoppingQuestionFactory' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -91,6 +92,12 @@ define( function( require ) {
       denominatorOptions: denominatorOptions
     } );
 
+    // @public
+    this.markerEditor = new MarkerEditor( new Property( this.unitRate ), {
+      numeratorMaxDecimals: numeratorOptions.maxDecimals,
+      denominatorMaxDecimals: denominatorOptions.maxDecimals
+    } );
+
     // @public {ShoppingQuestion} 'Unit Rate?'
     this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( itemData.unitRate,
       options.questionSingularUnits, numeratorOptions, denominatorOptions );
@@ -139,6 +146,7 @@ define( function( require ) {
     reset: function() {
 
       this.doubleNumberLine.reset();
+      this.markerEditor.reset();
 
       // reset all ShoppingQuestions
       this.unitRateQuestion.reset();
