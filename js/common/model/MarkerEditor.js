@@ -24,15 +24,17 @@ define( function( require ) {
   function MarkerEditor( unitRateProperty, options ) {
 
     options = _.extend( {
-      numeratorMaxDecimals: 2,
-      denominatorMaxDecimals: 2
+      numerator: null, // {Property.<number>} the rate's initial numerator, null indicates no value
+      denominator: null, // {Property.<number>} the rate's initial denominator, null indicates no value
+      numeratorMaxDecimals: 2, // {number} maximum decimal places in the numerator
+      denominatorMaxDecimals: 2 // {number} maximum decimal places in the denominator
     }, options );
 
     var self = this;
 
     // @public
-    this.numeratorProperty = new Property( null ); // {Property.<number>} the rate's numerator, null indicates no value
-    this.denominatorProperty = new Property( null ); // {Property.<number>} the rate's denominator, null indicates no value
+    this.numeratorProperty = new Property( options.numerator ); // {Property.<number|null>} the numerator in the editor
+    this.denominatorProperty = new Property( options.denominator ); // {Property.<number|null>} the denominator in the editor
     this.unitRateProperty = unitRateProperty;
 
     // @private
