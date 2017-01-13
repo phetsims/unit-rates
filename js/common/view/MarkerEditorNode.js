@@ -37,7 +37,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function MarkerEditor( unitRateProperty, doubleNumberLinePanel, keypadLayer, options ) {
+  function MarkerEditorNode( unitRateProperty, doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
       lineLength: 75, // {number} length of the vertical line between numerator and denominator values
@@ -275,7 +275,7 @@ define( function( require ) {
     unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose
 
     // @private
-    this.disposeMarkerEditor = function() {
+    this.disposeMarkerEditorNode = function() {
       unitRateProperty.unlink( unitRateObserver );
     };
 
@@ -284,9 +284,9 @@ define( function( require ) {
     this.denominatorNode = denominatorNode;
   }
 
-  unitRates.register( 'MarkerEditor', MarkerEditor );
+  unitRates.register( 'MarkerEditorNode', MarkerEditorNode );
 
-  return inherit( Node, MarkerEditor, {
+  return inherit( Node, MarkerEditorNode, {
 
     /**
      * Do the numerator and denominator values represent a valid marker?
@@ -330,7 +330,7 @@ define( function( require ) {
     // @public
     dispose: function() {
       Node.prototype.dispose && Node.prototype.dispose.call( this );
-      this.disposeMarkerEditor();
+      this.disposeMarkerEditorNode();
     }
   } );
 } );

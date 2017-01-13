@@ -23,7 +23,7 @@ define( function( require ) {
   var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
   var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
-  var MarkerEditor = require( 'UNIT_RATES/common/view/MarkerEditor' );
+  var MarkerEditorNode = require( 'UNIT_RATES/common/view/MarkerEditorNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
@@ -65,13 +65,13 @@ define( function( require ) {
     } );
 
     // home positions for marker editor and undo button, to left of axes
-    var markerEditorHomeX = doubleNumberLineNode.left - 40;
-    var undoButtonHomePosition = new Vector2( markerEditorHomeX, doubleNumberLineNode.centerY );
+    var markerEditorNodeHomeX = doubleNumberLineNode.left - 40;
+    var undoButtonHomePosition = new Vector2( markerEditorNodeHomeX, doubleNumberLineNode.centerY );
 
-    var markerEditor = new MarkerEditor( doubleNumberLine.unitRateProperty, this, keypadLayer, {
+    var markerEditorNode = new MarkerEditorNode( doubleNumberLine.unitRateProperty, this, keypadLayer, {
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
-      x: markerEditorHomeX,
+      x: markerEditorNodeHomeX,
       centerY: doubleNumberLineNode.centerY
     } );
 
@@ -87,7 +87,7 @@ define( function( require ) {
       baseColor: URColors.undoButton,
       listener: function() {
         if ( undoAppliesToEditor ) {
-          markerEditor.reset();
+          markerEditorNode.reset();
         }
         else {
           doubleNumberLine.undo();
@@ -110,7 +110,7 @@ define( function( require ) {
       align: 'right',
       spacing: 5,
       children: [
-        new Node( { children: [ doubleNumberLineNode, undoButton, markerEditor ] } ),
+        new Node( { children: [ doubleNumberLineNode, undoButton, markerEditorNode ] } ),
         eraserButton
       ]
     } );
@@ -118,30 +118,30 @@ define( function( require ) {
     AccordionBox.call( this, contentNode, options );
 
     // animation for marker editor
-    var markerEditorAnimation = null;
+    var markerEditorNodeAnimation = null;
 
     // when the marker editor exceeds the range of the axes, move it to the right of the axes
-    var markerEditorOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
+    var markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
 
     // Observe marker editor, to position the editor and create markers.
-    var markerEditorObserver = function() {
+    var markerEditorNodeObserver = function() {
 
       var destinationX = null; // destination for horizontal animation of marker editor
 
-      if ( markerEditor.isValidMarker() ) {
+      if ( markerEditorNode.isValidMarker() ) {
 
-        if ( markerEditor.denominatorProperty.value <= doubleNumberLine.denominatorOptions.axisRange.max ) {
+        if ( markerEditorNode.denominatorProperty.value <= doubleNumberLine.denominatorOptions.axisRange.max ) {
 
           // create a marker
-          var isMajor = ( URUtil.decimalPlaces( markerEditor.denominatorProperty.value ) <= doubleNumberLine.denominatorOptions.majorMarkerDecimals );
-          var marker = new Marker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value, 'editor', {
+          var isMajor = ( URUtil.decimalPlaces( markerEditorNode.denominatorProperty.value ) <= doubleNumberLine.denominatorOptions.majorMarkerDecimals );
+          var marker = new Marker( markerEditorNode.numeratorProperty.value, markerEditorNode.denominatorProperty.value, 'editor', {
             isMajor: isMajor,
             color: isMajor ? URColors.majorMarker : URColors.minorMarker
           } );
 
           // Return the marker editor to its home position.
           // Do this before adding the marker so that the undo button is associated with the marker.
-          markerEditor.reset();
+          markerEditorNode.reset();
 
           // add marker to double number line
           if ( doubleNumberLine.addMarker( marker ) ) {
@@ -153,7 +153,7 @@ define( function( require ) {
         else {
 
           // marker is out of range, move editor to right of axis arrows
-          destinationX = markerEditorOutOfRangeX;
+          destinationX = markerEditorNodeOutOfRangeX;
 
           // undo button is visible to left of axes
           if ( undoAppliesToEditor ) {
@@ -169,10 +169,10 @@ define( function( require ) {
           doubleNumberLine.undoMarkerProperty.value = null;
         }
 
-        if ( markerEditor.numeratorProperty.value === null && markerEditor.denominatorProperty.value === null ) {
+        if ( markerEditorNode.numeratorProperty.value === null && markerEditorNode.denominatorProperty.value === null ) {
 
           // both values are empty, move marker editor back to home position
-          destinationX = markerEditorHomeX;
+          destinationX = markerEditorNodeHomeX;
 
           // hide undo button if it's associated with the editor
           undoButton.center = undoButtonHomePosition;
@@ -181,13 +181,13 @@ define( function( require ) {
         else {
 
           // one value is empty, move marker to position of the non-empty value
-          var denominator = markerEditor.getValidDenominator();
+          var denominator = markerEditorNode.getValidDenominator();
           assert && assert( denominator >= 0, 'invalid denominator: ' + denominator );
 
           if ( denominator > doubleNumberLine.denominatorOptions.axisRange.max ) {
 
             // move marker editor to right of axis arrows
-            destinationX = markerEditorOutOfRangeX;
+            destinationX = markerEditorNodeOutOfRangeX;
           }
           else {
             destinationX = doubleNumberLineNode.x + doubleNumberLineNode.modelToView( denominator );
@@ -202,23 +202,23 @@ define( function( require ) {
       if ( destinationX !== null ) {
 
         // stop any animation that is in progress
-        markerEditorAnimation && markerEditorAnimation.stop();
+        markerEditorNodeAnimation && markerEditorNodeAnimation.stop();
 
-        markerEditorAnimation = new MoveTo( markerEditor, new Vector2( destinationX, markerEditor.y ), {
+        markerEditorNodeAnimation = new MoveTo( markerEditorNode, new Vector2( destinationX, markerEditorNode.y ), {
 
           // animation duration is controllable via query parameter
           duration: URQueryParameters.animationDuration,
 
           // marker editor is not interactive while animating
-          onStart: function() { markerEditor.pickable = false; },
-          onComplete: function() { markerEditor.pickable = true; },
-          onStop: function() { markerEditor.pickable = true; }
+          onStart: function() { markerEditorNode.pickable = false; },
+          onComplete: function() { markerEditorNode.pickable = true; },
+          onStop: function() { markerEditorNode.pickable = true; }
         } );
-        markerEditorAnimation.start();
+        markerEditorNodeAnimation.start();
       }
     };
-    markerEditor.numeratorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
-    markerEditor.denominatorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
+    markerEditorNode.numeratorProperty.lazyLink( markerEditorNodeObserver ); // unlink in dispose
+    markerEditorNode.denominatorProperty.lazyLink( markerEditorNodeObserver ); // unlink in dispose
 
     // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
     // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
@@ -230,7 +230,7 @@ define( function( require ) {
 
         // Position the undo button below the undoable marker
         undoButton.centerX = doubleNumberLineNode.modelToView( marker.denominator );
-        undoButton.bottom = markerEditor.bottom;
+        undoButton.bottom = markerEditorNode.bottom;
         undoButton.visible = true;
       }
       else {
@@ -240,7 +240,7 @@ define( function( require ) {
 
         // Move the undo button to its home position
         undoButton.center = undoButtonHomePosition;
-        undoButton.visible = ( markerEditor.centerX !== markerEditorHomeX );
+        undoButton.visible = ( markerEditorNode.centerX !== markerEditorNodeHomeX );
       }
     };
     doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver ); // unlink in dispose
@@ -248,7 +248,7 @@ define( function( require ) {
     //TODO test this in context of ShoppingLabScreen
     // When the unit rate changes, cancel any edit that is in progress
     var unitRateObserver = function( unitRate ) {
-      markerEditor.reset();
+      markerEditorNode.reset();
     };
     doubleNumberLine.unitRateProperty.link( unitRateObserver ); // unlink in dispose
 
@@ -260,10 +260,10 @@ define( function( require ) {
       doubleNumberLine.undoMarkerProperty.unlink( undoMarkerObserver );
 
       // view cleanup
-      markerEditorAnimation && markerEditorAnimation.stop();
-      markerEditor.numeratorProperty.unlink( markerEditorObserver );
-      markerEditor.denominatorProperty.unlink( markerEditorObserver );
-      markerEditor.dispose();
+      markerEditorNodeAnimation && markerEditorNodeAnimation.stop();
+      markerEditorNode.numeratorProperty.unlink( markerEditorNodeObserver );
+      markerEditorNode.denominatorProperty.unlink( markerEditorNodeObserver );
+      markerEditorNode.dispose();
       doubleNumberLineNode.dispose();
     };
   }
