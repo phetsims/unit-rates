@@ -40,7 +40,6 @@ define( function( require ) {
     var keypadLayer = new KeypadLayer();
     this.addChild( keypadLayer );
 
-    //TODO create on demand to reduce startup time?
     // create the view for each category
     model.categories.forEach( function( category ) {
       playAreaLayer.addChild( new ShoppingCategoryNode( category, model.categoryProperty, self.layoutBounds, keypadLayer, viewProperties ) );
