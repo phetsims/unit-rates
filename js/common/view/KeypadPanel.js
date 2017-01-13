@@ -40,6 +40,9 @@ define( function( require ) {
     options = _.extend( {
 
       // KeypadPanel options
+      valueBoxWidth: 85, // {number} width of the value field, height determined by valueFont
+      valueYMargin: 3, // {number} vertical margin inside the value box
+      valueFont: new URFont( 16 ),
       valueString: '',
       decimalPointKey: true,
       maxDigits: 4,
@@ -58,11 +61,10 @@ define( function( require ) {
     var valueStringProperty = new Property( options.valueString );
 
     var valueNode = new Text( valueStringProperty.value, {
-      font: new URFont( 16 )
+      font: options.valueFont
     } );
 
-    //TODO background should be sized to maximum value, with some margins
-    var valueBackgroundNode = new Rectangle( 0, 0, 85, 30, {
+    var valueBackgroundNode = new Rectangle( 0, 0, options.valueBoxWidth, valueNode.height + ( 2 * options.valueYMargin ), {
       cornerRadius: 3,
       fill: 'white',
       stroke: 'black'
