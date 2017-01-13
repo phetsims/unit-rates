@@ -11,8 +11,8 @@ define( function( require ) {
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -27,18 +27,12 @@ define( function( require ) {
   function MarkerNode( marker, options ) {
 
     options = _.extend( {
-
-      // VBox options
-      spacing: 2,
-      align: 'center',
-
-      // MarkerNode options
+      ySpacing: 2,
       font: new URFont( 12 ),
       lineLength: 75,
       lineWidth: 1,
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
-
     }, options );
 
     // @public (read-only)
@@ -69,17 +63,22 @@ define( function( require ) {
     var numeratorNode = new Text( '', textOptions );
     var numeratorObserver = function( numerator ) {
       numeratorNode.text = URUtil.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+      numeratorNode.centerX = lineNode.centerX;
+      numeratorNode.bottom = lineNode.top - options.ySpacing;
     };
     marker.numeratorProperty.link( numeratorObserver ); // unlink in dispose
 
     // denominator
     var denominatorString = URUtil.numberToString( marker.denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
-    var denominatorNode = new Text( denominatorString, textOptions );
+    var denominatorNode = new Text( denominatorString, _.extend( {}, textOptions, {
+      centerX: lineNode.centerX,
+      top: lineNode.bottom + options.ySpacing
+    } ) );
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ numeratorNode, lineNode, denominatorNode ];
 
-    VBox.call( this, options );
+    Node.call( this, options );
 
     // @private
     this.disposeMarkerNode = function() {
@@ -89,11 +88,11 @@ define( function( require ) {
 
   unitRates.register( 'MarkerNode', MarkerNode );
 
-  return inherit( VBox, MarkerNode, {
+  return inherit( Node, MarkerNode, {
 
     // @public
     dispose: function() {
-      VBox.prototype.dispose && VBox.prototype.dispose.call( this );
+      Node.prototype.dispose && Node.prototype.dispose.call( this );
       this.disposeMarkerNode();
     }
   } );

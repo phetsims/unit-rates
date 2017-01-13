@@ -60,8 +60,12 @@ define( function( require ) {
     // A single level of undo is supported.
     this.undoMarkerProperty = new Property( null );
 
-    var unitRateObserver = function() {
-      //TODO adjust numeratorProperty for all markers
+    // When the unit rate changes, adjust the numerator of all markers
+    var self = this;
+    var unitRateObserver = function( unitRate ) {
+      self.markers.forEach( function( marker ) {
+        marker.numeratorProperty.value = marker.denominator * unitRate;
+      } );
     };
     unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose
 
