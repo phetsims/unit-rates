@@ -52,7 +52,7 @@ define( function( require ) {
     URQueryParameters.randomEnabled = false;
   }
 
-  // enable logging output to the console
+  // enable logging to the console
   if ( URQueryParameters.log ) {
 
     console.log( 'enabling log' );
