@@ -108,11 +108,7 @@ define( function( require ) {
     eraserButton.touchArea = eraserButton.localBounds.dilatedXY( 5, 5 );
 
     var contentNode = new Node( {
-      children: [ doubleNumberLineNode, undoButton, markerEditorNode, eraserButton ],
-
-      //TODO workaround for AccordionBox layout bug, https://github.com/phetsims/sun/issues/280
-      left: 0,
-      top: 0
+      children: [ doubleNumberLineNode, undoButton, markerEditorNode, eraserButton ]
     } );
 
     AccordionBox.call( this, contentNode, options );
