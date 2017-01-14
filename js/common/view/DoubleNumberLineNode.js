@@ -88,7 +88,7 @@ define( function( require ) {
         maxWidth: options.labelMaxWidth,
         left: numeratorAxisNode.right + options.labelXSpacing,
         centerY: numeratorAxisNode.centerY,
-        children: [ new HStrut( options.labelMaxWidth ) ] // ensures constant width
+        children: [ new HStrut( options.labelMaxWidth ) ] // makes labels for all items the same width
       } ) );
     }
 
@@ -109,7 +109,7 @@ define( function( require ) {
         maxWidth: options.labelMaxWidth,
         left: denominatorAxisNode.right + options.labelXSpacing,
         centerY: denominatorAxisNode.centerY,
-        children: [ new HStrut( options.labelMaxWidth ) ] // ensures constant width
+        children: [ new HStrut( options.labelMaxWidth ) ] // makes labels for all items the same width
       } ) );
     }
 
