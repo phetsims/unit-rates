@@ -16,7 +16,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
@@ -102,18 +101,18 @@ define( function( require ) {
       baseColor: URColors.eraserButton,
       listener: function() {
         doubleNumberLine.erase();
-      }
+      },
+      right: doubleNumberLineNode.right,
+      bottom: markerEditorNode.bottom
     } );
     eraserButton.touchArea = eraserButton.localBounds.dilatedXY( 5, 5 );
 
-    var contentNode = new VBox( {
-      resize: false,
-      align: 'right',
-      spacing: 5,
-      children: [
-        new Node( { children: [ doubleNumberLineNode, undoButton, markerEditorNode ] } ),
-        eraserButton
-      ]
+    var contentNode = new Node( {
+      children: [ doubleNumberLineNode, undoButton, markerEditorNode, eraserButton ],
+
+      //TODO workaround for AccordionBox layout bug, https://github.com/phetsims/sun/issues/280
+      left: 0,
+      top: 0
     } );
 
     AccordionBox.call( this, contentNode, options );
