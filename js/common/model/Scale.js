@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -27,12 +28,19 @@ define( function( require ) {
     this.quantityIsDisplayed = options.quantityIsDisplayed;
     this.quantityUnits = options.quantityUnits;
 
+    // @public
+    this.costVisibleProperty = new Property( true );
+
     //TODO
   }
 
   unitRates.register( 'Scale', Scale );
 
   return inherit( Object, Scale, {
+
+    reset: function() {
+      this.costVisibleProperty.reset();
+    },
 
     // @public
     clear: function() {

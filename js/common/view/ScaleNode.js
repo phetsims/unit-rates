@@ -15,7 +15,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
-  var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
@@ -83,17 +82,18 @@ define( function( require ) {
         //TODO maxWidth
       } );
 
-      var expandedProperty = new Property( true ); //TODO reset?
-      expandedProperty.link( function( expanded ) {
-        costValueNode.visible = expanded;
-        costLabelNode.visible = !expanded;
-      } );
-
-      var expandCollapseButton = new ExpandCollapseButton( expandedProperty, {
+      // dispose required
+      var expandCollapseButton = new ExpandCollapseButton( scale.costVisibleProperty, {
         sideLength: 15,
         touchAreaXDilation: 30,
         touchAreaYDilation: 30
       } );
+
+      var costVisibleObserver = function( expanded ) {
+        costValueNode.visible = expanded;
+        costLabelNode.visible = !expanded;
+      };
+      scale.costVisibleProperty.link( costVisibleObserver ); // unlink in dispose
 
       var valueParent = new Node( {
         children: [ costValueNode, costLabelNode ]
@@ -140,9 +140,22 @@ define( function( require ) {
     options.children = [ scaleImageNode, valueBox ];
 
     Node.call( this, options );
+
+    // @private
+    this.disposeScaleNode = function() {
+      costVisibleObserver && scale.costVisibleProperty.unlink( costVisibleObserver );
+      expandCollapseButton && expandCollapseButton.dispose();
+    };
   }
 
   unitRates.register( 'ScaleNode', ScaleNode );
 
-  return inherit( Node, ScaleNode );
+  return inherit( Node, ScaleNode, {
+
+    // @public
+    dispose: function() {
+      Node.prototype.dispose && Node.prototype.dispose.call( this );
+      this.disposeScaleNode();
+    }
+  } );
 } );

@@ -20,5 +20,11 @@ define( function( require ) {
 
   unitRates.register( 'Shelf', Shelf );
 
-  return inherit( Object, Shelf );
+  return inherit( Object, Shelf, {
+
+    // @public
+    reset: function() {
+      //TODO
+    }
+  });
 } );

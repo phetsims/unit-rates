@@ -167,6 +167,8 @@ define( function( require ) {
 
       this.doubleNumberLine.reset();
       this.markerEditor.reset();
+      this.scale.reset();
+      this.shelf.reset();
 
       // reset all ShoppingQuestions
       this.unitRateQuestion.reset();
