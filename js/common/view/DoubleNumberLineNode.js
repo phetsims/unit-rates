@@ -70,6 +70,7 @@ define( function( require ) {
     } );
     this.addChild( verticalAxis );
 
+    // numerator axis
     var numeratorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
       fill: options.axisColor,
       stroke: null,
@@ -81,17 +82,17 @@ define( function( require ) {
     } );
     this.addChild( numeratorAxisNode );
 
-    if ( doubleNumberLine.numeratorOptions.axisLabel ) {
-      this.addChild( new Text( doubleNumberLine.numeratorOptions.axisLabel, {
-        font: options.labelFont,
-        fill: options.labelColor,
-        maxWidth: options.labelMaxWidth,
-        left: numeratorAxisNode.right + options.labelXSpacing,
-        centerY: numeratorAxisNode.centerY,
-        children: [ new HStrut( options.labelMaxWidth ) ] // makes labels for all items the same width
-      } ) );
-    }
+    // numerator axis label
+    this.addChild( new Text( doubleNumberLine.numeratorOptions.axisLabel, {
+      font: options.labelFont,
+      fill: options.labelColor,
+      maxWidth: options.labelMaxWidth,
+      left: numeratorAxisNode.right + options.labelXSpacing,
+      centerY: numeratorAxisNode.centerY,
+      children: [ new HStrut( options.labelMaxWidth ) ] // makes labels for all items the same width
+    } ) );
 
+    // denominator axis
     var denominatorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
       fill: options.axisColor,
       stroke: null,
@@ -102,16 +103,15 @@ define( function( require ) {
     } );
     this.addChild( denominatorAxisNode );
 
-    if ( doubleNumberLine.denominatorOptions.axisLabel ) {
-      this.addChild( new Text( doubleNumberLine.denominatorOptions.axisLabel, {
-        font: options.labelFont,
-        fill: options.labelColor,
-        maxWidth: options.labelMaxWidth,
-        left: denominatorAxisNode.right + options.labelXSpacing,
-        centerY: denominatorAxisNode.centerY,
-        children: [ new HStrut( options.labelMaxWidth ) ] // makes labels for all items the same width
-      } ) );
-    }
+    // denominator axis label
+    this.addChild( new Text( doubleNumberLine.denominatorOptions.axisLabel, {
+      font: options.labelFont,
+      fill: options.labelColor,
+      maxWidth: options.labelMaxWidth,
+      left: denominatorAxisNode.right + options.labelXSpacing,
+      centerY: denominatorAxisNode.centerY,
+      children: [ new HStrut( options.labelMaxWidth ) ] // makes labels for all items the same width
+    } ) );
 
     // @private parent for markers, to maintain rendering order
     this.markersParent = new Node();
