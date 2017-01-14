@@ -11,6 +11,7 @@ define( function( require ) {
   // common modules
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Dimension2 = require( 'DOT/Dimension2' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var LinearFunction = require( 'DOT/LinearFunction' );
@@ -39,7 +40,7 @@ define( function( require ) {
       verticalAxisLength: 40,
 
       // horizontal axes
-      horizontalAxisLength: 575, // {number} length of horizontal axes, including the arrow heads
+      horizontalAxisLength: 590, // {number} length of horizontal axes, including the arrow heads
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
       axisYSpacing: 20, // {number} vertical spacing between top and bottom axes
       labelFont: new URFont( 14 ), // {Font} for axis labels
@@ -86,7 +87,8 @@ define( function( require ) {
         fill: options.labelColor,
         maxWidth: options.labelMaxWidth,
         left: numeratorAxisNode.right + options.labelXSpacing,
-        centerY: numeratorAxisNode.centerY
+        centerY: numeratorAxisNode.centerY,
+        children: [ new HStrut( options.labelMaxWidth ) ] // ensures constant width
       } ) );
     }
 
@@ -106,7 +108,8 @@ define( function( require ) {
         fill: options.labelColor,
         maxWidth: options.labelMaxWidth,
         left: denominatorAxisNode.right + options.labelXSpacing,
-        centerY: denominatorAxisNode.centerY
+        centerY: denominatorAxisNode.centerY,
+        children: [ new HStrut( options.labelMaxWidth ) ] // ensures constant width
       } ) );
     }
 

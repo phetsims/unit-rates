@@ -5,7 +5,3 @@ Scale & shelf
 Scale:
 - cost display (accordionBox:false)
 - quantity display (visible:false)
-
-Width of DoubleNumberLineAccordionBox changes when switching items
-
-Width of ShoppingItemComboBox changes when switching categories
