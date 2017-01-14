@@ -17,6 +17,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
+  var lbsString = require( 'string!UNIT_RATES/lbs' );
   var poundString = require( 'string!UNIT_RATES/pound' );
   var poundsString = require( 'string!UNIT_RATES/pounds' );
 
@@ -39,7 +40,12 @@ define( function( require ) {
       },
 
       // All Candy questions have the same form, i.e. 'Cost of N pounds?'
-      uniformQuestions: true
+      uniformQuestions: true,
+
+      // Scale
+      scaleCostIsHideable: true, //TODO false for Shopping screen, true for Shopping Lab screen
+      scaleQuantityIsDisplayed: true,
+      scaleQuantityUnits: lbsString
     } );
   }
 

@@ -49,7 +49,12 @@ define( function( require ) {
       // questions
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
       questionPluralUnits: itemData.pluralName,  // {string} units for questions with plural quantities
-      uniformQuestions: true // {boolean} are all questions of the same form? see createQuestionSets
+      uniformQuestions: true, // {boolean} are all questions of the same form? see createQuestionSets
+
+      // scale
+      scaleCostIsHideable: false, // {boolean} whether cost is hidable on the scale
+      scaleQuantityIsDisplayed: false, // {boolean} whether to display quantity on the scale
+      scaleQuantityUnits: '' // {string} units for quantity on scale
     }, options );
 
     var self = this;
@@ -105,7 +110,13 @@ define( function( require ) {
 
     // @public
     this.shelf = new Shelf();
-    this.scale = new Scale();
+
+    // @public
+    this.scale = new Scale( {
+      costIsHideable: options.scaleCostIsHideable,
+      quantityIsDisplayed: options.scaleQuantityIsDisplayed,
+      quantityUnits: options.scaleQuantityUnits
+    });
 
     // @public {ShoppingQuestion} 'Unit Rate?'
     this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( itemData.unitRate,

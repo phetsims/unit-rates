@@ -14,7 +14,19 @@ define( function( require ) {
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
-  function Scale() {
+  function Scale( options ) {
+
+    options = _.extend( {
+      costIsHideable: false, // {boolean} whether cost is hideable
+      quantityIsDisplayed: false, // {boolean} whether quantity is displayed
+      quantityUnits: '' // {string} units for quantity
+    }, options );
+
+    // @public ( read-only)
+    this.costIsHideable = options.costIsHideable;
+    this.quantityIsDisplayed = options.quantityIsDisplayed;
+    this.quantityUnits = options.quantityUnits;
+
     //TODO
   }
 
