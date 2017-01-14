@@ -2,6 +2,3 @@ TODO list for unit-rates
 
 Scale & shelf
 
-Scale:
-- cost display, $X.XX, accordionBox:false
-- quantity display, X.X, visible:false
