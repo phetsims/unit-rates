@@ -61,6 +61,7 @@ define( function( require ) {
     var costValueNode = new Text( maxCostString, {
       font: options.valueFont,
       fill: options.valueFill
+      //TODO maxWidth
     } );
 
     // panel for displaying cost
@@ -79,6 +80,7 @@ define( function( require ) {
         font: options.valueFont,
         fill: options.valueFill,
         maxWidth: 1.1 * costValueNode.width
+        //TODO maxWidth
       } );
 
       var expandedProperty = new Property( true ); //TODO reset?
@@ -115,6 +117,7 @@ define( function( require ) {
       var quantityValueNode = new Text( maxQuantityString, {
         font: options.valueFont,
         fill: options.valueFill
+        //TODO maxWidth
       } );
 
       var quantityPanel = new Panel( quantityValueNode, PANEL_OPTIONS );
