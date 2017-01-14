@@ -2,4 +2,6 @@ TODO list for unit-rates
 
 Scale & shelf
 
+Width of DoubleNumberLineAccordionBox changes when switching items
 
+Width of ShoppingItemComboBox changes when switching categories
