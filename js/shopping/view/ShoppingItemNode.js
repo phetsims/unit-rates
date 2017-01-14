@@ -14,6 +14,8 @@ define( function( require ) {
 
   // sim modules
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
+  var ScaleNode = require( 'UNIT_RATES/common/view/ScaleNode' );
+  var ShelfNode = require( 'UNIT_RATES/common/view/ShelfNode' );
   var ShoppingQuestionsAccordionBox = require( 'UNIT_RATES/shopping/view/ShoppingQuestionsAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -27,7 +29,7 @@ define( function( require ) {
    */
   function ShoppingItemNode( shoppingItem, layoutBounds, keypadLayer, viewProperties, options ) {
 
-    Node.call( this );
+    options = options || {};
 
     // Double number line
     var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingItem.doubleNumberLine, shoppingItem.markerEditor, keypadLayer, {
@@ -35,7 +37,6 @@ define( function( require ) {
       left: layoutBounds.minX + 15,
       top: layoutBounds.minY + 15
     } );
-    this.addChild( doubleNumberLineAccordionBox );
 
     // Questions
     var questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingItem, keypadLayer, {
@@ -43,9 +44,23 @@ define( function( require ) {
       right: layoutBounds.right - 15,
       top: doubleNumberLineAccordionBox.top
     } );
-    this.addChild( questionsAccordionBox );
 
-    this.mutate( options );
+    // shelf
+    var shelfNode = new ShelfNode( shoppingItem.shelf, {
+      centerX: layoutBounds.left + ( 0.45 * layoutBounds.width ),
+      bottom: layoutBounds.bottom - 15
+    } );
+
+    // scale
+    var scaleNode = new ScaleNode( shoppingItem.scale, {
+      centerX: shelfNode.centerX,
+      bottom: shelfNode.top - 75
+    } );
+
+    assert && assert( !options.children, 'decoration not supported' );
+    options.children = [ doubleNumberLineAccordionBox, questionsAccordionBox, scaleNode, shelfNode ];
+
+    Node.call( this, options );
 
     // @private
     this.disposeShoppingItemNode = function() {
