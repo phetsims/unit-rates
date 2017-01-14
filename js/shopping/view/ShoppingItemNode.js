@@ -13,6 +13,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   // sim modules
+  var ClearScaleButton = require( 'UNIT_RATES/common/view/ClearScaleButton' );
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var ScaleNode = require( 'UNIT_RATES/common/view/ScaleNode' );
   var ShelfNode = require( 'UNIT_RATES/common/view/ShelfNode' );
@@ -57,8 +58,14 @@ define( function( require ) {
       bottom: shelfNode.top - 75
     } );
 
+    // button that clears the scale
+    var clearScaleButton = new ClearScaleButton( shoppingItem.scale, {
+      right: scaleNode.left - 15,
+      bottom: scaleNode.bottom
+    } );
+
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ doubleNumberLineAccordionBox, questionsAccordionBox, scaleNode, shelfNode ];
+    options.children = [ doubleNumberLineAccordionBox, questionsAccordionBox, scaleNode, shelfNode, clearScaleButton ];
 
     Node.call( this, options );
 

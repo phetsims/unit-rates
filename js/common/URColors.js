@@ -21,6 +21,7 @@ define( function( require ) {
     eraserButton: 'rgb( 242, 242, 242 )',
     refreshButton: 'rgb( 242, 242, 242 )',
     undoButton: 'rgb( 242, 242, 242 )',
+    clearScaleButton: 'rgb( 242, 242, 242 )',
 
     // markers
     questionMarker: 'green', // markers created by answering questions

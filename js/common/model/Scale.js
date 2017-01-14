@@ -20,5 +20,11 @@ define( function( require ) {
 
   unitRates.register( 'Scale', Scale );
 
-  return inherit( Object, Scale );
+  return inherit( Object, Scale, {
+
+    // @public
+    clear: function() {
+      //TODO
+    }
+  } );
 } );
