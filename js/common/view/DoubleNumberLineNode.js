@@ -40,12 +40,12 @@ define( function( require ) {
       verticalAxisLength: 40,
 
       // horizontal axes
-      horizontalAxisLength: 590, // {number} length of horizontal axes, including the arrow heads
+      horizontalAxisLength: 570, // {number} length of horizontal axes, including the arrow heads
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
       axisYSpacing: 20, // {number} vertical spacing between top and bottom axes
       labelFont: new URFont( 14 ), // {Font} for axis labels
       labelColor: 'black', // {Color|string} color of axis labels
-      labelMaxWidth: 50, // determined empirically
+      labelMaxWidth: 70, // determined empirically
       labelXSpacing: 12, // horizontal spacing between axis and its label
 
       // markers
