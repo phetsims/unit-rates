@@ -84,12 +84,15 @@ define( function( require ) {
     } );
     this.addChild( checkMarkNode );
 
+    // maxWidth for UI elements that span the entire width
+    var maxWidth = checkMarkNode.right - editButton.left;
+
     // the question
     var questionTextNode = new Text( question.questionString, {
       font: options.questionFont,
       centerX: valueBox.centerX,
       bottom: valueBox.top - options.ySpacing,
-      maxWidth: checkMarkNode.right - editButton.left
+      maxWidth: maxWidth
     } );
     this.addChild( questionTextNode );
 
@@ -97,7 +100,8 @@ define( function( require ) {
     var guessNode = new Text( '', {
       fill: options.neutralColor,
       font: options.valueFont,
-      center: valueBox.center
+      center: valueBox.center,
+      maxWidth: 0.8 * valueBoxWidth
     } );
     this.addChild( guessNode );
 
@@ -106,7 +110,8 @@ define( function( require ) {
       fill: URColors.correctQuestion,
       font: options.valueFont,
       center: valueBox.center,
-      visible: false
+      visible: false,
+      maxWidth: maxWidth
     } );
     this.addChild( numeratorNode );
 
@@ -126,7 +131,8 @@ define( function( require ) {
       font: options.valueFont,
       centerX: valueBox.centerX,
       top: fractionLineNode.bottom + ( fractionLineNode.top - guessNode.bottom ),
-      visible: options.denominatorVisible
+      visible: options.denominatorVisible,
+      maxWidth: maxWidth
     } );
     this.addChild( denominatorNode );
 
