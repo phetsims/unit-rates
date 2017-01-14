@@ -12,6 +12,7 @@ define( function( require ) {
   var ComboBox = require( 'SUN/ComboBox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -86,7 +87,8 @@ define( function( require ) {
     // Use the plural name to label the item
     var labelNode = new Text( shoppingItem.pluralName, {
       font: new URFont( 18 ),
-      maxWidth: 140
+      maxWidth: 140,
+      children: [ new HStrut( 140 ) ] // makes labels for all items the same width
     } );
 
     // icon to the left of label

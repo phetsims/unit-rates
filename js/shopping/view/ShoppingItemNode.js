@@ -48,7 +48,7 @@ define( function( require ) {
 
     // shelf
     var shelfNode = new ShelfNode( shoppingItem.shelf, {
-      centerX: layoutBounds.left + ( 0.45 * layoutBounds.width ),
+      centerX: layoutBounds.left + ( 0.5 * layoutBounds.width ),
       bottom: layoutBounds.bottom - 15
     } );
 
