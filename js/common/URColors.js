@@ -11,6 +11,9 @@ define( function( require ) {
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
+  // constants
+  var DEFAULT_BUTTON_COLOR = 'rgb( 242, 242, 242 )';
+
   // all values are {Color|string}, unless otherwise noted
   var URColors = {
 
@@ -18,10 +21,10 @@ define( function( require ) {
     categoryButton: 'white',
     editButton: 'yellow',
     enterButton: 'yellow',
-    eraserButton: 'rgb( 242, 242, 242 )',
-    refreshButton: 'rgb( 242, 242, 242 )',
-    undoButton: 'rgb( 242, 242, 242 )',
-    clearScaleButton: 'rgb( 242, 242, 242 )',
+    eraserButton: DEFAULT_BUTTON_COLOR,
+    refreshButton: DEFAULT_BUTTON_COLOR,
+    undoButton: DEFAULT_BUTTON_COLOR,
+    clearScaleButton: DEFAULT_BUTTON_COLOR,
 
     // markers
     questionMarker: 'green', // markers created by answering questions
