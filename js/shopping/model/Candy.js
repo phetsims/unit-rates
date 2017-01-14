@@ -42,8 +42,7 @@ define( function( require ) {
       // All Candy questions have the same form, i.e. 'Cost of N pounds?'
       uniformQuestions: true,
 
-      // Scale
-      scaleCostIsHideable: true, //TODO false for Shopping screen, true for Shopping Lab screen
+      // Scale displays quantity in 'lbs' for Candy
       scaleQuantityIsDisplayed: true,
       scaleQuantityUnits: lbsString
     } );
