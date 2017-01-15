@@ -51,8 +51,7 @@ define( function( require ) {
       valueFill: 'black'
     }, options );
 
-    var scaleImageNode = new Image( scaleImage );
-    scaleImageNode.setScaleMagnitude( 1.2, 1 ); //TODO redo image file so that scale is as wide as shelf
+    var scaleImageNode = new Image( scaleImage, { scale: 0.5 } );
 
     var valueBoxChildren = [];
 

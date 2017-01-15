@@ -26,7 +26,7 @@ define( function( require ) {
    */
   function ShelfNode( shelf, options ) {
 
-    var shelfImageNode = new Image( shelfImage, { scale: 0.5 } ); //TODO redo image file so that scale is not needed
+    var shelfImageNode = new Image( shelfImage, { scale: 0.5 } );
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ shelfImageNode ];
