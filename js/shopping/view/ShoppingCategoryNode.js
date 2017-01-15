@@ -1,4 +1,4 @@
-// Copyright 2016, University of Colorado Boulder
+// Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * View components that are specific to a category of items (e.g. Fruit) in the 'Shopping' screen.
