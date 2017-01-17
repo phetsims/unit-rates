@@ -1,4 +1,7 @@
 TODO list for unit-rates
 
 Scale & shelf
+- more logical placement algorithm
+- persistent placement of each item and bag
+- dev control for showing placement grid
 
