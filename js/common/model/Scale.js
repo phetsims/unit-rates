@@ -15,6 +15,10 @@ define( function( require ) {
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
+  /**
+   * @param {Object} [options]
+   * @constructor
+   */
   function Scale( options ) {
 
     options = _.extend( {
@@ -30,6 +34,8 @@ define( function( require ) {
 
     // @public
     this.costVisibleProperty = new Property( true );
+    this.costProperty = new Property( 0 );
+    this.quantityProperty = new Property( 0 );
 
     //TODO
   }
@@ -40,6 +46,8 @@ define( function( require ) {
 
     reset: function() {
       this.costVisibleProperty.reset();
+      this.costProperty.reset();
+      this.quantityProperty.reset();
     },
 
     // @public

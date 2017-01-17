@@ -55,13 +55,19 @@ define( function( require ) {
 
     var valueBoxChildren = [];
 
-    // e.g. '$10.50'
-    var maxCostString = StringUtils.format( currencyValueString, URUtil.numberToString( 10.5, 2, false ) );
+    // Cost value, e.g. '$10.50'
+    var maxCostString = costToString( 10.5 );
     var costValueNode = new Text( maxCostString, {
       font: options.valueFont,
       fill: options.valueFill
       //TODO maxWidth
     } );
+
+    // Update cost value
+    var costObserver = function( cost ) {
+      costValueNode.text = costToString( cost );
+    };
+    scale.costProperty.link( costObserver );
 
     // panel for displaying cost
     var costPanel = null;
@@ -113,7 +119,7 @@ define( function( require ) {
     if ( scale.quantityIsDisplayed ) {
 
       // e.g. '10.5 lbs'
-      var maxQuantityString = StringUtils.format( valueUnitsString, URUtil.numberToString( 10.5, 1, false ), scale.quantityUnits );
+      var maxQuantityString = quantityToString( 10.5, scale.quantityUnits );
       var quantityValueNode = new Text( maxQuantityString, {
         font: options.valueFont,
         fill: options.valueFill
@@ -123,6 +129,12 @@ define( function( require ) {
       var quantityPanel = new Panel( quantityValueNode, PANEL_OPTIONS );
 
       valueBoxChildren.push( quantityPanel );
+
+      // Update quantity value
+      var quantityObserver = function( quantity ) {
+        quantityValueNode.text = quantityToString( quantity, scale.quantityUnits );
+      };
+      scale.quantityProperty.link( quantityObserver );
     }
 
     var valueBox = new HBox( {
@@ -143,12 +155,35 @@ define( function( require ) {
 
     // @private
     this.disposeScaleNode = function() {
+      scale.costProperty.unlink( costObserver );
       costVisibleObserver && scale.costVisibleProperty.unlink( costVisibleObserver );
+      quantityObserver && scale.quantityProperty.unlink( quantityObserver );
       expandCollapseButton && expandCollapseButton.dispose();
     };
   }
 
   unitRates.register( 'ScaleNode', ScaleNode );
+
+  /**
+   * Converts a cost to a string, e.g. 10.5 -> '$10.50'
+   * @param {number} cost
+   * @returns {string}
+   */
+  var costToString = function( cost ) {
+    return StringUtils.format( currencyValueString,
+      URUtil.numberToString( cost, 2 /* maxDecimals */, false /* trimZeros */ ) );
+  };
+
+  /**
+   * Converts a quantity to a string, e.g. 10.5 -> '10.5 lb'
+   * @param {number} quantity
+   * @param {string} units
+   * @returns {string}
+   */
+  var quantityToString = function( quantity, units ) {
+    return StringUtils.format( valueUnitsString,
+      URUtil.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */  ), units );
+  };
 
   return inherit( Node, ScaleNode, {
 
