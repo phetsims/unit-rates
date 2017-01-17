@@ -38,6 +38,7 @@ define( function( require ) {
     // @public (read-only) items are grouped into categories
     this.categories = [
 
+      //TODO revisit this, I don't like how it's possible to pass a ShoppingItemData.Fruit to a non-Fruit
       // fruits
       new ShoppingCategory( appleImage, [
         new Fruit( ShoppingItemData.Fruit.APPLES ),
