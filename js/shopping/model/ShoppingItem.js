@@ -1,7 +1,7 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
 /**
- * An item in the 'Shopping' screen.
+ * A type of item in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
