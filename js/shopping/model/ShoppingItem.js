@@ -59,7 +59,7 @@ define( function( require ) {
 
     var self = this;
 
-    // @public (read-only) options specific to the rate's numerator
+    // options specific to the rate's numerator
     var numeratorOptions = _.extend( {
       axisLabel: dollarsString, // {string} label for the axis on the double number line
       valueFormat: currencyValueString, // {string} format with '{0}' placeholder for value
@@ -68,7 +68,7 @@ define( function( require ) {
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.numeratorOptions );
 
-    // @public (read-only) options specific to the rate's denominator
+    // options specific to the rate's denominator
     var denominatorOptions = _.extend( {
       axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
       valueFormat: '{0}', // {string} format with '{0}' placeholder for value
@@ -109,7 +109,7 @@ define( function( require ) {
     } );
 
     // @public
-    this.shelf = new Shelf();
+    this.shelf = new Shelf( this );
 
     // @public
     this.scale = new Scale( {

@@ -74,18 +74,19 @@ define( function( require ) {
     // Data structures that describe types of Fruit
     Fruit: {
 
-      // NOTE: This instance is assumed to be representative of 'item data', see assertIsItemData
+      // NOTE: This instance is representative of 'item data', see assertIsItemData
       APPLES: {
         unitRate: 0.5, // {number} cost per item, in $
-        bagRate: 2.50, // {number} cost per bag, in $
-        numberOfBags: 3, // {number} number of bags initially on the shelf
+        numberOfBags: 3, // {number} number of bags of the item
+        unitsPerBag: 5, // {number} number of units in each bag
         singularName: appleString, // {string} name to use for singular quantities (e.g. '1 Apple')
         pluralName: applesString, // {string} name to use for plural quantities (e.g. '2 Apples')
         itemImage: appleImage, // {HTMLImageElement} image for individual items
         bagImage: appleBagImage, // {HTMLImageElement} image for a bag of items
 
-        // {number[][]} Number of items for each question, grouped into 'question sets'.
+        // {number[][]} Number of items (or pounds, for Candy) for each question, grouped into 'question sets'.
         // See 'Unit Rates & Challenge Prompts' table in design document.
+        // ShoppingQuestionFactory takes these values and creates ShoppingQuestion instances.
         questionQuantities: [
           [ 10, 6, 8 ],
           [ 10, 14, 13 ],
@@ -96,12 +97,14 @@ define( function( require ) {
 
       LEMONS: {
         unitRate: 0.25,
-        bagRate: 1.25,
         numberOfBags: 3,
+        unitsPerBag: 5,
         singularName: lemonString,
         pluralName: lemonsString,
         itemImage: lemonImage,
         bagImage: lemonBagImage,
+
+        // number of items
         questionQuantities: [
           [ 10, 4, 14 ],
           [ 10, 14, 7 ],
@@ -112,12 +115,14 @@ define( function( require ) {
 
       ORANGES: {
         unitRate: 0.75,
-        bagRate: 3.75,
         numberOfBags: 3,
+        unitsPerBag: 5,
         singularName: orangeString,
         pluralName: orangesString,
         itemImage: orangeImage,
         bagImage: orangeBagImage,
+
+        // number of items
         questionQuantities: [
           [ 10, 4, 11 ],
           [ 10, 14, 8 ],
@@ -128,12 +133,14 @@ define( function( require ) {
 
       PEARS: {
         unitRate: 0.40,
-        bagRate: 2.00,
         numberOfBags: 3,
+        unitsPerBag: 5,
         singularName: pearString,
         pluralName: pearsString,
         itemImage: pearImage,
         bagImage: pearBagImage,
+
+        // number of items
         questionQuantities: [
           [ 10, 6, 7 ],
           [ 10, 14, 12 ],
@@ -148,14 +155,14 @@ define( function( require ) {
 
       CARROTS: {
         unitRate: 0.15,
-        bagRate: 0.60,
         numberOfBags: 4,
+        unitsPerBag: 4,
         singularName: carrotString,
         pluralName: carrotsString,
         itemImage: carrotImage,
         bagImage: carrotBagImage,
 
-        // {number[][]} number of items for each question
+        // number of items
         questionQuantities: [
           [ 9, 19, 21 ],
           [ 15, 25, 23 ],
@@ -166,12 +173,14 @@ define( function( require ) {
 
       CUCUMBERS: {
         unitRate: 0.22,
-        bagRate: 0.66,
         numberOfBags: 4,
+        unitsPerBag: 3,
         singularName: cucumberString,
         pluralName: cucumbersString,
         itemImage: cucumberImage,
         bagImage: cucumberBagImage,
+
+        // number of items
         questionQuantities: [
           [ 7, 19, 18 ],
           [ 11, 25, 23 ],
@@ -182,12 +191,14 @@ define( function( require ) {
 
       POTATOES: {
         unitRate: 0.45,
-        bagRate: 1.35,
         numberOfBags: 4,
+        unitsPerBag: 3,
         singularName: potatoString,
         pluralName: potatoesString,
         itemImage: potatoImage,
         bagImage: potatoBagImage,
+
+        // number of items
         questionQuantities: [
           [ 7, 17, 21 ],
           [ 8, 19, 18 ],
@@ -198,12 +209,14 @@ define( function( require ) {
 
       TOMATOES: {
         unitRate: 0.3,
-        bagRate: 1.20,
         numberOfBags: 4,
+        unitsPerBag: 4,
         singularName: tomatoString,
         pluralName: tomatoesString,
         itemImage: tomatoImage,
         bagImage: tomatoBagImage,
+
+        // number of items
         questionQuantities: [
           [ 7, 23, 28 ],
           [ 13, 25, 23 ],
@@ -218,14 +231,14 @@ define( function( require ) {
 
       PURPLE_CANDY: {
         unitRate: 5.40,
-        bagRate: 2.16,
         numberOfBags: 4,
+        unitsPerBag: 0.4,
         singularName: purpleCandyString,
         pluralName: purpleCandyString,
         itemImage: purpleCandyImage,
         bagImage: purpleCandyBagImage,
 
-        // {number[][]} number of pounds for each question
+        // pounds
         questionQuantities: [
           [ 0.6, 2.2, 2.4 ],
           [ 1.5, 3.2, 3.1 ],
@@ -236,12 +249,14 @@ define( function( require ) {
 
       RED_CANDY: {
         unitRate: 3.80,
-        bagRate: 1.14,
         numberOfBags: 4,
+        unitsPerBag: 0.3,
         singularName: redCandyString,
         pluralName: redCandyString,
         itemImage: redCandyImage,
         bagImage: redCandyBagImage,
+
+        // pounds
         questionQuantities: [
           [ 0.4, 2.3, 2 ],
           [ 0.7, 2.1, 2.4 ],
@@ -252,12 +267,14 @@ define( function( require ) {
 
       GREEN_CANDY: {
         unitRate: 8.20,
-        bagRate: 2.46,
         numberOfBags: 4,
+        unitsPerBag: 0.3,
         singularName: greenCandyString,
         pluralName: greenCandyString,
         itemImage: greenCandyImage,
         bagImage: greenCandyBagImage,
+
+        // pounds
         questionQuantities: [
           [ 0.7, 1.9, 2.2 ],
           [ 1.3, 2.5, 2.4 ],
@@ -268,12 +285,14 @@ define( function( require ) {
 
       BLUE_CANDY: {
         unitRate: 1.30,
-        bagRate: 0.52,
         numberOfBags: 4,
+        unitsPerBag: 0.4,
         singularName: blueCandyString,
         pluralName: blueCandyString,
         itemImage: blueCandyImage,
         bagImage: blueCandyBagImage,
+
+        // pounds
         questionQuantities: [
           [ 0.3, 1.9, 3.2 ],
           [ 0.7, 2.2, 2.3 ],
