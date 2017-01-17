@@ -52,9 +52,10 @@ define( function( require ) {
       uniformQuestions: true, // {boolean} are all questions of the same form? see createQuestionSets
 
       // scale
-      scaleCostIsHideable: false, // {boolean} whether cost is hidable on the scale
-      scaleQuantityIsDisplayed: false, // {boolean} whether to display quantity on the scale
+      scaleCostIsHideable: false, // {boolean} whether cost is hideable on the scale
+      scaleQuantityIsDisplayed: false, // {boolean} whether quantity is displayed on the scale
       scaleQuantityUnits: '' // {string} units for quantity on scale
+
     }, options );
 
     var self = this;
@@ -86,8 +87,8 @@ define( function( require ) {
 
     // @public (read-only) unpack itemData
     this.unitRate = itemData.unitRate;
-    this.bagRate = itemData.bagRate;
     this.numberOfBags = itemData.numberOfBags;
+    this.unitsPerBag = itemData.unitsPerBag;
     this.singularName = itemData.singularName;
     this.pluralName = itemData.pluralName;
     this.itemImage = itemData.itemImage;
