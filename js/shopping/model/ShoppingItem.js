@@ -41,7 +41,7 @@ define( function( require ) {
     assert && ShoppingItemData.assertIsItemData( itemData );
     assert && assert( itemData.questionQuantities.length > 1, 'more than 1 set of questions is required' );
 
-    // default option values apply to Fruit and Vegetable items
+    // default option values apply to Fruit items
     options = _.extend( {
 
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
@@ -55,7 +55,8 @@ define( function( require ) {
       // scale
       scaleCostIsHideable: false, // {boolean} whether cost is hideable on the scale
       scaleQuantityIsDisplayed: false, // {boolean} whether quantity is displayed on the scale
-      scaleQuantityUnits: '' // {string} units for quantity on scale
+      scaleQuantityUnits: '', // {string} units for quantity on scale
+      bagsOpen: true // {boolean} do bags open to display individual items?
 
     }, options );
 

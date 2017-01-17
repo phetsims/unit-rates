@@ -45,7 +45,8 @@ define( function( require ) {
 
       // Scale displays quantity in 'lbs' for Candy
       scaleQuantityIsDisplayed: true,
-      scaleQuantityUnits: lbsString
+      scaleQuantityUnits: lbsString,
+      bagsOpen: false
     } );
   }
 
