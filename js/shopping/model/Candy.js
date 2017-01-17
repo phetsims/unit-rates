@@ -2,6 +2,7 @@
 
 /**
  * A candy item in the Shopping screen.
+ * Candy differs from other item types, as described by the ShoppingItem constructor options.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

@@ -41,6 +41,7 @@ define( function( require ) {
     assert && ShoppingItemData.assertIsItemData( itemData );
     assert && assert( itemData.questionQuantities.length > 1, 'more than 1 set of questions is required' );
 
+    // default option values apply to Fruit and Vegetable items
     options = _.extend( {
 
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
@@ -49,7 +50,7 @@ define( function( require ) {
       // questions
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
       questionPluralUnits: itemData.pluralName,  // {string} units for questions with plural quantities
-      uniformQuestions: true, // {boolean} are all questions of the same form? see createQuestionSets
+      uniformQuestions: false, // {boolean} are all questions of the same form? see createQuestionSets
 
       // scale
       scaleCostIsHideable: false, // {boolean} whether cost is hideable on the scale
@@ -76,7 +77,7 @@ define( function( require ) {
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
       maxDecimals: 2, // {number} maximum number of decimal places
       trimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
-      axisRange: new Range( 0, 10 ), // {Range} range of bottom axis
+      axisRange: new Range( 0, 16 ), // {Range} range of bottom axis
       majorMarkerDecimals: 0 // {number} number of decimal places for major markers
     }, options.denominatorOptions );
 

@@ -14,11 +14,10 @@ define( function( require ) {
 
   // sim modules
   var Candy = require( 'UNIT_RATES/shopping/model/Candy' );
-  var Fruit = require( 'UNIT_RATES/shopping/model/Fruit' );
   var ShoppingCategory = require( 'UNIT_RATES/shopping/model/ShoppingCategory' );
+  var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Vegetable = require( 'UNIT_RATES/shopping/model/Vegetable' );
 
   // images
   var appleImage = require( 'image!UNIT_RATES/apple.png' );
@@ -40,18 +39,18 @@ define( function( require ) {
 
       // fruits
       new ShoppingCategory( appleImage, [
-        new Fruit( ShoppingItemData.Fruit.APPLES ),
-        new Fruit( ShoppingItemData.Fruit.LEMONS ),
-        new Fruit( ShoppingItemData.Fruit.ORANGES ),
-        new Fruit( ShoppingItemData.Fruit.PEARS )
+        new ShoppingItem( ShoppingItemData.Fruit.APPLES ),
+        new ShoppingItem( ShoppingItemData.Fruit.LEMONS ),
+        new ShoppingItem( ShoppingItemData.Fruit.ORANGES ),
+        new ShoppingItem( ShoppingItemData.Fruit.PEARS )
       ] ),
 
       // vegetables
       new ShoppingCategory( carrotImage, [
-        new Vegetable( ShoppingItemData.Vegetable.CARROTS ),
-        new Vegetable( ShoppingItemData.Vegetable.CUCUMBERS ),
-        new Vegetable( ShoppingItemData.Vegetable.POTATOES ),
-        new Vegetable( ShoppingItemData.Vegetable.TOMATOES )
+        new ShoppingItem( ShoppingItemData.Vegetable.CARROTS ),
+        new ShoppingItem( ShoppingItemData.Vegetable.CUCUMBERS ),
+        new ShoppingItem( ShoppingItemData.Vegetable.POTATOES ),
+        new ShoppingItem( ShoppingItemData.Vegetable.TOMATOES )
       ] ),
 
       // candies
