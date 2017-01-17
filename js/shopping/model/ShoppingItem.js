@@ -145,7 +145,7 @@ define( function( require ) {
     } );
 
     /**
-     * When a question is answered correctly, create a corresponding marker.
+     * When a question is answered correctly, create a corresponding marker on the double number line.
      * @param {ShoppingQuestion} question
      */
     var questionCorrectListener = function( question ) {
