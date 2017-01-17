@@ -20,7 +20,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
-  var shelfImage = require( 'image!UNIT_RATES/shelf.png' );
+  var shelfImage = require( 'image!UNIT_RATES/old/shelf.png' );
 
   // constants
   var BACK_DEPTH = 20;

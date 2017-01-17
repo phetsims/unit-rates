@@ -32,7 +32,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   
   // images
-  var scaleOLDImage = require( 'image!UNIT_RATES/scaleOLD.png' );
+  var scaleImage = require( 'image!UNIT_RATES/old/scale.png' );
 
   // strings
   var lbsString = require( 'string!UNIT_RATES/lbs' );
@@ -71,7 +71,7 @@ define( function( require ) {
     this.endMoveCallback = endMoveCallback;
 
     // load the scale image
-    this.scaleNode = new Image( scaleOLDImage );
+    this.scaleNode = new Image( scaleImage );
 
     // a transparent node with the approximate shape of the top of the scale - used for positioning dropped items
     // @private

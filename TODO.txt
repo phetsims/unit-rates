@@ -5,3 +5,7 @@ Scale & shelf
 - persistent placement of each item and bag
 - dev control for showing placement grid
 
+delete js/old/
+delete images/old/
+delete assets/old/
+
