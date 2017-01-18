@@ -1,7 +1,12 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
 /**
- * A scene in the 'Shopping' screen.
+ * A scene in the 'Shopping' screen. A scene has:
+ * - 1 type of item
+ * - N sets of questions
+ * - a double number line
+ * - a scale
+ * - a shelf
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -30,7 +35,7 @@ define( function( require ) {
   var dollarsString = require( 'string!UNIT_RATES/dollars' );
 
   /**
-   * @param {Object} itemData - data structure that describes a type of item, see for example Fruit.APPLES.
+   * @param {Object} itemData - data structure that describes the item, see ShoppingItemData.
    *   Using a data structure like this is an alternative to having a large number of constructor parameters.
    * @param {Object} [options]
    * @constructor
