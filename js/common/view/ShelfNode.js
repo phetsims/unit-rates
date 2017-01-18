@@ -33,16 +33,17 @@ define( function( require ) {
     }, options );
 
     // draw top face clockwise, starting at front-left corner, in pseudo-3D using parallel perspective
-    var selfShape = new Shape()
+    var shelfShape = new Shape()
       .moveTo( 0, 0 )
       .lineTo( shelf.perspectiveXOffset, -shelf.depth )
-      .lineTo( shelf.width - shelf.perspectiveXOffset, -shelf.depth );
+      .lineTo( shelf.width - shelf.perspectiveXOffset, -shelf.depth )
+      .lineTo( shelf.width, 0 );
 
     // add front face
-    selfShape.rect( 0, 0, shelf.width, shelf.height );
+    shelfShape.rect( 0, 0, shelf.width, shelf.height );
 
     // origin at center of top face
-    var shelfNode = new Path( selfShape, {
+    var shelfNode = new Path( shelfShape, {
       fill: options.fill,
       stroke: options.stroke,
       lineWidth: options.lineWidth,
