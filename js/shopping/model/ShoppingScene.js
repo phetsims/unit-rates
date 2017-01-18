@@ -193,6 +193,8 @@ define( function( require ) {
 
       // rest current question set
       this.questionSetsIndexProperty.reset();
+
+      //TODO delete all bags and items, re-stock shelf
     },
 
     /**
