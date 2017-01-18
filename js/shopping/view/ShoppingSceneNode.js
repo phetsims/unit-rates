@@ -47,16 +47,10 @@ define( function( require ) {
     } );
 
     // shelf
-    var shelfNode = new ShelfNode( shoppingScene.shelf, {
-      centerX: layoutBounds.left + ( 0.5 * layoutBounds.width ),
-      bottom: layoutBounds.bottom - 15
-    } );
+    var shelfNode = new ShelfNode( shoppingScene.shelf );
 
     // scale
-    var scaleNode = new ScaleNode( shoppingScene.scale, {
-      centerX: shelfNode.centerX,
-      bottom: shelfNode.top - 75
-    } );
+    var scaleNode = new ScaleNode( shoppingScene.scale );
 
     // button that clears the scale
     var clearScaleButton = new ClearScaleButton( shoppingScene.scale, {

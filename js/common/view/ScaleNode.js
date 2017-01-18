@@ -153,15 +153,17 @@ define( function( require ) {
       bottom: scaleImageNode.bottom - 17
     } );
 
-    assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ scaleImageNode, valueBox ];
-
-    Node.call( this, options );
+    // This type does not propagate options to the supertype because the model determines location.
+    Node.call( this, {
+      children: [ scaleImageNode, valueBox ]
+    } );
 
     // red dot at origin
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 2, { fill: 'red' } ) );
     }
+
+    this.center = scale.location;
 
     // @private
     this.disposeScaleNode = function() {

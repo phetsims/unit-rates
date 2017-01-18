@@ -125,7 +125,7 @@ define( function( require ) {
 
     // @public
     this.scale = new Scale( {
-      location: this.shelf.location.minusXY( 0, 175 ), // centered above the shelf
+      location: this.shelf.location.minusXY( 0, 150 ), // centered above the shelf
       costIsHideable: options.scaleCostIsHideable,
       quantityIsDisplayed: options.scaleQuantityIsDisplayed,
       quantityUnits: options.scaleQuantityUnits

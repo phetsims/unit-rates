@@ -39,7 +39,10 @@ define( function( require ) {
     checkMark: 'green', // check mark for correct answers
     correctQuestion: 'green', // correct answer for other questions
     incorrectQuestion: 'red', // incorrect guess
-    showAnswers: 'lightGray' // show answers in this color when 'showAnswers' query parameter is present
+    showAnswers: 'lightGray', // show answers in this color when 'showAnswers' query parameter is present
+
+    // shelf
+    shelf: 'rgb( 174, 129, 91 )'
   };
 
   unitRates.register( 'URColors', URColors );

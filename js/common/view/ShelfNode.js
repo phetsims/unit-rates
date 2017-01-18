@@ -18,19 +18,13 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
 
   /**
    * @param {Shelf} shelf
-   * @param {Object} [options]
    * @constructor
    */
-  function ShelfNode( shelf, options ) {
-
-    options = _.extend( {
-      fill: 'rgb( 174, 129, 91 )',
-      stroke: 'black',
-      lineWidth: 1
-    }, options );
+  function ShelfNode( shelf ) {
 
     // draw top face clockwise, starting at front-left corner, in pseudo-3D using parallel perspective
     var shelfShape = new Shape()
@@ -44,16 +38,14 @@ define( function( require ) {
 
     // origin at center of top face
     var shelfNode = new Path( shelfShape, {
-      fill: options.fill,
-      stroke: options.stroke,
-      lineWidth: options.lineWidth,
+      fill: URColors.shelf,
+      stroke: 'black',
       lineJoin: 'round',
       centerX: 0,
       y: shelf.depth / 2
     } );
 
-    // Do not propagate options to supertype, positioning is based on model
-    assert && assert( !options.children, 'decoration not supported' );
+    // This type does not propagate options to the supertype because the model determines location.
     Node.call( this, {
       children: [ shelfNode ]
     } );
