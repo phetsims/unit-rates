@@ -17,6 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
@@ -118,7 +119,9 @@ define( function( require ) {
     } );
 
     // @public
-    this.shelf = new Shelf();
+    this.shelf = new Shelf( {
+      location: new Vector2( 512, 575 )
+    } );
 
     // @public
     this.scale = new Scale( {
