@@ -162,7 +162,7 @@ define( function( require ) {
     // red dot at origin, red line where items will be placed
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 2, { fill: 'red' } ) );
-      this.addChild( new Line( -scale.width / 2, 0, scale.width/2, 0, { stroke: 'red' } ) );
+      this.addChild( new Line( -scale.width / 2, 0, scale.width / 2, 0, { stroke: 'red' } ) );
     }
 
     this.center = scale.location;
@@ -196,7 +196,7 @@ define( function( require ) {
    */
   var quantityToString = function( quantity, units ) {
     return StringUtils.format( valueUnitsString,
-      URUtil.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */  ), units );
+      URUtil.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */ ), units );
   };
 
   return inherit( Node, ScaleNode, {
