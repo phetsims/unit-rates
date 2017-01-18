@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * A category in the 'Shopping' screen. A category is a group of related items.
+ * A category in the 'Shopping' screen. A category is a group of related scenes.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -18,28 +18,28 @@ define( function( require ) {
 
   /**
    * @param {HTMLImageElement} image - image used to represent the category
-   * @param {ShoppingItem[]} shoppingItems - items in the category
+   * @param {ShoppingScene[]} shoppingScenes - scenes in the category
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingCategory( image, shoppingItems, options ) {
+  function ShoppingCategory( image, shoppingScenes, options ) {
 
-    assert && assert( shoppingItems.length > 0, 'at least 1 ShoppingItem is required' );
+    assert && assert( shoppingScenes.length > 0, 'at least 1 ShoppingScene is required' );
 
     options = _.extend( {
 
-      // index of the item that is initially selected, randomly chosen
-      shoppingItemIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, shoppingItems.length - 1 ) : 0
+      // index of the scene that is initially selected, randomly chosen
+      shoppingSceneIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, shoppingScenes.length - 1 ) : 0
     }, options );
 
     // validate options
-    assert && assert( options.shoppingItemIndex >= 0 && options.shoppingItemIndex < shoppingItems.length,
-      'invalid shoppingItemIndex: ' + options.shoppingItemIndex );
+    assert && assert( options.shoppingSceneIndex >= 0 && options.shoppingSceneIndex < shoppingScenes.length,
+      'invalid shoppingSceneIndex: ' + options.shoppingSceneIndex );
 
     // @public (read-only)
     this.image = image;
-    this.shoppingItems = shoppingItems;
-    this.shoppingItemProperty = new Property( shoppingItems[ options.shoppingItemIndex ] );
+    this.shoppingScenes = shoppingScenes;
+    this.shoppingSceneProperty = new Property( shoppingScenes[ options.shoppingSceneIndex ] );
   }
 
   unitRates.register( 'ShoppingCategory', ShoppingCategory );
@@ -49,14 +49,14 @@ define( function( require ) {
     // @public
     reset: function() {
 
-      // Reset all shopping items
-      this.shoppingItems.forEach( function( shoppingItem ) {
-        shoppingItem.reset();
+      // Reset all scenes
+      this.shoppingScenes.forEach( function( shoppingScene ) {
+        shoppingScene.reset();
       } );
 
       // Randomly choose an item
-      var shoppingItemIndex = URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, this.shoppingItems.length - 1 ) : 0;
-      this.shoppingItemProperty.value = this.shoppingItems[ shoppingItemIndex ];
+      var shoppingSceneIndex = URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, this.shoppingScenes.length - 1 ) : 0;
+      this.shoppingSceneProperty.value = this.shoppingScenes[ shoppingSceneIndex ];
     }
   } );
 } );

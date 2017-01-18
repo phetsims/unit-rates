@@ -1,7 +1,7 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
 /**
- * A type of item in the 'Shopping' screen.
+ * A scene in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -35,7 +35,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingItem( itemData, options ) {
+  function ShoppingScene( itemData, options ) {
 
     // verify that itemData has all required properties
     assert && ShoppingItemData.assertIsItemData( itemData );
@@ -161,9 +161,9 @@ define( function( require ) {
     } );
   }
 
-  unitRates.register( 'ShoppingItem', ShoppingItem );
+  unitRates.register( 'ShoppingScene', ShoppingScene );
 
-  return inherit( Object, ShoppingItem, {
+  return inherit( Object, ShoppingScene, {
 
     // @public
     reset: function() {

@@ -1,7 +1,7 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
 /**
- * View components that are specific to a category of items (e.g. Fruit) in the 'Shopping' screen.
+ * View components that are specific to a scene in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -13,8 +13,8 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   // sim modules
-  var ShoppingItemComboBox = require( 'UNIT_RATES/shopping/view/ShoppingItemComboBox' );
-  var ShoppingItemNode = require( 'UNIT_RATES/shopping/view/ShoppingItemNode' );
+  var ShoppingSceneComboBox = require( 'UNIT_RATES/shopping/view/ShoppingSceneComboBox' );
+  var ShoppingSceneNode = require( 'UNIT_RATES/shopping/view/ShoppingSceneNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -32,13 +32,13 @@ define( function( require ) {
 
     Node.call( this );
 
-    // parent for stuff that's specific to shopping item type, to maintain rendering order
-    var shoppingItemNode = null; // created below
-    var shoppingItemParent = new Node();
-    this.addChild( shoppingItemParent );
+    // parent for stuff that's specific to a scene, to maintain rendering order
+    var shoppingSceneNode = null; // created below
+    var shoppingSceneParent = new Node();
+    this.addChild( shoppingSceneParent );
 
-    // combo box, for selecting a ShoppingItem
-    var comboBox = new ShoppingItemComboBox( category.shoppingItems, category.shoppingItemProperty, this, {
+    // combo box, for selecting a scene
+    var comboBox = new ShoppingSceneComboBox( category.shoppingScenes, category.shoppingSceneProperty, this, {
       left: layoutBounds.left + 15,
       bottom: layoutBounds.bottom - 15
     } );
@@ -52,22 +52,22 @@ define( function( require ) {
     };
     categoryProperty.link( categoryObserver ); // unlink in dispose
 
-    // When the selected item changes, replace the UI elements that are item-specific
-    var shoppingItemObserver = function( shoppingItem ) {
+    // When the selected scene changes, replace the UI elements that are item-specific
+    var shoppingSceneObserver = function( shoppingScene ) {
 
-      if ( shoppingItemNode ) {
-        shoppingItemParent.removeChild( shoppingItemNode );
-        shoppingItemNode.dispose();
+      if ( shoppingSceneNode ) {
+        shoppingSceneParent.removeChild( shoppingSceneNode );
+        shoppingSceneNode.dispose();
       }
 
-      shoppingItemNode = new ShoppingItemNode( shoppingItem, layoutBounds, keypadLayer, viewProperties );
-      shoppingItemParent.addChild( shoppingItemNode );
+      shoppingSceneNode = new ShoppingSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties );
+      shoppingSceneParent.addChild( shoppingSceneNode );
     };
-    category.shoppingItemProperty.link( shoppingItemObserver ); // unlink in dispose
+    category.shoppingSceneProperty.link( shoppingSceneObserver ); // unlink in dispose
 
     this.diposeShoppingCategoryNode = function() {
       categoryProperty.unlink( categoryObserver );
-      category.shoppingItemProperty.unlink( shoppingItemObserver );
+      category.shoppingSceneProperty.unlink( shoppingSceneObserver );
     };
   }
 

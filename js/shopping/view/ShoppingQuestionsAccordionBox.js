@@ -26,12 +26,12 @@ define( function( require ) {
   var questionsString = require( 'string!UNIT_RATES/questions' );
 
   /**
-   * @param {ShoppingItem} shoppingItem
+   * @param {ShoppingScene} shoppingScene
    * @param {Node} keypadLayer
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingQuestionsAccordionBox( shoppingItem, keypadLayer, options ) {
+  function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
 
     options = _.extend( {
 
@@ -57,7 +57,7 @@ define( function( require ) {
     var self = this;
 
     // 'Unit Rate?' question
-    var unitRateQuestionNode = new ShoppingQuestionNode( shoppingItem.unitRateQuestion, this, keypadLayer, {
+    var unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, this, keypadLayer, {
       denominatorVisible: true
     } );
 
@@ -78,14 +78,14 @@ define( function( require ) {
       }
       questionsParent.setChildren( questionNodes );
     };
-    shoppingItem.questionSetProperty.link( questionSetObserver );// unlink in dispose
+    shoppingScene.questionSetProperty.link( questionSetObserver );// unlink in dispose
 
     // Refresh button, advances to the next question set
     var refreshButton = new FontAwesomeButton( 'refresh', {
       iconScale: 0.5,
       baseColor: URColors.refreshButton,
       listener: function() {
-        shoppingItem.nextQuestionSet();
+        shoppingScene.nextQuestionSet();
       }
     } );
     refreshButton.touchArea = refreshButton.localBounds.dilatedXY( 5, 5 );
@@ -105,7 +105,7 @@ define( function( require ) {
 
     // @private cleanup that's specific to this Node
     this.disposeShoppingQuestionsAccordionBox = function() {
-      shoppingItem.questionSetProperty.unlink( questionSetObserver );
+      shoppingScene.questionSetProperty.unlink( questionSetObserver );
       unitRateQuestionNode.dispose();
       questionsParent.getChildren().forEach( function( child ) {
         assert && assert( child instanceof ShoppingQuestionNode );

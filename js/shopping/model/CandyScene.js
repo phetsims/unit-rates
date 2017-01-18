@@ -1,8 +1,8 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
 /**
- * A candy item in the Shopping screen.
- * Candy differs from other item types, as described by the ShoppingItem constructor options.
+ * The candy scene in the Shopping screen.
+ * Candy differs significantly from other item types, as described by the ShoppingScene constructor options.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,7 +14,7 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
 
   // sim modules
-  var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
+  var ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
@@ -23,11 +23,11 @@ define( function( require ) {
   var poundsString = require( 'string!UNIT_RATES/pounds' );
 
   /**
-   * @param {Object} itemData - data structure that describes a type of candy, see for example Candy.PURPLE_CANDY
+   * @param {Object} itemData - data structure that describes a type of candy, see ShoppingItemData
    * @constructor
    */
-  function Candy( itemData ) {
-    ShoppingItem.call( this, itemData, {
+  function CandyScene( itemData ) {
+    ShoppingScene.call( this, itemData, {
 
       // Candy questions use 'pound' and 'pounds' for the units, e.g. 'Cost of 2.2 pounds?'
       questionSingularUnits: poundString,
@@ -50,7 +50,7 @@ define( function( require ) {
     } );
   }
 
-  unitRates.register( 'Candy', Candy );
+  unitRates.register( 'CandyScene', CandyScene );
 
-  return inherit( ShoppingItem, Candy );
+  return inherit( ShoppingScene, CandyScene );
 } );

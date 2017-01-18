@@ -1,7 +1,7 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
 /**
- * Combo box for selecting a ShoppingItem.
+ * Combo box for selecting a scene in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -24,19 +24,19 @@ define( function( require ) {
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
   /**
-   * @param {ShoppingItem[]} shoppingItems
-   * @param {Property.<ShoppingItem>} shoppingItemProperty - the currently selected shopping item
+   * @param {ShoppingScene[]} shoppingScenes
+   * @param {Property.<ShoppingScene>} shoppingSceneProperty - the selected scene
    * @param {Node} parentNode - the parent node of the combo box
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingItemComboBox( shoppingItems, shoppingItemProperty, parentNode, options ) {
+  function ShoppingSceneComboBox( shoppingScenes, shoppingSceneProperty, parentNode, options ) {
 
-    assert && assert( shoppingItems && shoppingItems.length > 0, 'at least 1 ShoppingItem is required' );
+    assert && assert( shoppingScenes && shoppingScenes.length > 0, 'at least 1 ShoppingScene is required' );
 
     options = _.extend( {
 
-      // ShoppingItemComboBox options
+      // ShoppingSceneComboBox options
       iconSize: new Dimension2( 30, 30 ),
 
       // ComboBox options
@@ -51,26 +51,26 @@ define( function( require ) {
 
     // describe items in the combo box
     var contentArray = [];
-    shoppingItems.forEach( function( shoppingItems ) {
-      contentArray.push( createItem( shoppingItems, options.iconSize ) );
+    shoppingScenes.forEach( function( shoppingScenes ) {
+      contentArray.push( createItem( shoppingScenes, options.iconSize ) );
     } );
 
-    ComboBox.call( this, contentArray, shoppingItemProperty, parentNode, options );
+    ComboBox.call( this, contentArray, shoppingSceneProperty, parentNode, options );
   }
 
-  unitRates.register( 'ShoppingItemComboBox', ShoppingItemComboBox );
+  unitRates.register( 'ShoppingSceneComboBox', ShoppingSceneComboBox );
 
   /**
    * Creates an item for the combo box.
    *
-   * @param {ShoppingItem} shoppingItem
+   * @param {ShoppingScene} shoppingScene
    * @param {Dimension2} iconSize
    * @returns {{node: Node, value: *}}
    */
-  function createItem( shoppingItem, iconSize ) {
+  function createItem( shoppingScene, iconSize ) {
 
     // Scale the image down if it's larger than iconSize
-    var imageNode = new Image( shoppingItem.itemImage );
+    var imageNode = new Image( shoppingScene.itemImage );
     if ( imageNode.width > iconSize.width || imageNode.height > iconSize.height ) {
       var scale = Math.min(  iconSize.width / imageNode.width, iconSize.height / imageNode.height );
       imageNode.setScaleMagnitude( scale );
@@ -85,7 +85,7 @@ define( function( require ) {
     } );
 
     // Use the plural name to label the item
-    var labelNode = new Text( shoppingItem.pluralName, {
+    var labelNode = new Text( shoppingScene.pluralName, {
       font: new URFont( 18 ),
       maxWidth: 140,
       children: [ new HStrut( 140 ) ] // makes labels for all items the same width
@@ -98,8 +98,8 @@ define( function( require ) {
       children: [ iconNode, labelNode ]
     } );
 
-    return ComboBox.createItem( itemNode, shoppingItem );
+    return ComboBox.createItem( itemNode, shoppingScene );
   }
 
-  return inherit( ComboBox, ShoppingItemComboBox );
+  return inherit( ComboBox, ShoppingSceneComboBox );
 } );

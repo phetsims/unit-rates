@@ -13,12 +13,12 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // sim modules
-  var Candy = require( 'UNIT_RATES/shopping/model/Candy' );
-  var Fruit = require( 'UNIT_RATES/shopping/model/Fruit' );
+  var CandyScene = require( 'UNIT_RATES/shopping/model/CandyScene' );
+  var FruitScene = require( 'UNIT_RATES/shopping/model/FruitScene' );
   var ShoppingCategory = require( 'UNIT_RATES/shopping/model/ShoppingCategory' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Vegetable = require( 'UNIT_RATES/shopping/model/Vegetable' );
+  var VegetableScene = require( 'UNIT_RATES/shopping/model/VegetableScene' );
 
   // images
   var appleImage = require( 'image!UNIT_RATES/apple.png' );
@@ -38,29 +38,29 @@ define( function( require ) {
     // @public (read-only) items are grouped into categories
     this.categories = [
 
-      //TODO revisit this, I don't like how it's possible to pass a ShoppingItemData.Fruit to a non-Fruit
+      //TODO revisit this, I don't like how it's possible to pass a ShoppingItemData.Fruit to a non-FruitScene
       // fruits
       new ShoppingCategory( appleImage, [
-        new Fruit( ShoppingItemData.Fruit.APPLES ),
-        new Fruit( ShoppingItemData.Fruit.LEMONS ),
-        new Fruit( ShoppingItemData.Fruit.ORANGES ),
-        new Fruit( ShoppingItemData.Fruit.PEARS )
+        new FruitScene( ShoppingItemData.Fruit.APPLES ),
+        new FruitScene( ShoppingItemData.Fruit.LEMONS ),
+        new FruitScene( ShoppingItemData.Fruit.ORANGES ),
+        new FruitScene( ShoppingItemData.Fruit.PEARS )
       ] ),
 
       // vegetables
       new ShoppingCategory( carrotImage, [
-        new Vegetable( ShoppingItemData.Vegetable.CARROTS ),
-        new Vegetable( ShoppingItemData.Vegetable.CUCUMBERS ),
-        new Vegetable( ShoppingItemData.Vegetable.POTATOES ),
-        new Vegetable( ShoppingItemData.Vegetable.TOMATOES )
+        new VegetableScene( ShoppingItemData.Vegetable.CARROTS ),
+        new VegetableScene( ShoppingItemData.Vegetable.CUCUMBERS ),
+        new VegetableScene( ShoppingItemData.Vegetable.POTATOES ),
+        new VegetableScene( ShoppingItemData.Vegetable.TOMATOES )
       ] ),
 
       // candies
       new ShoppingCategory( purpleCandyImage, [
-        new Candy( ShoppingItemData.Candy.PURPLE_CANDY ),
-        new Candy( ShoppingItemData.Candy.RED_CANDY ),
-        new Candy( ShoppingItemData.Candy.GREEN_CANDY ),
-        new Candy( ShoppingItemData.Candy.BLUE_CANDY )
+        new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY ),
+        new CandyScene( ShoppingItemData.Candy.RED_CANDY ),
+        new CandyScene( ShoppingItemData.Candy.GREEN_CANDY ),
+        new CandyScene( ShoppingItemData.Candy.BLUE_CANDY )
       ] )
     ];
 

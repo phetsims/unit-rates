@@ -56,7 +56,7 @@ define( function( require ) {
     /**
      * Creates question sets from raw data.
      *
-     * @param {number[][]} questionQuantities - number of items for each question, see for example ShoppingItemData.Fruit.APPLES.questionQuantities
+     * @param {number[][]} questionQuantities - number of items for each question, see ShoppingItemData
      * @param {number} unitRate
      * @param {string} singularUnits - denominator units to use for questions with singular quantities
      * @param {string} pluralUnits - denominator units to use for questions with plural quantities

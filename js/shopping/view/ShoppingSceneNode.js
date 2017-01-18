@@ -1,7 +1,7 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
 /**
- * View components that are specific to a type of item (e.g. Apples) in the 'Shopping' screen.
+ * View components that are specific to a scene in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -21,45 +21,45 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {ShoppingItem} shoppingItem
+   * @param {ShoppingScene} shoppingScene
    * @param {Bounds2} layoutBounds
    * @param {KeypadLayer} keypadLayer
    * @param {ShoppingViewProperties} viewProperties
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingItemNode( shoppingItem, layoutBounds, keypadLayer, viewProperties, options ) {
+  function ShoppingSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties, options ) {
 
     options = options || {};
 
     // Double number line
-    var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingItem.doubleNumberLine, shoppingItem.markerEditor, keypadLayer, {
+    var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
       expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
       left: layoutBounds.minX + 15,
       top: layoutBounds.minY + 15
     } );
 
     // Questions
-    var questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingItem, keypadLayer, {
+    var questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, {
       expandedProperty: viewProperties.questionsExpandedProperty,
       right: layoutBounds.right - 15,
       top: doubleNumberLineAccordionBox.top
     } );
 
     // shelf
-    var shelfNode = new ShelfNode( shoppingItem.shelf, {
+    var shelfNode = new ShelfNode( shoppingScene.shelf, {
       centerX: layoutBounds.left + ( 0.5 * layoutBounds.width ),
       bottom: layoutBounds.bottom - 15
     } );
 
     // scale
-    var scaleNode = new ScaleNode( shoppingItem.scale, {
+    var scaleNode = new ScaleNode( shoppingScene.scale, {
       centerX: shelfNode.centerX,
       bottom: shelfNode.top - 75
     } );
 
     // button that clears the scale
-    var clearScaleButton = new ClearScaleButton( shoppingItem.scale, {
+    var clearScaleButton = new ClearScaleButton( shoppingScene.scale, {
       right: scaleNode.left - 15,
       bottom: scaleNode.bottom
     } );
@@ -70,20 +70,20 @@ define( function( require ) {
     Node.call( this, options );
 
     // @private
-    this.disposeShoppingItemNode = function() {
+    this.disposeShoppingSceneNode = function() {
       doubleNumberLineAccordionBox.dispose();
       questionsAccordionBox.dispose();
     };
   }
 
-  unitRates.register( 'ShoppingItemNode', ShoppingItemNode );
+  unitRates.register( 'ShoppingSceneNode', ShoppingSceneNode );
 
-  return inherit( Node, ShoppingItemNode, {
+  return inherit( Node, ShoppingSceneNode, {
 
     // @public
     dispose: function() {
       Node.prototype.dispose && Node.prototype.dispose.call( this );
-      this.disposeShoppingItemNode();
+      this.disposeShoppingSceneNode();
     }
   } );
 } );
