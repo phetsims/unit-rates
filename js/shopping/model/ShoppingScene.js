@@ -118,7 +118,7 @@ define( function( require ) {
     } );
 
     // @public
-    this.shelf = new Shelf( this );
+    this.shelf = new Shelf();
 
     // @public
     this.scale = new Scale( {
