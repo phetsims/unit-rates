@@ -36,14 +36,10 @@ define( function( require ) {
     var selfShape = new Shape()
       .moveTo( 0, 0 )
       .lineTo( shelf.perspectiveXOffset, -shelf.depth )
-      .lineTo( shelf.width - shelf.perspectiveXOffset, -shelf.depth )
-      .lineTo( shelf.width, 0 )
-      .lineTo( 0, 0 );
+      .lineTo( shelf.width - shelf.perspectiveXOffset, -shelf.depth );
 
-    // draw front face counterclockwise
-    selfShape.lineTo( 0, shelf.height )
-      .lineTo( shelf.width, shelf.height )
-      .lineTo( shelf.width, 0 );
+    // add front face
+    selfShape.rect( 0, 0, shelf.width, shelf.height );
 
     // origin at center of top face
     var shelfNode = new Path( selfShape, {
