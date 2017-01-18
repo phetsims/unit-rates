@@ -101,6 +101,7 @@ define( function( require ) {
     this.itemImage = itemData.itemImage;
     this.bagImage = itemData.bagImage;
 
+    //TODO Shopping Lab screen requires mutable unit rate. Factor out a base type that excludes questions?
     // unit rate is constant in this model, but some model elements require a Property
     var unitRateProperty = new Property( this.unitRate );
 
