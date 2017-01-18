@@ -2,6 +2,7 @@
 
 /**
  * View of the scale.
+ * Origin is at the center of the top surface.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -9,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Circle = require( 'SCENERY/nodes/Circle' );
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
@@ -51,7 +53,10 @@ define( function( require ) {
       valueFill: 'black'
     }, options );
 
+    // Body of the scale, origin at center of top surface
     var scaleImageNode = new Image( scaleImage, { scale: 0.5 } );
+    scaleImageNode.x = -scaleImageNode.width / 2;
+    scaleImageNode.y = -0.1 * scaleImageNode.height; // multiplier is specific to image file
 
     var valueBoxChildren = [];
 
@@ -152,6 +157,11 @@ define( function( require ) {
     options.children = [ scaleImageNode, valueBox ];
 
     Node.call( this, options );
+
+    // red dot at origin
+    if ( phet.chipper.queryParameters.dev ) {
+      this.addChild( new Circle( 2, { fill: 'red' } ) );
+    }
 
     // @private
     this.disposeScaleNode = function() {

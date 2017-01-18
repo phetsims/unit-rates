@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -22,12 +23,14 @@ define( function( require ) {
   function Scale( options ) {
 
     options = _.extend( {
+      location: new Vector2( 0, 0 ), // {Vector2} location of the center of the scale's top surface
       costIsHideable: false, // {boolean} whether cost is hideable
       quantityIsDisplayed: false, // {boolean} whether quantity is displayed
       quantityUnits: '' // {string} units for quantity
     }, options );
 
     // @public ( read-only)
+    this.location = options.location;
     this.costIsHideable = options.costIsHideable;
     this.quantityIsDisplayed = options.quantityIsDisplayed;
     this.quantityUnits = options.quantityUnits;

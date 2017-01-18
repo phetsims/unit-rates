@@ -125,10 +125,11 @@ define( function( require ) {
 
     // @public
     this.scale = new Scale( {
+      location: this.shelf.location.minusXY( 0, 175 ), // centered above the shelf
       costIsHideable: options.scaleCostIsHideable,
       quantityIsDisplayed: options.scaleQuantityIsDisplayed,
       quantityUnits: options.scaleQuantityUnits
-    });
+    } );
 
     // @public {ShoppingQuestion} 'Unit Rate?'
     this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( itemData.unitRate,
