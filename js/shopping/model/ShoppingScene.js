@@ -120,7 +120,7 @@ define( function( require ) {
 
     // @public
     this.shelf = new Shelf( {
-      location: new Vector2( 512, 575 )
+      location: new Vector2( 512, 584 )
     } );
 
     // @public
