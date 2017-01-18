@@ -24,6 +24,7 @@ define( function( require ) {
 
     options = _.extend( {
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the scale's top surface
+      width: 300, // {number} width of the top surface of the scale
       costIsHideable: false, // {boolean} whether cost is hideable
       quantityIsDisplayed: false, // {boolean} whether quantity is displayed
       quantityUnits: '' // {string} units for quantity
@@ -31,6 +32,7 @@ define( function( require ) {
 
     // @public ( read-only)
     this.location = options.location;
+    this.width = options.width;
     this.costIsHideable = options.costIsHideable;
     this.quantityIsDisplayed = options.quantityIsDisplayed;
     this.quantityUnits = options.quantityUnits;

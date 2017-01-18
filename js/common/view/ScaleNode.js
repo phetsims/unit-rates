@@ -15,6 +15,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -158,9 +159,10 @@ define( function( require ) {
       children: [ scaleImageNode, valueBox ]
     } );
 
-    // red dot at origin
+    // red dot at origin, red line where items will be placed
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 2, { fill: 'red' } ) );
+      this.addChild( new Line( -scale.width / 2, 0, scale.width/2, 0, { stroke: 'red' } ) );
     }
 
     this.center = scale.location;
