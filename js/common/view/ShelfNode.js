@@ -14,9 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -34,34 +32,33 @@ define( function( require ) {
       lineWidth: 1
     }, options );
 
-    // top face, drawn in pseudo-3D using parallel perspective, origin at center
-    var topShape = new Shape()
+    // draw top face clockwise, starting at front-left corner, in pseudo-3D using parallel perspective
+    var selfShape = new Shape()
       .moveTo( 0, 0 )
       .lineTo( shelf.perspectiveXOffset, -shelf.depth )
       .lineTo( shelf.width - shelf.perspectiveXOffset, -shelf.depth )
       .lineTo( shelf.width, 0 )
-      .close();
-    var topNode = new Path( topShape, {
+      .lineTo( 0, 0 );
+
+    // draw front face counterclockwise
+    selfShape.lineTo( 0, shelf.height )
+      .lineTo( shelf.width, shelf.height )
+      .lineTo( shelf.width, 0 );
+
+    // origin at center of top face
+    var shelfNode = new Path( selfShape, {
       fill: options.fill,
       stroke: options.stroke,
       lineWidth: options.lineWidth,
       lineJoin: 'round',
-      center: new Vector2( 0, 0 )
-    } );
-
-    // front face
-    var frontNode = new Rectangle( 0, 0, shelf.width, shelf.height, {
-      fill: options.fill,
-      stroke: options.stroke,
-      lineWidth: options.lineWidth,
-      left: topNode.left,
-      top: topNode.bottom - ( options.lineWidth / 2 )
+      centerX: 0,
+      y: shelf.depth / 2
     } );
 
     // Do not propagate options to supertype, positioning is based on model
     assert && assert( !options.children, 'decoration not supported' );
     Node.call( this, {
-      children: [ frontNode, topNode ]
+      children: [ shelfNode ]
     } );
 
     // red dot at origin
