@@ -48,6 +48,7 @@ define( function( require ) {
 
     // shelf
     var shelfNode = new ShelfNode( shoppingScene.shelf );
+    console.log( layoutBounds.bottom - shelfNode.bottom );
 
     // scale
     var scaleNode = new ScaleNode( shoppingScene.scale );

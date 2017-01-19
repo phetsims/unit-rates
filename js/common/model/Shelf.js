@@ -22,15 +22,16 @@ define( function( require ) {
   function Shelf( options ) {
 
     options = _.extend( {
-      location: new Vector2( 0, 0 ) // {Vector2} location of the center of the shelf's top face
+      location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
+      width: 325 // {number} width of the top face, at its center
     }, options );
 
     // @public (read-only)
     this.location = options.location;
-    this.width = 356; // {number} width of the front face
+    this.width = options.width;
     this.height = 17; // {number} height of the front face
     this.depth = 20; // {number} depth, after flattening to 2D
-    this.perspectiveXOffset = 25; // {number} offset for parallel perspective, after flattening to 2D
+    this.perspectiveXOffset = 15; // {number} offset for parallel perspective, after flattening to 2D
 
     //TODO
   }

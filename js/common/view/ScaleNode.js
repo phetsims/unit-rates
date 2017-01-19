@@ -165,7 +165,8 @@ define( function( require ) {
       this.addChild( new Line( -scale.width / 2, 0, scale.width / 2, 0, { stroke: 'red' } ) );
     }
 
-    this.center = scale.location;
+    // move to model location
+    this.translation = scale.location;
 
     // @private
     this.disposeScaleNode = function() {
