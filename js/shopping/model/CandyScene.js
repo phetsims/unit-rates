@@ -40,9 +40,6 @@ define( function( require ) {
         majorMarkerDecimals: 1
       },
 
-      // All Candy questions have the same form, i.e. 'Cost of N pounds?'
-      uniformQuestions: true,
-
       // Scale displays quantity in 'lbs' for Candy
       scaleQuantityIsDisplayed: true,
       scaleQuantityUnits: lbsString,

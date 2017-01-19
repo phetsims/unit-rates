@@ -60,16 +60,13 @@ define( function( require ) {
      * @param {number} unitRate
      * @param {string} singularUnits - denominator units to use for questions with singular quantities
      * @param {string} pluralUnits - denominator units to use for questions with plural quantities
-     * @param {boolean} uniformQuestions -
-     *        true: all questions are of the same form, e.g. 'Cost of 3 Apples?'
-     *        false: the last question will have a different form, e.g. 'Apples for $3.00?'
      * @param {Object} numeratorOptions - see ShoppingItem.numeratorOptions
      * @param {Object} denominatorOptions - see ShoppingItem.denominatorOptions
      * @returns {ShoppingQuestion[][]}
      * @public
      * @static
      */
-    createQuestionSets: function( questionQuantities, unitRate, singularUnits, pluralUnits, uniformQuestions, numeratorOptions, denominatorOptions ) {
+    createQuestionSets: function( questionQuantities, unitRate, singularUnits, pluralUnits, numeratorOptions, denominatorOptions ) {
 
       var questionSets = [];  // {ShoppingQuestion[][]}
 
@@ -77,21 +74,17 @@ define( function( require ) {
 
         var questions = [];
 
-        for ( var i = 0; i < quantities.length; i++ ) {
-          var quantity = quantities[ i ];
-          if ( i < quantities.length - 1 || uniformQuestions ) {
-
-            // e.g. 'Cost of 3 Apples?'
-            questions.push( createCostOfQuestion( quantity, unitRate, singularUnits, pluralUnits,
-              numeratorOptions, denominatorOptions ) );
-          }
-          else {
-
-            // optionally, the last question has a different form, e.g. 'Apples for $3.00?'
-            questions.push( createItemsForQuestion( quantity, unitRate, singularUnits, pluralUnits,
-              numeratorOptions, denominatorOptions ) );
-          }
+        // the first N-1 questions are of the form 'Cost of 3 Apples?'
+        for ( var i = 0; i < quantities.length - 1; i++ ) {
+          questions.push( createCostOfQuestion( quantities[ i ],
+            unitRate, singularUnits, pluralUnits,
+            numeratorOptions, denominatorOptions ) );
         }
+
+        // the last question is of the form 'Apples for $3.00?'
+        questions.push( createItemsForQuestion( quantities[ quantities.length - 1 ],
+          unitRate, singularUnits, pluralUnits,
+          numeratorOptions, denominatorOptions ) );
 
         questionSets.push( questions );
       } );
