@@ -60,13 +60,14 @@ define( function( require ) {
      * @param {number} unitRate
      * @param {string} singularUnits - denominator units to use for questions with singular quantities
      * @param {string} pluralUnits - denominator units to use for questions with plural quantities
+     * @param {string} amountOfQuestionUnits - units used for "Apples for $10.00?" type questions
      * @param {Object} numeratorOptions - see ShoppingItem.numeratorOptions
      * @param {Object} denominatorOptions - see ShoppingItem.denominatorOptions
      * @returns {ShoppingQuestion[][]}
      * @public
      * @static
      */
-    createQuestionSets: function( questionQuantities, unitRate, singularUnits, pluralUnits, numeratorOptions, denominatorOptions ) {
+    createQuestionSets: function( questionQuantities, unitRate, singularUnits, pluralUnits, amountOfQuestionUnits, numeratorOptions, denominatorOptions ) {
 
       var questionSets = [];  // {ShoppingQuestion[][]}
 
@@ -83,7 +84,7 @@ define( function( require ) {
 
         // the last question is of the form 'Apples for $3.00?'
         questions.push( createItemsForQuestion( quantities[ quantities.length - 1 ],
-          unitRate, singularUnits, pluralUnits,
+          unitRate, singularUnits, pluralUnits, amountOfQuestionUnits,
           numeratorOptions, denominatorOptions ) );
 
         questionSets.push( questions );
@@ -137,11 +138,12 @@ define( function( require ) {
    * @param {number} unitRate
    * @param {string} singularUnits
    * @param {string} pluralUnits
+   * @param {string} amountOfQuestionUnits - units used for "Apples for $10.00?" type questions
    * @param {Object} numeratorOptions - see ShoppingItem options.numeratorOptions
    * @param {Object} denominatorOptions - see ShoppingItem options.denominatorOptions
    * @returns {ShoppingQuestion}
    */
-  var createItemsForQuestion = function( denominator, unitRate, singularUnits, pluralUnits, numeratorOptions, denominatorOptions ) {
+  var createItemsForQuestion = function( denominator, unitRate, singularUnits, pluralUnits, amountOfQuestionUnits, numeratorOptions, denominatorOptions ) {
 
     // answer
     var answer = Util.toFixedNumber( denominator, denominatorOptions.maxDecimals );
@@ -161,7 +163,7 @@ define( function( require ) {
 
     // 'Apples for $4.00?'
     var questionString = StringUtils.format( itemsForAmountString,
-      pluralUnits,
+      amountOfQuestionUnits,
       URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
     return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, denominatorOptions );

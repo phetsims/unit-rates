@@ -56,6 +56,7 @@ define( function( require ) {
       // questions
       questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
       questionPluralUnits: itemData.pluralName,  // {string} units for questions with plural quantities
+      amountOfQuestionUnits: itemData.pluralName,  // {string} units used for "Apples for $10.00?" type questions
 
       // scale
       scaleCostIsHideable: false, // {boolean} whether cost is hideable on the scale
@@ -136,7 +137,8 @@ define( function( require ) {
 
     // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
     this.questionSets = ShoppingQuestionFactory.createQuestionSets( itemData.questionQuantities, itemData.unitRate,
-      options.questionSingularUnits, options.questionPluralUnits, numeratorOptions, denominatorOptions );
+      options.questionSingularUnits, options.questionPluralUnits, options.amountOfQuestionUnits,
+      numeratorOptions, denominatorOptions );
 
     // Randomize the order of the question sets
     if ( URQueryParameters.randomEnabled ) {
