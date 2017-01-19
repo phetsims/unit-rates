@@ -8,4 +8,4 @@ Scale & shelf
 delete js/old/
 delete images/old/
 delete assets/old/
-
+purge unused strings
