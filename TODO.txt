@@ -1,6 +1,9 @@
 TODO list for unit-rates
 
 Scale & shelf
+- clean up initial positioning of bags on shelf
+- add drag handling to bags
+- get shelf+scale working for just bags, then add items
 - more logical placement algorithm
 - persistent placement of each item and bag
 - dev control for showing placement grid
