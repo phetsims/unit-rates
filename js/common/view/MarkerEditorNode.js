@@ -17,7 +17,6 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
 
   // sim modules
   var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
