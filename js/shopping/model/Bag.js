@@ -21,7 +21,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingBag( bagImage, itemImage, options ) {
+  function Bag( bagImage, itemImage, options ) {
 
     options = _.extend( {
       bagsOpen: false, // {boolean} do bags 'open' to produce items?
@@ -36,19 +36,19 @@ define( function( require ) {
     Movable.call( this, options );
 
     // @private
-    this.disposeShoppingBag = function() {
+    this.disposeBag = function() {
       //TODO if ( options.bagsOpen ) { create options.quantity ShoppingItem instances and notify observers }
     };
   }
 
   unitRates.register( 'Movable', Movable );
 
-  return inherit( Movable, ShoppingBag, {
+  return inherit( Movable, Bag, {
 
     // @public
     dispose: function() {
       Movable.prototype.dispose.call( this );
-      this.disposeShoppingBag();
+      this.disposeBag();
     }
   } );
 } );
