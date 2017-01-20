@@ -2,6 +2,7 @@
 
 /**
  * Model of a bag that contains shopping items.
+ * Origin is at the bottom center of the bag.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -16,20 +17,21 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {HTMLImageElement} bagImage - image used by the view to represent this bag
-   * @param {ShoppingItem[]} shoppingItems - the shopping items that are in the bag
+   * @param {HTMLImageElement} image - image used by the view to represent this bag
    * @param {Object} [options]
    * @constructor
    */
-  function Bag( bagImage, shoppingItems, options ) {
+  function Bag( image, options ) {
 
     options = _.extend( {
-      bagOpens: false // {boolean} do bags 'open' to produce items?
+
+      // {ShoppingItem[]|null} items in the bag, null means the bag does not open when place on the scale
+      shoppingItems: null
     }, options );
 
     // @public (read-only)
-    this.bagImage = bagImage;
-    this.shoppingItems = shoppingItems;
+    this.image = image;
+    this.shoppingItems = options.shoppingItems;
 
     Movable.call( this, options );
 
@@ -37,13 +39,13 @@ define( function( require ) {
     this.disposeBag = function() {
 
       // dispose of all shopping items that are in the bag
-      shoppingItems.forEach( function( shoppingItem ) {
+      options.shoppingItems.forEach( function( shoppingItem ) {
         shoppingItem.dispose();
       } );
     };
   }
 
-  unitRates.register( 'Movable', Movable );
+  unitRates.register( 'Bag', Bag );
 
   return inherit( Movable, Bag, {
 

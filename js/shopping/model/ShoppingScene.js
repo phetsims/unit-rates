@@ -20,11 +20,13 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
+  var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
   var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
+  var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingQuestionFactory = require( 'UNIT_RATES/shopping/model/ShoppingQuestionFactory' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -62,7 +64,7 @@ define( function( require ) {
       scaleCostIsCollapsible: true, // {boolean} whether cost is collapsible on the scale
       scaleQuantityIsDisplayed: false, // {boolean} whether quantity is displayed on the scale
       scaleQuantityUnits: '', // {string} units for quantity on scale
-      bagsOpen: true // {boolean} do bags open to display individual items?
+      bagsOpen: false // {boolean} do bags open to display individual items?
 
     }, options );
 
@@ -129,7 +131,7 @@ define( function( require ) {
 
     // @public
     this.scale = new Scale( {
-      location: this.shelf.location.minusXY( 0, 150 ), // centered above the shelf
+      location: this.shelf.location.minusXY( 0, 200 ), // centered above the shelf
       quantityUnits: options.scaleQuantityUnits
     } );
 
@@ -171,6 +173,34 @@ define( function( require ) {
         question.correctEmitter.addListener( questionCorrectListener ); // no removeListener required
       } );
     } );
+
+    //TODO temporary hack for positioning bags
+    var bagWidth = this.bagImage.width / 2; //TODO because BagNode uses scale:0.5
+    var bagSpacing = 8;
+    var bagFirstX = this.shelf.location.x - ( ( this.numberOfBags / 2 ) * bagWidth ) + ( bagWidth / 2 ) - ( ( ( this.numberOfBags - 1 ) * bagSpacing ) / 2 );
+    var bagLocation = new Vector2( bagFirstX, this.shelf.location.y );
+
+    // @public (read-only) create bags
+    this.bags = [];
+    for ( var i = 0; i < this.numberOfBags; i++ ) {
+
+      // create shopping items if the bag opens when placed on the scale
+      var shoppingItems = null;
+      if ( options.bagsOpen ) {
+        shoppingItems = [];
+        for ( var j = 0; j < this.unitsPerBag; j++ ) {
+          shoppingItems.push( new ShoppingItem( this.itemImage ) );
+        }
+      }
+
+      // create bags
+      this.bags.push( new Bag( this.bagImage, {
+        shoppingItems: shoppingItems,
+        location: bagLocation.copy()
+      } ) );
+
+      bagLocation = bagLocation.plusXY( bagWidth + bagSpacing, 0 );
+    }
   }
 
   unitRates.register( 'ShoppingScene', ShoppingScene );

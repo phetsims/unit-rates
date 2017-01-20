@@ -20,9 +20,7 @@ define( function( require ) {
    * @constructor
    */
   function VegetableScene( itemData ) {
-    ShoppingScene.call( this, itemData, {
-      bagsOpen: false // vegetable bags do not open when placed on the scale
-    } );
+    ShoppingScene.call( this, itemData );
   }
 
   unitRates.register( 'VegetableScene', VegetableScene );

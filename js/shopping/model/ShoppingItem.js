@@ -2,6 +2,7 @@
 
 /**
  * Model of a shopping item.
+ * Origin is at the bottom center of the item.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -33,7 +34,7 @@ define( function( require ) {
     };
   }
 
-  unitRates.register( 'Movable', Movable );
+  unitRates.register( 'ShoppingItem', ShoppingItem );
 
   return inherit( Movable, ShoppingItem, {
 

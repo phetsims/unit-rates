@@ -13,6 +13,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   // sim modules
+  var BagNode = require( 'UNIT_RATES/shopping/view/BagNode' );
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var ResetShelfButton = require( 'UNIT_RATES/shopping/view/ResetShelfButton' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
@@ -66,8 +67,15 @@ define( function( require ) {
       //TODO https://github.com/phetsims/unit-rates/issues/86
     } );
 
+    // bags
+    var bagsParent = new Node();
+    shoppingScene.bags.forEach( function( bag ) {
+      bagsParent.addChild( new BagNode( bag ) );
+    } );
+
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ doubleNumberLineAccordionBox, questionsAccordionBox, scaleNode, shelfNode, resetShelfButton ];
+    options.children = [ doubleNumberLineAccordionBox, questionsAccordionBox,
+      scaleNode, shelfNode, resetShelfButton, bagsParent ];
 
     Node.call( this, options );
 
@@ -75,6 +83,13 @@ define( function( require ) {
     this.disposeShoppingSceneNode = function() {
       doubleNumberLineAccordionBox.dispose();
       questionsAccordionBox.dispose();
+      scaleNode.dispose();
+      shelfNode.dispose();
+      resetShelfButton.dispose();
+      bagsParent.getChildren().forEach( function( bagNode ) {
+        assert && assert( bagNode instanceof BagNode );
+        bagNode.dispose();
+      } );
     };
   }
 

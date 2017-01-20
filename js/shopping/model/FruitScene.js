@@ -20,7 +20,11 @@ define( function( require ) {
    * @constructor
    */
   function FruitScene( itemData ) {
-    ShoppingScene.call( this, itemData );
+    ShoppingScene.call( this, itemData, {
+
+      // Fruit bags open when placed on the scale
+      bagsOpen: true
+    } );
   }
 
   unitRates.register( 'FruitScene', FruitScene );
