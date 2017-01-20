@@ -18,8 +18,8 @@ define( function( require ) {
     cm: { type: 'flag' },
 
     //TODO delete this when development is done
-    // show screens related to new development, see https://github.com/phetsims/unit-rates/issues/120
-    showNew: { type: 'flag' },
+    // show old screens related to original development, see https://github.com/phetsims/unit-rates/issues/120
+    old: { type: 'flag' },
 
     // shows answers for Shopping questions and marker editor
     showAnswers: { type: 'flag' },
@@ -47,7 +47,7 @@ define( function( require ) {
   // Convenience during development, make 'cm' override other query parameters.
   if ( URQueryParameters.cm ) {
     URQueryParameters.log = true;
-    URQueryParameters.showNew = true;
+    URQueryParameters.old = true;
     URQueryParameters.showAnswers = true;
     URQueryParameters.randomEnabled = false;
   }

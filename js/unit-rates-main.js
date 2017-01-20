@@ -37,13 +37,16 @@ define( function( require ) {
   SimLauncher.launch( function() {
 
     var screens = [
-      new OLDShoppingScreen(),
-      new OLDShoppingLabScreen(),
-      new OLDRacingLabScreen()
+      new ShoppingScreen()
+      //TODO add ShoppingLabScreen
+      //TODO add RacingScreen
     ];
 
-    if ( URQueryParameters.showNew ) {
-      screens.push( new ShoppingScreen() );
+    //TODO delete when development is done
+    if ( URQueryParameters.old ) {
+      screens.push( new OLDShoppingScreen() );
+      screens.push( new OLDShoppingLabScreen() );
+      screens.push( new OLDRacingLabScreen() );
     }
 
     var sim = new Sim( unitRatesTitleString, screens, simOptions );

@@ -34,7 +34,7 @@ define( function( require ) {
   function OLDShoppingScreen( options ) {
 
     options = _.extend( {
-      name: screenShoppingString,
+      name: screenShoppingString + ' (old)', //TODO
       backgroundColorProperty: new Property( Color.toColor( 'rgb( 226, 255, 249 )' ) ),
       homeScreenIcon: new Image( screenIcon )
     }, options );
