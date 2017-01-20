@@ -58,6 +58,11 @@ define( function( require ) {
       bottom: scaleNode.bottom
     } );
 
+    // Disable the button when there's nothing on the scale.
+    shoppingScene.scale.quantityProperty.link( function( quantity ) {
+      clearScaleButton.enabled = ( quantity > 0 );
+    } );
+
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ doubleNumberLineAccordionBox, questionsAccordionBox, scaleNode, shelfNode, clearScaleButton ];
 
