@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Model of a bag of shopping items.
+ * Model of a bag that contains shopping items.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -17,27 +17,29 @@ define( function( require ) {
 
   /**
    * @param {HTMLImageElement} bagImage - image used by the view to represent this bag
-   * @param {HTMLImageElement} itemImage - image used by the view to represent the items in the bag
+   * @param {ShoppingItem[]} shoppingItems - the shopping items that are in the bag
    * @param {Object} [options]
    * @constructor
    */
-  function Bag( bagImage, itemImage, options ) {
+  function Bag( bagImage, shoppingItems, options ) {
 
     options = _.extend( {
-      bagsOpen: false, // {boolean} do bags 'open' to produce items?
-      quantity: 4  // {number} quantity that the bag contains
+      bagOpens: false // {boolean} do bags 'open' to produce items?
     }, options );
 
     // @public (read-only)
     this.bagImage = bagImage;
-    this.itemImage = itemImage;
-    this.quantity = options.quantity;
+    this.shoppingItems = shoppingItems;
 
     Movable.call( this, options );
 
     // @private
     this.disposeBag = function() {
-      //TODO if ( options.bagsOpen ) { create options.quantity ShoppingItem instances and notify observers }
+
+      // dispose of all shopping items that are in the bag
+      shoppingItems.forEach( function( shoppingItem ) {
+        shoppingItem.dispose();
+      } );
     };
   }
 
