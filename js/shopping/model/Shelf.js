@@ -45,10 +45,18 @@ define( function( require ) {
       //TODO
     },
 
-    addShoppingBag: function( shoppingBag ) {
-      //TOOD
+    /**
+     * Adds a bag to the shelf.
+     * @param {Bag} bag
+     */
+    addBag: function( bag ) {
+      //TODO
     },
 
+    /**
+     * Adds a shopping item to the shelf.
+     * @param {ShoppingItem} shoppingItem
+     */
     addShoppingItem: function( shoppingItem ) {
       //TODO
     }
