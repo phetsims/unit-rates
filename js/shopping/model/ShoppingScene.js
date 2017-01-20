@@ -23,8 +23,8 @@ define( function( require ) {
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
-  var Scale = require( 'UNIT_RATES/common/model/Scale' );
-  var Shelf = require( 'UNIT_RATES/common/model/Shelf' );
+  var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
+  var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingQuestionFactory = require( 'UNIT_RATES/shopping/model/ShoppingQuestionFactory' );
   var unitRates = require( 'UNIT_RATES/unitRates' );

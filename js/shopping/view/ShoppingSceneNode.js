@@ -13,10 +13,10 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   // sim modules
-  var ResetShelfButton = require( 'UNIT_RATES/common/view/ResetShelfButton' );
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
-  var ScaleNode = require( 'UNIT_RATES/common/view/ScaleNode' );
-  var ShelfNode = require( 'UNIT_RATES/common/view/ShelfNode' );
+  var ResetShelfButton = require( 'UNIT_RATES/shopping/view/ResetShelfButton' );
+  var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
+  var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
   var ShoppingQuestionsAccordionBox = require( 'UNIT_RATES/shopping/view/ShoppingQuestionsAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
