@@ -43,6 +43,14 @@ define( function( require ) {
     // @public
     reset: function() {
       //TODO
+    },
+
+    addShoppingBag: function( shoppingBag ) {
+      //TOOD
+    },
+
+    addShoppingItem: function( shoppingItem ) {
+      //TODO
     }
   } );
 } );

@@ -44,11 +44,22 @@ define( function( require ) {
 
     // @private {function|null} called when animation to destination completes, set using animateTo
     this.animationCompletedCallback = null;
+
+    // @private
+    this.disposeMovable = function() {
+      //TODO cancel animation?
+      //TODO set animationCompletedCallback=null ?
+    };
   }
 
   unitRates.register( 'Movable', Movable );
 
   return inherit( Object, Movable, {
+
+    // @public
+    dispose: function() {
+      this.disposeMovable();
+    },
 
     // @public
     reset: function() {

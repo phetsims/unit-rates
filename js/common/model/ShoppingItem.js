@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Model of a bag of shopping items.
+ * Model of a shopping item.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -16,24 +16,31 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {HTMLImageElement} image - image used by the view to represent this bag
+   * @param {HTMLImageElement} image - image used by the view to represent this item
    * @param {Object} [options]
    * @constructor
    */
-  function Bag( image, options ) {
-
-    options = _.extend( {
-      quantity: 4  // {number} quantity that the bag contains
-    }, options );
+  function ShoppingItem( image, options ) {
 
     // @public (read-only)
     this.image = image;
-    this.quantity = options.quantity;
 
     Movable.call( this, options );
+
+    // @private
+    this.disposeShoppingItem = function() {
+      //TODO
+    };
   }
 
   unitRates.register( 'Movable', Movable );
 
-  return inherit( Movable, Bag );
+  return inherit( Movable, ShoppingItem, {
+
+    // @public
+    dispose: function() {
+      Movable.prototype.dispose.call( this );
+      this.disposeShoppingItem();
+    }
+  } );
 } );
