@@ -62,6 +62,7 @@ define( function( require ) {
     // numerator, which will be updated if the unit rate changes
     var numeratorNode = new Text( '', textOptions );
     var numeratorObserver = function( numerator ) {
+      assert && assert( ( typeof numerator === 'number') && !isNaN( numerator ), 'invalid numerator: ' + numerator );
       numeratorNode.text = URUtil.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
       numeratorNode.centerX = lineNode.centerX;
       numeratorNode.bottom = lineNode.top - options.ySpacing;
