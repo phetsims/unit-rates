@@ -1,11 +1,5 @@
 TODO list for unit-rates
 
-Bug:
-1. select Oranges
-2. enter denominator 2.5 in marker editor
-3. enter numerator 1.88 in marker editor
-4. expected to create a marker, but NaN is show in denominator of marker editor
-
 Scale & shelf
 - more logical placement algorithm
 - persistent placement of each item and bag

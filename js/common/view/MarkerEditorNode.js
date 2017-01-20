@@ -213,6 +213,7 @@ define( function( require ) {
 
     // Observe edits to the numerator
     var numeratorObserver = function( numerator ) {
+      assert && assert( !isNaN( numerator ), 'invalid numerator: ' + numerator );
 
       // update the numerator
       if ( numerator ) {
@@ -227,8 +228,8 @@ define( function( require ) {
       // show the corresponding denominator
       if ( URQueryParameters.showAnswers && !markerEditor.denominatorProperty.value ) {
         if ( numerator ) {
-          var denominator = Util.toFixedNumber( markerEditor.numeratorProperty.value / markerEditor.unitRateProperty.value, denominatorOptions.maxDecimals );
-          denominatorNode.text = URUtil.numberToString( numerator, denominator.maxDecimals, denominatorOptions.trimZeros );
+          var denominator = markerEditor.numeratorProperty.value / markerEditor.unitRateProperty.value;
+          denominatorNode.text = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
         }
         else {
           denominatorNode.text = '';
@@ -241,6 +242,7 @@ define( function( require ) {
 
     // Observe edits to the denominator
     var denominatorObserver = function( denominator ) {
+      assert && assert( !isNaN( denominator ), 'invalid denominator: ' + denominator );
 
       // update the denominator
       if ( denominator ) {
@@ -255,7 +257,7 @@ define( function( require ) {
       // show the corresponding numerator
       if ( URQueryParameters.showAnswers && !markerEditor.numeratorProperty.value ) {
         if ( denominator ) {
-          var numerator = Util.toFixedNumber( markerEditor.denominatorProperty.value * markerEditor.unitRateProperty.value, numeratorOptions.maxDecimals );
+          var numerator = markerEditor.denominatorProperty.value * markerEditor.unitRateProperty.value;
           numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
         }
         else {
