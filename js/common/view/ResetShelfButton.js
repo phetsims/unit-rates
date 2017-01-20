@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Pressing this button clears the scale, returning all items to the shelf.
+ * Pressing this button resets the shelf to its initial state.
+ * As a side-effect, the scale is cleared and markers are removed from the double number line.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -18,11 +19,11 @@ define( function( require ) {
   var URColors = require( 'UNIT_RATES/common/URColors' );
 
   /**
-   * @param {Scale} scale
+   * @param {ShoppingScene} shoppingScene
    * @param {Object} [options]
    * @constructor
    */
-  function ClearScaleButton( scale, options ) {
+  function ResetShelfButton( shoppingScene, options ) {
 
     options = _.extend({
 
@@ -32,7 +33,7 @@ define( function( require ) {
 
     },options);
 
-    // icon
+    // icon - designer insisted on using this icon instead of the standard ResetButton, see unit-rates#86
     assert && assert( !options.content, 'this button creates its own content' );
     var scaleRemoveIcon = new FontAwesomeNode( 'level_down' );
     scaleRemoveIcon.setScaleMagnitude( -0.7, 0.7 ); // reflect about the y axis
@@ -41,11 +42,11 @@ define( function( require ) {
     RectangularPushButton.call( this, options );
 
     this.addListener( function() {
-      scale.clear();
+      //TODO
     } );
   }
 
-  unitRates.register( 'ClearScaleButton', ClearScaleButton );
+  unitRates.register( 'ResetShelfButton', ResetShelfButton );
 
-  return inherit( RectangularPushButton, ClearScaleButton );
+  return inherit( RectangularPushButton, ResetShelfButton );
 } );

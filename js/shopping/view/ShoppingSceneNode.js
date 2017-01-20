@@ -13,7 +13,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   // sim modules
-  var ClearScaleButton = require( 'UNIT_RATES/common/view/ClearScaleButton' );
+  var ResetShelfButton = require( 'UNIT_RATES/common/view/ResetShelfButton' );
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var ScaleNode = require( 'UNIT_RATES/common/view/ScaleNode' );
   var ShelfNode = require( 'UNIT_RATES/common/view/ShelfNode' );
@@ -52,21 +52,19 @@ define( function( require ) {
     // scale
     var scaleNode = new ScaleNode( shoppingScene.scale );
 
-    //TODO replace with ResetButton? https://github.com/phetsims/unit-rates/issues/86
-    // button that clears the scale
-    var clearScaleButton = new ClearScaleButton( shoppingScene.scale, {
+    // button that resets the shelf to its initial state
+    var resetShelfButton = new ResetShelfButton( shoppingScene, {
       right: scaleNode.left - 15,
       bottom: scaleNode.bottom
     } );
 
-    //TODO delete this, or disable when shelf is in initial state, https://github.com/phetsims/unit-rates/issues/86
-    // Disable the button when there's nothing on the scale.
+    // Disable the button when the shelf and scale are in their initial state.
     shoppingScene.scale.quantityProperty.link( function( quantity ) {
-      clearScaleButton.enabled = ( quantity > 0 );
+      //TODO https://github.com/phetsims/unit-rates/issues/86
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ doubleNumberLineAccordionBox, questionsAccordionBox, scaleNode, shelfNode, clearScaleButton ];
+    options.children = [ doubleNumberLineAccordionBox, questionsAccordionBox, scaleNode, shelfNode, resetShelfButton ];
 
     Node.call( this, options );
 
