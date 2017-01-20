@@ -52,12 +52,14 @@ define( function( require ) {
     // scale
     var scaleNode = new ScaleNode( shoppingScene.scale );
 
+    //TODO replace with ResetButton? https://github.com/phetsims/unit-rates/issues/86
     // button that clears the scale
     var clearScaleButton = new ClearScaleButton( shoppingScene.scale, {
       right: scaleNode.left - 15,
       bottom: scaleNode.bottom
     } );
 
+    //TODO delete this, or disable when shelf is in initial state, https://github.com/phetsims/unit-rates/issues/86
     // Disable the button when there's nothing on the scale.
     shoppingScene.scale.quantityProperty.link( function( quantity ) {
       clearScaleButton.enabled = ( quantity > 0 );
