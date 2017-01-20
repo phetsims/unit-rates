@@ -23,7 +23,8 @@ define( function( require ) {
 
     options = _.extend( {
       doubleNumberLineExpanded: true,
-      questionsExpanded: true
+      questionsExpanded: true,
+      scaleCostExpanded: true
     }, options );
 
     // @public is the 'Double Number Line' accordion box expanded?
@@ -31,6 +32,9 @@ define( function( require ) {
 
     // @public is the 'Questions' accordion box expanded?
     this.questionsExpandedProperty = new Property( options.questionsExpanded );
+
+    // @public is the cost display expanded on the scale?
+    this.scaleCostExpandedProperty = new Property( options.scaleCostExpanded );
   }
 
   unitRates.register( 'ShoppingViewProperties', ShoppingViewProperties );
@@ -41,6 +45,7 @@ define( function( require ) {
     reset: function() {
       this.doubleNumberLineExpandedProperty.reset();
       this.questionsExpandedProperty.reset();
+      this.scaleCostExpandedProperty.reset();
     }
   } );
 } );

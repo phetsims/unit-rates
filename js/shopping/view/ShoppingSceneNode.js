@@ -50,7 +50,10 @@ define( function( require ) {
     var shelfNode = new ShelfNode( shoppingScene.shelf );
 
     // scale
-    var scaleNode = new ScaleNode( shoppingScene.scale );
+    var scaleNode = new ScaleNode( shoppingScene.scale, viewProperties.scaleCostExpandedProperty, {
+      costIsCollapsible: shoppingScene.scaleCostIsCollapsible,
+      quantityIsDisplayed: shoppingScene.scaleQuantityIsDisplayed
+    } );
 
     // button that resets the shelf to its initial state
     var resetShelfButton = new ResetShelfButton( shoppingScene, {

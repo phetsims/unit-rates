@@ -24,6 +24,7 @@ define( function( require ) {
   function ShoppingBag( bagImage, itemImage, options ) {
 
     options = _.extend( {
+      bagsOpen: false, // {boolean} do bags 'open' to produce items?
       quantity: 4  // {number} quantity that the bag contains
     }, options );
 
@@ -36,7 +37,7 @@ define( function( require ) {
 
     // @private
     this.disposeShoppingBag = function() {
-      //TODO create options.quantity ShoppingItem instances and notify observers
+      //TODO if ( options.bagsOpen ) { create options.quantity ShoppingItem instances and notify observers }
     };
   }
 

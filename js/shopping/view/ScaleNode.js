@@ -44,12 +44,15 @@ define( function( require ) {
 
   /**
    * @param {Scale} scale
+   * @param {Property.<boolean>} costExpandedProperty - is the cost display expanded?
    * @param {Object} [options]
    * @constructor
    */
-  function ScaleNode( scale, options ) {
+  function ScaleNode( scale, costExpandedProperty, options ) {
 
     options = _.extend( {
+      costIsCollapsible: false,
+      quantityIsDisplayed: false,
       valueFont: new URFont( 20 ),
       valueFill: 'black'
     }, options );
@@ -77,7 +80,7 @@ define( function( require ) {
 
     // panel for displaying cost
     var costPanel = null;
-    if ( !scale.costIsHideable ) {
+    if ( !options.costIsCollapsible ) {
 
       // cost value is always visible, put it in a panel
       costPanel = new Panel( costValueNode, PANEL_OPTIONS );
@@ -95,17 +98,17 @@ define( function( require ) {
       } );
 
       // dispose required
-      var expandCollapseButton = new ExpandCollapseButton( scale.costVisibleProperty, {
+      var expandCollapseButton = new ExpandCollapseButton( costExpandedProperty, {
         sideLength: 15,
         touchAreaXDilation: 30,
         touchAreaYDilation: 30
       } );
 
-      var costVisibleObserver = function( expanded ) {
+      var costExpandedObserver = function( expanded ) {
         costValueNode.visible = expanded;
         costLabelNode.visible = !expanded;
       };
-      scale.costVisibleProperty.link( costVisibleObserver ); // unlink in dispose
+      costExpandedProperty.link( costExpandedObserver ); // unlink in dispose
 
       var valueParent = new Node( {
         children: [ costValueNode, costLabelNode ]
@@ -122,7 +125,7 @@ define( function( require ) {
     valueBoxChildren.push( costPanel );
 
     // panel for displaying quantity
-    if ( scale.quantityIsDisplayed ) {
+    if ( options.quantityIsDisplayed ) {
 
       // e.g. '10.5 lbs'
       var maxQuantityString = quantityToString( 10.5, scale.quantityUnits );
@@ -171,7 +174,7 @@ define( function( require ) {
     // @private
     this.disposeScaleNode = function() {
       scale.costProperty.unlink( costObserver );
-      costVisibleObserver && scale.costVisibleProperty.unlink( costVisibleObserver );
+      costExpandedObserver && costExpandedProperty.unlink( costExpandedObserver );
       quantityObserver && scale.quantityProperty.unlink( quantityObserver );
       expandCollapseButton && expandCollapseButton.dispose();
     };

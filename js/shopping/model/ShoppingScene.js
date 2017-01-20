@@ -59,7 +59,7 @@ define( function( require ) {
       amountOfQuestionUnits: itemData.pluralName,  // {string} units used for "Apples for $10.00?" type questions
 
       // scale
-      scaleCostIsHideable: false, // {boolean} whether cost is hideable on the scale
+      scaleCostIsCollapsible: true, // {boolean} whether cost is collapsible on the scale
       scaleQuantityIsDisplayed: false, // {boolean} whether quantity is displayed on the scale
       scaleQuantityUnits: '', // {string} units for quantity on scale
       bagsOpen: true // {boolean} do bags open to display individual items?
@@ -102,6 +102,10 @@ define( function( require ) {
     this.itemImage = itemData.itemImage;
     this.bagImage = itemData.bagImage;
 
+    // @public (read-only) unpack options
+    this.scaleCostIsCollapsible = options.scaleCostIsCollapsible;
+    this.scaleQuantityIsDisplayed = options.scaleQuantityIsDisplayed;
+
     //TODO Shopping Lab screen requires mutable unit rate. Factor out a base type that excludes questions?
     // unit rate is constant in this model, but some model elements require a Property
     var unitRateProperty = new Property( this.unitRate );
@@ -126,8 +130,6 @@ define( function( require ) {
     // @public
     this.scale = new Scale( {
       location: this.shelf.location.minusXY( 0, 150 ), // centered above the shelf
-      costIsHideable: options.scaleCostIsHideable,
-      quantityIsDisplayed: options.scaleQuantityIsDisplayed,
       quantityUnits: options.scaleQuantityUnits
     } );
 
