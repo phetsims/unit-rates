@@ -20,7 +20,8 @@ define( function( require ) {
 
     // This type does not propagate options to the supertype because the model determines location.
     Image.call( this, bag.image, {
-      scale: 0.5
+      scale: 0.5,
+      cursor: 'pointer'
     } );
 
     // origin is at bottom center
@@ -29,6 +30,10 @@ define( function( require ) {
       self.bottom = location.y;
     };
     bag.locationProperty.link( locationObserver ); // must be unlinked in dispose
+
+    this.addInputListener( {
+      //TODO add drag handler to BagNode
+    } );
 
     // @private
     this.disposeBagNode = function() {
