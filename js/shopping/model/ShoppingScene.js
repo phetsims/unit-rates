@@ -21,6 +21,7 @@ define( function( require ) {
 
   // sim modules
   var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
+  var BagRow = require( 'UNIT_RATES/shopping/model/BagRow' );
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
@@ -31,6 +32,7 @@ define( function( require ) {
   var ShoppingQuestionFactory = require( 'UNIT_RATES/shopping/model/ShoppingQuestionFactory' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   // strings
@@ -174,11 +176,12 @@ define( function( require ) {
       } );
     } );
 
-    //TODO temporary hack for positioning bags
-    var bagWidth = this.bagImage.width / 2; //TODO because BagNode uses scale:0.5
-    var bagSpacing = 8;
-    var bagFirstX = this.shelf.location.x - ( ( this.numberOfBags / 2 ) * bagWidth ) + ( bagWidth / 2 ) - ( ( ( this.numberOfBags - 1 ) * bagSpacing ) / 2 );
-    var bagLocation = new Vector2( bagFirstX, this.shelf.location.y );
+    //TODO this should live elsewhere
+    var bagRow = new BagRow( {
+      centerX: this.shelf.location.x,
+      numberOfBags: this.numberOfBags,
+      bagWidth: URConstants.BAG_IMAGE_SCALE * this.bagImage.width //TODO will this work for mipmaps?
+    } );
 
     // @public (read-only) create bags
     this.bags = [];
@@ -194,12 +197,14 @@ define( function( require ) {
       }
 
       // create bags
-      this.bags.push( new Bag( this.bagImage, {
+      var cellIndex = bagRow.getIndexFirstUnoccupied();
+      var bag = new Bag( this.bagImage, {
         shoppingItems: shoppingItems,
-        location: bagLocation.copy()
-      } ) );
-
-      bagLocation = bagLocation.plusXY( bagWidth + bagSpacing, 0 );
+        location: new Vector2( bagRow.getXAt( cellIndex ), this.shelf.location.y )
+      } );
+      //TODO better to have bags live in 1 place
+      this.bags.push( bag );
+      bagRow.populateCell( cellIndex, bag );
     }
   }
 

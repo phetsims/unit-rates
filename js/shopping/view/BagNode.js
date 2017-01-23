@@ -9,6 +9,7 @@ define( function( require ) {
   // sim modules
   var Image = require( 'SCENERY/nodes/Image' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   /**
    * @param {Bag} bag
@@ -20,7 +21,7 @@ define( function( require ) {
 
     // This type does not propagate options to the supertype because the model determines location.
     Image.call( this, bag.image, {
-      scale: 0.5,
+      scale: URConstants.BAG_IMAGE_SCALE,
       cursor: 'pointer'
     } );
 
