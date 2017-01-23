@@ -37,7 +37,7 @@ define( function( require ) {
     this.depth = 20; // {number} depth, after flattening to 2D
     this.perspectiveXOffset = 15; // {number} offset for parallel perspective, after flattening to 2D
 
-    // @private
+    // @private manages the layout of objects on the shelf
     this.rowLayout = new RowLayout( {
       centerX: this.location.x,
       numberOfObjects: options.numberOfBags,

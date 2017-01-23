@@ -135,7 +135,9 @@ define( function( require ) {
     // @public
     this.scale = new Scale( {
       location: this.shelf.location.minusXY( 0, 200 ), // centered above the shelf
-      quantityUnits: options.scaleQuantityUnits
+      quantityUnits: options.scaleQuantityUnits,
+      numberOfBags: this.numberOfBags,
+      bagWidth: URConstants.BAG_IMAGE_SCALE * this.bagImage.width //TODO will this work for mipmaps?
     } );
 
     // @public {ShoppingQuestion} 'Unit Rate?'
