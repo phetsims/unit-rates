@@ -57,6 +57,64 @@ define( function( require ) {
       this.costProperty.reset();
       this.quantityProperty.reset();
       this.rowLayout.reset();
+    },
+    
+    //TODO identical to Shelf
+    /**
+     * Gets the index of the first unoccupied cell on the scale.
+     * @returns {number}
+     * @public
+     */
+    getFirstUnoccupiedCell: function() {
+      var cellIndex = this.rowLayout.getFirstUnoccupiedCell();
+      assert && assert( cellIndex !== -1, 'shelf is full' );
+      return cellIndex;
+    },
+    
+    //TODO identical to Shelf
+    /**
+     * Gets the index of the closet unoccupied cell on the shelf.
+     * @param {number} x
+     * @returns {number}
+     * @public
+     */
+    getClosestUnoccupiedCell: function( x ) {
+      var cellIndex = this.rowLayout.getClosestUnoccupiedCell( x );
+      assert && assert( cellIndex !== -1, 'shelf is full' );
+      return cellIndex;
+    },
+
+    //TODO identical to Shelf
+    /**
+     * Gets the location of a cell.
+     * @param {number} index
+     * @returns {Vector2}
+     * @public
+     */
+    getCellLocation: function( index ) {
+      return new Vector2( this.rowLayout.getXAt( index ), this.location.y );
+    },
+    
+    //TODO identical to Shelf
+    /**
+     * Adds a bag to the shelf.
+     * @param {Bag} bag
+     * @param {number} index - cell index
+     */
+    addBag: function( bag, index ) {
+      assert && assert( bag instanceof Bag, 'invalid bag' );
+      this.rowLayout.setContents( index, bag );
+    },
+
+    //TODO identical to Shelf
+    /**
+     * Removes a bag from the shelf.
+     * @param {Bag} bag
+     */
+    removeBag: function( bag ) {
+      assert && assert( bag instanceof Bag, 'invalid bag' );
+      var cellIndex = this.rowLayout.indexOf( bag );
+      this.rowLayout.clearCell( cellIndex );
     }
   } );
 } );

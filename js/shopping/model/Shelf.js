@@ -56,11 +56,23 @@ define( function( require ) {
 
     /**
      * Gets the index of the first unoccupied cell on the shelf.
-     * @returns {Vector2}
+     * @returns {number}
      * @public
      */
-    getIndexFirstUnoccupied: function() {
-      var cellIndex = this.rowLayout.getIndexFirstUnoccupied();
+    getFirstUnoccupiedCell: function() {
+      var cellIndex = this.rowLayout.getFirstUnoccupiedCell();
+      assert && assert( cellIndex !== -1, 'shelf is full' );
+      return cellIndex;
+    },
+    
+    /**
+     * Gets the index of the closest unoccupied cell on the shelf.
+     * @param {number} x
+     * @returns {number}
+     * @public
+     */
+    getClosestUnoccupiedCell: function( x ) {
+      var cellIndex = this.rowLayout.getClosestUnoccupiedCell( x );
       assert && assert( cellIndex !== -1, 'shelf is full' );
       return cellIndex;
     },
@@ -68,10 +80,10 @@ define( function( require ) {
     /**
      * Gets the location of a cell.
      * @param {number} index
-     * @returns {number}
+     * @returns {Vector2}
      * @public
      */
-    getLocationAt: function( index ) {
+    getCellLocation: function( index ) {
       return new Vector2( this.rowLayout.getXAt( index ), this.location.y );
     },
 
@@ -93,23 +105,6 @@ define( function( require ) {
       assert && assert( bag instanceof Bag, 'invalid bag' );
       var cellIndex = this.rowLayout.indexOf( bag );
       this.rowLayout.clearCell( cellIndex );
-    },
-
-    /**
-     * Adds a shopping item to the shelf.
-     * @param {ShoppingItem} shoppingItem
-     * @param {number} index - cell index
-     */
-    addShoppingItem: function( shoppingItem, index ) {
-      //TODO
-    },
-
-    /**
-     * Removes a shopping item from the shelf.
-     * @param {ShoppingItem} shoppingItem
-     */
-    removeShoppingItem: function( shoppingItem ) {
-      //TODO
     }
   } );
 } );

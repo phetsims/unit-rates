@@ -62,14 +62,14 @@ define( function( require ) {
     },
 
     /**
-     * Gets the index of the unoccupied cell that is closest to x.
+     * Gets the index of the closest unoccupied cell.
      * @param {number} x  - x coordinate
      * @returns {number} - cell index, -1 if all cells are occupied
      * @public
      */
-    getIndexClosestUnoccupied: function( x ) {
+    getClosestUnoccupiedCell: function( x ) {
       assert && assert( this.isValidX( x ), 'invalid x: ' + x );
-      var index = this.getIndexFirstUnoccupied();
+      var index = this.getFirstUnoccupiedCell();
       if ( index !== -1 ) {
         for ( var i = index + 1; i < this.cells.length; i++ ) {
           if ( this.getDistanceBetween( i, x ) < this.getDistanceBetween( index, x ) ) {
@@ -84,11 +84,11 @@ define( function( require ) {
     },
 
     /**
-     * Gets the index of the first unoccupied. Cells are visited left to right.
+     * Gets the index of the first unoccupied cell. Cells are visited left to right.
      * @returns {number} - cell index, -1 if all cells are occupied
      * @private
      */
-    getIndexFirstUnoccupied: function() {
+    getFirstUnoccupiedCell: function() {
       var index = -1;
       for ( var i = 0; i < this.cells.length; i++ ) {
         if ( this.isEmpty( i ) ) {

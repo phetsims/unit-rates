@@ -184,8 +184,8 @@ define( function( require ) {
     for ( var i = 0; i < this.numberOfBags; i++ ) {
 
       // the bag's location on the shelf
-      var cellIndex = this.shelf.getIndexFirstUnoccupied();
-      var bagLocation = this.shelf.getLocationAt( cellIndex );
+      var cellIndex = this.shelf.getFirstUnoccupiedCell();
+      var bagLocation = this.shelf.getCellLocation( cellIndex );
 
       // create shopping items if the bag opens when placed on the scale
       var shoppingItems = null;
@@ -234,8 +234,8 @@ define( function( require ) {
       // return all bags to shelf
       var shelf = this.shelf;
       this.bags.forEach( function( bag ) {
-        var cellIndex = shelf.getIndexFirstUnoccupied();
-        bag.locationProperty.value = shelf.getLocationAt( cellIndex );
+        var cellIndex = shelf.getFirstUnoccupiedCell();
+        bag.locationProperty.value = shelf.getCellLocation( cellIndex );
         shelf.addBag( bag, cellIndex );
       } );
     },
