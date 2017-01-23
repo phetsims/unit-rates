@@ -32,14 +32,20 @@ define( function( require ) {
       spacing: 8 // {number} horizontal space between objects
     }, options );
 
+    // distance between the centers of adjacent cell
+    var deltaX = options.objectWidth + options.spacing;
+
+    // distance between the centers of the left-most and right-most cells
+    var leftToRightDistance = deltaX * ( options.numberOfObjects - 1 );
+
+    // center of left-most cell
+    var leftX = options.centerX - ( leftToRightDistance / 2 );
+    
     // @private the row's cells.
     // Each cell contains a data structure with this format:
     // {Object|null} contents - the object that occupies the cell, null if the cell is empty
     // {number} x - the x coordinate of the cell
     this.cells = [];
-    //TODO simplify or deconstruct this expression
-    var leftX = options.centerX - ( ( options.numberOfObjects / 2 ) * options.objectWidth ) + ( options.objectWidth / 2 ) - ( ( ( options.numberOfObjects - 1 ) * options.spacing ) / 2 );
-    var deltaX = options.objectWidth + options.spacing;
     for ( var i = 0; i < options.numberOfObjects; i++ ) {
       this.cells.push( {
         contents: EMPTY,
