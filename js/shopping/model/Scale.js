@@ -14,6 +14,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
+  var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
   var RowLayout = require( 'UNIT_RATES/shopping/model/RowLayout' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
