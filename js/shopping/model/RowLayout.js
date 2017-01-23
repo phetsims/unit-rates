@@ -52,6 +52,15 @@ define( function( require ) {
 
   return inherit( Object, RowLayout, {
 
+    // @public
+    reset: function() {
+
+      // empty all cells
+      this.cells.forEach( function( cell ) {
+        cell.contents = EMPTY;
+      } );
+    },
+
     /**
      * Gets the index of the unoccupied cell that is closest to x.
      * @param {number} x  - x coordinate
@@ -124,12 +133,12 @@ define( function( require ) {
     },
 
     /**
-     * Puts an object in a specific cell.  The cell must be empty, and duplicates are not allowed in a row.
+     * Sets the contents of a specific cell.  The cell must be empty, and duplicates are not allowed in a row.
      * @param {number} index - the cell index
      * @param {Object} object
      * @public
      */
-    populateCell: function( index, object ) {
+    setContents: function( index, object ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
       assert && assert( this.isEmpty( index ), 'cell is occupied: ' + index );
       assert && assert( !this.containsObject( object ), 'object is already in row at index ' + this.indexOf( object ) );
@@ -152,7 +161,7 @@ define( function( require ) {
      * @returns {Object|null} - null if the cell is empty
      * @public
      */
-    getContentsAt: function( index ) {
+    getContents: function( index ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
       return this.cells[ index ].contents;
     },
@@ -178,7 +187,7 @@ define( function( require ) {
       assert && assert( object, 'invalid object: ' + object );
       var index = -1;
       for ( var i = 0; i < this.cells.length; i++ ) {
-        if ( this.getContentsAt( i ) === object ) {
+        if ( this.getContents( i ) === object ) {
           index = i;
           break;
         }
@@ -203,7 +212,7 @@ define( function( require ) {
      * @public
      */
     isEmpty: function( index ) {
-      return ( this.getContentsAt( index ) === EMPTY );
+      return ( this.getContents( index ) === EMPTY );
     }
   } );
 } );

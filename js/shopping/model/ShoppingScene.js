@@ -24,7 +24,6 @@ define( function( require ) {
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
-  var RowLayout = require( 'UNIT_RATES/shopping/model/RowLayout' );
   var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
   var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
@@ -128,7 +127,9 @@ define( function( require ) {
 
     // @public
     this.shelf = new Shelf( {
-      location: new Vector2( 512, 575 )
+      location: new Vector2( 512, 575 ),
+      numberOfBags: this.numberOfBags,
+      bagWidth: URConstants.BAG_IMAGE_SCALE * this.bagImage.width //TODO will this work for mipmaps?
     } );
 
     // @public
@@ -176,20 +177,13 @@ define( function( require ) {
       } );
     } );
 
-    //TODO this should live elsewhere
-    var rowLayout = new RowLayout( {
-      centerX: this.shelf.location.x,
-      numberOfObjects: this.numberOfBags,
-      objectWidth: URConstants.BAG_IMAGE_SCALE * this.bagImage.width //TODO will this work for mipmaps?
-    } );
-
-    // @public (read-only) create bags
+    // @public (read-only) create bags on the shelf
     this.bags = [];
     for ( var i = 0; i < this.numberOfBags; i++ ) {
 
-      // the bag's location
-      var cellIndex = rowLayout.getIndexFirstUnoccupied();
-      var bagLocation = new Vector2( rowLayout.getXAt( cellIndex ), this.shelf.location.y );
+      // the bag's location on the shelf
+      var cellIndex = this.shelf.getIndexFirstUnoccupied();
+      var bagLocation = this.shelf.getLocationAt( cellIndex );
 
       // create shopping items if the bag opens when placed on the scale
       var shoppingItems = null;
@@ -205,9 +199,9 @@ define( function( require ) {
         shoppingItems: shoppingItems,
         location: bagLocation
       } );
-      //TODO better to have bags live in 1 place
+      //TODO having 2 things keeping track of bags seems potentially problematic
       this.bags.push( bag );
-      rowLayout.populateCell( cellIndex, bag );
+      this.shelf.addBag( bag, cellIndex );
     }
   }
 
@@ -234,7 +228,14 @@ define( function( require ) {
       // rest current question set
       this.questionSetsIndexProperty.reset();
 
-      //TODO delete all bags and items, re-stock shelf
+      //TODO this is likely wrong and incomplete
+      // return all bags to shelf
+      var shelf = this.shelf;
+      this.bags.forEach( function( bag ) {
+        var cellIndex = shelf.getIndexFirstUnoccupied();
+        bag.locationProperty.value = shelf.getLocationAt( cellIndex );
+        shelf.addBag( bag, cellIndex );
+      } );
     },
 
     /**
