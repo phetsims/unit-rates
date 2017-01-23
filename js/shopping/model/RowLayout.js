@@ -2,7 +2,7 @@
 
 /**
  * This type manages the layout of a row of objects.
- * The objects are assumed to have homogeneous size.
+ * The objects are assumed to have homogeneous width.
  * This is used to arrange bags in a row on the shelf and scale.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -27,8 +27,8 @@ define( function( require ) {
 
     options = _.extend( {
       centerX: 0, // {number} x coordinate of the center of the row
-      numberOfObjects: 4,
-      objectWidth: 70,
+      numberOfObjects: 4, // {number} maximum number of objects in the row
+      objectWidth: 70, // {number} width of each object
       spacing: 8 // {number} horizontal space between objects
     }, options );
 

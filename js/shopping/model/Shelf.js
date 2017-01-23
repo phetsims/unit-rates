@@ -26,8 +26,8 @@ define( function( require ) {
     options = _.extend( {
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
       width: 325, // {number} width of the top face, at its center
-      numberOfBags: 4,
-      bagWidth: 70
+      numberOfBags: 4, // {number} maximum number of bags on the shelf
+      bagWidth: 70 // {number} width of each bag
     }, options );
 
     // @public (read-only)

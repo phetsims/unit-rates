@@ -27,8 +27,8 @@ define( function( require ) {
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the scale's top surface
       width: 300, // {number} width of the top surface of the scale
       quantityUnits: '', // {string} units for quantity
-      numberOfBags: 4,
-      bagWidth: 70
+      numberOfBags: 4, // {number} maximum number of bags on the scale
+      bagWidth: 70 // {number} width of each bag
     }, options );
 
     // @public ( read-only)
