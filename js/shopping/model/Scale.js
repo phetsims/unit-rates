@@ -113,8 +113,7 @@ define( function( require ) {
      */
     removeBag: function( bag ) {
       assert && assert( bag instanceof Bag, 'invalid bag' );
-      var cellIndex = this.rowLayout.indexOf( bag );
-      this.rowLayout.clearCell( cellIndex );
+      this.rowLayout.removeObject( bag );
     }
   } );
 } );

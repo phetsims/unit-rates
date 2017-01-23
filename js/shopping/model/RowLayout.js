@@ -146,6 +146,17 @@ define( function( require ) {
     },
 
     /**
+     * Gets the object that occupies a cell.
+     * @param {number} index - the cell index
+     * @returns {Object|null} - null if the cell is empty
+     * @public
+     */
+    getContents: function( index ) {
+      assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
+      return this.cells[ index ].contents;
+    },
+
+    /**
      * Clears the specified cell. The cell must be occupied.
      * @param {number} index - the cell index
      */
@@ -156,14 +167,11 @@ define( function( require ) {
     },
 
     /**
-     * Gets the object that occupies a cell.
-     * @param {number} index - the cell index
-     * @returns {Object|null} - null if the cell is empty
-     * @public
+     * Removes an object from the row.
+     * @param {Object} object
      */
-    getContents: function( index ) {
-      assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      return this.cells[ index ].contents;
+    removeObject: function( object ) {
+      this.clearCell( this.indexOf( object ) );
     },
 
     /**
