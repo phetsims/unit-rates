@@ -21,10 +21,10 @@ define( function( require ) {
 
   // sim modules
   var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
-  var BagRow = require( 'UNIT_RATES/shopping/model/BagRow' );
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  var RowLayout = require( 'UNIT_RATES/shopping/model/RowLayout' );
   var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
   var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
@@ -177,15 +177,19 @@ define( function( require ) {
     } );
 
     //TODO this should live elsewhere
-    var bagRow = new BagRow( {
+    var rowLayout = new RowLayout( {
       centerX: this.shelf.location.x,
-      numberOfBags: this.numberOfBags,
-      bagWidth: URConstants.BAG_IMAGE_SCALE * this.bagImage.width //TODO will this work for mipmaps?
+      numberOfObjects: this.numberOfBags,
+      objectWidth: URConstants.BAG_IMAGE_SCALE * this.bagImage.width //TODO will this work for mipmaps?
     } );
 
     // @public (read-only) create bags
     this.bags = [];
     for ( var i = 0; i < this.numberOfBags; i++ ) {
+
+      // the bag's location
+      var cellIndex = rowLayout.getIndexFirstUnoccupied();
+      var bagLocation = new Vector2( rowLayout.getXAt( cellIndex ), this.shelf.location.y );
 
       // create shopping items if the bag opens when placed on the scale
       var shoppingItems = null;
@@ -196,15 +200,14 @@ define( function( require ) {
         }
       }
 
-      // create bags
-      var cellIndex = bagRow.getIndexFirstUnoccupied();
+      // create bag
       var bag = new Bag( this.bagImage, {
         shoppingItems: shoppingItems,
-        location: new Vector2( bagRow.getXAt( cellIndex ), this.shelf.location.y )
+        location: bagLocation
       } );
       //TODO better to have bags live in 1 place
       this.bags.push( bag );
-      bagRow.populateCell( cellIndex, bag );
+      rowLayout.populateCell( cellIndex, bag );
     }
   }
 

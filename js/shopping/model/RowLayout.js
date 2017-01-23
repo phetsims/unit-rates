@@ -1,9 +1,9 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Bags are arranged in a row on the shelf and scale.
- * This type manages where items are in the row, which 'cells' are occupied vs free,
- * which cell is closest to a specified point, etc.
+ * This type manages the layout of a row of objects.
+ * The objects are assumed to have homogeneous size.
+ * This is used to arrange bags in a row on the shelf and scale.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,43 +14,43 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   // sim modules
-  var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // constants
-  var NO_BAG = null; // contents of an empty cell
+  var EMPTY = null; // contents of an empty cell
 
   /**
    * @param {Object} [options]
    * @constructor
    */
-  function BagRow( options ) {
+  function RowLayout( options ) {
 
     options = _.extend( {
       centerX: 0, // {number} x coordinate of the center of the row
-      numberOfBags: 4,
-      bagWidth: 70,
-      bagSpacing: 8 // {number} horizontal space between bags
+      numberOfObjects: 4,
+      objectWidth: 70,
+      spacing: 8 // {number} horizontal space between objects
     }, options );
 
     // @private the row's cells.
     // Each cell contains a data structure with this format:
-    // {Bag|null} bag - the bag that occupies the cell, null if the cell is empty
-    // {number} x - the x coordinate of the cell, corresponds to the bottom-center of a bag's location
+    // {Object|null} contents - the object that occupies the cell, null if the cell is empty
+    // {number} x - the x coordinate of the cell
     this.cells = [];
-    var leftX = options.centerX - ( ( options.numberOfBags / 2 ) * options.bagWidth ) + ( options.bagWidth / 2 ) - ( ( ( options.numberOfBags - 1 ) * options.bagSpacing ) / 2 );
-    var deltaX = options.bagWidth + options.bagSpacing;
-    for ( var i = 0; i < options.numberOfBags; i++ ) {
+    //TODO simplify or deconstruct this expression
+    var leftX = options.centerX - ( ( options.numberOfObjects / 2 ) * options.objectWidth ) + ( options.objectWidth / 2 ) - ( ( ( options.numberOfObjects - 1 ) * options.spacing ) / 2 );
+    var deltaX = options.objectWidth + options.spacing;
+    for ( var i = 0; i < options.numberOfObjects; i++ ) {
       this.cells.push( {
-        bag: NO_BAG,
+        contents: EMPTY,
         x: leftX + ( i * deltaX )
       } );
     }
   }
 
-  unitRates.register( 'BagRow', BagRow );
+  unitRates.register( 'RowLayout', RowLayout );
 
-  return inherit( Object, BagRow, {
+  return inherit( Object, RowLayout, {
 
     /**
      * Gets the index of the unoccupied cell that is closest to x.
@@ -117,44 +117,44 @@ define( function( require ) {
      * Is the x coordinate valid?
      * @param {number} x
      * @returns {boolean}
+     * @private
      */
     isValidX: function( x ) {
       return ( ( typeof x === 'number' ) && !isNaN( x ) );
     },
 
     /**
-     * Puts a bag in a specific cell.
+     * Puts an object in a specific cell.  The cell must be empty, and duplicates are not allowed in a row.
      * @param {number} index - the cell index
-     * @param {Bag} bag
+     * @param {Object} object
      * @public
      */
-    populateCell: function( index, bag ) {
+    populateCell: function( index, object ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
       assert && assert( this.isEmpty( index ), 'cell is occupied: ' + index );
-      assert && assert( bag instanceof Bag, 'invalid bag' );
-      assert && assert( !this.containsBag( bag ), 'bag is already in row at index ' + this.indexOfBag( bag ) );
-      this.cells[ index ].bag = bag;
+      assert && assert( !this.containsObject( object ), 'object is already in row at index ' + this.indexOf( object ) );
+      this.cells[ index ].contents = object;
     },
 
     /**
-     * Clears the specified cell.
+     * Clears the specified cell. The cell must be occupied.
      * @param {number} index - the cell index
      */
     clearCell: function( index ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
       assert && assert( !this.isEmpty( index ), 'cell is empty: ' + index );
-      this.cells[ index ].bag = NO_BAG;
+      this.cells[ index ].contents = EMPTY;
     },
 
     /**
-     * Gets the bag that occupies a cell.
+     * Gets the object that occupies a cell.
      * @param {number} index - the cell index
-     * @returns {Bag|null} - null if the cell is empty
+     * @returns {Object|null} - null if the cell is empty
      * @public
      */
-    getBagAt: function( index ) {
+    getContentsAt: function( index ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      return this.cells[ index ].bag;
+      return this.cells[ index ].contents;
     },
 
     /**
@@ -169,16 +169,16 @@ define( function( require ) {
     },
 
     /**
-     * Gets the index of the cell that is occupied by a specified bag.
-     * @param {Bag} bag
-     * @returns {number} -1 if the bag is not found
+     * Gets the index of the cell that is occupied by a specified object.
+     * @param {Object} object
+     * @returns {number} -1 if the object is not found
      * @public
      */
-    indexOfBag: function( bag ) {
-      assert && assert( bag instanceof Bag, 'invalid bag' );
+    indexOf: function( object ) {
+      assert && assert( object, 'invalid object: ' + object );
       var index = -1;
       for ( var i = 0; i < this.cells.length; i++ ) {
-        if ( this.getBagAt( i ) === bag ) {
+        if ( this.getContentsAt( i ) === object ) {
           index = i;
           break;
         }
@@ -187,13 +187,13 @@ define( function( require ) {
     },
 
     /**
-     * Does the row contain a specified bag?
-     * @param {Bag} bag
+     * Does the row contain a specified object?
+     * @param {Object} object
      * @returns {boolean}
      * @public
      */
-    containsBag: function( bag ) {
-      return ( this.indexOfBag( bag ) !== -1 );
+    containsObject: function( object ) {
+      return ( this.indexOf( object ) !== -1 );
     },
 
     /**
@@ -203,8 +203,7 @@ define( function( require ) {
      * @public
      */
     isEmpty: function( index ) {
-      assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      return ( this.cells[ index ].bag === NO_BAG );
+      return ( this.getContentsAt( index ) === EMPTY );
     }
   } );
 } );
