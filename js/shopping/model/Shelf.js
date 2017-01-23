@@ -56,7 +56,7 @@ define( function( require ) {
 
     /**
      * Gets the index of the first unoccupied cell on the shelf.
-     * @returns {number}
+     * @returns {number} cell index
      * @public
      */
     getFirstUnoccupiedCell: function() {
@@ -67,8 +67,8 @@ define( function( require ) {
     
     /**
      * Gets the index of the closest unoccupied cell on the shelf.
-     * @param {number} x
-     * @returns {number}
+     * @param {number} x - x coordinate
+     * @returns {number} cell index
      * @public
      */
     getClosestUnoccupiedCell: function( x ) {
@@ -79,7 +79,7 @@ define( function( require ) {
 
     /**
      * Gets the location of a cell.
-     * @param {number} index
+     * @param {number} index - cell index
      * @returns {Vector2}
      * @public
      */

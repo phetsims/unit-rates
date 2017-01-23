@@ -62,6 +62,22 @@ define( function( require ) {
     },
 
     /**
+     * Gets the index of the first unoccupied cell. Cells are visited left to right.
+     * @returns {number} - cell index, -1 if all cells are occupied
+     * @public
+     */
+    getFirstUnoccupiedCell: function() {
+      var index = -1;
+      for ( var i = 0; i < this.cells.length; i++ ) {
+        if ( this.isEmpty( i ) ) {
+          index = i;
+          break;
+        }
+      }
+      return index;
+    },
+
+    /**
      * Gets the index of the closest unoccupied cell.
      * @param {number} x  - x coordinate
      * @returns {number} - cell index, -1 if all cells are occupied
@@ -78,22 +94,6 @@ define( function( require ) {
           else {
             break;
           }
-        }
-      }
-      return index;
-    },
-
-    /**
-     * Gets the index of the first unoccupied cell. Cells are visited left to right.
-     * @returns {number} - cell index, -1 if all cells are occupied
-     * @private
-     */
-    getFirstUnoccupiedCell: function() {
-      var index = -1;
-      for ( var i = 0; i < this.cells.length; i++ ) {
-        if ( this.isEmpty( i ) ) {
-          index = i;
-          break;
         }
       }
       return index;
