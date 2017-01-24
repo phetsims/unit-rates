@@ -1,7 +1,7 @@
 TODO list for unit-rates
 
+Reset button for shelf + scale
 Clean up duplication in Scale
-Create marker when bag is put on scale
 
 Items on shelf and scale
 Placement algorithm for item, and items + bags

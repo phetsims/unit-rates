@@ -33,6 +33,7 @@ define( function( require ) {
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
   var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
@@ -140,6 +141,29 @@ define( function( require ) {
       bagWidth: URConstants.BAG_IMAGE_SCALE * this.bagImage.width //TODO will this work for mipmaps?
     } );
 
+    // The marker that corresponds to what's currently on the scale
+    var scaleMarker = null;
+
+    // Create a marker when what's on the scale changes
+    this.scale.quantityProperty.lazyLink( function( quantity ) {
+      if ( quantity > 0 ) {
+
+        // the marker for what was previously on the scale becomes erasable
+        if ( scaleMarker ) {
+          scaleMarker.colorProperty.value = URColors.majorMarker;
+          scaleMarker.erasable = true;
+        }
+
+        // the new marker for what's on the scale
+        scaleMarker = new Marker( self.scale.costProperty.value, quantity, 'scale', {
+          isMajor: ( URUtil.decimalPlaces( quantity ) <= denominatorOptions.majorMarkerDecimals ),
+          color: URColors.scaleMarker,
+          erasable: false
+        } );
+        self.doubleNumberLine.addMarker( scaleMarker );
+      }
+    } );
+
     // @public {ShoppingQuestion} 'Unit Rate?'
     this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( itemData.unitRate,
       options.questionSingularUnits, numeratorOptions, denominatorOptions );
@@ -169,7 +193,11 @@ define( function( require ) {
      * @param {ShoppingQuestion} question
      */
     var questionCorrectListener = function( question ) {
-      var marker = Marker.createQuestionMarker( question, URColors.questionMarker, denominatorOptions.majorMarkerDecimals );
+      var marker = new Marker( question.numerator, question.denominator, 'question', {
+        isMajor: ( URUtil.decimalPlaces( question.denominator ) <= denominatorOptions.majorMarkerDecimals ),
+        color: URColors.questionMarker,
+        erasable: false
+      } );
       self.doubleNumberLine.addMarker( marker );
     };
     this.unitRateQuestion.correctEmitter.addListener( questionCorrectListener ); // no removeListener required

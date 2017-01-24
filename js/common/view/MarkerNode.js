@@ -50,17 +50,11 @@ define( function( require ) {
 
     // vertical line
     var lineNode = new Line( 0, 0, 0, options.lineLength, {
-      stroke: marker.color,
       lineWidth: options.lineWidth
     } );
 
-    var textOptions = {
-      font: options.font,
-      fill: marker.color
-    };
-
     // numerator, which will be updated if the unit rate changes
-    var numeratorNode = new Text( '', textOptions );
+    var numeratorNode = new Text( '', { font: options.font } );
     var numeratorObserver = function( numerator ) {
       assert && assert( ( typeof numerator === 'number') && !isNaN( numerator ), 'invalid numerator: ' + numerator );
       numeratorNode.text = URUtil.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
@@ -71,19 +65,29 @@ define( function( require ) {
 
     // denominator
     var denominatorString = URUtil.numberToString( marker.denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
-    var denominatorNode = new Text( denominatorString, _.extend( {}, textOptions, {
+    var denominatorNode = new Text( denominatorString, {
+      font: options.font,
       centerX: lineNode.centerX,
       top: lineNode.bottom + options.ySpacing
-    } ) );
+    } );
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ numeratorNode, lineNode, denominatorNode ];
 
     Node.call( this, options );
 
+    // update the marker's color
+    var colorObserver = function( color ) {
+      lineNode.stroke = color;
+      numeratorNode.fill = color;
+      denominatorNode.fill = color;
+    };
+    marker.colorProperty.link( colorObserver ); // unlink in dispose
+
     // @private
     this.disposeMarkerNode = function() {
       marker.numeratorProperty.unlink( numeratorObserver );
+      marker.colorProperty.unlink( colorObserver );
     };
   }
 
