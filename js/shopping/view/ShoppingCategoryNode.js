@@ -40,7 +40,7 @@ define( function( require ) {
     // combo box, for selecting a scene
     var comboBox = new ShoppingSceneComboBox( category.shoppingScenes, category.shoppingSceneProperty, this, {
       left: layoutBounds.left + 15,
-      bottom: layoutBounds.bottom - 15
+      bottom: layoutBounds.bottom - 80
     } );
     this.addChild( comboBox );
 

@@ -47,8 +47,8 @@ define( function( require ) {
 
     // Category radio buttons
     var categoryRadioButtons = new ShoppingCategoryRadioButtons( model.categories, model.categoryProperty, {
-      right: this.layoutBounds.maxX - 15,
-      bottom: this.layoutBounds.maxY - 80
+      left: this.layoutBounds.left + 15,
+      bottom: this.layoutBounds.bottom - 15
     } );
     playAreaLayer.addChild( categoryRadioButtons );
 
