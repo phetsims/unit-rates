@@ -1,12 +1,13 @@
 TODO list for unit-rates
 
-Scale & shelf
-- clean up initial positioning of bags on shelf
-- add drag handling to bags
-- get shelf+scale working for just bags, then add items
-- more logical placement algorithm
-- persistent placement of each item and bag
-- dev control for showing placement grid
+Fix reset all for bag.
+Make RowLayout 2D instead of 1D
+Clean up duplication in Scale
+
+Items on shelf and scale
+Placement algorithm for item, and items + bags
+Persistent placement of each item and bag
+Dev control for showing placement grid
 
 delete js/old/
 delete images/old/
