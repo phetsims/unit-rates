@@ -33,10 +33,10 @@ define( function( require ) {
       defaultValue: true
     },
 
-    // duration of animations, larger values make animations run slower
-    animationDuration: {
+    // speed of animations, larger values make animations run faster
+    animationSpeed: {
       type: 'number',
-      defaultValue: 1.25,
+      defaultValue: 500,
       isValidValue: function( value ) { return value > 0; }
     }
   } );
@@ -62,7 +62,7 @@ define( function( require ) {
 
     unitRates.log( 'showAnswers=' + URQueryParameters.showAnswers );
     unitRates.log( 'randomEnabled=' + URQueryParameters.randomEnabled );
-    unitRates.log( 'animationDuration=' + URQueryParameters.animationDuration );
+    unitRates.log( 'animationSpeed=' + URQueryParameters.animationSpeed );
   }
 
   return URQueryParameters;

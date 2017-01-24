@@ -202,8 +202,8 @@ define( function( require ) {
 
         markerEditorNodeAnimation = new MoveTo( markerEditorNode, new Vector2( destinationX, markerEditorNode.y ), {
 
-          // animation duration is controllable via query parameter
-          duration: URQueryParameters.animationDuration,
+          // controllable via query parameter
+          duration: 500 / URQueryParameters.animationSpeed,
 
           // marker editor is not interactive while animating
           onStart: function() { markerEditorNode.pickable = false; },

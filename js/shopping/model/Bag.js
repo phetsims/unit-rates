@@ -15,6 +15,7 @@ define( function( require ) {
   // sim modules
   var Movable = require( 'UNIT_RATES/common/model/Movable' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {number} unitsPerBag
@@ -27,7 +28,11 @@ define( function( require ) {
     options = _.extend( {
 
       // {ShoppingItem[]|null} items in the bag, null means the bag does not open when place on the scale
-      shoppingItems: null
+      shoppingItems: null,
+
+      // Movable options
+      animationSpeed: URQueryParameters.animationSpeed
+
     }, options );
 
     // @public (read-only)
