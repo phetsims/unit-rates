@@ -119,7 +119,7 @@ define( function( require ) {
   return inherit( AccordionBox, ShoppingQuestionsAccordionBox, {
 
     dispose: function() {
-      AccordionBox.prototype.dispose.call( this );
+      AccordionBox.prototype.dispose && AccordionBox.prototype.dispose.call( this );
       this.disposeShoppingQuestionsAccordionBox();
     }
   } );

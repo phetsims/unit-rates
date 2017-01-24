@@ -53,6 +53,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
+      Image.prototype.dispose && Image.prototype.dispose.call( this );
       this.disposeBagNode();
     },
 
