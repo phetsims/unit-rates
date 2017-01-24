@@ -11,16 +11,17 @@ define( function( require ) {
   // common modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
+  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoveTo = require( 'TWIXT/MoveTo' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
   var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
-  var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditorNode = require( 'UNIT_RATES/common/view/MarkerEditorNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -81,8 +82,8 @@ define( function( require ) {
 
     // pressing the undo button moves the marker edit back to its home position,
     // or removes the marker that was most recently added using the editor
-    var undoButton = new FontAwesomeButton( 'undo', {
-      iconScale: 0.45,
+    var undoButton = new RectangularPushButton( {
+      content: new FontAwesomeNode( 'undo', { scale: 0.45 } ),
       visible: false,
       baseColor: URColors.undoButton,
       listener: function() {

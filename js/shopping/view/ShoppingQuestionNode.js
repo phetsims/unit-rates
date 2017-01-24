@@ -11,15 +11,16 @@ define( function( require ) {
 
   // modules
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
+  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ShadowText = require( 'SCENERY_PHET/ShadowText' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // sim modules
-  var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
@@ -65,8 +66,8 @@ define( function( require ) {
     valueBox.touchArea = valueBox.localBounds.dilatedXY( 5, 5 );
 
     // edit button
-    var editButton = new FontAwesomeButton( 'pencil_square_o', {
-      iconScale: 0.5,
+    var editButton = new RectangularPushButton( {
+      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.5 } ),
       baseColor: URColors.editButton,
       right: valueBox.left - options.xSpacing,
       centerY: valueBox.centerY

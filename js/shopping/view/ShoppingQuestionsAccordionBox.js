@@ -10,13 +10,14 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // sim modules
-  var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var ShoppingQuestionNode = require( 'UNIT_RATES/shopping/view/ShoppingQuestionNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
@@ -81,8 +82,8 @@ define( function( require ) {
     shoppingScene.questionSetProperty.link( questionSetObserver );// unlink in dispose
 
     // Refresh button, advances to the next question set
-    var refreshButton = new FontAwesomeButton( 'refresh', {
-      iconScale: 0.5,
+    var refreshButton = new RectangularPushButton( {
+      content: new FontAwesomeNode( 'refresh', { scale: 0.5 } ),
       baseColor: URColors.refreshButton,
       listener: function() {
         shoppingScene.nextQuestionSet();

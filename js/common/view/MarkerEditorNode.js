@@ -11,15 +11,16 @@ define( function( require ) {
 
   // common modules
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
+  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // sim modules
-  var FontAwesomeButton = require( 'UNIT_RATES/common/view/FontAwesomeButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
@@ -124,8 +125,8 @@ define( function( require ) {
     } );
     this.addChild( denominatorNode );
 
-    var numeratorEditButton = new FontAwesomeButton( 'pencil_square_o', {
-      iconScale: 0.5,
+    var numeratorEditButton = new RectangularPushButton( {
+      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.5 } ),
       baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
       bottom: numeratorBox.top - options.ySpacing
@@ -133,8 +134,8 @@ define( function( require ) {
     this.addChild( numeratorEditButton );
     numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 10 );
 
-    var denominatorEditButton = new FontAwesomeButton( 'pencil_square_o', {
-      iconScale: 0.5,
+    var denominatorEditButton = new RectangularPushButton( {
+      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.5 } ),
       baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
       top: denominatorBox.bottom + options.ySpacing
