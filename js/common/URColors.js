@@ -21,7 +21,7 @@ define( function( require ) {
     categoryButton: 'white',
     editButton: 'yellow',
     enterButton: 'yellow',
-    eraserButton: DEFAULT_BUTTON_COLOR,
+    eraserButton: 'rgb(255, 255, 219)', // pale yellow
     refreshButton: DEFAULT_BUTTON_COLOR,
     undoButton: DEFAULT_BUTTON_COLOR,
     resetShelfButton: DEFAULT_BUTTON_COLOR,
