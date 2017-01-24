@@ -110,7 +110,7 @@ define( function( require ) {
      * @param {number} index - the cell index
      * @param {number} x
      * @returns {number}
-     * @private
+     * @public
      */
     getDistanceBetween: function( index, x ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );

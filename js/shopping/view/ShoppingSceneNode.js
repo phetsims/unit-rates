@@ -76,7 +76,7 @@ define( function( require ) {
     // bags
     var bagsParent = new Node();
     shoppingScene.bags.forEach( function( bag ) {
-      bagsParent.addChild( new BagNode( bag ) );
+      bagsParent.addChild( new BagNode( bag, shoppingScene.shelf, shoppingScene.scale ) );
     } );
 
     assert && assert( !options.children, 'decoration not supported' );

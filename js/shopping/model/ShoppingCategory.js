@@ -47,6 +47,16 @@ define( function( require ) {
   return inherit( Object, ShoppingCategory, {
 
     // @public
+    step: function( dt ) {
+      for ( var i = 0; i < this.shoppingScenes.length; i++ ) {
+        if ( this.shoppingScenes[ i ] === this.shoppingSceneProperty.value ) {
+          this.shoppingScenes[ i ].step( dt );
+          break;
+        }
+      }
+    },
+
+    // @public
     reset: function() {
 
       // Reset all scenes

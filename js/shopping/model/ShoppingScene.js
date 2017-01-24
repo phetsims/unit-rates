@@ -212,6 +212,15 @@ define( function( require ) {
   return inherit( Object, ShoppingScene, {
 
     // @public
+    step: function( dt ) {
+
+      // animate bags
+      for ( var i = 0; i < this.bags.length; i++ ) {
+        this.bags[ i ].step( dt );
+      }
+    },
+
+    // @public
     reset: function() {
 
       this.doubleNumberLine.reset();

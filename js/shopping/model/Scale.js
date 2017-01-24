@@ -95,6 +95,27 @@ define( function( require ) {
     getCellLocation: function( index ) {
       return new Vector2( this.rowLayout.getXAt( index ), this.location.y );
     },
+
+    //TODO identical to Shelf
+    /**
+     * Is this bag on the shelf?
+     * @param {Bag} bag
+     * @returns {boolean}
+     */
+    containsBag: function( bag ) {
+      assert && assert( bag instanceof Bag, 'invalid bag' );
+      return this.rowLayout.containsObject( bag );
+    },
+
+    //TODO identical to Shelf
+    /**
+     * Gets the location of a specific cell.
+     * @param {number} index - cell index
+     * @returns {Vector2}
+     */
+    getLocationAt: function( index ) {
+      return new Vector2( this.rowLayout.getXAt( index ), this.location.y );
+    },
     
     //TODO identical to Shelf
     /**

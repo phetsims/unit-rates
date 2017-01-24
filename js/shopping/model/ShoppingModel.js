@@ -79,6 +79,16 @@ define( function( require ) {
   return inherit( Object, ShoppingModel, {
 
     // @public
+    step: function( dt ) {
+      for ( var i = 0; i < this.categories.length; i++ ) {
+        if ( this.categories[ i ] === this.categoryProperty.value ) {
+          this.categories[ i ].step( dt );
+          break;
+        }
+      }
+    },
+
+    // @public
     reset: function() {
       this.categoryProperty.reset();
       this.categories.forEach( function( category ) {
