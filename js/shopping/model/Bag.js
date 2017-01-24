@@ -17,11 +17,12 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
+   * @param {number} unitsPerBag
    * @param {HTMLImageElement} image - image used by the view to represent this bag
    * @param {Object} [options]
    * @constructor
    */
-  function Bag( image, options ) {
+  function Bag( unitsPerBag, image, options ) {
 
     options = _.extend( {
 
@@ -31,6 +32,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.image = image;
+    this.unitsPerBag = unitsPerBag;
     this.shoppingItems = options.shoppingItems;
 
     Movable.call( this, options );

@@ -68,6 +68,14 @@ define( function( require ) {
     },
 
     /**
+     * Gets the number of cells.
+     * @returns {number}
+     */
+    getNumerOfCells: function() {
+       return this.cells.length;
+    },
+
+    /**
      * Gets the index of the first unoccupied cell. Cells are visited left to right.
      * @returns {number} - cell index, -1 if all cells are occupied
      * @public

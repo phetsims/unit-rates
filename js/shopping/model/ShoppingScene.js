@@ -133,7 +133,7 @@ define( function( require ) {
     } );
 
     // @public
-    this.scale = new Scale( {
+    this.scale = new Scale( unitRateProperty, {
       location: this.shelf.location.minusXY( 0, 200 ), // centered above the shelf
       quantityUnits: options.scaleQuantityUnits,
       numberOfBags: this.numberOfBags,
@@ -197,7 +197,7 @@ define( function( require ) {
       }
 
       // create bag
-      var bag = new Bag( this.bagImage, {
+      var bag = new Bag( this.unitsPerBag, this.bagImage, {
         shoppingItems: shoppingItems,
         location: bagLocation
       } );

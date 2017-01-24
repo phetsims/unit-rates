@@ -19,10 +19,11 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
+   * @param {Property.<number>} options
    * @param {Object} [options]
    * @constructor
    */
-  function Scale( options ) {
+  function Scale( unitRateProperty, options ) {
 
     options = _.extend( {
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the scale's top surface
@@ -31,6 +32,11 @@ define( function( require ) {
       numberOfBags: 4, // {number} maximum number of bags on the scale
       bagWidth: 70 // {number} width of each bag
     }, options );
+
+    var self = this;
+
+    // @private
+    this.unitRateProperty = unitRateProperty;
 
     // @public ( read-only)
     this.location = options.location;
@@ -47,11 +53,35 @@ define( function( require ) {
       numberOfObjects: options.numberOfBags,
       objectWidth: options.bagWidth
     } );
+
+    // When unit rate changes, update the cost
+    var unitRateObserver = function( unitRate ){
+      var cost = 0;
+      var numberOfCells = self.rowLayout.getNumerOfCells();
+      for ( var i = 0; i < numberOfCells; i++ ) {
+        var bag = self.rowLayout.getContents( i );
+        if ( bag ) {
+          cost += bag.unitsPerBag * unitRate;
+        }
+      }
+      self.costProperty.value = cost;
+    };
+    this.unitRateProperty.link( unitRateObserver ); // unlink in dispose
+
+    // @private
+    this.disposeScale = function() {
+      unitRateProperty.unlink( unitRateObserver );
+    };
   }
 
   unitRates.register( 'Scale', Scale );
 
   return inherit( Object, Scale, {
+
+    // @public
+    dispose: function() {
+     this.disposeScale();
+    },
 
     // @public
     reset: function() {
@@ -117,7 +147,7 @@ define( function( require ) {
       return new Vector2( this.rowLayout.getXAt( index ), this.location.y );
     },
     
-    //TODO identical to Shelf
+    //TODO some of this is identical to Shelf
     /**
      * Adds a bag to the shelf.
      * @param {Bag} bag
@@ -126,9 +156,11 @@ define( function( require ) {
     addBag: function( bag, index ) {
       assert && assert( bag instanceof Bag, 'invalid bag' );
       this.rowLayout.setContents( index, bag );
+      this.costProperty.value += bag.unitsPerBag * this.unitRateProperty.value;
+      this.quantityProperty.value += bag.unitsPerBag;
     },
 
-    //TODO identical to Shelf
+    //TODO some of this is identical to Shelf
     /**
      * Removes a bag from the shelf.
      * @param {Bag} bag
@@ -136,6 +168,8 @@ define( function( require ) {
     removeBag: function( bag ) {
       assert && assert( bag instanceof Bag, 'invalid bag' );
       this.rowLayout.removeObject( bag );
+      this.costProperty.value -= bag.unitsPerBag * this.unitRateProperty.value;
+      this.quantityProperty.value -= bag.unitsPerBag;
     }
   } );
 } );
