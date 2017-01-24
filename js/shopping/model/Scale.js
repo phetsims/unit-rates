@@ -139,6 +139,16 @@ define( function( require ) {
 
     //TODO identical to Shelf
     /**
+     * Is the specified cell empty?
+     * @param index - cell index
+     * @returns {boolean}
+     */
+    isEmpty: function( index ) {
+      return this.rowLayout.isEmpty( index );
+    },
+
+    //TODO identical to Shelf
+    /**
      * Gets the location of a specific cell.
      * @param {number} index - cell index
      * @returns {Vector2}

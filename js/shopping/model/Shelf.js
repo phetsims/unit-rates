@@ -98,6 +98,15 @@ define( function( require ) {
     },
 
     /**
+     * Is the specified cell empty?
+     * @param index - cell index
+     * @returns {boolean}
+     */
+    isEmpty: function( index ) {
+      return this.rowLayout.isEmpty( index );
+    },
+
+    /**
      * Gets the location of a specific cell.
      * @param {number} index - cell index
      * @returns {Vector2}

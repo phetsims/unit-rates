@@ -23,7 +23,6 @@ define( function( require ) {
     var startDragOffset;
 
     //TODO handle cancellation of drag sequence
-    //TODO handle multi-touch, prevent 2 bags from ending up in the same cell
     SimpleDragHandler.call( this, {
 
       // allow touch swipes across a bag to pick it up
@@ -31,13 +30,13 @@ define( function( require ) {
 
       start: function( event, trail ) {
 
-        // prerequisites of the drag sequence
+        // prerequisites for the drag sequence
         assert && assert( shelf.containsBag( bag ) || scale.containsBag( bag ),
           'bag should be on shelf or scale' );
         assert && assert( !( shelf.containsBag( bag ) && scale.containsBag( bag ) ),
           'bag should not be on both shelf and scale' );
 
-        // remove from shelf or scale
+        // remove bag from shelf or scale
         if ( shelf.containsBag( bag ) ) {
           shelf.removeBag( bag );
         }
@@ -60,11 +59,6 @@ define( function( require ) {
         // disable interaction while animating
         bagNode.pickable = false;
 
-        // enable interaction when animation is completed
-        var animationCompletedCallback = function() {
-          bagNode.pickable = true;
-        };
-
         // find the closest cell on the shelf
         var shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value );
         var shelfCellLocation = shelf.getLocationAt( shelfCellIndex );
@@ -75,19 +69,50 @@ define( function( require ) {
         var scaleCellLocation = scale.getLocationAt( scaleCellIndex );
         var distanceToScale = bag.locationProperty.value.distance( scaleCellLocation );
 
+        // closer to the shelf or the scale?
         if ( distanceToShelf < distanceToScale ) {
 
           // animate to shelf
-          unitRates.log && unitRates.log( 'animating to shelf' );
-          shelf.addBag( bag, shelfCellIndex );
-          bag.animateTo( shelfCellLocation, animationCompletedCallback );
+          unitRates.log && unitRates.log( 'animating to shelf cell ' + shelfCellIndex );
+          var shelfAnimationCompletedCallback = function() {
+            if ( shelf.isEmpty( shelfCellIndex ) ) {
+
+              // the cell is still empty when we reach it, put the bag in that cell
+              bagNode.pickable = true;
+              shelf.addBag( bag, shelfCellIndex );
+            }
+            else {
+
+              // the cell is occupied when we reach it, try another cell
+              unitRates.log && unitRates.log( 'shelf cell ' +  shelfCellIndex + ' is occupied, trying another cell' );
+              shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value );
+              shelfCellLocation = shelf.getLocationAt( shelfCellIndex );
+              bag.animateTo( shelfCellLocation, shelfAnimationCompletedCallback );
+            }
+          };
+          bag.animateTo( shelfCellLocation, shelfAnimationCompletedCallback );
         }
         else {
 
           // animate to scale
-          unitRates.log && unitRates.log( 'animating to scale' );
-          scale.addBag( bag, scaleCellIndex );
-          bag.animateTo( scaleCellLocation, animationCompletedCallback );
+          unitRates.log && unitRates.log( 'animating to scale cell ' +  scaleCellIndex );
+          var scaleAnimationCompletedCallback = function() {
+            if ( scale.isEmpty( scaleCellIndex ) ) {
+
+              // the cell is still empty when we reach it, put the bag in that cell
+              bagNode.pickable = true;
+              scale.addBag( bag, scaleCellIndex );
+            }
+            else {
+
+              // the cell is occupied when we reach it, try another cell
+              unitRates.log && unitRates.log( 'scale cell ' +  scaleCellIndex + ' is occupied, trying another cell' );
+              scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value );
+              scaleCellLocation = scale.getLocationAt( shelfCellIndex );
+              bag.animateTo( scaleCellLocation, scaleAnimationCompletedCallback );
+            }
+          };
+          bag.animateTo( scaleCellLocation, scaleAnimationCompletedCallback );
         }
       }
     } );
