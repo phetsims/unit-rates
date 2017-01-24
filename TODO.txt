@@ -1,5 +1,6 @@
 TODO list for unit-rates
 
+Update scale costProperty and quantityProperty
 Make RowLayout 2D instead of 1D
 Clean up duplication in Scale
 
