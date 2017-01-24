@@ -12,6 +12,7 @@ define( function( require ) {
 
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -26,7 +27,7 @@ define( function( require ) {
   function RowLayout( options ) {
 
     options = _.extend( {
-      centerX: 0, // {number} x coordinate of the center of the row
+      location: new Vector2( 0, 0 ), // {number} center of the row
       numberOfObjects: 4, // {number} maximum number of objects in the row
       objectWidth: 70, // {number} width of each object
       spacing: 8 // {number} horizontal space between objects
@@ -39,17 +40,17 @@ define( function( require ) {
     var leftToRightDistance = deltaX * ( options.numberOfObjects - 1 );
 
     // center of left-most cell
-    var leftX = options.centerX - ( leftToRightDistance / 2 );
+    var leftX = options.location.x - ( leftToRightDistance / 2 );
     
     // @private the row's cells.
     // Each cell contains a data structure with this format:
     // {Object|null} contents - the object that occupies the cell, null if the cell is empty
-    // {number} x - the x coordinate of the cell
+    // {Vector} location - center of the cell
     this.cells = [];
     for ( var i = 0; i < options.numberOfObjects; i++ ) {
       this.cells.push( {
         contents: EMPTY,
-        x: leftX + ( i * deltaX )
+        location: new Vector2( leftX + ( i * deltaX ), options.location.y )
       } );
     }
   }
@@ -71,7 +72,7 @@ define( function( require ) {
      * Gets the number of cells.
      * @returns {number}
      */
-    getNumerOfCells: function() {
+    getNumberOfCells: function() {
        return this.cells.length;
     },
 
@@ -94,17 +95,16 @@ define( function( require ) {
 
     /**
      * Gets the index of the closest unoccupied cell.
-     * @param {number} x  - x coordinate
+     * @param {Vector2} location
      * @returns {number} - cell index, -1 if all cells are occupied
      * @public
      */
-    getClosestUnoccupiedCell: function( x ) {
-      assert && assert( this.isValidX( x ), 'invalid x: ' + x );
+    getClosestUnoccupiedCell: function( location ) {
       var index = this.getFirstUnoccupiedCell();
       if ( index !== -1 ) {
         for ( var i = index + 1; i < this.cells.length; i++ ) {
           if ( this.isEmpty( i ) ) {
-            if ( this.getDistanceBetween( i, x ) < this.getDistanceBetween( index, x ) ) {
+            if ( this.getDistanceBetween( i, location ) < this.getDistanceBetween( index, location ) ) {
               index = i;
             }
             else {
@@ -118,16 +118,15 @@ define( function( require ) {
     },
 
     /**
-     * Gets the distance between a cell and an x coordinate.
+     * Gets the distance between a cell and a location.
      * @param {number} index - the cell index
-     * @param {number} x
+     * @param {Vector2} location
      * @returns {number}
      * @public
      */
-    getDistanceBetween: function( index, x ) {
+    getDistanceBetween: function( index, location ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      assert && assert( this.isValidX( x ), 'invalid x: ' + x );
-      return Math.abs( this.getXAt( index ) - x );
+      return this.getLocationAt( index ).distance( location );
     },
 
     /**
@@ -138,16 +137,6 @@ define( function( require ) {
      */
     isValidIndex: function( index ) {
       return ( ( typeof index === 'number' ) && !isNaN( index ) && index >= 0 && index < this.cells.length );
-    },
-
-    /**
-     * Is the x coordinate valid?
-     * @param {number} x
-     * @returns {boolean}
-     * @private
-     */
-    isValidX: function( x ) {
-      return ( ( typeof x === 'number' ) && !isNaN( x ) );
     },
 
     /**
@@ -193,14 +182,14 @@ define( function( require ) {
     },
 
     /**
-     * Gets the x coordinate of a cell.
+     * Gets the location of a cell.
      * @param {number} index - the cell index
-     * @returns {number}
+     * @returns {Vector2}
      * @public
      */
-    getXAt: function( index ) {
+    getLocationAt: function( index ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      return this.cells[ index ].x;
+      return this.cells[ index ].location;
     },
 
     /**

@@ -49,7 +49,7 @@ define( function( require ) {
 
     // @private manages the layout of objects on the scale
     this.rowLayout = new RowLayout( {
-      centerX: this.location.x,
+      location: this.location,
       numberOfObjects: options.numberOfBags,
       objectWidth: options.bagWidth
     } );
@@ -57,7 +57,7 @@ define( function( require ) {
     // When unit rate changes, update the cost
     var unitRateObserver = function( unitRate ){
       var cost = 0;
-      var numberOfCells = self.rowLayout.getNumerOfCells();
+      var numberOfCells = self.rowLayout.getNumberOfCells();
       for ( var i = 0; i < numberOfCells; i++ ) {
         var bag = self.rowLayout.getContents( i );
         if ( bag ) {
@@ -105,12 +105,12 @@ define( function( require ) {
     //TODO identical to Shelf
     /**
      * Gets the index of the closet unoccupied cell on the shelf.
-     * @param {number} x - x coordinate
+     * @param {Vector2} location
      * @returns {number} cell index
      * @public
      */
-    getClosestUnoccupiedCell: function( x ) {
-      var cellIndex = this.rowLayout.getClosestUnoccupiedCell( x );
+    getClosestUnoccupiedCell: function( location ) {
+      var cellIndex = this.rowLayout.getClosestUnoccupiedCell( location );
       assert && assert( cellIndex !== -1, 'shelf is full' );
       return cellIndex;
     },
@@ -123,7 +123,7 @@ define( function( require ) {
      * @public
      */
     getCellLocation: function( index ) {
-      return new Vector2( this.rowLayout.getXAt( index ), this.location.y );
+      return this.rowLayout.getLocationAt( index );
     },
 
     //TODO identical to Shelf
@@ -144,7 +144,7 @@ define( function( require ) {
      * @returns {Vector2}
      */
     getLocationAt: function( index ) {
-      return new Vector2( this.rowLayout.getXAt( index ), this.location.y );
+      return this.rowLayout.getLocationAt( index );
     },
     
     //TODO some of this is identical to Shelf

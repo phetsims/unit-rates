@@ -23,6 +23,7 @@ define( function( require ) {
     var startDragOffset;
 
     //TODO handle cancellation of drag sequence
+    //TODO handle multi-touch, prevent 2 bags from ending up in the same cell
     SimpleDragHandler.call( this, {
 
       // allow touch swipes across a bag to pick it up
@@ -65,12 +66,12 @@ define( function( require ) {
         };
 
         // find the closest cell on the shelf
-        var shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value.x );
+        var shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value );
         var shelfCellLocation = shelf.getLocationAt( shelfCellIndex );
         var distanceToShelf = bag.locationProperty.value.distance( shelfCellLocation );
 
         // find the closest cell on the scale
-        var scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value.x );
+        var scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value );
         var scaleCellLocation = scale.getLocationAt( scaleCellIndex );
         var distanceToScale = bag.locationProperty.value.distance( scaleCellLocation );
 
