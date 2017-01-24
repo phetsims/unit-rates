@@ -156,7 +156,7 @@ define( function( require ) {
 
         // the new marker for what's on the scale
         scaleMarker = new Marker( self.scale.costProperty.value, quantity, 'scale', {
-          isMajor: ( URUtil.decimalPlaces( quantity ) <= denominatorOptions.majorMarkerDecimals ),
+          isMajor: true, // all scale markers are major, per the design document
           color: URColors.scaleMarker,
           erasable: false
         } );
@@ -194,7 +194,7 @@ define( function( require ) {
      */
     var questionCorrectListener = function( question ) {
       var marker = new Marker( question.numerator, question.denominator, 'question', {
-        isMajor: ( URUtil.decimalPlaces( question.denominator ) <= denominatorOptions.majorMarkerDecimals ),
+        isMajor: true, // all question markers are major, per the design document
         color: URColors.questionMarker,
         erasable: false
       } );
