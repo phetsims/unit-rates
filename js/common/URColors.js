@@ -24,7 +24,7 @@ define( function( require ) {
     eraserButton: DEFAULT_BUTTON_COLOR,
     refreshButton: DEFAULT_BUTTON_COLOR,
     undoButton: DEFAULT_BUTTON_COLOR,
-    clearScaleButton: DEFAULT_BUTTON_COLOR,
+    resetShelfButton: DEFAULT_BUTTON_COLOR,
 
     // markers
     questionMarker: 'green', // markers created by answering questions

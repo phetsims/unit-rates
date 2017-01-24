@@ -11,15 +11,16 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
 
   // sim modules
   var BagNode = require( 'UNIT_RATES/shopping/view/BagNode' );
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
-  var ResetShelfButton = require( 'UNIT_RATES/shopping/view/ResetShelfButton' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
   var ShoppingQuestionsAccordionBox = require( 'UNIT_RATES/shopping/view/ShoppingQuestionsAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
 
   /**
    * @param {ShoppingScene} shoppingScene
@@ -57,9 +58,14 @@ define( function( require ) {
     } );
 
     // button that resets the shelf to its initial state
-    var resetShelfButton = new ResetShelfButton( shoppingScene, {
-      right: scaleNode.left - 15,
-      bottom: scaleNode.bottom
+    var resetShelfButton = new ResetButton( {
+      listener: function() {
+        //TODO
+      },
+      baseColor: URColors.resetShelfButton,
+      scale: 0.65,
+      right: scaleNode.left,
+      top: scaleNode.bottom + 20
     } );
 
     // Disable the button when the shelf and scale are in their initial state.
