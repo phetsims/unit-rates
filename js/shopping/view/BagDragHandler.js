@@ -36,6 +36,14 @@ define( function( require ) {
         assert && assert( !( shelf.containsBag( bag ) && scale.containsBag( bag ) ),
           'bag should not be on both shelf and scale' );
 
+        // remove from shelf or scale
+        if ( shelf.containsBag( bag ) ) {
+          shelf.removeBag( bag );
+        }
+        else if ( scale.containsBag( bag ) ) {
+          scale.removeBag( bag );
+        }
+
         // compute the offset between the pointer and the bag's location
         startDragOffset = bagNode.globalToParentPoint( event.pointer.point ).minus( bag.locationProperty.value );
       },
@@ -55,14 +63,6 @@ define( function( require ) {
         var animationCompletedCallback = function() {
           bagNode.pickable = true;
         };
-
-        // remove from shelf or scale *before* looking for closest cell on shelf or scale
-        if ( shelf.containsBag( bag ) ) {
-          shelf.removeBag( bag );
-        }
-        else if ( scale.containsBag( bag ) ) {
-          scale.removeBag( bag );
-        }
 
         // find the closest cell on the shelf
         var shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value.x );
