@@ -67,12 +67,5 @@ define( function( require ) {
 
   unitRates.register( 'ShelfNode', ShelfNode );
 
-  return inherit( Node, ShelfNode, {
-
-    // @public
-    dispose: function() {
-      Node.prototype.dispose && Node.prototype.dispose.call( this );
-      //TODO
-    }
-  } );
+  return inherit( Node, ShelfNode );
 } );
