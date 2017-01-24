@@ -2,11 +2,7 @@ TODO list for unit-rates
 
 fuzzMouse assertion failure in BagDragHandler: bag should be on shelf or scale
 Reset button for shelf + scale
-
 Items on shelf and scale
-Placement algorithm for item, and items + bags
-Persistent placement of each item and bag
-Dev control for showing placement grid
 
 delete js/old/
 delete images/old/
