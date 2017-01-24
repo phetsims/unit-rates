@@ -18,6 +18,10 @@ define( function( require ) {
   var RowLayout = require( 'UNIT_RATES/shopping/model/RowLayout' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
+  /**
+   * @param {Object} [options]
+   * @constructor
+   */
   function BagContainer( options ) {
 
     options = _.extend( {

@@ -15,6 +15,7 @@ define( function( require ) {
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
+  // All functions are @public unless otherwise noted.
   var URUtil = {
 
     /**

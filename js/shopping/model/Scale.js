@@ -88,8 +88,8 @@ define( function( require ) {
      * Adds a bag to the shelf.
      * @param {Bag} bag
      * @param {number} index - cell index
-     * @override
      * @public
+     * @override
      */
     addBag: function( bag, index ) {
 
@@ -104,6 +104,8 @@ define( function( require ) {
     /**
      * Removes a bag from the shelf.
      * @param {Bag} bag
+     * @public
+     * @override
      */
     removeBag: function( bag ) {
 

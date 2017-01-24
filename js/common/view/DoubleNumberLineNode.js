@@ -180,6 +180,7 @@ define( function( require ) {
     /**
      * Removes a MarkerNode from the double number line.
      * @param {Marker} marker
+     * @public
      */
     removeMarkerNode: function( marker ) {
       unitRates.log && unitRates.log( 'removeMarker ' + marker );
@@ -198,6 +199,7 @@ define( function( require ) {
      * Gets the MarkerNode that is associated with marker.
      * @param {Marker} marker
      * @returns {MarkerNode|null} - null if there is no MarkerNode associated with marker
+     * @public
      */
     getMarkerNode: function( marker ) {
       var markerNode = null;

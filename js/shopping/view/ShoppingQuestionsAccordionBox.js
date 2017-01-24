@@ -118,6 +118,7 @@ define( function( require ) {
 
   return inherit( AccordionBox, ShoppingQuestionsAccordionBox, {
 
+    // @public
     dispose: function() {
       AccordionBox.prototype.dispose && AccordionBox.prototype.dispose.call( this );
       this.disposeShoppingQuestionsAccordionBox();

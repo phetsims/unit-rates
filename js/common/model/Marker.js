@@ -69,6 +69,7 @@ define( function( require ) {
      * Does the specified marker have the same rate?
      * @param {Marker} marker
      * @returns {boolean}
+     * @public
      */
     rateEquals: function( marker ) {
       assert && assert( marker instanceof Marker );
@@ -82,6 +83,7 @@ define( function( require ) {
      *    1 : marker has higher precedence
      *   -1 : marker has lower precedence
      *    0 : marker has same precedence
+     * @public
      */
     precedenceOf: function( marker ) {
 

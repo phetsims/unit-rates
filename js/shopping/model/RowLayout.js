@@ -71,6 +71,7 @@ define( function( require ) {
     /**
      * Gets the number of cells.
      * @returns {number}
+     * @public
      */
     getNumberOfCells: function() {
        return this.cells.length;
@@ -164,6 +165,7 @@ define( function( require ) {
     /**
      * Clears the specified cell. The cell must be occupied.
      * @param {number} index - the cell index
+     * @public
      */
     clearCell: function( index ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
@@ -174,6 +176,7 @@ define( function( require ) {
     /**
      * Removes an object from the row.
      * @param {Object} object
+     * @public
      */
     removeObject: function( object ) {
       this.clearCell( this.indexOf( object ) );

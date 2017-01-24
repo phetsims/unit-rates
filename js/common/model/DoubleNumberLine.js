@@ -85,6 +85,7 @@ define( function( require ) {
      * Calling this function may result in a lower precedence marker being deleted as a side effect.
      * @param {Marker} marker
      * @returns {boolean} true if the marker was added, false if the request was ignored
+     * @public
      */
     addMarker: function( marker ) {
 
@@ -124,6 +125,7 @@ define( function( require ) {
     /**
      * Removes a marker.
      * @param {Marker} marker
+     * @public
      */
     removeMarker: function( marker ) {
       assert && assert( this.markers.contains( marker ), 'attempt to remove an unknown marker: ' + marker );
@@ -134,6 +136,7 @@ define( function( require ) {
      * Gets a marker with the same rate as the specified marker.
      * @param {Marker} marker
      * @returns {Marker|null} null if there is no marker with the same rate
+     * @public
      */
     getMarkerWithSameRate: function( marker ) {
       var markerWithSameRate = null;
