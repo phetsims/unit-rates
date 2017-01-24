@@ -1,5 +1,7 @@
 TODO list for unit-rates
 
+bug: multiple bags in same cell
+bug: not choosing closest cell
 Make RowLayout 2D instead of 1D
 Clean up duplication in Scale
 Create marker when bag is put on scale
