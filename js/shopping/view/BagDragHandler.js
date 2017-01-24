@@ -28,6 +28,11 @@ define( function( require ) {
       // allow touch swipes across a bag to pick it up
       allowTouchSnag: true,
 
+      /**
+       * Called when a drag sequence starts.
+       * @param {Event} event
+       * @param {Trail} trail
+       */
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
@@ -48,12 +53,22 @@ define( function( require ) {
         startDragOffset = bagNode.globalToParentPoint( event.pointer.point ).minus( bag.locationProperty.value );
       },
 
+      /**
+       * Called when the pointer moves during a drag sequence.
+       * @param {Event} event
+       * @param {Trail} trail
+       */
       drag: function( event, trail ) {
 
         // move the bag immediately while dragging
         bag.moveTo( bagNode.globalToParentPoint( event.pointer.point ).minus( startDragOffset ) );
       },
 
+      /**
+       * Called when a drag sequence ends.
+       * @param {Event} event
+       * @param {Trail} trail
+       */
       end: function( event, trail ) {
 
         // disable interaction while animating
