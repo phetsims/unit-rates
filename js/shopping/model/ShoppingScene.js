@@ -244,7 +244,7 @@ define( function( require ) {
       var shelf = this.shelf;
       this.bags.forEach( function( bag ) {
         var cellIndex = shelf.getFirstUnoccupiedCell();
-        bag.locationProperty.value = shelf.getCellLocation( cellIndex );
+        bag.moveTo( shelf.getCellLocation( cellIndex ) );
         shelf.addBag( bag, cellIndex );
       } );
     },

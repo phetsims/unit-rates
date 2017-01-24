@@ -1,6 +1,5 @@
 TODO list for unit-rates
 
-Fix reset all for bag.
 Make RowLayout 2D instead of 1D
 Clean up duplication in Scale
 
