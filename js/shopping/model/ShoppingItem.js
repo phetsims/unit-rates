@@ -30,7 +30,7 @@ define( function( require ) {
 
     // @private
     this.disposeShoppingItem = function() {
-      //TODO
+      //TODO implement dispose
     };
   }
 
