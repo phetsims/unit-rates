@@ -131,21 +131,9 @@ define( function( require ) {
         }
       }
     } );
-
-    // @private
-    this.disposeBagDragHandler = function() {
-      //TODO
-    };
   }
 
   unitRates.register( 'BagDragHandler', BagDragHandler );
 
-  return inherit( SimpleDragHandler, BagDragHandler, {
-
-    // @public
-    dispose: function() {
-      SimpleDragHandler.prototype.dispose && SimpleDragHandler.prototype.dispose.call( this );
-      this.disposeBagDragHandler();
-    }
-  } );
+  return inherit( SimpleDragHandler, BagDragHandler );
 } );

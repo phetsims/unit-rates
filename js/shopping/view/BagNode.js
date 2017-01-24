@@ -43,7 +43,6 @@ define( function( require ) {
     this.disposeBagNode = function() {
       bag.locationProperty.unlink( locationObserver );
       self.removeInputListener( self.dragHandler );
-      self.dragHandler.dispose();
     };
   }
 
