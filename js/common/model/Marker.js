@@ -58,7 +58,7 @@ define( function( require ) {
     // @public
     toString: function() {
       return 'Marker[' +
-             ' rate=' + this.numerator + '/' + this.denominator +
+             ' rate=' + this.numeratorProperty.value + '/' + this.denominator +
              ' creator=' + this.creator +
              ' isMajor=' + this.isMajor +
              ' erasable=' + this.erasable +
