@@ -71,7 +71,7 @@ define( function( require ) {
 
         // find the closest cell on the scale
         var scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value.x );
-        var scaleCellLocation = scale.getLocationAt( shelfCellIndex );
+        var scaleCellLocation = scale.getLocationAt( scaleCellIndex );
         var distanceToScale = bag.locationProperty.value.distance( scaleCellLocation );
 
         if ( distanceToShelf < distanceToScale ) {

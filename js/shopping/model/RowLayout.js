@@ -88,6 +88,7 @@ define( function( require ) {
           break;
         }
       }
+      unitRates.log && unitRates.log( 'first unoccupied cell: ' + index );
       return index;
     },
 
@@ -112,6 +113,7 @@ define( function( require ) {
           }
         }
       }
+      unitRates.log && unitRates.log( 'closest unoccupied cell: ' + index );
       return index;
     },
 
