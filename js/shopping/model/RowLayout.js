@@ -102,11 +102,13 @@ define( function( require ) {
       var index = this.getFirstUnoccupiedCell();
       if ( index !== -1 ) {
         for ( var i = index + 1; i < this.cells.length; i++ ) {
-          if ( this.getDistanceBetween( i, x ) < this.getDistanceBetween( index, x ) ) {
-            index = i;
-          }
-          else {
-            break;
+          if ( this.isEmpty( i ) ) {
+            if ( this.getDistanceBetween( i, x ) < this.getDistanceBetween( index, x ) ) {
+              index = i;
+            }
+            else {
+              break;
+            }
           }
         }
       }
