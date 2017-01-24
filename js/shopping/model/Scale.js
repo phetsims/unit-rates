@@ -19,7 +19,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {Property.<number>} options
+   * @param {Property.<number>} unitRateProperty
    * @param {Object} [options]
    * @constructor
    */
