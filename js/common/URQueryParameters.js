@@ -33,7 +33,7 @@ define( function( require ) {
       defaultValue: true
     },
 
-    // speed of animations, larger values make animations run faster
+    // Speed of animations. Larger values make animations run faster. Smaller values are useful for testing multi-touch.
     animationSpeed: {
       type: 'number',
       defaultValue: 400,
