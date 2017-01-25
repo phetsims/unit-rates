@@ -145,15 +145,15 @@ define( function( require ) {
 
     // Create a marker when what's on the scale changes
     this.scale.quantityProperty.lazyLink( function( quantity ) {
+
+      // the marker for what was previously on the scale becomes erasable
+      if ( scaleMarker ) {
+        scaleMarker.colorProperty.value = URColors.majorMarker;
+        scaleMarker.erasable = true;
+      }
+
+      // the new marker for what's on the scale
       if ( quantity > 0 ) {
-
-        // the marker for what was previously on the scale becomes erasable
-        if ( scaleMarker ) {
-          scaleMarker.colorProperty.value = URColors.majorMarker;
-          scaleMarker.erasable = true;
-        }
-
-        // the new marker for what's on the scale
         scaleMarker = new Marker( self.scale.costProperty.value, quantity, 'scale', {
           isMajor: true, // all scale markers are major, per the design document
           color: URColors.scaleMarker,
@@ -212,7 +212,8 @@ define( function( require ) {
 
       // the bag's location on the shelf
       var cellIndex = this.shelf.getFirstUnoccupiedCell();
-      var bagLocation = this.shelf.getCellLocation( cellIndex );
+      assert && assert( cellIndex !== -1, 'shelf is full' );
+      var bagLocation = this.shelf.getLocationAt( cellIndex );
 
       // create shopping items if the bag opens when placed on the scale
       var shoppingItems = null;
@@ -271,7 +272,8 @@ define( function( require ) {
       var shelf = this.shelf;
       this.bags.forEach( function( bag ) {
         var cellIndex = shelf.getFirstUnoccupiedCell();
-        bag.moveTo( shelf.getCellLocation( cellIndex ) );
+        assert && assert( cellIndex !== -1, 'shelf is full' );
+        bag.moveTo( shelf.getLocationAt( cellIndex ) );
         shelf.addBag( bag, cellIndex );
       } );
     },

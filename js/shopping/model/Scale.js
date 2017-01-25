@@ -25,11 +25,16 @@ define( function( require ) {
   function Scale( unitRateProperty, options ) {
 
     options = _.extend( {
+
+      // BagContainer options
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the scale's top surface
-      width: 300, // {number} width of the top surface of the scale
-      quantityUnits: '', // {string} units for quantity
       numberOfBags: 4, // {number} maximum number of bags on the scale
-      bagWidth: 70 // {number} width of each bag
+      bagWidth: 70, // {number} width of each bag
+
+      // Scale options
+      width: 300, // {number} width of the top surface of the scale
+      quantityUnits: '' // {string} units for quantity
+
     }, options );
 
     var self = this;
@@ -53,7 +58,7 @@ define( function( require ) {
       var cost = 0;
       var numberOfCells = self.getNumberOfCells();
       for ( var i = 0; i < numberOfCells; i++ ) {
-        var bag = self.getContents( i );
+        var bag = self.getBagAt( i );
         if ( bag ) {
           cost += bag.unitsPerBag * unitRate;
         }
@@ -85,7 +90,7 @@ define( function( require ) {
     },
     
     /**
-     * Adds a bag to the shelf.
+     * Adds a bag to the scale.
      * @param {Bag} bag
      * @param {number} index - cell index
      * @public
@@ -102,7 +107,7 @@ define( function( require ) {
     },
 
     /**
-     * Removes a bag from the shelf.
+     * Removes a bag from the scale.
      * @param {Bag} bag
      * @public
      * @override

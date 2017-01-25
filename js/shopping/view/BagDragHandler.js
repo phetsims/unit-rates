@@ -1,5 +1,10 @@
 // Copyright 2017, University of Colorado Boulder
 
+/**
+ * Drag handler for bags.
+ *
+ * @author Chris Malley (PixelZoom, Inc.)
+ */
 define( function( require ) {
   'use strict';
 
@@ -36,16 +41,17 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
-        assert && assert( shelf.containsBag( bag ) || scale.containsBag( bag ),
-          'bag should be on shelf or scale' );
-        assert && assert( !( shelf.containsBag( bag ) && scale.containsBag( bag ) ),
+        assert && assert( !( shelf.contains( bag ) && scale.contains( bag ) ),
           'bag should not be on both shelf and scale' );
 
+        bag.dragging = true;
+        bagNode.moveToFront();
+
         // remove bag from shelf or scale
-        if ( shelf.containsBag( bag ) ) {
+        if ( shelf.contains( bag ) ) {
           shelf.removeBag( bag );
         }
-        else if ( scale.containsBag( bag ) ) {
+        else if ( scale.contains( bag ) ) {
           scale.removeBag( bag );
         }
 
@@ -71,69 +77,94 @@ define( function( require ) {
        */
       end: function( event, trail ) {
 
-        // disable interaction while animating
-        bagNode.pickable = false;
+        bag.dragging = false;
 
-        // find the closest cell on the shelf
+        // closest cell on the shelf
         var shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value );
-        var shelfCellLocation = shelf.getLocationAt( shelfCellIndex );
-        var distanceToShelf = bag.locationProperty.value.distance( shelfCellLocation );
+        assert && assert( shelfCellIndex !== -1, 'shelf is full' );
+        var distanceToShelf = shelf.getDistanceBetween( shelfCellIndex, bag.locationProperty.value );
 
-        // find the closest cell on the scale
+        // closest cell on the scale
         var scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value );
-        var scaleCellLocation = scale.getLocationAt( scaleCellIndex );
-        var distanceToScale = bag.locationProperty.value.distance( scaleCellLocation );
+        assert && assert( scaleCellIndex !== -1, 'scale is full' );
+        var distanceToScale = scale.getDistanceBetween( scaleCellIndex, bag.locationProperty.value );
 
-        // closer to the shelf or the scale?
+        // is the bag closer to the shelf or the scale?
         if ( distanceToShelf < distanceToScale ) {
 
           // animate to shelf
           unitRates.log && unitRates.log( 'animating to shelf cell ' + shelfCellIndex );
-          var shelfAnimationCompletedCallback = function() {
-            if ( shelf.isEmpty( shelfCellIndex ) ) {
-
-              // the cell is still empty when we reach it, put the bag in that cell
-              bagNode.pickable = true;
-              shelf.addBag( bag, shelfCellIndex );
-            }
-            else {
-
-              // the cell is occupied when we reach it, try another cell
-              unitRates.log && unitRates.log( 'shelf cell ' +  shelfCellIndex + ' is occupied, trying another cell' );
-              shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value );
-              shelfCellLocation = shelf.getLocationAt( shelfCellIndex );
-              bag.animateTo( shelfCellLocation, shelfAnimationCompletedCallback );
-            }
-          };
-          bag.animateTo( shelfCellLocation, shelfAnimationCompletedCallback );
+          beginAnimation( bag, shelfCellIndex, shelf );
         }
         else {
 
           // animate to scale
           unitRates.log && unitRates.log( 'animating to scale cell ' +  scaleCellIndex );
-          var scaleAnimationCompletedCallback = function() {
-            if ( scale.isEmpty( scaleCellIndex ) ) {
-
-              // the cell is still empty when we reach it, put the bag in that cell
-              bagNode.pickable = true;
-              scale.addBag( bag, scaleCellIndex );
-            }
-            else {
-
-              // the cell is occupied when we reach it, try another cell
-              unitRates.log && unitRates.log( 'scale cell ' +  scaleCellIndex + ' is occupied, trying another cell' );
-              scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value );
-              scaleCellLocation = scale.getLocationAt( shelfCellIndex );
-              bag.animateTo( scaleCellLocation, scaleAnimationCompletedCallback );
-            }
-          };
-          bag.animateTo( scaleCellLocation, scaleAnimationCompletedCallback );
+          beginAnimation( bag, scaleCellIndex, scale );
         }
       }
     } );
   }
 
   unitRates.register( 'BagDragHandler', BagDragHandler );
+
+  /**
+   * Begins the animation of a bag to a specified cell in a bag container (shelf or scale).
+   * The animation will change course immediately if the specified cell becomes occupied.
+   * @param {Bag} bag
+   * @param {number} cellIndex
+   * @param {BagContainer} bagContainer
+   * @private
+   */
+  function beginAnimation( bag, cellIndex, bagContainer ) {
+
+    var cellLocation = bagContainer.getLocationAt( cellIndex );
+
+    // This function changes course to the next closest unoccupied cell.
+    var changeCourse = function() {
+
+      // find another unoccupied cell
+      unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
+      cellIndex = bagContainer.getClosestUnoccupiedCell( bag.locationProperty.value );
+      assert && assert( cellIndex !== -1, 'all cells are occupied' );
+      cellLocation = bagContainer.getLocationAt( cellIndex );
+
+      // call bind, so that we have new function instances, otherwise the callbacks will be ignored
+      bag.animateTo( cellLocation, {
+        animationStepCallback: animationStepCallback.bind( this ),
+        animationCompletedCallback: animationCompletedCallback.bind( this )
+      } );
+    };
+
+    // This function is called on each animation step.
+    // If the target cell becomes occupied, change course immediately.
+    var animationStepCallback = function() {
+      if ( !bagContainer.isEmpty( cellIndex ) ) {
+        changeCourse();
+      }
+    };
+
+    // This function is called when animation completes.
+    // If the target cell is still empty, add the bag. Otherwise animate to an unoccupied cell.
+    var animationCompletedCallback = function() {
+      if ( bagContainer.isEmpty( cellIndex ) ) {
+
+        // the cell is still empty when we reach it, put the bag in that cell
+        bagContainer.addBag( bag, cellIndex );
+      }
+      else {
+
+        // the cell is occupied, try another cell
+        changeCourse();
+      }
+    };
+
+    // begin the animation
+    bag.animateTo( cellLocation, {
+      animationStepCallback: animationStepCallback,
+      animationCompletedCallback: animationCompletedCallback
+    } );
+  }
 
   return inherit( SimpleDragHandler, BagDragHandler );
 } );

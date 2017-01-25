@@ -1,6 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO this was copied from function-builder
+//TODO this was copied from function-builder, then modified
 /**
  * A model element that is movable.
  * It has a current location and a desired destination.
@@ -42,12 +42,16 @@ define( function( require ) {
     // @private {Vector2} destination to animate to, set using animateTo
     this.destination = options.location.copy();
 
+    // @private {function|null} called when animation step occurs, set using animateTo. Don't do anything expensive here!
+    this.animationStepCallback = null;
+
     // @private {function|null} called when animation to destination completes, set using animateTo
     this.animationCompletedCallback = null;
 
     // @private
     this.disposeMovable = function() {
       //TODO cancel animation?
+      //TODO set animationStepCallback=null ?
       //TODO set animationCompletedCallback=null ?
     };
   }
@@ -75,21 +79,34 @@ define( function( require ) {
      * @public
      */
     moveTo: function( location ) {
-      this.animationCompletedCallback = null; // cancels any pending callback
+
+      // cancel any pending callbacks
+      this.animationStepCallback = null;
+      this.animationCompletedCallback = null;
+
+      // move immediately to the location
       this.destination = location;
       this.locationProperty.set( location );
     },
 
     /**
-     * Animates to the specified location. When animation is completed, call optional callback.
+     * Animates to the specified location.
+     * Provides optional callback that occur on animation step and completion.
      *
      * @param {Vector2} destination
-     * @param {function} [animationCompletedCallback]
+     * @param {Object} [options]
      * @public
      */
-    animateTo: function( destination, animationCompletedCallback ) {
+    animateTo: function( destination, options ) {
+
+      options = _.extend( {
+        animationStepCallback: null, // {function} called when animation step occurs
+        animationCompletedCallback: null // {function} called when animation has completed
+      }, options );
+
       this.destination = destination;
-      this.animationCompletedCallback = animationCompletedCallback || null;
+      this.animationStepCallback = options.animationStepCallback;
+      this.animationCompletedCallback = options.animationCompletedCallback;
     },
 
     /**
@@ -110,6 +127,9 @@ define( function( require ) {
      */
     step: function( dt ) {
       if ( this.isAnimating() ) {
+
+        // optional callback
+        this.animationStepCallback && this.animationStepCallback();
 
         // distance from destination
         var totalDistance = this.locationProperty.get().distance( this.destination );

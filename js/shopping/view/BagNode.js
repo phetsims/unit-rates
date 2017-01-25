@@ -22,16 +22,22 @@ define( function( require ) {
 
     var self = this;
 
+    // @private
+    this.bag = bag;
+
     // This type does not propagate options to the supertype because the model determines location.
     Image.call( this, bag.image, {
       scale: URConstants.BAG_IMAGE_SCALE,
       cursor: 'pointer'
     } );
 
+    // Offset slightly, so that bags sit on the shelf and scale more naturally, determined empirically.
+    var yOffset = ( 0.07 * self.height );
+
     // origin is at bottom center
     var locationObserver = function( location ) {
       self.centerX = location.x;
-      self.bottom = location.y;
+      self.bottom = location.y + yOffset;
     };
     bag.locationProperty.link( locationObserver ); // must be unlinked in dispose
 
@@ -63,7 +69,9 @@ define( function( require ) {
      * @public
      */
     cancelDrag: function() {
-      this.dragHandler.endDrag( null /* event */ );
+      if ( this.bag.dragging ) {
+        this.dragHandler.endDrag( null /* event */ );
+      }
     }
   } );
 } );
