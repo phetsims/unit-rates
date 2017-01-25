@@ -96,8 +96,11 @@ define( function( require ) {
     assert && assert( numeratorOptions.maxDecimals === denominatorOptions.maxDecimals,
       'maxDecimals must be the same for numerator and denominator' );
 
+    //TODO Shopping screen does not fully support mutable unit rate. Factor out a base type that excludes questions?
+    // @public {Property.<number>}
+    this.unitRateProperty = new Property( itemData.unitRate );
+
     // @public (read-only) unpack itemData
-    this.unitRate = itemData.unitRate;
     this.numberOfBags = itemData.numberOfBags;
     this.unitsPerBag = itemData.unitsPerBag;
     this.singularName = itemData.singularName;
@@ -109,18 +112,14 @@ define( function( require ) {
     this.scaleCostIsCollapsible = options.scaleCostIsCollapsible;
     this.scaleQuantityIsDisplayed = options.scaleQuantityIsDisplayed;
 
-    //TODO Shopping Lab screen requires mutable unit rate. Factor out a base type that excludes questions?
-    // unit rate is constant in this model, but some model elements require a Property
-    var unitRateProperty = new Property( this.unitRate );
-
     // @public {DoubleNumberLine} double number line associated with this item
-    this.doubleNumberLine = new DoubleNumberLine( unitRateProperty, {
+    this.doubleNumberLine = new DoubleNumberLine( this.unitRateProperty, {
       numeratorOptions: numeratorOptions,
       denominatorOptions: denominatorOptions
     } );
 
     // @public
-    this.markerEditor = new MarkerEditor( unitRateProperty, {
+    this.markerEditor = new MarkerEditor( this.unitRateProperty, {
       numeratorMaxDecimals: numeratorOptions.maxDecimals,
       denominatorMaxDecimals: denominatorOptions.maxDecimals
     } );
@@ -133,7 +132,7 @@ define( function( require ) {
     } );
 
     // @public
-    this.scale = new Scale( unitRateProperty, {
+    this.scale = new Scale( this.unitRateProperty, {
       location: this.shelf.location.minusXY( 0, 200 ), // centered above the shelf
       quantityUnits: options.scaleQuantityUnits,
       numberOfBags: this.numberOfBags,
@@ -164,11 +163,11 @@ define( function( require ) {
     } );
 
     // @public {ShoppingQuestion} 'Unit Rate?'
-    this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( itemData.unitRate,
+    this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( this.unitRateProperty.value,
       options.questionSingularUnits, numeratorOptions, denominatorOptions );
 
     // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
-    this.questionSets = ShoppingQuestionFactory.createQuestionSets( itemData.questionQuantities, itemData.unitRate,
+    this.questionSets = ShoppingQuestionFactory.createQuestionSets( itemData.questionQuantities, this.unitRateProperty.value,
       options.questionSingularUnits, options.questionPluralUnits, options.amountOfQuestionUnits,
       numeratorOptions, denominatorOptions );
 
