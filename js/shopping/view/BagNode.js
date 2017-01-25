@@ -31,10 +31,13 @@ define( function( require ) {
       cursor: 'pointer'
     } );
 
+    // Offset slightly, so that bags sit on the shelf and scale more naturally, determined empirically.
+    var yOffset = ( 0.07 * self.height );
+
     // origin is at bottom center
     var locationObserver = function( location ) {
       self.centerX = location.x;
-      self.bottom = location.y;
+      self.bottom = location.y + yOffset;
     };
     bag.locationProperty.link( locationObserver ); // must be unlinked in dispose
 
