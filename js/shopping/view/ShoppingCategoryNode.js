@@ -1,7 +1,7 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
 /**
- * View components that are specific to a scene in the 'Shopping' screen.
+ * View components that are specific to a category in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -65,6 +65,7 @@ define( function( require ) {
     };
     category.shoppingSceneProperty.link( shoppingSceneObserver ); // unlink in dispose
 
+    // @private
     this.diposeShoppingCategoryNode = function() {
       categoryProperty.unlink( categoryObserver );
       category.shoppingSceneProperty.unlink( shoppingSceneObserver );

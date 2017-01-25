@@ -17,6 +17,7 @@ define( function( require ) {
   // common modules
   var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
   var ShoppingCategoryRadioButtons = require( 'UNIT_RATES/shopping/view/ShoppingCategoryRadioButtons' );
+  var ShoppingLabCategoryNode = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabCategoryNode' );
   var ShoppingViewProperties = require( 'UNIT_RATES/shopping/view/ShoppingViewProperties' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -26,6 +27,8 @@ define( function( require ) {
    * @constructor
    */
   function ShoppingLabScreenView( model, options ) {
+
+    var self = this;
 
     ScreenView.call( this, options );
 
@@ -39,7 +42,7 @@ define( function( require ) {
 
     // create the view for each category
     model.categories.forEach( function( category ) {
-      //TODO
+      playAreaLayer.addChild( new ShoppingLabCategoryNode( category, model.categoryProperty, self.layoutBounds, keypadLayer, viewProperties ) );
     } );
 
     // Category radio buttons
