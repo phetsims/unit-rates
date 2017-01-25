@@ -231,7 +231,7 @@ define( function( require ) {
       } );
       //TODO having 2 things keeping track of bags seems potentially problematic
       this.bags.push( bag );
-      this.shelf.addBag( bag, cellIndex );
+      this.shelf.setContents( cellIndex, bag );
     }
   }
 
@@ -274,7 +274,7 @@ define( function( require ) {
         var cellIndex = shelf.getFirstUnoccupiedCell();
         assert && assert( cellIndex !== -1, 'shelf is full' );
         bag.moveTo( shelf.getCellLocation( cellIndex ) );
-        shelf.addBag( bag, cellIndex );
+        shelf.setContents( cellIndex, bag );
       } );
     },
 

@@ -33,6 +33,9 @@ define( function( require ) {
       spacing: 8 // {number} horizontal space between objects
     }, options );
 
+    // @public (read-only)
+    this.location = options.location;
+
     // distance between the centers of adjacent cell
     var deltaX = options.objectWidth + options.spacing;
 
@@ -125,7 +128,7 @@ define( function( require ) {
      */
     getDistanceBetween: function( index, location ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      return this.getLocationAt( index ).distance( location );
+      return this.getCellLocation( index ).distance( location );
     },
 
     /**
@@ -188,7 +191,7 @@ define( function( require ) {
      * @returns {Vector2}
      * @public
      */
-    getLocationAt: function( index ) {
+    getCellLocation: function( index ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
       return this.cells[ index ].location;
     },

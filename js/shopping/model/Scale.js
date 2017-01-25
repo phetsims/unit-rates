@@ -14,7 +14,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
-  var BagContainer = require( 'UNIT_RATES/shopping/model/BagContainer' );
+  var RowLayout = require( 'UNIT_RATES/shopping/model/RowLayout' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -46,7 +46,11 @@ define( function( require ) {
     this.costProperty = new Property( 0 );
     this.quantityProperty = new Property( 0 );
 
-    BagContainer.call( this, options );
+    RowLayout.call( this, {
+      location: options.location,
+      numberOfObjects: options.numberOfBags,
+      objectWidth: options.bagWidth
+    } );
 
     // When unit rate changes, update the cost
     var unitRateObserver = function( unitRate ){
@@ -70,7 +74,7 @@ define( function( require ) {
 
   unitRates.register( 'Scale', Scale );
 
-  return inherit( BagContainer, Scale, {
+  return inherit( RowLayout, Scale, {
 
     // @public
     dispose: function() {
@@ -79,7 +83,7 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      BagContainer.prototype.reset.call( this );
+      RowLayout.prototype.reset.call( this );
       this.costProperty.reset();
       this.quantityProperty.reset();
     },
@@ -91,10 +95,10 @@ define( function( require ) {
      * @public
      * @override
      */
-    addBag: function( bag, index ) {
+    setContents: function( index, bag ) {
 
       // add to the container
-      BagContainer.prototype.addBag.call( this, bag, index );
+      RowLayout.prototype.setContents.call( this, index, bag );
 
       // update cost and quantity
       this.costProperty.value += bag.unitsPerBag * this.unitRateProperty.value;
@@ -107,10 +111,10 @@ define( function( require ) {
      * @public
      * @override
      */
-    removeBag: function( bag ) {
+    removeObject: function( bag ) {
 
       // remove from the container
-      BagContainer.prototype.removeBag.call( this, bag );
+      RowLayout.prototype.removeObject.call( this, bag );
 
       // update cost and quantity
       this.costProperty.value -= bag.unitsPerBag * this.unitRateProperty.value;

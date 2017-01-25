@@ -48,10 +48,10 @@ define( function( require ) {
 
         // remove bag from shelf or scale
         if ( shelf.contains( bag ) ) {
-          shelf.removeBag( bag );
+          shelf.removeObject( bag );
         }
         else if ( scale.contains( bag ) ) {
-          scale.removeBag( bag );
+          scale.removeObject( bag );
         }
 
         // compute the offset between the pointer and the bag's location
@@ -112,21 +112,21 @@ define( function( require ) {
    * The animation will change course immediately if the specified cell becomes occupied.
    * @param {Bag} bag
    * @param {number} cellIndex
-   * @param {BagContainer} bagContainer
+   * @param {RowLayout} rowLayout
    * @private
    */
-  function beginAnimation( bag, cellIndex, bagContainer ) {
+  function beginAnimation( bag, cellIndex, rowLayout ) {
 
-    var cellLocation = bagContainer.getLocationAt( cellIndex );
+    var cellLocation = rowLayout.getCellLocation( cellIndex );
 
     // This function changes course to the next closest unoccupied cell.
     var changeCourse = function() {
 
       // find another unoccupied cell
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
-      cellIndex = bagContainer.getClosestUnoccupiedCell( bag.locationProperty.value );
+      cellIndex = rowLayout.getClosestUnoccupiedCell( bag.locationProperty.value );
       assert && assert( cellIndex !== -1, 'all cells are occupied' );
-      cellLocation = bagContainer.getLocationAt( cellIndex );
+      cellLocation = rowLayout.getCellLocation( cellIndex );
 
       // call bind, so that we have new function instances, otherwise the callbacks will be ignored
       bag.animateTo( cellLocation, {
@@ -138,7 +138,7 @@ define( function( require ) {
     // This function is called on each animation step.
     // If the target cell becomes occupied, change course immediately.
     var animationStepCallback = function() {
-      if ( !bagContainer.isEmpty( cellIndex ) ) {
+      if ( !rowLayout.isEmpty( cellIndex ) ) {
         changeCourse();
       }
     };
@@ -146,10 +146,10 @@ define( function( require ) {
     // This function is called when animation completes.
     // If the target cell is still empty, add the bag. Otherwise animate to an unoccupied cell.
     var animationCompletedCallback = function() {
-      if ( bagContainer.isEmpty( cellIndex ) ) {
+      if ( rowLayout.isEmpty( cellIndex ) ) {
 
         // the cell is still empty when we reach it, put the bag in that cell
-        bagContainer.addBag( bag, cellIndex );
+        rowLayout.setContents( cellIndex, bag );
       }
       else {
 
