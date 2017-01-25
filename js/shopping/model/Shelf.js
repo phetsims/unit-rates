@@ -13,7 +13,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
-  var RowLayout = require( 'UNIT_RATES/shopping/model/RowLayout' );
+  var BagContainer = require( 'UNIT_RATES/shopping/model/BagContainer' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -24,13 +24,13 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // RowLayout options
+      // BagContainer options
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
+      numberOfBags: 4, // {number} maximum number of bags on the shelf
+      bagWidth: 70, // {number} width of each bag
 
       // Shelf options
-      width: 325, // {number} width of the top face, at its center
-      numberOfBags: 4, // {number} maximum number of bags on the shelf
-      bagWidth: 70 // {number} width of each bag
+      width: 325 // {number} width of the top face, at its center
 
     }, options );
 
@@ -40,14 +40,10 @@ define( function( require ) {
     this.depth = 20; // {number} depth, after flattening to 2D
     this.perspectiveXOffset = 15; // {number} offset for parallel perspective, after flattening to 2D
 
-    RowLayout.call( this, {
-      location: options.location,
-      numberOfObjects: options.numberOfBags,
-      objectWidth: options.bagWidth
-    } );
+    BagContainer.call( this, options );
   }
 
   unitRates.register( 'Shelf', Shelf );
 
-  return inherit( RowLayout, Shelf );
+  return inherit( BagContainer, Shelf );
 } );

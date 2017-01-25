@@ -213,7 +213,7 @@ define( function( require ) {
       // the bag's location on the shelf
       var cellIndex = this.shelf.getFirstUnoccupiedCell();
       assert && assert( cellIndex !== -1, 'shelf is full' );
-      var bagLocation = this.shelf.getCellLocation( cellIndex );
+      var bagLocation = this.shelf.getLocationAt( cellIndex );
 
       // create shopping items if the bag opens when placed on the scale
       var shoppingItems = null;
@@ -231,7 +231,7 @@ define( function( require ) {
       } );
       //TODO having 2 things keeping track of bags seems potentially problematic
       this.bags.push( bag );
-      this.shelf.setContents( cellIndex, bag );
+      this.shelf.addBag( bag, cellIndex );
     }
   }
 
@@ -273,8 +273,8 @@ define( function( require ) {
       this.bags.forEach( function( bag ) {
         var cellIndex = shelf.getFirstUnoccupiedCell();
         assert && assert( cellIndex !== -1, 'shelf is full' );
-        bag.moveTo( shelf.getCellLocation( cellIndex ) );
-        shelf.setContents( cellIndex, bag );
+        bag.moveTo( shelf.getLocationAt( cellIndex ) );
+        shelf.addBag( bag, cellIndex );
       } );
     },
 
