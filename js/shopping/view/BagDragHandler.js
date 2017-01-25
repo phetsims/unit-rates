@@ -45,6 +45,7 @@ define( function( require ) {
           'bag should not be on both shelf and scale' );
 
         bag.dragging = true;
+        bagNode.moveToFront();
 
         // remove bag from shelf or scale
         if ( shelf.contains( bag ) ) {
