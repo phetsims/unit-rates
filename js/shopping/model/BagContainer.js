@@ -13,6 +13,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
+  var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // constants
@@ -130,22 +131,13 @@ define( function( require ) {
     },
 
     /**
-     * Is the cell index valid?
-     * @param {number} index - the cell index
-     * @returns {boolean}
-     * @private
-     */
-    isValidIndex: function( index ) {
-      return ( ( typeof index === 'number' ) && !isNaN( index ) && index >= 0 && index < this.cells.length );
-    },
-
-    /**
      * Puts a bag in the specified cell.  The cell must be empty, and duplicates are not allowed in a row.
      * @param {Bag} bag
      * @param {number} index - the cell index
      * @public
      */
     addBag: function( bag, index ) {
+      assert && assert( this.isValidBag( bag ), 'invalid bag' );
       assert && assert( !this.contains( bag ), 'bag is already in row at index ' + this.indexOf( bag ) );
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
       assert && assert( this.isEmpty( index ), 'cell is occupied: ' + index );
@@ -158,6 +150,7 @@ define( function( require ) {
      * @public
      */
     removeBag: function( bag ) {
+      assert && assert( this.isValidBag( bag ), 'invalid bag' );
       this.clearCell( this.indexOf( bag ) );
     },
 
@@ -201,7 +194,7 @@ define( function( require ) {
      * @public
      */
     indexOf: function( bag ) {
-      assert && assert( bag, 'invalid bag' );
+      assert && assert( this.isValidBag( bag ), 'invalid bag' );
       var index = -1;
       for ( var i = 0; i < this.cells.length; i++ ) {
         if ( this.getBagAt( i ) === bag ) {
@@ -219,6 +212,7 @@ define( function( require ) {
      * @public
      */
     contains: function( bag ) {
+      assert && assert( this.isValidBag( bag ), 'invalid bag' );
       return ( this.indexOf( bag ) !== -1 );
     },
 
@@ -230,6 +224,25 @@ define( function( require ) {
      */
     isEmpty: function( index ) {
       return ( this.getBagAt( index ) === EMPTY );
+    },
+
+    /**
+     * Is the cell index valid?
+     * @param {number} index - the cell index
+     * @returns {boolean}
+     * @private
+     */
+    isValidIndex: function( index ) {
+      return ( ( typeof index === 'number' ) && !isNaN( index ) && index >= 0 && index < this.cells.length );
+    },
+
+    /**
+     * Is the bag valid?
+     * @param {Bag} bag
+     * @returns {boolean}
+     */
+    isValidBag: function( bag ) {
+      return ( bag instanceof Bag );
     }
   } );
 } );
