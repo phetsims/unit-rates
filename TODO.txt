@@ -1,5 +1,6 @@
 TODO list for unit-rates
 
+Move BagNode to front on startDrag
 Reset All or switching items while a bag is animating leaves the bag pickable:false
 fuzzMouse assertion failure in BagDragHandler: bag should be on shelf or scale
 Reset button for shelf + scale
