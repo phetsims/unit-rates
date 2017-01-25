@@ -35,7 +35,7 @@ define( function( require ) {
       categoryIndex: 0  // {number} index of the category that is initially selected
     }, options );
 
-    // @public (read-only) each category has one 1 items
+    // @public (read-only) unlike the 'Shopping' screen, each category in this screen has only 1 associated item
     this.categories = [
 
       // fruits

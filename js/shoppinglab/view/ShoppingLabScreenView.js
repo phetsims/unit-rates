@@ -21,7 +21,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {ShoppingModel} model
+   * @param {ShoppingLabModel} model
    * @param {Object} [options]
    * @constructor
    */
