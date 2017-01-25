@@ -65,9 +65,7 @@ define( function( require ) {
      * @public
      */
     getFirstUnoccupiedCell: function() {
-      var cellIndex = this.rowLayout.getFirstUnoccupiedCell();
-      assert && assert( cellIndex !== -1, 'shelf is full' );
-      return cellIndex;
+      return this.rowLayout.getFirstUnoccupiedCell();
     },
 
     /**
@@ -77,9 +75,7 @@ define( function( require ) {
      * @public
      */
     getClosestUnoccupiedCell: function( location ) {
-      var cellIndex = this.rowLayout.getClosestUnoccupiedCell( location );
-      assert && assert( cellIndex !== -1, 'shelf is full' );
-      return cellIndex;
+      return this.rowLayout.getClosestUnoccupiedCell( location );
     },
 
     /**
@@ -101,17 +97,6 @@ define( function( require ) {
      */
     getCellLocation: function( index ) {
       return this.rowLayout.getLocationAt( index );
-    },
-
-    /**
-     * Is this bag in this container?
-     * @param {Bag} bag
-     * @returns {boolean}
-     * @public
-     */
-    containsBag: function( bag ) {
-      assert && assert( bag instanceof Bag, 'invalid bag' );
-      return this.rowLayout.containsObject( bag );
     },
 
     /**
@@ -145,13 +130,23 @@ define( function( require ) {
     },
 
     /**
+     * Is this bag in this container?
+     * @param {Bag} bag
+     * @returns {boolean}
+     * @public
+     */
+    contains: function( bag ) {
+      assert && assert( bag instanceof Bag, 'invalid bag' );
+      return this.rowLayout.contains( bag );
+    },
+
+    /**
      * Adds a bag to the shelf.
      * @param {Bag} bag
      * @param {number} index - cell index
      * @public
      */
     addBag: function( bag, index ) {
-      unitRates.log && unitRates.log( 'add bag to cell ' + index );
       assert && assert( bag instanceof Bag, 'invalid bag' );
       this.rowLayout.setContents( index, bag );
     },

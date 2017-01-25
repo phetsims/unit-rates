@@ -147,7 +147,7 @@ define( function( require ) {
     setContents: function( index, object ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
       assert && assert( this.isEmpty( index ), 'cell is occupied: ' + index );
-      assert && assert( !this.containsObject( object ), 'object is already in row at index ' + this.indexOf( object ) );
+      assert && assert( !this.contains( object ), 'object is already in row at index ' + this.indexOf( object ) );
       this.cells[ index ].contents = object;
     },
 
@@ -217,7 +217,7 @@ define( function( require ) {
      * @returns {boolean}
      * @public
      */
-    containsObject: function( object ) {
+    contains: function( object ) {
       return ( this.indexOf( object ) !== -1 );
     },
 

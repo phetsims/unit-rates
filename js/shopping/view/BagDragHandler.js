@@ -41,16 +41,16 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
-        assert && assert( !( shelf.containsBag( bag ) && scale.containsBag( bag ) ),
+        assert && assert( !( shelf.contains( bag ) && scale.contains( bag ) ),
           'bag should not be on both shelf and scale' );
 
         bag.dragging = true;
 
         // remove bag from shelf or scale
-        if ( shelf.containsBag( bag ) ) {
+        if ( shelf.contains( bag ) ) {
           shelf.removeBag( bag );
         }
-        else if ( scale.containsBag( bag ) ) {
+        else if ( scale.contains( bag ) ) {
           scale.removeBag( bag );
         }
 
@@ -80,12 +80,12 @@ define( function( require ) {
 
         // closest cell on the shelf
         var shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value );
-        assert && assert( shelfCellIndex !== -1, 'all cells on the shelf are occupied' );
+        assert && assert( shelfCellIndex !== -1, 'shelf is full' );
         var distanceToShelf = shelf.getDistanceBetween( shelfCellIndex, bag.locationProperty.value );
 
         // closest cell on the scale
         var scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value );
-        assert && assert( scaleCellIndex !== -1, 'all cells on the scale are occupied' );
+        assert && assert( scaleCellIndex !== -1, 'scale is full' );
         var distanceToScale = scale.getDistanceBetween( scaleCellIndex, bag.locationProperty.value );
 
         // is the bag closer to the shelf or the scale?
