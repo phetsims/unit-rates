@@ -250,6 +250,8 @@ define( function( require ) {
     // @public
     reset: function() {
 
+      this.unitRateProperty.reset();
+
       this.doubleNumberLine.reset();
       this.markerEditor.reset();
       this.scale.reset();
