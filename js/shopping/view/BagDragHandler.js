@@ -36,10 +36,10 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
-        assert && assert( shelf.containsBag( bag ) || scale.containsBag( bag ),
-          'bag should be on shelf or scale' );
         assert && assert( !( shelf.containsBag( bag ) && scale.containsBag( bag ) ),
           'bag should not be on both shelf and scale' );
+
+        bag.dragging = true;
 
         // remove bag from shelf or scale
         if ( shelf.containsBag( bag ) ) {
@@ -71,8 +71,7 @@ define( function( require ) {
        */
       end: function( event, trail ) {
 
-        // disable interaction while animating
-        bagNode.pickable = false;
+        bag.dragging = false;
 
         // find the closest cell on the shelf
         var shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value );
@@ -93,7 +92,6 @@ define( function( require ) {
             if ( shelf.isEmpty( shelfCellIndex ) ) {
 
               // the cell is still empty when we reach it, put the bag in that cell
-              bagNode.pickable = true;
               shelf.addBag( bag, shelfCellIndex );
             }
             else {
@@ -115,7 +113,6 @@ define( function( require ) {
             if ( scale.isEmpty( scaleCellIndex ) ) {
 
               // the cell is still empty when we reach it, put the bag in that cell
-              bagNode.pickable = true;
               scale.addBag( bag, scaleCellIndex );
             }
             else {
@@ -123,7 +120,7 @@ define( function( require ) {
               // the cell is occupied when we reach it, try another cell
               unitRates.log && unitRates.log( 'scale cell ' +  scaleCellIndex + ' is occupied, trying another cell' );
               scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value );
-              scaleCellLocation = scale.getLocationAt( shelfCellIndex );
+              scaleCellLocation = scale.getLocationAt( scaleCellIndex );
               bag.animateTo( scaleCellLocation, scaleAnimationCompletedCallback );
             }
           };
