@@ -17,6 +17,9 @@ define( function( require ) {
   // all values are {Color|string}, unless otherwise noted
   var URColors = {
 
+    // screens
+    screenBackground: 'rgb( 226, 255, 249 )',
+
     // buttons
     categoryButton: 'white',
     editButton: 'yellow',

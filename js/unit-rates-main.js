@@ -17,6 +17,7 @@ define( function( require ) {
   var OLDRacingLabScreen = require( 'UNIT_RATES/old/racingLab/OLDRacingLabScreen' );
   var OLDShoppingScreen = require( 'UNIT_RATES/old/shopping/OLDShoppingScreen' );
   var OLDShoppingLabScreen = require( 'UNIT_RATES/old/shoppingLab/OLDShoppingLabScreen' );
+  var ShoppingLabScreen = require( 'UNIT_RATES/shoppinglab/ShoppingLabScreen' );
   var ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
@@ -37,8 +38,8 @@ define( function( require ) {
   SimLauncher.launch( function() {
 
     var screens = [
-      new ShoppingScreen()
-      //TODO add ShoppingLabScreen
+      new ShoppingScreen(),
+      new ShoppingLabScreen()
       //TODO add RacingScreen
     ];
 

@@ -1,7 +1,7 @@
-// Copyright 2016-2017, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
 /**
- * The 'Shopping' screen
+ * The 'Shopping Lab' screen
  *
  * @author Dave Schmitz (Schmitzware)
  * @author Chris Malley (PixelZoom, Inc.)
@@ -16,37 +16,37 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
 
   // sim modules
-  var ShoppingModel = require( 'UNIT_RATES/shopping/model/ShoppingModel' );
-  var ShoppingScreenView = require( 'UNIT_RATES/shopping/view/ShoppingScreenView' );
+  var ShoppingLabModel = require( 'UNIT_RATES/shoppinglab/model/ShoppingLabModel' );
+  var ShoppingLabScreenView = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabScreenView' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
 
   // images
-  var screenIcon = require( 'image!UNIT_RATES/shopping_screen_icon.png' );
+  var screenIcon = require( 'image!UNIT_RATES/shopping_lab_screen_icon.png' );
 
   // strings
-  var screenShoppingString = require( 'string!UNIT_RATES/screen.shopping' );
+  var screenShoppingLabString = require( 'string!UNIT_RATES/screen.shoppingLab' );
 
   /**
    * @param {Object} options
    * @constructor
    */
-  function ShoppingScreen( options ) {
+  function ShoppingLabScreen( options ) {
 
     options = _.extend( {
-      name: screenShoppingString,
+      name: screenShoppingLabString,
       backgroundColorProperty: new Property( URColors.screenBackground ),
       homeScreenIcon: new Image( screenIcon )
     }, options );
 
     Screen.call( this,
-      function() { return new ShoppingModel(); },
-      function( model ) { return new ShoppingScreenView( model ); },
+      function() { return new ShoppingLabModel(); },
+      function( model ) { return new ShoppingLabScreenView( model ); },
       options
     );
   }
 
-  unitRates.register( 'ShoppingScreen', ShoppingScreen );
+  unitRates.register( 'ShoppingLabScreen', ShoppingLabScreen );
 
-  return inherit( Screen, ShoppingScreen );
+  return inherit( Screen, ShoppingLabScreen );
 } );
