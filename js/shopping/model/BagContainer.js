@@ -83,6 +83,17 @@ define( function( require ) {
     },
 
     /**
+     * Gets the distance between a cell and a location.
+     * @param {number} index - the cell index
+     * @param {Vector2} location
+     * @returns {number}
+     * @public
+     */
+    getDistanceBetween: function( index, location ) {
+      return this.rowLayout.getDistanceBetween( index, location );
+    },
+
+    /**
      * Gets the location of a cell.
      * @param {number} index - cell index
      * @returns {Vector2}
