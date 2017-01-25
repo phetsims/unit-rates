@@ -145,15 +145,15 @@ define( function( require ) {
 
     // Create a marker when what's on the scale changes
     this.scale.quantityProperty.lazyLink( function( quantity ) {
+
+      // the marker for what was previously on the scale becomes erasable
+      if ( scaleMarker ) {
+        scaleMarker.colorProperty.value = URColors.majorMarker;
+        scaleMarker.erasable = true;
+      }
+
+      // the new marker for what's on the scale
       if ( quantity > 0 ) {
-
-        // the marker for what was previously on the scale becomes erasable
-        if ( scaleMarker ) {
-          scaleMarker.colorProperty.value = URColors.majorMarker;
-          scaleMarker.erasable = true;
-        }
-
-        // the new marker for what's on the scale
         scaleMarker = new Marker( self.scale.costProperty.value, quantity, 'scale', {
           isMajor: true, // all scale markers are major, per the design document
           color: URColors.scaleMarker,
