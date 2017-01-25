@@ -36,7 +36,7 @@ define( function( require ) {
     // speed of animations, larger values make animations run faster
     animationSpeed: {
       type: 'number',
-      defaultValue: 500,
+      defaultValue: 400,
       isValidValue: function( value ) { return value > 0; }
     }
   } );
