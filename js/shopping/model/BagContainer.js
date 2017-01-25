@@ -155,17 +155,6 @@ define( function( require ) {
     },
 
     /**
-     * Gets the bag that occupies a cell.
-     * @param {number} index - the cell index
-     * @returns {Bag|null} - null if the cell is empty
-     * @public
-     */
-    getBagAt: function( index ) {
-      assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      return this.cells[ index ].bag;
-    },
-
-    /**
      * Clears the specified cell. The cell must be occupied.
      * @param {number} index - the cell index
      * @public
@@ -174,6 +163,17 @@ define( function( require ) {
       assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
       assert && assert( !this.isEmpty( index ), 'cell is empty: ' + index );
       this.cells[ index ].bag = EMPTY;
+    },
+
+    /**
+     * Gets the bag that occupies a cell.
+     * @param {number} index - the cell index
+     * @returns {Bag|null} - null if the cell is empty
+     * @public
+     */
+    getBagAt: function( index ) {
+      assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
+      return this.cells[ index ].bag;
     },
 
     /**
@@ -240,6 +240,7 @@ define( function( require ) {
      * Is the bag valid?
      * @param {Bag} bag
      * @returns {boolean}
+     * @private
      */
     isValidBag: function( bag ) {
       return ( bag instanceof Bag );
