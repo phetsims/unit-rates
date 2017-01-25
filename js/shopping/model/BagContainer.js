@@ -140,6 +140,7 @@ define( function( require ) {
      * @public
      */
     addBag: function( bag, index ) {
+      unitRates.log && unitRates.log( 'add bag to cell ' + index );
       assert && assert( bag instanceof Bag, 'invalid bag' );
       this.rowLayout.setContents( index, bag );
     },
