@@ -100,7 +100,9 @@ define( function( require ) {
               unitRates.log && unitRates.log( 'shelf cell ' +  shelfCellIndex + ' is occupied, trying another cell' );
               shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value );
               shelfCellLocation = shelf.getLocationAt( shelfCellIndex );
-              bag.animateTo( shelfCellLocation, shelfAnimationCompletedCallback );
+
+              // call bind, so that we have a new function instance, otherwise the callback will be ignored
+              bag.animateTo( shelfCellLocation, shelfAnimationCompletedCallback.bind( this ) );
             }
           };
           bag.animateTo( shelfCellLocation, shelfAnimationCompletedCallback );
@@ -121,7 +123,9 @@ define( function( require ) {
               unitRates.log && unitRates.log( 'scale cell ' +  scaleCellIndex + ' is occupied, trying another cell' );
               scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value );
               scaleCellLocation = scale.getLocationAt( scaleCellIndex );
-              bag.animateTo( scaleCellLocation, scaleAnimationCompletedCallback );
+
+              // call bind, so that we have a new function instance, otherwise the callback will be ignored
+              bag.animateTo( scaleCellLocation, scaleAnimationCompletedCallback.bind( this ) );
             }
           };
           bag.animateTo( scaleCellLocation, scaleAnimationCompletedCallback );
