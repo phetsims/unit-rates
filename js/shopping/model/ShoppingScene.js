@@ -62,7 +62,6 @@ define( function( require ) {
       amountOfQuestionUnits: itemData.pluralName,  // {string} units used for "Apples for $10.00?" type questions
 
       // scale
-      scaleCostIsCollapsible: false, // {boolean} whether cost is collapsible on the scale
       scaleQuantityIsDisplayed: false, // {boolean} whether quantity is displayed on the scale
       scaleQuantityUnits: '', // {string} units for quantity on scale
       bagsOpen: false // {boolean} do bags open to display individual items?
@@ -110,7 +109,6 @@ define( function( require ) {
     this.bagImage = itemData.bagImage;
 
     // @public (read-only) unpack options
-    this.scaleCostIsCollapsible = options.scaleCostIsCollapsible;
     this.scaleQuantityIsDisplayed = options.scaleQuantityIsDisplayed;
 
     // @public {DoubleNumberLine} double number line associated with this item
