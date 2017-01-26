@@ -26,6 +26,7 @@ define( function( require ) {
   var MarkerEditorNode = require( 'UNIT_RATES/common/view/MarkerEditorNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
@@ -42,20 +43,10 @@ define( function( require ) {
    */
   function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLayer, options ) {
 
-    options = _.extend( {
+    options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // AccordionBox options
-      expandedProperty: new Property( true ),
-      titleNode: new Text( doubleNumberLineString, { font: new URFont( 18 ), maxWidth: 300 } ),
-      titleAlignX: 'left',
-      showTitleWhenExpanded: true,
-      fill: 'white',
-      cornerRadius: 10,
-      buttonLength: 20,
-      buttonXMargin: 15,
-      buttonYMargin: 10,
-      buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5
+      titleNode: new Text( doubleNumberLineString, { font: new URFont( 18 ), maxWidth: 300 } )
     }, options );
 
     var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {

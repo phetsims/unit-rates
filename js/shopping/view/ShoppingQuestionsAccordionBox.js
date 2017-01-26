@@ -21,6 +21,7 @@ define( function( require ) {
   var ShoppingQuestionNode = require( 'UNIT_RATES/shopping/view/ShoppingQuestionNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
   // strings
@@ -34,20 +35,10 @@ define( function( require ) {
    */
   function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
 
-    options = _.extend( {
+    options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // AccordionBox options
-      expandedProperty: new Property( true ),
       titleNode: new Text( questionsString, { font: new URFont( 18 ), maxWidth: 100 } ),
-      titleAlignX: 'left',
-      showTitleWhenExpanded: true,
-      fill: 'white',
-      cornerRadius: 10,
-      buttonLength: 20,
-      buttonXMargin: 15,
-      buttonYMargin: 10,
-      buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5,
 
       // VBox options
       contentYSpacing: 18, // vertical spacing between UI elements in the accordion box's content
