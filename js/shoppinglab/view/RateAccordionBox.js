@@ -10,6 +10,7 @@ define( function( require ) {
 
   // sim modules
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );//TODO get rid of this
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -105,16 +106,44 @@ define( function( require ) {
 
     AccordionBox.call( this, contentNode, options );
 
-    var unitRateObserver = function( unitRate ) {
-      //TODO convert unit rate to numerator and denominator, update numeratorProperty and denominatorProperty
-    };
-    unitRateProperty.link( unitRateObserver ); // unlink in dispose
+    // Flag to prevent computation of unit rate before both numerator and denominator Properties have been updated.
+    var fractionObserverEnabled = true;
 
+    // Update unit rate when numerator or denominator changes
     var fractionObserver = function() {
-      unitRateProperty.value = Util.toFixedNumber( numeratorProperty.value / denominatorProperty.value, options.unitRateDecimals );
+      if ( fractionObserverEnabled ) {
+        unitRateProperty.value = Util.toFixedNumber( numeratorProperty.value / denominatorProperty.value, options.unitRateDecimals );
+      }
     };
     numeratorProperty.lazyLink( fractionObserver ); // no unlink needed
     denominatorProperty.lazyLink( fractionObserver ); // no unlink needed
+
+    // Update numerator and denominator when unit rate changes
+    var unitRateObserver = function( unitRate ) {
+
+      // round to number of decimal places that we are interested in
+      unitRate = Util.toFixedNumber( unitRate, options.unitRateDecimals );
+
+      // Determine if the current numerator and denominator are equivalent to unitRate.
+      // This is necessary to handle rates like 1/3, whose corresponding unit rate is 0.33333333333....
+      var currentRate = Util.toFixedNumber( numeratorProperty.value / denominatorProperty.value, options.unitRateDecimals );
+
+      // If the current numerator and denominator are not equivalent to unit rate, then update them.
+      if ( currentRate !== unitRate ) {
+
+        // compute numerator and denominator
+        var denominator = Math.pow( 10, options.unitRateDecimals );
+        var fraction = new Fraction( unitRate * denominator, denominator );
+        fraction.reduce();
+
+        // update Properties, but don't fire observer until they have both changed
+        fractionObserverEnabled = false;
+        numeratorProperty.value = Util.toFixedNumber( fraction.numerator, 0 );
+        fractionObserverEnabled = true;
+        denominatorProperty.value = Util.toFixedNumber( fraction.denominator, 0 );
+      }
+    };
+    unitRateProperty.link( unitRateObserver ); // unlink in dispose
 
     // @private
     this.disposeRateAccordionBox = function() {
