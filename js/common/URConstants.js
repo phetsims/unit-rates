@@ -17,7 +17,7 @@ define( function( require ) {
     BAG_IMAGE_SCALE: 0.5,
     SHOPPING_ITEM_IMAGE_SCALE: 0.5,
 
-    // options shared by all AccordionBox subtypes
+    // options shared by all AccordionBoxes
     ACCORDION_BOX_OPTIONS: {
       titleAlignX: 'left',
       showTitleWhenExpanded: true,
