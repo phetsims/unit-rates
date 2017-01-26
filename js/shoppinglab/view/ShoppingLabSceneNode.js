@@ -18,6 +18,7 @@ define( function( require ) {
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
+  var RateAccordionBox = require( 'UNIT_RATES/shoppinglab/view/RateAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
 
@@ -38,6 +39,16 @@ define( function( require ) {
       expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
       left: layoutBounds.minX + 15,
       top: layoutBounds.minY + 15
+    } );
+
+    // Rate accordion box
+    var rateAccordionBox = new RateAccordionBox( shoppingScene.unitRateProperty, {
+      numeratorUnits: shoppingScene.numeratorOptions.axisLabel,  // matches the axis of the double number line
+      denominatorUnits: shoppingScene.denominatorOptions.axisLabel,  // matches the axis of the double number line
+      denominatorPickerColor: shoppingScene.denominatorOptions.pickerColor,
+      expandedProperty: viewProperties.rateExpandedProperty,
+      left: doubleNumberLineAccordionBox.left,
+      bottom: layoutBounds.bottom - 100
     } );
 
     // shelf
@@ -72,7 +83,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ doubleNumberLineAccordionBox, scaleNode, shelfNode, resetShelfButton, bagsParent ];
+    options.children = [ doubleNumberLineAccordionBox, rateAccordionBox, scaleNode, shelfNode, resetShelfButton, bagsParent ];
 
     Node.call( this, options );
 

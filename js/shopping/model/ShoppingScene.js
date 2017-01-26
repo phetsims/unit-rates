@@ -71,8 +71,8 @@ define( function( require ) {
 
     var self = this;
 
-    // options specific to the rate's numerator
-    var numeratorOptions = _.extend( {
+    // @public (read-only) options specific to the rate's numerator
+    this.numeratorOptions = _.extend( {
       axisLabel: dollarsString, // {string} label for the axis on the double number line
       valueFormat: currencyValueString, // {string} format with '{0}' placeholder for value
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
@@ -80,20 +80,21 @@ define( function( require ) {
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.numeratorOptions );
 
-    // options specific to the rate's denominator
-    var denominatorOptions = _.extend( {
+    // @public (read-only) options specific to the rate's denominator
+    this.denominatorOptions = _.extend( {
       axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
       valueFormat: '{0}', // {string} format with '{0}' placeholder for value
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
       maxDecimals: 2, // {number} maximum number of decimal places
       trimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
       axisRange: new Range( 0, 16 ), // {Range} range of bottom axis
-      majorMarkerDecimals: 0 // {number} number of decimal places for major markers
+      majorMarkerDecimals: 0, // {number} number of decimal places for major markers
+      pickerColor: 'black' // {Color|string} color of the number picker for the denominator in the Rate accordion box
     }, options.denominatorOptions );
 
     // numerator and denominator must have the same number of decimal places,
     // or we will end up with rates that share a common numerator or denominator.
-    assert && assert( numeratorOptions.maxDecimals === denominatorOptions.maxDecimals,
+    assert && assert( this.numeratorOptions.maxDecimals === this.denominatorOptions.maxDecimals,
       'maxDecimals must be the same for numerator and denominator' );
 
     //TODO Shopping screen does not fully support mutable unit rate. Factor out a base type that excludes questions?
@@ -114,14 +115,14 @@ define( function( require ) {
 
     // @public {DoubleNumberLine} double number line associated with this item
     this.doubleNumberLine = new DoubleNumberLine( this.unitRateProperty, {
-      numeratorOptions: numeratorOptions,
-      denominatorOptions: denominatorOptions
+      numeratorOptions: this.numeratorOptions,
+      denominatorOptions: this.denominatorOptions
     } );
 
     // @public
     this.markerEditor = new MarkerEditor( this.unitRateProperty, {
-      numeratorMaxDecimals: numeratorOptions.maxDecimals,
-      denominatorMaxDecimals: denominatorOptions.maxDecimals
+      numeratorMaxDecimals: this.numeratorOptions.maxDecimals,
+      denominatorMaxDecimals: this.denominatorOptions.maxDecimals
     } );
 
     // @public
@@ -164,12 +165,12 @@ define( function( require ) {
 
     // @public {ShoppingQuestion} 'Unit Rate?'
     this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( this.unitRateProperty.value,
-      options.questionSingularUnits, numeratorOptions, denominatorOptions );
+      options.questionSingularUnits, this.numeratorOptions, this.denominatorOptions );
 
     // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
     this.questionSets = ShoppingQuestionFactory.createQuestionSets( itemData.questionQuantities, this.unitRateProperty.value,
       options.questionSingularUnits, options.questionPluralUnits, options.amountOfQuestionUnits,
-      numeratorOptions, denominatorOptions );
+      this.numeratorOptions, this.denominatorOptions );
 
     // Randomize the order of the question sets
     if ( URQueryParameters.randomEnabled ) {

@@ -28,6 +28,12 @@ define( function( require ) {
       buttonYMargin: 10,
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5
+    },
+
+    // options shared by all NumberPickers
+    NUMBER_PICKER_OPTIONS: {
+      xMargin: 8,
+      cornerRadius: 4
     }
 
   };

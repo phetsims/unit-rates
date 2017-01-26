@@ -40,17 +40,29 @@ define( function( require ) {
 
       // fruits
       new ShoppingCategory( appleImage, [
-        new FruitScene( ShoppingItemData.Fruit.APPLES )
+        new FruitScene( ShoppingItemData.Fruit.APPLES, {
+          denominatorOptions: {
+            pickerColor: 'red'
+          }
+        } )
       ] ),
 
       // vegetables
       new ShoppingCategory( carrotImage, [
-        new VegetableScene( ShoppingItemData.Vegetable.CARROTS )
+        new VegetableScene( ShoppingItemData.Vegetable.CARROTS, {
+          denominatorOptions: {
+            pickerColor: 'orange'
+          }
+        } )
       ] ),
 
       // candies
       new ShoppingCategory( purpleCandyImage, [
-        new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY )
+        new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY, {
+          denominatorOptions: {
+            pickerColor: 'purple'
+          }
+        } )
       ] )
     ];
 

@@ -25,10 +25,12 @@ define( function( require ) {
 
   /**
    * @param {Object} itemData - data structure that describes a type of candy, see ShoppingItemData
+   * @param {Object} [options]
    * @constructor
    */
-  function CandyScene( itemData ) {
-    ShoppingScene.call( this, itemData, {
+  function CandyScene( itemData, options ) {
+
+    options = _.extend( {
 
       // Candy questions use 'pound' and 'pounds' for the units, e.g. 'Cost of 2.2 pounds?'
       questionSingularUnits: poundString,
@@ -38,17 +40,22 @@ define( function( require ) {
       // This hack was required by https://github.com/phetsims/unit-rates/issues/20
       amountOfQuestionUnits: poundsUppercaseString,
 
-      // Bottom axis of the double number line
-      denominatorOptions: {
-        axisLabel: poundsString,
-        axisRange: new Range( 0, 1.6 ),
-        majorMarkerDecimals: 1
-      },
+      // {*|null} nest options for the rate's denominator, defaults provided below
+      denominatorOptions: null,
 
       // Scale displays quantity in 'lbs' for Candy
       scaleQuantityIsDisplayed: true,
       scaleQuantityUnits: lbsString
-    } );
+
+    }, options );
+
+    options.denominatorOptions = _.extend( {
+      axisLabel: poundsString,
+      axisRange: new Range( 0, 1.6 ),
+      majorMarkerDecimals: 1
+    }, options.denominatorOptions );
+
+    ShoppingScene.call( this, itemData, options );
   }
 
   unitRates.register( 'CandyScene', CandyScene );

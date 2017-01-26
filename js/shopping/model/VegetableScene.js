@@ -17,10 +17,11 @@ define( function( require ) {
 
   /**
    * @param {Object} itemData - data structure that describes a type of vegetable, see ShoppingItemData
+   * @param {Object} [options]
    * @constructor
    */
-  function VegetableScene( itemData ) {
-    ShoppingScene.call( this, itemData );
+  function VegetableScene( itemData, options ) {
+    ShoppingScene.call( this, itemData, options );
   }
 
   unitRates.register( 'VegetableScene', VegetableScene );
