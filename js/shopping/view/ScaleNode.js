@@ -36,10 +36,11 @@ define( function( require ) {
 
   // constants
   var PANEL_OPTIONS = {
+    align: 'right',
     xMargin: 8,
     yMargin: 4,
     cornerRadius: 4,
-    resizable: false
+    resize: false
   };
 
   /**
@@ -64,19 +65,13 @@ define( function( require ) {
 
     var valueBoxChildren = [];
 
-    // Cost value, e.g. '$10.50'
-    var maxCostString = costToString( 10.5 );
+    // Cost value, e.g. '$100.50'
+    var maxCostString = costToString( 100.5 );
     var costValueNode = new Text( maxCostString, {
       font: options.valueFont,
       fill: options.valueFill
       //TODO maxWidth
     } );
-
-    // Update cost value
-    var costObserver = function( cost ) {
-      costValueNode.text = costToString( cost );
-    };
-    scale.costProperty.link( costObserver );
 
     // panel for displaying cost
     var costPanel = null;
@@ -161,6 +156,12 @@ define( function( require ) {
     Node.call( this, {
       children: [ scaleImageNode, valueBox ]
     } );
+
+    // Update cost value
+    var costObserver = function( cost ) {
+      costValueNode.text = costToString( cost );
+    };
+    scale.costProperty.link( costObserver );
 
     // red dot at origin, red line where items will be placed
     if ( phet.chipper.queryParameters.dev ) {
