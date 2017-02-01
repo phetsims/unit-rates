@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // common modules
-  var Color = require( 'SCENERY/util/Color' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
@@ -35,7 +34,7 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenShoppingLabString,
-      backgroundColorProperty: new Property( Color.toColor( 'rgb( 226, 255, 249 )' ) ),
+      backgroundColorProperty: new Property( 'rgb( 226, 255, 249 )' ),
       homeScreenIcon: new Image( screenIcon )
     }, options );
 
