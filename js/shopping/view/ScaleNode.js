@@ -69,8 +69,8 @@ define( function( require ) {
     var maxCostString = costToString( 100.5 );
     var costValueNode = new Text( maxCostString, {
       font: options.valueFont,
-      fill: options.valueFill
-      //TODO maxWidth
+      fill: options.valueFill,
+      maxWidth: 100 // i18n, determined empirically
     } );
 
     // panel for displaying cost
@@ -126,8 +126,8 @@ define( function( require ) {
       var maxQuantityString = quantityToString( 10.5, scale.quantityUnits );
       var quantityValueNode = new Text( maxQuantityString, {
         font: options.valueFont,
-        fill: options.valueFill
-        //TODO maxWidth
+        fill: options.valueFill,
+        maxWidth: 100 // i18n, determined empirically
       } );
 
       var quantityPanel = new Panel( quantityValueNode, PANEL_OPTIONS );
@@ -149,7 +149,7 @@ define( function( require ) {
 
       // These coordinates are dependent on the image file, and were determined empirically
       centerX: scaleImageNode.centerX,
-      bottom: scaleImageNode.bottom - 17
+      centerY: scaleImageNode.bottom - 32
     } );
 
     // This type does not propagate options to the supertype because the model determines location.
