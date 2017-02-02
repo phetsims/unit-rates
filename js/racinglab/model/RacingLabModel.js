@@ -13,6 +13,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // sim modules
+  var Car = require( 'UNIT_RATES/racinglab/model/Car' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -22,17 +23,18 @@ define( function( require ) {
   function RacingLabModel( options ) {
 
     options = _.extend( {
-      numberOfCars: 1
+      car2Visible: false // {boolean} is car2 initially visible?
     }, options );
 
     // @public number of cars that are racing
-    this.numberOfCarsProperty = new Property( options.numberOfCars );
-    this.numberOfCarsProperty.link( function( numberOfCars ) {
-      assert && assert( numberOfCars === 1 || numberOfCars === 2, 'invalid numberOfCars: ' + numberOfCars );
-    } );
+    this.car2VisibleProperty = new Property( options.car2Visible );
 
     // @public is the race running?
     this.runningProperty = new Property( false );
+
+    // @public
+    this.car1 = new Car(); // the red (top) car
+    this.car2 = new Car(); // the blue (bottom) car
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );
@@ -46,8 +48,10 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.numberOfCarsProperty.reset();
+      this.car2VisibleProperty.reset();
       this.runningProperty.reset();
+      this.car1.reset();
+      this.car2.reset();
     }
   } );
 } );

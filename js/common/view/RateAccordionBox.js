@@ -8,7 +8,7 @@
 define( function( require ) {
   'use strict';
 
-  // sim modules
+  // common modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -21,7 +21,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
-  // common modules
+  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );

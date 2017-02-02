@@ -22,11 +22,11 @@ define( function( require ) {
   var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
 
   /**
-   * @param {Property.<number>} numberOfCarsProperty
+   * @param {Property.<boolean>} car2VisibleProperty - is car2 visible?
    * @param {Object} [options]
    * @constructor
    */
-  function RacingLabSceneControl( numberOfCarsProperty, options ) {
+  function RacingLabSceneControl( car2VisibleProperty, options ) {
 
     options = _.extend( {
 
@@ -44,9 +44,9 @@ define( function( require ) {
 
     var maxCarWidth = options.buttonWidth - ( 2 * options.buttonContentXMargin );
 
-    RadioButtonGroup.call( this, numberOfCarsProperty, [
-      { value: 1, node: createOneCarIcon( maxCarWidth ) },
-      { value: 2, node: createTwoCarsIcon( maxCarWidth ) }
+    RadioButtonGroup.call( this, car2VisibleProperty, [
+      { value: false, node: createOneCarIcon( maxCarWidth ) },
+      { value: true, node: createTwoCarsIcon( maxCarWidth ) }
     ], options );
   }
 

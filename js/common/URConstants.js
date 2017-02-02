@@ -8,6 +8,9 @@
 define( function( require ) {
   'use strict';
 
+  // common modules
+  var Range = require( 'DOT/Range' );
+
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -38,7 +41,11 @@ define( function( require ) {
     NUMBER_PICKER_OPTIONS: {
       xMargin: 8,
       cornerRadius: 4
-    }
+    },
+
+    // range for Rate spinners
+    MILES_RANGE: new Range( 20, 100 ),
+    HOURS_RANGE: new Range( 1, 10 )
 
   };
 

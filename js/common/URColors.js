@@ -46,7 +46,11 @@ define( function( require ) {
     showAnswers: 'lightGray', // show answers in this color when 'showAnswers' query parameter is present
 
     // shelf
-    shelf: 'rgb( 174, 129, 91 )'
+    shelf: 'rgb( 174, 129, 91 )',
+
+    // race cars
+    car1: 'rgb( 236, 22, 44 )',  // red car
+    car2: 'rgb( 5, 174, 232 )' // blue car
   };
 
   unitRates.register( 'URColors', URColors );

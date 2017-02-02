@@ -19,7 +19,7 @@ define( function( require ) {
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
-  var RateAccordionBox = require( 'UNIT_RATES/shoppinglab/view/RateAccordionBox' );
+  var RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
