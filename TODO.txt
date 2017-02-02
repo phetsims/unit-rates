@@ -1,6 +1,5 @@
 TODO list for unit-rates
 
-Right justify cost and quantity values on scale
 Reset All or switching items while animation is happening doesn't clean up animation
 fuzzMouse assertion failure in BagDragHandler: bag should be on shelf or scale
 Reset button for shelf + scale
