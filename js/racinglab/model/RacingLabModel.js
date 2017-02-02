@@ -10,6 +10,7 @@ define( function( require ) {
 
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -19,7 +20,15 @@ define( function( require ) {
    * @constructor
    */
   function RacingLabModel( options ) {
-    //TODO
+
+    options = _.extend( {
+      numberOfCars: 1
+    }, options );
+
+    this.numberOfCarsProperty = new Property( options.numberOfCars );
+    this.numberOfCarsProperty.link( function( numberOfCars ) {
+      assert && assert( numberOfCars === 1 || numberOfCars === 2, 'invalid numberOfCars: ' + numberOfCars );
+    } );
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );
@@ -33,7 +42,7 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      //TODO
+      this.numberOfCarsProperty.reset();
     }
   } );
 } );

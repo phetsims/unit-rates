@@ -14,6 +14,7 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
 
   // common modules
+  var RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
@@ -35,6 +36,13 @@ define( function( require ) {
       bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
     } );
     this.addChild( resetAllButton );
+
+    // Scene control (1 vs 2 cars)
+    var sceneControl = new RacingLabSceneControl( model.numberOfCarsProperty, {
+      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
+      bottom: resetAllButton.top - 30
+    } );
+    this.addChild( sceneControl );
   }
 
   unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
