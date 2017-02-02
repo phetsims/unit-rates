@@ -8,14 +8,18 @@
 define( function( require ) {
   'use strict';
 
-  // sim modules
+  // common modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  // common modules
+  // sim modules
+  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
+  var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
   var RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
+  var RacingLabViewProperties = require( 'UNIT_RATES/racinglab/view/RacingLabViewProperties' );
   var RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
   var RestartRaceButton = require( 'UNIT_RATES/racinglab/view/RestartRaceButton' );
   var StartStopButton = require( 'UNIT_RATES/racinglab/view/StartStopButton' );
@@ -39,29 +43,38 @@ define( function( require ) {
 
     ScreenView.call( this, options );
 
+    var viewProperties = new RacingLabViewProperties();
+
+    var playAreaLayer = new Node();
+    this.addChild( playAreaLayer );
+
+    var keypadLayer = new KeypadLayer();
+    this.addChild( keypadLayer );
+
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
+        viewProperties.reset();
       },
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
     } );
-    this.addChild( resetAllButton );
+    playAreaLayer.addChild( resetAllButton );
 
     // Scene control (1 vs 2 cars)
     var sceneControl = new RacingLabSceneControl( model.car2VisibleProperty, {
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       bottom: resetAllButton.top - 30
     } );
-    this.addChild( sceneControl );
+    playAreaLayer.addChild( sceneControl );
 
     // Start/stop button
     var startStopButton = new StartStopButton( model.runningProperty, {
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       centerY: this.layoutBounds.centerY
     } );
-    this.addChild( startStopButton );
+    playAreaLayer.addChild( startStopButton );
 
     // Restart race button
     var restartRaceButton = new RestartRaceButton( {
@@ -71,11 +84,12 @@ define( function( require ) {
       right: startStopButton.left - 15,
       centerY: startStopButton.centerY
     } );
-    this.addChild( restartRaceButton );
+    playAreaLayer.addChild( restartRaceButton );
 
     // Rate for car 2 (blue)
-    var rate2AccordionBox = new RateAccordionBox( model.car2.speedProperty, {
+    var rateAccordionBox2 = new RateAccordionBox( model.car2.speedProperty, {
       titleNode: new Text( rate2String, { font: new URFont( 18 ), maxWidth: 100 } ),
+      expandedProperty: viewProperties.rateExpandedProperty2,
       pickerFont: URConstants.RACING_LAB_PICKER_FONT,
       numeratorRange: URConstants.MILES_RANGE,
       denominatorRange: URConstants.HOURS_RANGE,
@@ -86,11 +100,12 @@ define( function( require ) {
       right: sceneControl.left - 20,
       bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
     } );
-    this.addChild( rate2AccordionBox );
+    playAreaLayer.addChild( rateAccordionBox2 );
 
     // Rate for car 1 (red)
-    var rate1AccordionBox = new RateAccordionBox( model.car1.speedProperty, {
+    var rateAccordionBox1 = new RateAccordionBox( model.car1.speedProperty, {
       titleNode: new Text( rate1String, { font: new URFont( 18 ), maxWidth: 100 } ),
+      expandedProperty: viewProperties.rateExpandedProperty1,
       pickerFont: URConstants.RACING_LAB_PICKER_FONT,
       numeratorRange: URConstants.MILES_RANGE,
       denominatorRange: URConstants.HOURS_RANGE,
@@ -98,12 +113,28 @@ define( function( require ) {
       denominatorUnits: hoursString,
       numeratorPickerColor: URColors.car1,
       denominatorPickerColor: URColors.car1,
-      right: rate2AccordionBox.right,
+      right: rateAccordionBox2.right,
       top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
     } );
-    this.addChild( rate1AccordionBox );
+    playAreaLayer.addChild( rateAccordionBox1 );
 
+    // Double number line for car 1
+    var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
+      model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
+        expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
+        left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
+        top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
+      } );
+    playAreaLayer.addChild( doubleNumberLineAccordionBox1 );
 
+    // Double number line for car 2
+    var doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
+      model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
+        expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
+        left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
+        bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
+      } );
+    playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
   }
 
   unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
