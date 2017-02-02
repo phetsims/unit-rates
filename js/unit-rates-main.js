@@ -17,6 +17,7 @@ define( function( require ) {
   var OLDRacingLabScreen = require( 'UNIT_RATES/old/racingLab/OLDRacingLabScreen' );
   var OLDShoppingScreen = require( 'UNIT_RATES/old/shopping/OLDShoppingScreen' );
   var OLDShoppingLabScreen = require( 'UNIT_RATES/old/shoppingLab/OLDShoppingLabScreen' );
+  var RacingLabScreen = require( 'UNIT_RATES/racinglab/RacingLabScreen' );
   var ShoppingLabScreen = require( 'UNIT_RATES/shoppinglab/ShoppingLabScreen' );
   var ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
@@ -39,8 +40,8 @@ define( function( require ) {
 
     var screens = [
       new ShoppingScreen(),
-      new ShoppingLabScreen()
-      //TODO add RacingScreen
+      new ShoppingLabScreen(),
+      new RacingLabScreen()
     ];
 
     //TODO delete when development is done

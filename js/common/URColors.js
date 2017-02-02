@@ -18,7 +18,8 @@ define( function( require ) {
   var URColors = {
 
     // screens
-    screenBackground: 'rgb( 226, 255, 249 )',
+    shoppingScreenBackground: 'rgb( 226, 255, 249 )',
+    racingLabScreenBackground: 'rgb( 233, 242, 254 )',
 
     // buttons
     categoryButton: 'white',

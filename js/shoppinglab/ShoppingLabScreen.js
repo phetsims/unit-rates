@@ -35,7 +35,7 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenShoppingLabString,
-      backgroundColorProperty: new Property( URColors.screenBackground ),
+      backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
       homeScreenIcon: new Image( screenIcon )
     }, options );
 
