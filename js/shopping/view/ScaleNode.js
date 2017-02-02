@@ -18,6 +18,7 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
@@ -42,6 +43,10 @@ define( function( require ) {
     cornerRadius: 4,
     resize: false
   };
+  var DISPLAY_MIN_HEIGHT = 32;
+  var DISPLAY_CORNER_RADIUS = 4;
+  var DISPLAY_X_MARGIN = 8;
+  var DISPLAY_Y_MARGIN = 4;
 
   /**
    * @param {Scale} scale
@@ -130,13 +135,26 @@ define( function( require ) {
         maxWidth: 100 // i18n, determined empirically
       } );
 
-      var quantityPanel = new Panel( quantityValueNode, PANEL_OPTIONS );
+      // rectangle behind the number
+      var quantityDisplayWidth = quantityValueNode.width + ( 2 * DISPLAY_X_MARGIN );
+      var quantityDisplayHeight = Math.max( DISPLAY_MIN_HEIGHT, quantityValueNode.height + ( 2 * DISPLAY_Y_MARGIN ) );
+      var quantityRectangle = new Rectangle( 0, 0, quantityDisplayWidth, quantityDisplayHeight, {
+        cornerRadius: DISPLAY_CORNER_RADIUS,
+        fill: 'white',
+        stroke: 'black'
+      } );
 
-      valueBoxChildren.push( quantityPanel );
+      var quantityDisplayNode = new Node( {
+        children: [ quantityRectangle, quantityValueNode ]
+      } );
+
+      valueBoxChildren.push( quantityDisplayNode );
 
       // Update quantity value
       var quantityObserver = function( quantity ) {
         quantityValueNode.text = quantityToString( quantity, scale.quantityUnits );
+        quantityValueNode.right = quantityRectangle.right - DISPLAY_X_MARGIN;
+        quantityValueNode.centerY = quantityRectangle.centerY;
       };
       scale.quantityProperty.link( quantityObserver );
     }
