@@ -185,6 +185,11 @@ define( function( require ) {
       self.questionSetProperty.value = self.questionSets[ questionSetsIndex ];
     } );
 
+    // When the unit rate changes, cancel any marker edit that is in progress
+    this.unitRateProperty.lazyLink( function( unitRate ) {
+      self.markerEditor.reset();
+    } );
+
     /**
      * When a question is answered correctly, create a corresponding marker on the double number line.
      * @param {ShoppingQuestion} question

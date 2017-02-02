@@ -232,18 +232,10 @@ define( function( require ) {
     };
     doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver ); // unlink in dispose
 
-    //TODO move this to ShoppingLabModel
-    // When the unit rate changes, cancel any edit that is in progress
-    var unitRateObserver = function( unitRate ) {
-      markerEditor.reset();
-    };
-    doubleNumberLine.unitRateProperty.link( unitRateObserver ); // unlink in dispose
-
     // @private
     this.disposeDoubleNumberLineAccordionBox = function() {
 
       // model cleanup
-      doubleNumberLine.unitRateProperty.unlink( unitRateObserver );
       doubleNumberLine.undoMarkerProperty.unlink( undoMarkerObserver );
       markerEditor.numeratorProperty.unlink( markerEditorObserver );
       markerEditor.denominatorProperty.unlink( markerEditorObserver );
