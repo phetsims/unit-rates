@@ -33,7 +33,7 @@ define( function( require ) {
   function OLDRacingLabScreen( options ) {
 
     options = _.extend( {
-      name: screenRacingLabString,
+      name: screenRacingLabString + ' (old)', //TODO
       backgroundColorProperty: new Property( 'rgb( 233, 242, 254 )' ),
       homeScreenIcon: new Image( screenIcon )
     }, options );

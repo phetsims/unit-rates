@@ -33,7 +33,7 @@ define( function( require ) {
   function OLDShoppingLabScreen( options ) {
 
     options = _.extend( {
-      name: screenShoppingLabString,
+      name: screenShoppingLabString + ' (old)', //TODO
       backgroundColorProperty: new Property( 'rgb( 226, 255, 249 )' ),
       homeScreenIcon: new Image( screenIcon )
     }, options );
