@@ -2,6 +2,8 @@
 
 /**
  * Button used to start and stop a race in the 'Racing Lab' screen.
+ *
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';
