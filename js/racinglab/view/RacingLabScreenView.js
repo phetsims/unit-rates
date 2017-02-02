@@ -15,6 +15,7 @@ define( function( require ) {
 
   // common modules
   var RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
+  var RestartRaceButton = require( 'UNIT_RATES/racinglab/view/RestartRaceButton' );
   var StartStopButton = require( 'UNIT_RATES/racinglab/view/StartStopButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
@@ -51,6 +52,16 @@ define( function( require ) {
       centerY: this.layoutBounds.centerY
     } );
     this.addChild( startStopButton );
+
+    // Restart race button
+    var restartRaceButton = new RestartRaceButton( {
+      listener: function() {
+        //TODO
+      },
+      right: startStopButton.left - 15,
+      centerY: startStopButton.centerY
+    } );
+    this.addChild( restartRaceButton );
   }
 
   unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
