@@ -52,8 +52,9 @@ define( function( require ) {
 
       // RateAccordionBox options
       unitRateDecimals: 2,
-      numeratorRange: new Range( 1, 30 ), //TODO what is the correct range? see #141
-      denominatorRange: new Range( 1, 30 ), //TODO what is the correct range? see #141
+      //TODO what is the correct range for rate spinners? see #141
+      numeratorRange: new Range( 1, 30 ),
+      denominatorRange: new Range( 1, 30 ),
       numeratorUnits: '',
       denominatorUnits: '',
       numeratorPickerColor: 'black',
