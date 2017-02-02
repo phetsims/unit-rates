@@ -20,6 +20,7 @@ define( function( require ) {
   var ShoppingLabCategoryNode = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabCategoryNode' );
   var ShoppingViewProperties = require( 'UNIT_RATES/shopping/view/ShoppingViewProperties' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   /**
    * @param {ShoppingLabModel} model
@@ -47,8 +48,8 @@ define( function( require ) {
 
     // Category radio buttons
     var categoryRadioButtons = new ShoppingCategoryRadioButtons( model.categories, model.categoryProperty, {
-      left: this.layoutBounds.left + 15,
-      bottom: this.layoutBounds.bottom - 15
+      left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
+      bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
     } );
     playAreaLayer.addChild( categoryRadioButtons );
 
@@ -58,8 +59,8 @@ define( function( require ) {
         model.reset();
         viewProperties.reset();
       },
-      right: this.layoutBounds.maxX - 15,
-      bottom: this.layoutBounds.maxY - 15
+      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
+      bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
     } );
     playAreaLayer.addChild( resetAllButton );
   }

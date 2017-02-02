@@ -16,6 +16,7 @@ define( function( require ) {
   var ShoppingSceneComboBox = require( 'UNIT_RATES/shopping/view/ShoppingSceneComboBox' );
   var ShoppingSceneNode = require( 'UNIT_RATES/shopping/view/ShoppingSceneNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   /**
    * @param {ShoppingCategory} category
@@ -39,7 +40,7 @@ define( function( require ) {
 
     // combo box, for selecting a scene
     var comboBox = new ShoppingSceneComboBox( category.shoppingScenes, category.shoppingSceneProperty, this, {
-      left: layoutBounds.left + 15,
+      left: layoutBounds.left + URConstants.SCREEN_X_MARGIN,
       bottom: layoutBounds.bottom - 80
     } );
     this.addChild( comboBox );

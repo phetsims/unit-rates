@@ -21,6 +21,7 @@ define( function( require ) {
   var RateAccordionBox = require( 'UNIT_RATES/shoppinglab/view/RateAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   /**
    * @param {ShoppingScene} shoppingScene
@@ -37,8 +38,8 @@ define( function( require ) {
     // Double number line
     var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
       expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
-      left: layoutBounds.minX + 15,
-      top: layoutBounds.minY + 15
+      left: layoutBounds.minX + URConstants.SCREEN_X_MARGIN,
+      top: layoutBounds.minY + URConstants.SCREEN_Y_MARGIN
     } );
 
     // Rate accordion box

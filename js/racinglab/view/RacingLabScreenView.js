@@ -15,6 +15,7 @@ define( function( require ) {
 
   // common modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   /**
    * @param {RacingLabModel} model
@@ -30,8 +31,8 @@ define( function( require ) {
       listener: function() {
         model.reset();
       },
-      right: this.layoutBounds.maxX - 15,
-      bottom: this.layoutBounds.maxY - 15
+      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
+      bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
     } );
     this.addChild( resetAllButton );
   }

@@ -13,6 +13,10 @@ define( function( require ) {
 
   var URConstants = {
 
+    // screen
+    SCREEN_X_MARGIN: 15,
+    SCREEN_Y_MARGIN: 15,
+
     // image scaling
     BAG_IMAGE_SCALE: 0.5,
     SHOPPING_ITEM_IMAGE_SCALE: 0.5,
