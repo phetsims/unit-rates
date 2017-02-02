@@ -44,7 +44,7 @@ define( function( require ) {
     },
 
     //TODO what is the correct range for Shopping rate spinners? see #141
-    // range for Rate spinners
+    // ranges for Rate spinners
     COST_RANGE: new Range( 1, 30 ),
     QUANTITY_RANGE: new Range( 1, 30 ),
     MILES_RANGE: new Range( 20, 100 ),
