@@ -1,5 +1,6 @@
 TODO list for unit-rates
 
+Sprint on Racing Lab screen
 Reset All or switching items while animation is happening doesn't clean up animation
 fuzzMouse assertion failure in BagDragHandler: bag should be on shelf or scale
 Reset button for shelf + scale
