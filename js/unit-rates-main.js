@@ -15,8 +15,6 @@ define( function( require ) {
 
   // sim modules
   var OLDRacingLabScreen = require( 'UNIT_RATES/old/racingLab/OLDRacingLabScreen' );
-  var OLDShoppingScreen = require( 'UNIT_RATES/old/shopping/OLDShoppingScreen' );
-  var OLDShoppingLabScreen = require( 'UNIT_RATES/old/shoppingLab/OLDShoppingLabScreen' );
   var RacingLabScreen = require( 'UNIT_RATES/racinglab/RacingLabScreen' );
   var ShoppingLabScreen = require( 'UNIT_RATES/shoppinglab/ShoppingLabScreen' );
   var ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
@@ -46,8 +44,6 @@ define( function( require ) {
 
     //TODO delete when development is done
     if ( URQueryParameters.old ) {
-      screens.push( new OLDShoppingScreen() );
-      screens.push( new OLDShoppingLabScreen() );
       screens.push( new OLDRacingLabScreen() );
     }
 
