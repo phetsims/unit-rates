@@ -65,7 +65,10 @@ define( function( require ) {
     scaleImageNode.x = -scaleImageNode.width / 2;
     scaleImageNode.y = -0.1 * scaleImageNode.height; // multiplier is specific to image file
 
-    var valueBoxChildren = [];
+    // Numeric display(s) on the scale
+    var displayNode = null;
+
+    // Cost display -----------------------------------------------
 
     // Cost value, e.g. '$100.50'
     var maxCostString = costToString( 100.5 );
@@ -74,7 +77,8 @@ define( function( require ) {
       fill: options.valueFill,
       maxWidth: 100 // i18n, determined empirically
     } );
-    
+
+    // optional parts of the cost display
     var costRectangleWidth = costValueNode.width + ( 2 * DISPLAY_X_MARGIN );
     if ( options.costIsCollapsible ) {
 
@@ -102,11 +106,13 @@ define( function( require ) {
       costRectangleWidth = expandCollapseButton.width + DISPLAY_X_SPACING +
                            Math.max( costLabelNode.width, costValueNode.width ) + ( 2 * DISPLAY_X_MARGIN );
     }
+
+    // rectangle for the cost display
     var costRectangleHeight = Math.max( DISPLAY_MIN_HEIGHT, costValueNode.height + ( 2 * DISPLAY_Y_MARGIN ) );
     var costRectangle = new Rectangle( 0, 0, costRectangleWidth, costRectangleHeight, DISPLAY_RECTANGLE_OPTIONS );
 
+    // assemble and layout the cost display
     var costDisplayNode = new Node();
-    valueBoxChildren.push( costDisplayNode );
     costDisplayNode.addChild( costRectangle );
     if ( options.costIsCollapsible ) {
       costDisplayNode.addChild( expandCollapseButton );
@@ -121,8 +127,20 @@ define( function( require ) {
     costValueNode.right = costRectangle.right - DISPLAY_X_SPACING;
     costValueNode.centerY = costRectangle.centerY;
 
-    // quantity display
-    if ( options.quantityIsDisplayed ) {
+    // Update cost value
+    var costObserver = function( cost ) {
+      costValueNode.text = costToString( cost );
+      costValueNode.right = costRectangle.right - DISPLAY_X_MARGIN;
+      costValueNode.centerY = costRectangle.centerY;
+    };
+    scale.costProperty.link( costObserver );
+
+    // Quantity display -----------------------------------------------
+
+    if ( !options.quantityIsDisplayed ) {
+      displayNode = costDisplayNode;
+    }
+    else {
 
       // e.g. '10.5 lbs'
       var maxQuantityString = quantityToString( 10.5, scale.quantityUnits );
@@ -141,7 +159,11 @@ define( function( require ) {
         children: [ quantityRectangle, quantityValueNode ]
       } );
 
-      valueBoxChildren.push( quantityDisplayNode );
+      displayNode = new HBox( {
+        children: [ costDisplayNode, quantityDisplayNode ],
+        align: 'center',
+        spacing: 15
+      } );
 
       // Update quantity value
       var quantityObserver = function( quantity ) {
@@ -152,29 +174,15 @@ define( function( require ) {
       scale.quantityProperty.link( quantityObserver );
     }
 
-    var valueBox = new HBox( {
-      children: valueBoxChildren,
-      align: 'center',
-      spacing: 15,
-      resize: false,
-
-      // These coordinates are dependent on the image file, and were determined empirically
-      centerX: scaleImageNode.centerX,
-      centerY: scaleImageNode.bottom - 32
-    } );
-
     // This type does not propagate options to the supertype because the model determines location.
     Node.call( this, {
-      children: [ scaleImageNode, valueBox ]
+      children: [ scaleImageNode, displayNode ]
     } );
 
-    // Update cost value
-    var costObserver = function( cost ) {
-      costValueNode.text = costToString( cost );
-      costValueNode.right = costRectangle.right - DISPLAY_X_MARGIN;
-      costValueNode.centerY = costRectangle.centerY;
-    };
-    scale.costProperty.link( costObserver );
+    // Position the display on the scale.
+    // These coordinates are dependent on the image file, and were determined empirically
+    displayNode.centerX = scaleImageNode.centerX;
+    displayNode.centerY = scaleImageNode.bottom - 32;
 
     // red dot at origin, red line where items will be placed
     if ( phet.chipper.queryParameters.dev ) {
