@@ -87,7 +87,6 @@ define( function( require ) {
         font: options.valueFont,
         fill: options.valueFill,
         maxWidth: 1.1 * costValueNode.width
-        //TODO maxWidth
       } );
 
       // dispose required
