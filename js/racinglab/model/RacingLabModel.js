@@ -25,10 +25,14 @@ define( function( require ) {
       numberOfCars: 1
     }, options );
 
+    // @public number of cars that are racing
     this.numberOfCarsProperty = new Property( options.numberOfCars );
     this.numberOfCarsProperty.link( function( numberOfCars ) {
       assert && assert( numberOfCars === 1 || numberOfCars === 2, 'invalid numberOfCars: ' + numberOfCars );
     } );
+
+    // @public is the race running?
+    this.runningProperty = new Property( false );
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );
@@ -43,6 +47,7 @@ define( function( require ) {
     // @public
     reset: function() {
       this.numberOfCarsProperty.reset();
+      this.runningProperty.reset();
     }
   } );
 } );

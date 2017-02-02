@@ -15,6 +15,7 @@ define( function( require ) {
 
   // common modules
   var RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
+  var StartStopButton = require( 'UNIT_RATES/racinglab/view/StartStopButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
@@ -43,6 +44,13 @@ define( function( require ) {
       bottom: resetAllButton.top - 30
     } );
     this.addChild( sceneControl );
+
+    // Start/stop button
+    var startStopButton = new StartStopButton( model.runningProperty, {
+      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
+      centerY: this.layoutBounds.centerY
+    } );
+    this.addChild( startStopButton );
   }
 
   unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
