@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO ShoppingSceneNode and ShoppingLabSceneNode have much in common
 /**
  * View components that are specific to a scene in the 'Shopping Lab' screen.
  *
