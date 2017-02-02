@@ -10,7 +10,7 @@ define( function( require ) {
 
   // sim modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );//TODO get rid of this
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
