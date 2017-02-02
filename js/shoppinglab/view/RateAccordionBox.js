@@ -52,8 +52,8 @@ define( function( require ) {
 
       // RateAccordionBox options
       unitRateDecimals: 2,
-      numeratorRange: new Range( 1, 30 ),  //TODO this should be 1-20, but is exceeded by Purple Candy, see #141
-      denominatorRange: new Range( 1, 20 ),
+      numeratorRange: new Range( 1, 30 ), //TODO what is the correct range? see #141
+      denominatorRange: new Range( 1, 30 ), //TODO what is the correct range? see #141
       numeratorUnits: '',
       denominatorUnits: '',
       numeratorPickerColor: 'black',
