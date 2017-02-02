@@ -27,7 +27,7 @@ define( function( require ) {
     //TODO finalize credits, https://github.com/phetsims/unit-rates/issues/55
     credits: {
       leadDesign: 'Amy Rouinfar',
-      softwareDevelopment: 'Dave Schmitz (Schmitzware), Chris Malley (PixelZoom, Inc.)',
+      softwareDevelopment: 'Chris Malley (PixelZoom, Inc.), Dave Schmitz (Schmitzware)',
       team: 'Amy Hanson, Amanda McGarry, Susan Miller, Ariel Paul, Kathy Perkins',
       qualityAssurance: 'Steele Dalton, Amanda Davis',
       graphicArts: 'Mariah Hermsmeyer'
