@@ -11,15 +11,13 @@ define( function( require ) {
   // common modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -58,7 +56,7 @@ define( function( require ) {
       denominatorUnits: '',
       numeratorPickerColor: 'black',
       denominatorPickerColor: 'black',
-      xSpacing: 15,
+      xSpacing: 10,
       ySpacing: 15
 
     }, options );
@@ -70,10 +68,6 @@ define( function( require ) {
         color: options.numeratorPickerColor
       } ) );
     var numeratorUnitsNode = new Text( options.numeratorUnits, UNITS_TEXT_OPTIONS );
-    var numeratorNode = new HBox( {
-      spacing: options.xSpacing,
-      children: [ numeratorPicker, numeratorUnitsNode ]
-    } );
 
     // denominator
     var denominatorProperty = new Property( options.numeratorRange.min );
@@ -82,27 +76,32 @@ define( function( require ) {
         color: options.denominatorPickerColor
       } ) );
     var denominatorUnitsNode = new Text( options.denominatorUnits, UNITS_TEXT_OPTIONS );
-    var denominatorNode = new HBox( {
-      spacing: options.xSpacing,
-      children: [ denominatorPicker, denominatorUnitsNode ]
+
+
+    var contentNode = new Node( {
+      children: [  numeratorPicker, numeratorUnitsNode,  denominatorPicker, denominatorUnitsNode ]
     } );
+
+    // horizontal layout: center justify pickers, left justify labels
+    denominatorPicker.centerX = numeratorPicker.centerX;
+    numeratorUnitsNode.left = Math.max( numeratorPicker.right, denominatorPicker.right ) + options.xSpacing;
+    denominatorUnitsNode.left = numeratorUnitsNode.left;
 
     // fraction line
-    var fractionLineLength = Math.max( MIN_FRACTION_LINE_LENGTH, Math.max( numeratorNode.width, denominatorNode.width ) );
+    var fractionLineLength = Math.max( MIN_FRACTION_LINE_LENGTH,
+      Math.max( numeratorUnitsNode.right - numeratorPicker.left, denominatorUnitsNode.right - denominatorPicker.left ) );
     var fractionLineNode = new Line( 0, 0, fractionLineLength, 0, {
       stroke: 'black',
-      lineWidth: 2
+      lineWidth: 2,
+      left: Math.min( numeratorPicker.left, denominatorPicker.left )
     } );
+    contentNode.addChild( fractionLineNode );
 
-    var contentNode = new VBox( {
-      align: 'left',
-      spacing: options.ySpacing,
-      children: [
-        numeratorNode,
-        fractionLineNode,
-        denominatorNode
-      ]
-    } );
+    // vertical layout
+    numeratorUnitsNode.centerY = numeratorPicker.centerY;
+    fractionLineNode.top = numeratorPicker.bottom + options.ySpacing;
+    denominatorPicker.top = fractionLineNode.bottom + options.ySpacing;
+    denominatorUnitsNode.centerY = denominatorPicker.centerY;
 
     AccordionBox.call( this, contentNode, options );
 
