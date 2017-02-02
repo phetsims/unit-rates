@@ -17,7 +17,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
-  var returnCarButtonImage = require( 'image!UNIT_RATES/return_car_button.png' );
+  var restartRaceButtonImage = require( 'image!UNIT_RATES/restart_race_button.png' );
 
   /**
    * @param {Object} [options]
@@ -26,7 +26,7 @@ define( function( require ) {
   function RestartRaceButton( options ) {
 
     options = _.extend( {
-      content: new Image( returnCarButtonImage, { scale: 0.18 } ),
+      content: new Image( restartRaceButtonImage, { scale: 0.5 } ),
       xMargin: 12,
       yMargin: 8,
       touchAreaXDilation: 0,

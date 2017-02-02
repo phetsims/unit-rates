@@ -27,7 +27,7 @@ define( function( require ) {
   // images
   var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
   var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
-  var returnCarButtonImage = require( 'image!UNIT_RATES/return_car_button.png' );
+  var restartRaceButtonImage = require( 'image!UNIT_RATES/restart_race_button.png' );
   var goButtonIconImage = require( 'image!UNIT_RATES/go_button_icon.png' );
   var stopButtonImage = require( 'image!UNIT_RATES/stop_button.png' );
 
@@ -98,7 +98,7 @@ define( function( require ) {
     this.restartButton = new RectangularPushButton( {
       right: this.goStopButton.left - OLDURConstants.PANEL_SPACING,
       centerY: this.goStopButton.centerY,
-      content: new Image( returnCarButtonImage, { scale: 0.18 } ),
+      content: new Image( restartRaceButtonImage, { scale: 0.5 } ),
       minWidth: 45,
       minHeight: 45,
       cornerRadius: 4,
