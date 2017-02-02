@@ -29,6 +29,8 @@ define( function( require ) {
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
   // strings
+  var doubleNumberLine1String = require( 'string!UNIT_RATES/doubleNumberLine1' );
+  var doubleNumberLine2String = require( 'string!UNIT_RATES/doubleNumberLine2' );
   var hoursString = require( 'string!UNIT_RATES/hours' );
   var milesString = require( 'string!UNIT_RATES/miles' );
   var rate1String = require( 'string!UNIT_RATES/rate1' );
@@ -121,6 +123,7 @@ define( function( require ) {
     // Double number line for car 1
     var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
+        titleNode: new Text( doubleNumberLine1String, { font: new URFont( 18 ), maxWidth: 300 } ),
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
@@ -130,6 +133,7 @@ define( function( require ) {
     // Double number line for car 2
     var doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
       model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
+        titleNode: new Text( doubleNumberLine2String, { font: new URFont( 18 ), maxWidth: 300 } ),
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
