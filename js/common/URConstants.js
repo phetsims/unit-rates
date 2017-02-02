@@ -13,6 +13,7 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URFont = require( 'UNIT_RATES/common/URFont' );
 
   var URConstants = {
 
@@ -42,6 +43,8 @@ define( function( require ) {
       xMargin: 8,
       cornerRadius: 4
     },
+
+    RACING_LAB_PICKER_FONT: new URFont( 20 ),
 
     //TODO what is the correct range for Shopping rate spinners? see #141
     // ranges for Rate spinners

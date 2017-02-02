@@ -27,11 +27,6 @@ define( function( require ) {
   // strings
   var rateString = require( 'string!UNIT_RATES/rate' );
 
-  // constants
-  var UNITS_TEXT_OPTIONS = {
-    font: new URFont( 16 ),
-    maxWidth: 125 // i18n, set empirically
-  };
   // If the Rate accordion box appears to change size when switching categories, increase this value. Determined empirically.
   var MIN_FRACTION_LINE_LENGTH = 115;
 
@@ -50,10 +45,13 @@ define( function( require ) {
 
       // RateAccordionBox options
       unitRateDecimals: 2,
+      unitsFont: new URFont( 16 ),
+      unitsMaxWidth: 125, // i18n, set empirically
       numeratorRange: URConstants.COST_RANGE,
       denominatorRange: URConstants.QUANTITY_RANGE,
       numeratorUnits: '',
       denominatorUnits: '',
+      pickerFont: new URFont( 24 ),
       numeratorPickerColor: 'black',
       denominatorPickerColor: 'black',
       xSpacing: 10,
@@ -65,21 +63,29 @@ define( function( require ) {
     var numeratorProperty = new Property( options.numeratorRange.min );
     var numeratorPicker = new NumberPicker( numeratorProperty, new Property( options.numeratorRange ), _.extend( {},
       URConstants.NUMBER_PICKER_OPTIONS, {
+        font: options.pickerFont,
         color: options.numeratorPickerColor
       } ) );
-    var numeratorUnitsNode = new Text( options.numeratorUnits, UNITS_TEXT_OPTIONS );
+    var numeratorUnitsNode = new Text( options.numeratorUnits, {
+      font: options.unitsFont,
+      maxWidth: options.unitsMaxWidth
+    } );
 
     // denominator
     var denominatorProperty = new Property( options.numeratorRange.min );
     var denominatorPicker = new NumberPicker( denominatorProperty, new Property( options.denominatorRange ), _.extend( {},
       URConstants.NUMBER_PICKER_OPTIONS, {
+        font: options.pickerFont,
         color: options.denominatorPickerColor
       } ) );
-    var denominatorUnitsNode = new Text( options.denominatorUnits, UNITS_TEXT_OPTIONS );
+    var denominatorUnitsNode = new Text( options.denominatorUnits, {
+      font: options.unitsFont,
+      maxWidth: options.unitsMaxWidth
+    } );
 
 
     var contentNode = new Node( {
-      children: [  numeratorPicker, numeratorUnitsNode,  denominatorPicker, denominatorUnitsNode ]
+      children: [ numeratorPicker, numeratorUnitsNode, denominatorPicker, denominatorUnitsNode ]
     } );
 
     // horizontal layout: center justify pickers, left justify labels

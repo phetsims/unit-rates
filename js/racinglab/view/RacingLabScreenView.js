@@ -76,6 +76,7 @@ define( function( require ) {
     // Rate for car 2 (blue)
     var rate2AccordionBox = new RateAccordionBox( model.car2.speedProperty, {
       titleNode: new Text( rate2String, { font: new URFont( 18 ), maxWidth: 100 } ),
+      pickerFont: URConstants.RACING_LAB_PICKER_FONT,
       numeratorRange: URConstants.MILES_RANGE,
       denominatorRange: URConstants.HOURS_RANGE,
       numeratorUnits: milesString,
@@ -90,6 +91,7 @@ define( function( require ) {
     // Rate for car 1 (red)
     var rate1AccordionBox = new RateAccordionBox( model.car1.speedProperty, {
       titleNode: new Text( rate1String, { font: new URFont( 18 ), maxWidth: 100 } ),
+      pickerFont: URConstants.RACING_LAB_PICKER_FONT,
       numeratorRange: URConstants.MILES_RANGE,
       denominatorRange: URConstants.HOURS_RANGE,
       numeratorUnits: milesString,
