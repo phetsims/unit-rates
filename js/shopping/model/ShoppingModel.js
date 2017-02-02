@@ -1,7 +1,7 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
 /**
- * Model for the 'Shopping' screen.
+ * Model for the 'Shopping' screen. Also used as the base type for the 'Shopping Lab' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -32,11 +32,12 @@ define( function( require ) {
   function ShoppingModel( options ) {
 
     options = _.extend( {
-      categoryIndex: 0  // {number} index of the category that is initially selected
+      categoryIndex: 0, // {number} index of the category that is initially selected
+      categories: null // {ShoppingCategory[]} categories, populated below if not provided
     }, options );
 
     // @public (read-only) items are grouped into categories
-    this.categories = [
+    this.categories = options.categories || [
 
       //TODO revisit this, I don't like how it's possible to pass a ShoppingItemData.Fruit to a non-FruitScene
       // fruits
