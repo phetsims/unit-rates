@@ -43,7 +43,10 @@ define( function( require ) {
       cornerRadius: 4
     },
 
+    //TODO what is the correct range for Shopping rate spinners? see #141
     // range for Rate spinners
+    COST_RANGE: new Range( 1, 30 ),
+    QUANTITY_RANGE: new Range( 1, 30 ),
     MILES_RANGE: new Range( 20, 100 ),
     HOURS_RANGE: new Range( 1, 10 )
 

@@ -52,9 +52,8 @@ define( function( require ) {
 
       // RateAccordionBox options
       unitRateDecimals: 2,
-      //TODO what is the correct range for rate spinners? see #141
-      numeratorRange: new Range( 1, 30 ),
-      denominatorRange: new Range( 1, 30 ),
+      numeratorRange: URConstants.COST_RANGE,
+      denominatorRange: URConstants.QUANTITY_RANGE,
       numeratorUnits: '',
       denominatorUnits: '',
       numeratorPickerColor: 'black',
