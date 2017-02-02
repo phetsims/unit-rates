@@ -17,7 +17,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -36,17 +35,15 @@ define( function( require ) {
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   // constants
-  var PANEL_OPTIONS = {
-    align: 'right',
-    xMargin: 8,
-    yMargin: 4,
-    cornerRadius: 4,
-    resize: false
-  };
   var DISPLAY_MIN_HEIGHT = 32;
-  var DISPLAY_CORNER_RADIUS = 4;
   var DISPLAY_X_MARGIN = 8;
   var DISPLAY_Y_MARGIN = 4;
+  var DISPLAY_X_SPACING = 10; // horizontal space between cost and quantity displays
+  var DISPLAY_RECTANGLE_OPTIONS = {
+    cornerRadius: 4,
+    fill: 'white',
+    stroke: 'black'
+  };
 
   /**
    * @param {Scale} scale
@@ -77,17 +74,9 @@ define( function( require ) {
       fill: options.valueFill,
       maxWidth: 100 // i18n, determined empirically
     } );
-
-    // panel for displaying cost
-    var costPanel = null;
-    if ( !options.costIsCollapsible ) {
-
-      // cost value is always visible, put it in a panel
-      costPanel = new Panel( costValueNode, PANEL_OPTIONS );
-    }
-    else {
-
-      // build a panel with an expand/collapse button, to show/hide the cost value
+    
+    var costRectangleWidth = costValueNode.width + ( 2 * DISPLAY_X_MARGIN );
+    if ( options.costIsCollapsible ) {
 
       // 'Cost', displayed when collapsed
       var costLabelNode = new Text( costString, {
@@ -110,21 +99,29 @@ define( function( require ) {
       };
       costExpandedProperty.link( costExpandedObserver ); // unlink in dispose
 
-      var valueParent = new Node( {
-        children: [ costValueNode, costLabelNode ]
-      } );
-
-      var hBox = new HBox( {
-        align: 'center',
-        children: [ expandCollapseButton, valueParent ],
-        spacing: 10
-      } );
-
-      costPanel = new Panel( hBox, PANEL_OPTIONS );
+      costRectangleWidth = expandCollapseButton.width + DISPLAY_X_SPACING +
+                           Math.max( costLabelNode.width, costValueNode.width ) + ( 2 * DISPLAY_X_MARGIN );
     }
-    valueBoxChildren.push( costPanel );
+    var costRectangleHeight = Math.max( DISPLAY_MIN_HEIGHT, costValueNode.height + ( 2 * DISPLAY_Y_MARGIN ) );
+    var costRectangle = new Rectangle( 0, 0, costRectangleWidth, costRectangleHeight, DISPLAY_RECTANGLE_OPTIONS );
 
-    // panel for displaying quantity
+    var costDisplayNode = new Node();
+    valueBoxChildren.push( costDisplayNode );
+    costDisplayNode.addChild( costRectangle );
+    if ( options.costIsCollapsible ) {
+      costDisplayNode.addChild( expandCollapseButton );
+      expandCollapseButton.left = costRectangle.left + DISPLAY_X_MARGIN;
+      expandCollapseButton.centerY = costRectangle.centerY;
+
+      costDisplayNode.addChild( costLabelNode );
+      costLabelNode.left = expandCollapseButton.right + DISPLAY_X_SPACING;
+      costLabelNode.centerY = costRectangle.centerY;
+    }
+    costDisplayNode.addChild( costValueNode );
+    costValueNode.right = costRectangle.right - DISPLAY_X_SPACING;
+    costValueNode.centerY = costRectangle.centerY;
+
+    // quantity display
     if ( options.quantityIsDisplayed ) {
 
       // e.g. '10.5 lbs'
@@ -138,11 +135,7 @@ define( function( require ) {
       // rectangle behind the number
       var quantityDisplayWidth = quantityValueNode.width + ( 2 * DISPLAY_X_MARGIN );
       var quantityDisplayHeight = Math.max( DISPLAY_MIN_HEIGHT, quantityValueNode.height + ( 2 * DISPLAY_Y_MARGIN ) );
-      var quantityRectangle = new Rectangle( 0, 0, quantityDisplayWidth, quantityDisplayHeight, {
-        cornerRadius: DISPLAY_CORNER_RADIUS,
-        fill: 'white',
-        stroke: 'black'
-      } );
+      var quantityRectangle = new Rectangle( 0, 0, quantityDisplayWidth, quantityDisplayHeight, DISPLAY_RECTANGLE_OPTIONS );
 
       var quantityDisplayNode = new Node( {
         children: [ quantityRectangle, quantityValueNode ]
@@ -178,6 +171,8 @@ define( function( require ) {
     // Update cost value
     var costObserver = function( cost ) {
       costValueNode.text = costToString( cost );
+      costValueNode.right = costRectangle.right - DISPLAY_X_MARGIN;
+      costValueNode.centerY = costRectangle.centerY;
     };
     scale.costProperty.link( costObserver );
 
