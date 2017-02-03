@@ -38,7 +38,7 @@ define( function( require ) {
       axisLineWidth: 1.5,
 
       // horizontal axes
-      horizontalAxisLength: 570, // {number} length of horizontal axes, including the arrow heads
+      horizontalAxisLength: 610, // {number} length of horizontal axes, including the arrow heads
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
       axisYSpacing: 20, // {number} vertical spacing between top and bottom axes
       labelFont: new URFont( 14 ), // {Font} for axis labels
