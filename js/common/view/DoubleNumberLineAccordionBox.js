@@ -227,7 +227,7 @@ define( function( require ) {
 
         // Move the undo button to its home position
         undoButton.center = undoButtonHomePosition;
-        undoButton.visible = ( markerEditorNode.centerX !== markerEditorNodeHomeX );
+        undoButton.visible = ( markerEditorNode.x !== markerEditorNodeHomeX );
       }
     };
     doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver ); // unlink in dispose
