@@ -41,7 +41,7 @@ define( function( require ) {
 
     options = _.extend( {
       lineLength: 75, // {number} length of the vertical line between numerator and denominator values
-      valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
+      valueBoxWidth: 55, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 12 ), // {Font} font for the value
       valueColor: 'black', // {Color|string} color of the value
       allowZeroEntry: false, // {boolean} whether to allow '0' to be entered in the keypad
