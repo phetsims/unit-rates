@@ -66,7 +66,7 @@ define( function( require ) {
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.denominatorOptions );
 
-    assert && assert( _.contains( KEYPAD_LOCATION_VALUES, options.keypadLocation ),
+    assert && assert( _.includes( KEYPAD_LOCATION_VALUES, options.keypadLocation ),
       'invalid keypadLocation: ' + options.keypadLocation );
 
     // numerator and denominator must have the same number of decimal places,

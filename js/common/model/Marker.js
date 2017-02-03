@@ -34,7 +34,7 @@ define( function( require ) {
       erasable: true // {boolean} is this marker erased when the Eraser button is pressed?
     }, options );
 
-    assert && assert( _.contains( CREATOR_VALUES, creator ), 'invalid creator: ' + creator );
+    assert && assert( _.includes( CREATOR_VALUES, creator ), 'invalid creator: ' + creator );
 
     // @public
     this.numeratorProperty = new Property( numerator );
