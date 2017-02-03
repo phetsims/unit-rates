@@ -28,14 +28,18 @@ define( function( require ) {
     // options shared by all AccordionBoxes
     ACCORDION_BOX_OPTIONS: {
       titleAlignX: 'left',
+      titleXMargin: 10,
+      titleYMargin: 4,
       showTitleWhenExpanded: true,
       fill: 'white',
-      cornerRadius: 10,
-      buttonLength: 20,
-      buttonXMargin: 15,
-      buttonYMargin: 10,
+      cornerRadius: 8,
+      buttonLength: 16,
+      buttonXMargin: 10,
+      buttonYMargin: 4,
       buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5
+      buttonTouchAreaYDilation: 5,
+      contentXMargin: 10,
+      contentYMargin: 6
     },
 
     // options shared by all NumberPickers
