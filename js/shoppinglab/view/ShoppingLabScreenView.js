@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO ShoppingScreenView and ShoppingLabScreenView have much in common
 /**
  * View for the 'Shopping Lab' screen.
  *
