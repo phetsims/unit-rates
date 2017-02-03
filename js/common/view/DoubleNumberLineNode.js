@@ -21,6 +21,7 @@ define( function( require ) {
   // sim modules
   var MarkerNode = require( 'UNIT_RATES/common/view/MarkerNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
   /**
@@ -36,9 +37,6 @@ define( function( require ) {
       axisColor: 'black',
       axisLineWidth: 1.5,
 
-      // vertical axis
-      verticalAxisLength: 30,
-
       // horizontal axes
       horizontalAxisLength: 570, // {number} length of horizontal axes, including the arrow heads
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
@@ -49,8 +47,8 @@ define( function( require ) {
       labelXSpacing: 12, // horizontal spacing between axis and its label
 
       // markers
-      majorMarkerLength: 55,
-      minorMarkerLength: 30
+      majorMarkerLength: URConstants.MAJOR_MARKER_LENGTH,
+      minorMarkerLength: URConstants.MINOR_MARKER_LENGTH
 
     }, options );
 
@@ -64,7 +62,7 @@ define( function( require ) {
       0, options.horizontalAxisLength - options.arrowSize.height - 10 );
 
     // All other nodes are positioned relative to this one
-    var verticalAxis = new Line( 0, -options.verticalAxisLength / 2, 0, options.verticalAxisLength / 2, {
+    var verticalAxis = new Line( 0, -options.minorMarkerLength / 2, 0, options.minorMarkerLength / 2, {
       stroke: options.axisColor,
       lineWidth: options.axisLineWidth
     } );

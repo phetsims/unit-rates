@@ -51,8 +51,12 @@ define( function( require ) {
     COST_RANGE: new Range( 1, 30 ),
     QUANTITY_RANGE: new Range( 1, 30 ),
     MILES_RANGE: new Range( 20, 100 ),
-    HOURS_RANGE: new Range( 1, 10 )
+    HOURS_RANGE: new Range( 1, 10 ),
 
+    // markers on the double number line
+    MAJOR_MARKER_LENGTH: 55,
+    MINOR_MARKER_LENGTH: 30,
+    MARKER_Y_SPACING: 1  // space between the marker line and its values
   };
 
   unitRates.register( 'URConstants', URConstants );

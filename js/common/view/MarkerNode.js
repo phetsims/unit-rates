@@ -16,6 +16,7 @@ define( function( require ) {
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
@@ -29,7 +30,7 @@ define( function( require ) {
     options = _.extend( {
       ySpacing: 1,
       font: new URFont( 12 ),
-      lineLength: 75,
+      lineLength: URConstants.MAJOR_MARKER_LENGTH,
       lineWidth: 1,
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
