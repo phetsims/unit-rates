@@ -40,8 +40,7 @@ define( function( require ) {
       titleNode: new Text( questionsString, { font: new URFont( 18 ), maxWidth: 100 } ),
 
       // VBox options
-      contentYSpacing: 18, // vertical spacing between UI elements in the accordion box's content
-      contentAlign: 'right' // alignment of UI elements in the accordion box's content
+      vBoxSpacing: 18 // vertical spacing between UI elements in the accordion box's content
 
     }, options );
 
@@ -54,8 +53,8 @@ define( function( require ) {
 
     // Below the 'Unit Rate?' question is a set of questions that change when the refresh button is pressed.
     var questionsParent = new VBox( {
-      align: options.contentAlign,
-      spacing: options.contentYSpacing
+      align: 'right',
+      spacing: options.vBoxSpacing
     } );
     var questionSetObserver = function( questionSet ) {
 
@@ -83,8 +82,8 @@ define( function( require ) {
 
     // AccordionBox content
     var contentNode = new VBox( {
-      align: options.contentAlign,
-      spacing: options.contentYSpacing,
+      align: 'right',
+      spacing: options.vBoxSpacing,
       children: [
         unitRateQuestionNode,
         questionsParent,

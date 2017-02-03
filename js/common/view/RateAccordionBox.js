@@ -55,7 +55,7 @@ define( function( require ) {
       numeratorPickerColor: 'black',
       denominatorPickerColor: 'black',
       xSpacing: 10,
-      ySpacing: 15
+      ySpacing: 8
 
     }, options );
 
