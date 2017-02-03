@@ -39,7 +39,8 @@ define( function( require ) {
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5,
       contentXMargin: 10,
-      contentYMargin: 6
+      contentYMargin: 6,
+      contentYSpacing: 0
     },
 
     // options shared by all NumberPickers
