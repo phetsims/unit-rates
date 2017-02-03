@@ -40,13 +40,13 @@ define( function( require ) {
   function MarkerEditorNode( markerEditor, doubleNumberLinePanel, keypadLayer, options ) {
 
     options = _.extend( {
-      lineLength: 75, // {number} length of the vertical line between numerator and denominator values
+      lineLength: 55, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 55, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 12 ), // {Font} font for the value
       valueColor: 'black', // {Color|string} color of the value
       allowZeroEntry: false, // {boolean} whether to allow '0' to be entered in the keypad
       valueXMargin: 5, // {number} horizontal margin inside the value box
-      valueYMargin: 3, // {number} vertical margin inside the value box
+      valueYMargin: 1, // {number} vertical margin inside the value box
       ySpacing: 5,  // {number} vertical spacing between UI elements
       keypadLocation: 'below', // {string} 'above' or 'below' doubleNumberLinePanel
       numerationOptions: null, // {*} options specific to the rate's numerator, see below

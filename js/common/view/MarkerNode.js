@@ -27,7 +27,7 @@ define( function( require ) {
   function MarkerNode( marker, options ) {
 
     options = _.extend( {
-      ySpacing: 2,
+      ySpacing: 1,
       font: new URFont( 12 ),
       lineLength: 75,
       lineWidth: 1,

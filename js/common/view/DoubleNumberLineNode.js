@@ -37,7 +37,7 @@ define( function( require ) {
       axisLineWidth: 1.5,
 
       // vertical axis
-      verticalAxisLength: 40,
+      verticalAxisLength: 30,
 
       // horizontal axes
       horizontalAxisLength: 570, // {number} length of horizontal axes, including the arrow heads
@@ -49,8 +49,8 @@ define( function( require ) {
       labelXSpacing: 12, // horizontal spacing between axis and its label
 
       // markers
-      majorMarkerLength: 75,
-      minorMarkerLength: 40
+      majorMarkerLength: 55,
+      minorMarkerLength: 30
 
     }, options );
 
