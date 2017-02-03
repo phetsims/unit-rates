@@ -1,5 +1,6 @@
 TODO list for unit-rates
 
+Consider storing unit rate as Fraction
 Sprint on Racing Lab screen
 Reset All or switching items while animation is happening doesn't clean up animation
 fuzzMouse assertion failure in BagDragHandler: bag should be on shelf or scale
