@@ -32,7 +32,7 @@ define( function( require ) {
       titleYMargin: 4,
       showTitleWhenExpanded: true,
       fill: 'white',
-      cornerRadius: 8,
+      cornerRadius: 5,
       buttonLength: 16,
       buttonXMargin: 10,
       buttonYMargin: 4,
