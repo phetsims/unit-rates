@@ -31,13 +31,33 @@ define( function( require ) {
       radius: 45
     }, options );
 
+    var self = this;
+
     var goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
     var stopIcon = new Image( stopButtonImage, { scale: 0.5 } );
 
     BooleanRoundToggleButton.call( this, stopIcon, goIcon, runningProperty, options );
+
+    // adjust button color based on  runningProperty
+    var runningObserver = function( running ) {
+      self.baseColor = ( running ? '#6D6E70' : '#85d4a6' );
+    };
+    runningProperty.link( runningObserver );
+
+    // @private
+    this.disposeStartStopButton = function() {
+      runningProperty.unlink( runningObserver );
+    }
   }
 
   unitRates.register( 'StartStopButton', StartStopButton );
 
-  return inherit( BooleanRoundToggleButton, StartStopButton );
+  return inherit( BooleanRoundToggleButton, StartStopButton, {
+
+    // @public
+    dispose: function() {
+      BooleanRoundToggleButton.prototype.dispose && BooleanRoundToggleButton.prototype.dispose.call( this );
+      this.disposeStartStopButton();
+    }
+  } );
 } );
