@@ -141,6 +141,12 @@ define( function( require ) {
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
       } );
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
+
+    // Show/hide components related to car2
+    model.car2VisibleProperty.link( function( car2Visible ) {
+      rateAccordionBox2.visible = car2Visible;
+      doubleNumberLineAccordionBox2.visible = car2Visible;
+    } );
   }
 
   unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
