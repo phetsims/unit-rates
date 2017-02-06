@@ -45,7 +45,7 @@ define( function( require ) {
     // @public
     step: function( dt ) {
       //TODO implement Car.step
-      this.xProperty.value = this.xProperty.value + 1;
+      this.xProperty.value = this.xProperty.value + 1; //TOOD this is temporary
     }
   } );
 } );
