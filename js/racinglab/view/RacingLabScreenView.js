@@ -144,15 +144,14 @@ define( function( require ) {
       } );
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
 
-    // Show/hide components related to car2
+    // Show/hide components related to car2. unlink not needed.
     model.car2VisibleProperty.link( function( car2Visible ) {
       rateAccordionBox2.visible = car2Visible;
       doubleNumberLineAccordionBox2.visible = car2Visible;
       //TODO show/hide track for car2
     } );
 
-    // Disable the restart button when both cars are at the starting line.
-    // unmultilink not needed
+    // Disable the restart button when both cars are at the starting line. unmultilink not needed
     Property.multilink( [ model.car1.xProperty, model.car2.xProperty ],
       function( x1, x2 ) {
         restartRaceButton.enabled = ( x1 !== 0 || x2 !== 0 );
