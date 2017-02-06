@@ -1,5 +1,6 @@
 TODO list for unit-rates
 
+Terminology: team refers to fruit/vegetable/candy as "scene", implementation uses "category", change implementation?
 Consider storing unit rate as Fraction
 Sprint on Racing Lab screen
 Reset All or switching items while animation is happening doesn't clean up animation
