@@ -133,7 +133,7 @@ define( function( require ) {
       bottom: numeratorBox.top - options.ySpacing
     } );
     this.addChild( numeratorEditButton );
-    numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 10 );
+    numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 0 );
 
     var denominatorEditButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.5 } ),
@@ -142,7 +142,7 @@ define( function( require ) {
       top: denominatorBox.bottom + options.ySpacing
     } );
     this.addChild( denominatorEditButton );
-    denominatorEditButton.touchArea = denominatorEditButton.localBounds.dilatedXY( 10, 10 );
+    denominatorEditButton.touchArea = denominatorEditButton.localBounds.dilatedXY( 10, 0 );
 
     this.mutate( options );
 
