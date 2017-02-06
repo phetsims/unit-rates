@@ -29,6 +29,22 @@ define( function( require ) {
    */
   function ShoppingScreenView( model, options ) {
 
+    options = _.extend( {
+
+      /**
+       * Creates a Node for a category.
+       * @param {ShoppingCategory} category
+       * @param {Property.<ShoppingCategory>} categoryProperty
+       * @param {Bounds2} layoutBounds
+       * @param {KeypadLayer} keypadLayer
+       * @param {ShoppingViewProperties} viewProperties
+       * @returns {Node}
+       */
+      createCategoryNode: function( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ) {
+        return new ShoppingCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties );
+      }
+    }, options );
+
     var self = this;
 
     ScreenView.call( this, options );
@@ -43,7 +59,8 @@ define( function( require ) {
 
     // create the view for each category
     model.categories.forEach( function( category ) {
-      playAreaLayer.addChild( new ShoppingCategoryNode( category, model.categoryProperty, self.layoutBounds, keypadLayer, viewProperties ) );
+      var node = options.createCategoryNode( category, model.categoryProperty, self.layoutBounds, keypadLayer, viewProperties );
+      playAreaLayer.addChild( node );
     } );
 
     // Category radio buttons
