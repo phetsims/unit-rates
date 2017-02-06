@@ -11,6 +11,7 @@ define( function( require ) {
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Property = require( 'AXON/Property' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -150,13 +151,12 @@ define( function( require ) {
       //TODO show/hide track for car2
     } );
 
-    // Disable the restart button while a race is in progress, or when both cars are at the starting line.
-    var disableRestartRaceButton = function() {
-      restartRaceButton.enabled = !( model.runningProperty.value || ( model.car1.xProperty.value === 0 && model.car2.xProperty.value === 0 ) );
-    };
-    model.runningProperty.link( disableRestartRaceButton ); // unlink not needed
-    model.car1.xProperty.lazyLink( disableRestartRaceButton ); // unlink not needed
-    model.car2.xProperty.lazyLink( disableRestartRaceButton ); // unlink not needed
+    // Disable the restart button when both cars are at the starting line.
+    // unmultilink not needed
+    Property.multilink( [ model.car1.xProperty, model.car2.xProperty ],
+      function( x1, x2 ) {
+        restartRaceButton.enabled = ( x1 !== 0 || x2 !== 0 );
+      } );
   }
 
   unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
