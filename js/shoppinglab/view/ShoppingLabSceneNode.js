@@ -69,6 +69,7 @@ define( function( require ) {
         //TODO implement resetShelfButton listener
       },
       baseColor: URColors.resetShelfButton,
+      touchAreaDilation: 5,
       scale: 0.65,
       right: scaleNode.left,
       top: scaleNode.bottom + 20
