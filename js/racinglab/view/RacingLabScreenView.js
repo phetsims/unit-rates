@@ -67,13 +67,13 @@ define( function( require ) {
     // Scene control (1 vs 2 cars)
     var sceneControl = new RacingLabSceneControl( model.car2VisibleProperty, {
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
-      bottom: resetAllButton.top - 30
+      centerY: this.layoutBounds.centerY
     } );
     playAreaLayer.addChild( sceneControl );
 
     // Start/stop button
     var startStopButton = new StartStopButton( model.runningProperty, {
-      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
+      right: sceneControl.left - 20,
       centerY: this.layoutBounds.centerY
     } );
     playAreaLayer.addChild( startStopButton );
@@ -99,7 +99,7 @@ define( function( require ) {
       denominatorUnits: hoursString,
       numeratorPickerColor: URColors.car2,
       denominatorPickerColor: URColors.car2,
-      right: sceneControl.left - 20,
+      right: resetAllButton.left - 15,
       bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
     } );
     playAreaLayer.addChild( rateAccordionBox2 );
@@ -123,6 +123,7 @@ define( function( require ) {
     // Double number line for car 1
     var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
+        horizontalAxisLength: 600,
         titleNode: new Text( doubleNumberLine1String, { font: new URFont( 18 ), maxWidth: 300 } ),
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
@@ -133,6 +134,7 @@ define( function( require ) {
     // Double number line for car 2
     var doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
       model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
+        horizontalAxisLength: 600,
         titleNode: new Text( doubleNumberLine2String, { font: new URFont( 18 ), maxWidth: 300 } ),
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
