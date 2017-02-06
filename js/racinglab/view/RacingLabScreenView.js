@@ -146,6 +146,7 @@ define( function( require ) {
     model.car2VisibleProperty.link( function( car2Visible ) {
       rateAccordionBox2.visible = car2Visible;
       doubleNumberLineAccordionBox2.visible = car2Visible;
+      //TODO show/hide track for car2
     } );
   }
 
