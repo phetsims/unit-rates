@@ -37,7 +37,7 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 4,
       buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5,
+      buttonTouchAreaYDilation: 0,
       contentXMargin: 10,
       contentYMargin: 8,
       contentYSpacing: 2
@@ -46,7 +46,8 @@ define( function( require ) {
     // options shared by all NumberPickers
     NUMBER_PICKER_OPTIONS: {
       xMargin: 8,
-      cornerRadius: 4
+      cornerRadius: 4,
+      touchAreaYDilation: 0
     },
 
     RACING_LAB_PICKER_FONT: new URFont( 20 ),
