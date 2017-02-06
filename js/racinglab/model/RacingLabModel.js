@@ -79,7 +79,10 @@ define( function( require ) {
 
     // @public
     step: function( dt ) {
-      //TODO implement step for RacingLabModel
+      if ( this.runningProperty.value ) {
+        this.car1.step( dt );
+        this.car2.step( dt );
+      }
     },
 
     // @public

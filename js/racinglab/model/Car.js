@@ -27,6 +27,9 @@ define( function( require ) {
 
     // @public speed of this car, in miles per hour
     this.speedProperty = new Property( options.speed );
+
+    // @public the car's x location
+    this.xProperty = new Property( 0 );
   }
 
   unitRates.register( 'Car', Car );
@@ -36,6 +39,12 @@ define( function( require ) {
     // @public
     reset: function() {
       this.speedProperty.reset();
+      this.xProperty.reset();
+    },
+
+    // @public
+    step: function( dt ) {
+      //TODO implement Car.step
     }
   } );
 } );
