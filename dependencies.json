@@ -1,11 +1,11 @@
 {
-  "comment": "# unit-rates 1.0.0-dev.40 Thu Feb 02 2017 12:46:06 GMT-0700 (MST)",
+  "comment": "# unit-rates 1.0.0-dev.41 Mon Feb 06 2017 12:51:44 GMT-0700 (MST)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "master"
   },
   "axon": {
-    "sha": "1cf1028125aff542d863c6f40ecd3ee03ceaef74",
+    "sha": "a4ec548dfb9f4b84bfa71ab81d7350abe0e19071",
     "branch": "master"
   },
   "brand": {
@@ -13,27 +13,27 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "635b23e7e3d3127b559828dd8acbcfd055e0db5f",
+    "sha": "a31b8a5e88b89835f895301c51a42db6b27ae467",
     "branch": "master"
   },
   "dot": {
-    "sha": "75380061a901393db079c24d019e0eb03abe68c2",
+    "sha": "9b3b950fd8f8a5c1efcef537ea066db7b23173d6",
     "branch": "master"
   },
   "joist": {
-    "sha": "832ec360a8b8ca4eff354a31b2b7121e007d4ed3",
+    "sha": "47809c0daf6564a1b3986efd2ebe9d587379fe48",
     "branch": "master"
   },
   "kite": {
-    "sha": "eb398c840408d52f74036ac3ef44bf41accea013",
+    "sha": "f4c67cff6e24693f66b58fcea16069be3dbd8e88",
     "branch": "master"
   },
   "phet-core": {
-    "sha": "9ec68253eab70b25a0162fb22016e7c83bcfbbde",
+    "sha": "c5c6c2a8273b9bd3f3bcb4ddfbcf24058b58954a",
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "1cb33196c7b03661a71e82d189e66d95c92cc061",
+    "sha": "6ac4d14842e11267df027982fc8ac8234759d248",
     "branch": "master"
   },
   "query-string-machine": {
@@ -41,23 +41,23 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "8a97b7b67c6ac285ba5adc9103872c3b37bb7450",
+    "sha": "ce49c33ff5c41a7dd26133aa4287ca2d5c761ba8",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "37ffab9c7250bc6dc14cc1254419b1cc2e882d8e",
+    "sha": "f1191d31ed11abb78c8fc0b98b8073cfd5e11b72",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "785a536c157f34ab1af195b0d40cff3fff023a2b",
+    "sha": "985665662c9862d5b38583a715896029b46feb44",
     "branch": "master"
   },
   "sun": {
-    "sha": "a2bf84eed2205b625052813dec103f4543dea54b",
+    "sha": "69a4259796035d09aa998fd11e7f35a1904d25fb",
     "branch": "master"
   },
   "tandem": {
-    "sha": "d9c124e5a7d30ac8013874e932122085f3477da9",
+    "sha": "956c760995e640d76f262bdfb8055e42fb023ff3",
     "branch": "master"
   },
   "twixt": {
@@ -65,7 +65,7 @@
     "branch": "master"
   },
   "unit-rates": {
-    "sha": "cc7847627d90a1879233a99edce631bc98feb0d2",
+    "sha": "a0a0467be4e28269e8352c1e13f295728aab9a3e",
     "branch": "master"
   }
 }
