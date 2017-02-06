@@ -64,6 +64,7 @@ define( function( require ) {
       },
       baseColor: URColors.resetShelfButton,
       scale: 0.65,
+      touchAreaDilation: 5,
       right: scaleNode.left,
       top: scaleNode.bottom + 20
     } );
