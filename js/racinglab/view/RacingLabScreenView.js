@@ -82,8 +82,8 @@ define( function( require ) {
     // Restart race button
     var restartRaceButton = new RestartRaceButton( {
       listener: function() {
-        model.car1.xProperty.value = 0;
-        model.car2.xProperty.value = 0;
+        model.car1.distancePropery.value = 0;
+        model.car2.distancePropery.value = 0;
       },
       right: startStopButton.left - 15,
       centerY: startStopButton.centerY
@@ -152,9 +152,9 @@ define( function( require ) {
     } );
 
     // Disable the restart button when both cars are at the starting line. unmultilink not needed
-    Property.multilink( [ model.car1.xProperty, model.car2.xProperty ],
-      function( x1, x2 ) {
-        restartRaceButton.enabled = ( x1 !== 0 || x2 !== 0 );
+    Property.multilink( [ model.car1.distancePropery, model.car2.distancePropery ],
+      function( distance1, distance2 ) {
+        restartRaceButton.enabled = ( distance1 !== 0 || distance2 !== 0 );
       } );
   }
 
