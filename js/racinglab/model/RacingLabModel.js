@@ -81,7 +81,7 @@ define( function( require ) {
     step: function( dt ) {
       if ( this.runningProperty.value ) {
         this.car1.step( dt );
-        this.car2.step( dt );
+        this.car2.step( dt ); //TODO car2.step only if this.car2VisibleProperty?
       }
     },
 

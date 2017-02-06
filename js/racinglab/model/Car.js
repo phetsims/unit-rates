@@ -16,17 +16,12 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {Object} [options]
    * @constructor
    */
-  function Car( options ) {
-
-    options = _.extend( {
-      speed: 100 // {number} initial speed, in miles per hour
-    }, options );
+  function Car() {
 
     // @public speed of this car, in miles per hour
-    this.speedProperty = new Property( options.speed );
+    this.speedProperty = new Property( 0 );
 
     // @public the car's distance from the starting line, in miles
     this.distancePropery = new Property( 0 );
