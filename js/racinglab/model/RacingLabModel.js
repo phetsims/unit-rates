@@ -39,6 +39,10 @@ define( function( require ) {
       axisRange: new Range( 0, 2 ) // range of bottom axis, in hours
     }
   };
+  var MARKER_EDITOR_OPTIONS = {
+    numeratorMaxDecimals: DOUBLE_NUMBER_LINE_OPTIONS.numeratorOptions.maxDecimals,
+    denominatorMaxDecimals: DOUBLE_NUMBER_LINE_OPTIONS.denominatorOptions.maxDecimals
+  };
 
   /**
    * @param {Object} [options]
@@ -65,12 +69,8 @@ define( function( require ) {
     this.doubleNumberLine2 = new DoubleNumberLine( this.car1.speedProperty, DOUBLE_NUMBER_LINE_OPTIONS );
 
     // @public
-    this.markerEditor1 = new MarkerEditor( this.car1.speedProperty, {
-      //TODO options for MarkerEditor
-    } );
-    this.markerEditor2 = new MarkerEditor( this.car1.speedProperty, {
-      //TODO options for MarkerEditor
-    } );
+    this.markerEditor1 = new MarkerEditor( this.car1.speedProperty, MARKER_EDITOR_OPTIONS );
+    this.markerEditor2 = new MarkerEditor( this.car1.speedProperty, MARKER_EDITOR_OPTIONS );
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );
