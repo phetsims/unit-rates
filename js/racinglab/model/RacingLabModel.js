@@ -43,7 +43,7 @@ define( function( require ) {
 
     // @public
     step: function( dt ) {
-      //TODO
+      //TODO implement step for RacingLabModel
     },
 
     // @public

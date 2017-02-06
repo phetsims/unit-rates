@@ -32,12 +32,12 @@ define( function( require ) {
 
     // @public double number line associated with this car
     this.doubleNumberLine = new DoubleNumberLine( this.speedProperty, {
-      //TODO
+      //TODO options for DoubleNumberLine
     } );
 
     // @public marker editor for this car's double number line
     this.markerEditor = new MarkerEditor( this.speedProperty, {
-      //TODO
+      //TODO options for MarkerEditor
     } );
   }
 

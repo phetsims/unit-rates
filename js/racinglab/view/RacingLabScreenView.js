@@ -81,7 +81,7 @@ define( function( require ) {
     // Restart race button
     var restartRaceButton = new RestartRaceButton( {
       listener: function() {
-        //TODO
+        //TODO implement restartRaceButton listener
       },
       right: startStopButton.left - 15,
       centerY: startStopButton.centerY
