@@ -11,6 +11,7 @@ define( function( require ) {
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
 
   // sim modules
   var Car = require( 'UNIT_RATES/racinglab/model/Car' );
@@ -25,10 +26,17 @@ define( function( require ) {
   // constants
   var DOUBLE_NUMBER_LINE_OPTIONS = {
     numeratorOptions: {
-      axisLabel: milesString
+      axisLabel: milesString,
+      maxDigits: 4,
+      maxDecimals: 2,
+      trimZeros: true
     },
     denominatorOptions: {
-      axisLabel: hoursString
+      axisLabel: hoursString,
+      maxDigits: 4,
+      maxDecimals: 2,
+      trimZeros: false,
+      axisRange: new Range( 0, 2 ), // range of bottom axis, in hours
     }
   };
 
