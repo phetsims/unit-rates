@@ -47,7 +47,7 @@ define( function( require ) {
     // @private
     this.disposeStartStopButton = function() {
       runningProperty.unlink( runningObserver );
-    }
+    };
   }
 
   unitRates.register( 'StartStopButton', StartStopButton );
