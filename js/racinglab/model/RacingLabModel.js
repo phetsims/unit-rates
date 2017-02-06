@@ -36,7 +36,7 @@ define( function( require ) {
       maxDigits: 4,
       maxDecimals: 2,
       trimZeros: false,
-      axisRange: new Range( 0, 2 ), // range of bottom axis, in hours
+      axisRange: new Range( 0, 2 ) // range of bottom axis, in hours
     }
   };
 
