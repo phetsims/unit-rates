@@ -28,7 +28,7 @@ define( function( require ) {
     // @public speed of this car, in miles per hour
     this.speedProperty = new Property( options.speed );
 
-    // @public the car's distance from the starting line
+    // @public the car's distance from the starting line, in miles
     this.distancePropery = new Property( 0 );
   }
 
