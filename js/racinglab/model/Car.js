@@ -13,8 +13,6 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // sim modules
-  var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
-  var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -29,16 +27,6 @@ define( function( require ) {
 
     // @public speed of this car, in miles per hour
     this.speedProperty = new Property( options.speed );
-
-    // @public double number line associated with this car
-    this.doubleNumberLine = new DoubleNumberLine( this.speedProperty, {
-      //TODO options for DoubleNumberLine
-    } );
-
-    // @public marker editor for this car's double number line
-    this.markerEditor = new MarkerEditor( this.speedProperty, {
-      //TODO options for MarkerEditor
-    } );
   }
 
   unitRates.register( 'Car', Car );
@@ -48,8 +36,6 @@ define( function( require ) {
     // @public
     reset: function() {
       this.speedProperty.reset();
-      this.doubleNumberLine.reset();
-      this.markerEditor.reset();
     }
   } );
 } );

@@ -122,7 +122,7 @@ define( function( require ) {
 
     // Double number line for car 1
     var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
-      model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
+      model.doubleNumberLine1, model.markerEditor1, keypadLayer, {
         horizontalAxisLength: 600,
         titleNode: new Text( doubleNumberLine1String, { font: new URFont( 18 ), maxWidth: 300 } ),
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
@@ -133,7 +133,7 @@ define( function( require ) {
 
     // Double number line for car 2
     var doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
-      model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
+      model.doubleNumberLine2, model.markerEditor2, keypadLayer, {
         horizontalAxisLength: 600,
         titleNode: new Text( doubleNumberLine2String, { font: new URFont( 18 ), maxWidth: 300 } ),
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,

@@ -14,7 +14,23 @@ define( function( require ) {
 
   // sim modules
   var Car = require( 'UNIT_RATES/racinglab/model/Car' );
+  var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
+  var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+
+  // strings
+  var hoursString = require( 'string!UNIT_RATES/hours' );
+  var milesString = require( 'string!UNIT_RATES/miles' );
+
+  // constants
+  var DOUBLE_NUMBER_LINE_OPTIONS = {
+    numeratorOptions: {
+      axisLabel: milesString
+    },
+    denominatorOptions: {
+      axisLabel: hoursString
+    }
+  };
 
   /**
    * @param {Object} [options]
@@ -35,6 +51,18 @@ define( function( require ) {
     // @public
     this.car1 = new Car(); // the red (top) car
     this.car2 = new Car(); // the blue (bottom) car
+
+    // @public
+    this.doubleNumberLine1 = new DoubleNumberLine( this.car1.speedProperty, DOUBLE_NUMBER_LINE_OPTIONS );
+    this.doubleNumberLine2 = new DoubleNumberLine( this.car1.speedProperty, DOUBLE_NUMBER_LINE_OPTIONS );
+
+    // @public
+    this.markerEditor1 = new MarkerEditor( this.car1.speedProperty, {
+      //TODO options for MarkerEditor
+    } );
+    this.markerEditor2 = new MarkerEditor( this.car1.speedProperty, {
+      //TODO options for MarkerEditor
+    } );
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );
@@ -52,6 +80,10 @@ define( function( require ) {
       this.runningProperty.reset();
       this.car1.reset();
       this.car2.reset();
+      this.doubleNumberLine1.reset();
+      this.doubleNumberLine2.reset();
+      this.markerEditor1.reset();
+      this.markerEditor2.reset();
     }
   } );
 } );
