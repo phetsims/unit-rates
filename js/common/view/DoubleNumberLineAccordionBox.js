@@ -44,11 +44,15 @@ define( function( require ) {
 
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
+      // DoubleNumberLineAccordionBox options
+      horizontalAxisLength: 610, // {number} length of horizontal axes, including the arrow heads
+
       // AccordionBox options
       titleNode: new Text( doubleNumberLineString, { font: new URFont( 18 ), maxWidth: 300 } )
     }, options );
 
     var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
+      horizontalAxisLength: options.horizontalAxisLength,
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
       x: 0,

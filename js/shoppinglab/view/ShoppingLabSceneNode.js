@@ -38,7 +38,8 @@ define( function( require ) {
 
     // Double number line
     var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
-      expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
+      horizontalAxisLength: 834,  //TODO delete this when https://github.com/phetsims/unit-rates/issues/140 is resolved
+      expandedProperty: viewProperties.doubleNumberLineExpandedProperty,                  
       left: layoutBounds.minX + URConstants.SCREEN_X_MARGIN,
       top: layoutBounds.minY + URConstants.SCREEN_Y_MARGIN
     } );
