@@ -81,7 +81,8 @@ define( function( require ) {
     // Restart race button
     var restartRaceButton = new RestartRaceButton( {
       listener: function() {
-        //TODO implement restartRaceButton listener
+        model.car1.xProperty.value = 0;
+        model.car2.xProperty.value = 0;
       },
       right: startStopButton.left - 15,
       centerY: startStopButton.centerY
@@ -148,6 +149,14 @@ define( function( require ) {
       doubleNumberLineAccordionBox2.visible = car2Visible;
       //TODO show/hide track for car2
     } );
+
+    // Disable the restart button while a race is in progress, or when both cars are at the starting line.
+    var disableRestartRaceButton = function() {
+      restartRaceButton.enabled = !( model.runningProperty.value || ( model.car1.xProperty.value === 0 && model.car2.xProperty.value === 0 ) );
+    };
+    model.runningProperty.link( disableRestartRaceButton ); // unlink not needed
+    model.car1.xProperty.lazyLink( disableRestartRaceButton ); // unlink not needed
+    model.car2.xProperty.lazyLink( disableRestartRaceButton ); // unlink not needed
   }
 
   unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
