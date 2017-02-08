@@ -64,6 +64,10 @@ define( function( require ) {
     this.track2 = new RaceTrack();
 
     // @public
+    this.timeProperty1 = new Property( 0 );
+    this.timeProperty2 = new Property( 0 );
+
+    // @public
     this.doubleNumberLine1 = new DoubleNumberLine( this.car1.rate.unitRateProperty, DOUBLE_NUMBER_LINE_OPTIONS );
     this.doubleNumberLine2 = new DoubleNumberLine( this.car2.rate.unitRateProperty, DOUBLE_NUMBER_LINE_OPTIONS );
 
@@ -81,6 +85,7 @@ define( function( require ) {
       if ( this.runningProperty.value ) {
         this.car1.step( dt );
         this.car2.step( dt );
+        //TODO update timeProperty1 (and timeProperty2 ?)
       }
     },
 
@@ -91,6 +96,8 @@ define( function( require ) {
       this.car2.reset();
       this.track1.reset();
       this.track2.reset();
+      this.timeProperty1.reset();
+      this.timeProperty2.reset();
       this.doubleNumberLine1.reset();
       this.doubleNumberLine2.reset();
       this.markerEditor1.reset();

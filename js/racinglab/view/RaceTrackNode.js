@@ -51,13 +51,16 @@ define( function( require ) {
   
   /**
    * @param {RaceTrack} track - the track model
+   * @param {Property.<number>} timeProperty
    * @param {LinearFunction} modelToView
    * @param {Object} [options]
    * @constructor
    */
-  function RaceTrackNode( track, modelToView, options ) {
+  function RaceTrackNode( track, timeProperty, modelToView, options ) {
 
-    options = options || {};
+    options = _.extend( {
+      timerTitleString: '' // {string} title for the timer accordion box
+    }, options );
 
     var self = this;
 
@@ -120,7 +123,9 @@ define( function( require ) {
     } );
 
     // Timer
-    var timerNode = new RaceTimerNode();
+    var timerNode = new RaceTimerNode( timeProperty, {
+      titleString: options.timerTitleString
+    } );
 
     // Label that indicates the length of the track
     var lengthNode = new Text( '', { font: new URFont( 12 ) } );
@@ -205,6 +210,7 @@ define( function( require ) {
 
     // @private
     this.disposeRaceTrackNode = function() {
+      timerNode.dispose();
       track.lengthProperty.unlink( lengthObserver );
     };
   }
@@ -233,6 +239,7 @@ define( function( require ) {
 
     // @private
     dispose: function() {
+      Node.prototype.dispose && Node.prototype.dispose.call( this );
       this.disposeRaceTrackNode();
     }
   } );

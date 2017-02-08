@@ -38,6 +38,7 @@ define( function( require ) {
   var milesString = require( 'string!UNIT_RATES/miles' );
   var rate1String = require( 'string!UNIT_RATES/rate1' );
   var rate2String = require( 'string!UNIT_RATES/rate2' );
+  var timer1String = require( 'string!UNIT_RATES/timer1' );
 
   /**
    * @param {RacingLabModel} model
@@ -97,7 +98,8 @@ define( function( require ) {
     var modelToView = new LinearFunction( 0, 200, 0, 600 );
 
     // Track for car1
-    var trackNode1 = new RaceTrackNode( model.track1, modelToView, {
+    var trackNode1 = new RaceTrackNode( model.track1, model.timeProperty1, modelToView, {
+      timerTitleString: timer1String,
       //TODO temporary layout
       left: this.layoutBounds.left + 20,
       centerY: this.layoutBounds.centerY
