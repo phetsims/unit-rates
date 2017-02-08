@@ -94,7 +94,7 @@ define( function( require ) {
 
     //TODO use ModelViewTransform2? or just a scaleX factor?
     //TODO this should also be used by DoubleNumberLineAccordionBox and DoubleNumberLineNode
-    var modelToView = new LinearFunction( 0, 200, 0, 400 );
+    var modelToView = new LinearFunction( 0, 200, 0, 600 );
 
     // Track for car1
     var trackNode1 = new RaceTrackNode( model.track1, modelToView, {

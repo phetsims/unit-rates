@@ -10,14 +10,18 @@ define( function( require ) {
   'use strict';
 
   // common modules
+  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
+  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
 
   // sim modules
   var RaceTimerNode = require( 'UNIT_RATES/racinglab/view/RaceTimerNode' );
@@ -29,12 +33,21 @@ define( function( require ) {
   var startFlagImage = require( 'image!UNIT_RATES/start_flag.png' );
 
   // strings
+  var mileString = require( 'string!UNIT_RATES/mile' );
   var milesString = require( 'string!UNIT_RATES/miles' );
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   // constants
   var NEGATIVE_TRACK_LENGTH = 75; // length of track to left of starting flag, in view coordinates
   var MARKER_SIDE_LENGTH = 10;
+  var ARROW_LENGTH = 28;
+  var ARROW_OPTIONS = {
+    fill: 'rgb( 33, 190, 156 )',
+    lineWidth: 0.5,
+    headWidth: 21,
+    headHeight: 18,
+    tailWidth: 8
+  };
   
   /**
    * @param {RaceTrack} track - the track model
@@ -45,6 +58,8 @@ define( function( require ) {
   function RaceTrackNode( track, modelToView, options ) {
 
     options = options || {};
+
+    var self = this;
 
     // Dashed line shows the maximum track length, revealed when the track is shortened.
     var maxX = modelToView( track.maxLength );
@@ -86,9 +101,22 @@ define( function( require ) {
 
     // Flag at finish line
     var finishFlagNode = new Image( finishFlagImage, {
+      cursor: 'pointer',
       scale: 0.5,
       left: modelToView( track.lengthProperty.value ),
       bottom: 0
+    } );
+    finishFlagNode.touchArea = finishFlagNode.localBounds.dilatedX( 20 );
+
+    // green arrows around the finish flag, cues the user to move the flag
+    var arrowsNode = new HBox( {
+      spacing: 9,
+      children: [
+        new ArrowNode( 0, 0, -ARROW_LENGTH, 0, ARROW_OPTIONS ),
+        new ArrowNode( 0, 0, ARROW_LENGTH, 0, ARROW_OPTIONS )
+      ],
+      centerX: finishFlagNode.left,
+      bottom: finishFlagNode.bottom - 2
     } );
 
     // Timer
@@ -98,11 +126,10 @@ define( function( require ) {
     var lengthNode = new Text( '', { font: new URFont( 12 ) } );
 
     //TODO car
-    //TODO finish flag drag handler
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ dashedLineNode, solidLineNode, markersParent,
-      startFlagNode, finishFlagNode, timerNode, lengthNode ];
+      startFlagNode, finishFlagNode, timerNode, lengthNode, arrowsNode ];
 
     Node.call( this, options );
 
@@ -123,11 +150,56 @@ define( function( require ) {
       timerNode.bottom = finishFlagNode.top - 3;
 
       // distance label below finish flag
-      lengthNode.text = StringUtils.format( valueUnitsString, finishX, milesString );
+      var units = ( length === 1 ) ? mileString : milesString;
+      lengthNode.text = StringUtils.format( valueUnitsString, length, units );
       lengthNode.top = solidLineNode.bottom + MARKER_SIDE_LENGTH + 4;
       lengthNode.centerX = finishX;
     };
     track.lengthProperty.link( lengthObserver ); // unlink in dispose
+
+    // {number} where the drag started relative to the finish flag's current location, in parent view coordinates
+    var startDragXOffset;
+
+    // Drag the finish flag to change the track length
+    finishFlagNode.addInputListener( new SimpleDragHandler( {
+
+      // allow touch swipes across a bag to pick it up
+      allowTouchSnag: true,
+
+      /**
+       * Called when a drag sequence starts.
+       * @param {Event} event
+       * @param {Trail} trail
+       */
+      start: function( event, trail ) {
+
+        // remove the cue to drag the finish flag
+        if ( self.hasChild( arrowsNode ) ) {
+          self.removeChild( arrowsNode );
+        }
+
+        // compute offset from current track length
+        startDragXOffset = finishFlagNode.globalToParentPoint( event.pointer.point ).x -
+                           modelToView( track.lengthProperty.value );
+      },
+
+      /**
+       * Called when the pointer moves during a drag sequence.
+       * @param {Event} event
+       * @param {Trail} trail
+       */
+      drag: function( event, trail ) {
+
+        // compute track length in view coordinates
+        var viewLength = finishFlagNode.globalToParentPoint( event.pointer.point ).x - startDragXOffset;
+
+        // convert to model coordinates, constrain to the track length range
+        var modelLength = Util.clamp( modelToView.inverse( viewLength ), 0, track.maxLength );
+
+        // update the model, constrain to integer values
+        track.lengthProperty.value = Util.toFixedNumber( modelLength, 0 );
+      }
+    } ) );
 
     // @private
     this.disposeRaceTrackNode = function() {
