@@ -66,7 +66,7 @@ define( function( require ) {
     playAreaLayer.addChild( resetAllButton );
 
     // Scene control (1 vs 2 cars)
-    var sceneControl = new RacingLabSceneControl( model.car2VisibleProperty, {
+    var sceneControl = new RacingLabSceneControl( model.car2.visibleProperty, {
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       centerY: this.layoutBounds.centerY
     } );
@@ -145,9 +145,9 @@ define( function( require ) {
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
 
     // Show/hide components related to car2. unlink not needed.
-    model.car2VisibleProperty.link( function( car2Visible ) {
-      rateAccordionBox2.visible = car2Visible;
-      doubleNumberLineAccordionBox2.visible = car2Visible;
+    model.car2.visibleProperty.link( function( visible ) {
+      rateAccordionBox2.visible = visible;
+      doubleNumberLineAccordionBox2.visible = visible;
       //TODO show/hide track for car2
     } );
 

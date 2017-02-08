@@ -17,6 +17,7 @@ define( function( require ) {
   var Car = require( 'UNIT_RATES/racinglab/model/Car' );
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  var Rate = require( 'UNIT_RATES/common/model/Rate' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
@@ -45,24 +46,30 @@ define( function( require ) {
   };
 
   /**
-   * @param {Object} [options]
    * @constructor
    */
-  function RacingLabModel( options ) {
-
-    options = _.extend( {
-      car2Visible: false // {boolean} is car2 initially visible?
-    }, options );
-
-    // @public number of cars that are racing
-    this.car2VisibleProperty = new Property( options.car2Visible );
+  function RacingLabModel() {
 
     // @public is the race running?
     this.runningProperty = new Property( false );
 
-    // @public
-    this.car1 = new Car(); // the red (top) car
-    this.car2 = new Car(); // the blue (bottom) car
+    // @public the red (top) car
+    this.car1 = new Car( {
+      rate: new Rate( 100, 1 )
+    } );
+
+    // @public the blue (bottom) car
+    this.car2 = new Car( {
+      rate: new Rate( 50, 2 ),
+      visible: false
+    } );
+
+    // @public (read-only) maximum distance between start and finish line for a track
+    this.maxTrackLength = 200;
+
+    // @public (read-only) distance between start and finish line for each track
+    this.trackLength1Property = new Property( this.maxTrackLength );
+    this.trackLength2Property = new Property( this.maxTrackLength );
 
     // @public
     this.doubleNumberLine1 = new DoubleNumberLine( this.car1.rate.unitRateProperty, DOUBLE_NUMBER_LINE_OPTIONS );
@@ -81,13 +88,12 @@ define( function( require ) {
     step: function( dt ) {
       if ( this.runningProperty.value ) {
         this.car1.step( dt );
-        this.car2.step( dt ); //TODO car2.step only if this.car2VisibleProperty?
+        this.car2.step( dt );
       }
     },
 
     // @public
     reset: function() {
-      this.car2VisibleProperty.reset();
       this.runningProperty.reset();
       this.car1.reset();
       this.car2.reset();

@@ -19,13 +19,21 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function Car() {
+  function Car( options ) {
 
-    // @public rate of this car, in miles per hour
-    this.rate = new Rate( 100, 1 );
+    options = _.extend( {
+      rate: new Rate( 100, 1 ), // initial rate, in miles per hour
+      visible: true // is this car visible?
+    }, options );
+
+    // @public the car's rate, in miles per hour
+    this.rate = options.rate;
 
     // @public the car's distance from the starting line, in miles
     this.distancePropery = new Property( 0 );
+
+    // @public is this car visible?
+    this.visibleProperty = new Property( options.visible );
   }
 
   unitRates.register( 'Car', Car );
@@ -36,11 +44,14 @@ define( function( require ) {
     reset: function() {
       this.rate.reset();
       this.distancePropery.reset();
+      this.visibleProperty.reset();
     },
 
     // @public
     step: function( dt ) {
-      this.distancePropery.value = this.distancePropery.value + 1; //TODO implement Car.step, this is temporary
+      if ( this.visibleProperty.value ) {
+        this.distancePropery.value = this.distancePropery.value + 1; //TODO implement Car.step, this is temporary
+      }
     }
   } );
 } );
