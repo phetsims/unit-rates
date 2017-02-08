@@ -57,6 +57,18 @@ define( function( require ) {
     reset: function() {
       this.numeratorProperty.reset();
       this.denominatorProperty.reset();
+    },
+
+    // @public
+    toString: function() {
+      return this.numeratorProperty.value + '/' + this.denominatorProperty.value;
+    },
+
+    // @public
+    equals: function( object ) {
+      return ( object instanceof Rate ) &&
+             ( object.numeratorProperty.value === this.numeratorProperty.value) &&
+             ( object.denominatorProperty.value === this.denominatorProperty.value);
     }
   }, {
 
