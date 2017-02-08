@@ -10,6 +10,7 @@ define( function( require ) {
 
   // common modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var LinearFunction = require( 'DOT/LinearFunction' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -19,6 +20,7 @@ define( function( require ) {
   // sim modules
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
+  var RaceTrackNode = require( 'UNIT_RATES/racinglab/view/RaceTrackNode' );
   var RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
   var RacingLabViewProperties = require( 'UNIT_RATES/racinglab/view/RacingLabViewProperties' );
   var RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
@@ -90,7 +92,19 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( restartRaceButton );
 
-    // Rate for car 2 (blue)
+    //TODO use ModelViewTransform2? or just a scaleX factor?
+    //TODO this should also be used by DoubleNumberLineAccordionBox and DoubleNumberLineNode
+    var modelToView = new LinearFunction( 0, 200, 0, 400 );
+
+    // Track for car1
+    var trackNode1 = new RaceTrackNode( model.track1, modelToView, {
+      //TODO temporary layout
+      left: this.layoutBounds.left + 50,
+      centerY: this.layoutBounds.centerY
+    } );
+    playAreaLayer.addChild( trackNode1 );
+
+    // Rate for car2
     var rateAccordionBox2 = new RateAccordionBox( model.car2.rate, {
       titleNode: new Text( rate2String, { font: new URFont( 18 ), maxWidth: 100 } ),
       expandedProperty: viewProperties.rateExpandedProperty2,
@@ -106,7 +120,7 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( rateAccordionBox2 );
 
-    // Rate for car 1 (red)
+    // Rate for car1
     var rateAccordionBox1 = new RateAccordionBox( model.car1.rate, {
       titleNode: new Text( rate1String, { font: new URFont( 18 ), maxWidth: 100 } ),
       expandedProperty: viewProperties.rateExpandedProperty1,
@@ -122,7 +136,7 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( rateAccordionBox1 );
 
-    // Double number line for car 1
+    // Double number line for car1
     var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.doubleNumberLine1, model.markerEditor1, keypadLayer, {
         horizontalAxisLength: 600,
@@ -133,7 +147,7 @@ define( function( require ) {
       } );
     playAreaLayer.addChild( doubleNumberLineAccordionBox1 );
 
-    // Double number line for car 2
+    // Double number line for car2
     var doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
       model.doubleNumberLine2, model.markerEditor2, keypadLayer, {
         horizontalAxisLength: 600,

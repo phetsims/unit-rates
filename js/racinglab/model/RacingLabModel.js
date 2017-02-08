@@ -17,7 +17,7 @@ define( function( require ) {
   var Car = require( 'UNIT_RATES/racinglab/model/Car' );
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
-  var Rate = require( 'UNIT_RATES/common/model/Rate' );
+  var RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // strings
@@ -54,22 +54,14 @@ define( function( require ) {
     this.runningProperty = new Property( false );
 
     // @public the red (top) car
-    this.car1 = new Car( {
-      rate: new Rate( 100, 1 )
-    } );
+    this.car1 = new Car();
 
     // @public the blue (bottom) car
-    this.car2 = new Car( {
-      rate: new Rate( 50, 2 ),
-      visible: false
-    } );
+    this.car2 = new Car( { visible: false } );
 
-    // @public (read-only) maximum distance between start and finish line for a track
-    this.maxTrackLength = 200;
-
-    // @public (read-only) distance between start and finish line for each track
-    this.trackLength1Property = new Property( this.maxTrackLength );
-    this.trackLength2Property = new Property( this.maxTrackLength );
+    // @public
+    this.track1 = new RaceTrack();
+    this.track2 = new RaceTrack();
 
     // @public
     this.doubleNumberLine1 = new DoubleNumberLine( this.car1.rate.unitRateProperty, DOUBLE_NUMBER_LINE_OPTIONS );
@@ -97,6 +89,8 @@ define( function( require ) {
       this.runningProperty.reset();
       this.car1.reset();
       this.car2.reset();
+      this.track1.reset();
+      this.track2.reset();
       this.doubleNumberLine1.reset();
       this.doubleNumberLine2.reset();
       this.markerEditor1.reset();

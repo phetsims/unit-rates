@@ -22,7 +22,7 @@ define( function( require ) {
   function Car( options ) {
 
     options = _.extend( {
-      rate: new Rate( 100, 1 ), // initial rate, in miles per hour
+      rate: new Rate( 50, 2 ), // initial rate, in miles per hour
       visible: true // is this car visible?
     }, options );
 
