@@ -1,12 +1,24 @@
 TODO list for unit-rates
 
+Design:
+Hide DNL markers that are to right of finish flag? What about manual markers?
+
+Racing Lab:
+Redo RaceTimerNode without AccordionBox? right justify time?
+Add car to RaceTrackNode
+Gray out track markers that are to right of finish flag
+Use MVT for race track and DNL
+Align race track with DNL
+Add moving race marker to DNL
+
+Shopping:
 Terminology: team refers to fruit/vegetable/candy as "scene", implementation uses "category", change implementation?
-Sprint on Racing Lab screen
 Reset All or switching items while animation is happening doesn't clean up animation
 fuzzMouse assertion failure in BagDragHandler: bag should be on shelf or scale
 Reset button for shelf + scale
 Items on shelf and scale
 
+Cleanup:
 delete js/old/
 delete images/old/
 delete assets/old/
