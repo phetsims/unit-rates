@@ -1,6 +1,5 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO should the model include units?
 /**
  * Model of a rate.
  *
@@ -8,6 +7,9 @@
  * The two numbers are called terms, herein referred to as numerator and denominator.
  * A rate is a ratio where the measurements are in different units.
  * A unit rate is a rate where the denominator is 1.
+ *
+ * Note that the model does not include units. This sim has multiple ways of displaying units that are
+ * semantically equivalent (e.g. pound, pounds, lbs), so units are the responsibility of the client.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
