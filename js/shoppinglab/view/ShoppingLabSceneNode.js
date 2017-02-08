@@ -46,6 +46,8 @@ define( function( require ) {
 
     // Rate accordion box
     var rateAccordionBox = new RateAccordionBox( shoppingScene.rate, {
+      numeratorRange: URConstants.COST_RANGE,
+      denominatorRange: URConstants.QUANTITY_RANGE,
       numeratorUnits: shoppingScene.numeratorOptions.axisLabel,  // matches the axis of the double number line
       denominatorUnits: shoppingScene.denominatorOptions.axisLabel,  // matches the axis of the double number line
       denominatorPickerColor: shoppingScene.denominatorOptions.pickerColor,

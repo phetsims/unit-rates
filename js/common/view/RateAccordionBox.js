@@ -15,6 +15,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // sim modules
@@ -47,8 +48,8 @@ define( function( require ) {
       // RateAccordionBox options
       unitsFont: new URFont( 16 ),
       unitsMaxWidth: 125, // i18n, set empirically
-      numeratorRange: URConstants.COST_RANGE,
-      denominatorRange: URConstants.QUANTITY_RANGE,
+      numeratorRange: new Range( 0, 10 ),
+      denominatorRange: new Range( 0, 10 ),
       numeratorUnits: '',
       denominatorUnits: '',
       pickerFont: new URFont( 24 ),
