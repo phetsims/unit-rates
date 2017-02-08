@@ -58,8 +58,8 @@ define( function( require ) {
       denominatorOptions: null, // {*} options specific to the rate's denominator, see below
 
       // questions
-      questionSingularUnits: itemData.singularName, // {string} units for questions with singular quantities
-      questionPluralUnits: itemData.pluralName,  // {string} units for questions with plural quantities
+      quantitySingularUnits: itemData.singularName, // {string} units for questions with singular quantities
+      quantityPluralUnits: itemData.pluralName,  // {string} units for questions with plural quantities
       amountOfQuestionUnits: itemData.pluralName,  // {string} units used for "Apples for $10.00?" type questions
 
       // scale
@@ -163,11 +163,11 @@ define( function( require ) {
 
     // @public {ShoppingQuestion} 'Unit Rate?'
     this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( this.rate.unitRateProperty.value,
-      options.questionSingularUnits, this.numeratorOptions, this.denominatorOptions );
+      options.quantitySingularUnits, this.numeratorOptions, this.denominatorOptions );
 
     // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
     this.questionSets = ShoppingQuestionFactory.createQuestionSets( itemData.questionQuantities, this.rate.unitRateProperty.value,
-      options.questionSingularUnits, options.questionPluralUnits, options.amountOfQuestionUnits,
+      options.quantitySingularUnits, options.quantityPluralUnits, options.amountOfQuestionUnits,
       this.numeratorOptions, this.denominatorOptions );
 
     // Randomize the order of the question sets
