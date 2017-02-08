@@ -125,7 +125,7 @@ define( function( require ) {
     // Label that indicates the length of the track
     var lengthNode = new Text( '', { font: new URFont( 12 ) } );
 
-    //TODO car
+    //TODO add car
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ dashedLineNode, solidLineNode, markersParent,
@@ -154,6 +154,8 @@ define( function( require ) {
       lengthNode.text = StringUtils.format( valueUnitsString, length, units );
       lengthNode.top = solidLineNode.bottom + MARKER_SIDE_LENGTH + 4;
       lengthNode.centerX = finishX;
+
+      //TODO grey out markers that are past finish line
     };
     track.lengthProperty.link( lengthObserver ); // unlink in dispose
 
