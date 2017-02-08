@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * The 'Rate' accordion box in the 'Shopping Lab' screen, used to modify a rate.
+ * Accordion box used to modify a rate.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
