@@ -25,7 +25,7 @@ define( function( require ) {
     BAG_IMAGE_SCALE: 0.5,
     SHOPPING_ITEM_IMAGE_SCALE: 0.5,
 
-    // options shared by all AccordionBoxes
+    // AccordionBoxes
     ACCORDION_BOX_OPTIONS: {
       titleAlignX: 'left',
       titleXMargin: 10,
@@ -44,13 +44,12 @@ define( function( require ) {
     },
     ACCORDION_BOX_TITLE_FONT: new URFont( 16 ),
 
-    // options shared by all NumberPickers
+    // NumberPickers
     NUMBER_PICKER_OPTIONS: {
       xMargin: 8,
       cornerRadius: 4,
       touchAreaYDilation: 0
     },
-
     RACING_LAB_PICKER_FONT: new URFont( 20 ),
 
     //TODO what is the correct range for Shopping rate spinners? see #141
