@@ -26,7 +26,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
@@ -48,7 +47,10 @@ define( function( require ) {
       horizontalAxisLength: 610, // {number} length of horizontal axes, including the arrow heads
 
       // AccordionBox options
-      titleNode: new Text( doubleNumberLineString, { font: new URFont( 18 ), maxWidth: 300 } )
+      titleNode: new Text( doubleNumberLineString, {
+        font: URConstants.ACCORDION_BOX_TITLE_FONT,
+        maxWidth: 300
+      } )
     }, options );
 
     var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {

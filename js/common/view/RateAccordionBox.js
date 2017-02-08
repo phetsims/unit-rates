@@ -38,7 +38,10 @@ define( function( require ) {
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // AccordionBox options
-      titleNode: new Text( rateString, { font: new URFont( 18 ), maxWidth: 100 } ),
+      titleNode: new Text( rateString, {
+        font: URConstants.ACCORDION_BOX_TITLE_FONT,
+        maxWidth: 100
+      } ),
       contentXMargin: 20,
 
       // RateAccordionBox options

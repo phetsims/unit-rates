@@ -40,8 +40,9 @@ define( function( require ) {
       buttonTouchAreaYDilation: 0,
       contentXMargin: 10,
       contentYMargin: 8,
-      contentYSpacing: 2
+      contentYSpacing: 4
     },
+    ACCORDION_BOX_TITLE_FONT: new URFont( 16 ),
 
     // options shared by all NumberPickers
     NUMBER_PICKER_OPTIONS: {

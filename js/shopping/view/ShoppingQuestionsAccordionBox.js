@@ -21,7 +21,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
 
   // strings
   var questionsString = require( 'string!UNIT_RATES/questions' );
@@ -37,7 +36,10 @@ define( function( require ) {
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // AccordionBox options
-      titleNode: new Text( questionsString, { font: new URFont( 18 ), maxWidth: 100 } ),
+      titleNode: new Text( questionsString, {
+        font: URConstants.ACCORDION_BOX_TITLE_FONT,
+        maxWidth: 100
+      } ),
 
       // VBox options
       vBoxSpacing: 18 // vertical spacing between UI elements in the accordion box's content
