@@ -65,12 +65,12 @@ define( function( require ) {
     this.car2 = new Car(); // the blue (bottom) car
 
     // @public
-    this.doubleNumberLine1 = new DoubleNumberLine( this.car1.speedProperty, DOUBLE_NUMBER_LINE_OPTIONS );
-    this.doubleNumberLine2 = new DoubleNumberLine( this.car1.speedProperty, DOUBLE_NUMBER_LINE_OPTIONS );
+    this.doubleNumberLine1 = new DoubleNumberLine( this.car1.rate.unitRateProperty, DOUBLE_NUMBER_LINE_OPTIONS );
+    this.doubleNumberLine2 = new DoubleNumberLine( this.car2.rate.unitRateProperty, DOUBLE_NUMBER_LINE_OPTIONS );
 
     // @public
-    this.markerEditor1 = new MarkerEditor( this.car1.speedProperty, MARKER_EDITOR_OPTIONS );
-    this.markerEditor2 = new MarkerEditor( this.car1.speedProperty, MARKER_EDITOR_OPTIONS );
+    this.markerEditor1 = new MarkerEditor( this.car1.rate.unitRateProperty, MARKER_EDITOR_OPTIONS );
+    this.markerEditor2 = new MarkerEditor( this.car2.rate.unitRateProperty, MARKER_EDITOR_OPTIONS );
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );

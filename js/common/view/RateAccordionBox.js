@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * The 'Rate' accordion box in the 'Shopping Lab' screen, used to modify a unit rate.
+ * The 'Rate' accordion box in the 'Shopping Lab' screen, used to modify a rate.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -10,14 +10,12 @@ define( function( require ) {
 
   // common modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
 
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -31,11 +29,11 @@ define( function( require ) {
   var MIN_FRACTION_LINE_LENGTH = 115;
 
   /**
-   * @param {Property.<number>} unitRateProperty
+   * @param {Rate} rate
    * @param {Object} [options]
    * @constructor
    */
-  function RateAccordionBox( unitRateProperty, options ) {
+  function RateAccordionBox( rate, options ) {
 
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
@@ -44,7 +42,6 @@ define( function( require ) {
       contentXMargin: 20,
 
       // RateAccordionBox options
-      unitRateDecimals: 2,
       unitsFont: new URFont( 16 ),
       unitsMaxWidth: 125, // i18n, set empirically
       numeratorRange: URConstants.COST_RANGE,
@@ -59,30 +56,36 @@ define( function( require ) {
 
     }, options );
 
-    // numerator
-    var numeratorProperty = new Property( options.numeratorRange.min );
-    var numeratorPicker = new NumberPicker( numeratorProperty, new Property( options.numeratorRange ), _.extend( {},
+    assert && assert( options.numeratorRange.contains( rate.numeratorProperty.value ),
+      'numerator out of range: ' + rate.numeratorProperty.value );
+    assert && assert( options.denominatorRange.contains( rate.denominatorProperty.value ),
+      'denominator out of range: ' + rate.denominatorProperty.value );
+
+    // numerator picker, must be disposed
+    var numeratorPicker = new NumberPicker( rate.numeratorProperty, new Property( options.numeratorRange ), _.extend( {},
       URConstants.NUMBER_PICKER_OPTIONS, {
         font: options.pickerFont,
         color: options.numeratorPickerColor
       } ) );
+
+    // numerator units
     var numeratorUnitsNode = new Text( options.numeratorUnits, {
       font: options.unitsFont,
       maxWidth: options.unitsMaxWidth
     } );
 
-    // denominator
-    var denominatorProperty = new Property( options.numeratorRange.min );
-    var denominatorPicker = new NumberPicker( denominatorProperty, new Property( options.denominatorRange ), _.extend( {},
+    // denominator picker, must be disposed
+    var denominatorPicker = new NumberPicker( rate.denominatorProperty, new Property( options.denominatorRange ), _.extend( {},
       URConstants.NUMBER_PICKER_OPTIONS, {
         font: options.pickerFont,
         color: options.denominatorPickerColor
       } ) );
+
+    // denominator units
     var denominatorUnitsNode = new Text( options.denominatorUnits, {
       font: options.unitsFont,
       maxWidth: options.unitsMaxWidth
     } );
-
 
     var contentNode = new Node( {
       children: [ numeratorPicker, numeratorUnitsNode, denominatorPicker, denominatorUnitsNode ]
@@ -111,48 +114,10 @@ define( function( require ) {
 
     AccordionBox.call( this, contentNode, options );
 
-    // Flag to prevent computation of unit rate before both numerator and denominator Properties have been updated.
-    var fractionObserverEnabled = true;
-
-    // Update unit rate when numerator or denominator changes
-    var fractionObserver = function() {
-      if ( fractionObserverEnabled ) {
-        unitRateProperty.value = Util.toFixedNumber( numeratorProperty.value / denominatorProperty.value, options.unitRateDecimals );
-      }
-    };
-    numeratorProperty.lazyLink( fractionObserver ); // no unlink needed
-    denominatorProperty.lazyLink( fractionObserver ); // no unlink needed
-
-    // Update numerator and denominator when unit rate changes
-    var unitRateObserver = function( unitRate ) {
-
-      // round to number of decimal places that we are interested in
-      unitRate = Util.toFixedNumber( unitRate, options.unitRateDecimals );
-
-      // Determine if the current numerator and denominator are equivalent to unitRate.
-      // This is necessary to handle rates like 1/3, whose corresponding unit rate is 0.33333333333....
-      var currentRate = Util.toFixedNumber( numeratorProperty.value / denominatorProperty.value, options.unitRateDecimals );
-
-      // If the current numerator and denominator are not equivalent to unit rate, then update them.
-      if ( currentRate !== unitRate ) {
-
-        // compute numerator and denominator
-        var denominator = Math.pow( 10, options.unitRateDecimals );
-        var fraction = new Fraction( unitRate * denominator, denominator );
-        fraction.reduce();
-
-        // update Properties, but don't fire observer until they have both changed
-        fractionObserverEnabled = false;
-        numeratorProperty.value = Util.toFixedNumber( fraction.numerator, 0 );
-        fractionObserverEnabled = true;
-        denominatorProperty.value = Util.toFixedNumber( fraction.denominator, 0 );
-      }
-    };
-    unitRateProperty.link( unitRateObserver ); // unlink in dispose
-
     // @private
     this.disposeRateAccordionBox = function() {
-      unitRateProperty.unlink( unitRateObserver );
+      numeratorPicker.dispose();
+      denominatorPicker.dispose();
     };
   }
 

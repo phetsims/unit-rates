@@ -13,6 +13,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // sim modules
+  var Rate = require( 'UNIT_RATES/common/model/Rate' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -20,8 +21,8 @@ define( function( require ) {
    */
   function Car() {
 
-    // @public speed of this car, in miles per hour
-    this.speedProperty = new Property( 100 );
+    // @public rate of this car, in miles per hour
+    this.rate = new Rate( 100, 1 );
 
     // @public the car's distance from the starting line, in miles
     this.distancePropery = new Property( 0 );
@@ -33,7 +34,7 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.speedProperty.reset();
+      this.rate.reset();
       this.distancePropery.reset();
     },
 

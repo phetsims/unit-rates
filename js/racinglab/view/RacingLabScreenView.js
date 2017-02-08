@@ -91,7 +91,7 @@ define( function( require ) {
     playAreaLayer.addChild( restartRaceButton );
 
     // Rate for car 2 (blue)
-    var rateAccordionBox2 = new RateAccordionBox( model.car2.speedProperty, {
+    var rateAccordionBox2 = new RateAccordionBox( model.car2.rate, {
       titleNode: new Text( rate2String, { font: new URFont( 18 ), maxWidth: 100 } ),
       expandedProperty: viewProperties.rateExpandedProperty2,
       pickerFont: URConstants.RACING_LAB_PICKER_FONT,
@@ -107,7 +107,7 @@ define( function( require ) {
     playAreaLayer.addChild( rateAccordionBox2 );
 
     // Rate for car 1 (red)
-    var rateAccordionBox1 = new RateAccordionBox( model.car1.speedProperty, {
+    var rateAccordionBox1 = new RateAccordionBox( model.car1.rate, {
       titleNode: new Text( rate1String, { font: new URFont( 18 ), maxWidth: 100 } ),
       expandedProperty: viewProperties.rateExpandedProperty1,
       pickerFont: URConstants.RACING_LAB_PICKER_FONT,

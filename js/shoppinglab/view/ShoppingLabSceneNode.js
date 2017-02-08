@@ -45,7 +45,7 @@ define( function( require ) {
     } );
 
     // Rate accordion box
-    var rateAccordionBox = new RateAccordionBox( shoppingScene.unitRateProperty, {
+    var rateAccordionBox = new RateAccordionBox( shoppingScene.rate, {
       numeratorUnits: shoppingScene.numeratorOptions.axisLabel,  // matches the axis of the double number line
       denominatorUnits: shoppingScene.denominatorOptions.axisLabel,  // matches the axis of the double number line
       denominatorPickerColor: shoppingScene.denominatorOptions.pickerColor,

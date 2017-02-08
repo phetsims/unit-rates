@@ -24,6 +24,7 @@ define( function( require ) {
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  var Rate = require( 'UNIT_RATES/common/model/Rate' );
   var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
   var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
@@ -96,9 +97,8 @@ define( function( require ) {
     assert && assert( this.numeratorOptions.maxDecimals === this.denominatorOptions.maxDecimals,
       'maxDecimals must be the same for numerator and denominator' );
 
-    //TODO Shopping screen does not fully support mutable unit rate. Factor out a base type that excludes questions?
-    // @public {Property.<number>}
-    this.unitRateProperty = new Property( itemData.unitRate );
+    // @public {Rate}
+    this.rate = Rate.withUnitRate( itemData.unitRate );
 
     // @public (read-only) unpack itemData
     this.numberOfBags = itemData.numberOfBags;
@@ -112,13 +112,13 @@ define( function( require ) {
     this.scaleQuantityIsDisplayed = options.scaleQuantityIsDisplayed;
 
     // @public {DoubleNumberLine} double number line associated with this item
-    this.doubleNumberLine = new DoubleNumberLine( this.unitRateProperty, {
+    this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
       numeratorOptions: this.numeratorOptions,
       denominatorOptions: this.denominatorOptions
     } );
 
     // @public
-    this.markerEditor = new MarkerEditor( this.unitRateProperty, {
+    this.markerEditor = new MarkerEditor( this.rate.unitRateProperty, {
       numeratorMaxDecimals: this.numeratorOptions.maxDecimals,
       denominatorMaxDecimals: this.denominatorOptions.maxDecimals
     } );
@@ -131,7 +131,7 @@ define( function( require ) {
     } );
 
     // @public
-    this.scale = new Scale( this.unitRateProperty, {
+    this.scale = new Scale( this.rate.unitRateProperty, {
       location: this.shelf.location.minusXY( 0, 200 ), // centered above the shelf
       quantityUnits: options.scaleQuantityUnits,
       numberOfBags: this.numberOfBags,
@@ -162,11 +162,11 @@ define( function( require ) {
     } );
 
     // @public {ShoppingQuestion} 'Unit Rate?'
-    this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( this.unitRateProperty.value,
+    this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( this.rate.unitRateProperty.value,
       options.questionSingularUnits, this.numeratorOptions, this.denominatorOptions );
 
     // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
-    this.questionSets = ShoppingQuestionFactory.createQuestionSets( itemData.questionQuantities, this.unitRateProperty.value,
+    this.questionSets = ShoppingQuestionFactory.createQuestionSets( itemData.questionQuantities, this.rate.unitRateProperty.value,
       options.questionSingularUnits, options.questionPluralUnits, options.amountOfQuestionUnits,
       this.numeratorOptions, this.denominatorOptions );
 
@@ -186,7 +186,7 @@ define( function( require ) {
     } );
 
     // When the unit rate changes, cancel any marker edit that is in progress
-    this.unitRateProperty.lazyLink( function( unitRate ) {
+    this.rate.unitRateProperty.lazyLink( function( unitRate ) {
       self.markerEditor.reset();
     } );
 
@@ -254,7 +254,7 @@ define( function( require ) {
     // @public
     reset: function() {
 
-      this.unitRateProperty.reset();
+      this.rate.reset();
 
       this.doubleNumberLine.reset();
       this.markerEditor.reset();
