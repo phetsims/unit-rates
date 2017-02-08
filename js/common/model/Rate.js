@@ -77,12 +77,17 @@ define( function( require ) {
      * The Rate returned is the closest rate that can be represented with integers.
      * @param {number} unitRate
      * @returns {Rate}
+     * @public
+     * @static
      */
     withUnitRate: function( unitRate ) {
-      var decimalPlaces = URUtil.decimalPlaces( unitRate );
-      var denominator = Math.pow( 10, decimalPlaces );
+
+      // compute corresponding numerator and denominator
+      var denominator = Math.pow( 10, URUtil.decimalPlaces( unitRate ) );
       var fraction = new Fraction( unitRate * denominator, denominator );
       fraction.reduce();
+      
+      // use closest integer values
       return new Rate( Util.toFixedNumber( fraction.numerator, 0 ), Util.toFixedNumber( fraction.denominator, 0 ) );
     }
   } );
