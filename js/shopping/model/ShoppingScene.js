@@ -111,7 +111,7 @@ define( function( require ) {
     // @public (read-only) unpack options
     this.scaleQuantityIsDisplayed = options.scaleQuantityIsDisplayed;
 
-    // @public {DoubleNumberLine} double number line associated with this item
+    // @public
     this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
       numeratorOptions: this.numeratorOptions,
       denominatorOptions: this.denominatorOptions
