@@ -4,6 +4,11 @@
 /**
  * Model of a rate.
  *
+ * A ratio is a comparison of two numbers.
+ * The two numbers are called terms, herein referred to as numerator and denominator.
+ * A rate is a ratio where the measurements are in different units.
+ * A unit rate is a rate where the denominator is 1.
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
