@@ -19,7 +19,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
-
   /**
    * @param {number} numerator - the rate's numerator, must be an integer
    * @param {number} denominator - the rate's denominator, must be an integer
