@@ -99,7 +99,7 @@ define( function( require ) {
     // Track for car1
     var trackNode1 = new RaceTrackNode( model.track1, modelToView, {
       //TODO temporary layout
-      left: this.layoutBounds.left + 50,
+      left: this.layoutBounds.left + 20,
       centerY: this.layoutBounds.centerY
     } );
     playAreaLayer.addChild( trackNode1 );
