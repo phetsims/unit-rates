@@ -56,8 +56,8 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      BooleanRoundToggleButton.prototype.dispose && BooleanRoundToggleButton.prototype.dispose.call( this );
       this.disposeStartStopButton();
+      BooleanRoundToggleButton.prototype.dispose.call( this );
     }
   } );
 } );

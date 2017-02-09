@@ -261,7 +261,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      AccordionBox.prototype.dispose && AccordionBox.prototype.dispose.call( this );
+      AccordionBox.prototype.dispose.call( this );
       this.disposeDoubleNumberLineAccordionBox();
     }
   } );

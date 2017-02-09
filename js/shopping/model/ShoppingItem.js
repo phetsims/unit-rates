@@ -40,8 +40,8 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      Movable.prototype.dispose.call( this );
       this.disposeShoppingItem();
+      Movable.prototype.dispose.call( this );
     }
   } );
 } );

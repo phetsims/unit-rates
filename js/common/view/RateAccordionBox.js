@@ -134,8 +134,8 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      AccordionBox.prototype.dispose && AccordionBox.prototype.dispose.call( this );
       this.disposeRateAccordionBox();
+      AccordionBox.prototype.dispose.call( this );
     }
   } );
 } );

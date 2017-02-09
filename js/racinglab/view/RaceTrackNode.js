@@ -253,8 +253,8 @@ define( function( require ) {
 
     // @private
     dispose: function() {
-      Node.prototype.dispose && Node.prototype.dispose.call( this );
       this.disposeRaceTrackNode();
+      Node.prototype.dispose.call( this );
     }
   } );
 } );

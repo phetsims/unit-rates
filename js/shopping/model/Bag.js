@@ -58,8 +58,8 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      Movable.prototype.dispose.call( this );
       this.disposeBag();
+      Movable.prototype.dispose.call( this );
     }
   } );
 } );

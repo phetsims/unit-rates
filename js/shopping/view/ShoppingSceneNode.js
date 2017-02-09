@@ -106,8 +106,8 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      Node.prototype.dispose && Node.prototype.dispose.call( this );
       this.disposeShoppingSceneNode();
+      Node.prototype.dispose.call( this );
     }
   } );
 } );
