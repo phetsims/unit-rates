@@ -80,12 +80,12 @@ define( function( require ) {
     } );
 
     // markers below the track
-    var markersParent = new Node();
+    var markerNodes = [];
     for ( var x = 0; x <= track.maxLength; ) {
 
       // create marker
       var markerNode = createMarkerNode();
-      markersParent.addChild( markerNode );
+      markerNodes.push( markerNode );
 
       // position marker
       markerNode.centerX = modelToView( x );
@@ -94,6 +94,7 @@ define( function( require ) {
       // next marker
       x = x + track.markerSpacing;
     }
+    var markersParent = new Node( { children: markerNodes } );
     markersParent.top = solidLineNode.centerY;
 
     // Flag at starting line
@@ -164,7 +165,11 @@ define( function( require ) {
       lengthNode.top = solidLineNode.bottom + MARKER_SIDE_LENGTH + 4;
       lengthNode.centerX = finishX;
 
-      //TODO grey out markers that are past finish line
+      // grey out markers that are past finish line
+      for ( var i = 0; i < markerNodes.length; i++ ) {
+        var enabled = ( i * track.markerSpacing <= length );
+        markerNodes[ i ].opacity = ( enabled ? 1 : 0.4 );
+      }
     };
     track.lengthProperty.link( lengthObserver ); // unlink in dispose
 
