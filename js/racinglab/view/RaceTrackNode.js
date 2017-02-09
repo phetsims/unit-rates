@@ -38,7 +38,7 @@ define( function( require ) {
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   // constants
-  var NEGATIVE_TRACK_LENGTH = 75; // length of track to left of starting flag, in view coordinates
+  var NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates
   var MARKER_SIDE_LENGTH = 10;
   var ARROW_LENGTH = 28;
   var ARROW_OPTIONS = {
