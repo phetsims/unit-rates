@@ -111,10 +111,11 @@ define( function( require ) {
       left: modelToView( track.lengthProperty.value ),
       bottom: 0
     } );
-    finishFlagNode.touchArea = finishFlagNode.localBounds.dilatedX( 20 );
+    finishFlagNode.touchArea = finishFlagNode.localBounds.dilatedX( 30 );
 
     // green arrows around the finish flag, cues the user to move the flag
     var arrowsNode = new HBox( {
+      cursor: 'pointer',
       spacing: 9,
       children: [
         new ArrowNode( 0, 0, -ARROW_LENGTH, 0, ARROW_OPTIONS ),
@@ -179,7 +180,7 @@ define( function( require ) {
     var startDragXOffset;
 
     // Drag the finish flag to change the track length
-    finishFlagNode.addInputListener( new SimpleDragHandler( {
+    var dragHandler = new SimpleDragHandler( {
 
       // allow touch swipes across a bag to pick it up
       allowTouchSnag: true,
@@ -217,7 +218,9 @@ define( function( require ) {
         // update the model, constrain to integer values
         track.lengthProperty.value = Util.toFixedNumber( modelLength, 0 );
       }
-    } ) );
+    } );
+    finishFlagNode.addInputListener( dragHandler );
+    arrowsNode.addInputListener( dragHandler );
 
     // @private
     this.disposeRaceTrackNode = function() {
