@@ -45,13 +45,15 @@ define( function( require ) {
 
       // DoubleNumberLineAccordionBox options
       horizontalAxisLength: 610, // {number} length of horizontal axes, including the arrow heads
+      titleString: doubleNumberLineString
 
-      // AccordionBox options
-      titleNode: new Text( doubleNumberLineString, {
-        font: URConstants.ACCORDION_BOX_TITLE_FONT,
-        maxWidth: 300
-      } )
     }, options );
+
+    assert && assert( !options.titleNode, 'creates its own title node' );
+    options.titleNode = new Text( options.titleString, {
+      font: URConstants.ACCORDION_BOX_TITLE_FONT,
+      maxWidth: 300
+    } );
 
     var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
       horizontalAxisLength: options.horizontalAxisLength,

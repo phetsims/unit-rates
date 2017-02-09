@@ -39,13 +39,10 @@ define( function( require ) {
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // AccordionBox options
-      titleNode: new Text( rateString, {
-        font: URConstants.ACCORDION_BOX_TITLE_FONT,
-        maxWidth: 100
-      } ),
       contentXMargin: 20,
 
       // RateAccordionBox options
+      titleString: rateString,
       unitsFont: new URFont( 16 ),
       unitsMaxWidth: 125, // i18n, set empirically
       numeratorRange: new Range( 0, 10 ),
@@ -64,6 +61,12 @@ define( function( require ) {
       'numerator out of range: ' + rate.numeratorProperty.value );
     assert && assert( options.denominatorRange.contains( rate.denominatorProperty.value ),
       'denominator out of range: ' + rate.denominatorProperty.value );
+
+    assert && assert( !options.titleNode, 'creates its own title node' );
+    options.titleNode = new Text( options.titleString, {
+      font: URConstants.ACCORDION_BOX_TITLE_FONT,
+      maxWidth: 100
+    } );
 
     // numerator picker, must be disposed
     var numeratorPicker = new NumberPicker( rate.numeratorProperty, new Property( options.numeratorRange ), _.extend( {},

@@ -42,7 +42,7 @@ define( function( require ) {
       contentYMargin: 8,
       contentYSpacing: 4
     },
-    ACCORDION_BOX_TITLE_FONT: new URFont( 16 ),
+    ACCORDION_BOX_TITLE_FONT: new URFont( 14 ),
 
     // NumberPickers
     NUMBER_PICKER_OPTIONS: {

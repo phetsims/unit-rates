@@ -15,7 +15,6 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var Text = require( 'SCENERY/nodes/Text' );
 
   // sim modules
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
@@ -29,7 +28,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
 
   // strings
   var doubleNumberLine1String = require( 'string!UNIT_RATES/doubleNumberLine1' );
@@ -108,7 +106,7 @@ define( function( require ) {
 
     // Rate for car2
     var rateAccordionBox2 = new RateAccordionBox( model.car2.rate, {
-      titleNode: new Text( rate2String, { font: new URFont( 18 ), maxWidth: 100 } ),
+      titleString: rate2String,
       expandedProperty: viewProperties.rateExpandedProperty2,
       pickerFont: URConstants.RACING_LAB_PICKER_FONT,
       numeratorRange: URConstants.MILES_RANGE,
@@ -124,7 +122,7 @@ define( function( require ) {
 
     // Rate for car1
     var rateAccordionBox1 = new RateAccordionBox( model.car1.rate, {
-      titleNode: new Text( rate1String, { font: new URFont( 18 ), maxWidth: 100 } ),
+      titleString: rate1String,
       expandedProperty: viewProperties.rateExpandedProperty1,
       pickerFont: URConstants.RACING_LAB_PICKER_FONT,
       numeratorRange: URConstants.MILES_RANGE,
@@ -142,7 +140,7 @@ define( function( require ) {
     var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.doubleNumberLine1, model.markerEditor1, keypadLayer, {
         horizontalAxisLength: 600,
-        titleNode: new Text( doubleNumberLine1String, { font: new URFont( 18 ), maxWidth: 300 } ),
+        titleString: doubleNumberLine1String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
@@ -153,7 +151,7 @@ define( function( require ) {
     var doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
       model.doubleNumberLine2, model.markerEditor2, keypadLayer, {
         horizontalAxisLength: 600,
-        titleNode: new Text( doubleNumberLine2String, { font: new URFont( 18 ), maxWidth: 300 } ),
+        titleString: doubleNumberLine2String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
