@@ -1,6 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO redo this without AccordionBox?
+//TODO redo this without AccordionBox, layou is messed up with stringTest
 /**
  * Timer in the 'Racing Lab' screen.
  *
@@ -51,10 +51,16 @@ define( function( require ) {
     }, options );
 
     assert && assert( !options.titleNode, 'creates its own title node' );
-    options.titleNode = new Text( options.titleString, { font: options.font } );
+    options.titleNode = new Text( options.titleString, {
+      font: options.font,
+      maxWidth: 95 // i18n, determined empirically
+    } );
 
     var largestTimeString = StringUtils.format( valueUnitsString, '0000.00', hoursString );
-    var timeDisplayNode = new Text( largestTimeString, { font: options.font } );
+    var timeDisplayNode = new Text( largestTimeString, {
+      font: options.font,
+      maxWidth: 95 // i18n, determined empirically
+    } );
 
     AccordionBox.call( this, timeDisplayNode, options );
 
