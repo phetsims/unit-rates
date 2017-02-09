@@ -45,9 +45,9 @@ define( function( require ) {
       contentAlign: 'right',
       titleAlignX: 'left',
       titleXMargin: 8,
-      titleYMargin: 5,
+      titleYMargin:4,
       contentXMargin: 8,
-      contentYMargin: 5
+      contentYMargin: 4
     }, options );
 
     assert && assert( !options.titleNode, 'creates its own title node' );

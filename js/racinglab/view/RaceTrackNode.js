@@ -136,8 +136,6 @@ define( function( require ) {
     options.children = [ dashedLineNode, solidLineNode, markersParent,
       startFlagNode, finishFlagNode, timerNode, lengthNode, arrowsNode ];
 
-    Node.call( this, options );
-
     // Synchronize track length with the model
     var lengthObserver = function( length ) {
 
@@ -163,6 +161,8 @@ define( function( require ) {
       //TODO grey out markers that are past finish line
     };
     track.lengthProperty.link( lengthObserver ); // unlink in dispose
+
+    Node.call( this, options );
 
     // {number} where the drag started relative to the finish flag's current location, in parent view coordinates
     var startDragXOffset;

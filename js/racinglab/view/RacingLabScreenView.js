@@ -37,6 +37,7 @@ define( function( require ) {
   var rate1String = require( 'string!UNIT_RATES/rate1' );
   var rate2String = require( 'string!UNIT_RATES/rate2' );
   var timer1String = require( 'string!UNIT_RATES/timer1' );
+  var timer2String = require( 'string!UNIT_RATES/timer2' );
 
   /**
    * @param {RacingLabModel} model
@@ -99,10 +100,19 @@ define( function( require ) {
     var trackNode1 = new RaceTrackNode( model.track1, model.timeProperty1, modelToView, {
       timerTitleString: timer1String,
       //TODO temporary layout
-      left: this.layoutBounds.left + 20,
-      centerY: this.layoutBounds.centerY
+      left: this.layoutBounds.left + 15,
+      bottom: this.layoutBounds.centerY - 5
     } );
     playAreaLayer.addChild( trackNode1 );
+
+    // Track for car2
+    var trackNode2 = new RaceTrackNode( model.track2, model.timeProperty2, modelToView, {
+      timerTitleString: timer2String,
+      //TODO temporary layout
+      left: trackNode1.left,
+      top: this.layoutBounds.centerY + 5
+    } );
+    playAreaLayer.addChild( trackNode2 );
 
     // Rate for car2
     var rateAccordionBox2 = new RateAccordionBox( model.car2.rate, {
