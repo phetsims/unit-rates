@@ -48,7 +48,7 @@ define( function( require ) {
       allowZeroEntry: false, // {boolean} whether to allow '0' to be entered in the keypad
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: URConstants.MARKER_Y_SPACING, // {number} vertical margin inside the value box
-      ySpacing: 5,  // {number} vertical spacing between UI elements
+      ySpacing: 3,  // {number} vertical spacing between UI elements
       keypadLocation: 'below', // {string} 'above' or 'below' doubleNumberLinePanel
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
@@ -127,7 +127,7 @@ define( function( require ) {
     this.addChild( denominatorNode );
 
     var numeratorEditButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.5 } ),
+      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.4 } ),
       baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
       bottom: numeratorBox.top - options.ySpacing
@@ -136,7 +136,7 @@ define( function( require ) {
     numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 0 );
 
     var denominatorEditButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.5 } ),
+      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.4 } ),
       baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
       top: denominatorBox.bottom + options.ySpacing

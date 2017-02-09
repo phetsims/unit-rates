@@ -67,7 +67,7 @@ define( function( require ) {
 
     // edit button
     var editButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.5 } ),
+      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.4 } ),
       baseColor: URColors.editButton,
       right: valueBox.left - options.xSpacing,
       centerY: valueBox.centerY
