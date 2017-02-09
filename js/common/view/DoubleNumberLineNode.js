@@ -43,7 +43,7 @@ define( function( require ) {
       axisYSpacing: 20, // {number} vertical spacing between top and bottom axes
       labelFont: new URFont( 14 ), // {Font} for axis labels
       labelColor: 'black', // {Color|string} color of axis labels
-      labelMaxWidth: 70, // determined empirically
+      labelMaxWidth: 70, // i18n, determined empirically
       labelXSpacing: 12, // horizontal spacing between axis and its label
 
       // markers
