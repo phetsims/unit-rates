@@ -20,6 +20,10 @@ define( function( require ) {
   var RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
+  // images
+  var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
+  var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
+
   // strings
   var hoursString = require( 'string!UNIT_RATES/hours' );
   var milesString = require( 'string!UNIT_RATES/miles' );
@@ -54,10 +58,10 @@ define( function( require ) {
     this.runningProperty = new Property( false );
 
     // @public the red (top) car
-    this.car1 = new Car();
+    this.car1 = new Car( redCarImage );
 
     // @public the blue (bottom) car
-    this.car2 = new Car( { visible: false } );
+    this.car2 = new Car( blueCarImage, { visible: false } );
 
     // @public
     this.track1 = new RaceTrack();

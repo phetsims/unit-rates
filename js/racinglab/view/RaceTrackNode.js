@@ -50,13 +50,14 @@ define( function( require ) {
   };
   
   /**
-   * @param {RaceTrack} track - the track model
+   * @param {RaceTrack} track
+   * @param {Car} car
    * @param {Property.<number>} timeProperty
    * @param {LinearFunction} modelToView
    * @param {Object} [options]
    * @constructor
    */
-  function RaceTrackNode( track, timeProperty, modelToView, options ) {
+  function RaceTrackNode( track, car, timeProperty, modelToView, options ) {
 
     options = _.extend( {
       timerTitleString: '' // {string} title for the timer accordion box
@@ -130,11 +131,16 @@ define( function( require ) {
     // Label that indicates the length of the track
     var lengthNode = new Text( '', { font: new URFont( 12 ) } );
 
-    //TODO add car
+    // Car
+    var carNode = new Image( car.image, {
+      scale: 0.5,
+      right: startFlagNode.left,
+      bottom: solidLineNode.top
+    } );
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ dashedLineNode, solidLineNode, markersParent,
-      startFlagNode, finishFlagNode, timerNode, lengthNode, arrowsNode ];
+      startFlagNode, finishFlagNode, timerNode, lengthNode, arrowsNode, carNode ];
 
     // Synchronize track length with the model
     var lengthObserver = function( length ) {

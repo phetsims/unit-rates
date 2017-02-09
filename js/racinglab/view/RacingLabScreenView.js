@@ -97,7 +97,7 @@ define( function( require ) {
     var modelToView = new LinearFunction( 0, 200, 0, 600 );
 
     // Track for car1
-    var trackNode1 = new RaceTrackNode( model.track1, model.timeProperty1, modelToView, {
+    var trackNode1 = new RaceTrackNode( model.track1, model.car1, model.timeProperty1, modelToView, {
       timerTitleString: timer1String,
       //TODO temporary layout
       left: this.layoutBounds.left + 15,
@@ -106,7 +106,7 @@ define( function( require ) {
     playAreaLayer.addChild( trackNode1 );
 
     // Track for car2
-    var trackNode2 = new RaceTrackNode( model.track2, model.timeProperty2, modelToView, {
+    var trackNode2 = new RaceTrackNode( model.track2, model.car2, model.timeProperty2, modelToView, {
       timerTitleString: timer2String,
       //TODO temporary layout
       left: trackNode1.left,
@@ -172,7 +172,7 @@ define( function( require ) {
     model.car2.visibleProperty.link( function( visible ) {
       rateAccordionBox2.visible = visible;
       doubleNumberLineAccordionBox2.visible = visible;
-      //TODO show/hide track for car2
+      trackNode2.visible = visible;
     } );
 
     // Disable the restart button when both cars are at the starting line. unmultilink not needed

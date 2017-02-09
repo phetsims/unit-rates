@@ -17,14 +17,19 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
+   * @param {HTMLImageElement} image
+   * @param {Object} [options]
    * @constructor
    */
-  function Car( options ) {
+  function Car( image, options ) {
 
     options = _.extend( {
       rate: new Rate( 50, 2 ), // initial rate, in miles per hour
       visible: true // is this car visible?
     }, options );
+
+    // @pubic (read-omly)
+    this.image = image;
 
     // @public the car's rate, in miles per hour
     this.rate = options.rate;
