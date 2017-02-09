@@ -40,7 +40,7 @@ define( function( require ) {
       axisLabel: hoursString,
       maxDigits: 4,
       maxDecimals: 2,
-      trimZeros: false,
+      trimZeros: true,
       axisRange: new Range( 0, 2 ) // range of bottom axis, in hours
     }
   };
