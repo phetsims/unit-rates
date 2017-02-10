@@ -1,11 +1,11 @@
 {
-  "comment": "# unit-rates 1.0.0-dev.44 Wed Feb 08 2017 18:31:39 GMT-0700 (MST)",
+  "comment": "# unit-rates 1.0.0-dev.45 Fri Feb 10 2017 08:19:13 GMT-0700 (MST)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "master"
   },
   "axon": {
-    "sha": "5a451ec3e0a3f03bdd413bf438ecb4954326d5b2",
+    "sha": "03e252e3f7252c9853e6080ab9b2cf5369f50580",
     "branch": "master"
   },
   "brand": {
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "01bfbbe6ee9508194c5370fb8eacb7154214a0d4",
+    "sha": "7fa24cf8cb69c8d4bd990ebf0bf582138b36c6de",
     "branch": "master"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "86c15381809312da883d1298da717f047435a236",
+    "sha": "95300482f7c52934c0b99555f4e834bc15e7397b",
     "branch": "master"
   },
   "kite": {
@@ -53,7 +53,7 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "d7e040ac297a718aadf7a8160e7af5a9e674c26e",
+    "sha": "fdf42eb9b46b6a9ba10bafb89551844ee019e6d8",
     "branch": "master"
   },
   "tandem": {
@@ -65,7 +65,7 @@
     "branch": "master"
   },
   "unit-rates": {
-    "sha": "3ec6156840cc80205d12664d96fa532afc3bf364",
+    "sha": "0c61bc0f195030390a6653b9b095a6d9a1ac0d7d",
     "branch": "master"
   }
 }
