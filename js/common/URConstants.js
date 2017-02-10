@@ -52,10 +52,9 @@ define( function( require ) {
     },
     RACING_LAB_PICKER_FONT: new URFont( 20 ),
 
-    //TODO what is the correct range for Shopping rate spinners? see #141
     // ranges for Rate spinners
-    COST_RANGE: new Range( 1, 30 ),
-    QUANTITY_RANGE: new Range( 1, 30 ),
+    COST_RANGE: new Range( 1, 20 ),
+    QUANTITY_RANGE: new Range( 1, 20 ),
     MILES_RANGE: new Range( 20, 100 ),
     HOURS_RANGE: new Range( 1, 10 ),
 
