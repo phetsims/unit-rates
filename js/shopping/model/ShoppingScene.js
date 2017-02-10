@@ -54,6 +54,8 @@ define( function( require ) {
     // default option values apply to Fruit items
     options = _.extend( {
 
+      rate: null, // {Rate|null} if null, will be initialized to unit rate
+
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null, // {*} options specific to the rate's denominator, see below
 
@@ -98,7 +100,7 @@ define( function( require ) {
       'maxDecimals must be the same for numerator and denominator' );
 
     // @public {Rate}
-    this.rate = Rate.withUnitRate( itemData.unitRate );
+    this.rate = options.rate || Rate.withUnitRate( itemData.unitRate );
 
     // @public (read-only) unpack itemData
     this.numberOfBags = itemData.numberOfBags;

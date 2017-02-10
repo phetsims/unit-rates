@@ -14,6 +14,7 @@ define( function( require ) {
   // sim modules
   var CandyScene = require( 'UNIT_RATES/shopping/model/CandyScene' );
   var FruitScene = require( 'UNIT_RATES/shopping/model/FruitScene' );
+  var Rate = require( 'UNIT_RATES/common/model/Rate' );
   var ShoppingCategory = require( 'UNIT_RATES/shopping/model/ShoppingCategory' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingModel = require( 'UNIT_RATES/shopping/model/ShoppingModel' );
@@ -38,6 +39,7 @@ define( function( require ) {
         // fruits
         new ShoppingCategory( appleImage, [
           new FruitScene( ShoppingItemData.Fruit.APPLES, {
+            rate: new Rate( 1, 1 ),
             denominatorOptions: {
               pickerColor: 'red'
             }
@@ -47,6 +49,7 @@ define( function( require ) {
         // vegetables
         new ShoppingCategory( carrotImage, [
           new VegetableScene( ShoppingItemData.Vegetable.CARROTS, {
+            rate: new Rate( 1, 1 ),
             denominatorOptions: {
               pickerColor: 'orange'
             }
@@ -56,6 +59,7 @@ define( function( require ) {
         // candies
         new ShoppingCategory( purpleCandyImage, [
           new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY, {
+            rate: new Rate( 1, 1 ),
             denominatorOptions: {
               pickerColor: 'purple'
             }
