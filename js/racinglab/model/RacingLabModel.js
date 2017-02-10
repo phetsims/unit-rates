@@ -32,7 +32,7 @@ define( function( require ) {
   var DOUBLE_NUMBER_LINE_OPTIONS = {
     numeratorOptions: {
       axisLabel: milesString,
-      maxDigits: 4,
+      maxDigits: 5,
       maxDecimals: 2,
       trimZeros: true
     },
