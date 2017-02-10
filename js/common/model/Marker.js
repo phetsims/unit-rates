@@ -55,8 +55,6 @@ define( function( require ) {
 
   return inherit( Object, Marker, {
 
-    get denominator() { throw new Error('denominator does not exist' ); }, //XXX delete me
-
     // @public
     toString: function() {
       return 'Marker[' +
