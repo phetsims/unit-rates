@@ -64,7 +64,7 @@ define( function( require ) {
     var self = this;
     var unitRateObserver = function( unitRate ) {
       self.markers.forEach( function( marker ) {
-        marker.numeratorProperty.value = marker.denominator * unitRate;
+        marker.numeratorProperty.value = marker.denominatorProperty.value * unitRate;
       } );
     };
     unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose

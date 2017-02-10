@@ -1,4 +1,4 @@
-// Copyright 2016-2017, University of Colorado Boulder
+  // Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * Marker on the double number line.
@@ -54,7 +54,7 @@ define( function( require ) {
       lineWidth: options.lineWidth
     } );
 
-    // numerator, which will be updated if the unit rate changes
+    // numerator
     var numeratorNode = new Text( '', { font: options.font } );
     var numeratorObserver = function( numerator ) {
       assert && assert( ( typeof numerator === 'number') && !isNaN( numerator ), 'invalid numerator: ' + numerator );
@@ -65,12 +65,14 @@ define( function( require ) {
     marker.numeratorProperty.link( numeratorObserver ); // unlink in dispose
 
     // denominator
-    var denominatorString = URUtil.numberToString( marker.denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
-    var denominatorNode = new Text( denominatorString, {
-      font: options.font,
-      centerX: lineNode.centerX,
-      top: lineNode.bottom + options.ySpacing
-    } );
+    var denominatorNode = new Text( '', { font: options.font } );
+    var denominatorObserver = function( denominator ) {
+      assert && assert( ( typeof denominator === 'number') && !isNaN( denominator ), 'invalid denominator: ' + denominator );
+      denominatorNode.text = URUtil.numberToString( marker.denominatorProperty.value, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+      denominatorNode.centerX = lineNode.centerX;
+      denominatorNode.top = lineNode.bottom + options.ySpacing;
+    };
+    marker.denominatorProperty.link( denominatorObserver ); // unlink in dispose
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ numeratorNode, lineNode, denominatorNode ];
@@ -88,6 +90,7 @@ define( function( require ) {
     // @private
     this.disposeMarkerNode = function() {
       marker.numeratorProperty.unlink( numeratorObserver );
+      marker.denominatorProperty.unlink( denominatorObserver );
       marker.colorProperty.unlink( colorObserver );
     };
   }

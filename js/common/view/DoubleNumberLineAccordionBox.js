@@ -224,7 +224,7 @@ define( function( require ) {
         undoAppliesToEditor = false;
 
         // Position the undo button below the undoable marker
-        undoButton.centerX = doubleNumberLineNode.modelToView( marker.denominator );
+        undoButton.centerX = doubleNumberLineNode.modelToView( marker.denominatorProperty.value );
         undoButton.bottom = markerEditorNode.bottom;
         undoButton.visible = true;
       }

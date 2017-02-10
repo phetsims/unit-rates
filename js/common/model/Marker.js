@@ -16,7 +16,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // constants
-  // how the marker was created determines, ordered by ascending precedence
+  // how the marker was created, ordered by ascending precedence
   var CREATOR_VALUES = [ 'editor', 'scale', 'question' ];
 
   /**
@@ -38,9 +38,9 @@ define( function( require ) {
 
     // @public
     this.numeratorProperty = new Property( numerator );
+    this.denominatorProperty = new Property( denominator );
 
     // @public (read-only)
-    this.denominator = denominator;
     this.creator = creator;
 
     // @public (read-only) unpack options
@@ -55,10 +55,12 @@ define( function( require ) {
 
   return inherit( Object, Marker, {
 
+    get denominator() { throw new Error('denominator does not exist' ); }, //XXX delete me
+
     // @public
     toString: function() {
       return 'Marker[' +
-             ' rate=' + this.numeratorProperty.value + '/' + this.denominator +
+             ' rate=' + this.numeratorProperty.value + '/' + this.denominatorProperty.value +
              ' creator=' + this.creator +
              ' isMajor=' + this.isMajor +
              ' erasable=' + this.erasable +
@@ -73,7 +75,8 @@ define( function( require ) {
      */
     rateEquals: function( marker ) {
       assert && assert( marker instanceof Marker );
-      return ( marker.numerator === this.numerator ) && ( marker.denominator === this.denominator );
+      return ( marker.numeratorProperty.value === this.numeratorProperty.value ) &&
+             ( marker.denominatorProperty.value === this.denominatorProperty.value );
     },
 
     /**

@@ -124,12 +124,12 @@ define( function( require ) {
     var markerAddedListener = function( marker ) {
 
       // The model may contain markers that don't fit on the view scale
-      if ( doubleNumberLine.denominatorOptions.axisRange.contains( marker.denominator ) ) {
+      if ( doubleNumberLine.denominatorOptions.axisRange.contains( marker.denominatorProperty.value ) ) {
         self.addMarkerNode( marker, {
           lineLength: marker.isMajor ? options.majorMarkerLength : options.minorMarkerLength,
           numeratorOptions: doubleNumberLine.numeratorOptions,
           denominatorOptions: doubleNumberLine.denominatorOptions,
-          centerX: self.modelToView( marker.denominator ),
+          centerX: self.modelToView( marker.denominatorProperty.value ),
           centerY: verticalAxis.centerY
         } );
       }
