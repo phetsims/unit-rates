@@ -56,6 +56,10 @@ define( function( require ) {
 
       rate: null, // {Rate|null} if null, will be initialized to unit rate
 
+      // range of the denominator (quantity) is fixed
+      fixedAxis: 'denominator',
+      fixedAxisRange: new Range( 0, 16 ),
+
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null, // {*} options specific to the rate's denominator, see below
 
@@ -115,8 +119,8 @@ define( function( require ) {
 
     // @public
     this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
-      fixedAxis: 'denominator',
-      fixedAxisRange: new Range( 0, 16 ), // in number of items
+      fixedAxis: options.fixedAxis,
+      fixedAxisRange: options.fixedAxisRange,
       numeratorOptions: this.numeratorOptions,
       denominatorOptions: this.denominatorOptions
     } );
