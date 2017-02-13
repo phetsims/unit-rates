@@ -216,7 +216,6 @@ define( function( require ) {
     markerEditor.numeratorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
     markerEditor.denominatorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
 
-    //TODO move this to model
     // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
     // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
     var undoMarkerObserver = function( marker ) {
