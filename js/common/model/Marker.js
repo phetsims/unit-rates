@@ -17,7 +17,7 @@ define( function( require ) {
 
   // constants
   // how the marker was created, ordered by ascending precedence
-  var CREATOR_VALUES = [ 'editor', 'scale', 'question' ];
+  var CREATOR_VALUES = [ 'editor', 'scale', 'question', 'race' ];
 
   /**
    * @param {number} numerator
