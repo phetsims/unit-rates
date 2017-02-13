@@ -23,7 +23,4 @@ Reset button for shelf + scale
 Items on shelf and scale
 
 Cleanup:
-delete js/old/
-delete images/old/
-delete assets/old/
 purge unused strings
