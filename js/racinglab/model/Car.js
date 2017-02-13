@@ -26,7 +26,7 @@ define( function( require ) {
       visible: true // is this car visible?
     }, options );
 
-    // @pubic (read-omly)
+    // @pubic (read-only)
     this.image = image;
 
     // @public the car's rate, in miles per hour
