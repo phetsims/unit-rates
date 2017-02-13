@@ -32,7 +32,7 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // common to all axes
+      // common to all axes (horizontal and vertical)
       axisColor: 'black',
       axisLineWidth: 1.5,
 

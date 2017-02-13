@@ -110,9 +110,11 @@ define( function( require ) {
   unitRates.register( 'KeypadPanel', KeypadPanel );
 
   /**
-   * Creates a validation function that constrains the value have:
-   * - to a maximum number of digits (with 1 leading zero)
-   * - a maximum number of decimal places.
+   * Conforms to the API for NumberKeypad options.validateKey.
+   * Creates a validation function that constrains the value to have:
+   * - a maximum number of digits
+   * - a maximum number of decimal places
+   * - at most 1 zero to the left of the decimal point
    *
    * @param {Object} [options]
    * @returns {function(string, string)}
