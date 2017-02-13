@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
@@ -17,16 +17,14 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var RaceTimerNode = require( 'UNIT_RATES/racinglab/view/RaceTimerNode' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
-
-  // sim modules
-  var RaceTimerNode = require( 'UNIT_RATES/racinglab/view/RaceTimerNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
+  var Util = require( 'DOT/Util' );
 
   // images
   var finishFlagImage = require( 'image!UNIT_RATES/finish_flag.png' );

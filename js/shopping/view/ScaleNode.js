@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -20,8 +20,6 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );

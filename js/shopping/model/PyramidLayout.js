@@ -19,11 +19,9 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
   
   function PyramidLayout( options ) {

@@ -8,22 +8,20 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
+  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
   var LinearFunction = require( 'DOT/LinearFunction' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-
-  // sim modules
-  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
-  var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
   var RaceTrackNode = require( 'UNIT_RATES/racinglab/view/RaceTrackNode' );
   var RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
   var RacingLabViewProperties = require( 'UNIT_RATES/racinglab/view/RacingLabViewProperties' );
   var RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
+  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var RestartRaceButton = require( 'UNIT_RATES/racinglab/view/RestartRaceButton' );
+  var ScreenView = require( 'JOIST/ScreenView' );
   var StartStopButton = require( 'UNIT_RATES/racinglab/view/StartStopButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );

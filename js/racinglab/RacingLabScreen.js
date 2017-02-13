@@ -9,15 +9,13 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
-
-  // sim modules
   var RacingLabModel = require( 'UNIT_RATES/racinglab/model/RacingLabModel' );
   var RacingLabScreenView = require( 'UNIT_RATES/racinglab/view/RacingLabScreenView' );
+  var Screen = require( 'JOIST/Screen' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
 

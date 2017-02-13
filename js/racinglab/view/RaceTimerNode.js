@@ -9,16 +9,14 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
+  var Util = require( 'DOT/Util' );
 
   // strings
   var hourString = require( 'string!UNIT_RATES/hour' );

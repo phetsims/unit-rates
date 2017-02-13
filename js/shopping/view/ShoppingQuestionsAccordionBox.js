@@ -8,19 +8,17 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-
-  // sim modules
   var ShoppingQuestionNode = require( 'UNIT_RATES/shopping/view/ShoppingQuestionNode' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
   var questionsString = require( 'string!UNIT_RATES/questions' );

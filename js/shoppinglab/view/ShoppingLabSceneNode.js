@@ -9,14 +9,12 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
+  var BagNode = require( 'UNIT_RATES/shopping/view/BagNode' );
+  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
-
-  // sim modules
-  var BagNode = require( 'UNIT_RATES/shopping/view/BagNode' );
-  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
   var RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );

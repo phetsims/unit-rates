@@ -9,13 +9,11 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
-
-  // sim modules
   var ShoppingLabModel = require( 'UNIT_RATES/shoppinglab/model/ShoppingLabModel' );
   var ShoppingLabScreenView = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabScreenView' );
   var unitRates = require( 'UNIT_RATES/unitRates' );

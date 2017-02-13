@@ -8,13 +8,11 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Plane = require( 'SCENERY/nodes/Plane' );
-
-  // sim modules
   var KeypadPanel = require( 'UNIT_RATES/common/view/KeypadPanel' );
+  var Plane = require( 'SCENERY/nodes/Plane' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**

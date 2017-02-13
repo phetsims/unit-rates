@@ -8,25 +8,23 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Marker = require( 'UNIT_RATES/common/model/Marker' );
+  var MarkerEditorNode = require( 'UNIT_RATES/common/view/MarkerEditorNode' );
   var MoveTo = require( 'TWIXT/MoveTo' );
   var Node = require( 'SCENERY/nodes/Node' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Vector2 = require( 'DOT/Vector2' );
-
-  // sim modules
-  var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
-  var Marker = require( 'UNIT_RATES/common/model/Marker' );
-  var MarkerEditorNode = require( 'UNIT_RATES/common/view/MarkerEditorNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // strings
   var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );

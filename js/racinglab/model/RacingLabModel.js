@@ -8,16 +8,14 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-
-  // sim modules
+  // modules
   var Car = require( 'UNIT_RATES/racinglab/model/Car' );
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  var Property = require( 'AXON/Property' );
   var RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
+  var Range = require( 'DOT/Range' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images

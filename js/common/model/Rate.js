@@ -16,15 +16,13 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var Util = require( 'DOT/Util' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {number} numerator - the rate's numerator, must be an integer

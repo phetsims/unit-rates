@@ -9,11 +9,9 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Range = require( 'DOT/Range' );
-
-  // sim modules
   var ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );

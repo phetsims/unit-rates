@@ -9,10 +9,8 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var inherit = require( 'PHET_CORE/inherit' );
-
-  // sim modules
   var Movable = require( 'UNIT_RATES/common/model/Movable' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );

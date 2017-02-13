@@ -9,11 +9,9 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-
-  // sim modules
   var ShoppingLabSceneNode = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabSceneNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 

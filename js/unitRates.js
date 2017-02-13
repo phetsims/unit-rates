@@ -8,7 +8,7 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var Namespace = require( 'PHET_CORE/Namespace' );
 
   return new Namespace( 'unitRates' );

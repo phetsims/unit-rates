@@ -8,12 +8,10 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
+  var BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images

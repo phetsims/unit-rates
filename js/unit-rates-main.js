@@ -9,14 +9,12 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
-  var Sim = require( 'JOIST/Sim' );
-  var SimLauncher = require( 'JOIST/SimLauncher' );
-
-  // sim modules
+  // modules
   var RacingLabScreen = require( 'UNIT_RATES/racinglab/RacingLabScreen' );
   var ShoppingLabScreen = require( 'UNIT_RATES/shoppinglab/ShoppingLabScreen' );
   var ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
+  var Sim = require( 'JOIST/Sim' );
+  var SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
   var unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );

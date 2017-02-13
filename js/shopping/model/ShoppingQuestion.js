@@ -8,12 +8,10 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**

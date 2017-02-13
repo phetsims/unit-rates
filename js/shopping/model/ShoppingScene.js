@@ -13,18 +13,14 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var Util = require( 'DOT/Util' );
-  var Vector2 = require( 'DOT/Vector2' );
-
-  // sim modules
+  // modules
   var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var Rate = require( 'UNIT_RATES/common/model/Rate' );
   var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
   var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
@@ -35,6 +31,8 @@ define( function( require ) {
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  var Util = require( 'DOT/Util' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // strings
   var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );

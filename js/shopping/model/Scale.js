@@ -8,14 +8,12 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
+  var BagContainer = require( 'UNIT_RATES/shopping/model/BagContainer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var Vector2 = require( 'DOT/Vector2' );
-
-  // sim modules
-  var BagContainer = require( 'UNIT_RATES/shopping/model/BagContainer' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @param {Property.<number>} unitRateProperty

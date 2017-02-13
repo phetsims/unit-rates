@@ -3,12 +3,10 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
-  var inherit = require( 'PHET_CORE/inherit' );
-
-  // sim modules
+  // modules
   var BagDragHandler = require( 'UNIT_RATES/shopping/view/BagDragHandler' );
   var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
 

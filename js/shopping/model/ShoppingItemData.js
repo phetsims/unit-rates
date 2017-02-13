@@ -10,7 +10,7 @@
 define( function( require ) {
   'use strict';
 
-  // sim modules
+  // modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // Fruit strings

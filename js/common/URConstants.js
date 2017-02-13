@@ -8,10 +8,8 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var Range = require( 'DOT/Range' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
 

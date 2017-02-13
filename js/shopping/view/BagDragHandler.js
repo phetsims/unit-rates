@@ -8,11 +8,9 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**

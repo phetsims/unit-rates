@@ -8,12 +8,10 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images

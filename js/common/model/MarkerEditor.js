@@ -8,13 +8,11 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var Util = require( 'DOT/Util' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {Property.<boolean>} unitRateProperty

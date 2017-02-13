@@ -8,14 +8,12 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
-
-  // sim modules
-  var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
   var ShoppingCategoryRadioButtons = require( 'UNIT_RATES/shopping/view/ShoppingCategoryRadioButtons' );
   var ShoppingCategoryNode = require( 'UNIT_RATES/shopping/view/ShoppingCategoryNode' );
   var ShoppingViewProperties = require( 'UNIT_RATES/shopping/view/ShoppingViewProperties' );

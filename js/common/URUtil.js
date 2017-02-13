@@ -8,12 +8,10 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
+  // modules
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Util = require( 'DOT/Util' );
-
-  // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var Util = require( 'DOT/Util' );
 
   // All functions are @public unless otherwise noted.
   var URUtil = {

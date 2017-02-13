@@ -8,14 +8,12 @@
 define( function( require ) {
   'use strict';
 
-  // common modules
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Util = require( 'DOT/Util' );
-
-  // sim modules
+  // modules
   var ShoppingQuestion = require( 'UNIT_RATES/shopping/model/ShoppingQuestion' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var Util = require( 'DOT/Util' );
 
   // strings
   var costOfNUnitsString = require( 'string!UNIT_RATES/costOfNUnits' );
