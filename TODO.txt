@@ -5,7 +5,6 @@ MarkerEditor should be responsible for creating Markers on DNL, not DNLAccordion
 
 
 Racing Lab:
-Gray out track markers that are to right of finish flag
 Redo RaceTimerNode without AccordionBox? right justify time?
 Add car to RaceTrackNode
 Use MVT for race track and DNL
