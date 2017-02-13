@@ -79,7 +79,8 @@ define( function( require ) {
       valueFormat: currencyValueString, // {string} format with '{0}' placeholder for value
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
       maxDecimals: 2, // {number} maximum number of decimal places
-      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+      trimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
+      pickerColor: 'black' // {Color|string} color of the number picker for the numerator in the Rate accordion box
     }, options.numeratorOptions );
 
     // @public (read-only) options specific to the rate's denominator

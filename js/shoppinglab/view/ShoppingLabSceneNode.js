@@ -49,6 +49,7 @@ define( function( require ) {
       numeratorRange: URConstants.COST_RANGE,
       denominatorRange: URConstants.QUANTITY_RANGE,
       numeratorUnits: shoppingScene.numeratorOptions.axisLabel,  // matches the axis of the double number line
+      numeratorPickerColor: shoppingScene.numeratorOptions.pickerColor,
       denominatorUnits: shoppingScene.denominatorOptions.axisLabel,  // matches the axis of the double number line
       denominatorPickerColor: shoppingScene.denominatorOptions.pickerColor,
       expandedProperty: viewProperties.rateExpandedProperty,
