@@ -45,7 +45,7 @@ define( function( require ) {
     fixedAxis: 'numerator',
     fixedAxisRange: new Range( 0, 200 ),
 
-    // Major markers are multiples of 25
+    // Specifies the interval for major markers
     isMajorMarker: function( numerator, denominator ) {
       return ( numerator % 25 === 0 );
     }
