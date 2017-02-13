@@ -13,15 +13,11 @@ define( function( require ) {
 
   var URQueryParameters = QueryStringMachine.getAll( {
 
-    //TODO delete this when development is done
-    // Don't use this, it's for the exclusive use of CM during development
-    cm: { type: 'flag' },
+    // enables console logging
+    log: { type: 'flag' },
 
     // shows answers for Shopping questions and marker editor
     showAnswers: { type: 'flag' },
-
-    // enables console logging
-    log: { type: 'flag' },
 
     // enables random selection of scenes, items, questions, etc.
     randomEnabled: {
@@ -38,14 +34,6 @@ define( function( require ) {
   } );
 
   unitRates.register( 'URQueryParameters', URQueryParameters );
-
-  //TODO delete this when development is done
-  // Convenience during development, make 'cm' override other query parameters.
-  if ( URQueryParameters.cm ) {
-    URQueryParameters.log = true;
-    URQueryParameters.showAnswers = true;
-    URQueryParameters.randomEnabled = false;
-  }
 
   // enable logging to the console
   if ( URQueryParameters.log ) {
