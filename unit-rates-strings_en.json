@@ -14,9 +14,6 @@
   "carrots": {
     "value": "Carrots"
   },
-  "challenges": {
-    "value": "Questions"
-  },
   "cost": {
     "value": "Cost"
   },
@@ -28,9 +25,6 @@
   },
   "cucumbers": {
     "value": "Cucumbers"
-  },
-  "currencySymbol": {
-    "value": "$"
   },
   "currencyValue": {
     "value": "${0}"
