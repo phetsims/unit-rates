@@ -28,7 +28,7 @@ define( function( require ) {
   var hoursString = require( 'string!UNIT_RATES/hours' );
   var milesString = require( 'string!UNIT_RATES/miles' );
 
-  // constants
+  // options common to both double number lines
   var DOUBLE_NUMBER_LINE_OPTIONS = {
     numeratorOptions: {
       axisLabel: milesString,
@@ -45,8 +45,15 @@ define( function( require ) {
 
     // Numerator axis is fixed at 200 miles, so we will mutate the denominator (hours) when rate changes
     fixedAxis: 'numerator',
-    fixedAxisRange: new Range( 0, 200 )
+    fixedAxisRange: new Range( 0, 200 ),
+
+    // Major markers are multiples of 25
+    isMajorMarker: function( numerator, denominator ) {
+      return ( numerator % 25 === 0 );
+    }
   };
+
+  // options common to both marker editors
   var MARKER_EDITOR_OPTIONS = {
     numeratorMaxDecimals: DOUBLE_NUMBER_LINE_OPTIONS.numeratorOptions.maxDecimals,
     denominatorMaxDecimals: DOUBLE_NUMBER_LINE_OPTIONS.denominatorOptions.maxDecimals
