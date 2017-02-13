@@ -16,6 +16,7 @@ define( function( require ) {
   // sim modules
   var ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
   var lbsString = require( 'string!UNIT_RATES/lbs' );
@@ -48,13 +49,17 @@ define( function( require ) {
 
       // Scale displays quantity in 'lbs' for Candy
       scaleQuantityIsDisplayed: true,
-      scaleQuantityUnits: lbsString
+      scaleQuantityUnits: lbsString,
+
+      // Major markers have 1 decimal place in the denominator
+      isMajorMarker: function( numerator, denominator ) {
+        return URUtil.decimalPlaces( denominator ) === 1;
+      }
 
     }, options );
 
     options.denominatorOptions = _.extend( {
-      axisLabel: poundsString,
-      majorMarkerDecimals: 1
+      axisLabel: poundsString
     }, options.denominatorOptions );
 
     ShoppingScene.call( this, itemData, options );

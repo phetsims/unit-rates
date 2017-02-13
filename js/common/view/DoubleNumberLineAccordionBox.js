@@ -129,7 +129,7 @@ define( function( require ) {
         if ( markerEditor.denominatorProperty.value <= doubleNumberLine.denominatorAxisRangeProperty.value.max ) {
 
           // create a marker
-          var isMajor = ( URUtil.decimalPlaces( markerEditor.denominatorProperty.value ) <= doubleNumberLine.denominatorOptions.majorMarkerDecimals );
+          var isMajor = doubleNumberLine.isMajorMarker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value );
           var marker = new Marker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value, 'editor', {
             isMajor: isMajor,
             color: isMajor ? URColors.majorMarker : URColors.minorMarker

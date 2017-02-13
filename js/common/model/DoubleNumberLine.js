@@ -33,7 +33,10 @@ define( function( require ) {
       fixedAxis: 'denominator', // {string} which of the rate's axes has a fixed range
       fixedAxisRange: new Range( 0, 10 ), // {Range} range of the fixed axis
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
-      denominatorOptions: null // {*} options specific to the rate's denominator, see below
+      denominatorOptions: null, // {*} options specific to the rate's denominator, see below
+
+      // {function(number,number)} determines whether a marker is major or minor
+      isMajorMarker: function( numerator, denominator ) { return true; }
     }, options );
 
     assert && assert( _.includes( FIXED_AXIS_VALUES, options.fixedAxis ),
@@ -50,8 +53,7 @@ define( function( require ) {
     this.denominatorOptions = _.extend( {
       axisLabel: '', // {Node} label for the axis
       maxDecimals: 1, // {number} maximum number of decimal places
-      trimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
-      majorMarkerDecimals: 0 // {number} number of decimal places for major markers
+      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.denominatorOptions );
 
     // numerator and denominator must have the same number of decimal places,
@@ -64,6 +66,9 @@ define( function( require ) {
 
     // @public (read-only) {Marker[]} markers must be added/removed via addMarker/removeMarker
     this.markers = new ObservableArray( [] );
+
+    // @public (read-only) {function(number,number)}
+    this.isMajorMarker = options.isMajorMarker;
 
     // @public (read-only)
     this.fixedAxis = options.fixedAxis;

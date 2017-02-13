@@ -17,6 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+  var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // sim modules
@@ -71,7 +72,12 @@ define( function( require ) {
       // scale
       scaleQuantityIsDisplayed: false, // {boolean} whether quantity is displayed on the scale
       scaleQuantityUnits: '', // {string} units for quantity on scale
-      bagsOpen: false // {boolean} do bags open to display individual items?
+      bagsOpen: false, // {boolean} do bags open to display individual items?
+
+      // Major markers have integer denominators
+      isMajorMarker: function( numerator, denominator ) {
+        return Util.isInteger( denominator );
+      }
 
     }, options );
 
@@ -94,7 +100,6 @@ define( function( require ) {
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
       maxDecimals: 2, // {number} maximum number of decimal places
       trimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
-      majorMarkerDecimals: 0, // {number} number of decimal places for major markers
       pickerColor: 'black' // {Color|string} color of the number picker for the denominator in the Rate accordion box
     }, options.denominatorOptions );
 
@@ -122,7 +127,8 @@ define( function( require ) {
       fixedAxis: options.fixedAxis,
       fixedAxisRange: options.fixedAxisRange,
       numeratorOptions: this.numeratorOptions,
-      denominatorOptions: this.denominatorOptions
+      denominatorOptions: this.denominatorOptions,
+      isMajorMarker: options.isMajorMarker
     } );
 
     // @public
