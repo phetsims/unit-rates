@@ -2,6 +2,8 @@
 
 /**
  * Collapsible display for a value.
+ * When the display is collapsed, it displays a left-justified title.
+ * When the display is expanded, it displays a right-justified value.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
