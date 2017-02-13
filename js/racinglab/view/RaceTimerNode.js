@@ -63,7 +63,6 @@ define( function( require ) {
 
     // update time display
     var timeObserver = function( time ) {
-      var fixedTime = Util.toFixedNumber( time, options.decimals );
       timeDisplayNode.text = StringUtils.format( valueUnitsString, Util.toFixed( time, options.decimals ), hoursString );
     };
     timeProperty.link( timeObserver ); // unlink in dispose
