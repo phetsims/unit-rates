@@ -1,7 +1,6 @@
 TODO list for unit-rates
 
-Design:
-Hide DNL markers that are to right of finish flag? What about manual markers?
+Do we need both Rate and Marker?
 
 Racing Lab:
 Gray out track markers that are to right of finish flag
