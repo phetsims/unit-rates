@@ -1,7 +1,5 @@
 TODO list for unit-rates
 
-Do we need both Rate and Marker?
-
 Racing Lab:
 Gray out track markers that are to right of finish flag
 Redo RaceTimerNode without AccordionBox? right justify time?
