@@ -49,7 +49,7 @@ define( function( require ) {
     } );
 
     // anything longer than this will be scaled down via maxWidth
-    var largestTimeString = StringUtils.format( valueUnitsString, '0000.00', hoursString );
+    var largestTimeString = StringUtils.format( valueUnitsString, '000.00', hoursString );
     
     // time, displayed when the timer is expanded
     var timeNode = new Text( largestTimeString, {
