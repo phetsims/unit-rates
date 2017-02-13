@@ -2,7 +2,7 @@
 
 /**
  * Model for the double number line.
-` *
+ ` *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
@@ -17,6 +17,9 @@ define( function( require ) {
   // sim modules
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
+  // constants
+  var MUTABLE_TERM_VALUES = [ 'numerator', 'denominator' ];
+
   /**
    * @param {Property.<number>} unitRateProperty
    * @param {Object} [options]
@@ -26,8 +29,12 @@ define( function( require ) {
 
     options = _.extend( {
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
-      denominatorOptions: null // {*} options specific to the rate's denominator, see below
+      denominatorOptions: null, // {*} options specific to the rate's denominator, see below
+      mutableTerm: 'numerator' // {string} which of the rate's terms will be updated when the unit rate changes
     }, options );
+
+    assert && assert( _.includes( MUTABLE_TERM_VALUES, options.mutableTerm ),
+      'invalid mutableTerm: ' + options.mutableTerm );
 
     // @public (read-only) options for the numerator (top) number line
     this.numeratorOptions = _.extend( {
@@ -64,7 +71,12 @@ define( function( require ) {
     var self = this;
     var unitRateObserver = function( unitRate ) {
       self.markers.forEach( function( marker ) {
-        marker.numeratorProperty.value = marker.denominatorProperty.value * unitRate;
+        if ( options.mutableTerm === 'numerator' ) {
+          marker.numeratorProperty.value = marker.denominatorProperty.value * unitRate;
+        }
+        else {
+          marker.denominatorProperty.value = marker.numeratorProperty.value / unitRate;
+        }
       } );
     };
     unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose
