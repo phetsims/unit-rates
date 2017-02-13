@@ -42,7 +42,10 @@ define( function( require ) {
       maxDecimals: 2,
       trimZeros: true,
       axisRange: new Range( 0, 2 ) // range of bottom axis, in hours
-    }
+    },
+
+    // Numerator axis is fixed at 200 miles, so we will mutate the denominator (hours) when rate changes
+    mutableTerm: 'denominator'
   };
   var MARKER_EDITOR_OPTIONS = {
     numeratorMaxDecimals: DOUBLE_NUMBER_LINE_OPTIONS.numeratorOptions.maxDecimals,
