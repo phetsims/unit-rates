@@ -71,6 +71,7 @@ define( function( require ) {
     // @public (read-only)
     this.fixedAxis = options.fixedAxis;
 
+    //TODO are these Properties really needed?
     // @public defined below
     this.numeratorAxisRangeProperty = null;
     this.denominatorAxisRangeProperty = null;
