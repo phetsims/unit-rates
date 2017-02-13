@@ -1,6 +1,5 @@
 TODO list for unit-rates
 
-denominatorOptions.majorMarkerDecimals doesn't work for Racing Lab, where numerator scale is fixed, and major tick interval is not a function of decimals
 usages of modelView assume that we're mapping denominator
 MarkerEditor should be responsible for creating Markers on DNL, not DNLAccordionBox
 
