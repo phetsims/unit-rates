@@ -8,7 +8,7 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );

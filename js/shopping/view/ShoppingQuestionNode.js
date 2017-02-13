@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );

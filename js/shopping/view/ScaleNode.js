@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var Circle = require( 'SCENERY/nodes/Circle' );
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );

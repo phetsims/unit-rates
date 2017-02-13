@@ -8,7 +8,7 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );

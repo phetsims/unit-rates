@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  // modules
+  // common modules
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
