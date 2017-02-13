@@ -118,6 +118,7 @@ define( function( require ) {
     // when the marker editor exceeds the range of the axes, move it to the right of the axes
     var markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
 
+    //TODO move this to model
     // Observe marker editor, to position the editor and create markers.
     var markerEditorObserver = function() {
 
@@ -215,6 +216,7 @@ define( function( require ) {
     markerEditor.numeratorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
     markerEditor.denominatorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
 
+    //TODO move this to model
     // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
     // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
     var undoMarkerObserver = function( marker ) {
