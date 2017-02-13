@@ -50,11 +50,12 @@ define( function( require ) {
    * @param {RaceTrack} track
    * @param {Car} car
    * @param {Property.<number>} timeProperty
+   * @param {Property.<boolean>} timerExpandedProperty
    * @param {LinearFunction} modelToView
    * @param {Object} [options]
    * @constructor
    */
-  function RaceTrackNode( track, car, timeProperty, modelToView, options ) {
+  function RaceTrackNode( track, car, timeProperty, timerExpandedProperty, modelToView, options ) {
 
     options = _.extend( {
       timerTitleString: '' // {string} title for the timer accordion box
@@ -123,7 +124,7 @@ define( function( require ) {
     } );
 
     // Timer
-    var timerNode = new RaceTimerNode( timeProperty, {
+    var timerNode = new RaceTimerNode( timeProperty, timerExpandedProperty, {
       titleString: options.timerTitleString
     } );
 

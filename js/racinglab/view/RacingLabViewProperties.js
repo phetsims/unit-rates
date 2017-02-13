@@ -14,25 +14,21 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {Object} [options]
    * @constructor
    */
-  function RacingLabViewProperties( options ) {
-
-    options = _.extend( {
-      doubleNumberLineExpanded1: true,
-      doubleNumberLineExpanded2: true,
-      rateExpanded1: true,
-      rateExpanded2: true
-    }, options );
+  function RacingLabViewProperties() {
 
     // @public are the 'Double Number Line' accordion boxes expanded?
-    this.doubleNumberLineExpandedProperty1 = new Property( options.doubleNumberLineExpanded1 );
-    this.doubleNumberLineExpandedProperty2 = new Property( options.doubleNumberLineExpanded2 );
+    this.doubleNumberLineExpandedProperty1 = new Property( true );
+    this.doubleNumberLineExpandedProperty2 = new Property( true );
 
     // @public are the 'Rate' accordion boxes expanded?
-    this.rateExpandedProperty1 = new Property( options.rateExpanded1 );
-    this.rateExpandedProperty2 = new Property( options.rateExpanded2 );
+    this.rateExpandedProperty1 = new Property( true );
+    this.rateExpandedProperty2 = new Property( true );
+
+    // @public are the race timers expanded?
+    this.timerExpandedProperty1 = new Property( true );
+    this.timerExpandedProperty2 = new Property( true );
   }
 
   unitRates.register( 'RacingLabViewProperties', RacingLabViewProperties );
@@ -45,6 +41,8 @@ define( function( require ) {
       this.doubleNumberLineExpandedProperty2.reset();
       this.rateExpandedProperty1.reset();
       this.rateExpandedProperty2.reset();
+      this.timerExpandedProperty1.reset();
+      this.timerExpandedProperty2.reset();
     }
   } );
 } );

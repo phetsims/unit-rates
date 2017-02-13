@@ -95,7 +95,7 @@ define( function( require ) {
     var modelToView = new LinearFunction( 0, 200, 0, 600 );
 
     // Track for car1
-    var trackNode1 = new RaceTrackNode( model.track1, model.car1, model.timeProperty1, modelToView, {
+    var trackNode1 = new RaceTrackNode( model.track1, model.car1, model.timeProperty1, viewProperties.timerExpandedProperty1, modelToView, {
       timerTitleString: timer1String,
       //TODO temporary layout
       left: this.layoutBounds.left + 15,
@@ -104,7 +104,7 @@ define( function( require ) {
     playAreaLayer.addChild( trackNode1 );
 
     // Track for car2
-    var trackNode2 = new RaceTrackNode( model.track2, model.car2, model.timeProperty2, modelToView, {
+    var trackNode2 = new RaceTrackNode( model.track2, model.car2, model.timeProperty2, viewProperties.timerExpandedProperty2, modelToView, {
       timerTitleString: timer2String,
       //TODO temporary layout
       left: trackNode1.left,
