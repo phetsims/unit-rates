@@ -126,7 +126,7 @@ define( function( require ) {
 
       if ( markerEditor.isValidMarker() ) {
 
-        if ( markerEditor.denominatorProperty.value <= doubleNumberLine.denominatorOptions.axisRange.max ) {
+        if ( markerEditor.denominatorProperty.value <= doubleNumberLine.denominatorAxisRangeProperty.value.max ) {
 
           // create a marker
           var isMajor = ( URUtil.decimalPlaces( markerEditor.denominatorProperty.value ) <= doubleNumberLine.denominatorOptions.majorMarkerDecimals );
@@ -180,7 +180,7 @@ define( function( require ) {
           var denominator = markerEditor.getValidDenominator();
           assert && assert( denominator >= 0, 'invalid denominator: ' + denominator );
 
-          if ( denominator > doubleNumberLine.denominatorOptions.axisRange.max ) {
+          if ( denominator > doubleNumberLine.denominatorAxisRangeProperty.value.max ) {
 
             // move marker editor to right of axis arrows
             destinationX = markerEditorNodeOutOfRangeX;

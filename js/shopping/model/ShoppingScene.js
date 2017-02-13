@@ -89,7 +89,6 @@ define( function( require ) {
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
       maxDecimals: 2, // {number} maximum number of decimal places
       trimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
-      axisRange: new Range( 0, 16 ), // {Range} range of bottom axis
       majorMarkerDecimals: 0, // {number} number of decimal places for major markers
       pickerColor: 'black' // {Color|string} color of the number picker for the denominator in the Rate accordion box
     }, options.denominatorOptions );
@@ -115,6 +114,8 @@ define( function( require ) {
 
     // @public
     this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
+      fixedAxis: 'denominator',
+      fixedAxisRange: new Range( 0, 16 ), // in number of items
       numeratorOptions: this.numeratorOptions,
       denominatorOptions: this.denominatorOptions
     } );

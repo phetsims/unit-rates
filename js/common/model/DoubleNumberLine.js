@@ -18,7 +18,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // constants
-  var MUTABLE_TERM_VALUES = [ 'numerator', 'denominator' ];
+  var FIXED_AXIS_VALUES = [ 'numerator', 'denominator' ];
 
   /**
    * @param {Property.<number>} unitRateProperty
@@ -27,14 +27,17 @@ define( function( require ) {
    */
   function DoubleNumberLine( unitRateProperty, options ) {
 
+    var self = this;
+
     options = _.extend( {
+      fixedAxis: 'denominator', // {string} which of the rate's axes has a fixed range
+      fixedAxisRange: new Range( 0, 10 ), // {Range} range of the fixed axis
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
-      denominatorOptions: null, // {*} options specific to the rate's denominator, see below
-      mutableTerm: 'numerator' // {string} which of the rate's terms will be updated when the unit rate changes
+      denominatorOptions: null // {*} options specific to the rate's denominator, see below
     }, options );
 
-    assert && assert( _.includes( MUTABLE_TERM_VALUES, options.mutableTerm ),
-      'invalid mutableTerm: ' + options.mutableTerm );
+    assert && assert( _.includes( FIXED_AXIS_VALUES, options.fixedAxis ),
+      'invalid fixedAxis: ' + options.fixedAxis );
 
     // @public (read-only) options for the numerator (top) number line
     this.numeratorOptions = _.extend( {
@@ -48,7 +51,6 @@ define( function( require ) {
       axisLabel: '', // {Node} label for the axis
       maxDecimals: 1, // {number} maximum number of decimal places
       trimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
-      axisRange: new Range( 0, 10 ), // {Range} range of axis
       majorMarkerDecimals: 0 // {number} number of decimal places for major markers
     }, options.denominatorOptions );
 
@@ -63,21 +65,66 @@ define( function( require ) {
     // @public (read-only) {Marker[]} markers must be added/removed via addMarker/removeMarker
     this.markers = new ObservableArray( [] );
 
+    // @public (read-only)
+    this.fixedAxis = options.fixedAxis;
+
+    // @public defined below
+    this.numeratorAxisRangeProperty = null;
+    this.denominatorAxisRangeProperty = null;
+    if ( options.fixedAxis === 'numerator' ) {
+
+      this.numeratorAxisRangeProperty = new Property( options.fixedAxisRange );
+      this.numeratorAxisRangeProperty.lazyLink( function( range ) {  // unlink not needed
+        throw new Error( 'numeratorAxisRangeProperty should not change' );
+      } );
+
+      var denominatorMin = this.numeratorAxisRangeProperty.value.min / unitRateProperty.value;
+      var denominatorMax = this.numeratorAxisRangeProperty.value.max / unitRateProperty.value;
+      this.denominatorAxisRangeProperty = new Property( new Range( denominatorMin, denominatorMax ) );
+    }
+    else {
+
+      this.denominatorAxisRangeProperty = new Property( options.fixedAxisRange );
+      this.denominatorAxisRangeProperty.lazyLink( function( range ) { // unlink not needed
+        throw new Error( 'denominatorAxisRangeProperty should not change' );
+      } );
+
+      var numeratorMin = this.denominatorAxisRangeProperty.value.min * unitRateProperty.value;
+      var numeratorMax = this.denominatorAxisRangeProperty.value.max * unitRateProperty.value;
+      this.numeratorAxisRangeProperty = new Property( new Range( numeratorMin, numeratorMax ) );
+    }
+
     // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
     // A single level of undo is supported.
     this.undoMarkerProperty = new Property( null );
 
-    // When the unit rate changes, adjust the numerator of all markers
-    var self = this;
+    // When the unit rate changes...
     var unitRateObserver = function( unitRate ) {
-      self.markers.forEach( function( marker ) {
-        if ( options.mutableTerm === 'numerator' ) {
-          marker.numeratorProperty.value = marker.denominatorProperty.value * unitRate;
-        }
-        else {
+
+      if ( options.fixedAxis === 'numerator' ) {
+
+        // adjust the denominator range
+        var denominatorMin = self.numeratorAxisRangeProperty.value.min / unitRateProperty.value;
+        var denominatorMax = self.numeratorAxisRangeProperty.value.max / unitRateProperty.value;
+        self.denominatorAxisRangeProperty = new Property( new Range( denominatorMin, denominatorMax ) );
+
+        // adjust the denominator of all markers
+        self.markers.forEach( function( marker ) {
           marker.denominatorProperty.value = marker.numeratorProperty.value / unitRate;
-        }
-      } );
+        } );
+      }
+      else {
+
+        // adjust the numerator range
+        var numeratorMin = self.denominatorAxisRangeProperty.value.min * unitRateProperty.value;
+        var numeratorMax = self.denominatorAxisRangeProperty.value.max * unitRateProperty.value;
+        self.numeratorAxisRangeProperty = new Property( new Range( numeratorMin, numeratorMax ) );
+
+        // adjust the numerator of all markers
+        self.markers.forEach( function( marker ) {
+          marker.numeratorProperty.value = marker.denominatorProperty.value * unitRate;
+        } );
+      }
     };
     unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose
 
@@ -159,6 +206,16 @@ define( function( require ) {
         }
       }
       return markerWithSameRate;
+    },
+
+    /**
+     * Does this marker fall within the range of the axes?
+     * @param {Marker} marker
+     * @returns {boolean}
+     */
+    markerIsInRange: function( marker ) {
+      return ( this.numeratorAxisRangeProperty.value.contains( marker.numeratorProperty.value ) &&
+               this.denominatorAxisRangeProperty.value.contains( marker.denominatorProperty.value ) );
     },
 
     // @public

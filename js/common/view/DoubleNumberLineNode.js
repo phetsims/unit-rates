@@ -16,6 +16,7 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var LinearFunction = require( 'DOT/LinearFunction' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Range = require( 'DOT/Range' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // sim modules
@@ -56,10 +57,13 @@ define( function( require ) {
 
     Node.call( this );
 
-    // @public (read-only) maps the denominator to an x coordinate on this node
-    this.modelToView = new LinearFunction(
-      doubleNumberLine.denominatorOptions.axisRange.min, doubleNumberLine.denominatorOptions.axisRange.max,
-      0, options.horizontalAxisLength - options.arrowSize.height - 10 );
+    var modelRange = ( options.doubleNumberLine === 'numerator' ) ?
+                     doubleNumberLine.numeratorAxisRangeProperty.value :
+                     doubleNumberLine.denominatorAxisRangeProperty.value;
+    var viewRange = new Range( 0, options.horizontalAxisLength - options.arrowSize.height - 10 );
+
+    // @public (read-only) maps an x coordinate between model and view coordinate frames
+    this.modelToView = new LinearFunction( modelRange.min, modelRange.max, viewRange.min, viewRange.max );
 
     // All other nodes are positioned relative to this one
     var verticalAxis = new Line( 0, -options.minorMarkerLength / 2, 0, options.minorMarkerLength / 2, {
@@ -124,7 +128,7 @@ define( function( require ) {
     var markerAddedListener = function( marker ) {
 
       // The model may contain markers that don't fit on the view scale
-      if ( doubleNumberLine.denominatorOptions.axisRange.contains( marker.denominatorProperty.value ) ) {
+      if ( doubleNumberLine.markerIsInRange( marker ) ) {
         self.addMarkerNode( marker, {
           lineLength: marker.isMajor ? options.majorMarkerLength : options.minorMarkerLength,
           numeratorOptions: doubleNumberLine.numeratorOptions,

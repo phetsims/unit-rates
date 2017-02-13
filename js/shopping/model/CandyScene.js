@@ -32,6 +32,9 @@ define( function( require ) {
 
     options = _.extend( {
 
+      // range of denominator, in pounds
+      fixedAxisRange: new Range( 0, 1.6 ),
+
       // Candy quantity is in pounds
       quantitySingularUnits: poundString,
       quantityPluralUnits: poundsString,
@@ -51,7 +54,6 @@ define( function( require ) {
 
     options.denominatorOptions = _.extend( {
       axisLabel: poundsString,
-      axisRange: new Range( 0, 1.6 ),
       majorMarkerDecimals: 1
     }, options.denominatorOptions );
 

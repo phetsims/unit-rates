@@ -40,12 +40,12 @@ define( function( require ) {
       axisLabel: hoursString,
       maxDigits: 4,
       maxDecimals: 2,
-      trimZeros: true,
-      axisRange: new Range( 0, 2 ) // range of bottom axis, in hours
+      trimZeros: true
     },
 
     // Numerator axis is fixed at 200 miles, so we will mutate the denominator (hours) when rate changes
-    mutableTerm: 'denominator'
+    fixedAxis: 'numerator',
+    fixedAxisRange: new Range( 0, 200 )
   };
   var MARKER_EDITOR_OPTIONS = {
     numeratorMaxDecimals: DOUBLE_NUMBER_LINE_OPTIONS.numeratorOptions.maxDecimals,
