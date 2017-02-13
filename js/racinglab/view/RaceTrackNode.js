@@ -31,7 +31,6 @@ define( function( require ) {
   var startFlagImage = require( 'image!UNIT_RATES/start_flag.png' );
 
   // strings
-  var mileString = require( 'string!UNIT_RATES/mile' );
   var milesString = require( 'string!UNIT_RATES/miles' );
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
@@ -159,8 +158,7 @@ define( function( require ) {
       timerNode.bottom = finishFlagNode.top - 3;
 
       // distance label below finish flag
-      var units = ( length === 1 ) ? mileString : milesString;
-      lengthNode.text = StringUtils.format( valueUnitsString, length, units );
+      lengthNode.text = StringUtils.format( valueUnitsString, length, milesString );
       lengthNode.top = solidLineNode.bottom + MARKER_SIDE_LENGTH + 4;
       lengthNode.centerX = finishX;
 

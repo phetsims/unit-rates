@@ -19,7 +19,6 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // strings
-  var hourString = require( 'string!UNIT_RATES/hour' );
   var hoursString = require( 'string!UNIT_RATES/hours' );
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
@@ -65,8 +64,7 @@ define( function( require ) {
     // update time display
     var timeObserver = function( time ) {
       var fixedTime = Util.toFixedNumber( time, options.decimals );
-      var units = ( fixedTime === 1 ) ? hourString : hoursString;
-      timeDisplayNode.text = StringUtils.format( valueUnitsString, Util.toFixed( time, options.decimals ), units );
+      timeDisplayNode.text = StringUtils.format( valueUnitsString, Util.toFixed( time, options.decimals ), hoursString );
     };
     timeProperty.link( timeObserver ); // unlink in dispose
 
