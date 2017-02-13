@@ -27,7 +27,6 @@ define( function( require ) {
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
   var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
