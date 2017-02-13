@@ -14,11 +14,9 @@ define( function( require ) {
   var SimLauncher = require( 'JOIST/SimLauncher' );
 
   // sim modules
-  var OLDRacingLabScreen = require( 'UNIT_RATES/old/racingLab/OLDRacingLabScreen' );
   var RacingLabScreen = require( 'UNIT_RATES/racinglab/RacingLabScreen' );
   var ShoppingLabScreen = require( 'UNIT_RATES/shoppinglab/ShoppingLabScreen' );
   var ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
-  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   // strings
   var unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );
@@ -41,11 +39,6 @@ define( function( require ) {
       new ShoppingLabScreen(),
       new RacingLabScreen()
     ];
-
-    //TODO delete when development is done
-    if ( URQueryParameters.old ) {
-      screens.push( new OLDRacingLabScreen() );
-    }
 
     var sim = new Sim( unitRatesTitleString, screens, simOptions );
     sim.start();
