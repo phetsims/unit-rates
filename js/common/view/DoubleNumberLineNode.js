@@ -120,7 +120,7 @@ define( function( require ) {
     this.mutate( options );
 
     // @public (read-only) position for things that are "out of range", halfway between arrows and labels
-    this.outOfRangeXOffset = options.horizontalAxisLength + options.labelXSpacing / 2;
+    this.outOfRangeXOffset = options.horizontalAxisLength + ( options.labelXSpacing / 2 );
 
     // when a Marker is added, add a MarkerNode
     var markerAddedListener = function( marker ) {
