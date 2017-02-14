@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
+  var CollapsibleValueNode = require( 'UNIT_RATES/common/view/CollapsibleValueNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -33,10 +33,9 @@ define( function( require ) {
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   // constants
-  var DISPLAY_MIN_HEIGHT = 32;
   var DISPLAY_X_MARGIN = 8;
   var DISPLAY_Y_MARGIN = 4;
-  var DISPLAY_X_SPACING = 10; // horizontal space between cost and quantity displays
+  var DISPLAY_X_SPACING = 15; // horizontal space between cost and quantity displays
   var DISPLAY_RECTANGLE_OPTIONS = {
     cornerRadius: 4,
     fill: 'white',
@@ -70,67 +69,47 @@ define( function( require ) {
 
     // Cost value, e.g. '$100.50'
     var maxCostString = costToString( 100.5 );
-    var costValueNode = new Text( maxCostString, {
-      font: options.valueFont,
-      fill: options.valueFill,
-      maxWidth: 100 // i18n, determined empirically
-    } );
 
-    // optional parts of the cost display
-    var costRectangleWidth = costValueNode.width + ( 2 * DISPLAY_X_MARGIN );
+    var costDisplayNode = null;
     if ( options.costIsCollapsible ) {
-
-      // 'Cost', displayed when collapsed
-      var costLabelNode = new Text( costString, {
-        font: options.valueFont,
-        fill: options.valueFill,
-        maxWidth: 1.1 * costValueNode.width
-      } );
 
       // dispose required
-      var expandCollapseButton = new ExpandCollapseButton( costExpandedProperty, {
-        sideLength: 15,
-        touchAreaXDilation: 30,
-        touchAreaYDilation: 30
+      costDisplayNode = new CollapsibleValueNode( scale.costProperty, costExpandedProperty, {
+        titleString: costString,
+        titleFont: options.valueFont,
+        valueFont: options.valueFont,
+        valueMaxWidth: 100,
+        valueMaxString: maxCostString,
+        valueToString: function( value ) {
+          return costToString( value );
+        },
+        xMargin: DISPLAY_X_MARGIN,
+        yMargin: DISPLAY_Y_MARGIN
+      } );
+    }
+    else {
+      var costValueNode = new Text( maxCostString, {
+        font: options.valueFont,
+        fill: options.valueFill,
+        maxWidth: 100 // i18n, determined empirically
       } );
 
-      var costExpandedObserver = function( expanded ) {
-        costValueNode.visible = expanded;
-        costLabelNode.visible = !expanded;
+      // background rectangle
+      var costRectangleWidth = costValueNode.width + ( 2 * DISPLAY_X_MARGIN );
+      var costRectangleHeight = costValueNode.height + ( 2 * DISPLAY_Y_MARGIN );
+      var costRectangle = new Rectangle( 0, 0, costRectangleWidth, costRectangleHeight, DISPLAY_RECTANGLE_OPTIONS );
+
+      costDisplayNode = new Node( {
+        children: [ costRectangle, costValueNode ]
+      } );
+
+      var costObserver = function( cost ) {
+        costValueNode.text = costToString( cost );
+        costValueNode.right = costRectangle.right - DISPLAY_X_MARGIN;
+        costValueNode.centerY = costRectangle.centerY;
       };
-      costExpandedProperty.link( costExpandedObserver ); // unlink in dispose
-
-      costRectangleWidth = expandCollapseButton.width + DISPLAY_X_SPACING +
-                           Math.max( costLabelNode.width, costValueNode.width ) + ( 2 * DISPLAY_X_MARGIN );
+      scale.costProperty.link( costObserver ); // unlink in dispose
     }
-
-    // rectangle for the cost display
-    var costRectangleHeight = Math.max( DISPLAY_MIN_HEIGHT, costValueNode.height + ( 2 * DISPLAY_Y_MARGIN ) );
-    var costRectangle = new Rectangle( 0, 0, costRectangleWidth, costRectangleHeight, DISPLAY_RECTANGLE_OPTIONS );
-
-    // assemble and layout the cost display
-    var costDisplayNode = new Node();
-    costDisplayNode.addChild( costRectangle );
-    if ( options.costIsCollapsible ) {
-      costDisplayNode.addChild( expandCollapseButton );
-      expandCollapseButton.left = costRectangle.left + DISPLAY_X_MARGIN;
-      expandCollapseButton.centerY = costRectangle.centerY;
-
-      costDisplayNode.addChild( costLabelNode );
-      costLabelNode.left = expandCollapseButton.right + DISPLAY_X_SPACING;
-      costLabelNode.centerY = costRectangle.centerY;
-    }
-    costDisplayNode.addChild( costValueNode );
-    costValueNode.right = costRectangle.right - DISPLAY_X_SPACING;
-    costValueNode.centerY = costRectangle.centerY;
-
-    // Update cost value
-    var costObserver = function( cost ) {
-      costValueNode.text = costToString( cost );
-      costValueNode.right = costRectangle.right - DISPLAY_X_MARGIN;
-      costValueNode.centerY = costRectangle.centerY;
-    };
-    scale.costProperty.link( costObserver );
 
     // Quantity display -----------------------------------------------
 
@@ -149,17 +128,11 @@ define( function( require ) {
 
       // rectangle behind the number
       var quantityDisplayWidth = quantityValueNode.width + ( 2 * DISPLAY_X_MARGIN );
-      var quantityDisplayHeight = Math.max( DISPLAY_MIN_HEIGHT, quantityValueNode.height + ( 2 * DISPLAY_Y_MARGIN ) );
+      var quantityDisplayHeight = quantityValueNode.height + ( 2 * DISPLAY_Y_MARGIN );
       var quantityRectangle = new Rectangle( 0, 0, quantityDisplayWidth, quantityDisplayHeight, DISPLAY_RECTANGLE_OPTIONS );
 
       var quantityDisplayNode = new Node( {
         children: [ quantityRectangle, quantityValueNode ]
-      } );
-
-      displayNode = new HBox( {
-        children: [ costDisplayNode, quantityDisplayNode ],
-        align: 'center',
-        spacing: 15
       } );
 
       // Update quantity value
@@ -169,6 +142,12 @@ define( function( require ) {
         quantityValueNode.centerY = quantityRectangle.centerY;
       };
       scale.quantityProperty.link( quantityObserver );
+
+      displayNode = new HBox( {
+        children: [ costDisplayNode, quantityDisplayNode ],
+        align: 'center',
+        spacing: DISPLAY_X_SPACING
+      } );
     }
 
     // This type does not propagate options to the supertype because the model determines location.
@@ -192,10 +171,8 @@ define( function( require ) {
 
     // @private
     this.disposeScaleNode = function() {
-      scale.costProperty.unlink( costObserver );
-      costExpandedObserver && costExpandedProperty.unlink( costExpandedObserver );
+      costObserver && scale.costProperty.unlink( costObserver );
       quantityObserver && scale.quantityProperty.unlink( quantityObserver );
-      expandCollapseButton && expandCollapseButton.dispose();
     };
   }
 

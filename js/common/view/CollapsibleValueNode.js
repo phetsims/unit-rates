@@ -50,7 +50,7 @@ define( function( require ) {
       cornerRadius: 4,
       xMargin: 8,
       yMargin: 4,
-      xSpacing: 4
+      xSpacing: 8
 
     }, options );
 
