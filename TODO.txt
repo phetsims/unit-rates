@@ -5,7 +5,6 @@ Move cars
 Update timer
 Add moving race marker to DNL
 Add marker to DNL when race finishes
-Reset race when any of these change: rate spinner, scene selection, track length
 
 Shopping:
 Terminology: team refers to fruit/vegetable/candy as "scene", implementation uses "category", change implementation?

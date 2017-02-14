@@ -84,8 +84,8 @@ define( function( require ) {
     // Restart race button
     var restartRaceButton = new RestartRaceButton( {
       listener: function() {
-        model.car1.distancePropery.value = 0;
-        model.car2.distancePropery.value = 0;
+        model.car1.distanceProperty.value = 0;
+        model.car2.distanceProperty.value = 0;
       },
       right: startStopButton.left - 15,
       centerY: startStopButton.centerY
@@ -164,6 +164,11 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( trackNode2 );
 
+    assert && assert( model.car1.visibleProperty.value, 'car1 should be visible' );
+    model.car1.visibleProperty.lazyLink( function( visible ) {
+      assert && assert( model.car1.visibleProperty.value, 'car1 visibility should never change' );
+    } );
+
     // Show/hide components related to car2. unlink not needed.
     model.car2.visibleProperty.link( function( visible ) {
       rateAccordionBox2.visible = visible;
@@ -172,7 +177,7 @@ define( function( require ) {
     } );
 
     // Disable the restart button when both cars are at the starting line. unmultilink not needed
-    Property.multilink( [ model.car1.distancePropery, model.car2.distancePropery ],
+    Property.multilink( [ model.car1.distanceProperty, model.car2.distanceProperty ],
       function( distance1, distance2 ) {
         restartRaceButton.enabled = ( distance1 !== 0 || distance2 !== 0 );
       } );

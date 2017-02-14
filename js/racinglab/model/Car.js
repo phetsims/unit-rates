@@ -33,7 +33,7 @@ define( function( require ) {
     this.rate = options.rate;
 
     // @public the car's distance from the starting line, in miles
-    this.distancePropery = new Property( 0 );
+    this.distanceProperty = new Property( 0 );
 
     // @public is this car visible?
     this.visibleProperty = new Property( options.visible );
@@ -46,14 +46,14 @@ define( function( require ) {
     // @public
     reset: function() {
       this.rate.reset();
-      this.distancePropery.reset();
+      this.distanceProperty.reset();
       this.visibleProperty.reset();
     },
 
     // @public
     step: function( dt ) {
       if ( this.visibleProperty.value ) {
-        this.distancePropery.value = this.distancePropery.value + 1; //TODO implement Car.step, this is temporary
+        this.distanceProperty.value = this.distanceProperty.value + 1; //TODO implement Car.step, this is temporary
       }
     }
   } );
