@@ -34,7 +34,7 @@ define( function( require ) {
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null, // {*} options specific to the rate's denominator, see below
 
-      // {function(number,number)} determines whether a marker is major or minor
+      // {function(number,number):boolean} determines whether a marker is major or minor
       isMajorMarker: function( numerator, denominator ) { return true; }
     }, options );
 
@@ -66,7 +66,7 @@ define( function( require ) {
     // @public (read-only) {Marker[]} markers must be added/removed via addMarker/removeMarker
     this.markers = new ObservableArray( [] );
 
-    // @public (read-only) {function(number,number)}
+    // @public (read-only) {function(number,number):boolean}
     this.isMajorMarker = options.isMajorMarker;
 
     // @public (read-only)
