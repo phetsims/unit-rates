@@ -87,15 +87,6 @@ define( function( require ) {
     reset: function() {
       this.numeratorProperty.reset();
       this.denominatorProperty.reset();
-    },
-
-    /**
-     * Do the numerator and denominator values represent a valid marker?
-     * @returns {boolean}
-     * @public
-     */
-    isValidMarker: function() {
-      return ( this.numeratorProperty.value !== null && this.denominatorProperty.value !== null );
     }
   } );
 } );
