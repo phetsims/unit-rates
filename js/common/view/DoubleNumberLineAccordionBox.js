@@ -55,15 +55,16 @@ define( function( require ) {
     var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
       axisViewLength: options.axisViewLength,
       numeratorOptions: doubleNumberLine.numeratorOptions,
-      denominatorOptions: doubleNumberLine.denominatorOptions,
-      x: 0,
-      y: 0
+      denominatorOptions: doubleNumberLine.denominatorOptions
     } );
 
     // home positions for marker editor and undo button, to left of axes
     var markerEditorNodeHomeX = doubleNumberLineNode.left - 28;
     var undoButtonHomePosition = new Vector2( markerEditorNodeHomeX, doubleNumberLineNode.centerY );
 
+    // when the marker editor exceeds the range of the axes, move it to the right of the axes
+    var markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
+    
     var markerEditorNode = new MarkerEditorNode( markerEditor, this, keypadLayer, {
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
@@ -112,9 +113,6 @@ define( function( require ) {
 
     // animation for marker editor
     var markerEditorNodeAnimation = null;
-
-    // when the marker editor exceeds the range of the axes, move it to the right of the axes
-    var markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
 
     // Observe marker editor, to position the editor and create markers.
     var markerEditorObserver = function() {
