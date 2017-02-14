@@ -25,6 +25,7 @@ define( function( require ) {
 
     // AccordionBoxes
     ACCORDION_BOX_OPTIONS: {
+      titleBarExpandCollapse: false,
       titleAlignX: 'left',
       titleXMargin: 10,
       titleYMargin: 4,
