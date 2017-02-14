@@ -115,19 +115,26 @@ define( function( require ) {
     // when the marker editor exceeds the range of the axes, move it to the right of the axes
     var markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
 
-    //TODO move this to model
     // Observe marker editor, to position the editor and create markers.
     var markerEditorObserver = function() {
 
-      var destinationX = null; // destination for horizontal animation of marker editor
+      // local vars to improve readability
+      var numerator = markerEditor.numeratorProperty.value;
+      var denominator = markerEditor.denominatorProperty.value;
+      var maxNumerator = doubleNumberLine.numeratorAxisRangeProperty.value.max;
+      var maxDenominator = doubleNumberLine.denominatorAxisRangeProperty.value.max;
+      var axisViewLength = doubleNumberLineNode.axisViewLength;
 
-      if ( markerEditor.isValidMarker() ) {
+      // {number} destination for horizontal animation of marker editor, null indicates that no animation is required
+      var destinationX = null;
 
-        if ( markerEditor.denominatorProperty.value <= doubleNumberLine.denominatorAxisRangeProperty.value.max ) {
+      if ( numerator !== null && denominator !== null ) {
+
+        if ( denominator <= maxDenominator ) {
 
           // create a marker
-          var isMajor = doubleNumberLine.isMajorMarker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value );
-          var marker = new Marker( markerEditor.numeratorProperty.value, markerEditor.denominatorProperty.value, 'editor', {
+          var isMajor = doubleNumberLine.isMajorMarker( numerator, denominator );
+          var marker = new Marker( numerator, denominator, 'editor', {
             isMajor: isMajor,
             color: isMajor ? URColors.majorMarker : URColors.minorMarker
           } );
@@ -155,49 +162,69 @@ define( function( require ) {
           }
         }
       }
-      else { // marker is invalid
+      else { // marker is not fully specified
 
         // undo marker is lost when we start using the editor
         if ( doubleNumberLine.undoMarkerProperty.value ) {
           doubleNumberLine.undoMarkerProperty.value = null;
         }
 
-        if ( markerEditor.numeratorProperty.value === null && markerEditor.denominatorProperty.value === null ) {
+        if ( numerator === null && denominator === null ) {
 
           // both values are empty, move marker editor back to home position
           destinationX = markerEditorNodeHomeX;
 
-          // hide undo button if it's associated with the editor
+          // hide undo button
           undoButton.center = undoButtonHomePosition;
           undoButton.visible = false;
         }
-        else {
-
-          // one value is empty, move marker to position of the non-empty value
-          var denominator = markerEditor.getValidDenominator();
-          assert && assert( denominator >= 0, 'invalid denominator: ' + denominator );
-
-          if ( denominator > doubleNumberLine.denominatorAxisRangeProperty.value.max ) {
-
-            // move marker editor to right of axis arrows
-            destinationX = markerEditorNodeOutOfRangeX;
-          }
-          else {
-            destinationX = doubleNumberLineNode.x +
-                           doubleNumberLine.modelToViewDenominator( denominator, doubleNumberLineNode.axisViewLength );
-          }
+        else { // one of the 2 values is filled in
 
           // undo button is visible to left of axes
           undoButton.center = undoButtonHomePosition;
           undoButton.visible = true;
+
+          if ( numerator !== null ) {
+
+            // numerator is filled in
+            if ( numerator > maxNumerator ) {
+
+              // move marker editor to right of axis arrows
+              destinationX = markerEditorNodeOutOfRangeX;
+            }
+            else {
+
+              // move marker editor to position of numerator
+              destinationX = doubleNumberLineNode.x +
+                             doubleNumberLine.modelToViewNumerator( numerator, axisViewLength );
+            }
+          }
+          else {
+            assert && assert( denominator !== null, 'expected a valid denominator' );
+
+            // denominator is filled in
+            if ( denominator > maxDenominator ) {
+
+              // move marker editor to right of axis arrows
+              destinationX = markerEditorNodeOutOfRangeX;
+            }
+            else {
+
+              // move marker editor to position of denominator
+              destinationX = doubleNumberLineNode.x +
+                             doubleNumberLine.modelToViewDenominator( denominator, axisViewLength );
+            }
+          }
         }
       }
 
+      // if we need to move the marker editor...
       if ( destinationX !== null ) {
 
         // stop any animation that is in progress
         markerEditorNodeAnimation && markerEditorNodeAnimation.stop();
 
+        // animate the marker editor to it's new location
         markerEditorNodeAnimation = new MoveTo( markerEditorNode, new Vector2( destinationX, markerEditorNode.y ), {
 
           // controllable via query parameter

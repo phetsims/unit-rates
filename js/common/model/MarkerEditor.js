@@ -96,24 +96,6 @@ define( function( require ) {
      */
     isValidMarker: function() {
       return ( this.numeratorProperty.value !== null && this.denominatorProperty.value !== null );
-    },
-
-    /**
-     * Gets a valid denominator for what is currently entered in the editor.
-     * @return {number|null} - null indicates that a valid denominator cannot be determined
-     * @public
-     */
-    getValidDenominator: function() {
-      if ( this.numeratorProperty.value === null && this.denominatorProperty.value === null ) {
-        return null;
-      }
-      else {
-        var denominator = this.denominatorProperty.value;
-        if ( denominator === null ) {
-          denominator = this.numeratorProperty.value / this.unitRateProperty.value;
-        }
-        return Util.toFixedNumber( denominator, this.denominatorMaxDecimals );
-      }
     }
   } );
 } );

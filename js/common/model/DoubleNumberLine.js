@@ -225,7 +225,7 @@ define( function( require ) {
      * Gets a marker with the same rate as the specified marker.
      * @param {Marker} marker
      * @returns {Marker|null} null if there is no marker with the same rate
-     * @public
+     * @private
      */
     getMarkerWithSameRate: function( marker ) {
       var markerWithSameRate = null;
