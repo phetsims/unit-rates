@@ -9,53 +9,14 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
   var Property = require( 'AXON/Property' );
   var RaceCar = require( 'UNIT_RATES/racinglab/model/RaceCar' );
-  var RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
-  var Range = require( 'DOT/Range' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
   var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
   var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
-
-  // strings
-  var hoursString = require( 'string!UNIT_RATES/hours' );
-  var milesString = require( 'string!UNIT_RATES/miles' );
-
-  // options common to both double number lines
-  var DOUBLE_NUMBER_LINE_OPTIONS = {
-    numeratorOptions: {
-      axisLabel: milesString,
-      maxDigits: 5,
-      maxDecimals: 2,
-      trimZeros: true
-    },
-    denominatorOptions: {
-      axisLabel: hoursString,
-      maxDigits: 4,
-      maxDecimals: 2,
-      trimZeros: true
-    },
-
-    // Numerator axis is fixed at 200 miles, so we will mutate the denominator (hours) when rate changes
-    fixedAxis: 'numerator',
-    fixedAxisRange: new Range( 0, 200 ),
-
-    // Specifies the interval for major markers
-    isMajorMarker: function( numerator, denominator ) {
-      return ( numerator % 25 === 0 );
-    }
-  };
-
-  // options common to both marker editors
-  var MARKER_EDITOR_OPTIONS = {
-    numeratorMaxDecimals: DOUBLE_NUMBER_LINE_OPTIONS.numeratorOptions.maxDecimals,
-    denominatorMaxDecimals: DOUBLE_NUMBER_LINE_OPTIONS.denominatorOptions.maxDecimals
-  };
 
   /**
    * @constructor
