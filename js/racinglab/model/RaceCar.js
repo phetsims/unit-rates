@@ -19,7 +19,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function Car( image, options ) {
+  function RaceCar( image, options ) {
 
     options = _.extend( {
       rate: new Rate( 50, 2 ), // initial rate, in miles per hour
@@ -39,9 +39,9 @@ define( function( require ) {
     this.visibleProperty = new Property( options.visible );
   }
 
-  unitRates.register( 'Car', Car );
+  unitRates.register( 'RaceCar', RaceCar );
 
-  return inherit( Object, Car, {
+  return inherit( Object, RaceCar, {
 
     // @public
     reset: function() {
@@ -53,7 +53,7 @@ define( function( require ) {
     // @public
     step: function( dt ) {
       if ( this.visibleProperty.value ) {
-        this.distanceProperty.value = this.distanceProperty.value + 1; //TODO implement Car.step, this is temporary
+        this.distanceProperty.value = this.distanceProperty.value + 1; //TODO implement RaceCar.step, this is temporary
       }
     }
   } );

@@ -9,11 +9,11 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Car = require( 'UNIT_RATES/racinglab/model/Car' );
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
   var Property = require( 'AXON/Property' );
+  var RaceCar = require( 'UNIT_RATES/racinglab/model/RaceCar' );
   var RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
   var Range = require( 'DOT/Range' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -66,10 +66,10 @@ define( function( require ) {
     this.runningProperty = new Property( false );
 
     // @public the red (top) car
-    this.car1 = new Car( redCarImage );
+    this.car1 = new RaceCar( redCarImage );
 
     // @public the blue (bottom) car
-    this.car2 = new Car( blueCarImage, { visible: false } );
+    this.car2 = new RaceCar( blueCarImage, { visible: false } );
 
     // @public
     this.track1 = new RaceTrack();
