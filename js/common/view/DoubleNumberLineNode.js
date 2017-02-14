@@ -14,10 +14,8 @@ define( function( require ) {
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var LinearFunction = require( 'DOT/LinearFunction' );
   var MarkerNode = require( 'UNIT_RATES/common/view/MarkerNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Range = require( 'DOT/Range' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
