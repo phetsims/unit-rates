@@ -108,8 +108,17 @@ define( function( require ) {
 
     // @public
     step: function( dt ) {
-      if ( this.visibleProperty.value ) {
-        this.distanceProperty.value = this.distanceProperty.value + 1; //TODO implement RaceCar.step, this is temporary
+      if ( this.visibleProperty.value && ( this.distanceProperty.value < this.track.lengthProperty.value ) ) {
+
+        var dx = 1; //TODO compute dx as a function of dt and this.rate
+        if ( this.distanceProperty.value + dx > this.track.lengthProperty.value ) {
+          dx = this.track.lengthProperty.value - this.distanceProperty.value;
+        }
+        
+        this.distanceProperty.value = this.distanceProperty.value + dx;
+
+        //TODO update timerProperty
+        //TODO emit raceFinished
       }
     }
   } );

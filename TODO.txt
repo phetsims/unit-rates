@@ -1,7 +1,7 @@
 TODO list for unit-rates
 
 Racing Lab:
-Move cars, stop at finish line, adjust rate
+Move car as a function of rate and dt
 Update timer
 Add car location indicator to DNL
 Add marker to DNL when car reaches finish line
