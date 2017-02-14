@@ -1,5 +1,6 @@
 TODO list for unit-rates
 
+use NumberDisplay or write my own for ScaleNode displays that don't collapse
 usages of modelView assume that we're mapping denominator
 MarkerEditor should be responsible for creating Markers on DNL, not DNLAccordionBox
 
