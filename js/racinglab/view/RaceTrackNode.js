@@ -124,9 +124,7 @@ define( function( require ) {
     } );
 
     // Timer
-    var timerNode = new RaceTimerNode( timeProperty, timerExpandedProperty, {
-      titleString: options.timerTitleString
-    } );
+    var timerNode = new RaceTimerNode( timeProperty, timerExpandedProperty, options.timerTitleString );
 
     // Label that indicates the length of the track
     var lengthNode = new Text( '', { font: new URFont( 12 ) } );

@@ -13,6 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URFont = require( 'UNIT_RATES/common/URFont' );
   var Util = require( 'DOT/Util' );
 
   // strings
@@ -22,19 +23,21 @@ define( function( require ) {
   /**
    * @param {Property.<number>} timeProperty
    * @param {Property.<boolean>} expandedProperty
+   * @param {string} titleString
    * @param {Object} [options]
    * @constructor
    */
-  function RaceTimerNode( timeProperty, expandedProperty, options ) {
+  function RaceTimerNode( timeProperty, expandedProperty, titleString, options ) {
 
     options = _.extend( {
+      font: new URFont( 14 ),
       valueMaxString: StringUtils.format( valueUnitsString, '000.00', hoursString ),
       valueToString: function( value ) {
         return StringUtils.format( valueUnitsString, Util.toFixed( value, 2 ), hoursString );
       }
     }, options );
 
-    CollapsibleValueNode.call( this, timeProperty, expandedProperty, options );
+    CollapsibleValueNode.call( this, timeProperty, expandedProperty, titleString, options );
   }
 
   unitRates.register( 'RaceTimerNode', RaceTimerNode );

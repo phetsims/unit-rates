@@ -1,9 +1,9 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Collapsible display for a value.
+ * Displays a value on a rectangular background, with an expand/collapse button.
+ * When the display is expanded, it displays the right-justified value.
  * When the display is collapsed, it displays a left-justified title.
- * When the display is expanded, it displays a right-justified value.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,12 +20,13 @@ define( function( require ) {
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
   /**
-   * @param {Property.<number>} valueProperty
+   * @param {Property.<*>} valueProperty
    * @param {Property.<boolean>} expandedProperty
+   * @param {string} titleString
    * @param {Object} [options]
    * @constructor
    */
-  function CollapsibleValueNode( valueProperty, expandedProperty, options ) {
+  function CollapsibleValueNode( valueProperty, expandedProperty, titleString, options ) {
 
     options = _.extend( {
 
@@ -35,19 +36,15 @@ define( function( require ) {
       buttonTouchAreaYDilation: 30,
 
       // value
-      valueMaxWidth: 95,
-      valueFont: new URFont( 14 ),
-      valueMaxString: '',
       valueToString: function( value ) { return '' + value; },
+      valueMaxString: '',
+      valueMaxWidth: 100,
 
       // title
-      titleString: '',
-      titleMaxWidth: 95,
-      titleFont: new URFont( 14 ),
+      titleMaxWidth: 100,
 
       // panel
-      fill: 'white',
-      cornerRadius: 4,
+      font: new URFont( 20 ),
       xMargin: 8,
       yMargin: 4,
       xSpacing: 8
@@ -55,14 +52,14 @@ define( function( require ) {
     }, options );
 
     // title, displayed when collapsed
-    var titleNode = new Text( options.titleString, {
-      font: options.titleFont,
+    var titleNode = new Text( titleString, {
+      font: options.font,
       maxWidth: options.titleMaxWidth // i18n, determined empirically
     } );
 
     // value, displayed when expanded
     var valueNode = new Text( options.valueMaxString, {
-      font: options.valueFont,
+      font: options.font,
       maxWidth: options.valueMaxWidth // i18n, determined empirically
     } );
 
@@ -83,8 +80,8 @@ define( function( require ) {
     var backgroundWith = maxWidth + expandCollapseButton.width + options.xSpacing + ( 2 * options.xMargin );
     var backgroundHeight = maxHeight + ( 2 * options.yMargin );
     var backgroundNode = new Rectangle( 0, 0, backgroundWith, backgroundHeight, {
-      cornerRadius: options.cornerRadius,
-      fill: options.fill,
+      cornerRadius: 4,
+      fill: 'white',
       stroke: 'black'
     } );
 
@@ -107,7 +104,7 @@ define( function( require ) {
     };
     expandedProperty.link( expandedObserver ); // unlink in dispose
 
-    // update time display
+    // update value display
     var valueObserver = function( value ) {
       valueNode.text = options.valueToString( value );
       valueNode.right = backgroundNode.right - options.xMargin;
