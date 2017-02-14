@@ -164,6 +164,7 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( trackNode2 );
 
+    // car1 should always be visible
     assert && assert( model.car1.visibleProperty.value, 'car1 should be visible' );
     model.car1.visibleProperty.lazyLink( function( visible ) {
       assert && assert( model.car1.visibleProperty.value, 'car1 visibility should never change' );
