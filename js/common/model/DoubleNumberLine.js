@@ -144,28 +144,28 @@ define( function( require ) {
 
     /**
      * Maps a rate's numerator from model to view coordinate frame.
-     * @param {number} modelX
-     * @param {number} viewXMax
+     * @param {number} numerator - numerator in model coordinate frame
+     * @param {number} viewMax - numerator's maximum in view coordinate frame
      * @returns {number}
      */
-    modelToViewNumerator: function( modelX, viewXMax ) {
+    modelToViewNumerator: function( numerator, viewMax ) {
        return Util.linear(
          this.numeratorAxisRangeProperty.value.min, this.numeratorAxisRangeProperty.value.max,
-         0, viewXMax,
-         modelX );
+         0, viewMax,
+         numerator );
     },
 
     /**
      * Maps a rate's denominator from model to view coordinate frame.
-     * @param {number} modelX
-     * @param {number} viewXMax
+     * @param {number} denominator - denominator in model coordinate frame
+     * @param {number} viewMax - denominator's maximum in view coordinate frame
      * @returns {number}
      */
-    modelToViewDenominator: function( modelX, viewXMax ) {
+    modelToViewDenominator: function( denominator, viewMax ) {
        return Util.linear(
          this.denominatorAxisRangeProperty.value.min, this.denominatorAxisRangeProperty.value.max,
-         0, viewXMax,
-         modelX );
+         0, viewMax,
+         denominator );
     },
 
     /**
