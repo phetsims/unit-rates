@@ -1,6 +1,7 @@
 TODO list for unit-rates
 
 Racing Lab:
+Give each car its own runningProperty, which is sets to false when the race completes
 Change start/stop button to start when both cars reach finish line
 Pressing the start button should also call resetRace.
 When restart race button is pressed, stop the race.
