@@ -1,9 +1,5 @@
 TODO list for unit-rates
 
-usages of modelView assume that we're mapping denominator
-MarkerEditor should be responsible for creating Markers on DNL, not DNLAccordionBox
-
-
 Racing Lab:
 Use MVT for race track and DNL
 Align race track with DNL
