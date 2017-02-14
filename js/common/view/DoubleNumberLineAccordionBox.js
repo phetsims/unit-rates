@@ -179,10 +179,6 @@ define( function( require ) {
         }
         else { // one of the 2 values is filled in
 
-          // undo button is visible to left of axes
-          undoButton.center = undoButtonHomePosition;
-          undoButton.visible = true;
-
           if ( numerator !== null ) {
 
             // numerator is filled in
@@ -214,6 +210,10 @@ define( function( require ) {
                              doubleNumberLine.modelToViewDenominator( denominator, axisViewLength );
             }
           }
+
+          // undo button is visible to left of axes
+          undoButton.center = undoButtonHomePosition;
+          undoButton.visible = true;
         }
       }
 
