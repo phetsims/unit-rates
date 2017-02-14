@@ -55,7 +55,7 @@ define( function( require ) {
 
     Node.call( this );
 
-    var modelRange = ( options.doubleNumberLine === 'numerator' ) ?
+    var modelRange = ( doubleNumberLine.fixedAxis === 'numerator' ) ?
                      doubleNumberLine.numeratorAxisRangeProperty.value :
                      doubleNumberLine.denominatorAxisRangeProperty.value;
     var viewRange = new Range( 0, options.horizontalAxisLength - options.arrowSize.height - 10 );
