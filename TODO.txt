@@ -1,8 +1,6 @@
 TODO list for unit-rates
 
 Racing Lab:
-Use MVT for race track and DNL
-Align race track with DNL
 Add moving race marker to DNL
 Add marker to DNL when race finishes
 Reset race when any of these change: rate spinner, scene selection, track length

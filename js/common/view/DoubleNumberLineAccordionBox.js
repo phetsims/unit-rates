@@ -278,6 +278,9 @@ define( function( require ) {
       markerEditorNode.dispose();
       doubleNumberLineNode.dispose();
     };
+
+    // @private required by prototype functions
+    this.doubleNumberLineNode = doubleNumberLineNode;
   }
 
   unitRates.register( 'DoubleNumberLineAccordionBox', DoubleNumberLineAccordionBox );
@@ -288,6 +291,14 @@ define( function( require ) {
     dispose: function() {
       AccordionBox.prototype.dispose.call( this );
       this.disposeDoubleNumberLineAccordionBox();
+    },
+
+    /**
+     * Gets the origin of the double number line's origin in the global view coordinate from.
+     * @returns {*}
+     */
+    getGlobalOrigin: function() {
+      return this.doubleNumberLineNode.parentToGlobalPoint( new Vector2( this.doubleNumberLineNode.x, this.doubleNumberLineNode.y ) );
     }
   } );
 } );

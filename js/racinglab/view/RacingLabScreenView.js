@@ -92,26 +92,6 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( restartRaceButton );
 
-    // Track for car1
-    var trackNode1 = new RaceTrackNode( model.track1, model.car1, model.timeProperty1, viewProperties.timerExpandedProperty1, {
-      timerTitleString: timer1String,
-      trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
-      //TODO temporary layout
-      left: this.layoutBounds.left + 15,
-      bottom: this.layoutBounds.centerY - 5
-    } );
-    playAreaLayer.addChild( trackNode1 );
-
-    // Track for car2
-    var trackNode2 = new RaceTrackNode( model.track2, model.car2, model.timeProperty2, viewProperties.timerExpandedProperty2, {
-      timerTitleString: timer2String,
-      trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
-      //TODO temporary layout
-      left: trackNode1.left,
-      top: this.layoutBounds.centerY + 5
-    } );
-    playAreaLayer.addChild( trackNode2 );
-
     // Rate for car2
     var rateAccordionBox2 = new RateAccordionBox( model.car2.rate, {
       titleString: rate2String,
@@ -165,6 +145,24 @@ define( function( require ) {
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
       } );
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
+
+    // Track for car1
+    var trackNode1 = new RaceTrackNode( model.track1, model.car1, model.timeProperty1, viewProperties.timerExpandedProperty1, {
+      timerTitleString: timer1String,
+      trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
+      x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
+      bottom: this.layoutBounds.centerY - 5
+    } );
+    playAreaLayer.addChild( trackNode1 );
+
+    // Track for car2
+    var trackNode2 = new RaceTrackNode( model.track2, model.car2, model.timeProperty2, viewProperties.timerExpandedProperty2, {
+      timerTitleString: timer2String,
+      trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
+      x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
+      top: this.layoutBounds.centerY + 5
+    } );
+    playAreaLayer.addChild( trackNode2 );
 
     // Show/hide components related to car2. unlink not needed.
     model.car2.visibleProperty.link( function( visible ) {
