@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.0-dev.46 Tue Feb 14 2017 15:39:24 GMT-0700 (MST)",
+  "comment": "# unit-rates 1.0.0-dev.46 Tue Feb 14 2017 15:43:47 GMT-0700 (MST)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "master"
@@ -65,7 +65,7 @@
     "branch": "master"
   },
   "unit-rates": {
-    "sha": "5ff9a86d4a031c93259cf37383af0115155fad85",
+    "sha": "c0551ae42d66bf737254d44592d0f24a117a4299",
     "branch": "master"
   }
 }
