@@ -51,7 +51,7 @@ define( function( require ) {
 
       // Major markers have 1 decimal place in the denominator
       isMajorMarker: function( numerator, denominator ) {
-        return URUtil.decimalPlaces( denominator ) === 1;
+        return URUtil.decimalPlaces( denominator ) <= 1;
       }
 
     }, options );
