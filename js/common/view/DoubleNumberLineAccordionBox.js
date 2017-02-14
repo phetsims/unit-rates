@@ -75,8 +75,8 @@ define( function( require ) {
     // This flag indicates whether the undo button applies to the editor (true) or a marker (false).
     var undoAppliesToEditor = true;
 
-    // pressing the undo button moves the marker edit back to its home position,
-    // or removes the marker that was most recently added using the editor
+    // Pressing the undo button moves the marker edit back to its home position,
+    // or removes the marker that was most recently added using the editor.
     var undoButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'undo', { scale: 0.45 } ),
       visible: false,
@@ -93,6 +93,7 @@ define( function( require ) {
     } );
     undoButton.touchArea = undoButton.localBounds.dilatedXY( 5, 5 );
 
+    // Pressing the eraser button erases all 'erasable' markers from the double number line.
     var eraserButton = new EraserButton( {
       baseColor: URColors.eraserButton,
       listener: function() {
