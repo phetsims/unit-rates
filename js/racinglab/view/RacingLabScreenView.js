@@ -126,7 +126,7 @@ define( function( require ) {
 
     // Double number line for car1
     var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
-      model.doubleNumberLine1, model.markerEditor1, keypadLayer, {
+      model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
         axisViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
         titleString: doubleNumberLine1String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
@@ -137,7 +137,7 @@ define( function( require ) {
 
     // Double number line for car2
     var doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
-      model.doubleNumberLine2, model.markerEditor2, keypadLayer, {
+      model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
         axisViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
         titleString: doubleNumberLine2String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
@@ -147,7 +147,7 @@ define( function( require ) {
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
 
     // Track for car1
-    var trackNode1 = new RaceTrackNode( model.track1, model.car1, model.timeProperty1, viewProperties.timerExpandedProperty1, {
+    var trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, {
       timerTitleString: timer1String,
       trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
@@ -156,7 +156,7 @@ define( function( require ) {
     playAreaLayer.addChild( trackNode1 );
 
     // Track for car2
-    var trackNode2 = new RaceTrackNode( model.track2, model.car2, model.timeProperty2, viewProperties.timerExpandedProperty2, {
+    var trackNode2 = new RaceTrackNode( model.car2, viewProperties.timerExpandedProperty2, {
       timerTitleString: timer2String,
       trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line

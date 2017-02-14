@@ -71,22 +71,6 @@ define( function( require ) {
     // @public the blue (bottom) car
     this.car2 = new RaceCar( blueCarImage, { visible: false } );
 
-    // @public
-    this.track1 = new RaceTrack();
-    this.track2 = new RaceTrack();
-
-    // @public
-    this.timeProperty1 = new Property( 0 );
-    this.timeProperty2 = new Property( 0 );
-
-    // @public
-    this.doubleNumberLine1 = new DoubleNumberLine( this.car1.rate.unitRateProperty, DOUBLE_NUMBER_LINE_OPTIONS );
-    this.doubleNumberLine2 = new DoubleNumberLine( this.car2.rate.unitRateProperty, DOUBLE_NUMBER_LINE_OPTIONS );
-
-    // @public
-    this.markerEditor1 = new MarkerEditor( this.car1.rate.unitRateProperty, MARKER_EDITOR_OPTIONS );
-    this.markerEditor2 = new MarkerEditor( this.car2.rate.unitRateProperty, MARKER_EDITOR_OPTIONS );
-
     // Reset the race when any of the specified Properties changes. unmultilink not needed
     Property.lazyMultilink( [
 
@@ -100,8 +84,8 @@ define( function( require ) {
         this.car2.rate.denominatorProperty,
 
         // changed by dragging the finish line flags
-        this.track1.lengthProperty,
-        this.track2.lengthProperty
+        this.car1.track.lengthProperty,
+        this.car2.track.lengthProperty
       ],
       this.resetRace.bind( this ) );
   }
@@ -124,29 +108,13 @@ define( function( require ) {
       this.runningProperty.reset();
       this.car1.reset();
       this.car2.reset();
-      this.track1.reset();
-      this.track2.reset();
-      this.timeProperty1.reset();
-      this.timeProperty2.reset();
-      this.doubleNumberLine1.reset();
-      this.doubleNumberLine2.reset();
-      this.markerEditor1.reset();
-      this.markerEditor2.reset();
     },
 
     // @private resets the race
     resetRace: function() {
-
-      // stop the race
-      this.runningProperty.value = false;
-
-      // return cars to starting line
-      this.car1.distanceProperty.value = 0;
-      this.car2.distanceProperty.value = 0;
-      
-      // reset the timers
-      this.timeProperty1.reset();
-      this.timeProperty2.reset();
+      this.runningProperty.reset();
+      this.car1.resetRace();
+      this.car2.resetRace();
     }
   } );
 } );

@@ -48,14 +48,12 @@ define( function( require ) {
   };
 
   /**
-   * @param {RaceTrack} track
-   * @param {Car} car
-   * @param {Property.<number>} timeProperty
+   * @param {RaceCar} car
    * @param {Property.<boolean>} timerExpandedProperty
    * @param {Object} [options]
    * @constructor
    */
-  function RaceTrackNode( track, car, timeProperty, timerExpandedProperty, options ) {
+  function RaceTrackNode( car, timerExpandedProperty, options ) {
 
     options = _.extend( {
       trackViewLength: 1000, // {number} view length of the track
@@ -65,7 +63,7 @@ define( function( require ) {
     var self = this;
 
     // maps 'miles' between model and view coordinate frames
-    var modelToView = new LinearFunction( 0, track.maxLength, 0, options.trackViewLength );
+    var modelToView = new LinearFunction( 0, car.track.maxLength, 0, options.trackViewLength );
 
     // Dashed line shows the maximum track length, revealed when the track is shortened.
     var dashedLineNode = new Line( 0, 0, options.trackViewLength, 0, {
@@ -82,7 +80,7 @@ define( function( require ) {
 
     // markers below the track
     var markerNodes = [];
-    for ( var x = 0; x <= track.maxLength; ) {
+    for ( var x = 0; x <= car.track.maxLength; ) {
 
       // create marker
       var markerNode = createMarkerNode();
@@ -93,7 +91,7 @@ define( function( require ) {
       markerNode.top = solidLineNode.bottom;
 
       // next marker
-      x = x + track.markerSpacing;
+      x = x + car.track.markerSpacing;
     }
     var markersParent = new Node( { children: markerNodes } );
     markersParent.top = solidLineNode.centerY;
@@ -109,7 +107,7 @@ define( function( require ) {
     var finishFlagNode = new Image( finishFlagImage, {
       cursor: 'pointer',
       scale: 0.5,
-      left: modelToView( track.lengthProperty.value ),
+      left: modelToView( car.track.lengthProperty.value ),
       bottom: 0
     } );
     finishFlagNode.touchArea = finishFlagNode.localBounds.dilatedX( 30 );
@@ -127,7 +125,7 @@ define( function( require ) {
     } );
 
     // Timer
-    var timerNode = new RaceTimerNode( timeProperty, timerExpandedProperty, options.timerTitleString );
+    var timerNode = new RaceTimerNode( car.timeProperty, timerExpandedProperty, options.timerTitleString );
 
     // Label that indicates the length of the track
     var lengthNode = new Text( '', { font: new URFont( 12 ) } );
@@ -166,11 +164,11 @@ define( function( require ) {
 
       // grey out markers that are past finish line
       for ( var i = 0; i < markerNodes.length; i++ ) {
-        var enabled = ( i * track.markerSpacing <= length );
+        var enabled = ( i * car.track.markerSpacing <= length );
         markerNodes[ i ].opacity = ( enabled ? 1 : 0.4 );
       }
     };
-    track.lengthProperty.link( lengthObserver ); // unlink in dispose
+    car.track.lengthProperty.link( lengthObserver ); // unlink in dispose
 
     Node.call( this, options );
 
@@ -197,7 +195,7 @@ define( function( require ) {
 
         // compute offset from current track length
         startDragXOffset = finishFlagNode.globalToParentPoint( event.pointer.point ).x -
-                           modelToView( track.lengthProperty.value );
+                           modelToView( car.track.lengthProperty.value );
       },
 
       /**
@@ -211,10 +209,10 @@ define( function( require ) {
         var viewLength = finishFlagNode.globalToParentPoint( event.pointer.point ).x - startDragXOffset;
 
         // convert to model coordinates, constrain to the track length range
-        var modelLength = Util.clamp( modelToView.inverse( viewLength ), 0, track.maxLength );
+        var modelLength = Util.clamp( modelToView.inverse( viewLength ), 0, car.track.maxLength );
 
         // update the model, constrain to integer values
-        track.lengthProperty.value = Util.toFixedNumber( modelLength, 0 );
+        car.track.lengthProperty.value = Util.toFixedNumber( modelLength, 0 );
       }
     } );
     finishFlagNode.addInputListener( dragHandler );
@@ -229,7 +227,7 @@ define( function( require ) {
     // @private
     this.disposeRaceTrackNode = function() {
       timerNode.dispose();
-      track.lengthProperty.unlink( lengthObserver );
+      car.track.lengthProperty.unlink( lengthObserver );
       car.distanceProperty.unlink( carObserver );
     };
   }
