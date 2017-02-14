@@ -31,7 +31,7 @@ define( function( require ) {
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   // constants
-  // values larger than these will be displayed properly, but the display will be scaled to fit
+  // values longer than these will be displayed properly, but the display will be scaled to fit
   var MAX_COST = 100.5;
   var MAX_QUANTITY = 10.5;
 

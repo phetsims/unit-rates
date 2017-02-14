@@ -37,11 +37,11 @@ define( function( require ) {
 
       // value
       valueToString: function( value ) { return '' + value; },
-      valueMaxString: '',
-      valueMaxWidth: 100,
+      valueMaxString: '12345', // strings longer than this will be scaled down
+      valueMaxWidth: 100, // i18n, determined empirically
 
       // title
-      titleMaxWidth: 100,
+      titleMaxWidth: 100, // i18n, determined empirically
 
       // panel
       font: new URFont( 20 ),
@@ -54,13 +54,13 @@ define( function( require ) {
     // title, displayed when collapsed
     var titleNode = new Text( titleString, {
       font: options.font,
-      maxWidth: options.titleMaxWidth // i18n, determined empirically
+      maxWidth: options.titleMaxWidth
     } );
 
     // value, displayed when expanded
     var valueNode = new Text( options.valueMaxString, {
       font: options.font,
-      maxWidth: options.valueMaxWidth // i18n, determined empirically
+      maxWidth: options.valueMaxWidth
     } );
 
     // dispose required

@@ -25,8 +25,8 @@ define( function( require ) {
 
     options = _.extend( {
       valueToString: function( value ) { return '' + value; },
-      valueMaxString: '',
-      valueMaxWidth: 100,
+      valueMaxString: '12345', // strings longer than this will be scaled down
+      valueMaxWidth: 100, // i18n, determined empirically
       font: new URFont( 20 ),
       xMargin: 8,
       yMargin: 4
