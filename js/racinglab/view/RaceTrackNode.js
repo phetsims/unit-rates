@@ -15,6 +15,7 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var LinearFunction = require( 'DOT/LinearFunction' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var RaceTimerNode = require( 'UNIT_RATES/racinglab/view/RaceTimerNode' );
@@ -51,28 +52,30 @@ define( function( require ) {
    * @param {Car} car
    * @param {Property.<number>} timeProperty
    * @param {Property.<boolean>} timerExpandedProperty
-   * @param {LinearFunction} modelToView
    * @param {Object} [options]
    * @constructor
    */
-  function RaceTrackNode( track, car, timeProperty, timerExpandedProperty, modelToView, options ) {
+  function RaceTrackNode( track, car, timeProperty, timerExpandedProperty, options ) {
 
     options = _.extend( {
+      trackViewLength: 1000, // {number} view length of the track
       timerTitleString: '' // {string} title for the timer accordion box
     }, options );
 
     var self = this;
 
+    // maps 'miles' between model and view coordinate frames
+    var modelToView = new LinearFunction( 0, track.maxLength, 0, options.trackViewLength );
+
     // Dashed line shows the maximum track length, revealed when the track is shortened.
-    var maxX = modelToView( track.maxLength );
-    var dashedLineNode = new Line( 0, 0, maxX, 0, {
+    var dashedLineNode = new Line( 0, 0, options.trackViewLength, 0, {
       stroke: 'gray',
       lineWidth: 0.5,
       lineDash: [ 5, 5 ]
     } );
 
     // Solid line shows the actual track length.
-    var solidLineNode = new Line( -NEGATIVE_TRACK_LENGTH, 0, maxX, 0, {
+    var solidLineNode = new Line( -NEGATIVE_TRACK_LENGTH, 0, options.trackViewLength, 0, {
       stroke: 'black',
       lineWidth: 1
     } );

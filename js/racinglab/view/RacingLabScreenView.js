@@ -12,7 +12,6 @@ define( function( require ) {
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
-  var LinearFunction = require( 'DOT/LinearFunction' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var RaceTrackNode = require( 'UNIT_RATES/racinglab/view/RaceTrackNode' );
@@ -93,13 +92,10 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( restartRaceButton );
 
-    //TODO use ModelViewTransform2? or just a scaleX factor?
-    //TODO this should also be used by DoubleNumberLineAccordionBox and DoubleNumberLineNode
-    var modelToView = new LinearFunction( 0, 200, 0, 600 );
-
     // Track for car1
-    var trackNode1 = new RaceTrackNode( model.track1, model.car1, model.timeProperty1, viewProperties.timerExpandedProperty1, modelToView, {
+    var trackNode1 = new RaceTrackNode( model.track1, model.car1, model.timeProperty1, viewProperties.timerExpandedProperty1, {
       timerTitleString: timer1String,
+      trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
       //TODO temporary layout
       left: this.layoutBounds.left + 15,
       bottom: this.layoutBounds.centerY - 5
@@ -107,8 +103,9 @@ define( function( require ) {
     playAreaLayer.addChild( trackNode1 );
 
     // Track for car2
-    var trackNode2 = new RaceTrackNode( model.track2, model.car2, model.timeProperty2, viewProperties.timerExpandedProperty2, modelToView, {
+    var trackNode2 = new RaceTrackNode( model.track2, model.car2, model.timeProperty2, viewProperties.timerExpandedProperty2, {
       timerTitleString: timer2String,
+      trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
       //TODO temporary layout
       left: trackNode1.left,
       top: this.layoutBounds.centerY + 5
