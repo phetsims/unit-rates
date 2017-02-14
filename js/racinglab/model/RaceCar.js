@@ -110,14 +110,17 @@ define( function( require ) {
     step: function( dt ) {
       if ( this.visibleProperty.value && ( this.distanceProperty.value < this.track.lengthProperty.value ) ) {
 
-        var dx = 1; //TODO compute dx as a function of dt and this.rate
+        //TODO compute dx as a function of dt and this.rate
+        var dx = 0.5;
         if ( this.distanceProperty.value + dx > this.track.lengthProperty.value ) {
           dx = this.track.lengthProperty.value - this.distanceProperty.value;
         }
         
         this.distanceProperty.value = this.distanceProperty.value + dx;
 
-        //TODO update timerProperty
+        //TODO update timerProperty as a function of dt and this.rate
+        this.timeProperty.value = this.timeProperty.value + dt;
+
         //TODO emit raceFinished
       }
     }
