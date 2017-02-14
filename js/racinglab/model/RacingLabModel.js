@@ -136,11 +136,17 @@ define( function( require ) {
 
     // @private resets the race
     resetRace: function() {
+
+      // stop the race
       this.runningProperty.value = false;
+
+      // return cars to starting line
       this.car1.distanceProperty.value = 0;
       this.car2.distanceProperty.value = 0;
-      this.timeProperty1.value = 0;
-      this.timeProperty2.value = 0;
+      
+      // reset the timers
+      this.timeProperty1.reset();
+      this.timeProperty2.reset();
     }
   } );
 } );
