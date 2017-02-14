@@ -13,3 +13,6 @@ Reset All or switching items while animation is happening doesn't clean up anima
 fuzzMouse assertion failure in BagDragHandler: bag should be on shelf or scale
 Reset button for shelf + scale
 Items on shelf and scale
+
+General:
+Disable click-to-close for AccordionBox title bars
