@@ -62,8 +62,6 @@ define( function( require ) {
    */
   function RacingLabModel() {
 
-    var self = this;
-
     // @public is the race running?
     this.runningProperty = new Property( false );
 
@@ -90,11 +88,6 @@ define( function( require ) {
     this.markerEditor2 = new MarkerEditor( this.car2.rate.unitRateProperty, MARKER_EDITOR_OPTIONS );
 
     // Reset the race when any of the specified Properties changes
-    var resetRace = function() {
-      self.runningProperty.value = false;
-      self.car1.distanceProperty.value = 0;
-      self.car2.distanceProperty.value = 0;
-    };
     Property.lazyMultilink( [
 
         // changed via the scene radio buttons
@@ -110,7 +103,7 @@ define( function( require ) {
         this.track1.lengthProperty,
         this.track2.lengthProperty
       ],
-      resetRace );
+      this.resetRace.bind( this ) );
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );
@@ -139,6 +132,15 @@ define( function( require ) {
       this.doubleNumberLine2.reset();
       this.markerEditor1.reset();
       this.markerEditor2.reset();
+    },
+
+    // @private resets the race
+    resetRace: function() {
+      this.runningProperty.value = false;
+      this.car1.distanceProperty.value = 0;
+      this.car2.distanceProperty.value = 0;
+      this.timeProperty1.value = 0;
+      this.timeProperty2.value = 0;
     }
   } );
 } );
