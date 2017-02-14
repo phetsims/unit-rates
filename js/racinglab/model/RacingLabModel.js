@@ -87,7 +87,7 @@ define( function( require ) {
     this.markerEditor1 = new MarkerEditor( this.car1.rate.unitRateProperty, MARKER_EDITOR_OPTIONS );
     this.markerEditor2 = new MarkerEditor( this.car2.rate.unitRateProperty, MARKER_EDITOR_OPTIONS );
 
-    // Reset the race when any of the specified Properties changes
+    // Reset the race when any of the specified Properties changes. unmultilink not needed
     Property.lazyMultilink( [
 
         // changed via the scene radio buttons
