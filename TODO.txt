@@ -5,7 +5,6 @@ MarkerEditor should be responsible for creating Markers on DNL, not DNLAccordion
 
 
 Racing Lab:
-Redo RaceTimerNode without AccordionBox? right justify time?
 Use MVT for race track and DNL
 Align race track with DNL
 Add moving race marker to DNL
