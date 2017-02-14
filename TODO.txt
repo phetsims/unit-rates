@@ -1,6 +1,8 @@
 TODO list for unit-rates
 
 Racing Lab:
+Move cars
+Update timer
 Add moving race marker to DNL
 Add marker to DNL when race finishes
 Reset race when any of these change: rate spinner, scene selection, track length
