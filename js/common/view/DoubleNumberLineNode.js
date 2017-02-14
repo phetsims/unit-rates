@@ -37,7 +37,7 @@ define( function( require ) {
       axisLineWidth: 1.5,
 
       // horizontal axes
-      horizontalAxisLength: 610, // {number} length of horizontal axes, including the arrow heads
+      axisViewLength: 1000, // {number} view length of doubleNumberLine's range
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
       axisYSpacing: 20, // {number} vertical spacing between top and bottom axes
       labelFont: new URFont( 14 ), // {Font} for axis labels
@@ -55,14 +55,9 @@ define( function( require ) {
 
     Node.call( this );
 
-    var modelRange = ( doubleNumberLine.fixedAxis === 'numerator' ) ?
-                     doubleNumberLine.numeratorAxisRangeProperty.value :
-                     doubleNumberLine.denominatorAxisRangeProperty.value;
-    var viewRange = new Range( 0, options.horizontalAxisLength - options.arrowSize.height - 10 );
-
-    // @public (read-only) maps an x coordinate between model and view coordinate frames
-    this.modelToView = new LinearFunction( modelRange.min, modelRange.max, viewRange.min, viewRange.max );
-
+    // @public (read-only)
+    this.axisViewLength = options.axisViewLength;
+    
     // All other nodes are positioned relative to this one
     var verticalAxis = new Line( 0, -options.minorMarkerLength / 2, 0, options.minorMarkerLength / 2, {
       stroke: options.axisColor,
@@ -70,8 +65,11 @@ define( function( require ) {
     } );
     this.addChild( verticalAxis );
 
+    // Double number line's maximum should be just to the left of the axis' arrow head
+    var horizontalAxisLength = this.axisViewLength + options.arrowSize.height + 10;
+    
     // numerator axis
-    var numeratorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
+    var numeratorAxisNode = new ArrowNode( 0, 0, horizontalAxisLength, 0, {
       fill: options.axisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
@@ -93,7 +91,7 @@ define( function( require ) {
     } ) );
 
     // denominator axis
-    var denominatorAxisNode = new ArrowNode( 0, 0, options.horizontalAxisLength, 0, {
+    var denominatorAxisNode = new ArrowNode( 0, 0, horizontalAxisLength, 0, {
       fill: options.axisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
@@ -120,7 +118,7 @@ define( function( require ) {
     this.mutate( options );
 
     // @public (read-only) position for things that are "out of range", halfway between arrows and labels
-    this.outOfRangeXOffset = options.horizontalAxisLength + ( options.labelXSpacing / 2 );
+    this.outOfRangeXOffset = horizontalAxisLength + ( options.labelXSpacing / 2 );
 
     // when a Marker is added, add a MarkerNode
     var markerAddedListener = function( marker ) {
@@ -131,7 +129,7 @@ define( function( require ) {
           lineLength: marker.isMajor ? options.majorMarkerLength : options.minorMarkerLength,
           numeratorOptions: doubleNumberLine.numeratorOptions,
           denominatorOptions: doubleNumberLine.denominatorOptions,
-          centerX: self.modelToView( marker.denominatorProperty.value ),
+          centerX: doubleNumberLine.modelToViewDenominator( marker.denominatorProperty.value, self.axisViewLength ),
           centerY: verticalAxis.centerY
         } );
       }

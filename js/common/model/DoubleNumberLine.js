@@ -14,6 +14,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var Util = require( 'DOT/Util' );
 
   // constants
   var FIXED_AXIS_VALUES = [ 'numerator', 'denominator' ];
@@ -71,7 +72,6 @@ define( function( require ) {
     // @public (read-only)
     this.fixedAxis = options.fixedAxis;
 
-    //TODO are these Properties really needed?
     // @public defined below
     this.numeratorAxisRangeProperty = null;
     this.denominatorAxisRangeProperty = null;
@@ -141,6 +141,32 @@ define( function( require ) {
   unitRates.register( 'DoubleNumberLine', DoubleNumberLine );
 
   return inherit( Object, DoubleNumberLine, {
+
+    /**
+     * Maps a rate's numerator from model to view coordinate frame.
+     * @param {number} modelX
+     * @param {number} viewXMax
+     * @returns {number}
+     */
+    modelToViewNumerator: function( modelX, viewXMax ) {
+       return Util.linear(
+         this.numeratorAxisRangeProperty.value.min, this.numeratorAxisRangeProperty.value.max,
+         0, viewXMax,
+         modelX );
+    },
+
+    /**
+     * Maps a rate's denominator from model to view coordinate frame.
+     * @param {number} modelX
+     * @param {number} viewXMax
+     * @returns {number}
+     */
+    modelToViewDenominator: function( modelX, viewXMax ) {
+       return Util.linear(
+         this.denominatorAxisRangeProperty.value.min, this.denominatorAxisRangeProperty.value.max,
+         0, viewXMax,
+         modelX );
+    },
 
     /**
      * This is a request to add a marker, subject to rules about uniqueness and marker precedence.

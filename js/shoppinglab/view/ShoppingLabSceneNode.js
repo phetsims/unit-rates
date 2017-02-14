@@ -36,7 +36,7 @@ define( function( require ) {
 
     // Double number line
     var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
-      horizontalAxisLength: 834, // determined empirically, to take up the full width of the screen
+      axisViewLength: 816, // determined empirically, to take up the full width of the screen
       expandedProperty: viewProperties.doubleNumberLineExpandedProperty,                  
       left: layoutBounds.minX + URConstants.SCREEN_X_MARGIN,
       top: layoutBounds.minY + URConstants.SCREEN_Y_MARGIN

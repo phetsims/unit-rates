@@ -37,6 +37,9 @@ define( function( require ) {
   var timer1String = require( 'string!UNIT_RATES/timer1' );
   var timer2String = require( 'string!UNIT_RATES/timer2' );
 
+  // constants
+  var DOUBLE_NUMBER_LINE_AXIS_LENGTH = 582;
+
   /**
    * @param {RacingLabModel} model
    * @param {Object} [options]
@@ -147,7 +150,7 @@ define( function( require ) {
     // Double number line for car1
     var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.doubleNumberLine1, model.markerEditor1, keypadLayer, {
-        horizontalAxisLength: 600,
+        axisViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
         titleString: doubleNumberLine1String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
@@ -158,7 +161,7 @@ define( function( require ) {
     // Double number line for car2
     var doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
       model.doubleNumberLine2, model.markerEditor2, keypadLayer, {
-        horizontalAxisLength: 600,
+        axisViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
         titleString: doubleNumberLine2String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,

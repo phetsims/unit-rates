@@ -41,7 +41,7 @@ define( function( require ) {
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // DoubleNumberLineAccordionBox options
-      horizontalAxisLength: 610, // {number} length of horizontal axes, including the arrow heads
+      axisViewLength: 592, // {number} view length of doubleNumberLine's range
       titleString: doubleNumberLineString
 
     }, options );
@@ -53,7 +53,7 @@ define( function( require ) {
     } );
 
     var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
-      horizontalAxisLength: options.horizontalAxisLength,
+      axisViewLength: options.axisViewLength,
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
       x: 0,
@@ -183,7 +183,8 @@ define( function( require ) {
             destinationX = markerEditorNodeOutOfRangeX;
           }
           else {
-            destinationX = doubleNumberLineNode.x + doubleNumberLineNode.modelToView( denominator );
+            destinationX = doubleNumberLineNode.x +
+                           doubleNumberLine.modelToViewDenominator( denominator, doubleNumberLineNode.axisViewLength );
           }
 
           // undo button is visible to left of axes
@@ -222,7 +223,7 @@ define( function( require ) {
         undoAppliesToEditor = false;
 
         // Position the undo button below the undoable marker
-        undoButton.centerX = doubleNumberLineNode.modelToView( marker.denominatorProperty.value );
+        undoButton.centerX = doubleNumberLine.modelToViewDenominator( marker.denominatorProperty.value, doubleNumberLineNode.axisViewLength );
         undoButton.bottom = markerEditorNode.bottom;
         undoButton.visible = true;
       }
