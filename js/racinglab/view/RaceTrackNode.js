@@ -46,7 +46,7 @@ define( function( require ) {
     headHeight: 18,
     tailWidth: 8
   };
-  
+
   /**
    * @param {RaceTrack} track
    * @param {Car} car
@@ -220,10 +220,17 @@ define( function( require ) {
     finishFlagNode.addInputListener( dragHandler );
     arrowsNode.addInputListener( dragHandler );
 
+    // Synchronize car location with model
+    var carObserver = function( distance ) {
+      carNode.right = modelToView( distance );
+    };
+    car.distanceProperty.link( carObserver ); // unlink in dispose
+
     // @private
     this.disposeRaceTrackNode = function() {
       timerNode.dispose();
       track.lengthProperty.unlink( lengthObserver );
+      car.distanceProperty.unlink( carObserver );
     };
   }
 
@@ -234,13 +241,13 @@ define( function( require ) {
    * @returns {Node}
    */
   function createMarkerNode() {
-    
+
     var markerShape = new Shape()
       .moveTo( 0, 0 )
       .lineTo( MARKER_SIDE_LENGTH / 2, MARKER_SIDE_LENGTH )
       .lineTo( -MARKER_SIDE_LENGTH / 2, MARKER_SIDE_LENGTH )
       .close();
-    
+
     return new Path( markerShape, {
       stroke: 'black',
       fill: 'yellow'
