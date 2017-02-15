@@ -7,7 +7,6 @@ Add marker to DNL when car reaches finish line, if timer is expanded
 Shopping:
 Add 3rd decimal place to cost display on scale
 Reset All or switching items while animation is happening doesn't clean up animation
-fuzzMouse assertion failure in BagDragHandler: bag should be on shelf or scale
 Reset button for shelf + scale
 Items on shelf and scale
 
