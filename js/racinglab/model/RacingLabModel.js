@@ -23,6 +23,8 @@ define( function( require ) {
    */
   function RacingLabModel() {
 
+    var self = this;
+
     // @public is the race running?
     this.runningProperty = new Property( false );
 
@@ -49,6 +51,22 @@ define( function( require ) {
         this.car2.track.lengthProperty
       ],
       this.resetRace.bind( this ) );
+
+    // If both cars are at the finish line, changing the state to running restarts the race. unlink not needed.
+    this.runningProperty.link( function( running ) {
+      if ( running && self.car1.isAtFinish() && ( !self.car2.visibleProperty.value || self.car2.isAtFinish() ) ) {
+        self.car1.resetRace();
+        self.car2.resetRace();
+      }
+    } );
+
+    // When both cars reach the finish line, stop the race.
+    Property.lazyMultilink( [ this.car1.distanceProperty, this.car2.distanceProperty ],
+      function( distance1, distance2 ) {
+        if ( self.car1.isAtFinish() && ( !self.car2.visibleProperty.value || self.car2.isAtFinish() ) ) {
+          self.runningProperty.value = false;
+        }
+      } );
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );
