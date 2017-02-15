@@ -133,7 +133,7 @@ define( function( require ) {
 
         if ( this.distanceProperty.value + deltaDistance >= this.track.lengthProperty.value ) {
 
-          // move directly to the finish line
+          // car has reached the finish line
           this.distanceProperty.value = this.track.lengthProperty.value;
           this.timeProperty.value = this.track.lengthProperty.value / this.rate.unitRateProperty.value;
           //TODO emit raceFinished
