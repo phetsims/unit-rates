@@ -106,6 +106,15 @@ define( function( require ) {
       this.timeProperty.reset();
     },
 
+    /**
+     * Is the car at the finish line?
+     * @returns {boolean}
+     * @public
+     */
+    isAtFinish: function() {
+      return ( this.distanceProperty.value === this.track.lengthProperty.value );
+    },
+
     // @public
     step: function( dt ) {
       if ( this.visibleProperty.value && ( this.distanceProperty.value < this.track.lengthProperty.value ) ) {
