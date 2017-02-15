@@ -42,7 +42,8 @@ define( function( require ) {
 
       // DoubleNumberLineAccordionBox options
       axisViewLength: 592, // {number} view length of doubleNumberLine's range
-      titleString: doubleNumberLineString
+      titleString: doubleNumberLineString,
+      keypadLocation: 'below' // {string} whether the keypad is 'above' or 'below' the double number line
 
     }, options );
 
@@ -68,6 +69,7 @@ define( function( require ) {
     var markerEditorNode = new MarkerEditorNode( markerEditor, this, keypadLayer, {
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
+      keypadLocation: options.keypadLocation,
       x: markerEditorNodeHomeX,
       centerY: doubleNumberLineNode.centerY
     } );
