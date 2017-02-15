@@ -84,8 +84,9 @@ define( function( require ) {
     // Restart race button
     var restartRaceButton = new RestartRaceButton( {
       listener: function() {
-        model.car1.distanceProperty.value = 0;
-        model.car2.distanceProperty.value = 0;
+        model.runningProperty.value = false;
+        model.car1.resetRace();
+        model.car2.resetRace();
       },
       right: startStopButton.left - 15,
       centerY: startStopButton.centerY
