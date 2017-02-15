@@ -125,7 +125,9 @@ define( function( require ) {
     step: function( dt ) {
       if ( this.visibleProperty.value && ( this.distanceProperty.value < this.track.lengthProperty.value ) ) {
 
-        // race time, in hours. 1 sec of sim time is equivalent to 8 hours of race time.
+        // race time, in hours. 
+        // 1 sec of sim time is equivalent to 8 hours of race time.
+        // see https://github.com/phetsims/unit-rates/issues/95
         var deltaRaceTime = Util.linear( 0, 1, 0, 8, dt );
 
         // distance traveled, in miles
