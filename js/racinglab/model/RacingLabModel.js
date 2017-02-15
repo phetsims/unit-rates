@@ -35,6 +35,7 @@ define( function( require ) {
     this.car2 = new RaceCar( blueCarImage, { visible: false } );
 
     // Reset the race when any of the specified Properties changes. unmultilink not needed
+    // See https://github.com/phetsims/unit-rates/issues/93
     Property.lazyMultilink( [
 
         // changed via the scene radio buttons
