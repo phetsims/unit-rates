@@ -17,6 +17,7 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var Rate = require( 'UNIT_RATES/common/model/Rate' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var Util = require( 'DOT/Util' );
 
   // strings
   var hoursString = require( 'string!UNIT_RATES/hours' );
@@ -117,22 +118,32 @@ define( function( require ) {
       return ( this.distanceProperty.value === this.track.lengthProperty.value );
     },
 
-    // @public
+    /**
+     * Updates the car and timer.
+     * @param {number} dt - elapsed time since previous call to step, in seconds
+     */
     step: function( dt ) {
       if ( this.visibleProperty.value && ( this.distanceProperty.value < this.track.lengthProperty.value ) ) {
 
-        //TODO compute dx as a function of dt and this.rate
-        var dx = 0.5;
-        if ( this.distanceProperty.value + dx > this.track.lengthProperty.value ) {
-          dx = this.track.lengthProperty.value - this.distanceProperty.value;
+        // race time, in hours. 1 sec of sim time is equivalent to 8 hours of race time.
+        var deltaRaceTime = Util.linear( 0, 1, 0, 8, dt );
+
+        // distance traveled, in miles
+        var deltaDistance = deltaRaceTime * this.rate.unitRateProperty.value;
+
+        if ( this.distanceProperty.value + deltaDistance >= this.track.lengthProperty.value ) {
+
+          // move directly to the finish line
+          this.distanceProperty.value = this.track.lengthProperty.value;
+          this.timeProperty.value = this.track.lengthProperty.value / this.rate.unitRateProperty.value;
+          //TODO emit raceFinished
         }
-        
-        this.distanceProperty.value = this.distanceProperty.value + dx;
+        else {
 
-        //TODO update timerProperty as a function of dt and this.rate
-        this.timeProperty.value = this.timeProperty.value + dt;
-
-        //TODO emit raceFinished
+          // move incrementally
+          this.distanceProperty.value = this.distanceProperty.value + deltaDistance;
+          this.timeProperty.value = this.timeProperty.value + deltaRaceTime;
+        }
       }
     }
   } );
