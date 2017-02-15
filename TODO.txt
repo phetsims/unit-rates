@@ -1,10 +1,8 @@
 TODO list for unit-rates
 
 Racing Lab:
-Move car as a function of rate and dt
-Update timer
 Add car location indicator to DNL
-Add marker to DNL when car reaches finish line
+Add marker to DNL when car reaches finish line, if timer is expanded
 
 Shopping:
 Terminology: team refers to fruit/vegetable/candy as "scene", implementation uses "category", change implementation?
