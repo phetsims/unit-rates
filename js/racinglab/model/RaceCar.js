@@ -33,7 +33,8 @@ define( function( require ) {
       rate: new Rate( 50, 2 ), // initial rate, in miles per hour
       visible: true, // is this car visible?
       numeratorMaxDecimals: 2,
-      denominatorMaxDecimals: 2
+      denominatorMaxDecimals: 2,
+      majorMarkerSpacing: 25
     }, options );
 
     // @pubic (read-only)
@@ -75,7 +76,7 @@ define( function( require ) {
 
       // Specifies the interval for major markers
       isMajorMarker: function( numerator, denominator ) {
-        return ( numerator % 25 === 0 );
+        return ( numerator % options.majorMarkerSpacing === 0 );
       }
     } );
 
@@ -96,6 +97,7 @@ define( function( require ) {
       this.distanceProperty.reset();
       this.visibleProperty.reset();
       this.timeProperty.reset();
+      this.track.reset();
       this.doubleNumberLine.reset();
       this.markerEditor.reset();
     },

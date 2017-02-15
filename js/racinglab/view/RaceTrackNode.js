@@ -37,7 +37,6 @@ define( function( require ) {
 
   // constants
   var NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates
-  var MARKER_SIDE_LENGTH = 10;
   var ARROW_LENGTH = 28;
   var ARROW_OPTIONS = {
     fill: 'rgb( 33, 190, 156 )',
@@ -45,6 +44,11 @@ define( function( require ) {
     headWidth: 21,
     headHeight: 18,
     tailWidth: 8
+  };
+  var MARKER_SIDE_LENGTH = 5;
+  var MARKER_OPTIONS = {
+    fill: 'black',
+    stroke: null
   };
 
   /**
@@ -246,10 +250,7 @@ define( function( require ) {
       .lineTo( -MARKER_SIDE_LENGTH / 2, MARKER_SIDE_LENGTH )
       .close();
 
-    return new Path( markerShape, {
-      stroke: 'black',
-      fill: 'yellow'
-    } );
+    return new Path( markerShape, MARKER_OPTIONS );
   }
 
   return inherit( Node, RaceTrackNode, {
