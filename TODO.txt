@@ -11,6 +11,7 @@ Reset button for shelf + scale
 Reset All or switching items while animation is happening doesn't clean up animation
 
 Misc:
+bags and items look crappy as images, try mipmaps?
 TODO items in code
 multi-touch testing
 check for memory leaks
