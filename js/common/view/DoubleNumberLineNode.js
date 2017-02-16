@@ -16,6 +16,7 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var MarkerNode = require( 'UNIT_RATES/common/view/MarkerNode' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
@@ -45,7 +46,13 @@ define( function( require ) {
 
       // markers
       majorMarkerLength: URConstants.MAJOR_MARKER_LENGTH,
-      minorMarkerLength: URConstants.MINOR_MARKER_LENGTH
+      minorMarkerLength: URConstants.MINOR_MARKER_LENGTH,
+
+      // Vertical indicator line that can be moved horizontally.
+      // Used in the Racing Lab screen to indicate the current position of the race car.
+      indicatorXProperty: new Property( 0 ), // in model coordinates
+      indicatorVisible: false,
+      indicatorColor: 'green'
 
     }, options );
 
@@ -109,6 +116,16 @@ define( function( require ) {
       children: [ new HStrut( options.labelMaxWidth ) ] // makes labels for all items the same width
     } ) );
 
+    // indicator line
+    var indicatorNode = new Line( 0, 0, 0, options.minorMarkerLength, {
+      visible: options.indicatorVisible,
+      stroke: options.indicatorColor,
+      lineWidth: 2,
+      centerX: options.indicatorXProperty.value,
+      centerY: verticalAxis.centerY
+    } );
+    this.addChild( indicatorNode );
+
     // @private parent for markers, to maintain rendering order
     this.markersParent = new Node();
     this.addChild( this.markersParent );
@@ -143,10 +160,16 @@ define( function( require ) {
     // Add a MarkNode for each initial Marker
     doubleNumberLine.markers.forEach( markerAddedListener.bind( this ) );
 
+    var indicatorXObserver = function( x ) {
+       indicatorNode.centerX = doubleNumberLine.modelToViewNumerator( x, self.axisViewLength );
+    };
+    options.indicatorXProperty.link( indicatorXObserver ); // unlink in dispose
+
     // @private
     this.disposeDoubleNumberLineNode = function() {
       doubleNumberLine.markers.removeItemAddedListener( markerAddedListener );
       doubleNumberLine.markers.removeItemRemovedListener( markerRemovedListener );
+      options.indicatorXProperty.unlink( indicatorXObserver );
     };
   }
 

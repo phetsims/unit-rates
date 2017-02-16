@@ -23,6 +23,7 @@ define( function( require ) {
   var MarkerEditorNode = require( 'UNIT_RATES/common/view/MarkerEditorNode' );
   var MoveTo = require( 'TWIXT/MoveTo' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -45,10 +46,15 @@ define( function( require ) {
 
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
-      // DoubleNumberLineAccordionBox options
       axisViewLength: 592, // {number} view length of doubleNumberLine's range
       titleString: doubleNumberLineString,
-      keypadLocation: 'below' // {string} whether the keypad is 'above' or 'below' the double number line
+      keypadLocation: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
+
+      // Vertical indicator line that can be moved horizontally.
+      // Used in the Racing Lab screen to indicate the current position of the race car.
+      indicatorXProperty: new Property( 0 ), // in view coordinates
+      indicatorVisible: false,
+      indicatorColor: 'green'
 
     }, options );
 
@@ -61,7 +67,10 @@ define( function( require ) {
     var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
       axisViewLength: options.axisViewLength,
       numeratorOptions: doubleNumberLine.numeratorOptions,
-      denominatorOptions: doubleNumberLine.denominatorOptions
+      denominatorOptions: doubleNumberLine.denominatorOptions,
+      indicatorXProperty: options.indicatorXProperty,
+      indicatorVisible: options.indicatorVisible,
+      indicatorColor: options.indicatorColor
     } );
 
     // home positions for marker editor and undo button, to left of axes
