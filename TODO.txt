@@ -7,7 +7,7 @@ Add marker to DNL when car reaches finish line, if timer is expanded
 Shopping:
 Add 3rd decimal place to cost display on scale
 Items on shelf and scale
-Reset button for shelf + scale
+Reset button for shelf + scale (move things from scale to shelf, put all items back into bags)
 Reset All or switching items while animation is happening doesn't clean up animation
 
 Misc:
