@@ -96,17 +96,10 @@ define( function( require ) {
       axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
       valueFormat: '{0}', // {string} format with '{0}' placeholder for value
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
-      maxDecimals: 3, // {number} maximum number of decimal places
+      maxDecimals: 2, // {number} maximum number of decimal places
       trimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
       pickerColor: 'black' // {Color|string} color of the number picker for the denominator in the Rate accordion box
     }, options.denominatorOptions );
-
-    // Numerator must have fewer decimal places than denominator, or we'll have 2 problems:
-    // 1. rounding will make it impossible to enter correct values for some rates
-    // 2. we can end up with 2 markers that have the same denominator and different numerators
-    // See https://github.com/phetsims/unit-rates/issues/148
-    assert && assert( this.numeratorOptions.maxDecimals < this.denominatorOptions.maxDecimals,
-      'numerator must have fewer decimal places than denominator' );
 
     // @public {Rate}
     this.rate = options.rate || Rate.withUnitRate( itemData.unitRate );
