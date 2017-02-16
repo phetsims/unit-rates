@@ -17,7 +17,7 @@ define( function( require ) {
 
     // screen
     SCREEN_X_MARGIN: 15,
-    SCREEN_Y_MARGIN: 15,
+    SCREEN_Y_MARGIN: 10,
 
     // image scaling
     BAG_IMAGE_SCALE: 0.5,

@@ -50,7 +50,7 @@ define( function( require ) {
       keypadLocation: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
 
       // DoubleNumberLineNode options
-      axisViewLength: 592, // {number} view length of doubleNumberLine's range
+      axisViewLength: 1000, // {number} view length of doubleNumberLine's range
       indicatorXProperty: null, // in view coordinates
       indicatorColor: 'green'
 

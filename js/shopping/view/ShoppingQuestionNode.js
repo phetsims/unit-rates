@@ -41,7 +41,7 @@ define( function( require ) {
       questionFont: new URFont( 14 ), // {Font} font for the question
       valueFont: new URFont( 14 ), // {Font} font for the value
       checkMarkFont: new URFont( 36 ), // {Font} font for check mark
-      valueYMargin: 3, // {number} vertical margin inside the value box
+      valueYMargin: 1, // {number} vertical margin inside the value box
       xSpacing: 25, // {number} horizontal spacing between UI elements
       ySpacing: 5  // {number} vertical spacing between UI elements
     }, options );
@@ -115,11 +115,11 @@ define( function( require ) {
     this.addChild( numeratorNode );
 
     // fraction line in the revealed answer
-    var fractionLineNode = new Line( 0, 0, 1.2 * valueBox.width, 0, {
+    var fractionLineNode = new Line( 0, 0, 1.1 * valueBox.width, 0, {
       stroke: options.neutralColor,
       lineWidth: 1,
       centerX: valueBox.centerX,
-      top: valueBox.bottom + 4,
+      top: valueBox.bottom + 2,
       visible: options.denominatorVisible
     } );
     this.addChild( fractionLineNode );

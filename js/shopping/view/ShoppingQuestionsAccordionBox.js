@@ -34,13 +34,17 @@ define( function( require ) {
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // AccordionBox options
+      // tight vertical margins and spacing, see https://github.com/phetsims/unit-rates/issues/140
+      titleYMargin: 0,
+      contentYMargin: 6,
+      contentYSpacing: 2,
       titleNode: new Text( questionsString, {
         font: URConstants.ACCORDION_BOX_TITLE_FONT,
         maxWidth: 100
       } ),
 
       // VBox options
-      vBoxSpacing: 18 // vertical spacing between UI elements in the accordion box's content
+      vBoxSpacing: 10 // vertical spacing between UI elements in the accordion box's content
 
     }, options );
 
@@ -72,7 +76,8 @@ define( function( require ) {
 
     // Refresh button, advances to the next question set
     var refreshButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'refresh', { scale: 0.5 } ),
+      content: new FontAwesomeNode( 'refresh', { scale: 0.35 } ),
+      xMargin: 10,
       baseColor: URColors.refreshButton,
       listener: function() {
         shoppingScene.nextQuestionSet();
@@ -82,14 +87,20 @@ define( function( require ) {
 
     // AccordionBox content
     var contentNode = new VBox( {
-      align: 'right',
-      spacing: options.vBoxSpacing,
+      spacing: 0,
+      align: 'left',
       children: [
-        unitRateQuestionNode,
-        questionsParent,
+        new VBox( {
+          spacing: options.vBoxSpacing,
+          children: [
+            unitRateQuestionNode,
+            questionsParent
+          ]
+        } ),
         refreshButton
       ]
     } );
+
 
     AccordionBox.call( this, contentNode, options );
 
