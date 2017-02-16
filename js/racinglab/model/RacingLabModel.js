@@ -79,7 +79,6 @@ define( function( require ) {
       if ( this.runningProperty.value ) {
         this.car1.step( dt );
         this.car2.step( dt );
-        //TODO update timeProperty1 (and timeProperty2 ?)
       }
     },
 

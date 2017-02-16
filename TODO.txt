@@ -11,6 +11,7 @@ Reset button for shelf + scale
 Items on shelf and scale
 
 Misc:
+TODO items in code
 model.md
 implementation-notes.md
 credits

@@ -78,7 +78,7 @@ define( function( require ) {
 
     // Disable the button when the shelf and scale are in their initial state.
     shoppingScene.scale.quantityProperty.link( function( quantity ) {
-      //TODO https://github.com/phetsims/unit-rates/issues/86
+      //TODO disable resetShelfButton, https://github.com/phetsims/unit-rates/issues/86
     } );
 
     // bags
