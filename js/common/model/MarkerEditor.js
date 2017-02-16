@@ -36,27 +36,21 @@ define( function( require ) {
     // @private
     this.denominatorMaxDecimals = options.denominatorMaxDecimals;
 
+    // if a numerator is entered that can't be computed from the existing denominator, then clear the denominator
     this.numeratorProperty.link( function( numerator ) { // no unlink required
-      if ( numerator !== null ) {
-
-        // compute the corresponding denominator
-        var denominator = Util.toFixedNumber( numerator / unitRateProperty.value, options.denominatorMaxDecimals );
-
-        // clear the denominator if it doesn't match the numerator
-        if ( denominator !== self.denominatorProperty.value ) {
+      if ( numerator !== null && self.denominatorProperty.value !== null ) {
+        var correctNumerator = Util.toFixedNumber( self.denominatorProperty.value * unitRateProperty.value, options.numeratorMaxDecimals );
+        if ( numerator !== correctNumerator ) {
           self.denominatorProperty.value = null;
         }
       }
     } );
 
+    // if a denominator is entered that can't be computed from the existing numerator, then clear the numerator
     this.denominatorProperty.link( function( denominator ) { // no unlink required
-      if ( denominator !== null ) {
-
-        // compute the corresponding numerator
-        var numerator = Util.toFixedNumber( denominator * unitRateProperty.value, options.numeratorMaxDecimals );
-
-        // clear the numerator if it doesn't match the denominator
-        if ( numerator !== self.numeratorProperty.value ) {
+      if ( denominator !== null && self.numeratorProperty.value !== null ) {
+        var correctDenominator = Util.toFixedNumber( self.numeratorProperty.value / unitRateProperty.value, options.denominatorMaxDecimals );
+        if ( denominator !== correctDenominator ) {
           self.numeratorProperty.value = null;
         }
       }
