@@ -55,11 +55,6 @@ define( function( require ) {
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.denominatorOptions );
 
-    // numerator and denominator must have the same number of decimal places,
-    // or we will end up with rates that share a common numerator or denominator.
-    assert && assert( this.numeratorOptions.maxDecimals === this.denominatorOptions.maxDecimals,
-      'maxDecimals must be the same for numerator and denominator' );
-
     // @public (read-only) {Property.<number>}
     this.unitRateProperty = unitRateProperty;
 
