@@ -33,10 +33,17 @@ define( function( require ) {
     options = _.extend( {
       rate: new Rate( 50, 2 ), // initial rate, in miles per hour
       visible: true, // is this car visible?
-      numeratorMaxDecimals: 2,
+      numeratorMaxDecimals: 1,
       denominatorMaxDecimals: 2,
       majorMarkerSpacing: 25
     }, options );
+
+    // Numerator must have fewer decimal places than denominator, or we'll have 2 problems:
+    // 1. rounding will make it impossible to enter correct values for some rates
+    // 2. we can end up with 2 markers that have the same denominator and different numerators
+    // See https://github.com/phetsims/unit-rates/issues/148
+    assert && assert( options.numeratorMaxDecimals < options.denominatorMaxDecimals,
+      'numerator must have fewer decimal places than denominator' );
 
     // @pubic (read-only)
     this.image = image;
