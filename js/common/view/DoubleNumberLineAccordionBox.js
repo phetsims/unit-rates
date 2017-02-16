@@ -260,9 +260,9 @@ define( function( require ) {
         // associate the undo button with the editor
         undoAppliesToEditor = true;
 
-        // Move the undo button to its home position
+        // Move the undo button to its home position, invisible if the marker editor contains no values
         undoButton.center = undoButtonHomePosition;
-        undoButton.visible = ( markerEditorNode.x !== markerEditorNodeHomeX );
+        undoButton.visible = !markerEditor.isEmpty();
       }
     };
     doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver ); // unlink in dispose

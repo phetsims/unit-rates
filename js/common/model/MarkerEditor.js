@@ -81,6 +81,14 @@ define( function( require ) {
     reset: function() {
       this.numeratorProperty.reset();
       this.denominatorProperty.reset();
+    },
+
+    /**
+     * The marker editor is 'empty' when both the numerator and denominator are null.
+     * @returns {boolean}
+     */
+    isEmpty: function() {
+      return ( this.numeratorProperty.value === null && this.denominatorProperty.value == null );
     }
   } );
 } );
