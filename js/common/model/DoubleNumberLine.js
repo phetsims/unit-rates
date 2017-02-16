@@ -177,21 +177,21 @@ define( function( require ) {
 
       var wasAdded = false;
 
-      // look for a marker with the same rate
-      var markerWithSameRate = this.getMarkerWithSameRate( marker );
+      // look for a marker that conflicts with this one
+      var conflictingMarker = this.getOverlappingMarker( marker );
 
-      if ( !markerWithSameRate ) {
+      if ( !conflictingMarker ) {
 
-        // if there is no marker with the same rate, then simply add the marker
+        // if there is no marker that conflicts with this one, then simply add the marker
         this.markers.add( marker );
         wasAdded = true;
       }
-      else if ( markerWithSameRate.precedenceOf( marker ) >= 0 ) {
+      else if ( conflictingMarker.precedenceOf( marker ) >= 0 ) {
 
         // Replace with higher or same precedence marker.
         // Need to replace same precedence marker so that undo marker is properly set.
-        this.removeMarker( markerWithSameRate );
-        if ( this.undoMarkerProperty.value === markerWithSameRate ) {
+        this.removeMarker( conflictingMarker );
+        if ( this.undoMarkerProperty.value === conflictingMarker ) {
           this.undoMarkerProperty.value = null;
         }
         this.markers.add( marker );
@@ -217,20 +217,22 @@ define( function( require ) {
     },
 
     /**
-     * Gets a marker with the same rate as the specified marker.
+     * Gets a marker that conflicts with the specified marker.
+     * Two markers conflict if they have the same numerator or denominator.
+     * This is possible due to rounding errors.
      * @param {Marker} marker
-     * @returns {Marker|null} null if there is no marker with the same rate
+     * @returns {Marker|null} null if there is no conflicting
      * @private
      */
-    getMarkerWithSameRate: function( marker ) {
-      var markerWithSameRate = null;
+    getOverlappingMarker: function( marker ) {
+      var conflictingMarker = null;
       var markers = this.markers.getArray();
-      for ( var i = 0; i < markers.length && !markerWithSameRate; i++ ) {
-        if ( marker.rateEquals( markers[ i ] ) ) {
-          markerWithSameRate = markers[ i ];
+      for ( var i = 0; i < markers.length && !conflictingMarker; i++ ) {
+        if ( marker.conflictsWith( markers[ i ] ) ) {
+          conflictingMarker = markers[ i ];
         }
       }
-      return markerWithSameRate;
+      return conflictingMarker;
     },
 
     /**

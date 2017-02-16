@@ -64,14 +64,17 @@ define( function( require ) {
     },
 
     /**
-     * Does the specified marker have the same rate?
+     * Does the specified marker conflict with this one?
+     * Two markers conflict if they have the same numerator or denominator.
+     * This is possible due to rounding errors.
+     * See https://github.com/phetsims/unit-rates/issues/148.
      * @param {Marker} marker
      * @returns {boolean}
      * @public
      */
-    rateEquals: function( marker ) {
+    conflictsWith: function( marker ) {
       assert && assert( marker instanceof Marker );
-      return ( marker.numeratorProperty.value === this.numeratorProperty.value ) &&
+      return ( marker.numeratorProperty.value === this.numeratorProperty.value ) ||
              ( marker.denominatorProperty.value === this.denominatorProperty.value );
     },
 
