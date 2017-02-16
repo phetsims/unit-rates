@@ -105,7 +105,7 @@ define( function( require ) {
     // 1. rounding will make it impossible to enter correct values for some rates
     // 2. we can end up with 2 markers that have the same denominator and different numerators
     // See https://github.com/phetsims/unit-rates/issues/148
-    assert && assert( options.numeratorMaxDecimals < options.denominatorMaxDecimals,
+    assert && assert( this.numeratorOptions.maxDecimals < this.denominatorOptions.maxDecimals,
       'numerator must have fewer decimal places than denominator' );
 
     // @public {Rate}
