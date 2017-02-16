@@ -20,7 +20,7 @@ define( function( require ) {
   function RaceTrack( options ) {
 
     options = _.extend( {
-      length: 150, // initial distance between start and finish line, in miles
+      length: 200, // initial distance between start and finish line, in miles
       maxLength: 200, // maximum distance between start and finish line, in miles
       markerSpacing: 50  // markers are spaced at this interval, in miles
     }, options );

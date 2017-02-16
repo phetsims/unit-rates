@@ -29,10 +29,15 @@ define( function( require ) {
     this.runningProperty = new Property( false );
 
     // @public the red (top) car
-    this.car1 = new RaceCar( redCarImage );
+    this.car1 = new RaceCar( redCarImage, {
+      trackLength: 150
+    } );
 
     // @public the blue (bottom) car
-    this.car2 = new RaceCar( blueCarImage, { visible: false } );
+    this.car2 = new RaceCar( blueCarImage, {
+      trackLength: 100,
+      visible: false
+    } );
 
     // Reset the race when any of the specified Properties changes. unmultilink not needed
     // See https://github.com/phetsims/unit-rates/issues/93

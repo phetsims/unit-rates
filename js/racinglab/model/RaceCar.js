@@ -34,6 +34,7 @@ define( function( require ) {
     options = _.extend( {
       rate: new Rate( 50, 2 ), // initial rate, in miles per hour
       visible: true, // is this car visible?
+      trackLength: 200,
       numeratorMaxDecimals: 1,
       denominatorMaxDecimals: 2,
       majorMarkerSpacing: 25
@@ -55,7 +56,7 @@ define( function( require ) {
     this.timeProperty = new Property( 0 );
 
     // @public
-    this.track = new RaceTrack();
+    this.track = new RaceTrack( { length: options.trackLength });
 
     // @public
     this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
