@@ -132,7 +132,6 @@ define( function( require ) {
         titleString: doubleNumberLine1String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
         indicatorXProperty: model.car1.distanceProperty,
-        indicatorVisible: true,
         indicatorColor: URColors.car1,
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
@@ -146,7 +145,6 @@ define( function( require ) {
         titleString: doubleNumberLine2String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
         indicatorXProperty: model.car2.distanceProperty,
-        indicatorVisible: true,
         indicatorColor: URColors.car2,
         keypadLocation: 'above',
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,

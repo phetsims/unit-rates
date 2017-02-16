@@ -16,7 +16,6 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var MarkerNode = require( 'UNIT_RATES/common/view/MarkerNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
@@ -48,10 +47,9 @@ define( function( require ) {
       majorMarkerLength: URConstants.MAJOR_MARKER_LENGTH,
       minorMarkerLength: URConstants.MINOR_MARKER_LENGTH,
 
-      // Vertical indicator line that can be moved horizontally.
+      // Optional position indicator (vertical line).
       // Used in the Racing Lab screen to indicate the current position of the race car.
-      indicatorXProperty: new Property( 0 ), // in model coordinates
-      indicatorVisible: false,
+      indicatorXProperty: null, // {Property.<number>|null} position of vertical indicator line, in model coordinates
       indicatorColor: 'green'
 
     }, options );
@@ -116,15 +114,21 @@ define( function( require ) {
       children: [ new HStrut( options.labelMaxWidth ) ] // makes labels for all items the same width
     } ) );
 
-    // indicator line
-    var indicatorNode = new Line( 0, 0, 0, options.minorMarkerLength, {
-      visible: options.indicatorVisible,
-      stroke: options.indicatorColor,
-      lineWidth: 2,
-      centerX: options.indicatorXProperty.value,
-      centerY: verticalAxis.centerY
-    } );
-    this.addChild( indicatorNode );
+    // position indicator (vertical line)
+    if ( options.indicatorXProperty ) {
+      var indicatorNode = new Line( 0, 0, 0, options.minorMarkerLength, {
+        stroke: options.indicatorColor,
+        lineWidth: 2,
+        // horizontal position set by indicatorXObserver
+        centerY: verticalAxis.centerY
+      } );
+      this.addChild( indicatorNode );
+
+      var indicatorXObserver = function( x ) {
+         indicatorNode.centerX = doubleNumberLine.modelToViewNumerator( x, self.axisViewLength );
+      };
+      options.indicatorXProperty.link( indicatorXObserver ); // unlink in dispose
+    }
 
     // @private parent for markers, to maintain rendering order
     this.markersParent = new Node();
@@ -160,16 +164,11 @@ define( function( require ) {
     // Add a MarkNode for each initial Marker
     doubleNumberLine.markers.forEach( markerAddedListener.bind( this ) );
 
-    var indicatorXObserver = function( x ) {
-       indicatorNode.centerX = doubleNumberLine.modelToViewNumerator( x, self.axisViewLength );
-    };
-    options.indicatorXProperty.link( indicatorXObserver ); // unlink in dispose
-
     // @private
     this.disposeDoubleNumberLineNode = function() {
       doubleNumberLine.markers.removeItemAddedListener( markerAddedListener );
       doubleNumberLine.markers.removeItemRemovedListener( markerRemovedListener );
-      options.indicatorXProperty.unlink( indicatorXObserver );
+      indicatorXObserver && options.indicatorXProperty.unlink( indicatorXObserver );
     };
   }
 
