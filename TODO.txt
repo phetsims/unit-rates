@@ -6,12 +6,14 @@ Add marker to DNL when car reaches finish line, if timer is expanded
 
 Shopping:
 Add 3rd decimal place to cost display on scale
-Reset All or switching items while animation is happening doesn't clean up animation
-Reset button for shelf + scale
 Items on shelf and scale
+Reset button for shelf + scale
+Reset All or switching items while animation is happening doesn't clean up animation
 
 Misc:
 TODO items in code
+multi-touch testing
+check for memory leaks
 model.md
 implementation-notes.md
 credits
