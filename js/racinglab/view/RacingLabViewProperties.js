@@ -29,6 +29,9 @@ define( function( require ) {
     // @public are the race timers expanded?
     this.timerExpandedProperty1 = new Property( true );
     this.timerExpandedProperty2 = new Property( true );
+
+    // @public are the drag arrows visible that surround the finish flag?
+    this.arrowsVisibleProperty = new Property( true );
   }
 
   unitRates.register( 'RacingLabViewProperties', RacingLabViewProperties );
@@ -43,6 +46,7 @@ define( function( require ) {
       this.rateExpandedProperty2.reset();
       this.timerExpandedProperty1.reset();
       this.timerExpandedProperty2.reset();
+      this.arrowsVisibleProperty.reset();
     }
   } );
 } );

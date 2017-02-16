@@ -54,17 +54,16 @@ define( function( require ) {
   /**
    * @param {RaceCar} car
    * @param {Property.<boolean>} timerExpandedProperty
+   * @param {Property.<boolean>} arrowsVisibleProperty - are the 'drag cue' arrows are visible?
    * @param {Object} [options]
    * @constructor
    */
-  function RaceTrackNode( car, timerExpandedProperty, options ) {
+  function RaceTrackNode( car, timerExpandedProperty, arrowsVisibleProperty, options ) {
 
     options = _.extend( {
       trackViewLength: 1000, // {number} view length of the track
       timerTitleString: '' // {string} title for the timer accordion box
     }, options );
-
-    var self = this;
 
     // maps 'miles' between model and view coordinate frames
     var modelToView = new LinearFunction( 0, car.track.maxLength, 0, options.trackViewLength );
@@ -116,7 +115,7 @@ define( function( require ) {
     } );
     finishFlagNode.touchArea = finishFlagNode.localBounds.dilatedX( 30 );
 
-    // green arrows around the finish flag, cues the user to move the flag
+    // green arrows around the finish flag, cues the user to drag the flag
     var arrowsNode = new HBox( {
       cursor: 'pointer',
       spacing: 9,
@@ -192,11 +191,6 @@ define( function( require ) {
        */
       start: function( event, trail ) {
 
-        // remove the cue to drag the finish flag
-        if ( self.hasChild( arrowsNode ) ) {
-          self.removeChild( arrowsNode );
-        }
-
         // compute offset from current track length
         startDragXOffset = finishFlagNode.globalToParentPoint( event.pointer.point ).x -
                            modelToView( car.track.lengthProperty.value );
@@ -208,6 +202,9 @@ define( function( require ) {
        * @param {Trail} trail
        */
       drag: function( event, trail ) {
+
+        // hide the 'drag cue' arrows
+        arrowsVisibleProperty.value = false;
 
         // compute track length in view coordinates
         var viewLength = finishFlagNode.globalToParentPoint( event.pointer.point ).x - startDragXOffset;
@@ -228,11 +225,17 @@ define( function( require ) {
     };
     car.distanceProperty.link( carObserver ); // unlink in dispose
 
+    var arrowsVisibleObserver = function( visible ) {
+      arrowsNode.visible = visible;
+    };
+    arrowsVisibleProperty.link( arrowsVisibleObserver ); // unlink in dispose
+
     // @private
     this.disposeRaceTrackNode = function() {
       timerNode.dispose();
       car.track.lengthProperty.unlink( lengthObserver );
       car.distanceProperty.unlink( carObserver );
+      arrowsVisibleProperty.unlink( arrowsVisibleObserver );
     };
   }
 

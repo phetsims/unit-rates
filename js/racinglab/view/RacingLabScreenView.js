@@ -155,7 +155,7 @@ define( function( require ) {
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
 
     // Track for car1
-    var trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, {
+    var trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, viewProperties.arrowsVisibleProperty, {
       timerTitleString: timer1String,
       trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
@@ -164,7 +164,7 @@ define( function( require ) {
     playAreaLayer.addChild( trackNode1 );
 
     // Track for car2
-    var trackNode2 = new RaceTrackNode( model.car2, viewProperties.timerExpandedProperty2, {
+    var trackNode2 = new RaceTrackNode( model.car2, viewProperties.timerExpandedProperty2, viewProperties.arrowsVisibleProperty, {
       timerTitleString: timer2String,
       trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
