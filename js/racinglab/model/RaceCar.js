@@ -17,6 +17,7 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var Rate = require( 'UNIT_RATES/common/model/Rate' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var Util = require( 'DOT/Util' );
 
   // strings
@@ -125,10 +126,9 @@ define( function( require ) {
     step: function( dt ) {
       if ( this.visibleProperty.value && ( this.distanceProperty.value < this.track.lengthProperty.value ) ) {
 
-        // race time, in hours. 
-        // 1 sec of sim time is equivalent to 8 hours of race time.
+        // Map from sim time (seconds) to race time (hours).
         // see https://github.com/phetsims/unit-rates/issues/95
-        var deltaRaceTime = Util.linear( 0, 1, 0, 8, dt );
+        var deltaRaceTime = Util.linear( 0, 1, 0, URQueryParameters.raceTimeScale, dt );
 
         // distance traveled, in miles
         var deltaDistance = deltaRaceTime * this.rate.unitRateProperty.value;

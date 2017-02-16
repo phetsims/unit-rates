@@ -30,6 +30,13 @@ define( function( require ) {
       type: 'number',
       defaultValue: 400,
       isValidValue: function( value ) { return value > 0; }
+    },
+
+    // 1 second of sim type is equivalent to this many hours of race time. Larger values make the race run faster.
+    raceTimeScale: {
+      type: 'number',
+      defaultValue: 8,
+      isValidValue: function( value ) { return value > 0; }
     }
   } );
 
