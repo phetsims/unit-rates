@@ -25,14 +25,16 @@ define( function( require ) {
       defaultValue: true
     },
 
-    // Speed of animations. Larger values make animations run faster. Smaller values are useful for testing multi-touch.
+    // Speed of animations for bags, items and marker editor.
+    // Larger values make animations run faster. Smaller values are useful for testing multi-touch.
     animationSpeed: {
       type: 'number',
       defaultValue: 400,
       isValidValue: function( value ) { return value > 0; }
     },
 
-    // 1 second of sim type is equivalent to this many hours of race time. Larger values make the race run faster.
+    // 1 second of sim type is equivalent to this many hours of race time.
+    // Larger values make car animation run faster.
     raceTimeScale: {
       type: 'number',
       defaultValue: 8, // hours
