@@ -1,15 +1,15 @@
 TODO list for unit-rates
 
 Racing Lab:
-Add car location indicator to DNL
 Add marker to DNL when car reaches finish line, if timer is expanded
+Eraser button does not erase marker for current race while car is still at finish line
 
 Shopping:
+Questions panel layout
 Add 3rd decimal place to cost display on scale
 Items on shelf and scale
 Reset button for shelf + scale (move things from scale to shelf, put all items back into bags)
 Reset All or switching items while animation is happening doesn't clean up animation
-Questions panel layout
 
 Misc:
 bags and items look crappy as images, try mipmaps?
