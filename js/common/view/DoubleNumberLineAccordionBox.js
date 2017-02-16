@@ -2,6 +2,11 @@
 
 /**
  * Displays a double number line in an accordion box, with a marker editor, undo button and eraser button.
+ * Responsibilities include:
+ * - creation of markers, based on contents of the marker editor
+ * - a single level of undo for markers
+ * - location and animation of the marker editor
+ * - location and visibility of the undo button
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
