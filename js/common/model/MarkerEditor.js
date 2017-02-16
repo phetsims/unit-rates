@@ -88,7 +88,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     isEmpty: function() {
-      return ( this.numeratorProperty.value === null && this.denominatorProperty.value == null );
+      return ( this.numeratorProperty.value === null && this.denominatorProperty.value === null );
     }
   } );
 } );
