@@ -1,4 +1,4 @@
-  // Copyright 2016-2017, University of Colorado Boulder
+// Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * Marker on the double number line.
