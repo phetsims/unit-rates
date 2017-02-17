@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
   var Property = require( 'AXON/Property' );
   var RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
@@ -32,6 +33,7 @@ define( function( require ) {
   function RaceCar( image, options ) {
 
     options = _.extend( {
+      color: 'black',
       rate: new Rate( 50, 2 ), // initial rate, in miles per hour
       visible: true, // is this car visible?
       trackLength: 200,
@@ -40,8 +42,13 @@ define( function( require ) {
       majorMarkerSpacing: 25
     }, options );
 
+    var self = this;
+
     // @pubic (read-only)
     this.image = image;
+
+    // @public (read-only)
+    this.color = options.color;
 
     // @public the car's rate, in miles per hour
     this.rate = options.rate;
@@ -57,6 +64,11 @@ define( function( require ) {
 
     // @public
     this.track = new RaceTrack( { length: options.trackLength });
+
+    // Specifies the interval for major markers
+    var isMajorMarker = function( numerator, denominator ) {
+      return ( numerator % options.majorMarkerSpacing === 0 );
+    };
 
     // @public
     this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
@@ -78,15 +90,34 @@ define( function( require ) {
       fixedAxisRange: new Range( 0, 200 ),
 
       // Specifies the interval for major markers
-      isMajorMarker: function( numerator, denominator ) {
-        return ( numerator % options.majorMarkerSpacing === 0 );
-      }
+      isMajorMarker: isMajorMarker
     } );
 
     // @public
     this.markerEditor = new MarkerEditor( this.rate.unitRateProperty, {
       numeratorMaxDecimals: options.numeratorMaxDecimals,
       denominatorMaxDecimals: options.denominatorMaxDecimals
+    } );
+
+    // create a marker when the car reaches the finish line. unlink not needed
+    var persistentMarker = null;
+    this.distanceProperty.link( function( distance ) {
+
+      // make the current persistent marker erasable
+      if ( persistentMarker ) {
+        persistentMarker.erasable = true;
+        persistentMarker = null;
+      }
+
+      // create a marker that is not erasable
+      if ( distance === self.track.lengthProperty.value ) {
+        persistentMarker = new Marker( distance, self.timeProperty.value, 'race', {
+          isMajor: isMajorMarker( distance, self.timeProperty.value ),
+          color: self.color,
+          erasable: false
+        } );
+        self.doubleNumberLine.addMarker( persistentMarker );
+      }
     } );
   }
 
@@ -137,15 +168,14 @@ define( function( require ) {
         if ( this.distanceProperty.value + deltaDistance >= this.track.lengthProperty.value ) {
 
           // car has reached the finish line
-          this.distanceProperty.value = this.track.lengthProperty.value;
           this.timeProperty.value = this.track.lengthProperty.value / this.rate.unitRateProperty.value;
-          //TODO emit raceFinished
+          this.distanceProperty.value = this.track.lengthProperty.value;
         }
         else {
 
           // move incrementally
-          this.distanceProperty.value = this.distanceProperty.value + deltaDistance;
           this.timeProperty.value = this.timeProperty.value + deltaRaceTime;
+          this.distanceProperty.value = this.distanceProperty.value + deltaDistance;
         }
       }
     }

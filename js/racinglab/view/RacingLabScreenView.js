@@ -23,7 +23,6 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var StartStopButton = require( 'UNIT_RATES/racinglab/view/StartStopButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   // strings
@@ -102,8 +101,8 @@ define( function( require ) {
       denominatorRange: URConstants.HOURS_RANGE,
       numeratorUnits: milesString,
       denominatorUnits: hoursString,
-      numeratorPickerColor: URColors.car2,
-      denominatorPickerColor: URColors.car2,
+      numeratorPickerColor: model.car2.color,
+      denominatorPickerColor: model.car2.color,
       right: resetAllButton.left - 15,
       bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
     } );
@@ -118,8 +117,8 @@ define( function( require ) {
       denominatorRange: URConstants.HOURS_RANGE,
       numeratorUnits: milesString,
       denominatorUnits: hoursString,
-      numeratorPickerColor: URColors.car1,
-      denominatorPickerColor: URColors.car1,
+      numeratorPickerColor: model.car1.color,
+      denominatorPickerColor: model.car1.color,
       right: rateAccordionBox2.right,
       top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
     } );
@@ -132,7 +131,7 @@ define( function( require ) {
         titleString: doubleNumberLine1String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
         indicatorXProperty: model.car1.distanceProperty,
-        indicatorColor: URColors.car1,
+        indicatorColor: model.car1.color,
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
       } );
@@ -145,7 +144,7 @@ define( function( require ) {
         titleString: doubleNumberLine2String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
         indicatorXProperty: model.car2.distanceProperty,
-        indicatorColor: URColors.car2,
+        indicatorColor: model.car2.color,
         keypadLocation: 'above',
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN

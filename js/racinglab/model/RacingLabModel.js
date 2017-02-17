@@ -13,6 +13,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var RaceCar = require( 'UNIT_RATES/racinglab/model/RaceCar' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
 
   // images
   var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
@@ -30,11 +31,13 @@ define( function( require ) {
 
     // @public the red (top) car
     this.car1 = new RaceCar( redCarImage, {
+      color: URColors.car1,
       trackLength: 150
     } );
 
     // @public the blue (bottom) car
     this.car2 = new RaceCar( blueCarImage, {
+      color: URColors.car2,
       trackLength: 100,
       visible: false
     } );

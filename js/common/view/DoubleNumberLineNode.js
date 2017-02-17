@@ -116,9 +116,9 @@ define( function( require ) {
 
     // position indicator (vertical line)
     if ( options.indicatorXProperty ) {
-      var indicatorNode = new Line( 0, 0, 0, options.minorMarkerLength, {
+      var indicatorNode = new Line( 0, 0, 0, options.axisYSpacing, {
         stroke: options.indicatorColor,
-        lineWidth: 2,
+        lineWidth: 4,
         // horizontal position set by indicatorXObserver
         centerY: verticalAxis.centerY
       } );

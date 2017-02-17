@@ -1,9 +1,5 @@
 TODO list for unit-rates
 
-Racing Lab:
-Add marker to DNL when car reaches finish line, if timer is expanded
-Eraser button does not erase marker for current race while car is still at finish line
-
 Shopping:
 Questions panel layout
 Add 3rd decimal place to cost display on scale

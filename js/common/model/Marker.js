@@ -37,16 +37,12 @@ define( function( require ) {
     // @public
     this.numeratorProperty = new Property( numerator );
     this.denominatorProperty = new Property( denominator );
+    this.colorProperty = new Property( options.color );
+    this.erasable = options.erasable;
 
     // @public (read-only)
     this.creator = creator;
-
-    // @public (read-only) unpack options
     this.isMajor = options.isMajor;
-    this.erasable = options.erasable;
-
-    // @public color is mutable
-    this.colorProperty = new Property( options.color );
   }
 
   unitRates.register( 'Marker', Marker );
