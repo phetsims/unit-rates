@@ -1,11 +1,15 @@
 TODO list for unit-rates
 
-Shopping:
+High:
 Questions panel layout
 Add 3rd decimal place to cost display on scale
 Items on shelf and scale
+
+Medium:
 Reset button for shelf + scale (move things from scale to shelf, put all items back into bags)
-Reset All or switching items while animation is happening doesn't clean up animation
+When selected item changes, cancel marker editor animation.
+When selected item changes, cancel bag/item animations.
+If marker editor is on it's way home when Reset All is pressed, it doesn't move immediately to home.
 
 Misc:
 bags and items look crappy as images, try mipmaps?
