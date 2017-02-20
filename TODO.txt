@@ -15,7 +15,7 @@ bags and items look crappy as images, try mipmaps?
 TODO items in code
 multi-touch testing
 check for memory leaks
-model.md
-implementation-notes.md
-credits
+model.md, https://github.com/phetsims/unit-rates/issues/65
+implementation-notes.mdm, https://github.com/phetsims/unit-rates/issues/66
+credits, https://github.com/phetsims/unit-rates/issues/55
 Terminology: team refers to fruit/vegetable/candy as "scene", implementation uses "category", change implementation?
