@@ -50,7 +50,7 @@ define( function( require ) {
 
     // race cars
     car1: 'rgb( 236, 22, 44 )',  // red car
-    car2: 'rgb( 5, 174, 232 )' // blue car
+    car2: 'rgb( 0, 143, 204 )' // blue car
   };
 
   unitRates.register( 'URColors', URColors );
