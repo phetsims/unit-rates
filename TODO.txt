@@ -10,6 +10,11 @@ resetShelfButton, https://github.com/phetsims/unit-rates/issues/156
 When selected item changes, cancel marker editor animation (TWEEN), cancel bag/item animations (model.step).
 If marker editor is on it's way home when Reset All is pressed, it doesn't move immediately to home.
 
+Low:
+address TODO items in Movable
+Handle cancellation of drags in BagDragHandler
+Duplication between ShoppingSceneNode and ShoppingLabSceneNode
+
 Misc:
 bags and items look crappy as images, try mipmaps?
 TODO items in code
