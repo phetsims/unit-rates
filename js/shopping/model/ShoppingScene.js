@@ -130,11 +130,14 @@ define( function( require ) {
       denominatorMaxDecimals: this.denominatorOptions.maxDecimals
     } );
 
+    // Does not work for mipmap, bagImage.width is undefined. See https://github.com/phetsims/unit-rates/issues/157
+    var bagWidth = URConstants.BAG_IMAGE_SCALE * this.bagImage.width;
+
     // @public
     this.shelf = new Shelf( {
       location: new Vector2( 512, 575 ),
       numberOfBags: this.numberOfBags,
-      bagWidth: URConstants.BAG_IMAGE_SCALE * this.bagImage.width //TODO will this work for mipmaps?
+      bagWidth: bagWidth
     } );
 
     // @public
@@ -142,7 +145,7 @@ define( function( require ) {
       location: this.shelf.location.minusXY( 0, 200 ), // centered above the shelf
       quantityUnits: options.scaleQuantityUnits,
       numberOfBags: this.numberOfBags,
-      bagWidth: URConstants.BAG_IMAGE_SCALE * this.bagImage.width //TODO will this work for mipmaps?
+      bagWidth: bagWidth
     } );
 
     // The marker that corresponds to what's currently on the scale
