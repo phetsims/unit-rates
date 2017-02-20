@@ -1,14 +1,13 @@
 TODO list for unit-rates
 
 High:
-Questions panel layout
-Add 3rd decimal place to cost display on scale
+Questions panel layout, https://github.com/phetsims/unit-rates/issues/152
+Add 3rd decimal place to cost display on scale, https://github.com/phetsims/unit-rates/issues/44
 Items on shelf and scale
 
 Medium:
 resetShelfButton, https://github.com/phetsims/unit-rates/issues/156
-When selected item changes, cancel marker editor animation.
-When selected item changes, cancel bag/item animations.
+When selected item changes, cancel marker editor animation (TWEEN), cancel bag/item animations (model.step).
 If marker editor is on it's way home when Reset All is pressed, it doesn't move immediately to home.
 
 Misc:
