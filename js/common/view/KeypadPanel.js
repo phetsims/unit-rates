@@ -1,6 +1,6 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
-//TODO replace with new common-code keypad
+//TODO replace NumberKeypad with next-generation keypad, see https://github.com/phetsims/unit-rates/issues/153
 /***
  * Temporary keypad for Unit Rates.
  *
