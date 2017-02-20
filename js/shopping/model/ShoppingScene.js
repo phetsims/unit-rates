@@ -131,6 +131,7 @@ define( function( require ) {
     } );
 
     // Does not work for mipmap, bagImage.width is undefined. See https://github.com/phetsims/unit-rates/issues/157
+    assert && assert( this.bagImage.width, 'Are you using the image plugin?' );
     var bagWidth = URConstants.BAG_IMAGE_SCALE * this.bagImage.width;
 
     // @public
