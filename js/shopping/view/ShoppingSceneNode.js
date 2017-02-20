@@ -59,7 +59,7 @@ define( function( require ) {
     // button that resets the shelf to its initial state
     var resetShelfButton = new ResetButton( {
       listener: function() {
-        //TODO implement resetShelfButton listener
+        //TODO implement resetShelfButton listener, https://github.com/phetsims/unit-rates/issues/156
       },
       baseColor: URColors.resetShelfButton,
       scale: 0.65,
@@ -70,7 +70,7 @@ define( function( require ) {
 
     // Disable the button when the shelf and scale are in their initial state.
     shoppingScene.scale.quantityProperty.link( function( quantity ) {
-      //TODO disable resetShelfButton, https://github.com/phetsims/unit-rates/issues/86
+      //TODO disable resetShelfButton, https://github.com/phetsims/unit-rates/issues/156
     } );
 
     // bags
