@@ -6,7 +6,7 @@ Add 3rd decimal place to cost display on scale
 Items on shelf and scale
 
 Medium:
-Reset button for shelf + scale (move things from scale to shelf, put all items back into bags)
+resetShelfButton, https://github.com/phetsims/unit-rates/issues/156
 When selected item changes, cancel marker editor animation.
 When selected item changes, cancel bag/item animations.
 If marker editor is on it's way home when Reset All is pressed, it doesn't move immediately to home.
