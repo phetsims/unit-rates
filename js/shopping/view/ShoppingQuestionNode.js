@@ -66,7 +66,7 @@ define( function( require ) {
     this.addChild( valueBox );
     valueBox.touchArea = valueBox.localBounds.dilatedXY( 5, 5 );
 
-    // edit button
+    // edit button, to the right of the box
     var editButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.4 } ),
       baseColor: URColors.editButton,
@@ -76,7 +76,7 @@ define( function( require ) {
     this.addChild( editButton );
     editButton.touchArea = editButton.localBounds.dilatedXY( 10, 10 );
 
-    // strut to the right of valueBox, same width as editButton
+    // strut to the left of the box, same width as editButton
     // See layout specification in https://github.com/phetsims/unit-rates/issues/152
     var strut = new HStrut( editButton.width, {
       right: valueBox.left - options.xSpacing,
@@ -84,7 +84,7 @@ define( function( require ) {
     } );
     this.addChild( strut );
 
-    // check mark to indicate that the question has been correctly answered
+    // check mark to right of box, to indicate that the question has been correctly answered
     var checkMarkNode = new ShadowText( '\u2713', {
       fill: URColors.checkMark,
       font: options.checkMarkFont,
@@ -94,7 +94,7 @@ define( function( require ) {
     } );
     this.addChild( checkMarkNode );
 
-    // the question
+    // the question, centered above the box
     var questionTextNode = new Text( question.questionString, {
       font: options.questionFont,
       centerX: valueBox.centerX,
@@ -103,7 +103,7 @@ define( function( require ) {
     } );
     this.addChild( questionTextNode );
 
-    // the user's guess, as entered via the keypad
+    // the user's guess, as entered via the keypad, appears centered in the box
     var guessNode = new Text( '', {
       fill: options.neutralColor,
       font: options.valueFont,
@@ -112,7 +112,7 @@ define( function( require ) {
     } );
     this.addChild( guessNode );
 
-    // numerator in the revealed answer
+    // numerator in the revealed answer, replaces the box when the answer is correct
     var numeratorNode = new Text( question.numeratorString, {
       fill: URColors.correctQuestion,
       font: options.valueFont,
@@ -157,6 +157,7 @@ define( function( require ) {
         guessNode.fill = correct ? URColors.correctQuestion : URColors.incorrectQuestion;
       }
       else if ( URQueryParameters.showAnswers ) {
+
         // show the answer, if query parameter is set
         guessNode.text = URUtil.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
         guessNode.text = URUtil.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
@@ -166,7 +167,7 @@ define( function( require ) {
         guessNode.text = '';
       }
       guessNode.visible = !correct;
-      guessNode.center = valueBox.center;
+      guessNode.center = valueBox.center; // center guess in box
 
       // update other UI elements
       editButton.visible = !correct;
@@ -174,6 +175,9 @@ define( function( require ) {
       checkMarkNode.visible = correct;
       numeratorNode.visible = correct;
       fractionLineNode.stroke = denominatorNode.fill = ( correct ? URColors.correctQuestion : options.neutralColor );
+
+      // The denominator is sometimes visibile at all times (e.g. for the 'Unit Rate?' question).
+      // If it's not visible at all times, make it visible when the answer is revealed.
       if ( !options.denominatorVisible ) {
         fractionLineNode.visible = denominatorNode.visible = correct;
       }
