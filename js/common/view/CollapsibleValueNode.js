@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO AccordionBox should have been usasble for this, but I ran into problems with i18n, spacing and margins
 /**
- * Displays a content Node on a rectangular background, with an expand/collapse button.
+ * Displays a ValueNode on a rectangular background, with an expand/collapse button.
  * When the display is expanded, it displays right-justified content.
  * When the display is collapsed, it displays left-justified title.
  *
@@ -20,13 +21,13 @@ define( function( require ) {
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
   /**
-   * @param {Node} contentNode
+   * @param {Node} valueNode
    * @param {Property.<boolean>} expandedProperty
    * @param {string} titleString
    * @param {Object} [options]
    * @constructor
    */
-  function CollapsibleValueNode( contentNode, expandedProperty, titleString, options ) {
+  function CollapsibleValueNode( valueNode, expandedProperty, titleString, options ) {
 
     options = _.extend( {
 
@@ -64,10 +65,10 @@ define( function( require ) {
     } );
 
     // background rectangle
-    var maxWidth = _.maxBy( [ titleNode, contentNode ], function( node ) {
+    var maxWidth = _.maxBy( [ titleNode, valueNode ], function( node ) {
       return node.width;
     } ).width;
-    var maxHeight = _.maxBy( [ titleNode, contentNode, expandCollapseButton ], function( node ) {
+    var maxHeight = _.maxBy( [ titleNode, valueNode, expandCollapseButton ], function( node ) {
       return node.height;
     } ).height;
     var backgroundWith = Math.max( options.backgroundMinWidth, 
@@ -84,23 +85,23 @@ define( function( require ) {
     expandCollapseButton.centerY = backgroundNode.centerY;
     titleNode.left = expandCollapseButton.right + options.xSpacing;
     titleNode.centerY = backgroundNode.centerY;
-    contentNode.right = backgroundNode.right - options.xMargin;
-    contentNode.centerY = backgroundNode.centerY;
+    valueNode.right = backgroundNode.right - options.xMargin;
+    valueNode.centerY = backgroundNode.centerY;
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ backgroundNode, expandCollapseButton, titleNode, contentNode ];
+    options.children = [ backgroundNode, expandCollapseButton, titleNode, valueNode ];
 
     Node.call( this, options );
 
-    // right justify contentNode when its bounds change
-    contentNode.on( 'bounds', function() {
-      contentNode.right = backgroundNode.right - options.xMargin;
-      contentNode.centerY = backgroundNode.centerY;
+    // right justify valueNode when its bounds change
+    valueNode.on( 'bounds', function() {
+      valueNode.right = backgroundNode.right - options.xMargin;
+      valueNode.centerY = backgroundNode.centerY;
     } );
 
     // expand/collapse
     var expandedObserver = function( expanded ) {
-      contentNode.visible = expanded;
+      valueNode.visible = expanded;
       titleNode.visible = !expanded;
     };
     expandedProperty.link( expandedObserver ); // unlink in dispose
