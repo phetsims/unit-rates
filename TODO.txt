@@ -16,7 +16,6 @@ Handle cancellation of drags in BagDragHandler
 Duplication between ShoppingSceneNode and ShoppingLabSceneNode
 
 Misc:
-improve rendering quality for bags and items, https://github.com/phetsims/unit-rates/issues/157
 TODO items in code
 multi-touch testing
 check for memory leaks
