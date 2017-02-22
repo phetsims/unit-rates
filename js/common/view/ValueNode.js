@@ -27,6 +27,7 @@ define( function( require ) {
       valueToString: function( value ) { return '' + value; },
       valueMaxString: '12345', // strings longer than this will be scaled down
       valueMaxWidth: 100, // i18n, determined empirically
+      backgroundMinHeight: 30, // minimum height of the background
       font: new URFont( 20 ),
       xMargin: 8,
       yMargin: 4
@@ -40,7 +41,7 @@ define( function( require ) {
 
     // background rectangle
     var backgroundWith = valueNode.width + ( 2 * options.xMargin );
-    var backgroundHeight = valueNode.height + ( 2 * options.yMargin );
+    var backgroundHeight = Math.max( options.backgroundMinHeight, valueNode.height + ( 2 * options.yMargin ) );
     var backgroundNode = new Rectangle( 0, 0, backgroundWith, backgroundHeight, {
       cornerRadius: 4,
       fill: 'white',
