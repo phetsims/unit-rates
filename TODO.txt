@@ -1,7 +1,6 @@
 TODO list for unit-rates
 
 High:
-Questions panel layout, https://github.com/phetsims/unit-rates/issues/152
 Add 3rd decimal place to cost display on scale, https://github.com/phetsims/unit-rates/issues/44
 Items on shelf and scale
 
