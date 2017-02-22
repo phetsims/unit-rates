@@ -41,9 +41,9 @@ define( function( require ) {
   var ARROW_OPTIONS = {
     fill: 'rgb( 33, 190, 156 )',
     lineWidth: 0.5,
-    headWidth: 21,
-    headHeight: 18,
-    tailWidth: 8
+    headWidth: 20,
+    headHeight: 16,
+    tailWidth: 7
   };
   var MARKER_SIDE_LENGTH = 5;
   var MARKER_OPTIONS = {
