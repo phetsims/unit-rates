@@ -130,7 +130,7 @@ define( function( require ) {
     // @private
     this.disposeScaleNode = function() {
       costNode.dispose();
-      quantityNode.dispose();
+      quantityNode && quantityNode.dispose();
       costPanel && costPanel.dispose();
     };
   }
