@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var CollapsibleValueNode = require( 'UNIT_RATES/common/view/CollapsibleValueNode' );
+  var CollapsiblePanel = require( 'UNIT_RATES/common/view/CollapsiblePanel' );
   var CostNode = require( 'UNIT_RATES/common/view/CostNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
@@ -72,7 +72,7 @@ define( function( require ) {
     if ( options.costIsCollapsible ) {
 
       // dispose required
-      var costPanel = new CollapsibleValueNode( costNode, costExpandedProperty, costString, {
+      var costPanel = new CollapsiblePanel( costNode, costExpandedProperty, costString, {
         valueToString: function( value ) {
           return costToString( value );
         }

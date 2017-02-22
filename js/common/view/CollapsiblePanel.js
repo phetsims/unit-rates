@@ -27,7 +27,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function CollapsibleValueNode( valueNode, expandedProperty, titleString, options ) {
+  function CollapsiblePanel( valueNode, expandedProperty, titleString, options ) {
 
     options = _.extend( {
 
@@ -107,19 +107,19 @@ define( function( require ) {
     expandedProperty.link( expandedObserver ); // unlink in dispose
 
     // @private
-    this.disposeCollapsibleValueNode = function() {
+    this.disposeCollapsiblePanel = function() {
       expandCollapseButton.dispose();
       expandedProperty.unlink( expandedObserver );
     };
   }
 
-  unitRates.register( 'CollapsibleValueNode', CollapsibleValueNode );
+  unitRates.register( 'CollapsiblePanel', CollapsiblePanel );
 
-  return inherit( Node, CollapsibleValueNode, {
+  return inherit( Node, CollapsiblePanel, {
 
     // @public
     dispose: function() {
-      this.disposeCollapsibleValueNode();
+      this.disposeCollapsiblePanel();
       Node.prototype.dispose.call( this );
     }
   } );

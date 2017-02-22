@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var CollapsibleValueNode = require( 'UNIT_RATES/common/view/CollapsibleValueNode' );
+  var CollapsiblePanel = require( 'UNIT_RATES/common/view/CollapsiblePanel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -44,10 +44,10 @@ define( function( require ) {
       valueToString: options.valueToString
     } );
 
-    CollapsibleValueNode.call( this, valueNode, expandedProperty, titleString, options );
+    CollapsiblePanel.call( this, valueNode, expandedProperty, titleString, options );
   }
 
   unitRates.register( 'RaceTimerNode', RaceTimerNode );
 
-  return inherit( CollapsibleValueNode, RaceTimerNode );
+  return inherit( CollapsiblePanel, RaceTimerNode );
 } );
