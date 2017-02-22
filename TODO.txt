@@ -1,7 +1,7 @@
 TODO list for unit-rates
 
 High:
-Add 3rd decimal place to cost display on scale, https://github.com/phetsims/unit-rates/issues/44
+Make scale displays have constant height, so the panel height doesn't change when the value scales for i18n
 Items on shelf and scale
 
 Medium:
