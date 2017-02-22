@@ -104,7 +104,6 @@ define( function( require ) {
       ]
     } );
 
-
     AccordionBox.call( this, contentNode, options );
 
     // @private cleanup that's specific to this Node
