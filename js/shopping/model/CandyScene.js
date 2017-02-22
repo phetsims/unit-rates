@@ -20,7 +20,7 @@ define( function( require ) {
   var lbsString = require( 'string!UNIT_RATES/lbs' );
   var poundString = require( 'string!UNIT_RATES/pound' );
   var poundsString = require( 'string!UNIT_RATES/pounds' );
-  var poundsUppercaseString = require( 'string!UNIT_RATES/poundsUppercase' );
+  var poundsCapitalizedString = require( 'string!UNIT_RATES/poundsCapitalized' );
 
   /**
    * @param {Object} itemData - data structure that describes a type of candy, see ShoppingItemData
@@ -40,7 +40,7 @@ define( function( require ) {
 
       // Candy questions require capitalization of 'Pounds', e.g. 'Pounds for $10.50?'
       // This hack was required by https://github.com/phetsims/unit-rates/issues/20
-      amountOfQuestionUnits: poundsUppercaseString,
+      amountOfQuestionUnits: poundsCapitalizedString,
 
       // {*|null} nest options for the rate's denominator, defaults provided below
       denominatorOptions: null,
