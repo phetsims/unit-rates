@@ -67,7 +67,7 @@ define( function( require ) {
       // truncate cost
       assert && assert( cost >= 0, 'negative cost not supported: ' + cost );
       var powerOfTen = Math.pow( 10, options.decimalPlaces );
-      var costRounded = Util.toFixedNumber( cost, options.decimalPlaces + 1 );
+      var costRounded = Util.toFixedNumber( cost, 10 ); // to eliminate garbage due to floating point error
       var costTruncated = Math.floor( costRounded * powerOfTen ) / powerOfTen;
       
       // convert to string, then pick it apart
