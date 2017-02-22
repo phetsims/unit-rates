@@ -41,7 +41,8 @@ define( function( require ) {
 
     var valueNode = new ValueNode( timeProperty, {
       font: options.font,
-      valueToString: options.valueToString
+      valueToString: options.valueToString,
+      maxWidth: 150
     } );
 
     CollapsiblePanel.call( this, valueNode, expandedProperty, titleString, options );

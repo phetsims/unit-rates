@@ -68,7 +68,10 @@ define( function( require ) {
 
     // Cost panel
     // dispose required
-    var costNode = new CostNode( scale.costProperty, { extraDecimalVisible: options.extraCostDecimalVisible } );
+    var costNode = new CostNode( scale.costProperty, {
+      extraDecimalVisible: options.extraCostDecimalVisible,
+      maxWidth: 100 // i18n, determined empirically
+    } );
     if ( options.costIsCollapsible ) {
 
       // dispose required
@@ -91,6 +94,7 @@ define( function( require ) {
 
       // dispose required
       quantityNode = new ValueNode( scale.quantityProperty, {
+        maxWidth: 100, // i18n, determined empirically
         valueToString: function( value ) {
           return quantityToString( value, scale.quantityUnits );
         }
