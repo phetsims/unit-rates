@@ -2,6 +2,7 @@
 
 /**
  * Displays questions in an accordion box, with a refresh button.
+ * Layout is specified in https://github.com/phetsims/unit-rates/issues/152
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -36,6 +37,7 @@ define( function( require ) {
       // AccordionBox options
       // tight vertical margins and spacing, see https://github.com/phetsims/unit-rates/issues/140
       titleYMargin: 0,
+      contentXMargin: 10,
       contentYMargin: 6,
       contentYSpacing: 2,
       titleNode: new Text( questionsString, {
@@ -44,7 +46,7 @@ define( function( require ) {
       } ),
 
       // VBox options
-      vBoxSpacing: 10 // vertical spacing between UI elements in the accordion box's content
+      vBoxSpacing: 12 // vertical spacing between UI elements in the accordion box's content
 
     }, options );
 
@@ -87,11 +89,12 @@ define( function( require ) {
 
     // AccordionBox content
     var contentNode = new VBox( {
-      spacing: 0,
+      spacing: 0, // no space here, we want refreshButton snug against bottom question
       align: 'left',
       children: [
         new VBox( {
           spacing: options.vBoxSpacing,
+          align: 'right',
           children: [
             unitRateQuestionNode,
             questionsParent

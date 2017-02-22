@@ -3,6 +3,7 @@
 /**
  * Displays a question and associated answer in the Shopping screen.
  * Values are entered via a keypad.
+ * Layout is specified in https://github.com/phetsims/unit-rates/issues/152
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -13,6 +14,7 @@ define( function( require ) {
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -43,7 +45,8 @@ define( function( require ) {
       checkMarkFont: new URFont( 36 ), // {Font} font for check mark
       valueYMargin: 1, // {number} vertical margin inside the value box
       xSpacing: 25, // {number} horizontal spacing between UI elements
-      ySpacing: 5  // {number} vertical spacing between UI elements
+      ySpacing: 5,  // {number} vertical spacing between UI elements
+      fractionYSpacing: 3 // {number} vertical space above and below fraction line
     }, options );
 
     Node.call( this );
@@ -67,11 +70,19 @@ define( function( require ) {
     var editButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.4 } ),
       baseColor: URColors.editButton,
-      right: valueBox.left - options.xSpacing,
+      left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY
     } );
     this.addChild( editButton );
     editButton.touchArea = editButton.localBounds.dilatedXY( 10, 10 );
+
+    // strut to the right of valueBox, same width as editButton
+    // See layout specification in https://github.com/phetsims/unit-rates/issues/152
+    var strut = new HStrut( editButton.width, {
+      right: valueBox.left - options.xSpacing,
+      centerY: valueBox.centerY
+    } );
+    this.addChild( strut );
 
     // check mark to indicate that the question has been correctly answered
     var checkMarkNode = new ShadowText( '\u2713', {
@@ -83,15 +94,12 @@ define( function( require ) {
     } );
     this.addChild( checkMarkNode );
 
-    // maxWidth for UI elements that span the entire width
-    var maxWidth = checkMarkNode.right - editButton.left;
-
     // the question
     var questionTextNode = new Text( question.questionString, {
       font: options.questionFont,
       centerX: valueBox.centerX,
       bottom: valueBox.top - options.ySpacing,
-      maxWidth: maxWidth
+      maxWidth: 180 // i18n, determined empirically
     } );
     this.addChild( questionTextNode );
 
@@ -110,7 +118,7 @@ define( function( require ) {
       font: options.valueFont,
       center: valueBox.center,
       visible: false,
-      maxWidth: maxWidth
+      maxWidth: 100 // i18n, determined empirically
     } );
     this.addChild( numeratorNode );
 
@@ -119,7 +127,7 @@ define( function( require ) {
       stroke: options.neutralColor,
       lineWidth: 1,
       centerX: valueBox.centerX,
-      top: valueBox.bottom + 2,
+      top: valueBox.bottom + options.fractionYSpacing,
       visible: options.denominatorVisible
     } );
     this.addChild( fractionLineNode );
@@ -129,9 +137,9 @@ define( function( require ) {
       fill: options.neutralColor,
       font: options.valueFont,
       centerX: valueBox.centerX,
-      top: fractionLineNode.bottom + ( fractionLineNode.top - guessNode.bottom ),
+      top: fractionLineNode.bottom + options.fractionYSpacing,
       visible: options.denominatorVisible,
-      maxWidth: maxWidth
+      maxWidth: 100 // i18n, determined empirically
     } );
     this.addChild( denominatorNode );
 
