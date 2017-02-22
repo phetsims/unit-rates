@@ -15,6 +15,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var Util = require( 'DOT/Util' );
+  var ValueNode = require( 'UNIT_RATES/common/view/ValueNode' );
 
   // strings
   var hoursString = require( 'string!UNIT_RATES/hours' );
@@ -30,14 +31,20 @@ define( function( require ) {
   function RaceTimerNode( timeProperty, expandedProperty, titleString, options ) {
 
     options = _.extend( {
+
+      // ValueNode options
       font: new URFont( 14 ),
-      valueMaxString: StringUtils.format( valueUnitsString, '000.00', hoursString ),
       valueToString: function( value ) {
         return StringUtils.format( valueUnitsString, Util.toFixed( value, 2 ), hoursString );
       }
     }, options );
 
-    CollapsibleValueNode.call( this, timeProperty, expandedProperty, titleString, options );
+    var valueNode = new ValueNode( timeProperty, {
+      font: options.font,
+      valueToString: options.valueToString
+    } );
+
+    CollapsibleValueNode.call( this, valueNode, expandedProperty, titleString, options );
   }
 
   unitRates.register( 'RaceTimerNode', RaceTimerNode );

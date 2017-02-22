@@ -53,6 +53,8 @@ define( function( require ) {
 
     // scale
     var scaleNode = new ScaleNode( shoppingScene.scale, viewProperties.scaleCostExpandedProperty, {
+      costIsCollapsible: false,
+      extraCostDecimalVisible: false, //TODO should be false XXX
       quantityIsDisplayed: shoppingScene.scaleQuantityIsDisplayed
     } );
 

@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * View of the scale.
+ * View of the scale, with display for cost and (optionally) quantity.
  * Origin is at the center of the top surface.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -12,11 +12,13 @@ define( function( require ) {
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
   var CollapsibleValueNode = require( 'UNIT_RATES/common/view/CollapsibleValueNode' );
+  var CostNode = require( 'UNIT_RATES/common/view/CostNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Panel = require( 'SUN/Panel' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
@@ -31,9 +33,14 @@ define( function( require ) {
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
   // constants
-  // values longer than these will be displayed properly, but the display will be scaled to fit
-  var MAX_COST = 100.5;
-  var MAX_QUANTITY = 10.5;
+  var PANEL_OPTIONS = {
+    align: 'right',
+    xMargin: 8,
+    yMargin: 4,
+    minWidth: 110,
+    resize: false,
+    cornerRadius: 4
+  };
 
   /**
    * @param {Scale} scale
@@ -44,8 +51,11 @@ define( function( require ) {
   function ScaleNode( scale, costExpandedProperty, options ) {
 
     options = _.extend( {
-      costIsCollapsible: false,
-      quantityIsDisplayed: false
+
+      //TODO replace this option with costExpandedProperty:null
+      costIsCollapsible: false, // {boolean} is the cost display collapsible?
+      extraCostDecimalVisible: false, // {boolean} does the scale show a 3rd decimal place for cost?
+      quantityIsDisplayed: false // {boolean} does the scale show quantity?
     }, options );
 
     // Body of the scale, origin at center of top surface
@@ -56,38 +66,36 @@ define( function( require ) {
     // Nodes that make up the numeric display on the scale
     var displayChildren = [];
 
-    // Cost display
-    var costNode = null;
-    var COST_DISPLAY_OPTIONS = {
-      valueMaxString: costToString( MAX_COST ),
-      valueToString: function( value ) {
-        return costToString( value );
-      }
-    };
+    // Cost panel
+    // dispose required
+    var costNode = new CostNode( scale.costProperty, { extraDecimalVisible: options.extraCostDecimalVisible } );
     if ( options.costIsCollapsible ) {
 
       // dispose required
-      costNode = new CollapsibleValueNode( scale.costProperty, costExpandedProperty, costString, COST_DISPLAY_OPTIONS );
+      var costPanel = new CollapsibleValueNode( costNode, costExpandedProperty, costString, {
+        valueToString: function( value ) {
+          return costToString( value );
+        }
+      } );
+      displayChildren.push( costPanel );
     }
     else {
 
       // dispose required
-      costNode = new ValueNode( scale.costProperty, COST_DISPLAY_OPTIONS );
+      displayChildren.push( new Panel( costNode, PANEL_OPTIONS ) );
     }
-    displayChildren.push( costNode );
 
-    // Quantity display
+    // Quantity panel
     var quantityNode = null;
     if ( options.quantityIsDisplayed ) {
 
       // dispose required
       quantityNode = new ValueNode( scale.quantityProperty, {
-        valueMaxString: quantityToString( MAX_QUANTITY, scale.quantityUnits ),
         valueToString: function( value ) {
           return quantityToString( value, scale.quantityUnits );
         }
       } );
-      displayChildren.push( quantityNode );
+      displayChildren.push( new Panel( quantityNode, PANEL_OPTIONS ) );
     }
 
     // Assemble the numeric display(s)
@@ -118,7 +126,8 @@ define( function( require ) {
     // @private
     this.disposeScaleNode = function() {
       costNode.dispose();
-      quantityNode && quantityNode.dispose();
+      quantityNode.dispose();
+      costPanel && costPanel.dispose();
     };
   }
 

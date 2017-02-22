@@ -1,9 +1,9 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Displays a value on a rectangular background, with an expand/collapse button.
- * When the display is expanded, it displays the right-justified value.
- * When the display is collapsed, it displays a left-justified title.
+ * Displays a content Node on a rectangular background, with an expand/collapse button.
+ * When the display is expanded, it displays right-justified content.
+ * When the display is collapsed, it displays left-justified title.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,13 +20,13 @@ define( function( require ) {
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
   /**
-   * @param {Property.<*>} valueProperty
+   * @param {Node} contentNode
    * @param {Property.<boolean>} expandedProperty
    * @param {string} titleString
    * @param {Object} [options]
    * @constructor
    */
-  function CollapsibleValueNode( valueProperty, expandedProperty, titleString, options ) {
+  function CollapsibleValueNode( contentNode, expandedProperty, titleString, options ) {
 
     options = _.extend( {
 
@@ -35,10 +35,8 @@ define( function( require ) {
       buttonTouchAreaXDilation: 30,
       buttonTouchAreaYDilation: 30,
 
-      // value
-      valueToString: function( value ) { return '' + value; },
-      valueMaxString: '12345', // strings longer than this will be scaled down
-      valueMaxWidth: 100, // i18n, determined empirically
+      // rectangular background
+      backgroundMinWidth: 130, // determined empirically
       backgroundMinHeight: 30, // minimum height of the background
 
       // title
@@ -58,12 +56,6 @@ define( function( require ) {
       maxWidth: options.titleMaxWidth
     } );
 
-    // value, displayed when expanded
-    var valueNode = new Text( options.valueMaxString, {
-      font: options.font,
-      maxWidth: options.valueMaxWidth
-    } );
-
     // dispose required
     var expandCollapseButton = new ExpandCollapseButton( expandedProperty, {
       sideLength: options.buttonSideLength,
@@ -72,13 +64,14 @@ define( function( require ) {
     } );
 
     // background rectangle
-    var maxWidth = _.maxBy( [ titleNode, valueNode ], function( node ) {
+    var maxWidth = _.maxBy( [ titleNode, contentNode ], function( node ) {
       return node.width;
     } ).width;
-    var maxHeight = _.maxBy( [ titleNode, valueNode, expandCollapseButton ], function( node ) {
+    var maxHeight = _.maxBy( [ titleNode, contentNode, expandCollapseButton ], function( node ) {
       return node.height;
     } ).height;
-    var backgroundWith = maxWidth + expandCollapseButton.width + options.xSpacing + ( 2 * options.xMargin );
+    var backgroundWith = Math.max( options.backgroundMinWidth, 
+      maxWidth + expandCollapseButton.width + options.xSpacing + ( 2 * options.xMargin ) );
     var backgroundHeight = Math.max( options.backgroundMinHeight, maxHeight + ( 2 * options.yMargin ) );
     var backgroundNode = new Rectangle( 0, 0, backgroundWith, backgroundHeight, {
       cornerRadius: 4,
@@ -91,33 +84,31 @@ define( function( require ) {
     expandCollapseButton.centerY = backgroundNode.centerY;
     titleNode.left = expandCollapseButton.right + options.xSpacing;
     titleNode.centerY = backgroundNode.centerY;
-    // valueNode layout is handled by valueObserver
+    contentNode.right = backgroundNode.right - options.xMargin;
+    contentNode.centerY = backgroundNode.centerY;
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ backgroundNode, expandCollapseButton, titleNode, valueNode ];
+    options.children = [ backgroundNode, expandCollapseButton, titleNode, contentNode ];
 
     Node.call( this, options );
 
+    // right justify contentNode when its bounds change
+    contentNode.on( 'bounds', function() {
+      contentNode.right = backgroundNode.right - options.xMargin;
+      contentNode.centerY = backgroundNode.centerY;
+    } );
+
     // expand/collapse
     var expandedObserver = function( expanded ) {
-      valueNode.visible = expanded;
+      contentNode.visible = expanded;
       titleNode.visible = !expanded;
     };
     expandedProperty.link( expandedObserver ); // unlink in dispose
-
-    // update value display
-    var valueObserver = function( value ) {
-      valueNode.text = options.valueToString( value );
-      valueNode.right = backgroundNode.right - options.xMargin;
-      valueNode.centerY = backgroundNode.centerY;
-    };
-    valueProperty.link( valueObserver ); // unlink in dispose
 
     // @private
     this.disposeCollapsibleValueNode = function() {
       expandCollapseButton.dispose();
       expandedProperty.unlink( expandedObserver );
-      valueProperty.unlink( valueObserver );
     };
   }
 

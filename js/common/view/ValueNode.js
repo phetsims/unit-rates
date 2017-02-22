@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Displays a value on a rectangular background.
+ * Displays the value of some generic Property.
+ * Client specifies how the value is converted to a string via options.valueToString.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -10,8 +11,6 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
@@ -24,40 +23,17 @@ define( function( require ) {
   function ValueNode( valueProperty, options ) {
 
     options = _.extend( {
-      valueToString: function( value ) { return '' + value; },
-      valueMaxString: '12345', // strings longer than this will be scaled down
-      valueMaxWidth: 100, // i18n, determined empirically
-      backgroundMinHeight: 30, // minimum height of the background
       font: new URFont( 20 ),
-      xMargin: 8,
-      yMargin: 4
+      valueToString: function( value ) { return '' + value; }
     }, options );
 
-    // value, displayed when expanded
-    var valueNode = new Text( options.valueMaxString, {
-      font: options.font,
-      maxWidth: options.valueMaxWidth // i18n, determined empirically
-    } );
+    var self = this;
 
-    // background rectangle
-    var backgroundWith = valueNode.width + ( 2 * options.xMargin );
-    var backgroundHeight = Math.max( options.backgroundMinHeight, valueNode.height + ( 2 * options.yMargin ) );
-    var backgroundNode = new Rectangle( 0, 0, backgroundWith, backgroundHeight, {
-      cornerRadius: 4,
-      fill: 'white',
-      stroke: 'black'
-    } );
-
-    assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ backgroundNode, valueNode ];
-
-    Node.call( this, options );
+    Text.call( this, '' );
 
     // update value display
     var valueObserver = function( value ) {
-      valueNode.text = options.valueToString( value );
-      valueNode.right = backgroundNode.right - options.xMargin;
-      valueNode.centerY = backgroundNode.centerY;
+      self.text = options.valueToString( value );
     };
     valueProperty.link( valueObserver ); // unlink in dispose
 
@@ -65,16 +41,18 @@ define( function( require ) {
     this.disposeValueNode = function() {
       valueProperty.unlink( valueObserver );
     };
+
+    this.mutate( options );
   }
 
   unitRates.register( 'ValueNode', ValueNode );
 
-  return inherit( Node, ValueNode, {
+  return inherit( Text, ValueNode, {
 
     // @public
     dispose: function() {
       this.disposeValueNode();
-      Node.prototype.dispose.call( this );
+      Text.prototype.dispose.call( this );
     }
   } );
 } );
