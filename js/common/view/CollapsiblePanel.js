@@ -36,9 +36,9 @@ define( function( require ) {
       buttonTouchAreaXDilation: 30,
       buttonTouchAreaYDilation: 30,
 
-      // rectangular background
-      backgroundMinWidth: 130, // determined empirically
-      backgroundMinHeight: 30, // minimum height of the background
+      // minimum content size
+      minContentWidth: 0,
+      minContentHeight: 0,
 
       // title
       titleMaxWidth: 100, // i18n, determined empirically
@@ -65,15 +65,14 @@ define( function( require ) {
     } );
 
     // background rectangle
-    var maxWidth = _.maxBy( [ titleNode, valueNode ], function( node ) {
+    var maxWidth = Math.max( options.minContentWidth, _.maxBy( [ titleNode, valueNode ], function( node ) {
       return node.width;
-    } ).width;
-    var maxHeight = _.maxBy( [ titleNode, valueNode, expandCollapseButton ], function( node ) {
+    } ).width );
+    var maxHeight = Math.max( options.minContentHeight, _.maxBy( [ titleNode, valueNode, expandCollapseButton ], function( node ) {
       return node.height;
-    } ).height;
-    var backgroundWith = Math.max( options.backgroundMinWidth, 
-      maxWidth + expandCollapseButton.width + options.xSpacing + ( 2 * options.xMargin ) );
-    var backgroundHeight = Math.max( options.backgroundMinHeight, maxHeight + ( 2 * options.yMargin ) );
+    } ).height );
+    var backgroundWith = maxWidth + expandCollapseButton.width + options.xSpacing + ( 2 * options.xMargin );
+    var backgroundHeight = maxHeight + ( 2 * options.yMargin );
     var backgroundNode = new Rectangle( 0, 0, backgroundWith, backgroundHeight, {
       cornerRadius: 4,
       fill: 'white',

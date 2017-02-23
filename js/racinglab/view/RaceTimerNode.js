@@ -33,10 +33,15 @@ define( function( require ) {
     options = _.extend( {
 
       // ValueNode options
-      font: new URFont( 14 ),
+      font: new URFont( 16 ),
       valueToString: function( value ) {
         return StringUtils.format( valueUnitsString, Util.toFixed( value, 2 ), hoursString );
-      }
+      },
+
+      // CollapsiblePanel options
+      minContentWidth: 95,
+      minContentHeight: 15
+
     }, options );
 
     var valueNode = new ValueNode( timeProperty, {

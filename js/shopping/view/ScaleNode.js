@@ -76,6 +76,8 @@ define( function( require ) {
 
       // dispose required
       var costPanel = new CollapsiblePanel( costNode, costExpandedProperty, costString, {
+        minContentWidth: 115,
+        minContentHeight: 15,
         valueToString: function( value ) {
           return costToString( value );
         }
