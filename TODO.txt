@@ -3,6 +3,7 @@ TODO list for unit-rates
 High:
 ValuePanel: options.contentSize, options.collapsible
 Items on shelf and scale
+Get rid of tween for MarkerEditor
 
 Medium:
 resetShelfButton, https://github.com/phetsims/unit-rates/issues/156
