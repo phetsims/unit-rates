@@ -52,9 +52,8 @@ define( function( require ) {
     var shelfNode = new ShelfNode( shoppingScene.shelf );
 
     // scale
-    var scaleNode = new ScaleNode( shoppingScene.scale, viewProperties.scaleCostExpandedProperty, {
-      costIsCollapsible: false,
-      extraCostDecimalVisible: false, //TODO should be false XXX
+    var scaleNode = new ScaleNode( shoppingScene.scale, {
+      extraCostDecimalVisible: false,
       quantityIsDisplayed: shoppingScene.scaleQuantityIsDisplayed
     } );
 

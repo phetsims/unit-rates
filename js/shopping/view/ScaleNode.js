@@ -36,16 +36,14 @@ define( function( require ) {
 
   /**
    * @param {Scale} scale
-   * @param {Property.<boolean>} costExpandedProperty - is the cost display expanded?
    * @param {Object} [options]
    * @constructor
    */
-  function ScaleNode( scale, costExpandedProperty, options ) {
+  function ScaleNode( scale, options ) {
 
     options = _.extend( {
 
-      //TODO replace this option with costExpandedProperty:null
-      costIsCollapsible: false, // {boolean} is the cost display collapsible?
+      costExpandedProperty: null, // {Property.<boolean>|null} null indicates that cost display is not collapsible
       extraCostDecimalVisible: false, // {boolean} does the scale show a 3rd decimal place for cost?
       quantityIsDisplayed: false // {boolean} does the scale show quantity?
     }, options );
@@ -68,7 +66,7 @@ define( function( require ) {
     var costPanel = new ValuePanel( costNode, {
       panelWidth: PANEL_WIDTH,
       panelMinHeight: PANEL_MIN_HEIGHT,
-      expandedProperty: ( options.costIsCollapsible ? costExpandedProperty : null ),
+      expandedProperty: options.costExpandedProperty,
       titleString: costString
     } );
     displayChildren.push( costPanel );
