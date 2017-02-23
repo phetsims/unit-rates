@@ -8,7 +8,7 @@ Medium:
 resetShelfButton, https://github.com/phetsims/unit-rates/issues/156
 When selected item changes, cancel marker editor animation (TWEEN), cancel bag/item animations (model.step).
 If marker editor is on it's way home when Reset All is pressed, it doesn't move immediately to home.
-Strip out showAnswers in production versions
+Strip out showAnswers in production versions?
 
 Low:
 address TODO items in Movable
