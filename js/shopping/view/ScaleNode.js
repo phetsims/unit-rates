@@ -70,7 +70,7 @@ define( function( require ) {
     // dispose required
     var costNode = new CostNode( scale.costProperty, {
       extraDecimalVisible: options.extraCostDecimalVisible,
-      maxWidth: 100 // i18n, determined empirically
+      maxWidth: 90 // i18n, determined empirically
     } );
     if ( options.costIsCollapsible ) {
 
