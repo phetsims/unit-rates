@@ -1,7 +1,6 @@
 TODO list for unit-rates
 
 High:
-Move responsibility for marker editor from DNLAccordionBox to DNLNode?
 Make scale displays have constant height, so the panel height doesn't change when the value scales for i18n
 Items on shelf and scale
 
