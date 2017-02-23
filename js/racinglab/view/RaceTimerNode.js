@@ -9,13 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var CollapsiblePanel = require( 'UNIT_RATES/common/view/CollapsiblePanel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var Util = require( 'DOT/Util' );
   var ValueNode = require( 'UNIT_RATES/common/view/ValueNode' );
+  var ValuePanel = require( 'UNIT_RATES/common/view/ValuePanel' );
 
   // strings
   var hoursString = require( 'string!UNIT_RATES/hours' );
@@ -38,22 +38,23 @@ define( function( require ) {
         return StringUtils.format( valueUnitsString, Util.toFixed( value, 2 ), hoursString );
       },
 
-      // CollapsiblePanel options
-      minContentWidth: 115, // determined empirically
-      minContentHeight: 15  // determined empirically
+      // ValuePanel options
+      panelWidth: 132,
+      expandedProperty: expandedProperty,
+      titleString: titleString,
+      titleFont: new URFont( 16 )
 
     }, options );
 
     var valueNode = new ValueNode( timeProperty, {
       font: options.font,
-      valueToString: options.valueToString,
-      maxWidth: 90 // i18n, determined empirically
+      valueToString: options.valueToString
     } );
 
-    CollapsiblePanel.call( this, valueNode, expandedProperty, titleString, options );
+    ValuePanel.call( this, valueNode, options );
   }
 
   unitRates.register( 'RaceTimerNode', RaceTimerNode );
 
-  return inherit( CollapsiblePanel, RaceTimerNode );
+  return inherit( ValuePanel, RaceTimerNode );
 } );

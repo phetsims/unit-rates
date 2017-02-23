@@ -11,36 +11,24 @@ define( function( require ) {
 
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var CollapsiblePanel = require( 'UNIT_RATES/common/view/CollapsiblePanel' );
   var CostNode = require( 'UNIT_RATES/common/view/CostNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
   var ValueNode = require( 'UNIT_RATES/common/view/ValueNode' );
+  var ValuePanel = require( 'UNIT_RATES/common/view/ValuePanel' );
 
   // images
   var scaleImage = require( 'image!UNIT_RATES/scale.png' );
 
   // strings
   var costString = require( 'string!UNIT_RATES/cost' );
-  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
-
-  // constants
-  var PANEL_OPTIONS = {
-    align: 'right',
-    xMargin: 8,
-    yMargin: 4,
-    minWidth: 110,
-    resize: false,
-    cornerRadius: 4
-  };
 
   /**
    * @param {Scale} scale
@@ -66,49 +54,42 @@ define( function( require ) {
     // Nodes that make up the numeric display on the scale
     var displayChildren = [];
 
-    // Cost panel
     // dispose required
     var costNode = new CostNode( scale.costProperty, {
       extraDecimalVisible: options.extraCostDecimalVisible,
       maxWidth: 90 // i18n, determined empirically
     } );
-    if ( options.costIsCollapsible ) {
 
-      // dispose required
-      var costPanel = new CollapsiblePanel( costNode, costExpandedProperty, costString, {
-        minContentWidth: 115,
-        minContentHeight: 15,
-        valueToString: function( value ) {
-          return costToString( value );
-        }
-      } );
-      displayChildren.push( costPanel );
-    }
-    else {
+    // dispose required
+    var costPanel = new ValuePanel( costNode, {
+      panelWidth: 132,
+      expandedProperty: ( options.costIsCollapsible ? costExpandedProperty : null ),
+      titleString: costString
+    } );
+    displayChildren.push( costPanel );
 
-      // dispose required
-      displayChildren.push( new Panel( costNode, PANEL_OPTIONS ) );
-    }
-
-    // Quantity panel
-    var quantityNode = null;
+    // optional quantity display
     if ( options.quantityIsDisplayed ) {
 
       // dispose required
-      quantityNode = new ValueNode( scale.quantityProperty, {
-        maxWidth: 100, // i18n, determined empirically
+      var quantityNode = new ValueNode( scale.quantityProperty, {
         valueToString: function( value ) {
           return quantityToString( value, scale.quantityUnits );
         }
       } );
-      displayChildren.push( new Panel( quantityNode, PANEL_OPTIONS ) );
+
+      // dispose required
+      var quantityPanel = new ValuePanel( quantityNode, {
+        panelWidth: 132
+      } );
+      displayChildren.push( quantityPanel );
     }
 
     // Assemble the numeric display(s)
     var displayNode = new HBox( {
       children: displayChildren,
       align: 'center',
-      spacing: 15,
+      spacing: 8,
 
       // These coordinates are dependent on the image file, and were determined empirically
       centerX: scaleImageNode.centerX,
@@ -132,22 +113,13 @@ define( function( require ) {
     // @private
     this.disposeScaleNode = function() {
       costNode.dispose();
-      costPanel && costPanel.dispose();
+      costPanel.dispose();
       quantityNode && quantityNode.dispose();
+      quantityPanel && quantityPanel.dispose();
     };
   }
 
   unitRates.register( 'ScaleNode', ScaleNode );
-
-  /**
-   * Converts a cost to a string, e.g. 10.5 -> '$10.50'
-   * @param {number} cost
-   * @returns {string}
-   */
-  var costToString = function( cost ) {
-    return StringUtils.format( currencyValueString,
-      URUtil.numberToString( cost, 2 /* maxDecimals */, false /* trimZeros */ ) );
-  };
 
   /**
    * Converts a quantity to a string, e.g. 10.5 -> '10.5 lb'

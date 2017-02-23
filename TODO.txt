@@ -1,7 +1,7 @@
 TODO list for unit-rates
 
 High:
-ValuePanel: options.contentSize, options.collapsible
+make all ValuePanels the same height, regardless of i18n
 Items on shelf and scale
 
 Medium:
