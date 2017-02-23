@@ -63,26 +63,33 @@ define( function( require ) {
 
     var costObserver = function( cost ) {
 
+      var maxDecimalPlaces = 10; // the number of decimal places that we'll keep in cost
+
       assert && assert( cost >= 0, 'negative cost not supported: ' + cost );
+      assert && assert( options.decimalPlaces < maxDecimalPlaces,
+        'decimalPlaces must be < maxDecimalPlaces: ' + options.decimalPlaces );
 
-      // First truncate to 10 decimal places, in an attempt to remove floating point error.
+      // First truncate to maxDecimalPlaces, in an attempt to remove floating point error.
       // For example, Javascript computes 3 * 0.4 as 1.2000000000000002.
-      var powerOfTen = Math.pow( 10, 10 );
-      var costTruncatedOnce = Math.floor( cost * powerOfTen ) / powerOfTen;
+      // This determines whether the cost has relevant non-zero decimal places,
+      // and therefore whether extra decimal place show be shown.
+      var powerOfTen = Math.pow( 10, maxDecimalPlaces );
+      var costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
+      extraDecimalNode.visible = ( URUtil.decimalPlaces( costTruncated ) >= options.decimalPlaces );
 
-      // truncate again to the number of decimal places that we're interested in
+      // Now truncate to the number of decimal places that we're interested in.
+      // This determines the cost value that is displayed.
       powerOfTen = Math.pow( 10, options.decimalPlaces );
-      var costTruncatedTwice = Math.floor( costTruncatedOnce * powerOfTen ) / powerOfTen;
+      costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
       
       // convert to string, then pick it apart
-      var costString = costToString( costTruncatedTwice );
+      var costString = costToString( costTruncated );
       primaryNode.text = costString.substring( 0, costString.length - 1 );
       extraDecimalNode.text = costString.substring( costString.length - 1, costString.length );
       extraDecimalNode.left = primaryNode.right + 1;
       extraDecimalNode.y = primaryNode.y;
 
-      // Hide the extra decimal place if it's not significant
-      extraDecimalNode.visible = ( URUtil.decimalPlaces( costTruncatedOnce ) >= options.decimalPlaces );
+
     };
     costProperty.link( costObserver ); // unlink in dispose
 
