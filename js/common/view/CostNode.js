@@ -20,7 +20,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
-  var Util = require( 'DOT/Util' );
 
   // strings
   var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
