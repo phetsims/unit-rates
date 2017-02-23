@@ -78,7 +78,6 @@ define( function( require ) {
     // @public
     dispose: function() {
      this.disposeScale();
-      BagContainer.prototype.dispose && BagContainer.prototype.dispose.call( this );
     },
 
     // @public
