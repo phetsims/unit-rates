@@ -42,7 +42,7 @@ define( function( require ) {
       // RateAccordionBox options
       titleString: rateString,
       unitsFont: new URFont( 16 ),
-      unitsMaxWidth: 125, // i18n, set empirically
+      unitsMaxWidth: 60, // i18n, set empirically
       numeratorRange: new Range( 0, 10 ),
       denominatorRange: new Range( 0, 10 ),
       numeratorUnits: '',
@@ -63,7 +63,7 @@ define( function( require ) {
     assert && assert( !options.titleNode, 'creates its own title node' );
     options.titleNode = new Text( options.titleString, {
       font: URConstants.ACCORDION_BOX_TITLE_FONT,
-      maxWidth: 100
+      maxWidth: 100  // i18n, determined empirically
     } );
 
     // numerator picker, must be disposed
