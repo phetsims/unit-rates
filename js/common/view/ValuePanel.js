@@ -36,6 +36,7 @@ define( function( require ) {
     options = _.extend( {
 
       panelWidth: 100, // {number} contents are scaled to fit, height depends on contents
+      panelMinHeight: 0, // {number} minimum panel height
 
       // expand/collapse button
       expandedProperty: null, // {Property.<boolean>|null} null indicates no expand/collapse button
@@ -61,16 +62,20 @@ define( function( require ) {
 
     // width of panel content
     var contentWidth = options.panelWidth - ( 2 * options.xMargin );
+    var minContentHeight = Math.max( 0, options.panelMinHeight - ( 2 * options.yMargin ) );
 
     // invisible rectangle whose size is equivalent to the size of the panel's content, used for right justifying valueNode
     var backgroundNode = null; // assigned below
-    
+
+    var contentHeight = 0; // computed below
     if ( !options.expandedProperty ) {
 
       // limit valueNode width
       valueNode.maxWidth = contentWidth;
+
+      contentHeight = Math.max( minContentHeight, valueNode.height );
       
-      backgroundNode = new Rectangle( 0, 0, contentWidth, valueNode.height, { stroke: BACKGROUND_RECTANGLE_STROKE } );
+      backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight, { stroke: BACKGROUND_RECTANGLE_STROKE } );
       contentNode.addChild( backgroundNode );
     }
     else {
@@ -96,9 +101,9 @@ define( function( require ) {
       // limit valueNode width
       valueNode.maxWidth = maxExpandedWidth;
 
-      var contentHeight = _.maxBy( [ titleNode, valueNode, expandCollapseButton ], function( node ) {
+      contentHeight = Math.max( minContentHeight, _.maxBy( [ titleNode, valueNode, expandCollapseButton ], function( node ) {
         return node.height;
-      } ).height;
+      } ).height );
       backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight, { stroke: BACKGROUND_RECTANGLE_STROKE } );
       contentNode.addChild( backgroundNode );
 

@@ -30,6 +30,10 @@ define( function( require ) {
   var costString = require( 'string!UNIT_RATES/cost' );
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
+  // constants
+  var PANEL_WIDTH = 132;
+  var PANEL_MIN_HEIGHT = 32;
+
   /**
    * @param {Scale} scale
    * @param {Property.<boolean>} costExpandedProperty - is the cost display expanded?
@@ -62,7 +66,8 @@ define( function( require ) {
 
     // dispose required
     var costPanel = new ValuePanel( costNode, {
-      panelWidth: 132,
+      panelWidth: PANEL_WIDTH,
+      panelMinHeight: PANEL_MIN_HEIGHT,
       expandedProperty: ( options.costIsCollapsible ? costExpandedProperty : null ),
       titleString: costString
     } );
@@ -80,7 +85,8 @@ define( function( require ) {
 
       // dispose required
       var quantityPanel = new ValuePanel( quantityNode, {
-        panelWidth: 132
+        panelWidth: PANEL_WIDTH,
+        panelMinHeight: PANEL_MIN_HEIGHT
       } );
       displayChildren.push( quantityPanel );
     }
