@@ -88,8 +88,6 @@ define( function( require ) {
       extraDecimalNode.text = costString.substring( costString.length - 1, costString.length );
       extraDecimalNode.left = primaryNode.right + 1;
       extraDecimalNode.y = primaryNode.y;
-
-
     };
     costProperty.link( costObserver ); // unlink in dispose
 
