@@ -39,15 +39,15 @@ define( function( require ) {
       },
 
       // CollapsiblePanel options
-      minContentWidth: 115,
-      minContentHeight: 15
+      minContentWidth: 115, // determined empirically
+      minContentHeight: 15  // determined empirically
 
     }, options );
 
     var valueNode = new ValueNode( timeProperty, {
       font: options.font,
       valueToString: options.valueToString,
-      maxWidth: 150
+      maxWidth: 90, // i18n, determined empirically
     } );
 
     CollapsiblePanel.call( this, valueNode, expandedProperty, titleString, options );
