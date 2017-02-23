@@ -64,21 +64,26 @@ define( function( require ) {
 
     var costObserver = function( cost ) {
 
-      // truncate cost
       assert && assert( cost >= 0, 'negative cost not supported: ' + cost );
-      var powerOfTen = Math.pow( 10, options.decimalPlaces );
-      var costRounded = Util.toFixedNumber( cost, 10 ); // to eliminate garbage due to floating point error
-      var costTruncated = Math.floor( costRounded * powerOfTen ) / powerOfTen;
+
+      // First truncate to 10 decimal places, in an attempt to remove floating point error.
+      // For example, Javascript computes 3 * 0.4 as 1.2000000000000002.
+      var powerOfTen = Math.pow( 10, 10 );
+      var costTruncatedOnce = Math.floor( cost * powerOfTen ) / powerOfTen;
+
+      // truncate again to the number of decimal places that we're interested in
+      powerOfTen = Math.pow( 10, options.decimalPlaces );
+      var costTruncatedTwice = Math.floor( costTruncatedOnce * powerOfTen ) / powerOfTen;
       
       // convert to string, then pick it apart
-      var costString = costToString( costTruncated );
+      var costString = costToString( costTruncatedTwice );
       primaryNode.text = costString.substring( 0, costString.length - 1 );
       extraDecimalNode.text = costString.substring( costString.length - 1, costString.length );
       extraDecimalNode.left = primaryNode.right + 1;
       extraDecimalNode.y = primaryNode.y;
 
-      // Hide the extra decimal place if the original cost didn't require it
-      extraDecimalNode.visible = ( URUtil.decimalPlaces( cost ) >= options.decimalPlaces );
+      // Hide the extra decimal place if it's not significant
+      extraDecimalNode.visible = ( URUtil.decimalPlaces( costTruncatedOnce ) >= options.decimalPlaces );
     };
     costProperty.link( costObserver ); // unlink in dispose
 
