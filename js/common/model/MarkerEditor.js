@@ -2,6 +2,7 @@
 
 /**
  * Model for the marker editor.
+ * Location of the editor is handled solely in the view.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
