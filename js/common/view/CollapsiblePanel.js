@@ -1,10 +1,12 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO AccordionBox should have been usasble for this, but I ran into problems with i18n, spacing and margins
 /**
- * Displays a ValueNode on a rectangular background, with an expand/collapse button.
- * When the display is expanded, it displays right-justified content.
- * When the display is collapsed, it displays left-justified title.
+ * Displays a Node in a panel, with an expand/collapse button.
+ * When expanded, it displays the right-justified Node.
+ * When collapsed, it displays a left-justified title.
+ * 
+ * NOTE: While this seemed like a good application for AccordionBox, 
+ * I ran into problems related to justifying and i18n.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -15,6 +17,7 @@ define( function( require ) {
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Panel = require( 'SUN/Panel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -35,27 +38,22 @@ define( function( require ) {
       buttonSideLength: 15,
       buttonTouchAreaXDilation: 30,
       buttonTouchAreaYDilation: 30,
-
+      
+      // title
+      titleMaxWidth: 100, // i18n, determined empirically
+      titleFont: new URFont( 20 ),
+      xSpacing: 8,  // space between expand/collapse button and title
+      
       // minimum content size
       minContentWidth: 0,
       minContentHeight: 0,
-
-      // title
-      titleMaxWidth: 100, // i18n, determined empirically
-
-      // panel
-      font: new URFont( 20 ),
+      
+      // Panel options
+      cornerRadius: 4,
       xMargin: 8,
-      yMargin: 4,
-      xSpacing: 8
+      yMargin: 4
 
     }, options );
-
-    // title, displayed when collapsed
-    var titleNode = new Text( titleString, {
-      font: options.font,
-      maxWidth: options.titleMaxWidth
-    } );
 
     // dispose required
     var expandCollapseButton = new ExpandCollapseButton( expandedProperty, {
@@ -63,38 +61,39 @@ define( function( require ) {
       touchAreaXDilation: options.buttonTouchAreaXDilation,
       touchAreaYDilation: options.buttonTouchAreaYDilation
     } );
-
-    // background rectangle
-    var maxWidth = Math.max( options.minContentWidth, _.maxBy( [ titleNode, valueNode ], function( node ) {
-      return node.width;
-    } ).width );
-    var maxHeight = Math.max( options.minContentHeight, _.maxBy( [ titleNode, valueNode, expandCollapseButton ], function( node ) {
-      return node.height;
-    } ).height );
-    var backgroundWith = maxWidth + expandCollapseButton.width + options.xSpacing + ( 2 * options.xMargin );
-    var backgroundHeight = maxHeight + ( 2 * options.yMargin );
-    var backgroundNode = new Rectangle( 0, 0, backgroundWith, backgroundHeight, {
-      cornerRadius: 4,
-      fill: 'white',
-      stroke: 'black'
+    
+    // title, displayed when collapsed
+    var titleNode = new Text( titleString, {
+      font: options.titleFont,
+      maxWidth: options.titleMaxWidth
     } );
 
+    // invisible background rectangle that sits behind other UI elements, used for justifying valueNode
+    var contentWidth = Math.max( options.minContentWidth, _.maxBy( [ titleNode, valueNode ], function( node ) {
+      return node.width;
+    } ).width );
+    var contentHeight = Math.max( options.minContentHeight, _.maxBy( [ titleNode, valueNode, expandCollapseButton ], function( node ) {
+      return node.height;
+    } ).height );
+    var backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
+
     // layout
-    expandCollapseButton.left = backgroundNode.left + options.xMargin;
+    expandCollapseButton.left = backgroundNode.left;
     expandCollapseButton.centerY = backgroundNode.centerY;
     titleNode.left = expandCollapseButton.right + options.xSpacing;
     titleNode.centerY = backgroundNode.centerY;
-    valueNode.right = backgroundNode.right - options.xMargin;
+    valueNode.right = backgroundNode.right;
     valueNode.centerY = backgroundNode.centerY;
 
-    assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ backgroundNode, expandCollapseButton, titleNode, valueNode ];
+    var contentNode = new Node({
+      children: [ backgroundNode, expandCollapseButton, titleNode, valueNode ]
+    } );
 
-    Node.call( this, options );
+    Panel.call( this, contentNode, options );
 
     // right justify valueNode when its bounds change
     valueNode.on( 'bounds', function() {
-      valueNode.right = backgroundNode.right - options.xMargin;
+      valueNode.right = backgroundNode.right;
       valueNode.centerY = backgroundNode.centerY;
     } );
 
@@ -114,7 +113,7 @@ define( function( require ) {
 
   unitRates.register( 'CollapsiblePanel', CollapsiblePanel );
 
-  return inherit( Node, CollapsiblePanel, {
+  return inherit( Panel, CollapsiblePanel, {
 
     // @public
     dispose: function() {

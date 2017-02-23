@@ -39,7 +39,7 @@ define( function( require ) {
       },
 
       // CollapsiblePanel options
-      minContentWidth: 95,
+      minContentWidth: 115,
       minContentHeight: 15
 
     }, options );
