@@ -42,7 +42,7 @@ define( function( require ) {
       // RateAccordionBox options
       titleString: rateString,
       unitsFont: new URFont( 16 ),
-      unitsMaxWidth: 60, // i18n, set empirically
+      unitsMaxWidth: 60, // i18n, determined empirically
       numeratorRange: new Range( 0, 10 ),
       denominatorRange: new Range( 0, 10 ),
       numeratorUnits: '',
