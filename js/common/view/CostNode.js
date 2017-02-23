@@ -72,7 +72,7 @@ define( function( require ) {
       // First truncate to maxDecimalPlaces, in an attempt to remove floating point error.
       // For example, Javascript computes 3 * 0.4 as 1.2000000000000002.
       // This determines whether the cost has relevant non-zero decimal places,
-      // and therefore whether extra decimal place show be shown.
+      // and therefore whether the extra decimal place should be visible.
       var powerOfTen = Math.pow( 10, maxDecimalPlaces );
       var costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
       extraDecimalNode.visible = ( URUtil.decimalPlaces( costTruncated ) >= options.decimalPlaces );
