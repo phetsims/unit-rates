@@ -1,6 +1,8 @@
 TODO list for unit-rates
 
 High:
+CollapsiblePanel: add options.contentSize and scale things inside it accordingly
+Put ValueNode in a ValuePanel with options.contentSize
 Make scale displays have constant height, so the panel height doesn't change when the value scales for i18n
 Items on shelf and scale
 
