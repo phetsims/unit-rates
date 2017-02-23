@@ -11,8 +11,8 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Movable = require( 'UNIT_RATES/common/model/Movable' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URMovable = require( 'UNIT_RATES/common/model/URMovable' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
@@ -28,7 +28,7 @@ define( function( require ) {
       // {ShoppingItem[]|null} items in the bag, null means the bag does not open when place on the scale
       shoppingItems: null,
 
-      // Movable options
+      // URMovable options
       animationSpeed: URQueryParameters.animationSpeed
 
     }, options );
@@ -38,7 +38,7 @@ define( function( require ) {
     this.unitsPerBag = unitsPerBag;
     this.shoppingItems = options.shoppingItems;
 
-    Movable.call( this, options );
+    URMovable.call( this, options );
 
     // @private
     this.disposeBag = function() {
@@ -52,12 +52,12 @@ define( function( require ) {
 
   unitRates.register( 'Bag', Bag );
 
-  return inherit( Movable, Bag, {
+  return inherit( URMovable, Bag, {
 
     // @public
     dispose: function() {
       this.disposeBag();
-      Movable.prototype.dispose.call( this );
+      URMovable.prototype.dispose.call( this );
     }
   } );
 } );

@@ -11,8 +11,8 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Movable = require( 'UNIT_RATES/common/model/Movable' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URMovable = require( 'UNIT_RATES/common/model/URMovable' );
 
   /**
    * @param {HTMLImageElement} image - image used by the view to represent this item
@@ -24,7 +24,7 @@ define( function( require ) {
     // @public (read-only)
     this.image = image;
 
-    Movable.call( this, options );
+    URMovable.call( this, options );
 
     // @private
     this.disposeShoppingItem = function() {
@@ -34,12 +34,12 @@ define( function( require ) {
 
   unitRates.register( 'ShoppingItem', ShoppingItem );
 
-  return inherit( Movable, ShoppingItem, {
+  return inherit( URMovable, ShoppingItem, {
 
     // @public
     dispose: function() {
       this.disposeShoppingItem();
-      Movable.prototype.dispose.call( this );
+      URMovable.prototype.dispose.call( this );
     }
   } );
 } );

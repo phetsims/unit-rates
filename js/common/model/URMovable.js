@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function Movable( options ) {
+  function URMovable( options ) {
 
     options = _.extend( {
       location: new Vector2( 0, 0 ), // {Vector2} initial location
@@ -49,20 +49,20 @@ define( function( require ) {
     this.animationCompletedCallback = null;
 
     // @private
-    this.disposeMovable = function() {
+    this.disposeURMovable = function() {
       //TODO cancel animation?
       //TODO set animationStepCallback=null ?
       //TODO set animationCompletedCallback=null ?
     };
   }
 
-  unitRates.register( 'Movable', Movable );
+  unitRates.register( 'URMovable', URMovable );
 
-  return inherit( Object, Movable, {
+  return inherit( Object, URMovable, {
 
     // @public
     dispose: function() {
-      this.disposeMovable();
+      this.disposeURMovable();
     },
 
     // @public
@@ -110,7 +110,7 @@ define( function( require ) {
     },
 
     /**
-     * Is the Movable animating?
+     * Is the URMovable animating?
      *
      * @returns {boolean}
      * @public
