@@ -29,7 +29,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      fixedAxis: 'denominator', // {string} which of the rate's axes has a fixed range
+      fixedAxis: 'denominator', // {string} which of the axes has a fixed range
       fixedAxisRange: new Range( 0, 10 ), // {Range} range of the fixed axis
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null, // {*} options specific to the rate's denominator, see below
@@ -64,30 +64,35 @@ define( function( require ) {
     // @public (read-only) {function(number,number):boolean}
     this.isMajorMarker = options.isMajorMarker;
 
-    // @public (read-only)
+    // @public (read-only) which of the axes has a fixed range, see FIXED_AXIS_VALUES
     this.fixedAxis = options.fixedAxis;
 
     // @public defined below
     this.numeratorAxisRangeProperty = null;
     this.denominatorAxisRangeProperty = null;
+    
     if ( options.fixedAxis === 'numerator' ) {
 
+      // changing the numerator range is an Error
       this.numeratorAxisRangeProperty = new Property( options.fixedAxisRange );
       this.numeratorAxisRangeProperty.lazyLink( function( range ) {  // unlink not needed
         throw new Error( 'numeratorAxisRangeProperty should not change' );
       } );
 
+      // denominator range is mutable, compute initial values
       var denominatorMin = this.numeratorAxisRangeProperty.value.min / unitRateProperty.value;
       var denominatorMax = this.numeratorAxisRangeProperty.value.max / unitRateProperty.value;
       this.denominatorAxisRangeProperty = new Property( new Range( denominatorMin, denominatorMax ) );
     }
     else {
 
+      // changing the denominator range is an Error
       this.denominatorAxisRangeProperty = new Property( options.fixedAxisRange );
       this.denominatorAxisRangeProperty.lazyLink( function( range ) { // unlink not needed
         throw new Error( 'denominatorAxisRangeProperty should not change' );
       } );
 
+      // numerator range is mutable, compute initial values
       var numeratorMin = this.denominatorAxisRangeProperty.value.min * unitRateProperty.value;
       var numeratorMax = this.denominatorAxisRangeProperty.value.max * unitRateProperty.value;
       this.numeratorAxisRangeProperty = new Property( new Range( numeratorMin, numeratorMax ) );
@@ -177,8 +182,8 @@ define( function( require ) {
 
       var wasAdded = false;
 
-      // look for a marker that conflicts with this one
-      var conflictingMarker = this.getOverlappingMarker( marker );
+      // look for a marker that conflicts with this one (has same numerator or denominator)
+      var conflictingMarker = this.getConflictingMarker( marker );
 
       if ( !conflictingMarker ) {
 
@@ -218,13 +223,12 @@ define( function( require ) {
 
     /**
      * Gets a marker that conflicts with the specified marker.
-     * Two markers conflict if they have the same numerator or denominator.
-     * This is possible due to rounding errors.
+     * Two markers conflict if they have the same numerator or denominator, which is possible due to rounding errors.
      * @param {Marker} marker
      * @returns {Marker|null} null if there is no conflicting
      * @private
      */
-    getOverlappingMarker: function( marker ) {
+    getConflictingMarker: function( marker ) {
       var conflictingMarker = null;
       var markers = this.markers.getArray();
       for ( var i = 0; i < markers.length && !conflictingMarker; i++ ) {
@@ -239,6 +243,7 @@ define( function( require ) {
      * Does this marker fall within the range of the axes?
      * @param {Marker} marker
      * @returns {boolean}
+     * @public
      */
     markerIsInRange: function( marker ) {
       return ( this.numeratorAxisRangeProperty.value.contains( marker.numeratorProperty.value ) &&
