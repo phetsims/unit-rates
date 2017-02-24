@@ -115,7 +115,7 @@ define( function( require ) {
 
     // edit button for the numerator
     var numeratorEditButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.4 } ),
+      content: new FontAwesomeNode( 'pencil_square_o', { scale: URConstants.EDIT_ICON_SCALE } ),
       baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
       bottom: numeratorBox.top - options.ySpacing
@@ -125,7 +125,7 @@ define( function( require ) {
 
     // edit button for the denominator
     var denominatorEditButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.4 } ),
+      content: new FontAwesomeNode( 'pencil_square_o', { scale: URConstants.EDIT_ICON_SCALE } ),
       baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
       top: denominatorBox.bottom + options.ySpacing

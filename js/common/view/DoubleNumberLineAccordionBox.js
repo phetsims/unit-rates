@@ -95,7 +95,9 @@ define( function( require ) {
     // Pressing the undo button moves the marker edit back to its home position,
     // or removes the marker that was most recently added using the editor.
     var undoButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'undo', { scale: 0.45 } ),
+      content: new FontAwesomeNode( 'undo', {
+        scale: 0.36 // to approximately match height of marker editor buttons, determined empirically
+      } ),
       visible: false,
       baseColor: URColors.undoButton,
       listener: function() {
@@ -112,6 +114,7 @@ define( function( require ) {
 
     // Pressing the eraser button erases all 'erasable' markers from the double number line.
     var eraserButton = new EraserButton( {
+      scale: 0.92, // to approximately match height of marker editor buttons, determined empirically
       baseColor: URColors.eraserButton,
       listener: function() {
         doubleNumberLine.erase();

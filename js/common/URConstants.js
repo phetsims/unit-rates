@@ -22,6 +22,7 @@ define( function( require ) {
     // image scaling
     BAG_IMAGE_SCALE: 0.5,
     SHOPPING_ITEM_IMAGE_SCALE: 0.5,
+    EDIT_ICON_SCALE: 0.4,
 
     // AccordionBoxes
     ACCORDION_BOX_OPTIONS: {

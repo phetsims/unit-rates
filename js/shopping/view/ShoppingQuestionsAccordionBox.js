@@ -78,7 +78,9 @@ define( function( require ) {
 
     // Refresh button, advances to the next question set
     var refreshButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'refresh', { scale: 0.35 } ),
+      content: new FontAwesomeNode( 'refresh', {
+        scale: 0.36 // to approximately match height of marker editor buttons, determined empirically
+      } ),
       xMargin: 10,
       baseColor: URColors.refreshButton,
       listener: function() {

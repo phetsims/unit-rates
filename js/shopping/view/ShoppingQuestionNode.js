@@ -23,6 +23,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
+  var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
@@ -68,7 +69,7 @@ define( function( require ) {
 
     // edit button, to the right of the box
     var editButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.4 } ),
+      content: new FontAwesomeNode( 'pencil_square_o', { scale: URConstants.EDIT_ICON_SCALE } ),
       baseColor: URColors.editButton,
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY
