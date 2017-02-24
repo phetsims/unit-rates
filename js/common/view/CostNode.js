@@ -32,10 +32,10 @@ define( function( require ) {
   function CostNode( costProperty, options ) {
 
     options = _.extend( {
-      extraDecimalVisible: false,
-      decimalPlaces: 3, // total decimal places, including the extra decimal place
-      font: new URFont( 20 ),
-      extraDecimalColor: 'gray'
+      extraDecimalVisible: false, // {boolean} is the extra decimal place visible?
+      decimalPlaces: 3, // {number} total decimal places, including the extra decimal place
+      font: new URFont( 20 ), // {Font} font for all parts of the value
+      extraDecimalColor: 'gray' // {Color|string} color of the extra decimal place
     }, options );
 
     Node.call( this );
@@ -52,8 +52,8 @@ define( function( require ) {
     } );
     this.addChild( primaryNode );
 
-    // extra decimal place
-    var extraDecimalNode = new Text( '0', {
+    // the extra decimal place
+    var extraDecimalNode = new Text( '', {
       font: options.font,
       fill: options.extraDecimalColor
     } );
@@ -61,6 +61,7 @@ define( function( require ) {
       this.addChild( extraDecimalNode );
     }
 
+    // When cost changes, update the displayed value
     var costObserver = function( cost ) {
 
       var maxDecimalPlaces = 10; // the number of decimal places that we'll keep in cost
