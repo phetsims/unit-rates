@@ -69,13 +69,6 @@ define( function( require ) {
 
     Node.call( this );
 
-    // @private
-    this.maxDecimals = denominatorOptions.maxDecimals;
-
-    // @public (read-only)
-    this.numeratorProperty = new Property( null );
-    this.denominatorProperty = new Property( null );
-
     // vertical line
     var verticalLine = new Line( 0, 0, 0, options.lineLength, {
       stroke: 'black'
@@ -105,6 +98,7 @@ define( function( require ) {
     } ) );
     this.addChild( denominatorBox );
 
+    // numerator value
     var numeratorNode = new Text( '', {
       fill: options.neutralColor,
       font: options.valueFont,
@@ -112,6 +106,7 @@ define( function( require ) {
     } );
     this.addChild( numeratorNode );
 
+    // denominator value
     var denominatorNode = new Text( '', {
       fill: options.neutralColor,
       font: options.valueFont,
@@ -119,6 +114,7 @@ define( function( require ) {
     } );
     this.addChild( denominatorNode );
 
+    // edit button for the numerator
     var numeratorEditButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.4 } ),
       baseColor: URColors.editButton,
@@ -128,6 +124,7 @@ define( function( require ) {
     this.addChild( numeratorEditButton );
     numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 0 );
 
+    // edit button for the denominator
     var denominatorEditButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'pencil_square_o', { scale: 0.4 } ),
       baseColor: URColors.editButton,
