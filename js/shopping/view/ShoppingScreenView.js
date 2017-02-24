@@ -47,8 +47,10 @@ define( function( require ) {
 
     ScreenView.call( this, options );
 
+    // Properties that are specific to the view
     var viewProperties = new ShoppingViewProperties();
 
+    // parent for everything expect the keypad
     var playAreaLayer = new Node();
     this.addChild( playAreaLayer );
 
