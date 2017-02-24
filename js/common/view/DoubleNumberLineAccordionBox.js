@@ -51,17 +51,19 @@ define( function( require ) {
 
       // DoubleNumberLineNode options
       axisViewLength: 1000, // {number} view length of doubleNumberLine's range
-      indicatorXProperty: null, // in view coordinates
-      indicatorColor: 'green'
+      indicatorXProperty: null, // {Property.<number>|null} position of the indicator, in view coordinates. null means no indicator.
+      indicatorColor: 'green' // {Color|string} color of the indicator
 
     }, options );
 
+    // title on the accordion box
     assert && assert( !options.titleNode, 'creates its own title node' );
     options.titleNode = new Text( options.titleString, {
       font: URConstants.ACCORDION_BOX_TITLE_FONT,
-      maxWidth: 300
+      maxWidth: 300 // i18n, determined empirically
     } );
 
+    // double number line
     var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
       axisViewLength: options.axisViewLength,
       numeratorOptions: doubleNumberLine.numeratorOptions,
@@ -77,6 +79,7 @@ define( function( require ) {
     // when the marker editor exceeds the range of the axes, move it to the right of the axes
     var markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
 
+    // marker editor
     var markerEditorNode = new MarkerEditorNode( markerEditor, this, keypadLayer, {
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
@@ -118,6 +121,7 @@ define( function( require ) {
     } );
     eraserButton.touchArea = eraserButton.localBounds.dilatedXY( 5, 5 );
 
+    // assemble the content for the accordion box
     var contentNode = new Node( {
       children: [ doubleNumberLineNode, undoButton, markerEditorNode, eraserButton ]
     } );
@@ -308,7 +312,9 @@ define( function( require ) {
 
     /**
      * Gets the origin of the double number line's origin in the global view coordinate from.
+     * This is used to line up other things (like the race track in 'Racing Lab' screen) with the double number line.
      * @returns {*}
+     * @public
      */
     getGlobalOrigin: function() {
       return this.doubleNumberLineNode.parentToGlobalPoint( new Vector2( this.doubleNumberLineNode.x, this.doubleNumberLineNode.y ) );
