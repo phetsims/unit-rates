@@ -36,11 +36,11 @@ define( function( require ) {
 
     BooleanRoundToggleButton.call( this, stopIcon, goIcon, runningProperty, options );
 
-    // adjust button color based on  runningProperty
+    // adjust button color based on runningProperty
     var runningObserver = function( running ) {
       self.baseColor = ( running ? '#6D6E70' : '#85d4a6' );
     };
-    runningProperty.link( runningObserver );
+    runningProperty.link( runningObserver ); // unlink in dispose
 
     // @private
     this.disposeStartStopButton = function() {
