@@ -119,6 +119,7 @@ define( function( require ) {
       bottom: 0
     } );
     finishFlagNode.touchArea = finishFlagNode.localBounds.dilatedX( 30 );
+    finishFlagNode.mouseArea = finishFlagNode.localBounds.dilatedX( 30 );
 
     // green arrows around the finish flag, cues the user to drag the flag
     var arrowsNode = new HBox( {
