@@ -5,7 +5,7 @@
  * When expanded, it displays the right-justified Node.
  * When collapsed, it displays a left-justified title.
  *
- * NOTE: While this seemed like a good application for AccordionBox,
+ * NOTE: While this seems like a good application for AccordionBox,
  * I ran into problems related to justifying and i18n.
  *
  * @author Chris Malley (PixelZoom, Inc.)

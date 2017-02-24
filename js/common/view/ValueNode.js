@@ -16,7 +16,7 @@ define( function( require ) {
   var URFont = require( 'UNIT_RATES/common/URFont' );
 
   /**
-   * @param {Property.<*>} valueProperty
+   * @param {Property.<number>} valueProperty
    * @param {Object} [options]
    * @constructor
    */
