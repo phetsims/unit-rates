@@ -60,6 +60,7 @@ define( function( require ) {
       Image.prototype.dispose.call( this );
     },
 
+    //TODO not currently used, should it be? delete this?
     //FUTURE revisit when scenery supports drag cancellation, see https://github.com/phetsims/function-builder/issues/57
     /**
      * Cancels a drag that is in progress.

@@ -1,7 +1,7 @@
 TODO list for unit-rates
 
 High:
-Items on shelf and scale
+Items on shelf and scale (BagContainer, Scale, Shelf, BagDragHandler)
 
 Medium:
 resetShelfButton, https://github.com/phetsims/unit-rates/issues/156
