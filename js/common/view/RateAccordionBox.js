@@ -38,6 +38,8 @@ define( function( require ) {
 
       // AccordionBox options
       contentXMargin: 20,
+      contentYMargin: 24,
+      contentYSpacing: 20,
 
       // RateAccordionBox options
       titleString: rateString,

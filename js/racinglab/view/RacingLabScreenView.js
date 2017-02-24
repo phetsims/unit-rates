@@ -95,38 +95,6 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( restartRaceButton );
 
-    // Rate control for car2
-    var rateAccordionBox2 = new RateAccordionBox( model.car2.rate, {
-      titleString: rate2String,
-      expandedProperty: viewProperties.rateExpandedProperty2,
-      pickerFont: URConstants.RACING_LAB_PICKER_FONT,
-      numeratorRange: URConstants.MILES_RANGE,
-      denominatorRange: URConstants.HOURS_RANGE,
-      numeratorUnits: milesString,
-      denominatorUnits: hoursString,
-      numeratorPickerColor: model.car2.color,
-      denominatorPickerColor: model.car2.color,
-      right: resetAllButton.left - 15,
-      bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
-    } );
-    playAreaLayer.addChild( rateAccordionBox2 );
-
-    // Rate control for car1
-    var rateAccordionBox1 = new RateAccordionBox( model.car1.rate, {
-      titleString: rate1String,
-      expandedProperty: viewProperties.rateExpandedProperty1,
-      pickerFont: URConstants.RACING_LAB_PICKER_FONT,
-      numeratorRange: URConstants.MILES_RANGE,
-      denominatorRange: URConstants.HOURS_RANGE,
-      numeratorUnits: milesString,
-      denominatorUnits: hoursString,
-      numeratorPickerColor: model.car1.color,
-      denominatorPickerColor: model.car1.color,
-      right: rateAccordionBox2.right,
-      top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
-    } );
-    playAreaLayer.addChild( rateAccordionBox1 );
-
     // Double number line for car1
     var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
@@ -153,6 +121,38 @@ define( function( require ) {
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
       } );
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
+
+    // Rate control for car1
+    var rateAccordionBox1 = new RateAccordionBox( model.car1.rate, {
+      titleString: rate1String,
+      expandedProperty: viewProperties.rateExpandedProperty1,
+      pickerFont: URConstants.RACING_LAB_PICKER_FONT,
+      numeratorRange: URConstants.MILES_RANGE,
+      denominatorRange: URConstants.HOURS_RANGE,
+      numeratorUnits: milesString,
+      denominatorUnits: hoursString,
+      numeratorPickerColor: model.car1.color,
+      denominatorPickerColor: model.car1.color,
+      left: doubleNumberLineAccordionBox1.right + 10,
+      top: doubleNumberLineAccordionBox1.top
+    } );
+    playAreaLayer.addChild( rateAccordionBox1 );
+
+    // Rate control for car2
+    var rateAccordionBox2 = new RateAccordionBox( model.car2.rate, {
+      titleString: rate2String,
+      expandedProperty: viewProperties.rateExpandedProperty2,
+      pickerFont: URConstants.RACING_LAB_PICKER_FONT,
+      numeratorRange: URConstants.MILES_RANGE,
+      denominatorRange: URConstants.HOURS_RANGE,
+      numeratorUnits: milesString,
+      denominatorUnits: hoursString,
+      numeratorPickerColor: model.car2.color,
+      denominatorPickerColor: model.car2.color,
+      left: doubleNumberLineAccordionBox2.right + 10,
+      top: doubleNumberLineAccordionBox2.top
+    } );
+    playAreaLayer.addChild( rateAccordionBox2 );
 
     // Track for car1
     var trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, viewProperties.arrowsVisibleProperty, {
