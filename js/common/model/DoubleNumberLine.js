@@ -2,7 +2,7 @@
 
 /**
  * Model for the double number line.
- ` *
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
