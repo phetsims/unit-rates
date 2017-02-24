@@ -23,15 +23,7 @@ define( function( require ) {
 
     options = _.extend( {
 
-      /**
-       * Creates a Node for a category.
-       * @param {ShoppingCategory} category
-       * @param {Property.<ShoppingCategory>} categoryProperty
-       * @param {Bounds2} layoutBounds
-       * @param {KeypadLayer} keypadLayer
-       * @param {ShoppingViewProperties} viewProperties
-       * @returns {Node}
-       */
+      // Creates a Node for a category. See ShoppingScreenView options.createCategoryNode
       createCategoryNode: function( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ) {
         return new ShoppingLabCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties );
       }
