@@ -17,6 +17,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
@@ -34,23 +35,15 @@ define( function( require ) {
     assert && assert( Util.isInteger( numerator ), 'numerator must be an integer: ' + numerator );
     assert && assert( Util.isInteger( denominator ), 'denominator must be an integer: ' + denominator );
 
-    var self = this;
-
     // @public
     this.numeratorProperty = new Property( numerator );
     this.denominatorProperty = new Property( denominator );
 
-    // @public (read-only)
-    this.unitRateProperty = new Property( numerator / denominator );
-
-    // unmultilink not needed
-    Property.multilink( [ this.numeratorProperty, this.denominatorProperty ],
+    // @public (read-only) dispose not needed
+    this.unitRateProperty = new DerivedProperty( [ this.numeratorProperty, this.denominatorProperty ],
       function( numerator, denominator ) {
-        assert && assert( Util.isInteger( numerator ), 'numerator must be an integer: ' + numerator );
-        assert && assert( Util.isInteger( denominator ), 'denominator must be an integer: ' + denominator );
-        self.unitRateProperty.value = numerator / denominator;
-      }
-    );
+        return numerator / denominator;
+      } );
   }
 
   unitRates.register( 'Rate', Rate );
@@ -63,7 +56,11 @@ define( function( require ) {
       this.denominatorProperty.reset();
     },
 
-    // @public
+    /**
+     * String representation. For debugging and logging only. Do not rely on the format of this!
+     * @returns {string}
+     * @public
+     */
     toString: function() {
       return this.numeratorProperty.value + '/' + this.denominatorProperty.value;
     },
