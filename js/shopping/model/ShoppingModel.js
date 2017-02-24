@@ -79,6 +79,8 @@ define( function( require ) {
 
     // @public
     step: function( dt ) {
+
+      // step the selected category
       for ( var i = 0; i < this.categories.length; i++ ) {
         if ( this.categories[ i ] === this.categoryProperty.value ) {
           this.categories[ i ].step( dt );

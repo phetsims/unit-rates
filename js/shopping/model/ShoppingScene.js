@@ -197,7 +197,7 @@ define( function( require ) {
       self.questionSetProperty.value = self.questionSets[ questionSetsIndex ];
     } );
 
-    // When the unit rate changes, cancel any marker edit that is in progress
+    // When the unit rate changes, cancel any marker edit that is in progress, unlink not needed
     this.rate.unitRateProperty.lazyLink( function( unitRate ) {
       self.markerEditor.reset();
     } );
