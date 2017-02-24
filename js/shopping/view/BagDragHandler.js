@@ -25,7 +25,6 @@ define( function( require ) {
     // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
     var startDragOffset;
 
-    //TODO handle cancellation of drag sequence
     SimpleDragHandler.call( this, {
 
       // allow touch swipes across a bag to pick it up
