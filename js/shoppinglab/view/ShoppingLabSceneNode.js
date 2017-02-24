@@ -71,8 +71,8 @@ define( function( require ) {
         //TODO implement resetShelfButton listener, https://github.com/phetsims/unit-rates/issues/156
       },
       baseColor: URColors.resetShelfButton,
-      touchAreaDilation: 5,
       scale: 0.65,
+      touchAreaDilation: 5,
       right: scaleNode.left,
       top: scaleNode.bottom + 20
     } );
