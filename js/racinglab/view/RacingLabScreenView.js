@@ -36,7 +36,7 @@ define( function( require ) {
   var timer2String = require( 'string!UNIT_RATES/timer2' );
 
   // constants
-  var DOUBLE_NUMBER_LINE_AXIS_LENGTH = 582;
+  var DOUBLE_NUMBER_LINE_AXIS_LENGTH = 582; // determined empirically
 
   /**
    * @param {RacingLabModel} model
@@ -52,6 +52,7 @@ define( function( require ) {
     var playAreaLayer = new Node();
     this.addChild( playAreaLayer );
 
+    // separate layer for model keypad
     var keypadLayer = new KeypadLayer();
     this.addChild( keypadLayer );
 

@@ -52,6 +52,7 @@ define( function( require ) {
     var playAreaLayer = new Node();
     this.addChild( playAreaLayer );
 
+    // separate layer for model keypad
     var keypadLayer = new KeypadLayer();
     this.addChild( keypadLayer );
 
