@@ -10,6 +10,10 @@ If marker editor is on it's way home when Reset All is pressed, it doesn't move 
 Handle cancellation of drags?
 Duplication between ShoppingSceneNode and ShoppingLabSceneNode
 
+Performance:
+Reset All is a bit laggy on iPad
+Switching items is a bit laggy on iPad
+
 Misc:
 TODO items in code
 multi-touch testing
