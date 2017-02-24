@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Range = require( 'DOT/Range' );
+  var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
@@ -28,6 +29,8 @@ define( function( require ) {
    * @constructor
    */
   function CandyScene( itemData, options ) {
+
+    assert && assert( _.includes( _.values( ShoppingItemData.Candy ), itemData ), 'itemData is not a candy' );
 
     options = _.extend( {
 

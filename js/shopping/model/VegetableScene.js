@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -19,6 +20,7 @@ define( function( require ) {
    * @constructor
    */
   function VegetableScene( itemData, options ) {
+    assert && assert( _.includes( _.values( ShoppingItemData.Vegetable ), itemData ), 'itemData is not a vegetable' );
     ShoppingScene.call( this, itemData, options );
   }
 

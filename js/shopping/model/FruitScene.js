@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -19,6 +20,8 @@ define( function( require ) {
    * @constructor
    */
   function FruitScene( itemData, options ) {
+
+    assert && assert( _.includes( _.values( ShoppingItemData.Fruit ), itemData ), 'itemData is not a fruit' );
 
     options = _.extend( {
 
