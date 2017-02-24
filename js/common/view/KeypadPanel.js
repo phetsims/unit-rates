@@ -41,24 +41,26 @@ define( function( require ) {
       valueBoxWidth: 85, // {number} width of the value field, height determined by valueFont
       valueYMargin: 3, // {number} vertical margin inside the value box
       valueFont: new URFont( 16 ),
-      valueString: '',
-      decimalPointKey: true,
-      maxDigits: 4,
-      maxDecimals: 2,
+      valueString: '', // {string} initial value shown in the keypad
+      decimalPointKey: true, // {boolean} does the keypad have a decimal point key?
+      maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
+      maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypd
 
       // Panel options
-      fill: 'rgb( 230, 230, 230 )',
-      backgroundPickable: true,
+      fill: 'rgb( 230, 230, 230 )', // {Color|string} the keypad's background color
+      backgroundPickable: true, // {boolean} so that clicking in the keypad's background doesn't close the keypad
       xMargin: 10,
       yMargin: 10,
 
       // RectangularPushButton options
-      enterButtonListener: null
+      enterButtonListener: null  // {function} called when the Enter button is pressed
+
     }, options );
 
-    var valueStringProperty = new Property( options.valueString );
+    // @public
+    this.valueStringProperty = new Property( options.valueString );
 
-    var valueNode = new Text( valueStringProperty.value, {
+    var valueNode = new Text( this.valueStringProperty.value, {
       font: options.valueFont
     } );
 
@@ -73,7 +75,7 @@ define( function( require ) {
     } );
 
     var keypadNode = new NumberKeypad( {
-      valueStringProperty: valueStringProperty,
+      valueStringProperty: this.valueStringProperty,
       decimalPointKey: options.decimalPointKey,
       validateKey: validateDigitsAndDecimals( {
         maxDigits: options.maxDigits,
@@ -98,13 +100,10 @@ define( function( require ) {
 
     Panel.call( this, contentNode, options );
 
-    valueStringProperty.link( function( valueString ) { // no unlink required
+    this.valueStringProperty.link( function( valueString ) { // no unlink required
       valueNode.text = valueString;
       valueNode.center = valueBackgroundNode.center;
     } );
-
-    // @public
-    this.valueStringProperty = valueStringProperty;
   }
 
   unitRates.register( 'KeypadPanel', KeypadPanel );
