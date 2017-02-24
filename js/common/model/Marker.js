@@ -2,6 +2,10 @@
 
 /**
  * Model of a marker, used to indicate a rate on the double number line.
+ * Markers can be major or minor (with semantics similar to major and minor tick marks on a slider).
+ * Markers have an associated creator, which determines their precedence; markers created by higher precedence creators
+ * will replace markers created by lower precedence creators.  For example, a marker created by answering a question
+ * will replace a marker that was created with the marker editor.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -49,7 +53,10 @@ define( function( require ) {
 
   return inherit( Object, Marker, {
 
-    // @public
+    /**
+     * String representation. For debugging and logging only. Do not rely on the format of this!
+     * @returns {string}
+     */
     toString: function() {
       return 'Marker[' +
              ' rate=' + this.numeratorProperty.value + '/' + this.denominatorProperty.value +
