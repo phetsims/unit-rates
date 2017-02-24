@@ -21,6 +21,10 @@ define( function( require ) {
   var hoursString = require( 'string!UNIT_RATES/hours' );
   var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
 
+  // constants
+  var TIMER_FONT = new URFont( 16 );
+  var DECIMAL_PLACES = 2;
+
   /**
    * @param {Property.<number>} timeProperty
    * @param {Property.<boolean>} expandedProperty
@@ -30,28 +34,19 @@ define( function( require ) {
    */
   function RaceTimerNode( timeProperty, expandedProperty, titleString, options ) {
 
-    options = _.extend( {
-
-      // ValueNode options
-      font: new URFont( 16 ),
+    var valueNode = new ValueNode( timeProperty, {
+      font: TIMER_FONT,
       valueToString: function( value ) {
-        return StringUtils.format( valueUnitsString, Util.toFixed( value, 2 ), hoursString );
-      },
+        return StringUtils.format( valueUnitsString, Util.toFixed( value, DECIMAL_PLACES ), hoursString );
+      }
+    } );
 
-      // ValuePanel options
+    ValuePanel.call( this, valueNode, _.extend( {
       panelWidth: 132,
       expandedProperty: expandedProperty,
       titleString: titleString,
-      titleFont: new URFont( 16 )
-
-    }, options );
-
-    var valueNode = new ValueNode( timeProperty, {
-      font: options.font,
-      valueToString: options.valueToString
-    } );
-
-    ValuePanel.call( this, valueNode, options );
+      titleFont: TIMER_FONT
+    }, options ) );
   }
 
   unitRates.register( 'RaceTimerNode', RaceTimerNode );
