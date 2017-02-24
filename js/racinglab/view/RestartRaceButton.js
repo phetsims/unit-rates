@@ -22,16 +22,13 @@ define( function( require ) {
    * @constructor
    */
   function RestartRaceButton( options ) {
-
-    options = _.extend( {
+    RectangularPushButton.call( this, _.extend( {
       content: new Image( restartRaceButtonImage, { scale: 0.5 } ),
       xMargin: 12,
       yMargin: 8,
       touchAreaXDilation: 0,
       touchAreaYDilation: 0
-    }, options );
-
-    RectangularPushButton.call( this, options );
+    }, options ) );
   }
 
   unitRates.register( 'RestartRaceButton', RestartRaceButton );
