@@ -47,8 +47,10 @@ define( function( require ) {
 
     ScreenView.call( this, options );
 
+    // Properties that are specific to the view
     var viewProperties = new RacingLabViewProperties();
 
+    // parent for everything expect the keypad
     var playAreaLayer = new Node();
     this.addChild( playAreaLayer );
 
@@ -93,7 +95,7 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( restartRaceButton );
 
-    // Rate for car2
+    // Rate control for car2
     var rateAccordionBox2 = new RateAccordionBox( model.car2.rate, {
       titleString: rate2String,
       expandedProperty: viewProperties.rateExpandedProperty2,
@@ -109,7 +111,7 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( rateAccordionBox2 );
 
-    // Rate for car1
+    // Rate control for car1
     var rateAccordionBox1 = new RateAccordionBox( model.car1.rate, {
       titleString: rate1String,
       expandedProperty: viewProperties.rateExpandedProperty1,
@@ -171,9 +173,8 @@ define( function( require ) {
     playAreaLayer.addChild( trackNode2 );
 
     // car1 should always be visible
-    assert && assert( model.car1.visibleProperty.value, 'car1 should be visible' );
-    model.car1.visibleProperty.lazyLink( function( visible ) {
-      assert && assert( model.car1.visibleProperty.value, 'car1 visibility should never change' );
+    model.car1.visibleProperty.link( function( visible ) {
+      assert && assert( model.car1.visibleProperty.value, 'car1 should always be visible' );
     } );
 
     // Show/hide components related to car2. unlink not needed.
