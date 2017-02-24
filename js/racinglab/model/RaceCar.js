@@ -33,34 +33,30 @@ define( function( require ) {
   function RaceCar( image, options ) {
 
     options = _.extend( {
-      color: 'black',
-      rate: new Rate( 50, 2 ), // initial rate, in miles per hour
-      visible: true, // is this car visible?
-      trackLength: 200,
-      numeratorMaxDecimals: 1,
-      denominatorMaxDecimals: 2,
-      majorMarkerSpacing: 25
+      color: 'black', // {Color|string} color used for things that are associated with the car (markers, spinners, ...)
+      rate: new Rate( 50, 2 ), // {Rate} initial rate, in miles per hour
+      visible: true, // {boolean} is this car visible?
+      trackLength: 200, // {number} length of this car's track
+      numeratorMaxDecimals: 1, // {number} decimal places shown for numerator (miles)
+      denominatorMaxDecimals: 2, // {number} decimal places shown for denominator (hours)
+      majorMarkerSpacing: 25 // {number} spacing for major markers on this car's double number line
     }, options );
 
     var self = this;
 
     // @pubic (read-only)
     this.image = image;
-
-    // @public (read-only)
     this.color = options.color;
-
-    // @public the car's rate, in miles per hour
     this.rate = options.rate;
 
     // @public the car's distance from the starting line, in miles
     this.distanceProperty = new Property( 0 );
 
+    // @public time for this car, in hours
+    this.timeProperty = new Property( 0 );
+
     // @public is this car visible?
     this.visibleProperty = new Property( options.visible );
-
-    // @public timer for this car
-    this.timeProperty = new Property( 0 );
 
     // @public
     this.track = new RaceTrack( { length: options.trackLength });
@@ -154,6 +150,7 @@ define( function( require ) {
     /**
      * Updates the car and timer.
      * @param {number} dt - elapsed time since previous call to step, in seconds
+     * @public
      */
     step: function( dt ) {
       if ( this.visibleProperty.value && ( this.distanceProperty.value < this.track.lengthProperty.value ) ) {
