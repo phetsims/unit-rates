@@ -13,6 +13,9 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
+  // radius of the scale's surface in scale.png, determined by inspection
+  var SCALE_RADIUS = 10;
+  
   /**
    * @param {BagNode} bagNode
    * @param {Bag} bag
@@ -76,28 +79,26 @@ define( function( require ) {
 
         bag.dragging = false;
 
-        // closest cell on the shelf
-        var shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value );
-        assert && assert( shelfCellIndex !== -1, 'shelf is full' );
-        var distanceToShelf = shelf.getDistanceBetween( shelfCellIndex, bag.locationProperty.value );
+        // if the bag is released above the scale's surface ...
+        if ( bag.locationProperty.value.y < scale.location.y + SCALE_RADIUS ) {
 
-        // closest cell on the scale
-        var scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value );
-        assert && assert( scaleCellIndex !== -1, 'scale is full' );
-        var distanceToScale = scale.getDistanceBetween( scaleCellIndex, bag.locationProperty.value );
-
-        // is the bag closer to the shelf or the scale?
-        if ( distanceToShelf < distanceToScale ) {
-
-          // animate to shelf
-          unitRates.log && unitRates.log( 'animating to shelf cell ' + shelfCellIndex );
-          beginAnimation( bag, shelfCellIndex, shelf );
-        }
-        else {
+          // find closest cell on the scale
+          var scaleCellIndex = scale.getClosestUnoccupiedCell( bag.locationProperty.value );
+          assert && assert( scaleCellIndex !== -1, 'scale is full' );
 
           // animate to scale
           unitRates.log && unitRates.log( 'animating to scale cell ' +  scaleCellIndex );
           beginAnimation( bag, scaleCellIndex, scale );
+        }
+        else {
+
+          // find closest cell on the shelf
+          var shelfCellIndex = shelf.getClosestUnoccupiedCell( bag.locationProperty.value );
+          assert && assert( shelfCellIndex !== -1, 'shelf is full' );
+
+          // animate to shelf
+          unitRates.log && unitRates.log( 'animating to shelf cell ' + shelfCellIndex );
+          beginAnimation( bag, shelfCellIndex, shelf );
         }
       }
     } );
