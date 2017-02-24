@@ -25,21 +25,9 @@ define( function( require ) {
     this.image = image;
 
     URMovable.call( this, options );
-
-    // @private
-    this.disposeShoppingItem = function() {
-      //TODO implement dispose
-    };
   }
 
   unitRates.register( 'ShoppingItem', ShoppingItem );
 
-  return inherit( URMovable, ShoppingItem, {
-
-    // @public
-    dispose: function() {
-      this.disposeShoppingItem();
-      URMovable.prototype.dispose.call( this );
-    }
-  } );
+  return inherit( URMovable, ShoppingItem );
 } );

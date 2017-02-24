@@ -39,25 +39,9 @@ define( function( require ) {
     this.shoppingItems = options.shoppingItems;
 
     URMovable.call( this, options );
-
-    // @private
-    this.disposeBag = function() {
-
-      // dispose of all shopping items that are in the bag
-      options.shoppingItems.forEach( function( shoppingItem ) {
-        shoppingItem.dispose();
-      } );
-    };
   }
 
   unitRates.register( 'Bag', Bag );
 
-  return inherit( URMovable, Bag, {
-
-    // @public
-    dispose: function() {
-      this.disposeBag();
-      URMovable.prototype.dispose.call( this );
-    }
-  } );
+  return inherit( URMovable, Bag );
 } );

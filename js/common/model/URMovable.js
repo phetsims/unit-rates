@@ -47,23 +47,11 @@ define( function( require ) {
 
     // @private {function|null} called when animation to destination completes, set using animateTo
     this.animationCompletedCallback = null;
-
-    // @private
-    this.disposeURMovable = function() {
-      //TODO cancel animation?
-      //TODO set animationStepCallback=null ?
-      //TODO set animationCompletedCallback=null ?
-    };
   }
 
   unitRates.register( 'URMovable', URMovable );
 
   return inherit( Object, URMovable, {
-
-    // @public
-    dispose: function() {
-      this.disposeURMovable();
-    },
 
     // @public
     reset: function() {
