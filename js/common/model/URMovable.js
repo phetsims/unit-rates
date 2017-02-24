@@ -61,7 +61,6 @@ define( function( require ) {
 
     /**
      * Moves immediately to the specified location, without animation.
-     *
      * @param {Vector2} location
      * @public
      */
@@ -79,7 +78,6 @@ define( function( require ) {
     /**
      * Animates to the specified location.
      * Provides optional callback that occur on animation step and completion.
-     *
      * @param {Vector2} destination
      * @param {Object} [options]
      * @public
@@ -98,7 +96,6 @@ define( function( require ) {
 
     /**
      * Animates location, when not being dragged by the user.
-     *
      * @param {number} dt - time since the previous step, in seconds
      * @public
      */
