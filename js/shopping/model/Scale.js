@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var BagContainer = require( 'UNIT_RATES/shopping/model/BagContainer' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -37,37 +38,25 @@ define( function( require ) {
 
     var self = this;
 
-    // @private
-    this.unitRateProperty = unitRateProperty;
-
     // @public ( read-only)
     this.location = options.location;
     this.width = options.width;
     this.quantityUnits = options.quantityUnits;
 
     // @public
-    this.costProperty = new Property( 0 );
     this.quantityProperty = new Property( 0 );
+
+    // @public dispose required
+    this.costProperty = new DerivedProperty( [ this.quantityProperty, unitRateProperty ],
+      function( quantity, unitRate ) {
+        return quantity * unitRate;
+      } );
 
     BagContainer.call( this, options );
 
-    // When unit rate changes, update the cost
-    var unitRateObserver = function( unitRate ){
-      var cost = 0;
-      var numberOfCells = self.getNumberOfCells();
-      for ( var i = 0; i < numberOfCells; i++ ) {
-        var bag = self.getBagAt( i );
-        if ( bag ) {
-          cost += bag.unitsPerBag * unitRate;
-        }
-      }
-      self.costProperty.value = cost;
-    };
-    this.unitRateProperty.link( unitRateObserver ); // unlink in dispose
-
     // @private
     this.disposeScale = function() {
-      unitRateProperty.unlink( unitRateObserver );
+      self.costProperty.dispose();
     };
   }
 
@@ -83,7 +72,6 @@ define( function( require ) {
     // @public
     reset: function() {
       BagContainer.prototype.reset.call( this );
-      this.costProperty.reset();
       this.quantityProperty.reset();
     },
     
@@ -99,8 +87,7 @@ define( function( require ) {
       // add to the container
       BagContainer.prototype.addBag.call( this, bag, index );
 
-      // update cost and quantity
-      this.costProperty.value += bag.unitsPerBag * this.unitRateProperty.value;
+      // update quantity
       this.quantityProperty.value += bag.unitsPerBag;
     },
 
@@ -115,8 +102,7 @@ define( function( require ) {
       // remove from the container
       BagContainer.prototype.removeBag.call( this, bag );
 
-      // update cost and quantity
-      this.costProperty.value -= bag.unitsPerBag * this.unitRateProperty.value;
+      // update quantity
       this.quantityProperty.value -= bag.unitsPerBag;
     }
   } );
