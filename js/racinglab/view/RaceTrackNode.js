@@ -1,7 +1,12 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Displays a race track in the 'Racing Lab' screen.
+ * Displays a complete race track in the 'Racing Lab' screen, including:
+ * - track
+ * - start and finish flags
+ * - race car
+ * - timer
+ *
  * The starting line flag is at x = 0.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -258,7 +263,7 @@ define( function( require ) {
 
   return inherit( Node, RaceTrackNode, {
 
-    // @private
+    // @public
     dispose: function() {
       this.disposeRaceTrackNode();
       Node.prototype.dispose.call( this );
