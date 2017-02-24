@@ -2,7 +2,8 @@
 
 /**
  * Model for the marker editor.
- * Location of the editor is handled solely in the view.
+ * The rate created by the marker editor is used as the basis for creating markers on the double number line.
+ * Location of the marker editor is handled by the view.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -32,6 +33,8 @@ define( function( require ) {
     // @public
     this.numeratorProperty = new Property( null ); // {Property.<number|null>} the numerator in the editor
     this.denominatorProperty = new Property( null ); // {Property.<number|null>} the denominator in the editor
+
+    // @public (read-only)
     this.unitRateProperty = unitRateProperty;
 
     // @private
@@ -57,7 +60,7 @@ define( function( require ) {
       }
     } );
 
-    // if the unit rate changes, cancel any edit that is in progress
+    // if the unit rate changes, reset the editor, which effectively cancels any edit that is in progress
     var unitRateObserver = function() {
       self.reset();
     };
@@ -87,6 +90,7 @@ define( function( require ) {
     /**
      * The marker editor is 'empty' when both the numerator and denominator are null.
      * @returns {boolean}
+     * @public
      */
     isEmpty: function() {
       return ( this.numeratorProperty.value === null && this.denominatorProperty.value === null );
