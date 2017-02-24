@@ -56,6 +56,7 @@ define( function( require ) {
     /**
      * String representation. For debugging and logging only. Do not rely on the format of this!
      * @returns {string}
+     * @public
      */
     toString: function() {
       return 'Marker[' +
