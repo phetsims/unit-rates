@@ -42,7 +42,23 @@ define( function( require ) {
       visible: false
     } );
 
-    // Reset the race when any of the specified Properties changes. unmultilink not needed
+    // When both cars reach the finish line, stop the race.
+    Property.lazyMultilink( [ this.car1.distanceProperty, this.car2.distanceProperty ],
+      function( distance1, distance2 ) {
+        if ( self.car1.isAtFinish() && ( !self.car2.visibleProperty.value || self.car2.isAtFinish() ) ) {
+          self.runningProperty.value = false;
+        }
+      } );
+
+    // If both cars are at the finish line, changing the state to running restarts the race. unlink not needed.
+    this.runningProperty.link( function( running ) {
+      if ( running && self.car1.isAtFinish() && ( !self.car2.visibleProperty.value || self.car2.isAtFinish() ) ) {
+        self.car1.resetRace();
+        self.car2.resetRace();
+      }
+    } );
+
+    // Reset the race when any of these Properties is changed. unmultilink not needed
     // See https://github.com/phetsims/unit-rates/issues/93
     Property.lazyMultilink( [
 
@@ -60,22 +76,6 @@ define( function( require ) {
         this.car2.track.lengthProperty
       ],
       this.resetRace.bind( this ) );
-
-    // If both cars are at the finish line, changing the state to running restarts the race. unlink not needed.
-    this.runningProperty.link( function( running ) {
-      if ( running && self.car1.isAtFinish() && ( !self.car2.visibleProperty.value || self.car2.isAtFinish() ) ) {
-        self.car1.resetRace();
-        self.car2.resetRace();
-      }
-    } );
-
-    // When both cars reach the finish line, stop the race.
-    Property.lazyMultilink( [ this.car1.distanceProperty, this.car2.distanceProperty ],
-      function( distance1, distance2 ) {
-        if ( self.car1.isAtFinish() && ( !self.car2.visibleProperty.value || self.car2.isAtFinish() ) ) {
-          self.runningProperty.value = false;
-        }
-      } );
   }
 
   unitRates.register( 'RacingLabModel', RacingLabModel );
