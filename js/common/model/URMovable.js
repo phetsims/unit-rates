@@ -1,6 +1,5 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO this was copied from function-builder, then modified
 /**
  * A model element that is movable.
  * It has a current location and a desired destination.
@@ -33,7 +32,7 @@ define( function( require ) {
     // @public (read-only) {Vector2} DO NOT set this directly! Use moveTo or animateTo.
     this.locationProperty = new Property( options.location );
 
-    // @public
+    // @public drag handlers must manage this flag during a drag sequence
     this.dragging = options.dragging;
 
     // @private
@@ -98,23 +97,14 @@ define( function( require ) {
     },
 
     /**
-     * Is the URMovable animating?
-     *
-     * @returns {boolean}
-     * @public
-     */
-    isAnimating: function() {
-      return !this.dragging && ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
-    },
-
-    /**
      * Animates location, when not being dragged by the user.
      *
      * @param {number} dt - time since the previous step, in seconds
      * @public
      */
     step: function( dt ) {
-      if ( this.isAnimating() ) {
+      var doStep = !this.dragging && ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
+      if ( doStep ) {
 
         // optional callback
         this.animationStepCallback && this.animationStepCallback();
