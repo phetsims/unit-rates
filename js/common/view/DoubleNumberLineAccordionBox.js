@@ -133,8 +133,8 @@ define( function( require ) {
       // local vars to improve readability
       var numerator = markerEditor.numeratorProperty.value;
       var denominator = markerEditor.denominatorProperty.value;
-      var maxNumerator = doubleNumberLine.numeratorAxisRangeProperty.value.max;
-      var maxDenominator = doubleNumberLine.denominatorAxisRangeProperty.value.max;
+      var maxNumerator = doubleNumberLine.getMaxNumerator();
+      var maxDenominator = doubleNumberLine.getMaxDenominator();
       var axisViewLength = doubleNumberLineNode.axisViewLength;
 
       // {number} destination for horizontal animation of marker editor, null indicates that no animation is required

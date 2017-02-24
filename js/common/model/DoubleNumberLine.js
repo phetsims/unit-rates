@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
@@ -67,74 +68,63 @@ define( function( require ) {
     // @public (read-only) which of the axes has a fixed range, see FIXED_AXIS_VALUES
     this.fixedAxis = options.fixedAxis;
 
-    // @public defined below
-    this.numeratorAxisRangeProperty = null;
-    this.denominatorAxisRangeProperty = null;
+    // @private defined below
+    this.numeratorRangeProperty = null;
+    this.denominatorRangeProperty = null;
     
     if ( options.fixedAxis === 'numerator' ) {
 
-      // changing the numerator range is an Error
-      this.numeratorAxisRangeProperty = new Property( options.fixedAxisRange );
-      this.numeratorAxisRangeProperty.lazyLink( function( range ) {  // unlink not needed
-        throw new Error( 'numeratorAxisRangeProperty should not change' );
+      // numerator range is fixed
+      this.numeratorRangeProperty = new Property( options.fixedAxisRange );
+      this.numeratorRangeProperty.lazyLink( function( range ) {  // unlinkAll in dispose
+        throw new Error( 'numeratorRangeProperty should not change' );
       } );
 
-      // denominator range is mutable, compute initial values
-      var denominatorMin = this.numeratorAxisRangeProperty.value.min / unitRateProperty.value;
-      var denominatorMax = this.numeratorAxisRangeProperty.value.max / unitRateProperty.value;
-      this.denominatorAxisRangeProperty = new Property( new Range( denominatorMin, denominatorMax ) );
+      // denominator range is mutable, dispose needed
+      this.denominatorRangeProperty = new DerivedProperty( [ this.numeratorRangeProperty, unitRateProperty ],
+        function( numeratorRange, unitRate ) {
+          return new Range( numeratorRange.min / unitRate, numeratorRange.max / unitRate );
+        } );
+
+      // when the denominator range changes, adjust the denominator of all markers, unlinkAll in dispose
+      this.denominatorRangeProperty.link( function( denominatorRange ) {
+        self.markers.forEach( function( marker ) {
+          marker.denominatorProperty.value = marker.numeratorProperty.value / unitRateProperty.value;
+        } );
+      } );
     }
     else {
 
-      // changing the denominator range is an Error
-      this.denominatorAxisRangeProperty = new Property( options.fixedAxisRange );
-      this.denominatorAxisRangeProperty.lazyLink( function( range ) { // unlink not needed
-        throw new Error( 'denominatorAxisRangeProperty should not change' );
+      // denominator range is fixed
+      this.denominatorRangeProperty = new Property( options.fixedAxisRange );
+      this.denominatorRangeProperty.lazyLink( function( range ) { // unlinkAll in dispose
+        throw new Error( 'denominatorRangeProperty should not change' );
       } );
 
-      // numerator range is mutable, compute initial values
-      var numeratorMin = this.denominatorAxisRangeProperty.value.min * unitRateProperty.value;
-      var numeratorMax = this.denominatorAxisRangeProperty.value.max * unitRateProperty.value;
-      this.numeratorAxisRangeProperty = new Property( new Range( numeratorMin, numeratorMax ) );
+      // numerator range is mutable, dispose needed
+      this.numeratorRangeProperty = new DerivedProperty( [ this.denominatorRangeProperty, unitRateProperty ],
+        function( denominatorRange, unitRate ) {
+          return new Range( denominatorRange.min * unitRate, denominatorRange.max * unitRate );
+        } );
+
+      // when the numerator range changes, adjust the numerator of all markers, unlinkAll in dispose
+      this.numeratorRangeProperty.link( function( numeratorRange ) {
+        self.markers.forEach( function( marker ) {
+          marker.numeratorProperty.value = marker.denominatorProperty.value * unitRateProperty.value;
+        } );
+      });
     }
 
     // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
     // A single level of undo is supported.
     this.undoMarkerProperty = new Property( null );
 
-    // When the unit rate changes...
-    var unitRateObserver = function( unitRate ) {
-
-      if ( options.fixedAxis === 'numerator' ) {
-
-        // adjust the denominator range
-        var denominatorMin = self.numeratorAxisRangeProperty.value.min / unitRateProperty.value;
-        var denominatorMax = self.numeratorAxisRangeProperty.value.max / unitRateProperty.value;
-        self.denominatorAxisRangeProperty = new Property( new Range( denominatorMin, denominatorMax ) );
-
-        // adjust the denominator of all markers
-        self.markers.forEach( function( marker ) {
-          marker.denominatorProperty.value = marker.numeratorProperty.value / unitRate;
-        } );
-      }
-      else {
-
-        // adjust the numerator range
-        var numeratorMin = self.denominatorAxisRangeProperty.value.min * unitRateProperty.value;
-        var numeratorMax = self.denominatorAxisRangeProperty.value.max * unitRateProperty.value;
-        self.numeratorAxisRangeProperty = new Property( new Range( numeratorMin, numeratorMax ) );
-
-        // adjust the numerator of all markers
-        self.markers.forEach( function( marker ) {
-          marker.numeratorProperty.value = marker.denominatorProperty.value * unitRate;
-        } );
-      }
-    };
-    unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose
-
     // @private
     this.disposeDoubleNumberLine = function() {
-      unitRateProperty.unlink( unitRateObserver );
+      this.numeratorRangeProperty.unlinkAll();
+      this.numeratorRangeProperty.dispose();
+      this.denominatorRangeProperty.unlinkAll();
+      this.denominatorRangeProperty.dispose();
     };
   }
 
@@ -147,10 +137,11 @@ define( function( require ) {
      * @param {number} numerator - numerator in model coordinate frame
      * @param {number} viewMax - numerator's maximum in view coordinate frame
      * @returns {number}
+     * @public
      */
     modelToViewNumerator: function( numerator, viewMax ) {
        return Util.linear(
-         this.numeratorAxisRangeProperty.value.min, this.numeratorAxisRangeProperty.value.max,
+         this.numeratorRangeProperty.value.min, this.numeratorRangeProperty.value.max,
          0, viewMax,
          numerator );
     },
@@ -160,12 +151,29 @@ define( function( require ) {
      * @param {number} denominator - denominator in model coordinate frame
      * @param {number} viewMax - denominator's maximum in view coordinate frame
      * @returns {number}
+     * @public
      */
     modelToViewDenominator: function( denominator, viewMax ) {
        return Util.linear(
-         this.denominatorAxisRangeProperty.value.min, this.denominatorAxisRangeProperty.value.max,
+         this.denominatorRangeProperty.value.min, this.denominatorRangeProperty.value.max,
          0, viewMax,
          denominator );
+    },
+
+    /**
+     * Gets the maximum value that fits on the numerator (top) axis.
+     * @returns {number}
+     */
+    getMaxNumerator: function() {
+      return this.numeratorRangeProperty.value.max;
+    },
+
+    /**
+     * Gets the maximum value that fits on the denominator (bottom) axis.
+     * @returns {number}
+     */
+    getMaxDenominator: function() {
+      return this.denominatorRangeProperty.value.max;
     },
 
     /**
@@ -246,8 +254,8 @@ define( function( require ) {
      * @public
      */
     markerIsInRange: function( marker ) {
-      return ( this.numeratorAxisRangeProperty.value.contains( marker.numeratorProperty.value ) &&
-               this.denominatorAxisRangeProperty.value.contains( marker.denominatorProperty.value ) );
+      return ( this.numeratorRangeProperty.value.contains( marker.numeratorProperty.value ) &&
+               this.denominatorRangeProperty.value.contains( marker.denominatorProperty.value ) );
     },
 
     // @public
