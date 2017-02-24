@@ -115,6 +115,7 @@ define( function( require ) {
     } ) );
 
     // position indicator (vertical line)
+    var indicatorXObserver = null;
     if ( options.indicatorXProperty ) {
       var indicatorNode = new Line( 0, 0, 0, options.axisYSpacing, {
         stroke: options.indicatorColor,
@@ -124,7 +125,7 @@ define( function( require ) {
       } );
       this.addChild( indicatorNode );
 
-      var indicatorXObserver = function( x ) {
+      indicatorXObserver = function( x ) {
          indicatorNode.centerX = doubleNumberLine.modelToViewNumerator( x, self.axisViewLength );
       };
       options.indicatorXProperty.link( indicatorXObserver ); // unlink in dispose
@@ -168,7 +169,7 @@ define( function( require ) {
     this.disposeDoubleNumberLineNode = function() {
       doubleNumberLine.markers.removeItemAddedListener( markerAddedListener );
       doubleNumberLine.markers.removeItemRemovedListener( markerRemovedListener );
-      indicatorXObserver && options.indicatorXProperty.unlink( indicatorXObserver );
+      options.indicatorXProperty && options.indicatorXProperty.unlink( indicatorXObserver );
     };
   }
 
@@ -198,7 +199,7 @@ define( function( require ) {
     /**
      * Removes a MarkerNode from the double number line.
      * @param {Marker} marker
-     * @public
+     * @private
      */
     removeMarkerNode: function( marker ) {
       unitRates.log && unitRates.log( 'removeMarker ' + marker );
@@ -217,7 +218,7 @@ define( function( require ) {
      * Gets the MarkerNode that is associated with marker.
      * @param {Marker} marker
      * @returns {MarkerNode|null} - null if there is no MarkerNode associated with marker
-     * @public
+     * @private
      */
     getMarkerNode: function( marker ) {
       var markerNode = null;
