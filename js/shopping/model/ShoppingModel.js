@@ -77,7 +77,11 @@ define( function( require ) {
 
   return inherit( Object, ShoppingModel, {
 
-    // @public
+    /**
+     * Updates time-dependent parts of the model.
+     * @param {number} dt - time since the previous step, in seconds
+     * @public
+     */
     step: function( dt ) {
 
       // step the selected category

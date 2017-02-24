@@ -254,7 +254,11 @@ define( function( require ) {
 
   return inherit( Object, ShoppingScene, {
 
-    // @public
+    /**
+     * Updates time-dependent parts of the model.
+     * @param {number} dt - time since the previous step, in seconds
+     * @public
+     */
     step: function( dt ) {
 
       // animate bags

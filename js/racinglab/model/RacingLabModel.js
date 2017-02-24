@@ -82,7 +82,11 @@ define( function( require ) {
 
   return inherit( Object, RacingLabModel, {
 
-    // @public
+    /**
+     * Updates time-dependent parts of the model.
+     * @param {number} dt - time since the previous step, in seconds
+     * @public
+     */
     step: function( dt ) {
       if ( this.runningProperty.value ) {
         this.car1.step( dt );
