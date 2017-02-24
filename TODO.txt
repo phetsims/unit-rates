@@ -10,7 +10,7 @@ If marker editor is on it's way home when Reset All is pressed, it doesn't move 
 
 Low:
 address TODO items in Movable
-Handle cancellation of drags in BagDragHandler
+Handle cancellation of drags?
 Duplication between ShoppingSceneNode and ShoppingLabSceneNode
 
 Misc:
