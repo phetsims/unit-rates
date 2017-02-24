@@ -25,7 +25,7 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // {ShoppingItem[]|null} items in the bag, null means the bag does not open when place on the scale
+      // {ShoppingItem[]|null} items in the bag, null means the bag does not open when placed on the scale
       shoppingItems: null,
 
       // URMovable options
