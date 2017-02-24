@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Model of a track in the 'Racing Lab' screen.
+ * Model of a race track in the 'Racing Lab' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,9 +20,9 @@ define( function( require ) {
   function RaceTrack( options ) {
 
     options = _.extend( {
-      length: 200, // initial distance between start and finish line, in miles
-      maxLength: 200, // maximum distance between start and finish line, in miles
-      markerSpacing: 50  // markers are spaced at this interval, in miles
+      length: 200, // {number} initial distance between start and finish line, in miles
+      maxLength: 200, // {number} maximum distance between start and finish line, in miles
+      markerSpacing: 50  // {number} track markers are spaced at this interval, in miles
     }, options );
 
     // @public (read-only)
@@ -31,6 +31,8 @@ define( function( require ) {
 
     // @public
     this.lengthProperty = new Property( options.length );
+
+    // validate length, unlink not needed
     this.lengthProperty.link( function( length ) {
       assert && assert( length >= 0 && length <= options.maxLength, 'invalid length: ' + length );
     } );

@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Model of a car in the 'Racing Lab' screen.
+ * Model of a race car in the 'Racing Lab' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
