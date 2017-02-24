@@ -33,7 +33,7 @@ define( function( require ) {
 
     options = options || {};
 
-    // Double number line
+    // Double number line, dispose required
     var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
       axisViewLength: 816, // determined empirically, to take up the full width of the screen
       expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
@@ -41,23 +41,23 @@ define( function( require ) {
       top: layoutBounds.minY + URConstants.SCREEN_Y_MARGIN
     } );
 
-    // Questions
+    // Questions, dispose required
     var questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, {
       expandedProperty: viewProperties.questionsExpandedProperty,
       right: layoutBounds.right - URConstants.SCREEN_X_MARGIN,
       top: doubleNumberLineAccordionBox.bottom + 10
     } );
 
-    // shelf
+    // shelf, dispose required
     var shelfNode = new ShelfNode( shoppingScene.shelf );
 
-    // scale
+    // scale, dispose required
     var scaleNode = new ScaleNode( shoppingScene.scale, {
       extraCostDecimalVisible: false,
       quantityIsDisplayed: shoppingScene.scaleQuantityIsDisplayed
     } );
 
-    // button that resets the shelf to its initial state
+    // button that resets the shelf to its initial state, dispose required
     var resetShelfButton = new ResetButton( {
       listener: function() {
         //TODO implement resetShelfButton listener, https://github.com/phetsims/unit-rates/issues/156
@@ -70,11 +70,12 @@ define( function( require ) {
     } );
 
     // Disable the button when the shelf and scale are in their initial state.
-    shoppingScene.scale.quantityProperty.link( function( quantity ) {
+    var quantityObserver = function( quantity ) {
       //TODO disable resetShelfButton, https://github.com/phetsims/unit-rates/issues/156
-    } );
+    };
+    shoppingScene.scale.quantityProperty.link( quantityObserver ); // unlink in dispose
 
-    // bags
+    // bags, dispose required
     var bagsParent = new Node();
     shoppingScene.bags.forEach( function( bag ) {
       bagsParent.addChild( new BagNode( bag, shoppingScene.shelf, shoppingScene.scale ) );
@@ -93,6 +94,7 @@ define( function( require ) {
       scaleNode.dispose();
       shelfNode.dispose();
       resetShelfButton.dispose();
+      shoppingScene.scale.quantityProperty.unlink( quantityObserver );
       bagsParent.getChildren().forEach( function( bagNode ) {
         assert && assert( bagNode instanceof BagNode );
         bagNode.dispose();
