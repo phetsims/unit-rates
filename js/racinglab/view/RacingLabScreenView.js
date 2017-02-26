@@ -112,7 +112,7 @@ define( function( require ) {
       timerTitleString: timer1String,
       trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
-      bottom: this.layoutBounds.centerY - 5
+      bottom: this.layoutBounds.centerY - 10
     } );
     playAreaLayer.addChild( trackNode1 );
 
