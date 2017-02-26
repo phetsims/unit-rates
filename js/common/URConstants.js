@@ -51,11 +51,12 @@ define( function( require ) {
       touchAreaYDilation: 0
     },
 
-    // ranges for Rate spinners
+    // ranges and deltas for Rate spinners
     COST_RANGE: new Range( 1, 20 ),
     QUANTITY_RANGE: new Range( 1, 20 ),
     MILES_RANGE: new Range( 20, 100 ),
     HOURS_RANGE: new Range( 1, 10 ),
+    MILES_DELTA: 5,
 
     // markers on the double number line
     MAJOR_MARKER_LENGTH: 55,

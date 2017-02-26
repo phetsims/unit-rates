@@ -12,25 +12,22 @@ define( function( require ) {
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
+  var MilesPerHourAccordionBox = require( 'UNIT_RATES/racinglab/view/MilesPerHourAccordionBox' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var RaceTrackNode = require( 'UNIT_RATES/racinglab/view/RaceTrackNode' );
   var RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
   var RacingLabViewProperties = require( 'UNIT_RATES/racinglab/view/RacingLabViewProperties' );
-  var RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var RestartRaceButton = require( 'UNIT_RATES/racinglab/view/RestartRaceButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StartStopButton = require( 'UNIT_RATES/racinglab/view/StartStopButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
 
   // strings
   var doubleNumberLine1String = require( 'string!UNIT_RATES/doubleNumberLine1' );
   var doubleNumberLine2String = require( 'string!UNIT_RATES/doubleNumberLine2' );
-  var hoursString = require( 'string!UNIT_RATES/hours' );
-  var milesString = require( 'string!UNIT_RATES/miles' );
   var rate1String = require( 'string!UNIT_RATES/rate1' );
   var rate2String = require( 'string!UNIT_RATES/rate2' );
   var timer1String = require( 'string!UNIT_RATES/timer1' );
@@ -38,20 +35,6 @@ define( function( require ) {
 
   // view length of the double number line, determined empirically
   var DOUBLE_NUMBER_LINE_AXIS_LENGTH = 582;
-
-  // picker for the rate's numerator (miles) increments and decrements by this delta
-  var NUMERATOR_PICKER_DELTA = 5;
-
-  // options common to instances of RateAccordionBox
-  var RATE_ACCORDION_BOX_OPTIONS = {
-    numeratorUnits: milesString,
-    denominatorUnits: hoursString,
-    pickerFont: new URFont( 20 ),
-    numeratorRange: URConstants.MILES_RANGE,
-    denominatorRange: URConstants.HOURS_RANGE,
-    numeratorPickerUpFunction: function( miles ) { return miles + NUMERATOR_PICKER_DELTA; },
-    numeratorPickerDownFunction: function( miles ) { return miles - NUMERATOR_PICKER_DELTA; }
-  };
 
   /**
    * @param {RacingLabModel} model
@@ -139,25 +122,25 @@ define( function( require ) {
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
 
     // Rate control for car1
-    var rateAccordionBox1 = new RateAccordionBox( model.car1.rate, _.extend( {}, RATE_ACCORDION_BOX_OPTIONS, {
+    var rateAccordionBox1 = new MilesPerHourAccordionBox( model.car1.rate, {
       titleString: rate1String,
       expandedProperty: viewProperties.rateExpandedProperty1,
       numeratorPickerColor: model.car1.color,
       denominatorPickerColor: model.car1.color,
       left: doubleNumberLineAccordionBox1.right + 10,
       top: doubleNumberLineAccordionBox1.top
-    } ) );
+    } );
     playAreaLayer.addChild( rateAccordionBox1 );
 
     // Rate control for car2
-    var rateAccordionBox2 = new RateAccordionBox( model.car2.rate, _.extend( {}, RATE_ACCORDION_BOX_OPTIONS, {
+    var rateAccordionBox2 = new MilesPerHourAccordionBox( model.car2.rate, {
       titleString: rate2String,
       expandedProperty: viewProperties.rateExpandedProperty2,
       numeratorPickerColor: model.car2.color,
       denominatorPickerColor: model.car2.color,
       left: doubleNumberLineAccordionBox2.right + 10,
       top: doubleNumberLineAccordionBox2.top
-    } ) );
+    } );
     playAreaLayer.addChild( rateAccordionBox2 );
 
     // Track for car1
