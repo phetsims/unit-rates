@@ -142,7 +142,7 @@ define( function( require ) {
         model.car1.resetRace();
         model.car2.resetRace();
       },
-      right: startStopButton.left - 15,
+      right: startStopButton.left - 20,
       centerY: startStopButton.centerY
     } );
     playAreaLayer.addChild( restartRaceButton );
