@@ -33,6 +33,10 @@ define( function( require ) {
   var timer1String = require( 'string!UNIT_RATES/timer1' );
   var timer2String = require( 'string!UNIT_RATES/timer2' );
 
+  // constants
+  var BUTTON_X_SPACE = 20; // space between buttons
+  var ACCORDION_BOX_X_SPACE = 10; // space between accordion boxes
+
   /**
    * @param {RacingLabModel} model
    * @param {Object} [options]
@@ -87,7 +91,7 @@ define( function( require ) {
       expandedProperty: viewProperties.rateExpandedProperty1,
       numeratorPickerColor: model.car1.color,
       denominatorPickerColor: model.car1.color,
-      left: doubleNumberLineAccordionBox1.right + 10,
+      left: doubleNumberLineAccordionBox1.right + ACCORDION_BOX_X_SPACE,
       top: doubleNumberLineAccordionBox1.top
     } );
     playAreaLayer.addChild( rateAccordionBox1 );
@@ -98,7 +102,7 @@ define( function( require ) {
       expandedProperty: viewProperties.rateExpandedProperty2,
       numeratorPickerColor: model.car2.color,
       denominatorPickerColor: model.car2.color,
-      left: doubleNumberLineAccordionBox2.right + 10,
+      left: doubleNumberLineAccordionBox2.right + ACCORDION_BOX_X_SPACE,
       top: doubleNumberLineAccordionBox2.top
     } );
     playAreaLayer.addChild( rateAccordionBox2 );
@@ -117,7 +121,7 @@ define( function( require ) {
       timerTitleString: timer2String,
       trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
-      top: this.layoutBounds.centerY + 5
+      top: this.layoutBounds.centerY + ( this.layoutBounds.centerY - trackNode1.bottom )
     } );
     playAreaLayer.addChild( trackNode2 );
 
@@ -130,7 +134,7 @@ define( function( require ) {
 
     // Start/Stop button
     var startStopButton = new StartStopButton( model.runningProperty, {
-      right: sceneControl.left - 20,
+      right: sceneControl.left - BUTTON_X_SPACE,
       centerY: this.layoutBounds.centerY
     } );
     playAreaLayer.addChild( startStopButton );
@@ -142,7 +146,7 @@ define( function( require ) {
         model.car1.resetRace();
         model.car2.resetRace();
       },
-      right: startStopButton.left - 20,
+      right: startStopButton.left - BUTTON_X_SPACE,
       centerY: startStopButton.centerY
     } );
     playAreaLayer.addChild( restartRaceButton );
