@@ -33,9 +33,6 @@ define( function( require ) {
   var timer1String = require( 'string!UNIT_RATES/timer1' );
   var timer2String = require( 'string!UNIT_RATES/timer2' );
 
-  // view length of the double number line, determined empirically
-  var DOUBLE_NUMBER_LINE_AXIS_LENGTH = 582;
-
   /**
    * @param {RacingLabModel} model
    * @param {Object} [options]
@@ -96,7 +93,7 @@ define( function( require ) {
     // Double number line for car1
     var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
-        axisViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
+        axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
         titleString: doubleNumberLine1String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
         indicatorXProperty: model.car1.distanceProperty,
@@ -110,7 +107,7 @@ define( function( require ) {
     // Double number line for car2
     var doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
       model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
-        axisViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
+        axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
         titleString: doubleNumberLine2String,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
         indicatorXProperty: model.car2.distanceProperty,
@@ -146,7 +143,7 @@ define( function( require ) {
     // Track for car1
     var trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, viewProperties.arrowsVisibleProperty, {
       timerTitleString: timer1String,
-      trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
+      trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
       bottom: this.layoutBounds.centerY - 5
     } );
@@ -155,7 +152,7 @@ define( function( require ) {
     // Track for car2
     var trackNode2 = new RaceTrackNode( model.car2, viewProperties.timerExpandedProperty2, viewProperties.arrowsVisibleProperty, {
       timerTitleString: timer2String,
-      trackViewLength: DOUBLE_NUMBER_LINE_AXIS_LENGTH,
+      trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
       top: this.layoutBounds.centerY + 5
     } );

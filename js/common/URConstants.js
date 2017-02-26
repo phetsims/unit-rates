@@ -24,6 +24,10 @@ define( function( require ) {
     SHOPPING_ITEM_IMAGE_SCALE: 0.5,
     EDIT_ICON_SCALE: 0.4,
 
+    // double number lines
+    SHOPPING_AXIS_LENGTH: 816, // determined empirically, to take up the full width of the screen
+    RACING_LAB_AXIS_LENGTH: 582, // determined empirically
+
     // AccordionBoxes
     ACCORDION_BOX_OPTIONS: {
       titleBarExpandCollapse: false,
@@ -44,14 +48,12 @@ define( function( require ) {
     },
     ACCORDION_BOX_TITLE_FONT: new URFont( 14 ),
 
-    // NumberPickers
+    // Rate pickers (aka spinners)
     NUMBER_PICKER_OPTIONS: {
       xMargin: 8,
       cornerRadius: 4,
       touchAreaYDilation: 0
     },
-
-    // ranges and deltas for Rate spinners
     COST_RANGE: new Range( 1, 20 ),
     QUANTITY_RANGE: new Range( 1, 20 ),
     MILES_RANGE: new Range( 20, 100 ),
