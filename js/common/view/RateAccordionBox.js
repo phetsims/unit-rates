@@ -52,6 +52,8 @@ define( function( require ) {
       pickerFont: new URFont( 24 ),
       numeratorPickerColor: 'black',
       denominatorPickerColor: 'black',
+      numeratorPickerUpFunction: function( value ) { return value + 1; },
+      numeratorPickerDownFunction: function( value ) { return value - 1; },
       xSpacing: 10,
       ySpacing: 8
 
@@ -71,6 +73,8 @@ define( function( require ) {
     // numerator picker, must be disposed
     var numeratorPicker = new NumberPicker( rate.numeratorProperty, new Property( options.numeratorRange ), _.extend( {},
       URConstants.NUMBER_PICKER_OPTIONS, {
+        upFunction: options.numeratorPickerUpFunction,
+        downFunction: options.numeratorPickerDownFunction,
         font: options.pickerFont,
         color: options.numeratorPickerColor
       } ) );

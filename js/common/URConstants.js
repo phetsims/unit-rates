@@ -50,7 +50,6 @@ define( function( require ) {
       cornerRadius: 4,
       touchAreaYDilation: 0
     },
-    RACING_LAB_PICKER_FONT: new URFont( 20 ),
 
     // ranges for Rate spinners
     COST_RANGE: new Range( 1, 20 ),
