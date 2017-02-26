@@ -86,22 +86,18 @@ define( function( require ) {
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
 
     // Rate control for car1
-    var rateAccordionBox1 = new MilesPerHourAccordionBox( model.car1.rate, {
+    var rateAccordionBox1 = new MilesPerHourAccordionBox( model.car1, {
       titleString: rate1String,
       expandedProperty: viewProperties.rateExpandedProperty1,
-      numeratorPickerColor: model.car1.color,
-      denominatorPickerColor: model.car1.color,
       left: doubleNumberLineAccordionBox1.right + ACCORDION_BOX_X_SPACE,
       top: doubleNumberLineAccordionBox1.top
     } );
     playAreaLayer.addChild( rateAccordionBox1 );
 
     // Rate control for car2
-    var rateAccordionBox2 = new MilesPerHourAccordionBox( model.car2.rate, {
+    var rateAccordionBox2 = new MilesPerHourAccordionBox( model.car2, {
       titleString: rate2String,
       expandedProperty: viewProperties.rateExpandedProperty2,
-      numeratorPickerColor: model.car2.color,
-      denominatorPickerColor: model.car2.color,
       left: doubleNumberLineAccordionBox2.right + ACCORDION_BOX_X_SPACE,
       top: doubleNumberLineAccordionBox2.top
     } );

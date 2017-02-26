@@ -20,23 +20,25 @@ define( function( require ) {
   var milesString = require( 'string!UNIT_RATES/miles' );
 
   /**
-   * @param {Rate} rate
+   * @param {RaceCar} car
    * @param {Object} [options]
    * @constructor
    */
-  function MilesPerHourAccordionBox( rate, options ) {
+  function MilesPerHourAccordionBox( car, options ) {
 
     options = _.extend( {
       numeratorUnits: milesString,
       denominatorUnits: hoursString,
       numeratorRange: URConstants.MILES_RANGE,
       denominatorRange: URConstants.HOURS_RANGE,
+      numeratorPickerColor: car.color,
+      denominatorPickerColor: car.color,
       numeratorPickerUpFunction: function( miles ) { return miles + URConstants.MILES_DELTA; },
       numeratorPickerDownFunction: function( miles ) { return miles - URConstants.MILES_DELTA; },
       pickerFont: new URFont( 20 )
     }, options );
 
-    RateAccordionBox.call( this, rate, options );
+    RateAccordionBox.call( this, car.rate, options );
   }
 
   unitRates.register( 'MilesPerHourAccordionBox', MilesPerHourAccordionBox );
