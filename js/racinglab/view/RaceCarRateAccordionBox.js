@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Control for setting the rate (miles/hours) in 'Racing Lab' screen.
+ * Control for setting the rate of the race car.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -24,7 +24,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function MilesPerHourAccordionBox( car, options ) {
+  function RaceCarRateAccordionBox( car, options ) {
 
     options = _.extend( {
       numeratorUnits: milesString,
@@ -41,7 +41,7 @@ define( function( require ) {
     RateAccordionBox.call( this, car.rate, options );
   }
 
-  unitRates.register( 'MilesPerHourAccordionBox', MilesPerHourAccordionBox );
+  unitRates.register( 'RaceCarRateAccordionBox', RaceCarRateAccordionBox );
 
-  return inherit( RateAccordionBox, MilesPerHourAccordionBox );
+  return inherit( RateAccordionBox, RaceCarRateAccordionBox );
 } );

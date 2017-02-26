@@ -12,9 +12,9 @@ define( function( require ) {
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
-  var MilesPerHourAccordionBox = require( 'UNIT_RATES/racinglab/view/MilesPerHourAccordionBox' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
+  var RaceCarRateAccordionBox = require( 'UNIT_RATES/racinglab/view/RaceCarRateAccordionBox' );
   var RaceTrackNode = require( 'UNIT_RATES/racinglab/view/RaceTrackNode' );
   var RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
   var RacingLabViewProperties = require( 'UNIT_RATES/racinglab/view/RacingLabViewProperties' );
@@ -86,7 +86,7 @@ define( function( require ) {
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
 
     // Rate control for car1
-    var rateAccordionBox1 = new MilesPerHourAccordionBox( model.car1, {
+    var rateAccordionBox1 = new RaceCarRateAccordionBox( model.car1, {
       titleString: rate1String,
       expandedProperty: viewProperties.rateExpandedProperty1,
       left: doubleNumberLineAccordionBox1.right + ACCORDION_BOX_X_SPACE,
@@ -95,7 +95,7 @@ define( function( require ) {
     playAreaLayer.addChild( rateAccordionBox1 );
 
     // Rate control for car2
-    var rateAccordionBox2 = new MilesPerHourAccordionBox( model.car2, {
+    var rateAccordionBox2 = new RaceCarRateAccordionBox( model.car2, {
       titleString: rate2String,
       expandedProperty: viewProperties.rateExpandedProperty2,
       left: doubleNumberLineAccordionBox2.right + ACCORDION_BOX_X_SPACE,
