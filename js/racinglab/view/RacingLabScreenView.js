@@ -53,43 +53,6 @@ define( function( require ) {
     var keypadLayer = new KeypadLayer();
     this.addChild( keypadLayer );
 
-    // Reset All button
-    var resetAllButton = new ResetAllButton( {
-      listener: function() {
-        model.reset();
-        viewProperties.reset();
-      },
-      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
-      bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
-    } );
-    playAreaLayer.addChild( resetAllButton );
-
-    // Scene control (1 vs 2 cars)
-    var sceneControl = new RacingLabSceneControl( model.car2.visibleProperty, {
-      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
-      centerY: this.layoutBounds.centerY
-    } );
-    playAreaLayer.addChild( sceneControl );
-
-    // Start/stop button
-    var startStopButton = new StartStopButton( model.runningProperty, {
-      right: sceneControl.left - 20,
-      centerY: this.layoutBounds.centerY
-    } );
-    playAreaLayer.addChild( startStopButton );
-
-    // Restart race button
-    var restartRaceButton = new RestartRaceButton( {
-      listener: function() {
-        model.runningProperty.value = false;
-        model.car1.resetRace();
-        model.car2.resetRace();
-      },
-      right: startStopButton.left - 15,
-      centerY: startStopButton.centerY
-    } );
-    playAreaLayer.addChild( restartRaceButton );
-
     // Double number line for car1
     var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
@@ -158,7 +121,44 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( trackNode2 );
 
-    // car1 should always be visible
+    // Scene control (1 vs 2 cars)
+    var sceneControl = new RacingLabSceneControl( model.car2.visibleProperty, {
+      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
+      centerY: this.layoutBounds.centerY
+    } );
+    playAreaLayer.addChild( sceneControl );
+
+    // Start/Stop button
+    var startStopButton = new StartStopButton( model.runningProperty, {
+      right: sceneControl.left - 20,
+      centerY: this.layoutBounds.centerY
+    } );
+    playAreaLayer.addChild( startStopButton );
+
+    // Restart Race button
+    var restartRaceButton = new RestartRaceButton( {
+      listener: function() {
+        model.runningProperty.value = false;
+        model.car1.resetRace();
+        model.car2.resetRace();
+      },
+      right: startStopButton.left - 15,
+      centerY: startStopButton.centerY
+    } );
+    playAreaLayer.addChild( restartRaceButton );
+
+    // Reset All button
+    var resetAllButton = new ResetAllButton( {
+      listener: function() {
+        model.reset();
+        viewProperties.reset();
+      },
+      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
+      bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
+    } );
+    playAreaLayer.addChild( resetAllButton );
+
+    // car1 should always be visible, because the view doesn't doesn't support hiding it. unlink not needed.
     model.car1.visibleProperty.link( function( visible ) {
       assert && assert( model.car1.visibleProperty.value, 'car1 should always be visible' );
     } );
@@ -173,7 +173,7 @@ define( function( require ) {
     // Disable the restart button when both cars are at the starting line. unmultilink not needed
     Property.multilink( [ model.car1.distanceProperty, model.car2.distanceProperty ],
       function( distance1, distance2 ) {
-        restartRaceButton.enabled = ( distance1 !== 0 || distance2 !== 0 );
+        restartRaceButton.enabled = !( distance1 === 0 && distance2 === 0 );
       } );
   }
 
