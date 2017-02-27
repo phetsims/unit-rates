@@ -68,6 +68,8 @@ define( function( require ) {
       leftX += ( 0.5 * options.cellSize.width );
       bottomY -= options.cellSize.height;
     }
+    assert && assert( this.cells.length === options.numberOfCells,
+      'incorrect number of cells were created: ' + this.cells.length );
 
     // @public quantity represented by the bags currently in the container
     this.quantityProperty = new Property( 0 );
