@@ -40,32 +40,47 @@ define( function( require ) {
     // @public (read-only) bottom center of the row
     this.location = options.location;
 
-    // distance between the centers of adjacent cells
-    var deltaX = options.cellSize.width + options.cellSpacing;
-
-    // distance between the centers of the left-most and right-most cells
-    var leftToRightDistance = deltaX * ( options.numberOfCells - 1 );
-
-    // center of left-most cell
-    var leftX = options.location.x - ( leftToRightDistance / 2 );
-    
     // @private the container's cells.
-    // Each cell contains a data structure with this format:
-    // {Object|null} object - the object that occupies the cell, null if the cell is empty
-    // {Vector} location - bottom center of the cell
-    this.cells = [];
-    for ( var i = 0; i < options.numberOfCells; i++ ) {
-      this.cells.push( {
-        object: null,
-        location: new Vector2( leftX + ( i * deltaX ), options.location.y )
-      } );
-    }
-    
-    // @public (read-only) number of objects in the row
+    this.cells = createCells( options.numberOfCells, options.location, options.cellSize, options.cellSpacing );
+
+    // @public (read-only) number of objects in the row (number of occupied cells)
     this.numberOfObjectsProperty = new Property( 0 );
   }
 
   unitRates.register( 'ObjectRow', ObjectRow );
+
+  /**
+   * Creates a row of empty cells.
+   * @param {number} numberOfCells
+   * @param {Vector2} location - bottom center of the row
+   * @param {Dimension2} cellSize
+   * @param {number} cellSpacing
+   * @returns {{object:Object|null, location:Vector2}[]}
+   */
+  function createCells( numberOfCells, location, cellSize, cellSpacing ) {
+
+    // distance between the centers of adjacent cells
+    var deltaX = cellSize.width + cellSpacing;
+
+    // distance between the centers of the left-most and right-most cells
+    var leftToRightDistance = deltaX * ( numberOfCells - 1 );
+
+    // center of the first (left-most) cell
+    var firstCenterX = location.x - ( leftToRightDistance / 2 );
+
+    // Each cell contains a data structure with this format:
+    // {Object|null} object - the object that occupies the cell, null if the cell is empty
+    // {Vector} location - bottom center of the cell
+    var cells = [];
+    for ( var i = 0; i < numberOfCells; i++ ) {
+      cells.push( {
+        object: null,
+        location: new Vector2( firstCenterX + ( i * deltaX ), location.y )
+      } );
+    }
+
+    return cells;
+  }
 
   return inherit( Object, ObjectRow, {
 
