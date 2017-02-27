@@ -14,9 +14,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  // constants
-  var EMPTY = null; // contents of an empty cell
-
   /**
    * @param {Object} [options]
    * @constructor
@@ -49,7 +46,7 @@ define( function( require ) {
     this.cells = [];
     for ( var i = 0; i < options.numberOfBags; i++ ) {
       this.cells.push( {
-        bag: EMPTY,
+        bag: null,
         location: new Vector2( leftX + ( i * deltaX ), options.location.y )
       } );
     }
@@ -64,7 +61,7 @@ define( function( require ) {
 
       // empty all cells
       this.cells.forEach( function( cell ) {
-        cell.bag = EMPTY;
+        cell.bag = null;
       } );
     },
 
@@ -142,7 +139,7 @@ define( function( require ) {
       assert && assert( this.isValidBag( bag ), 'invalid bag' );
       var index = this.indexOfBag( bag );
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
-      this.cells[ index ].bag = EMPTY;
+      this.cells[ index ].bag = null;
     },
 
     /**
@@ -193,7 +190,7 @@ define( function( require ) {
      */
     isEmptyCell: function( index ) {
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
-      return ( this.cells[ index ].bag === EMPTY );
+      return ( this.cells[ index ].bag === null );
     },
 
     /**
