@@ -69,15 +69,6 @@ define( function( require ) {
     },
 
     /**
-     * Gets the number of cells.
-     * @returns {number}
-     * @public
-     */
-    getNumberOfCells: function() {
-       return this.cells.length;
-    },
-
-    /**
      * Gets the index of the first unoccupied cell. Cells are visited left to right.
      * @returns {number} - cell index, -1 if all cells are occupied
      * @public
@@ -85,7 +76,7 @@ define( function( require ) {
     getFirstUnoccupiedCell: function() {
       var index = -1;
       for ( var i = 0; i < this.cells.length; i++ ) {
-        if ( this.isEmpty( i ) ) {
+        if ( this.isEmptyCell( i ) ) {
           index = i;
           break;
         }
@@ -103,8 +94,8 @@ define( function( require ) {
       var index = this.getFirstUnoccupiedCell();
       if ( index !== -1 ) {
         for ( var i = index + 1; i < this.cells.length; i++ ) {
-          if ( this.isEmpty( i ) ) {
-            if ( this.getDistanceBetween( i, location ) < this.getDistanceBetween( index, location ) ) {
+          if ( this.isEmptyCell( i ) ) {
+            if ( this.getDistanceFromCell( i, location ) < this.getDistanceFromCell( index, location ) ) {
               index = i;
             }
             else {
@@ -121,11 +112,11 @@ define( function( require ) {
      * @param {number} index - the cell index
      * @param {Vector2} location
      * @returns {number}
-     * @public
+     * @private
      */
-    getDistanceBetween: function( index, location ) {
-      assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      return this.getLocationAt( index ).distance( location );
+    getDistanceFromCell: function( index, location ) {
+      assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
+      return this.getCellLocation( index ).distance( location );
     },
 
     /**
@@ -136,9 +127,9 @@ define( function( require ) {
      */
     addBag: function( bag, index ) {
       assert && assert( this.isValidBag( bag ), 'invalid bag' );
-      assert && assert( !this.contains( bag ), 'bag is already in row at index ' + this.indexOf( bag ) );
-      assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      assert && assert( this.isEmpty( index ), 'cell is occupied: ' + index );
+      assert && assert( !this.containsBag( bag ), 'bag is already in row at index ' + this.indexOfBag( bag ) );
+      assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
+      assert && assert( this.isEmptyCell( index ), 'cell is occupied: ' + index );
       this.cells[ index ].bag = bag;
     },
 
@@ -149,29 +140,9 @@ define( function( require ) {
      */
     removeBag: function( bag ) {
       assert && assert( this.isValidBag( bag ), 'invalid bag' );
-      this.clearCell( this.indexOf( bag ) );
-    },
-
-    /**
-     * Clears the specified cell. The cell must be occupied.
-     * @param {number} index - the cell index
-     * @public
-     */
-    clearCell: function( index ) {
-      assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      assert && assert( !this.isEmpty( index ), 'cell is empty: ' + index );
+      var index = this.indexOfBag( bag );
+      assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
       this.cells[ index ].bag = EMPTY;
-    },
-
-    /**
-     * Gets the bag that occupies a cell.
-     * @param {number} index - the cell index
-     * @returns {Bag|null} - null if the cell is empty
-     * @public
-     */
-    getBagAt: function( index ) {
-      assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
-      return this.cells[ index ].bag;
     },
 
     /**
@@ -180,8 +151,8 @@ define( function( require ) {
      * @returns {Vector2}
      * @public
      */
-    getLocationAt: function( index ) {
-      assert && assert( this.isValidIndex( index ), 'invalid index: ' + index );
+    getCellLocation: function( index ) {
+      assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
       return this.cells[ index ].location;
     },
 
@@ -189,13 +160,13 @@ define( function( require ) {
      * Gets the index of the cell that is occupied by a specified bag.
      * @param {Bag} bag
      * @returns {number} -1 if the bag is not found
-     * @public
+     * @private
      */
-    indexOf: function( bag ) {
+    indexOfBag: function( bag ) {
       assert && assert( this.isValidBag( bag ), 'invalid bag' );
       var index = -1;
       for ( var i = 0; i < this.cells.length; i++ ) {
-        if ( this.getBagAt( i ) === bag ) {
+        if ( this.cells[ i ].bag === bag ) {
           index = i;
           break;
         }
@@ -209,9 +180,9 @@ define( function( require ) {
      * @returns {boolean}
      * @public
      */
-    contains: function( bag ) {
+    containsBag: function( bag ) {
       assert && assert( this.isValidBag( bag ), 'invalid bag' );
-      return ( this.indexOf( bag ) !== -1 );
+      return ( this.indexOfBag( bag ) !== -1 );
     },
 
     /**
@@ -220,8 +191,9 @@ define( function( require ) {
      * @returns {boolean}
      * @public
      */
-    isEmpty: function( index ) {
-      return ( this.getBagAt( index ) === EMPTY );
+    isEmptyCell: function( index ) {
+      assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
+      return ( this.cells[ index ].bag === EMPTY );
     },
 
     /**
@@ -230,7 +202,7 @@ define( function( require ) {
      * @returns {boolean}
      * @private
      */
-    isValidIndex: function( index ) {
+    isValidCellIndex: function( index ) {
       return ( ( typeof index === 'number' ) && !isNaN( index ) && index >= 0 && index < this.cells.length );
     },
 
