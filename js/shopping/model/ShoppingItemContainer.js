@@ -11,6 +11,7 @@
  * Each cell contains at most 1 item. Cells are filled from the base of the triangle upward.
  * Each item in the top row must be supported by 2 items below it.
  * Removing an item from the lower row causes an item above it to fall down.
+ * Cells are indexed from left to right, starting with the bottom row.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -43,8 +44,11 @@ define( function( require ) {
     // @public (read-only) bottom center of the container
     this.location = options.location;
 
-    // number of cells in the current row
-    var numberOfCellsInRow = Math.floor( options.numberOfCells / 2 ) + 1;
+    // @private number of cells in bottom row
+    this.numberOfCellsInBottomRow = Math.floor( options.numberOfCells / 2 ) + 1;
+
+    // number of cells in the current row, starting with bottom row
+    var numberOfCellsInRow = this.numberOfCellsInBottomRow;
 
     // center of the left-most cell in the current row
     var leftX = options.location.x - ( ( options.cellSize.width * ( numberOfCellsInRow - 1 ) ) / 2 );
@@ -202,6 +206,48 @@ define( function( require ) {
      */
     isValidItem: function( item ) {
       return ( item instanceof ShoppingItem );
+    },
+
+    /**
+     * Is the specified cell in the bottom row?
+     * @param {number} index
+     * @returns {boolean}
+     * @private
+     */
+    isCellInBottomRow: function( index ) {
+      assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
+      return index < this.numberOfCellsInBottomRow;
+    },
+
+    /**
+     * Is the specified cell in the top row?
+     * @param {number} index
+     * @returns {boolean}
+     * @private
+     */
+    isCellInTopRow: function( index ) {
+      return !this.isCellInBottomRow( index );
+    },
+
+    /**
+     * Is the specified cell fully supported?
+     * @param {number} index
+     * @returns {boolean}
+     */
+    isFullySupported: function( index ) {
+      var fullySupported = false;
+      if ( this.isCellInBottomRow( index ) ) {
+
+        // all cells in the bottom row are considered fully-supported
+        fullySupported = true;
+      }
+      else {
+
+        // a cell in the top row is fully-supported if the 2 cells below it are occupied
+        var leftSupportingCellIndex = index - this.numberOfCellsInBottomRow;
+        return ( !this.isEmptyCell( leftSupportingCellIndex ) && !this.isEmptyCell( leftSupportingCellIndex + 1 ) );
+      }
+      return fullySupported;
     }
   } );
 } );
