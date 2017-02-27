@@ -2,6 +2,8 @@
 
 /**
  * ObjectRow manages a row of objects.
+ * Used to manage the location of bags and shopping items on the scale and shelf.
+ *
  * - Each row has N cells.
  * - Cells are indexed from left to right.
  * - At most 1 object can occupy a cell.
