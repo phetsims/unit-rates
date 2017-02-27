@@ -12,7 +12,6 @@ define( function( require ) {
   var BagContainer = require( 'UNIT_RATES/shopping/model/BagContainer' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -28,31 +27,21 @@ define( function( require ) {
       // BagContainer options
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the scale's top surface
       numberOfBags: 4, // {number} maximum number of bags on the scale
-      bagWidth: 70, // {number} width of each bag
-
-      // Scale options
-      width: 300, // {number} width of the top surface of the scale
-      quantityUnits: '' // {string} units for quantity
-
+      bagWidth: 70 // {number} width of each bag
     }, options );
 
     var self = this;
 
-    // @public ( read-only)
-    this.location = options.location;
-    this.width = options.width;
-    this.quantityUnits = options.quantityUnits;
+    // @public (read-only) width of the top surface of the scale, specific to scale.png
+    this.topWidth = 300;
 
-    // @public
-    this.quantityProperty = new Property( 0 );
+    BagContainer.call( this, options );
 
     // @public dispose required
     this.costProperty = new DerivedProperty( [ this.quantityProperty, unitRateProperty ],
       function( quantity, unitRate ) {
         return quantity * unitRate;
       } );
-
-    BagContainer.call( this, options );
 
     // @private
     this.disposeScale = function() {
@@ -67,43 +56,6 @@ define( function( require ) {
     // @public
     dispose: function() {
      this.disposeScale();
-    },
-
-    // @public
-    reset: function() {
-      BagContainer.prototype.reset.call( this );
-      this.quantityProperty.reset();
-    },
-    
-    /**
-     * Adds a bag to the scale.
-     * @param {Bag} bag
-     * @param {number} index - cell index
-     * @public
-     * @override
-     */
-    addBag: function( bag, index ) {
-
-      // add to the container
-      BagContainer.prototype.addBag.call( this, bag, index );
-
-      // update quantity
-      this.quantityProperty.value += bag.unitsPerBag;
-    },
-
-    /**
-     * Removes a bag from the scale.
-     * @param {Bag} bag
-     * @public
-     * @override
-     */
-    removeBag: function( bag ) {
-
-      // remove from the container
-      BagContainer.prototype.removeBag.call( this, bag );
-
-      // update quantity
-      this.quantityProperty.value -= bag.unitsPerBag;
     }
   } );
 } );

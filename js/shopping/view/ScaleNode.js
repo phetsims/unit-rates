@@ -108,7 +108,7 @@ define( function( require ) {
     // red dot at origin, red line where items will be placed
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 2, { fill: 'red' } ) );
-      this.addChild( new Line( -scale.width / 2, 0, scale.width / 2, 0, { stroke: 'red' } ) );
+      this.addChild( new Line( -scale.topWidth / 2, 0, scale.topWidth / 2, 0, { stroke: 'red' } ) );
     }
 
     // move to model location

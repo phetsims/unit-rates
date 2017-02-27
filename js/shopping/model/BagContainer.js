@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -25,7 +26,8 @@ define( function( require ) {
       location: new Vector2( 0, 0 ), // {number} center of the row
       numberOfBags: 4, // {number} maximum number of bags in the row
       bagWidth: 70, // {number} width of each bag
-      bagSpacing: 8 // {number} horizontal space between bags
+      bagSpacing: 8, // {number} horizontal space between bags
+      quantityUnits: '' // {string} units for quantity
     }, options );
 
     // @public (read-only)
@@ -51,6 +53,10 @@ define( function( require ) {
         location: new Vector2( leftX + ( i * deltaX ), options.location.y )
       } );
     }
+
+    // @public quantity represented by the bags currently in the container
+    this.quantityProperty = new Property( 0 );
+    this.quantityUnits = options.quantityUnits;
   }
 
   unitRates.register( 'BagContainer', BagContainer );
@@ -64,6 +70,8 @@ define( function( require ) {
       this.cells.forEach( function( cell ) {
         cell.bag = null;
       } );
+
+      this.quantityProperty.reset();
     },
 
     /**
@@ -129,6 +137,7 @@ define( function( require ) {
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
       assert && assert( this.isEmptyCell( index ), 'cell is occupied: ' + index );
       this.cells[ index ].bag = bag;
+      this.quantityProperty.value += bag.unitsPerBag;
     },
 
     /**
@@ -141,6 +150,7 @@ define( function( require ) {
       var index = this.indexOfBag( bag );
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
       this.cells[ index ].bag = null;
+      this.quantityProperty.value -= bag.unitsPerBag;
     },
 
     /**
