@@ -23,7 +23,7 @@ define( function( require ) {
   function BagContainer( options ) {
 
     options = _.extend( {
-      location: new Vector2( 0, 0 ), // {number} center of the row
+      location: new Vector2( 0, 0 ), // {number} bottom center of the row
       numberOfBags: 4, // {number} maximum number of bags in the row
       bagWidth: 70, // {number} width of each bag
       bagSpacing: 8, // {number} horizontal space between bags
@@ -42,10 +42,10 @@ define( function( require ) {
     // center of left-most cell
     var leftX = options.location.x - ( leftToRightDistance / 2 );
     
-    // @private the row's cells.
+    // @private the container's cells.
     // Each cell contains a data structure with this format:
     // {Bag|null} bag - the bag that occupies the cell, null if the cell is empty
-    // {Vector} location - center of the cell
+    // {Vector} location - bottom center of the cell
     this.cells = [];
     for ( var i = 0; i < options.numberOfBags; i++ ) {
       this.cells.push( {
