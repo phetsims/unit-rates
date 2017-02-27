@@ -3,6 +3,7 @@
 /**
  * BagContainer is a container for shopping bags.
  * Bags are arranged in a row, each row has N cells, and at most 1 bag can be in a cell.
+ * Cells are index from left to right.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
