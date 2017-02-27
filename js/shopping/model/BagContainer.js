@@ -30,7 +30,7 @@ define( function( require ) {
       quantityUnits: '' // {string} units for quantity
     }, options );
 
-    // @public (read-only)
+    // @public (read-only) bottom center of the container
     this.location = options.location;
 
     // distance between the centers of adjacent cells
