@@ -1,7 +1,9 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * BagContainer is the base type for the shelf and scale. It handles the layout of bags in a row.
+ * BagContainer is the base type for the shelf and scale.
+ * It handles the layout of bags in a row.
+ * Each row has N cells, and at most 1 bag can be in a cell.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
