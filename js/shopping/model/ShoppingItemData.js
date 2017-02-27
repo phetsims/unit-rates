@@ -78,7 +78,7 @@ define( function( require ) {
       APPLES: {
         unitRate: 0.5, // {number} cost per item, in $
         numberOfBags: 3, // {number} number of bags of the item
-        unitsPerBag: 5, // {number} number of units in each bag
+        quantityPerBag: 5, // {number} quantity in each bag
         singularName: appleString, // {string} name to use for singular quantities (e.g. '1 Apple')
         pluralName: applesString, // {string} name to use for plural quantities (e.g. '2 Apples')
         itemImage: appleImage, // {HTMLImageElement} image for individual items
@@ -98,7 +98,7 @@ define( function( require ) {
       LEMONS: {
         unitRate: 0.25,
         numberOfBags: 3,
-        unitsPerBag: 5,
+        quantityPerBag: 5,
         singularName: lemonString,
         pluralName: lemonsString,
         itemImage: lemonImage,
@@ -116,7 +116,7 @@ define( function( require ) {
       ORANGES: {
         unitRate: 0.75,
         numberOfBags: 3,
-        unitsPerBag: 5,
+        quantityPerBag: 5,
         singularName: orangeString,
         pluralName: orangesString,
         itemImage: orangeImage,
@@ -134,7 +134,7 @@ define( function( require ) {
       PEARS: {
         unitRate: 0.40,
         numberOfBags: 3,
-        unitsPerBag: 5,
+        quantityPerBag: 5,
         singularName: pearString,
         pluralName: pearsString,
         itemImage: pearImage,
@@ -156,7 +156,7 @@ define( function( require ) {
       CARROTS: {
         unitRate: 0.15,
         numberOfBags: 4,
-        unitsPerBag: 4,
+        quantityPerBag: 4,
         singularName: carrotString,
         pluralName: carrotsString,
         itemImage: carrotImage,
@@ -174,7 +174,7 @@ define( function( require ) {
       CUCUMBERS: {
         unitRate: 0.22,
         numberOfBags: 4,
-        unitsPerBag: 3,
+        quantityPerBag: 3,
         singularName: cucumberString,
         pluralName: cucumbersString,
         itemImage: cucumberImage,
@@ -192,7 +192,7 @@ define( function( require ) {
       POTATOES: {
         unitRate: 0.45,
         numberOfBags: 4,
-        unitsPerBag: 3,
+        quantityPerBag: 3,
         singularName: potatoString,
         pluralName: potatoesString,
         itemImage: potatoImage,
@@ -210,7 +210,7 @@ define( function( require ) {
       TOMATOES: {
         unitRate: 0.3,
         numberOfBags: 4,
-        unitsPerBag: 4,
+        quantityPerBag: 4,
         singularName: tomatoString,
         pluralName: tomatoesString,
         itemImage: tomatoImage,
@@ -232,7 +232,7 @@ define( function( require ) {
       PURPLE_CANDY: {
         unitRate: 5.40,
         numberOfBags: 4,
-        unitsPerBag: 0.4,
+        quantityPerBag: 0.4,
         singularName: purpleCandyString,
         pluralName: purpleCandyString,
         itemImage: purpleCandyImage,
@@ -250,7 +250,7 @@ define( function( require ) {
       RED_CANDY: {
         unitRate: 3.80,
         numberOfBags: 4,
-        unitsPerBag: 0.3,
+        quantityPerBag: 0.3,
         singularName: redCandyString,
         pluralName: redCandyString,
         itemImage: redCandyImage,
@@ -268,7 +268,7 @@ define( function( require ) {
       GREEN_CANDY: {
         unitRate: 8.20,
         numberOfBags: 4,
-        unitsPerBag: 0.3,
+        quantityPerBag: 0.3,
         singularName: greenCandyString,
         pluralName: greenCandyString,
         itemImage: greenCandyImage,
@@ -286,7 +286,7 @@ define( function( require ) {
       BLUE_CANDY: {
         unitRate: 1.30,
         numberOfBags: 4,
-        unitsPerBag: 0.4,
+        quantityPerBag: 0.4,
         singularName: blueCandyString,
         pluralName: blueCandyString,
         itemImage: blueCandyImage,

@@ -16,12 +16,11 @@ define( function( require ) {
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
-   * @param {number} unitsPerBag
    * @param {HTMLImageElement} image - image used by the view to represent this bag
    * @param {Object} [options]
    * @constructor
    */
-  function Bag( unitsPerBag, image, options ) {
+  function Bag( image, options ) {
 
     options = _.extend( {
 
@@ -35,7 +34,6 @@ define( function( require ) {
 
     // @public (read-only)
     this.image = image;
-    this.unitsPerBag = unitsPerBag;
     this.shoppingItems = options.shoppingItems;
 
     URMovable.call( this, options );

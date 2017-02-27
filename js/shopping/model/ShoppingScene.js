@@ -15,6 +15,7 @@ define( function( require ) {
 
   // modules
   var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
+  var Dimension2 = require( 'DOT/Dimension2' );
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
@@ -106,7 +107,7 @@ define( function( require ) {
 
     // @public (read-only) unpack itemData
     this.numberOfBags = itemData.numberOfBags;
-    this.unitsPerBag = itemData.unitsPerBag;
+    this.quantityPerBag = itemData.quantityPerBag;
     this.singularName = itemData.singularName;
     this.pluralName = itemData.pluralName;
     this.itemImage = itemData.itemImage;
@@ -133,21 +134,22 @@ define( function( require ) {
     // Does not work for mipmap, bagImage.width is undefined.
     // If considering a switch to mipmaps, see https://github.com/phetsims/unit-rates/issues/157
     assert && assert( this.bagImage.width, 'Are you using the image plugin?' );
-    var bagWidth = URConstants.BAG_IMAGE_SCALE * this.bagImage.width;
+    var bagSize = new Dimension2( URConstants.BAG_IMAGE_SCALE * this.bagImage.width, URConstants.BAG_IMAGE_SCALE * this.bagImage.height );
 
     // @public
     this.shelf = new Shelf( {
       location: new Vector2( 512, 575 ),
       numberOfBags: this.numberOfBags,
-      bagWidth: bagWidth
+      bagSize: bagSize
     } );
 
     // @public
     this.scale = new Scale( this.rate.unitRateProperty, {
       location: this.shelf.location.minusXY( 0, 200 ), // centered above the shelf
-      quantityUnits: options.scaleQuantityUnits,
       numberOfBags: this.numberOfBags,
-      bagWidth: bagWidth
+      bagSize: bagSize,
+      quantityPerBag: this.quantityPerBag,
+      quantityUnits: options.scaleQuantityUnits
     } );
 
     // The marker that corresponds to what's currently on the scale
@@ -226,27 +228,27 @@ define( function( require ) {
     for ( var i = 0; i < this.numberOfBags; i++ ) {
 
       // the bag's location on the shelf
-      var cellIndex = this.shelf.getFirstUnoccupiedCell();
+      var cellIndex = this.shelf.bagRow.getFirstUnoccupiedCell();
       assert && assert( cellIndex !== -1, 'shelf is full' );
-      var bagLocation = this.shelf.getCellLocation( cellIndex );
+      var bagLocation = this.shelf.bagRow.getCellLocation( cellIndex );
 
       // create shopping items if the bag opens when placed on the scale
       var shoppingItems = null;
       if ( options.bagsOpen ) {
         shoppingItems = [];
-        for ( var j = 0; j < this.unitsPerBag; j++ ) {
+        for ( var j = 0; j < this.quantityPerBag; j++ ) {
           shoppingItems.push( new ShoppingItem( this.itemImage ) );
         }
       }
 
       // create bag
-      var bag = new Bag( this.unitsPerBag, this.bagImage, {
+      var bag = new Bag( this.bagImage, {
         shoppingItems: shoppingItems,
         location: bagLocation
       } );
       //TODO having 2 things keeping track of bags seems potentially problematic
       this.bags.push( bag );
-      this.shelf.addBag( bag, cellIndex );
+      this.shelf.bagRow.addObject( bag, cellIndex );
     }
   }
 
@@ -292,10 +294,10 @@ define( function( require ) {
       // return all bags to shelf
       var shelf = this.shelf;
       this.bags.forEach( function( bag ) {
-        var cellIndex = shelf.getFirstUnoccupiedCell();
+        var cellIndex = shelf.bagRow.getFirstUnoccupiedCell();
         assert && assert( cellIndex !== -1, 'shelf is full' );
-        bag.moveTo( shelf.getCellLocation( cellIndex ) );
-        shelf.addBag( bag, cellIndex );
+        bag.moveTo( shelf.bagRow.getCellLocation( cellIndex ) );
+        shelf.bagRow.addObject( bag, cellIndex );
       } );
     },
 
