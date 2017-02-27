@@ -142,6 +142,7 @@ define( function( require ) {
       }
     };
 
+    //TODO if bag.shoppingItems, replace the bag with the items that it contains
     // This function is called when animation completes.
     // If the target cell is still empty, add the bag. Otherwise animate to an unoccupied cell.
     var animationCompletedCallback = function() {
