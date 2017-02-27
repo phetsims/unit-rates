@@ -114,18 +114,6 @@ define( function( require ) {
     },
 
     /**
-     * Gets the distance between a cell and a location.
-     * @param {number} index - the cell index
-     * @param {Vector2} location
-     * @returns {number}
-     * @private
-     */
-    getDistanceFromCell: function( index, location ) {
-      assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
-      return this.getCellLocation( index ).distance( location );
-    },
-
-    /**
      * Puts a bag in the specified cell.  The cell must be empty, and duplicates are not allowed in a row.
      * @param {Bag} bag
      * @param {number} index - the cell index
@@ -151,6 +139,28 @@ define( function( require ) {
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
       this.cells[ index ].bag = null;
       this.quantityProperty.value -= bag.unitsPerBag;
+    },
+
+    /**
+     * Does the row contain a specified bag?
+     * @param {Bag} bag
+     * @returns {boolean}
+     * @public
+     */
+    containsBag: function( bag ) {
+      assert && assert( this.isValidBag( bag ), 'invalid bag' );
+      return ( this.indexOfBag( bag ) !== -1 );
+    },
+
+    /**
+     * Is a cell empty?
+     * @param {number} index - the cell index
+     * @returns {boolean}
+     * @public
+     */
+    isEmptyCell: function( index ) {
+      assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
+      return ( this.cells[ index ].bag === null );
     },
 
     /**
@@ -183,25 +193,15 @@ define( function( require ) {
     },
 
     /**
-     * Does the row contain a specified bag?
-     * @param {Bag} bag
-     * @returns {boolean}
-     * @public
-     */
-    containsBag: function( bag ) {
-      assert && assert( this.isValidBag( bag ), 'invalid bag' );
-      return ( this.indexOfBag( bag ) !== -1 );
-    },
-
-    /**
-     * Is a cell empty?
+     * Gets the distance between a cell and a location.
      * @param {number} index - the cell index
-     * @returns {boolean}
-     * @public
+     * @param {Vector2} location
+     * @returns {number}
+     * @private
      */
-    isEmptyCell: function( index ) {
+    getDistanceFromCell: function( index, location ) {
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
-      return ( this.cells[ index ].bag === null );
+      return this.getCellLocation( index ).distance( location );
     },
 
     /**
