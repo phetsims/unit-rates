@@ -1,13 +1,13 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * ObjectRow manages a row of objects.
+ * MovableRow manages a row of URMovables (movable model elements).
  * Used to manage the location of bags and items on the scale and shelf.
  *
  * - Each row has N cells.
  * - Cells are indexed from left to right.
- * - At most 1 object can occupy a cell.
- * - An object cannot occupy more than 1 cell.
+ * - At most 1 movable can occupy a cell.
+ * - A movable cannot occupy more than 1 cell.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ObjectRow( options ) {
+  function MovableRow( options ) {
 
     options = _.extend( {
       location: new Vector2( 0, 0 ), // {number} bottom center of the row
@@ -43,11 +43,11 @@ define( function( require ) {
     // @private the container's cells.
     this.cells = createCells( options.numberOfCells, options.location, options.cellSize, options.cellSpacing );
 
-    // @public (read-only) number of objects in the row (number of occupied cells)
-    this.numberOfObjectsProperty = new Property( 0 );
+    // @public (read-only) number of movables in the row (number of occupied cells)
+    this.numberOfMovablesProperty = new Property( 0 );
   }
 
-  unitRates.register( 'ObjectRow', ObjectRow );
+  unitRates.register( 'MovableRow', MovableRow );
 
   /**
    * Creates a row of empty cells.
@@ -55,7 +55,7 @@ define( function( require ) {
    * @param {Vector2} location - bottom center of the row
    * @param {Dimension2} cellSize
    * @param {number} cellSpacing
-   * @returns {{object:Object|null, location:Vector2}[]}
+   * @returns {{movable:URMovable|null, location:Vector2}[]}
    */
   function createCells( numberOfCells, location, cellSize, cellSpacing ) {
 
@@ -69,12 +69,12 @@ define( function( require ) {
     var firstCenterX = location.x - ( leftToRightDistance / 2 );
 
     // Each cell contains a data structure with this format:
-    // {Object|null} object - the object that occupies the cell, null if the cell is empty
+    // {URMovable|null} movable - the movable that occupies the cell, null if the cell is empty
     // {Vector} location - bottom center of the cell
     var cells = [];
     for ( var i = 0; i < numberOfCells; i++ ) {
       cells.push( {
-        object: null,
+        movable: null,
         location: new Vector2( firstCenterX + ( i * deltaX ), location.y )
       } );
     }
@@ -82,16 +82,16 @@ define( function( require ) {
     return cells;
   }
 
-  return inherit( Object, ObjectRow, {
+  return inherit( Object, MovableRow, {
 
     // @public
     reset: function() {
 
       // empty all cells
       this.cells.forEach( function( cell ) {
-        cell.object = null;
+        cell.movable = null;
       } );
-      this.numberOfObjectsProperty.reset();
+      this.numberOfMovablesProperty.reset();
     },
 
     /**
@@ -134,46 +134,47 @@ define( function( require ) {
     },
 
     /**
-     * Puts an object in the specified cell.  
-     * The cell must be empty, and object cannot occupy more than 1 cell.
-     * @param {Object} object
+     * Puts a movable in the specified cell.
+     * The cell must be empty, and the movable cannot occupy more than 1 cell.
+     * @param {URMovable} movable
      * @param {number} index - the cell index
      * @public
      */
-    addObject: function( object, index ) {
+    put: function( movable, index ) {
 
-      assert && assert( !this.containsObject( object ), 'object is already in row at index ' + this.indexOfObject( object ) );
+      assert && assert( !this.containsMovable( movable ),
+        'movable is already in row at index ' + this.indexOf( movable ) );
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
       assert && assert( this.isEmptyCell( index ), 'cell is occupied: ' + index );
 
       // put in cell
-      this.cells[ index ].object = object;
-      this.numberOfObjectsProperty.value++;
+      this.cells[ index ].movable = movable;
+      this.numberOfMovablesProperty.value++;
 
       // move immediately to cell
-      object.moveTo( this.getCellLocation( index ) );
+      movable.moveTo( this.getCellLocation( index ) );
     },
 
     /**
-     * Removes an object from the container.
-     * @param {Object} object
+     * Removes a movable from the container.
+     * @param {URMovable} movable
      * @public
      */
-    removeObject: function( object ) {
-      var index = this.indexOfObject( object );
+    remove: function( movable ) {
+      var index = this.indexOf( movable );
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
-      this.cells[ index ].object = null;
-      this.numberOfObjectsProperty.value--;
+      this.cells[ index ].movable = null;
+      this.numberOfMovablesProperty.value--;
     },
 
     /**
-     * Does the row contain a specified object?
-     * @param {Object} object
+     * Does the row contain a specified movable?
+     * @param {URMovable} movable
      * @returns {boolean}
      * @public
      */
-    containsObject: function( object ) {
-      return ( this.indexOfObject( object ) !== -1 );
+    containsMovable: function( movable ) {
+      return ( this.indexOf( movable ) !== -1 );
     },
 
     /**
@@ -184,7 +185,7 @@ define( function( require ) {
      */
     isEmptyCell: function( index ) {
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
-      return ( this.cells[ index ].object === null );
+      return ( this.cells[ index ].movable === null );
     },
 
     /**
@@ -199,15 +200,15 @@ define( function( require ) {
     },
 
     /**
-     * Gets the index of the cell that is occupied by a specified object.
-     * @param {Object} object
-     * @returns {number} -1 if the object is not found
+     * Gets the index of the cell that is occupied by a specified movable.
+     * @param {URMovable} movable
+     * @returns {number} -1 if the movable is not found
      * @private
      */
-    indexOfObject: function( object ) {
+    indexOf: function( movable ) {
       var index = -1;
       for ( var i = 0; i < this.cells.length; i++ ) {
-        if ( this.cells[ i ].object === object ) {
+        if ( this.cells[ i ].movable === movable ) {
           index = i;
           break;
         }

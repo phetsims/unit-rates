@@ -260,7 +260,7 @@ define( function( require ) {
           items.push( item );
           
           // put item on shelf
-          this.shelf.itemRow.addObject( item, itemCellIndex );
+          this.shelf.itemRow.put( item, itemCellIndex );
         }
       }
 
@@ -272,7 +272,7 @@ define( function( require ) {
       this.bags.push( bag );
 
       // put bag on shelf
-      this.shelf.bagRow.addObject( bag, bagCellIndex );
+      this.shelf.bagRow.put( bag, bagCellIndex );
     }
   }
 
@@ -328,7 +328,7 @@ define( function( require ) {
         // return bag to shelf
         var bagCellIndex = shelf.bagRow.getFirstUnoccupiedCell();
         assert && assert( bagCellIndex !== -1, 'shelf is full' );
-        shelf.bagRow.addObject( bag, bagCellIndex );
+        shelf.bagRow.put( bag, bagCellIndex );
 
         // return bag's items to shelf
         var items = bag.items;
@@ -338,7 +338,7 @@ define( function( require ) {
             // return item to shelf
             var itemCellIndex = shelf.itemRow.getFirstUnoccupiedCell();
             assert && assert( itemCellIndex !== -1, 'shelf is full' );
-            shelf.itemRow.addObject( item, itemCellIndex );
+            shelf.itemRow.put( item, itemCellIndex );
           } );
         }
       } );

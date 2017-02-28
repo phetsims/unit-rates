@@ -41,18 +41,18 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
-        assert && assert( !( shelf.bagRow.containsObject( bag ) && scale.bagRow.containsObject( bag ) ),
+        assert && assert( !( shelf.bagRow.containsMovable( bag ) && scale.bagRow.containsMovable( bag ) ),
           'bag should not be on both shelf and scale' );
 
         bag.dragging = true;
         bagNode.moveToFront();
 
         // remove bag from shelf or scale
-        if ( shelf.bagRow.containsObject( bag ) ) {
-          shelf.bagRow.removeObject( bag );
+        if ( shelf.bagRow.containsMovable( bag ) ) {
+          shelf.bagRow.remove( bag );
         }
-        else if ( scale.bagRow.containsObject( bag ) ) {
-          scale.bagRow.removeObject( bag );
+        else if ( scale.bagRow.containsMovable( bag ) ) {
+          scale.bagRow.remove( bag );
         }
 
         // compute the offset between the pointer and the bag's location
@@ -111,7 +111,7 @@ define( function( require ) {
    * The animation will change course immediately if the specified cell becomes occupied.
    * @param {Bag} bag
    * @param {number} cellIndex
-   * @param {ObjectRow} bagRow
+   * @param {MovableRow} bagRow
    * @private
    */
   function beginAnimation( bag, cellIndex, bagRow ) {
@@ -149,7 +149,7 @@ define( function( require ) {
       if ( bagRow.isEmptyCell( cellIndex ) ) {
 
         // the cell is still empty when we reach it, put the bag in that cell
-        bagRow.addObject( bag, cellIndex );
+        bagRow.put( bag, cellIndex );
       }
       else {
 

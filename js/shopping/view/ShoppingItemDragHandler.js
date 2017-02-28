@@ -15,7 +15,7 @@ define( function( require ) {
 
   // radius of the scale's surface in scale.png, determined by inspection
   var SCALE_RADIUS = 10;
-  
+
   /**
    * @param {ShoppingItemNode} itemNode
    * @param {item} item
@@ -41,18 +41,18 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
-        assert && assert( !( shelf.itemRow.containsObject( item ) && scale.itemRow.containsObject( item ) ),
+        assert && assert( !( shelf.itemRow.containsMovable( item ) && scale.itemRow.containsMovable( item ) ),
           'item should not be on both shelf and scale' );
 
         item.dragging = true;
         itemNode.moveToFront();
 
         // remove item from shelf or scale
-        if ( shelf.itemRow.containsObject( item ) ) {
-          shelf.itemRow.removeObject( item );
+        if ( shelf.itemRow.containsMovable( item ) ) {
+          shelf.itemRow.remove( item );
         }
-        else if ( scale.itemRow.containsObject( item ) ) {
-          scale.itemRow.removeObject( item );
+        else if ( scale.itemRow.containsMovable( item ) ) {
+          scale.itemRow.remove( item );
         }
 
         // compute the offset between the pointer and the item's location
@@ -87,7 +87,7 @@ define( function( require ) {
           assert && assert( scaleCellIndex !== -1, 'scale is full' );
 
           // animate to scale
-          unitRates.log && unitRates.log( 'animating to scale cell ' +  scaleCellIndex );
+          unitRates.log && unitRates.log( 'animating to scale cell ' + scaleCellIndex );
           beginAnimation( item, scaleCellIndex, scale.itemRow );
         }
         else {
@@ -111,7 +111,7 @@ define( function( require ) {
    * The animation will change course immediately if the specified cell becomes occupied.
    * @param {ShoppingItem} item
    * @param {number} cellIndex
-   * @param {ObjectRow} itemRow
+   * @param {MovableRow} itemRow
    * @private
    */
   function beginAnimation( item, cellIndex, itemRow ) {
@@ -148,7 +148,7 @@ define( function( require ) {
       if ( itemRow.isEmptyCell( cellIndex ) ) {
 
         // the cell is still empty when we reach it, put the item in that cell
-        itemRow.addObject( item, cellIndex );
+        itemRow.put( item, cellIndex );
       }
       else {
 
