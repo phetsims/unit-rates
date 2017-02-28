@@ -141,11 +141,17 @@ define( function( require ) {
      * @public
      */
     addObject: function( object, index ) {
+
       assert && assert( !this.containsObject( object ), 'object is already in row at index ' + this.indexOfObject( object ) );
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
       assert && assert( this.isEmptyCell( index ), 'cell is occupied: ' + index );
+
+      // put in cell
       this.cells[ index ].object = object;
       this.numberOfObjectsProperty.value++;
+
+      // move immediately to cell
+      object.moveTo( this.getCellLocation( index ) );
     },
 
     /**
