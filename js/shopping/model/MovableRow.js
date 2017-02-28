@@ -200,6 +200,15 @@ define( function( require ) {
     },
 
     /**
+     * Gets the number of cells in the row.
+     * @returns {number}
+     * @public
+     */
+    getNumberOfCells: function() {
+      return this.cells.length;
+    },
+
+    /**
      * Gets the index of the cell that is occupied by a specified movable.
      * @param {URMovable} movable
      * @returns {number} -1 if the movable is not found

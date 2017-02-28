@@ -111,6 +111,7 @@ define( function( require ) {
     this.singularName = itemData.singularName;
     this.pluralName = itemData.pluralName;
     this.itemImage = itemData.itemImage;
+    this.itemRowOverlap = itemData.itemRowOverlap;
     this.bagImage = itemData.bagImage;
 
     // @public (read-only) unpack options
@@ -149,7 +150,8 @@ define( function( require ) {
       numberOfBags: this.numberOfBags,
       bagSize: bagSize,
       numberOfItems: this.numberOfBags * this.quantityPerBag,
-      itemSize: itemSize
+      itemSize: itemSize,
+      itemRowOverlap: this.itemRowOverlap
     } );
 
     // @public
@@ -159,6 +161,7 @@ define( function( require ) {
       bagSize: bagSize,
       numberOfItems: this.numberOfBags * this.quantityPerBag,
       itemSize: itemSize,
+      itemRowOverlap: this.itemRowOverlap,
       quantityPerBag: this.quantityPerBag,
       quantityUnits: options.scaleQuantityUnits
     } );
@@ -236,6 +239,7 @@ define( function( require ) {
 
     // @public (read-only) create bags and items on the shelf
     this.bags = [];
+    var numberOfItemsAdded = 0;
     for ( var i = 0; i < this.numberOfBags; i++ ) {
 
       // the bag's location on the shelf
@@ -246,21 +250,28 @@ define( function( require ) {
       // create items if the bag opens when placed on the scale
       var items = null;
       if ( options.bagsOpen ) {
+
         items = [];
         for ( var j = 0; j < this.quantityPerBag; j++ ) {
 
-          var itemCellIndex = this.shelf.itemRowBottom.getFirstUnoccupiedCell();
+          // bottom or top row?
+          var itemRow = ( numberOfItemsAdded < this.shelf.itemRowBottom.getNumberOfCells() ) ? this.shelf.itemRowBottom : this.shelf.itemRowTop;
+
+          // cell and location on shelf
+          var itemCellIndex = itemRow.getFirstUnoccupiedCell();
           assert && assert( itemCellIndex !== -1, 'shelf is full' );
-          var itemLocation = this.shelf.itemRowBottom.getCellLocation( itemCellIndex );
+          var itemLocation = itemRow.getCellLocation( itemCellIndex );
 
           // create item
           var item = new ShoppingItem( this.pluralName, this.itemImage, {
             location: itemLocation
           } );
           items.push( item );
-          
+
           // put item on shelf
-          this.shelf.itemRowBottom.put( item, itemCellIndex );
+          itemRow.put( item, itemCellIndex );
+
+          numberOfItemsAdded++;
         }
       }
 
@@ -323,7 +334,10 @@ define( function( require ) {
       //TODO this is likely wrong and incomplete
       // return all bags to shelf
       var shelf = this.shelf;
-      this.bags.forEach( function( bag ) {
+      var numberOfItemsReturned = 0;
+      for ( var i = 0; i < this.bags.length; i++ ) {
+
+        var bag = this.bags[ i ];
 
         // return bag to shelf
         var bagCellIndex = shelf.bagRow.getFirstUnoccupiedCell();
@@ -333,15 +347,23 @@ define( function( require ) {
         // return bag's items to shelf
         var items = bag.items;
         if ( items ) {
-          items.forEach( function( item ) {
+
+          for ( var j = 0; j < items.length; j++ ) {
+
+            var item = this.items[ j ];
+
+            // bottom or top row?
+            var itemRow = ( numberOfItemsReturned < shelf.itemRowBottom.getNumberOfCells() ) ? shelf.itemRowBottom : shelf.itemRowTop;
 
             // return item to shelf
-            var itemCellIndex = shelf.itemRowBottom.getFirstUnoccupiedCell();
+            var itemCellIndex = itemRow.getFirstUnoccupiedCell();
             assert && assert( itemCellIndex !== -1, 'shelf is full' );
-            shelf.itemRowBottom.put( item, itemCellIndex );
-          } );
+            itemRow.put( item, itemCellIndex );
+          }
+
+          numberOfItemsReturned++;
         }
-      } );
+      }
     },
 
     /**

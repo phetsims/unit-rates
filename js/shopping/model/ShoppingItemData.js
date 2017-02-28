@@ -82,6 +82,7 @@ define( function( require ) {
         singularName: appleString, // {string} name to use for singular quantities (e.g. '1 Apple')
         pluralName: applesString, // {string} name to use for plural quantities (e.g. '2 Apples')
         itemImage: appleImage, // {HTMLImageElement} image for individual items
+        itemRowOverlap: 7, // {number} for tweaking how items overlap when stacked, specific to itemImage
         bagImage: appleBagImage, // {HTMLImageElement} image for a bag of items
 
         // {number[][]} Number of items (or pounds, for Candy) for each question, grouped into 'question sets'.
@@ -102,6 +103,7 @@ define( function( require ) {
         singularName: lemonString,
         pluralName: lemonsString,
         itemImage: lemonImage,
+        itemRowOverlap: 5,
         bagImage: lemonBagImage,
 
         // number of items
@@ -120,6 +122,7 @@ define( function( require ) {
         singularName: orangeString,
         pluralName: orangesString,
         itemImage: orangeImage,
+        itemRowOverlap: 5,
         bagImage: orangeBagImage,
 
         // number of items
@@ -138,6 +141,7 @@ define( function( require ) {
         singularName: pearString,
         pluralName: pearsString,
         itemImage: pearImage,
+        itemRowOverlap: 5,
         bagImage: pearBagImage,
 
         // number of items
@@ -160,6 +164,7 @@ define( function( require ) {
         singularName: carrotString,
         pluralName: carrotsString,
         itemImage: carrotImage,
+        itemRowOverlap: 0,
         bagImage: carrotBagImage,
 
         // number of items
@@ -178,6 +183,7 @@ define( function( require ) {
         singularName: cucumberString,
         pluralName: cucumbersString,
         itemImage: cucumberImage,
+        itemRowOverlap: 0,
         bagImage: cucumberBagImage,
 
         // number of items
@@ -196,6 +202,7 @@ define( function( require ) {
         singularName: potatoString,
         pluralName: potatoesString,
         itemImage: potatoImage,
+        itemRowOverlap: 0,
         bagImage: potatoBagImage,
 
         // number of items
@@ -214,6 +221,7 @@ define( function( require ) {
         singularName: tomatoString,
         pluralName: tomatoesString,
         itemImage: tomatoImage,
+        itemRowOverlap: 0,
         bagImage: tomatoBagImage,
 
         // number of items
@@ -236,6 +244,7 @@ define( function( require ) {
         singularName: purpleCandyString,
         pluralName: purpleCandyString,
         itemImage: purpleCandyImage,
+        itemRowOverlap: 0,
         bagImage: purpleCandyBagImage,
 
         // pounds
@@ -254,6 +263,7 @@ define( function( require ) {
         singularName: redCandyString,
         pluralName: redCandyString,
         itemImage: redCandyImage,
+        itemRowOverlap: 0,
         bagImage: redCandyBagImage,
 
         // pounds
@@ -272,6 +282,7 @@ define( function( require ) {
         singularName: greenCandyString,
         pluralName: greenCandyString,
         itemImage: greenCandyImage,
+        itemRowOverlap: 0,
         bagImage: greenCandyBagImage,
 
         // pounds
@@ -290,6 +301,7 @@ define( function( require ) {
         singularName: blueCandyString,
         pluralName: blueCandyString,
         itemImage: blueCandyImage,
+        itemRowOverlap: 0,
         bagImage: blueCandyBagImage,
 
         // pounds

@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO lots of duplication between Shelf and Scale
 /**
  * Model of the shelf.
  *
@@ -25,15 +26,16 @@ define( function( require ) {
 
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
       width: 325, // {number} width of the top face, at its center
+      bagsOpen: false, // {boolean} do bags open to reveal individual items?
 
       // MovableRow options (bags)
-
       numberOfBags: 4, // {number} maximum number of bags on the shelf
       bagSize: new Dimension2( 100, 100 ), // {number} dimensions of each bag
 
       // MovableRow options (items)
       numberOfItems: 15, // {number} maximum number of items on the shelf
-      itemSize: new Dimension2( 25, 25 ) // {number} dimensions of each item
+      itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
+      itemRowOverlap: 0 // {number} how much rows should overlap, so that items appear to touch when stacked
 
     }, options );
 
@@ -44,18 +46,36 @@ define( function( require ) {
     this.depth = 20; // {number} depth, after flattening to 2D
     this.perspectiveXOffset = 15; // {number} offset for parallel perspective, after flattening to 2D
 
+    //TODO note that this differs from Scale
+    var bagRowLocation = options.location; //TODO move a little back if bags open, making it easier to grab bags with fruit in front
+    var bottomRowLocation =  new Vector2( options.location.x, options.location.y + 5 ); // a little forward
+    var topRowLocation =  new Vector2( bottomRowLocation.x, bottomRowLocation.y - options.itemSize.height + options.itemRowOverlap );
+
     // @public row of bags
     this.bagRow = new MovableRow( {
-      location: options.location,
+      location: bagRowLocation,
       numberOfCells: options.numberOfBags,
       cellSize: options.bagSize,
       cellSpacing: 8
     } );
 
-    // @public row of items
+    // Top row has 1 less cell than bottom row,
+    // because each cell in the top row will be centered above 2 adjacent cells in the bottom row.
+    var numberOfBottomCells = Math.floor( options.numberOfItems / 2 ) + 1;
+    var numberOfTopCells = options.numberOfItems - numberOfBottomCells;
+    assert( numberOfBottomCells + numberOfTopCells === options.numberOfItems );
+
+    // @public bottom row of items
     this.itemRowBottom = new MovableRow( {
-      location: options.location,
-      numberOfCells: options.numberOfItems,
+      location: bottomRowLocation,
+      numberOfCells: numberOfBottomCells,
+      cellSize: options.itemSize
+    } );
+
+    // @public top row of items
+    this.itemRowTop = new MovableRow( {
+      location: topRowLocation,
+      numberOfCells: numberOfTopCells,
       cellSize: options.itemSize
     } );
   }
@@ -68,6 +88,7 @@ define( function( require ) {
     reset: function() {
       this.bagRow.reset();
       this.itemRowBottom.reset();
+      this.itemRowTop.reset();
     }
   } );
 } );

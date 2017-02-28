@@ -51,8 +51,17 @@ define( function( require ) {
         if ( shelf.itemRowBottom.containsMovable( item ) ) {
           shelf.itemRowBottom.remove( item );
         }
+        else if ( shelf.itemRowTop.containsMovable( item ) ) {
+          shelf.itemRowTop.remove( item );
+        }
         else if ( scale.itemRowBottom.containsMovable( item ) ) {
           scale.itemRowBottom.remove( item );
+        }
+        else if ( scale.itemRowTop.containsMovable( item ) ) {
+          scale.itemRowTop.remove( item );
+        }
+        else {
+          throw new Error( 'item is not on shelf or scale' );
         }
 
         // compute the offset between the pointer and the item's location
@@ -83,22 +92,32 @@ define( function( require ) {
         if ( item.locationProperty.value.y < scale.location.y + SCALE_RADIUS ) {
 
           // find closest cell on the scale
-          var scaleCellIndex = scale.itemRowBottom.getClosestUnoccupiedCell( item.locationProperty.value );
+          var scaleItemRow = scale.itemRowBottom;
+          var scaleCellIndex = scaleItemRow.getClosestUnoccupiedCell( item.locationProperty.value );
+          if ( scaleCellIndex === -1 ) {
+            scaleItemRow = scale.itemRowTop;
+            scaleCellIndex = scaleItemRow.getClosestUnoccupiedCell( item.locationProperty.value );
+          }
           assert && assert( scaleCellIndex !== -1, 'scale is full' );
 
           // animate to scale
           unitRates.log && unitRates.log( 'animating to scale cell ' + scaleCellIndex );
-          beginAnimation( item, scaleCellIndex, scale.itemRowBottom );
+          beginAnimation( item, scaleCellIndex, scale, scaleItemRow );
         }
         else {
 
           // find closest cell on the shelf
-          var shelfCellIndex = shelf.itemRowBottom.getClosestUnoccupiedCell( item.locationProperty.value );
+          var shelfItemRow = shelf.itemRowBottom;
+          var shelfCellIndex = shelfItemRow.getClosestUnoccupiedCell( item.locationProperty.value );
+          if ( shelfCellIndex === -1 ) {
+            shelfItemRow = shelf.itemRowTop;
+            shelfCellIndex = shelfItemRow.getClosestUnoccupiedCell( item.locationProperty.value );
+          }
           assert && assert( shelfCellIndex !== -1, 'shelf is full' );
 
           // animate to shelf
           unitRates.log && unitRates.log( 'animating to shelf cell ' + shelfCellIndex );
-          beginAnimation( item, shelfCellIndex, shelf.itemRowBottom );
+          beginAnimation( item, shelfCellIndex, shelf, shelfItemRow );
         }
       }
     } );
@@ -111,10 +130,11 @@ define( function( require ) {
    * The animation will change course immediately if the specified cell becomes occupied.
    * @param {ShoppingItem} item
    * @param {number} cellIndex
+   * @param {Scale|Shelf} scaleOrShelf
    * @param {MovableRow} itemRow
    * @private
    */
-  function beginAnimation( item, cellIndex, itemRow ) {
+  function beginAnimation( item, cellIndex, scaleOrShelf, itemRow ) {
 
     var cellLocation = itemRow.getCellLocation( cellIndex );
 
@@ -123,15 +143,15 @@ define( function( require ) {
 
       // find another unoccupied cell
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
+      itemRow = scaleOrShelf.itemRowBottom;
       cellIndex = itemRow.getClosestUnoccupiedCell( item.locationProperty.value );
+      if ( cellIndex === -1 ) {
+        itemRow = scaleOrShelf.itemRowTop;
+        cellIndex = itemRow.getClosestUnoccupiedCell( item.locationProperty.value );
+      }
       assert && assert( cellIndex !== -1, 'all cells are occupied' );
-      cellLocation = itemRow.getCellLocation( cellIndex );
 
-      // call bind, so that we have new function instances, otherwise the callbacks will be ignored
-      item.animateTo( cellLocation, {
-        animationStepCallback: animationStepCallback.bind( this ),
-        animationCompletedCallback: animationCompletedCallback.bind( this )
-      } );
+      beginAnimation( item, cellIndex, scaleOrShelf, itemRow );
     };
 
     // This function is called on each animation step.
