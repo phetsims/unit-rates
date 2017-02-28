@@ -123,15 +123,10 @@ define( function( require ) {
 
       // find another unoccupied cell
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
-      cellIndex = bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
-      assert && assert( cellIndex !== -1, 'all cells are occupied' );
-      cellLocation = bagRow.getCellLocation( cellIndex );
+      var newCellIndex = bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
+      assert && assert( newCellIndex !== -1, 'all cells are occupied' );
 
-      // call bind, so that we have new function instances, otherwise the callbacks will be ignored
-      bag.animateTo( cellLocation, {
-        animationStepCallback: animationStepCallback.bind( this ),
-        animationCompletedCallback: animationCompletedCallback.bind( this )
-      } );
+      beginAnimation( bag, newCellIndex, bagRow );
     };
 
     // This function is called on each animation step.
