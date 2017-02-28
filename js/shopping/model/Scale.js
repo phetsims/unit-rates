@@ -57,7 +57,7 @@ define( function( require ) {
     } );
 
     // @public row of items
-    this.itemRow = new MovableRow( {
+    this.itemRowBottom = new MovableRow( {
       location: options.location,
       numberOfCells: options.numberOfItems,
       cellSize: options.itemSize
@@ -65,7 +65,7 @@ define( function( require ) {
 
     // @public
     this.quantityProperty = new DerivedProperty(
-      [ this.bagRow.numberOfMovablesProperty, this.itemRow.numberOfMovablesProperty ],
+      [ this.bagRow.numberOfMovablesProperty, this.itemRowBottom.numberOfMovablesProperty ],
       function( numberOfBags, numberOfItems ) {
         return ( numberOfBags * options.quantityPerBag ) + numberOfItems;
       } );
@@ -90,7 +90,7 @@ define( function( require ) {
     // @public
     reset: function() {
       this.bagRow.reset();
-      this.itemRow.reset();
+      this.itemRowBottom.reset();
     },
 
     // @public

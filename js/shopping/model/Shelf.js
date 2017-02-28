@@ -53,7 +53,7 @@ define( function( require ) {
     } );
 
     // @public row of items
-    this.itemRow = new MovableRow( {
+    this.itemRowBottom = new MovableRow( {
       location: options.location,
       numberOfCells: options.numberOfItems,
       cellSize: options.itemSize
@@ -67,7 +67,7 @@ define( function( require ) {
     // @public
     reset: function() {
       this.bagRow.reset();
-      this.itemRow.reset();
+      this.itemRowBottom.reset();
     }
   } );
 } );

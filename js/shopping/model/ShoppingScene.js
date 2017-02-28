@@ -249,9 +249,9 @@ define( function( require ) {
         items = [];
         for ( var j = 0; j < this.quantityPerBag; j++ ) {
 
-          var itemCellIndex = this.shelf.itemRow.getFirstUnoccupiedCell();
+          var itemCellIndex = this.shelf.itemRowBottom.getFirstUnoccupiedCell();
           assert && assert( itemCellIndex !== -1, 'shelf is full' );
-          var itemLocation = this.shelf.itemRow.getCellLocation( itemCellIndex );
+          var itemLocation = this.shelf.itemRowBottom.getCellLocation( itemCellIndex );
 
           // create item
           var item = new ShoppingItem( this.pluralName, this.itemImage, {
@@ -260,7 +260,7 @@ define( function( require ) {
           items.push( item );
           
           // put item on shelf
-          this.shelf.itemRow.put( item, itemCellIndex );
+          this.shelf.itemRowBottom.put( item, itemCellIndex );
         }
       }
 
@@ -336,9 +336,9 @@ define( function( require ) {
           items.forEach( function( item ) {
 
             // return item to shelf
-            var itemCellIndex = shelf.itemRow.getFirstUnoccupiedCell();
+            var itemCellIndex = shelf.itemRowBottom.getFirstUnoccupiedCell();
             assert && assert( itemCellIndex !== -1, 'shelf is full' );
-            shelf.itemRow.put( item, itemCellIndex );
+            shelf.itemRowBottom.put( item, itemCellIndex );
           } );
         }
       } );

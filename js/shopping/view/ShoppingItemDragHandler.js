@@ -41,18 +41,18 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
-        assert && assert( !( shelf.itemRow.containsMovable( item ) && scale.itemRow.containsMovable( item ) ),
+        assert && assert( !( shelf.itemRowBottom.containsMovable( item ) && scale.itemRowBottom.containsMovable( item ) ),
           'item should not be on both shelf and scale' );
 
         item.dragging = true;
         itemNode.moveToFront();
 
         // remove item from shelf or scale
-        if ( shelf.itemRow.containsMovable( item ) ) {
-          shelf.itemRow.remove( item );
+        if ( shelf.itemRowBottom.containsMovable( item ) ) {
+          shelf.itemRowBottom.remove( item );
         }
-        else if ( scale.itemRow.containsMovable( item ) ) {
-          scale.itemRow.remove( item );
+        else if ( scale.itemRowBottom.containsMovable( item ) ) {
+          scale.itemRowBottom.remove( item );
         }
 
         // compute the offset between the pointer and the item's location
@@ -83,22 +83,22 @@ define( function( require ) {
         if ( item.locationProperty.value.y < scale.location.y + SCALE_RADIUS ) {
 
           // find closest cell on the scale
-          var scaleCellIndex = scale.itemRow.getClosestUnoccupiedCell( item.locationProperty.value );
+          var scaleCellIndex = scale.itemRowBottom.getClosestUnoccupiedCell( item.locationProperty.value );
           assert && assert( scaleCellIndex !== -1, 'scale is full' );
 
           // animate to scale
           unitRates.log && unitRates.log( 'animating to scale cell ' + scaleCellIndex );
-          beginAnimation( item, scaleCellIndex, scale.itemRow );
+          beginAnimation( item, scaleCellIndex, scale.itemRowBottom );
         }
         else {
 
           // find closest cell on the shelf
-          var shelfCellIndex = shelf.itemRow.getClosestUnoccupiedCell( item.locationProperty.value );
+          var shelfCellIndex = shelf.itemRowBottom.getClosestUnoccupiedCell( item.locationProperty.value );
           assert && assert( shelfCellIndex !== -1, 'shelf is full' );
 
           // animate to shelf
           unitRates.log && unitRates.log( 'animating to shelf cell ' + shelfCellIndex );
-          beginAnimation( item, shelfCellIndex, shelf.itemRow );
+          beginAnimation( item, shelfCellIndex, shelf.itemRowBottom );
         }
       }
     } );
