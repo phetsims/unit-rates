@@ -13,15 +13,22 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URMovable = require( 'UNIT_RATES/common/model/URMovable' );
+  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
+   * @param {string} name - for internal use
    * @param {HTMLImageElement} image - image used by the view to represent this item
    * @param {Object} [options]
    * @constructor
    */
-  function ShoppingItem( image, options ) {
+  function ShoppingItem( name, image, options ) {
+
+    options = _.extend( {
+      animationSpeed: URQueryParameters.animationSpeed
+    }, options );
 
     // @public (read-only)
+    this.name = name;
     this.image = image;
 
     URMovable.call( this, options );

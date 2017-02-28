@@ -23,13 +23,17 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // ObjectRow options
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
+      width: 325, // {number} width of the top face, at its center
+
+      // ObjectRow options (bags)
+
       numberOfBags: 4, // {number} maximum number of bags on the shelf
       bagSize: new Dimension2( 100, 100 ), // {number} dimensions of each bag
 
-      // Shelf options
-      width: 325 // {number} width of the top face, at its center
+      // ObjectRow options (items)
+      numberOfItems: 15, // {number} maximum number of items on the shelf
+      itemSize: new Dimension2( 25, 25 ) // {number} dimensions of each item
 
     }, options );
 
@@ -40,11 +44,19 @@ define( function( require ) {
     this.depth = 20; // {number} depth, after flattening to 2D
     this.perspectiveXOffset = 15; // {number} offset for parallel perspective, after flattening to 2D
 
-    // @public the container for bags
+    // @public row of bags
     this.bagRow = new ObjectRow( {
       location: options.location,
       numberOfCells: options.numberOfBags,
-      cellSize: options.bagSize
+      cellSize: options.bagSize,
+      cellSpacing: 8
+    } );
+
+    // @public row of items
+    this.itemRow = new ObjectRow( {
+      location: options.location,
+      numberOfCells: options.numberOfItems,
+      cellSize: options.itemSize
     } );
   }
 
@@ -55,6 +67,7 @@ define( function( require ) {
     // @public
     reset: function() {
       this.bagRow.reset();
+      this.itemRow.reset();
     }
   } );
 } );

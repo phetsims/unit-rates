@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * View of a shopping bag.
+ * View of a shopping item.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -9,32 +9,33 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var BagDragHandler = require( 'UNIT_RATES/shopping/view/BagDragHandler' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var ShoppingItemDragHandler = require( 'UNIT_RATES/shopping/view/ShoppingItemDragHandler' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   /**
-   * @param {Bag} bag
+   * @param {ShoppingItem} item
    * @param {Shelf} shelf
    * @param {Scale} scale
    * @constructor
    */
-  function BagNode( bag, shelf, scale ) {
+  function ShoppingItemNode( item, shelf, scale ) {
 
     var self = this;
 
     // @private
-    this.bag = bag;
+    this.item = item;
 
     // This type does not propagate options to the supertype because the model determines location.
-    Image.call( this, bag.image, {
-      scale: URConstants.BAG_IMAGE_SCALE,
+    Image.call( this, item.image, {
+      scale: URConstants.SHOPPING_ITEM_IMAGE_SCALE,
       cursor: 'pointer'
     } );
 
-    // Offset slightly, so that bags sit on the shelf and scale more naturally, determined empirically.
+    //TODO is this right for items?
+    // Offset slightly, so that item sit on the shelf and scale more naturally, determined empirically.
     var yOffset = ( 0.07 * self.height );
 
     // origin is at bottom center
@@ -42,26 +43,26 @@ define( function( require ) {
       self.centerX = location.x;
       self.bottom = location.y + yOffset;
     };
-    bag.locationProperty.link( locationObserver ); // must be unlinked in dispose
+    item.locationProperty.link( locationObserver ); // must be unlinked in dispose
 
     // @private drag handler
-    this.dragHandler = new BagDragHandler( this, bag, shelf, scale );
+    this.dragHandler = new ShoppingItemDragHandler( this, item, shelf, scale );
     this.addInputListener( self.dragHandler );
 
     // @private
-    this.disposeBagNode = function() {
-      bag.locationProperty.unlink( locationObserver );
+    this.disposeShoppingItemNode = function() {
+      item.locationProperty.unlink( locationObserver );
       self.removeInputListener( self.dragHandler );
     };
   }
 
-  unitRates.register( 'BagNode', BagNode );
+  unitRates.register( 'ShoppingItemNode', ShoppingItemNode );
 
-  return inherit( Image, BagNode, {
+  return inherit( Image, ShoppingItemNode, {
 
     // @public
     dispose: function() {
-      this.disposeBagNode();
+      this.disposeShoppingItemNode();
       Image.prototype.dispose.call( this );
     },
 
@@ -73,7 +74,7 @@ define( function( require ) {
      * @public
      */
     cancelDrag: function() {
-      if ( this.bag.dragging ) {
+      if ( this.item.dragging ) {
         this.dragHandler.endDrag( null /* event */ );
       }
     }

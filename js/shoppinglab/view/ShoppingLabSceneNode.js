@@ -14,10 +14,11 @@ define( function( require ) {
   var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
   var ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
-  var RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
+  var ShoppingItemNode = require( 'UNIT_RATES/shopping/view/ShoppingItemNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
@@ -83,28 +84,47 @@ define( function( require ) {
     };
     shoppingScene.scale.quantityProperty.link( quantityObserver ); // unlink in dispose
 
-    // bags, dispose required
+    // bags and items, dispose required
     var bagsParent = new Node();
+    var itemsParent = new Node();
     shoppingScene.bags.forEach( function( bag ) {
+
+      // bag
       bagsParent.addChild( new BagNode( bag, shoppingScene.shelf, shoppingScene.scale ) );
+
+      // optional items in the bag
+      if ( bag.items ) {
+        bag.items.forEach( function( item ) {
+          itemsParent.addChild( new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale ) );
+        } );
+      }
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ doubleNumberLineAccordionBox, rateAccordionBox, scaleNode, shelfNode, resetShelfButton, bagsParent ];
+    options.children = [ doubleNumberLineAccordionBox, rateAccordionBox,
+      scaleNode, shelfNode, resetShelfButton, bagsParent, itemsParent ];
 
     Node.call( this, options );
 
     // @private
     this.disposeShoppingLabSceneNode = function() {
+
+      shoppingScene.scale.quantityProperty.unlink( quantityObserver );
+
       doubleNumberLineAccordionBox.dispose();
       rateAccordionBox.dispose();
       scaleNode.dispose();
       shelfNode.dispose();
       resetShelfButton.dispose();
-      shoppingScene.scale.quantityProperty.unlink( quantityObserver );
+
       bagsParent.getChildren().forEach( function( bagNode ) {
         assert && assert( bagNode instanceof BagNode );
         bagNode.dispose();
+      } );
+
+      itemsParent.getChildren().forEach( function( node ) {
+        assert && assert( node instanceof ShoppingItemNode );
+        node.dispose();
       } );
     };
   }

@@ -2,7 +2,7 @@
 
 /**
  * ObjectRow manages a row of objects.
- * Used to manage the location of bags and shopping items on the scale and shelf.
+ * Used to manage the location of bags and items on the scale and shelf.
  *
  * - Each row has N cells.
  * - Cells are indexed from left to right.
@@ -31,7 +31,7 @@ define( function( require ) {
       location: new Vector2( 0, 0 ), // {number} bottom center of the row
       numberOfCells: 4, // {number} number of cells in the row
       cellSize: new Dimension2( 100, 100 ), // {number} dimensions of each cell
-      cellSpacing: 8 // {number} horizontal space between cells
+      cellSpacing: 0 // {number} horizontal space between cells
     }, options );
 
     // @public (read-only)

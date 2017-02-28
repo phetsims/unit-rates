@@ -133,14 +133,23 @@ define( function( require ) {
 
     // Does not work for mipmap, bagImage.width is undefined.
     // If considering a switch to mipmaps, see https://github.com/phetsims/unit-rates/issues/157
-    assert && assert( this.bagImage.width, 'Are you using the image plugin?' );
-    var bagSize = new Dimension2( URConstants.BAG_IMAGE_SCALE * this.bagImage.width, URConstants.BAG_IMAGE_SCALE * this.bagImage.height );
+    assert && assert( this.bagImage.width && this.bagImage.height, 'Are you using the image plugin?' );
+    var bagSize = new Dimension2(
+      URConstants.BAG_IMAGE_SCALE * this.bagImage.width,
+      URConstants.BAG_IMAGE_SCALE * this.bagImage.height );
+
+    assert && assert( this.itemImage.width && this.itemImage.height, 'Are you using the image plugin?' );
+    var itemSize = new Dimension2(
+      URConstants.SHOPPING_ITEM_IMAGE_SCALE * this.itemImage.width,
+      URConstants.SHOPPING_ITEM_IMAGE_SCALE * this.itemImage.height );
 
     // @public
     this.shelf = new Shelf( {
       location: new Vector2( 512, 575 ),
       numberOfBags: this.numberOfBags,
-      bagSize: bagSize
+      bagSize: bagSize,
+      numberOfItems: this.numberOfBags * this.quantityPerBag,
+      itemSize: itemSize
     } );
 
     // @public
@@ -148,6 +157,8 @@ define( function( require ) {
       location: this.shelf.location.minusXY( 0, 200 ), // centered above the shelf
       numberOfBags: this.numberOfBags,
       bagSize: bagSize,
+      numberOfItems: this.numberOfBags * this.quantityPerBag,
+      itemSize: itemSize,
       quantityPerBag: this.quantityPerBag,
       quantityUnits: options.scaleQuantityUnits
     } );
@@ -223,32 +234,45 @@ define( function( require ) {
       } );
     } );
 
-    // @public (read-only) create bags on the shelf
+    // @public (read-only) create bags and items on the shelf
     this.bags = [];
     for ( var i = 0; i < this.numberOfBags; i++ ) {
 
       // the bag's location on the shelf
-      var cellIndex = this.shelf.bagRow.getFirstUnoccupiedCell();
-      assert && assert( cellIndex !== -1, 'shelf is full' );
-      var bagLocation = this.shelf.bagRow.getCellLocation( cellIndex );
+      var bagCellIndex = this.shelf.bagRow.getFirstUnoccupiedCell();
+      assert && assert( bagCellIndex !== -1, 'shelf is full' );
+      var bagLocation = this.shelf.bagRow.getCellLocation( bagCellIndex );
 
-      // create shopping items if the bag opens when placed on the scale
-      var shoppingItems = null;
+      // create items if the bag opens when placed on the scale
+      var items = null;
       if ( options.bagsOpen ) {
-        shoppingItems = [];
+        items = [];
         for ( var j = 0; j < this.quantityPerBag; j++ ) {
-          shoppingItems.push( new ShoppingItem( this.itemImage ) );
+
+          var itemCellIndex = this.shelf.itemRow.getFirstUnoccupiedCell();
+          assert && assert( itemCellIndex !== -1, 'shelf is full' );
+          var itemLocation = this.shelf.itemRow.getCellLocation( itemCellIndex );
+
+          // create item
+          var item = new ShoppingItem( this.pluralName, this.itemImage, {
+            location: itemLocation
+          } );
+          items.push( item );
+          
+          // put item on shelf
+          this.shelf.itemRow.addObject( item, itemCellIndex );
         }
       }
 
       // create bag
-      var bag = new Bag( this.bagImage, {
-        shoppingItems: shoppingItems,
-        location: bagLocation
+      var bag = new Bag( this.pluralName, this.bagImage, {
+        location: bagLocation,
+        items: items
       } );
-      //TODO having 2 things keeping track of bags seems potentially problematic
       this.bags.push( bag );
-      this.shelf.bagRow.addObject( bag, cellIndex );
+
+      // put bag on shelf
+      this.shelf.bagRow.addObject( bag, bagCellIndex );
     }
   }
 
@@ -266,6 +290,14 @@ define( function( require ) {
       // animate bags
       for ( var i = 0; i < this.bags.length; i++ ) {
         this.bags[ i ].step( dt );
+
+        // animate items
+        var items = this.bags[ i ].items;
+        if ( items ) {
+          for ( var j = 0; j < items.length; j++ ) {
+            items[ j ].step( dt );
+          }
+        }
       }
     },
 
@@ -279,25 +311,38 @@ define( function( require ) {
       this.scale.reset();
       this.shelf.reset();
 
-      // reset all ShoppingQuestions
+      // reset questions
       this.unitRateQuestion.reset();
       this.questionSets.forEach( function( questionSet ) {
         questionSet.forEach( function( question ) {
           question.reset();
         } );
       } );
-
-      // rest current question set
       this.questionSetsIndexProperty.reset();
 
       //TODO this is likely wrong and incomplete
       // return all bags to shelf
       var shelf = this.shelf;
       this.bags.forEach( function( bag ) {
-        var cellIndex = shelf.bagRow.getFirstUnoccupiedCell();
-        assert && assert( cellIndex !== -1, 'shelf is full' );
-        bag.moveTo( shelf.bagRow.getCellLocation( cellIndex ) );
-        shelf.bagRow.addObject( bag, cellIndex );
+
+        // return bag to shelf
+        var bagCellIndex = shelf.bagRow.getFirstUnoccupiedCell();
+        assert && assert( bagCellIndex !== -1, 'shelf is full' );
+        bag.moveTo( shelf.bagRow.getCellLocation( bagCellIndex ) );
+        shelf.bagRow.addObject( bag, bagCellIndex );
+
+        // return bag's items to shelf
+        var items = bag.items;
+        if ( items ) {
+          items.forEach( function( item ) {
+
+            // return item to shelf
+            var itemCellIndex = shelf.itemRow.getFirstUnoccupiedCell();
+            assert && assert( itemCellIndex !== -1, 'shelf is full' );
+            item.moveTo( shelf.itemRow.getCellLocation( itemCellIndex ) );
+            shelf.itemRow.addObject( item, itemCellIndex );
+          } );
+        }
       } );
     },
 

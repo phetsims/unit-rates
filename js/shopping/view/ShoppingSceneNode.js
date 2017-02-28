@@ -16,6 +16,7 @@ define( function( require ) {
   var ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
+  var ShoppingItemNode = require( 'UNIT_RATES/shopping/view/ShoppingItemNode' );
   var ShoppingQuestionsAccordionBox = require( 'UNIT_RATES/shopping/view/ShoppingQuestionsAccordionBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
@@ -76,29 +77,47 @@ define( function( require ) {
     };
     shoppingScene.scale.quantityProperty.link( quantityObserver ); // unlink in dispose
 
-    // bags, dispose required
+    // bags and items, dispose required
     var bagsParent = new Node();
+    var itemsParent = new Node();
     shoppingScene.bags.forEach( function( bag ) {
+
+      // bag
       bagsParent.addChild( new BagNode( bag, shoppingScene.shelf, shoppingScene.scale ) );
+
+      // optional items in the bag
+      if ( bag.items ) {
+        bag.items.forEach( function( item ) {
+          itemsParent.addChild( new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale ) );
+        } );
+      }
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ doubleNumberLineAccordionBox, questionsAccordionBox,
-      scaleNode, shelfNode, resetShelfButton, bagsParent ];
+      scaleNode, shelfNode, resetShelfButton, bagsParent, itemsParent ];
 
     Node.call( this, options );
 
     // @private
     this.disposeShoppingSceneNode = function() {
+
+      shoppingScene.scale.quantityProperty.unlink( quantityObserver );
+
       doubleNumberLineAccordionBox.dispose();
       questionsAccordionBox.dispose();
-      scaleNode.dispose();
       shelfNode.dispose();
+      scaleNode.dispose();
       resetShelfButton.dispose();
-      shoppingScene.scale.quantityProperty.unlink( quantityObserver );
-      bagsParent.getChildren().forEach( function( bagNode ) {
-        assert && assert( bagNode instanceof BagNode );
-        bagNode.dispose();
+
+      bagsParent.getChildren().forEach( function( node ) {
+        assert && assert( node instanceof BagNode );
+        node.dispose();
+      } );
+
+      itemsParent.getChildren().forEach( function( node ) {
+        assert && assert( node instanceof ShoppingItemNode );
+        node.dispose();
       } );
     };
   }

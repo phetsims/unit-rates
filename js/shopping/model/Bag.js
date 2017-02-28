@@ -16,16 +16,17 @@ define( function( require ) {
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
+   * @param {string} name - for internal use
    * @param {HTMLImageElement} image - image used by the view to represent this bag
    * @param {Object} [options]
    * @constructor
    */
-  function Bag( image, options ) {
+  function Bag( name, image, options ) {
 
     options = _.extend( {
 
       // {ShoppingItem[]|null} items in the bag, null means the bag does not open when placed on the scale
-      shoppingItems: null,
+      items: null,
 
       // URMovable options
       animationSpeed: URQueryParameters.animationSpeed
@@ -33,8 +34,9 @@ define( function( require ) {
     }, options );
 
     // @public (read-only)
+    this.name = name;
     this.image = image;
-    this.shoppingItems = options.shoppingItems;
+    this.items = options.items;
 
     URMovable.call( this, options );
   }
