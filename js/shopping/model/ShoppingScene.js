@@ -331,37 +331,33 @@ define( function( require ) {
       } );
       this.questionSetsIndexProperty.reset();
 
-      //TODO this is likely wrong and incomplete
+      //TODO this is much too complicated, and possibly incomplete
       // return all bags to shelf
-      var shelf = this.shelf;
-      var numberOfItemsReturned = 0;
       for ( var i = 0; i < this.bags.length; i++ ) {
 
-        var bag = this.bags[ i ];
-
         // return bag to shelf
-        var bagCellIndex = shelf.bagRow.getFirstUnoccupiedCell();
+        var bagCellIndex = this.shelf.bagRow.getFirstUnoccupiedCell();
         assert && assert( bagCellIndex !== -1, 'shelf is full' );
-        shelf.bagRow.put( bag, bagCellIndex );
+        this.shelf.bagRow.put( this.bags[ i ], bagCellIndex );
 
         // return bag's items to shelf
-        var items = bag.items;
+        var items = this.bags[ i ].items;
         if ( items ) {
 
           for ( var j = 0; j < items.length; j++ ) {
 
-            var item = this.items[ j ];
-
-            // bottom or top row?
-            var itemRow = ( numberOfItemsReturned < shelf.itemRowBottom.getNumberOfCells() ) ? shelf.itemRowBottom : shelf.itemRowTop;
-
-            // return item to shelf
+            // find an unoccupied cell on the shelf
+            var itemRow = this.shelf.itemRowBottom;
             var itemCellIndex = itemRow.getFirstUnoccupiedCell();
+            if ( itemCellIndex === -1 ) {
+              itemRow = this.shelf.itemRowTop;
+              itemCellIndex = itemRow.getFirstUnoccupiedCell();
+            }
             assert && assert( itemCellIndex !== -1, 'shelf is full' );
-            itemRow.put( item, itemCellIndex );
-          }
 
-          numberOfItemsReturned++;
+            // put the item in the cell
+            itemRow.put( items[ j ], itemCellIndex );
+          }
         }
       }
     },
