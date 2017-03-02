@@ -50,7 +50,7 @@ define( function( require ) {
 
     // scale
     scaleTopLight: 'rgb( 220, 220, 220 )',
-    scaleTopDark: 'rgb( 160, 160, 160 )',
+    scaleTopDark: 'rgb( 170, 170, 170 )',
     scaleBody: 'rgb( 113, 148, 152 )',
 
     // race cars

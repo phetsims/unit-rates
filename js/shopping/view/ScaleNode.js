@@ -77,6 +77,13 @@ define( function( require ) {
       children: [ topSideNode, topFaceNode ]
     } );
 
+    // shadow under the top platter
+    var shadowNode = new Path( topFaceShape, {
+      fill: 'rgb( 100, 100, 100 )',
+      opacity: 0.2,
+      y: topFaceNode.y + topThickness + 10
+    } );
+
     // scale.width is the width at the midpoint of the scale's top face, compute the foreground and background widths
     var foregroundWidth = scale.width + scale.perspectiveXOffset;
     var backgroundWidth = scale.width - scale.perspectiveXOffset;
@@ -156,7 +163,7 @@ define( function( require ) {
 
     // This type does not propagate options to the supertype because the model determines location.
     Node.call( this, {
-      children: [ bodyNode, topNode, displayBackgroundNode, displayNode ]
+      children: [ bodyNode, shadowNode, topNode, displayBackgroundNode, displayNode ]
     } );
 
     // red dot at origin, red line where items will be placed
