@@ -88,89 +88,47 @@ define( function( require ) {
 
         item.dragging = false;
 
-        // if the item is released above the scale's surface ...
-        if ( item.locationProperty.value.y < scale.location.y + SCALE_RADIUS ) {
+        // if the item is released above the scale's surface, item falls to scale, otherwise to shelf.
+        var itemContainer = ( item.locationProperty.value.y < scale.location.y + SCALE_RADIUS ) ? scale : shelf;
 
-          // find closest cell on the scale
-          var backScaleCellIndex = scale.itemRowBack.getClosestUnoccupiedCell( item.locationProperty.value );
-          var frontScaleCellIndex = scale.itemRowFront.getClosestUnoccupiedCell( item.locationProperty.value );
-          assert && assert( !( backScaleCellIndex === -1 && frontScaleCellIndex === -1 ), 'scale is full' );
+        // find closest cell
+        var backCellIndex = itemContainer.itemRowBack.getClosestUnoccupiedCell( item.locationProperty.value );
+        var frontCellIndex = itemContainer.itemRowFront.getClosestUnoccupiedCell( item.locationProperty.value );
+        assert && assert( !( backCellIndex === -1 && frontCellIndex === -1 ), 'scale or shelf is full' );
 
-          var scaleCellIndex = -1;
-          var scaleItemRow = null;
-          if ( backScaleCellIndex === -1 ) {
-            scaleCellIndex = frontScaleCellIndex;
-            scaleItemRow = scale.itemRowFront;
-          }
-          else if ( frontScaleCellIndex === -1 ) {
-            scaleCellIndex = backScaleCellIndex;
-            scaleItemRow = scale.itemRowBack;
-          }
-          else {
-            var backScaleCellDistance = item.locationProperty.value.distance( scale.itemRowBack.getCellLocation( backScaleCellIndex ) );
-            var frontScaleCellDistance = item.locationProperty.value.distance( scale.itemRowFront.getCellLocation( frontScaleCellIndex ) );
-            if ( backScaleCellDistance <= frontScaleCellDistance ) {
-              scaleCellIndex = backScaleCellIndex;
-              scaleItemRow = scale.itemRowBack;
-            }
-            else {
-              scaleCellIndex = frontScaleCellIndex;
-              scaleItemRow = scale.itemRowFront;
-            }
-          }
-
-          if ( scaleItemRow === scale.itemRowBack ) {
-            itemNode.moveToBack();
-          }
-          else {
-            itemNode.moveToFront();
-          }
-
-          // animate to scale
-          unitRates.log && unitRates.log( 'animating to scale cell ' + scaleCellIndex );
-          beginAnimation( item, scaleCellIndex, scale, scaleItemRow );
+        var cellIndex = -1;
+        var itemRow = null;
+        if ( backCellIndex === -1 ) {
+          cellIndex = frontCellIndex;
+          itemRow = itemContainer.itemRowFront;
+        }
+        else if ( frontCellIndex === -1 ) {
+          cellIndex = backCellIndex;
+          itemRow = itemContainer.itemRowBack;
         }
         else {
-
-          // find closest cell on the shelf
-          var backShelfCellIndex = shelf.itemRowBack.getClosestUnoccupiedCell( item.locationProperty.value );
-          var frontShelfCellIndex = shelf.itemRowFront.getClosestUnoccupiedCell( item.locationProperty.value );
-          assert && assert( backShelfCellIndex !== -1 || frontShelfCellIndex !== 1 , 'shelf is full' );
-
-          var shelfCellIndex = -1;
-          var shelfItemRow = null;
-          if ( backShelfCellIndex === -1 ) {
-            shelfCellIndex = frontShelfCellIndex;
-            shelfItemRow = shelf.itemRowFront;
-          }
-          else if ( frontShelfCellIndex === -1 ) {
-            shelfCellIndex = backShelfCellIndex;
-            shelfItemRow = shelf.itemRowBack;
+          var backCellDistance = item.locationProperty.value.distance( itemContainer.itemRowBack.getCellLocation( backCellIndex ) );
+          var frontCellDistance = item.locationProperty.value.distance( itemContainer.itemRowFront.getCellLocation( frontCellIndex ) );
+          if ( backCellDistance <= frontCellDistance ) {
+            cellIndex = backCellIndex;
+            itemRow = itemContainer.itemRowBack;
           }
           else {
-            var backShelfCellDistance = item.locationProperty.value.distance( shelf.itemRowBack.getCellLocation( backShelfCellIndex ) );
-            var frontShelfCellDistance = item.locationProperty.value.distance( shelf.itemRowFront.getCellLocation( frontShelfCellIndex ) );
-            if ( backShelfCellDistance <= frontShelfCellDistance ) {
-              shelfCellIndex = backShelfCellIndex;
-              shelfItemRow = shelf.itemRowBack;
-            }
-            else {
-              shelfCellIndex = frontShelfCellIndex;
-              shelfItemRow = shelf.itemRowFront;
-            }
+            cellIndex = frontCellIndex;
+            itemRow = itemContainer.itemRowFront;
           }
-
-          if ( shelfItemRow === scale.itemRowBack ) {
-            itemNode.moveToBack();
-          }
-          else {
-            itemNode.moveToFront();
-          }
-
-          // animate to shelf
-          unitRates.log && unitRates.log( 'animating to shelf cell ' + shelfCellIndex );
-          beginAnimation( item, shelfCellIndex, shelf, shelfItemRow );
         }
+
+        if ( itemRow === itemContainer.itemRowBack ) {
+          itemNode.moveToBack();
+        }
+        else {
+          itemNode.moveToFront();
+        }
+
+        // animate to scale
+        unitRates.log && unitRates.log( 'animating to cell ' + cellIndex );
+        beginAnimation( item, cellIndex, itemContainer, itemRow );
       }
     } );
   }
@@ -182,11 +140,11 @@ define( function( require ) {
    * The animation will change course immediately if the specified cell becomes occupied.
    * @param {ShoppingItem} item
    * @param {number} cellIndex
-   * @param {Scale|Shelf} scaleOrShelf
+   * @param {Scale|Shelf} itemContainer
    * @param {MovableRow} itemRow
    * @private
    */
-  function beginAnimation( item, cellIndex, scaleOrShelf, itemRow ) {
+  function beginAnimation( item, cellIndex, itemContainer, itemRow ) {
 
     var cellLocation = itemRow.getCellLocation( cellIndex );
 
@@ -195,15 +153,15 @@ define( function( require ) {
 
       // find another unoccupied cell
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
-      itemRow = scaleOrShelf.itemRowBack;
+      itemRow = itemContainer.itemRowBack;
       cellIndex = itemRow.getClosestUnoccupiedCell( item.locationProperty.value );
       if ( cellIndex === -1 ) {
-        itemRow = scaleOrShelf.itemRowFront;
+        itemRow = itemContainer.itemRowFront;
         cellIndex = itemRow.getClosestUnoccupiedCell( item.locationProperty.value );
       }
       assert && assert( cellIndex !== -1, 'all cells are occupied' );
 
-      beginAnimation( item, cellIndex, scaleOrShelf, itemRow );
+      beginAnimation( item, cellIndex, itemContainer, itemRow );
     };
 
     // This function is called on each animation step.
