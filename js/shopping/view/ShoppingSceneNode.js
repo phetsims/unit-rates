@@ -82,11 +82,8 @@ define( function( require ) {
     var itemsParent = new Node();
     shoppingScene.bags.forEach( function( bag ) {
 
-      //TODO temporarily skip creating bags
       // bag
-      if ( !bag.items ) {
-        bagsParent.addChild( new BagNode( bag, shoppingScene.shelf, shoppingScene.scale ) );
-      }
+      bagsParent.addChild( new BagNode( bag, shoppingScene.shelf, shoppingScene.scale ) );
 
       // optional items in the bag
       if ( bag.items ) {

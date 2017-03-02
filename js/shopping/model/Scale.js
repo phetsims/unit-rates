@@ -32,11 +32,12 @@ define( function( require ) {
       numberOfBags: 4, // {number} maximum number of bags on the scale
       bagSize: new Dimension2( 100, 100 ), // {number} dimensions of each bag
       quantityPerBag: 5, // {number} quantity in each bag
+      bagRowYOffset: 5, // {number} offset of bag row from scale origin
 
       // MovableRow options (items)
       numberOfItems: 15, // {number} maximum number of items on the shelf
       itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
-      itemRowOffset: 5 // {number} offset of the front row from the back row
+      itemRowOffset: 5 // // {number} offset of item rows from scale origin
 
     }, options );
 
@@ -49,7 +50,7 @@ define( function( require ) {
     // @public (read-only) width of the top surface of the scale, specific to scale.png
     this.topWidth = 350;
 
-    var bagRowLocation = options.location;
+    var bagRowLocation = new Vector2( options.location.x, options.location.y + options.bagRowYOffset );
     var backRowLocation =  new Vector2( options.location.x, options.location.y - options.itemRowOffset );
     var frontRowLocation =  new Vector2( options.location.x, options.location.y + options.itemRowOffset );
 

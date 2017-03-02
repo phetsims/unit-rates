@@ -26,16 +26,16 @@ define( function( require ) {
 
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
       width: 350, // {number} width of the top face, at its center
-      bagsOpen: false, // {boolean} do bags open to reveal individual items?
 
       // MovableRow options (bags)
       numberOfBags: 4, // {number} maximum number of bags on the shelf
       bagSize: new Dimension2( 100, 100 ), // {number} dimensions of each bag
+      bagRowYOffset: 0, // {number} offset of bag row from shelf origin
 
       // MovableRow options (items)
       numberOfItems: 15, // {number} maximum number of items on the shelf
       itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
-      itemRowYOffset: 5 // {number} offset of the front row from the back row
+      itemRowYOffset: 5 // {number} offset of item rows from shelf origin
 
     }, options );
 
@@ -43,13 +43,13 @@ define( function( require ) {
     this.location = options.location;
     this.width = options.width;
     this.height = 17; // {number} height of the front face
-    this.depth = 20; // {number} depth, after flattening to 2D
+    this.depth = 35; // {number} depth, after flattening to 2D
     this.perspectiveXOffset = 15; // {number} offset for parallel perspective, after flattening to 2D
 
-    //TODO note that this differs from Scale
-    var bagRowLocation = options.location; //TODO move a little back if bags open, making it easier to grab bags with fruit in front
-    var backRowLocation =  new Vector2( options.location.x, options.location.y - options.itemRowYOffset );
-    var frontRowLocation =  new Vector2( options.location.x, options.location.y + options.itemRowYOffset );
+    //TODO only move bags back if , making it easier to grab bags with fruit in front
+    var bagRowLocation = new Vector2( options.location.x, options.location.y + options.bagRowYOffset );
+    var backRowLocation =  new Vector2( options.location.x, options.location.y + options.itemRowYOffset );
+    var frontRowLocation =  new Vector2( options.location.x, backRowLocation.y + options.itemRowYOffset );
 
     // @public row of bags
     this.bagRow = new MovableRow( {
