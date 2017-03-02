@@ -62,7 +62,7 @@ define( function( require ) {
     // Back row has 1 more cell than front row
     var numberOfCellsBack = Math.floor( options.numberOfItems / 2 ) + 1;
     var numberOfCellsFront = options.numberOfItems - numberOfCellsBack;
-    assert( numberOfCellsBack + numberOfCellsFront === options.numberOfItems );
+    assert && assert( numberOfCellsBack + numberOfCellsFront === options.numberOfItems );
 
     var itemCellSpacing = 8;
 
