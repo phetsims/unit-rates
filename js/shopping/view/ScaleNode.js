@@ -34,6 +34,8 @@ define( function( require ) {
   // constants
   var PANEL_WIDTH = 132;
   var PANEL_MIN_HEIGHT = 32;
+  var DISPLAY_X_MARGIN = 10;
+  var DISPLAY_Y_MARGIN = 7;
 
   /**
    * @param {Scale} scale
@@ -49,7 +51,8 @@ define( function( require ) {
       quantityIsDisplayed: false // {boolean} does the scale show quantity?
     }, options );
 
-    // round platter on top, origin at center
+    // round platter on top, origin at center ---------------------------------------------------
+    
     var topThickness = 8;
     var topRadiusX = 0.5 * scale.width;
     var topRadiusY = 0.5 * scale.depth;
@@ -81,9 +84,11 @@ define( function( require ) {
     var shadowNode = new Path( topFaceShape, {
       fill: 'rgb( 100, 100, 100 )',
       opacity: 0.2,
-      y: topFaceNode.y + topThickness + 10
+      y: topFaceNode.y + ( 2 * topThickness )
     } );
 
+    // body of the scale ---------------------------------------------------------------------
+    
     // scale.width is the width at the midpoint of the scale's top face, compute the foreground and background widths
     var foregroundWidth = scale.width + scale.perspectiveXOffset;
     var backgroundWidth = scale.width - scale.perspectiveXOffset;
@@ -106,15 +111,15 @@ define( function( require ) {
       centerX: topNode.centerX,
       centerY: topNode.centerY + scale.depth
     } );
+    
+    // display on front of the scale ---------------------------------------------------------------------
 
     // display background
-    var displayXMargin = 10;
-    var displayYMargin = 7;
-    var displayBackgroundNode = new Rectangle( 0, 0, foregroundWidth - ( 2 * displayXMargin ), scale.height - ( 2 * displayYMargin ), {
+    var displayBackgroundNode = new Rectangle( 0, 0, foregroundWidth - ( 2 * DISPLAY_X_MARGIN ), scale.height - ( 2 * DISPLAY_Y_MARGIN ), {
       fill: 'black',
       cornerRadius: 4,
-      left: bodyNode.left + displayXMargin,
-      bottom: bodyNode.bottom - displayYMargin
+      left: bodyNode.left + DISPLAY_X_MARGIN,
+      bottom: bodyNode.bottom - DISPLAY_Y_MARGIN
     } );
 
     // Nodes that make up the numeric display on the scale
@@ -153,7 +158,7 @@ define( function( require ) {
       displayChildren.push( quantityPanel );
     }
 
-    // Assemble the numeric display(s)
+    // Assemble the display
     var displayNode = new Node( {
       children: [
         displayBackgroundNode,
@@ -164,6 +169,8 @@ define( function( require ) {
           center: displayBackgroundNode.center
         } ) ]
     } );
+    
+    // put all of the above pieces together ---------------------------------------------------------------------
 
     // This type does not propagate options to the supertype because the model determines location.
     Node.call( this, {
