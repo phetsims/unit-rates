@@ -146,7 +146,7 @@ define( function( require ) {
 
     // @public
     this.shelf = new Shelf( {
-      location: new Vector2( 512, 575 ),
+      location: new Vector2( 512, 560 ),
       numberOfBags: this.numberOfBags,
       bagSize: bagSize,
       numberOfItems: this.numberOfBags * this.quantityPerBag,
@@ -156,7 +156,7 @@ define( function( require ) {
 
     // @public
     this.scale = new Scale( this.rate.unitRateProperty, {
-      location: this.shelf.location.minusXY( 0, 200 ), // centered above the shelf
+      location: this.shelf.location.minusXY( 0, 220 ), // centered above the shelf
       numberOfBags: this.numberOfBags,
       bagSize: bagSize,
       numberOfItems: this.numberOfBags * this.quantityPerBag,

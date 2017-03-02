@@ -13,9 +13,6 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
-  // radius of the scale's surface in scale.png, determined by inspection
-  var SCALE_RADIUS = 10;
-  
   /**
    * @param {BagNode} bagNode
    * @param {Bag} bag
@@ -80,7 +77,7 @@ define( function( require ) {
         bag.dragging = false;
 
         // if the bag is released above the scale's surface ...
-        if ( bag.locationProperty.value.y < scale.location.y + SCALE_RADIUS ) {
+        if ( bag.locationProperty.value.y < scale.location.y + ( scale.depth / 2 ) ) {
 
           // find closest cell on the scale
           var scaleCellIndex = scale.bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );

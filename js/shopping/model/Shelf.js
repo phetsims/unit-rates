@@ -35,16 +35,16 @@ define( function( require ) {
       // MovableRow options (items)
       numberOfItems: 15, // {number} maximum number of items on the shelf
       itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
-      itemRowYOffset: 5 // {number} offset of item rows from shelf origin
+      itemRowYOffset: 8 // {number} offset of item rows from shelf origin
 
     }, options );
 
     // @public (read-only)
     this.location = options.location;
     this.width = options.width;
-    this.height = 17; // {number} height of the front face
-    this.depth = 35; // {number} depth, after flattening to 2D
-    this.perspectiveXOffset = 15; // {number} offset for parallel perspective, after flattening to 2D
+    this.height = 15; // {number} height of the front face
+    this.depth = 45; // {number} depth, after flattening to 2D
+    this.perspectiveXOffset = 30; // {number} offset for parallel perspective, after flattening to 2D
 
     //TODO only move bags back if , making it easier to grab bags with fruit in front
     var bagRowLocation = new Vector2( options.location.x, options.location.y + options.bagRowYOffset );

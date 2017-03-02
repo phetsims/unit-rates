@@ -13,9 +13,6 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
-  // radius of the scale's surface in scale.png, determined by inspection
-  var SCALE_RADIUS = 10;
-
   /**
    * @param {ShoppingItemNode} itemNode
    * @param {item} item
@@ -89,7 +86,7 @@ define( function( require ) {
         item.dragging = false;
 
         // if the item is released above the scale's surface, item falls to scale, otherwise to shelf.
-        var itemContainer = ( item.locationProperty.value.y < scale.location.y + SCALE_RADIUS ) ? scale : shelf;
+        var itemContainer = ( item.locationProperty.value.y < scale.location.y + ( scale.depth / 2 ) ) ? scale : shelf;
 
         // find closest cell
         var backCellIndex = itemContainer.itemRowBack.getClosestUnoccupiedCell( item.locationProperty.value );

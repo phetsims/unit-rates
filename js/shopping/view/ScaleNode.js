@@ -13,18 +13,19 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var CostNode = require( 'UNIT_RATES/common/view/CostNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var LinearGradient = require( 'SCENERY/util/LinearGradient' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Path = require( 'SCENERY/nodes/Path' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Shape = require( 'KITE/Shape' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var URColors = require( 'UNIT_RATES/common/URColors' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
   var ValueNode = require( 'UNIT_RATES/common/view/ValueNode' );
   var ValuePanel = require( 'UNIT_RATES/common/view/ValuePanel' );
-
-  // images
-  var scaleImage = require( 'image!UNIT_RATES/scale.png' );
 
   // strings
   var costString = require( 'string!UNIT_RATES/cost' );
@@ -48,11 +49,66 @@ define( function( require ) {
       quantityIsDisplayed: false // {boolean} does the scale show quantity?
     }, options );
 
-    // Body of the scale, origin at center of top surface
-    var scaleImageNode = new Image( scaleImage );
-    scaleImageNode.setScaleMagnitude( 0.6, 0.5 );
-    scaleImageNode.x = -scaleImageNode.width / 2;
-    scaleImageNode.y = -0.1 * scaleImageNode.height; // multiplier is specific to image file
+    // round platter on top, origin at center
+    var topThickness = 8;
+    var topRadiusX = 0.5 * scale.width;
+    var topRadiusY = 0.5 * scale.depth;
+    var topFaceShape = new Shape()
+      .ellipse( 0, 0, topRadiusX, topRadiusY, 0 );
+    var topSideShape = new Shape()
+      .moveTo( -topRadiusX, 0 )
+      .lineTo( -topRadiusX, topThickness )
+      .ellipticalArc( 0, topThickness, topRadiusX, topRadiusY, 0, Math.PI, 0, true )
+      .lineTo( topRadiusX, 0 )
+      .close();
+
+    var topFaceNode = new Path( topFaceShape, {
+      fill: new LinearGradient( -scale.width / 2, 0, scale.width / 2, 0 )
+        .addColorStop( 0, URColors.scaleTopLight )
+        .addColorStop( 0.5, URColors.scaleTopDark )
+        .addColorStop( 1, URColors.scaleTopLight ),
+      stroke: 'black'
+    } );
+    var topSideNode = new Path( topSideShape, {
+      fill: 'rgb( 140, 140, 140 )',
+      stroke: 'black'
+    } );
+    var topNode = new Node( {
+      children: [ topSideNode, topFaceNode ]
+    } );
+
+    // scale.width is the width at the midpoint of the scale's top face, compute the foreground and background widths
+    var foregroundWidth = scale.width + scale.perspectiveXOffset;
+    var backgroundWidth = scale.width - scale.perspectiveXOffset;
+
+    // draw top face clockwise, starting at front-left corner, in pseudo-3D using parallel perspective
+    var bodyShape = new Shape()
+      .moveTo( 0, 0 )
+      .lineTo( scale.perspectiveXOffset, -scale.depth )
+      .lineTo( scale.perspectiveXOffset + backgroundWidth, -scale.depth )
+      .lineTo( foregroundWidth, 0 );
+
+    // add front face
+    bodyShape.rect( 0, 0, scale.width + scale.perspectiveXOffset, scale.height );
+
+    // origin at center of top face
+    var bodyNode = new Path( bodyShape, {
+      fill: URColors.scaleBody,
+      stroke: 'black',
+      lineJoin: 'round',
+      centerX: topNode.centerX,
+      centerY: topNode.centerY + scale.depth
+    } );
+
+    // display background
+    var displayXMargin = 10;
+    var displayYMargin = 7;
+    var displayBackgroundNode = new Rectangle( 0, 0, foregroundWidth - ( 2 * displayXMargin ), scale.height - ( 2 * displayYMargin ), {
+      fill: 'black',
+      cornerRadius: 4,
+      left: bodyNode.left + displayXMargin,
+      bottom: bodyNode.bottom - displayYMargin
+    } );
 
     // Nodes that make up the numeric display on the scale
     var displayChildren = [];
@@ -95,21 +151,18 @@ define( function( require ) {
       children: displayChildren,
       align: 'center',
       spacing: 8,
-
-      // These coordinates are dependent on the image file, and were determined empirically
-      centerX: scaleImageNode.centerX,
-      centerY: scaleImageNode.bottom - 32
+      center: displayBackgroundNode.center
     } );
 
     // This type does not propagate options to the supertype because the model determines location.
     Node.call( this, {
-      children: [ scaleImageNode, displayNode ]
+      children: [ bodyNode, topNode, displayBackgroundNode, displayNode ]
     } );
 
     // red dot at origin, red line where items will be placed
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 2, { fill: 'red' } ) );
-      this.addChild( new Line( -scale.topWidth / 2, 0, scale.topWidth / 2, 0, { stroke: 'red' } ) );
+      this.addChild( new Line( -scale.width / 2, 0, scale.width / 2, 0, { stroke: 'red' } ) );
     }
 
     // move to model location

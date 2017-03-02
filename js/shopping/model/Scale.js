@@ -37,7 +37,7 @@ define( function( require ) {
       // MovableRow options (items)
       numberOfItems: 15, // {number} maximum number of items on the shelf
       itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
-      itemRowOffset: 5 // // {number} offset of item rows from scale origin
+      itemRowOffset: 10 // // {number} offset of item rows from scale origin
 
     }, options );
 
@@ -48,7 +48,10 @@ define( function( require ) {
     this.quantityUnits = options.quantityUnits;
 
     // @public (read-only) width of the top surface of the scale, specific to scale.png
-    this.topWidth = 350;
+    this.width = 350;
+    this.height = 60; // {number} height of the front face
+    this.depth = 45; // {number} depth, after flattening to 2D
+    this.perspectiveXOffset = 30; // {number} offset for parallel perspective, after flattening to 2D
 
     var bagRowLocation = new Vector2( options.location.x, options.location.y + options.bagRowYOffset );
     var backRowLocation =  new Vector2( options.location.x, options.location.y - options.itemRowOffset );
