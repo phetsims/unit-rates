@@ -154,16 +154,20 @@ define( function( require ) {
     }
 
     // Assemble the numeric display(s)
-    var displayNode = new HBox( {
-      children: displayChildren,
-      align: 'center',
-      spacing: 8,
-      center: displayBackgroundNode.center
+    var displayNode = new Node( {
+      children: [
+        displayBackgroundNode,
+        new HBox( {
+          children: displayChildren,
+          align: 'center',
+          spacing: 8,
+          center: displayBackgroundNode.center
+        } ) ]
     } );
 
     // This type does not propagate options to the supertype because the model determines location.
     Node.call( this, {
-      children: [ bodyNode, shadowNode, topNode, displayBackgroundNode, displayNode ]
+      children: [ bodyNode, shadowNode, topNode, displayNode ]
     } );
 
     // red dot at origin, red line where items will be placed
