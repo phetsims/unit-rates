@@ -49,7 +49,8 @@ define( function( require ) {
     }, options );
 
     // Body of the scale, origin at center of top surface
-    var scaleImageNode = new Image( scaleImage, { scale: 0.5 } );
+    var scaleImageNode = new Image( scaleImage );
+    scaleImageNode.setScaleMagnitude( 0.6, 0.5 );
     scaleImageNode.x = -scaleImageNode.width / 2;
     scaleImageNode.y = -0.1 * scaleImageNode.height; // multiplier is specific to image file
 

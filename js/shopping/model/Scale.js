@@ -36,7 +36,7 @@ define( function( require ) {
       // MovableRow options (items)
       numberOfItems: 15, // {number} maximum number of items on the shelf
       itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
-      itemRowOverlap: 0 // {number} how much rows should overlap, so that items appear to touch when stacked
+      itemRowOffset: 5 // {number} offset of the front row from the back row
 
     }, options );
 
@@ -47,41 +47,48 @@ define( function( require ) {
     this.quantityUnits = options.quantityUnits;
 
     // @public (read-only) width of the top surface of the scale, specific to scale.png
-    this.topWidth = 300;
+    this.topWidth = 350;
+
+    var bagRowLocation = options.location;
+    var backRowLocation =  new Vector2( options.location.x, options.location.y - options.itemRowOffset );
+    var frontRowLocation =  new Vector2( options.location.x, options.location.y + options.itemRowOffset );
 
     // @public row of bags
     this.bagRow = new MovableRow( {
-      location: options.location,
+      location: bagRowLocation,
       numberOfCells: options.numberOfBags,
       cellSize: options.bagSize,
       cellSpacing: 8
     } );
 
-    // Top row has 1 less cell than bottom row,
-    // because each cell in the top row will be centered above 2 adjacent cells in the bottom row.
-    var numberOfBottomCells = Math.floor( options.numberOfItems / 2 ) + 1;
-    var numberOfTopCells = options.numberOfItems - numberOfBottomCells;
-    assert( numberOfBottomCells + numberOfTopCells === options.numberOfItems );
+    // Back row has 1 more cell than front row
+    var numberOfCellsBack = Math.floor( options.numberOfItems / 2 ) + 1;
+    var numberOfCellsFront = options.numberOfItems - numberOfCellsBack;
+    assert( numberOfCellsBack + numberOfCellsFront === options.numberOfItems );
 
-    // @public bottom row of items
-    this.itemRowBottom = new MovableRow( {
-      location: options.location,
-      numberOfCells: numberOfBottomCells,
-      cellSize: options.itemSize
+    var itemCellSpacing = 8;
+
+    // @public back row of items
+    this.itemRowBack = new MovableRow( {
+      location: backRowLocation,
+      numberOfCells: numberOfCellsBack,
+      cellSize: options.itemSize,
+      cellSpacing: itemCellSpacing
     } );
 
-    // @public top row of items
-    this.itemRowTop = new MovableRow( {
-      location: new Vector2( options.location.x, options.location.y - options.itemSize.height + options.itemRowOverlap ),
-      numberOfCells: numberOfTopCells,
-      cellSize: options.itemSize
+    // @public front row of items
+    this.itemRowFront = new MovableRow( {
+      location: frontRowLocation,
+      numberOfCells: numberOfCellsFront,
+      cellSize: options.itemSize,
+      cellSpacing: itemCellSpacing
     } );
 
     // @public
     this.quantityProperty = new DerivedProperty(
-      [ this.bagRow.numberOfMovablesProperty, this.itemRowBottom.numberOfMovablesProperty, this.itemRowTop.numberOfMovablesProperty ],
-      function( numberOfBags, numberOfItemsBottom, numberOfItemsTop ) {
-        return ( numberOfBags * options.quantityPerBag ) + numberOfItemsBottom + numberOfItemsTop;
+      [ this.bagRow.numberOfMovablesProperty, this.itemRowBack.numberOfMovablesProperty, this.itemRowFront.numberOfMovablesProperty ],
+      function( numberOfBags, numberOfItemsBack, numberOfItemsFront ) {
+        return ( numberOfBags * options.quantityPerBag ) + numberOfItemsBack + numberOfItemsFront;
       } );
 
     // @public dispose required
@@ -104,8 +111,8 @@ define( function( require ) {
     // @public
     reset: function() {
       this.bagRow.reset();
-      this.itemRowBottom.reset();
-      this.itemRowTop.reset();
+      this.itemRowBack.reset();
+      this.itemRowFront.reset();
     },
 
     // @public

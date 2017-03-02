@@ -25,7 +25,7 @@ define( function( require ) {
     options = _.extend( {
 
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
-      width: 325, // {number} width of the top face, at its center
+      width: 350, // {number} width of the top face, at its center
       bagsOpen: false, // {boolean} do bags open to reveal individual items?
 
       // MovableRow options (bags)
@@ -35,7 +35,7 @@ define( function( require ) {
       // MovableRow options (items)
       numberOfItems: 15, // {number} maximum number of items on the shelf
       itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
-      itemRowOverlap: 0 // {number} how much rows should overlap, so that items appear to touch when stacked
+      itemRowYOffset: 5 // {number} offset of the front row from the back row
 
     }, options );
 
@@ -48,8 +48,8 @@ define( function( require ) {
 
     //TODO note that this differs from Scale
     var bagRowLocation = options.location; //TODO move a little back if bags open, making it easier to grab bags with fruit in front
-    var bottomRowLocation =  new Vector2( options.location.x, options.location.y + 5 ); // a little forward
-    var topRowLocation =  new Vector2( bottomRowLocation.x, bottomRowLocation.y - options.itemSize.height + options.itemRowOverlap );
+    var backRowLocation =  new Vector2( options.location.x, options.location.y - options.itemRowYOffset );
+    var frontRowLocation =  new Vector2( options.location.x, options.location.y + options.itemRowYOffset );
 
     // @public row of bags
     this.bagRow = new MovableRow( {
@@ -59,24 +59,27 @@ define( function( require ) {
       cellSpacing: 8
     } );
 
-    // Top row has 1 less cell than bottom row,
-    // because each cell in the top row will be centered above 2 adjacent cells in the bottom row.
-    var numberOfBottomCells = Math.floor( options.numberOfItems / 2 ) + 1;
-    var numberOfTopCells = options.numberOfItems - numberOfBottomCells;
-    assert( numberOfBottomCells + numberOfTopCells === options.numberOfItems );
+    // Back row has 1 more cell than front row
+    var numberOfCellsBack = Math.floor( options.numberOfItems / 2 ) + 1;
+    var numberOfCellsFront = options.numberOfItems - numberOfCellsBack;
+    assert( numberOfCellsBack + numberOfCellsFront === options.numberOfItems );
 
-    // @public bottom row of items
-    this.itemRowBottom = new MovableRow( {
-      location: bottomRowLocation,
-      numberOfCells: numberOfBottomCells,
-      cellSize: options.itemSize
+    var itemCellSpacing = 8;
+
+    // @public back row of items
+    this.itemRowBack = new MovableRow( {
+      location: backRowLocation,
+      numberOfCells: numberOfCellsBack,
+      cellSize: options.itemSize,
+      cellSpacing: itemCellSpacing
     } );
 
-    // @public top row of items
-    this.itemRowTop = new MovableRow( {
-      location: topRowLocation,
-      numberOfCells: numberOfTopCells,
-      cellSize: options.itemSize
+    // @public front row of items
+    this.itemRowFront = new MovableRow( {
+      location: frontRowLocation,
+      numberOfCells: numberOfCellsFront,
+      cellSize: options.itemSize,
+      cellSpacing: itemCellSpacing
     } );
   }
 
@@ -87,8 +90,8 @@ define( function( require ) {
     // @public
     reset: function() {
       this.bagRow.reset();
-      this.itemRowBottom.reset();
-      this.itemRowTop.reset();
+      this.itemRowBack.reset();
+      this.itemRowFront.reset();
     }
   } );
 } );
