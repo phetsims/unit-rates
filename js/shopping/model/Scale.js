@@ -79,9 +79,9 @@ define( function( require ) {
 
     // @public
     this.quantityProperty = new DerivedProperty(
-      [ this.bagRow.numberOfMovablesProperty, this.itemRowBottom.numberOfMovablesProperty ],
-      function( numberOfBags, numberOfItems ) {
-        return ( numberOfBags * options.quantityPerBag ) + numberOfItems;
+      [ this.bagRow.numberOfMovablesProperty, this.itemRowBottom.numberOfMovablesProperty, this.itemRowTop.numberOfMovablesProperty ],
+      function( numberOfBags, numberOfItemsBottom, numberOfItemsTop ) {
+        return ( numberOfBags * options.quantityPerBag ) + numberOfItemsBottom + numberOfItemsTop;
       } );
 
     // @public dispose required
