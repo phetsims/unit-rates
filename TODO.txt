@@ -1,6 +1,7 @@
 TODO list for unit-rates
 
 High:
+Instead 2 stacked rows, try a foreground and background row on a wider scale and shelf
 Organization of items (2 rows) on shelf and scale should be transparent to ShoppingScene and ShoppingItemDragHandler
 Should items (model and view) be created in ShoppingScene and ShoppingSceneNode constructors, or when a bag opens?
 ShoppingScene constructor requires too much logic to create bags & items
