@@ -1,6 +1,7 @@
 TODO list for unit-rates
 
 High:
+Bags should pop to front when drag starts, need a common drag layer for bags & items.
 After Reset All, front/back items are not in correct rendering order
 Organization of items on shelf and scale should be transparent to ShoppingScene and ShoppingItemDragHandler
 Should items (model and view) be created in ShoppingScene and ShoppingSceneNode constructors, or when a bag opens?
