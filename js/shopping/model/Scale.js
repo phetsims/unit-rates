@@ -47,8 +47,8 @@ define( function( require ) {
     this.location = options.location;
     this.quantityUnits = options.quantityUnits;
 
-    // @public (read-only) width of the top surface of the scale, specific to scale.png
-    this.width = 350;
+    // @public (read-only) description of pseudo-3D shape
+    this.width = 350; // {number} diameter of the top platter
     this.height = 60; // {number} height of the front face
     this.depth = 45; // {number} depth, after flattening to 2D
     this.perspectiveXOffset = 30; // {number} offset for parallel perspective, after flattening to 2D

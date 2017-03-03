@@ -40,6 +40,8 @@ define( function( require ) {
 
     // @public (read-only)
     this.location = options.location;
+
+    // @public (read-only) description of pseudo-3D shape
     this.width = 350; // {number} width of the top face, at its center
     this.height = 15; // {number} height of the front face
     this.depth = 45; // {number} depth, after flattening to 2D
