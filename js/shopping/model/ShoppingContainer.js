@@ -14,7 +14,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MovableRow = require( 'UNIT_RATES/shopping/model/MovableRow' );
+  var RowOfMovables = require( 'UNIT_RATES/shopping/model/RowOfMovables' );
   var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -46,7 +46,7 @@ define( function( require ) {
     this.location = options.location;
 
     // @public row of bags
-    this.bagRow = new MovableRow( {
+    this.bagRow = new RowOfMovables( {
       location: new Vector2( options.location.x, options.location.y + options.bagRowYOffset ),
       numberOfCells: options.numberOfBags,
       cellSize: options.bagSize,
@@ -59,7 +59,7 @@ define( function( require ) {
     assert && assert( backNumberOfCells + frontNumberOfCells === options.numberOfItems );
 
     // @public back row of items, dispose required
-    this.backItemRow = new MovableRow( {
+    this.backItemRow = new RowOfMovables( {
       location: new Vector2( options.location.x, options.location.y + options.backRowYOffset ),
       numberOfCells: backNumberOfCells,
       cellSize: options.itemSize,
@@ -67,7 +67,7 @@ define( function( require ) {
     } );
 
     // @public front row of items, dispose required
-    this.frontItemRow = new MovableRow( {
+    this.frontItemRow = new RowOfMovables( {
       location: new Vector2( options.location.x, options.location.y + options.frontRowYOffset ),
       numberOfCells: frontNumberOfCells,
       cellSize: options.itemSize,

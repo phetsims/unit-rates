@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * MovableRow manages a row of URMovables (movable model elements).
+ * RowOfMovables manages a row of URMovables (movable model elements).
  * Used to manage the location of bags and items on the scale and shelf.
  *
  * - Each row has N cells.
@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function MovableRow( options ) {
+  function RowOfMovables( options ) {
 
     options = _.extend( {
       location: new Vector2( 0, 0 ), // {number} bottom center of the row
@@ -47,7 +47,7 @@ define( function( require ) {
     this.numberOfMovablesProperty = new Property( 0 );
   }
 
-  unitRates.register( 'MovableRow', MovableRow );
+  unitRates.register( 'RowOfMovables', RowOfMovables );
 
   /**
    * Creates a row of empty cells.
@@ -82,7 +82,7 @@ define( function( require ) {
     return cells;
   }
 
-  return inherit( Object, MovableRow, {
+  return inherit( Object, RowOfMovables, {
 
     // @public
     reset: function() {

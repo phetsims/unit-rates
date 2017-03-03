@@ -111,7 +111,7 @@ define( function( require ) {
    * The animation will change course immediately if the specified cell becomes occupied.
    * @param {Bag} bag
    * @param {number} cellIndex
-   * @param {MovableRow} bagRow
+   * @param {RowOfMovables} bagRow
    * @private
    */
   function beginAnimation( bag, cellIndex, bagRow ) {

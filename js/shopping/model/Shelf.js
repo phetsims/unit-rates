@@ -25,12 +25,10 @@ define( function( require ) {
 
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
 
-      // MovableRow options (bags)
+      // ShoppingContainer options
       numberOfBags: 4, // {number} maximum number of bags on the shelf
       bagSize: new Dimension2( 100, 100 ), // {number} dimensions of each bag
       bagRowYOffset: 0, // {number} offset of bag row from shelf origin
-
-      // MovableRow options (items)
       numberOfItems: 15, // {number} maximum number of items on the shelf
       itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
       backRowYOffset: 8, // {number} offset of items back row from shelf origin
