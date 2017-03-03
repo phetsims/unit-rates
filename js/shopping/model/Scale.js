@@ -12,7 +12,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MovableRow = require( 'UNIT_RATES/shopping/model/MovableRow' );
+  var ShoppingContainer = require( 'UNIT_RATES/shopping/model/ShoppingContainer' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -37,14 +37,16 @@ define( function( require ) {
       // MovableRow options (items)
       numberOfItems: 15, // {number} maximum number of items on the shelf
       itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
-      itemRowOffset: 10 // // {number} offset of item rows from scale origin
+      backRowYOffset: -10, // // {number} offset of items back row from scale origin
+      frontRowYOffset: 10 // // {number} offset of items front row from scale origin
 
     }, options );
+
+    ShoppingContainer.call( this, options );
 
     var self = this;
 
     // @public (read-only)
-    this.location = options.location;
     this.quantityUnits = options.quantityUnits;
 
     // @public (read-only) description of pseudo-3D shape
@@ -53,46 +55,11 @@ define( function( require ) {
     this.depth = 45; // {number} depth, after flattening to 2D
     this.perspectiveXOffset = 30; // {number} offset for parallel perspective, after flattening to 2D
 
-    var bagRowLocation = new Vector2( options.location.x, options.location.y + options.bagRowYOffset );
-    var backRowLocation =  new Vector2( options.location.x, options.location.y - options.itemRowOffset );
-    var frontRowLocation =  new Vector2( options.location.x, options.location.y + options.itemRowOffset );
-
-    // @public row of bags
-    this.bagRow = new MovableRow( {
-      location: bagRowLocation,
-      numberOfCells: options.numberOfBags,
-      cellSize: options.bagSize,
-      cellSpacing: 8
-    } );
-
-    // Back row has 1 more cell than front row
-    var numberOfCellsBack = Math.floor( options.numberOfItems / 2 ) + 1;
-    var numberOfCellsFront = options.numberOfItems - numberOfCellsBack;
-    assert && assert( numberOfCellsBack + numberOfCellsFront === options.numberOfItems );
-
-    var itemCellSpacing = 8;
-
-    // @public back row of items
-    this.itemRowBack = new MovableRow( {
-      location: backRowLocation,
-      numberOfCells: numberOfCellsBack,
-      cellSize: options.itemSize,
-      cellSpacing: itemCellSpacing
-    } );
-
-    // @public front row of items
-    this.itemRowFront = new MovableRow( {
-      location: frontRowLocation,
-      numberOfCells: numberOfCellsFront,
-      cellSize: options.itemSize,
-      cellSpacing: itemCellSpacing
-    } );
-
     // @public
     this.quantityProperty = new DerivedProperty(
-      [ this.bagRow.numberOfMovablesProperty, this.itemRowBack.numberOfMovablesProperty, this.itemRowFront.numberOfMovablesProperty ],
-      function( numberOfBags, numberOfItemsBack, numberOfItemsFront ) {
-        return ( numberOfBags * options.quantityPerBag ) + numberOfItemsBack + numberOfItemsFront;
+      [ this.numberOfBagsProperty, this.numberOfItemsProperty ],
+      function( numberOfBags, numberOfItems ) {
+        return ( numberOfBags * options.quantityPerBag ) + numberOfItems;
       } );
 
     // @public dispose required
@@ -110,18 +77,12 @@ define( function( require ) {
 
   unitRates.register( 'Scale', Scale );
 
-  return inherit( Object, Scale, {
-
-    // @public
-    reset: function() {
-      this.bagRow.reset();
-      this.itemRowBack.reset();
-      this.itemRowFront.reset();
-    },
+  return inherit( ShoppingContainer, Scale, {
 
     // @public
     dispose: function() {
      this.disposeScale();
+     ShoppingContainer.prototype.dispose.call( this );
     }
   } );
 } );

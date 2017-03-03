@@ -256,7 +256,8 @@ define( function( require ) {
         for ( var j = 0; j < this.quantityPerBag; j++ ) {
 
           // bottom or top row?
-          var itemRow = ( numberOfItemsAdded < this.shelf.itemRowBack.getNumberOfCells() ) ? this.shelf.itemRowBack : this.shelf.itemRowFront;
+          var itemRow = ( numberOfItemsAdded < this.shelf.backItemRow.getNumberOfCells() ) ?
+                        this.shelf.backItemRow : this.shelf.frontItemRow;
 
           // cell and location on shelf
           var itemCellIndex = itemRow.getFirstUnoccupiedCell();
@@ -348,10 +349,10 @@ define( function( require ) {
           for ( var j = 0; j < items.length; j++ ) {
 
             // find an unoccupied cell on the shelf
-            var itemRow = this.shelf.itemRowBack;
+            var itemRow = this.shelf.backItemRow;
             var itemCellIndex = itemRow.getFirstUnoccupiedCell();
             if ( itemCellIndex === -1 ) {
-              itemRow = this.shelf.itemRowFront;
+              itemRow = this.shelf.frontItemRow;
               itemCellIndex = itemRow.getFirstUnoccupiedCell();
             }
             assert && assert( itemCellIndex !== -1, 'shelf is full' );

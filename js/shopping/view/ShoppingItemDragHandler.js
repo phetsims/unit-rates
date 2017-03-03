@@ -38,24 +38,18 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
-        assert && assert( !( shelf.itemRowBack.containsMovable( item ) && scale.itemRowBack.containsMovable( item ) ),
+        assert && assert( !( shelf.containsItem( item ) && scale.containsItem( item ) ),
           'item should not be on both shelf and scale' );
 
         item.dragging = true;
         itemNode.moveToFront();
 
         // remove item from shelf or scale
-        if ( shelf.itemRowBack.containsMovable( item ) ) {
-          shelf.itemRowBack.remove( item );
+        if ( shelf.containsItem( item ) ) {
+          shelf.removeItem( item );
         }
-        else if ( shelf.itemRowFront.containsMovable( item ) ) {
-          shelf.itemRowFront.remove( item );
-        }
-        else if ( scale.itemRowBack.containsMovable( item ) ) {
-          scale.itemRowBack.remove( item );
-        }
-        else if ( scale.itemRowFront.containsMovable( item ) ) {
-          scale.itemRowFront.remove( item );
+        else if ( scale.containsItem( item ) ) {
+          scale.removeItem( item );
         }
         else {
           // item was grabbed while animating
@@ -89,34 +83,34 @@ define( function( require ) {
         var itemContainer = ( item.locationProperty.value.y < scale.location.y + ( scale.depth / 2 ) ) ? scale : shelf;
 
         // find closest cell
-        var backCellIndex = itemContainer.itemRowBack.getClosestUnoccupiedCell( item.locationProperty.value );
-        var frontCellIndex = itemContainer.itemRowFront.getClosestUnoccupiedCell( item.locationProperty.value );
+        var backCellIndex = itemContainer.backItemRow.getClosestUnoccupiedCell( item.locationProperty.value );
+        var frontCellIndex = itemContainer.frontItemRow.getClosestUnoccupiedCell( item.locationProperty.value );
         assert && assert( !( backCellIndex === -1 && frontCellIndex === -1 ), 'scale or shelf is full' );
 
         var cellIndex = -1;
         var itemRow = null;
         if ( backCellIndex === -1 ) {
           cellIndex = frontCellIndex;
-          itemRow = itemContainer.itemRowFront;
+          itemRow = itemContainer.frontItemRow;
         }
         else if ( frontCellIndex === -1 ) {
           cellIndex = backCellIndex;
-          itemRow = itemContainer.itemRowBack;
+          itemRow = itemContainer.backItemRow;
         }
         else {
-          var backCellDistance = item.locationProperty.value.distance( itemContainer.itemRowBack.getCellLocation( backCellIndex ) );
-          var frontCellDistance = item.locationProperty.value.distance( itemContainer.itemRowFront.getCellLocation( frontCellIndex ) );
+          var backCellDistance = item.locationProperty.value.distance( itemContainer.backItemRow.getCellLocation( backCellIndex ) );
+          var frontCellDistance = item.locationProperty.value.distance( itemContainer.frontItemRow.getCellLocation( frontCellIndex ) );
           if ( backCellDistance <= frontCellDistance ) {
             cellIndex = backCellIndex;
-            itemRow = itemContainer.itemRowBack;
+            itemRow = itemContainer.backItemRow;
           }
           else {
             cellIndex = frontCellIndex;
-            itemRow = itemContainer.itemRowFront;
+            itemRow = itemContainer.frontItemRow;
           }
         }
 
-        if ( itemRow === itemContainer.itemRowBack ) {
+        if ( itemRow === itemContainer.backItemRow ) {
           itemNode.moveToBack();
         }
         else {
@@ -150,10 +144,10 @@ define( function( require ) {
 
       // find another unoccupied cell
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
-      itemRow = itemContainer.itemRowBack;
+      itemRow = itemContainer.backItemRow;
       cellIndex = itemRow.getClosestUnoccupiedCell( item.locationProperty.value );
       if ( cellIndex === -1 ) {
-        itemRow = itemContainer.itemRowFront;
+        itemRow = itemContainer.frontItemRow;
         cellIndex = itemRow.getClosestUnoccupiedCell( item.locationProperty.value );
       }
       assert && assert( cellIndex !== -1, 'all cells are occupied' );
