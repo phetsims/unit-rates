@@ -34,7 +34,7 @@ define( function( require ) {
   // constants
   var PANEL_WIDTH = 132;
   var PANEL_MIN_HEIGHT = 32;
-  var DISPLAY_X_MARGIN = 10;
+  var DISPLAY_X_MARGIN = 25;
   var DISPLAY_Y_MARGIN = 7;
 
   /**
