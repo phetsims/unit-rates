@@ -149,6 +149,7 @@ define( function( require ) {
       location: new Vector2( 512, 560 ),
       numberOfBags: this.numberOfBags,
       bagSize: bagSize,
+      bagRowYOffset: ( options.bagsOpen ? 0 : 10 ),
       numberOfItems: this.numberOfBags * this.quantityPerBag,
       itemSize: itemSize,
       itemRowOverlap: this.itemRowOverlap
