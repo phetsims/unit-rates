@@ -49,8 +49,8 @@ define( function( require ) {
     shelf: 'rgb( 174, 129, 91 )', // brown
 
     // scale
-    scaleTopLight: 'rgb( 220, 220, 220 )',
-    scaleTopDark: 'rgb( 170, 170, 170 )',
+    scaleTopLight: 'white',
+    scaleTopDark: 'rgb( 220, 220, 220 )',
     scaleBody: 'rgb( 113, 148, 152 )',
 
     // race cars

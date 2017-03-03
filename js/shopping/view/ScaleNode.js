@@ -66,7 +66,7 @@ define( function( require ) {
       .close();
 
     var topFaceNode = new Path( topFaceShape, {
-      fill: new LinearGradient( -scale.width / 2, 0, scale.width / 2, 0 )
+      fill: new LinearGradient( -topRadiusX /2, -topRadiusX /2 , topRadiusX/ 2, topRadiusX / 2)
         .addColorStop( 0, URColors.scaleTopLight )
         .addColorStop( 0.5, URColors.scaleTopDark )
         .addColorStop( 1, URColors.scaleTopLight ),
