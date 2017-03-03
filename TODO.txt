@@ -1,7 +1,7 @@
 TODO list for unit-rates
 
 High:
-Organization of items (2 rows) on shelf and scale should be transparent to ShoppingScene and ShoppingItemDragHandler
+Organization of items on shelf and scale should be transparent to ShoppingScene and ShoppingItemDragHandler
 Should items (model and view) be created in ShoppingScene and ShoppingSceneNode constructors, or when a bag opens?
 ShoppingScene constructor requires too much logic to create bags & items
 ShoppingScene.reset requires too much logic to reset bags & items
