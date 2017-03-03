@@ -58,7 +58,7 @@ define( function( require ) {
           scale.itemRowFront.remove( item );
         }
         else {
-          throw new Error( 'item is not on shelf or scale' );
+          // item was grabbed while animating
         }
 
         // compute the offset between the pointer and the item's location

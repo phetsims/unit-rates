@@ -51,6 +51,9 @@ define( function( require ) {
         else if ( scale.bagRow.containsMovable( bag ) ) {
           scale.bagRow.remove( bag );
         }
+        else {
+          // bag was grabbed while animating
+        }
 
         // compute the offset between the pointer and the bag's location
         startDragOffset = bagNode.globalToParentPoint( event.pointer.point ).minus( bag.locationProperty.value );
