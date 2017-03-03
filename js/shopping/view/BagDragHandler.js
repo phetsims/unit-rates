@@ -38,18 +38,18 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
-        assert && assert( !( shelf.bagRow.containsMovable( bag ) && scale.bagRow.containsMovable( bag ) ),
+        assert && assert( !( shelf.containsBag( bag ) && scale.containsBag( bag ) ),
           'bag should not be on both shelf and scale' );
 
         bag.dragging = true;
         bagNode.moveToFront();
 
         // remove bag from shelf or scale
-        if ( shelf.bagRow.containsMovable( bag ) ) {
-          shelf.bagRow.remove( bag );
+        if ( shelf.containsBag( bag ) ) {
+          shelf.removeBag( bag );
         }
-        else if ( scale.bagRow.containsMovable( bag ) ) {
-          scale.bagRow.remove( bag );
+        else if ( scale.containsBag( bag ) ) {
+          scale.removeBag( bag );
         }
         else {
           // bag was grabbed while animating
