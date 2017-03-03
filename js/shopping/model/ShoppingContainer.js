@@ -27,18 +27,18 @@ define( function( require ) {
 
     options = _.extend( {
 
-      location: new Vector2( 0, 0 ),
+      location: new Vector2( 0, 0 ), // {Vector2} location of the container
 
       // bags
       numberOfBags: 4, // {number} maximum number of bags on the shelf
       bagSize: new Dimension2( 100, 100 ), // {number} dimensions of each bag
-      bagRowYOffset: 0,
+      bagRowYOffset: 0, // {number} offset of bag row from the container's origin
 
       // items
-      itemSize: new Dimension2( 10, 10 ),
-      itemCellSpacing: 8,
-      backRowYOffset: 0,
-      frontRowYOffset: 0
+      itemSize: new Dimension2( 10, 10 ), // {number} dimensions of each item
+      itemCellSpacing: 8, // {number} horizontal spacing between cells in each row
+      backRowYOffset: 0, // {number} offset of items front row from the container's origin
+      frontRowYOffset: 0 // {number} offset of items back row from the container's origin
 
     }, options );
 
@@ -120,7 +120,7 @@ define( function( require ) {
      */
     containsBag: function( bag ) {
       assert && assert( bag instanceof Bag );
-      return this.bagRow.containsMovable( bag );
+      return this.bagRow.contains( bag );
     },
 
     /**
@@ -130,7 +130,7 @@ define( function( require ) {
      */
     containsItem: function( item ) {
       assert && assert( item instanceof ShoppingItem );
-      return ( this.backItemRow.containsMovable( item ) || this.frontItemRow.containsMovable( item ) );
+      return ( this.backItemRow.contains( item ) || this.frontItemRow.contains( item ) );
     },
 
     /**
@@ -152,7 +152,7 @@ define( function( require ) {
     removeItem: function( item ) {
       assert && assert( item instanceof ShoppingItem );
       assert && assert( this.containsItem( item ), 'does not contain item' );
-      if ( this.backItemRow.containsMovable( item ) ) {
+      if ( this.backItemRow.contains( item ) ) {
         this.backItemRow.remove( item );
       }
       else {

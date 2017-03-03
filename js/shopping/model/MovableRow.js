@@ -142,7 +142,7 @@ define( function( require ) {
      */
     put: function( movable, index ) {
 
-      assert && assert( !this.containsMovable( movable ),
+      assert && assert( !this.contains( movable ),
         'movable is already in row at index ' + this.indexOf( movable ) );
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
       assert && assert( this.isEmptyCell( index ), 'cell is occupied: ' + index );
@@ -173,7 +173,7 @@ define( function( require ) {
      * @returns {boolean}
      * @public
      */
-    containsMovable: function( movable ) {
+    contains: function( movable ) {
       return ( this.indexOf( movable ) !== -1 );
     },
 
