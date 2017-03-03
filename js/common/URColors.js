@@ -46,7 +46,7 @@ define( function( require ) {
     showAnswers: 'lightGray', // show answers in this color when 'showAnswers' query parameter is present
 
     // shelf
-    shelf: 'rgb( 232, 201, 166 )',
+    shelf: 'rgb( 174, 129, 91 )', // brown
 
     // scale
     scaleTopLight: 'white',
