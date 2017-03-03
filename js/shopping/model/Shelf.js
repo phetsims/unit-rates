@@ -25,7 +25,6 @@ define( function( require ) {
     options = _.extend( {
 
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
-      width: 350, // {number} width of the top face, at its center
 
       // MovableRow options (bags)
       numberOfBags: 4, // {number} maximum number of bags on the shelf
@@ -41,7 +40,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.location = options.location;
-    this.width = options.width;
+    this.width = 350; // {number} width of the top face, at its center
     this.height = 15; // {number} height of the front face
     this.depth = 45; // {number} depth, after flattening to 2D
     this.perspectiveXOffset = 30; // {number} offset for parallel perspective, after flattening to 2D
