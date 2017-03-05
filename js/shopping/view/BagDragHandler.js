@@ -83,28 +83,17 @@ define( function( require ) {
        */
       end: function( event, trail ) {
 
+        // return Node to bag layer
         bag.dragging = false;
         dragLayer.removeChild( bagNode );
         bagLayer.addChild( bagNode );
 
         // if the bag is released above the scale's surface ...
         if ( bag.locationProperty.value.y < scale.location.y + ( scale.depth / 2 ) ) {
-
-          // find closest cell on the scale
-          var scaleCellIndex = scale.bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
-          assert && assert( scaleCellIndex !== -1, 'scale is full' );
-
-          // animate to scale
-          beginAnimation( bag, scale, scaleCellIndex );
+          animateBagToContainer( bag, scale );
         }
         else {
-
-          // find closest cell on the shelf
-          var shelfCellIndex = shelf.bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
-          assert && assert( shelfCellIndex !== -1, 'shelf is full' );
-
-          // animate to shelf
-          beginAnimation( bag, shelf, shelfCellIndex );
+          animateBagToContainer( bag, shelf );
         }
       }
     } );
@@ -113,26 +102,23 @@ define( function( require ) {
   unitRates.register( 'BagDragHandler', BagDragHandler );
 
   /**
-   * Begins the animation of a bag to a specified cell (on shelf or scale).
+   * Animates a bag to the closest unoccupied cell in a container.
    * The animation will change course immediately if the specified cell becomes occupied.
    * @param {Bag} bag
    * @param {ShoppingContainer} container
-   * @param {number} cellIndex
    * @private
    */
-  function beginAnimation( bag, container, cellIndex ) {
+  function animateBagToContainer( bag, container ) {
+
+    var cellIndex = container.bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
+    assert && assert( cellIndex !== -1, 'container is full' );
 
     var cellLocation = container.bagRow.getCellLocation( cellIndex );
 
     // This function changes course to the next closest unoccupied cell.
     var changeCourse = function() {
-
-      // find another unoccupied cell
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
-      var newCellIndex = container.bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
-      assert && assert( newCellIndex !== -1, 'all cells are occupied' );
-
-      beginAnimation( bag, container, newCellIndex );
+      animateBagToContainer( bag, container );
     };
 
     // This function is called on each animation step.
@@ -149,12 +135,12 @@ define( function( require ) {
 
       if ( bag.items && ( container instanceof Scale ) ) {
 
-        // replace the bag with individual items
-        openBag( bag, container );
+        // replace the bag with individual items on the scale
+        replaceBagWithItems( bag, container );
       }
       else if ( container.bagRow.isEmptyCell( cellIndex ) ) {
 
-        // the cell is still empty when we reach it, put the bag in that cell
+        // the cell is still unoccupied when we reached it, put the bag in that cell
         container.bagRow.put( bag, cellIndex );
       }
       else {
@@ -176,7 +162,7 @@ define( function( require ) {
    * @param {Bag} bag
    * @param {Scale} scale
    */
-  function openBag( bag, scale ) {
+  function replaceBagWithItems( bag, scale ) {
 
     assert && assert( scale instanceof Scale );
 
