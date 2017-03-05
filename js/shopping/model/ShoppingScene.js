@@ -303,8 +303,6 @@ define( function( require ) {
     reset: function() {
 
       this.rate.reset();
-      this.scale.reset();
-      this.shelf.reset();
 
       // reset questions
       this.unitRateQuestion.reset();
@@ -314,6 +312,22 @@ define( function( require ) {
         } );
       } );
       this.questionSetsIndexProperty.reset();
+
+      this.resetShelfAndScale();
+
+      // reset these last, since moving bags and items can create markers
+      this.doubleNumberLine.reset();
+      this.markerEditor.reset();
+    },
+
+    /**
+     * Resets the shelf and scale, returning all bags and items to the shelf.
+     * @public
+     */
+    resetShelfAndScale: function() {
+
+      this.scale.reset();
+      this.shelf.reset();
 
       // return all bags to shelf
       for ( var i = 0; i < this.bags.length; i++ ) {
@@ -332,10 +346,6 @@ define( function( require ) {
           }
         }
       }
-
-      // reset these last, since moving bags and items can create markers
-      this.doubleNumberLine.reset();
-      this.markerEditor.reset();
     },
 
     /**

@@ -64,7 +64,7 @@ define( function( require ) {
     // button that resets the shelf to its initial state, dispose required
     var resetShelfButton = new ResetButton( {
       listener: function() {
-        //TODO implement resetShelfButton listener, https://github.com/phetsims/unit-rates/issues/156
+        shoppingScene.resetShelfAndScale();
       },
       baseColor: URColors.resetShelfButton,
       scale: 0.65,
@@ -73,11 +73,11 @@ define( function( require ) {
       top: scaleNode.bottom + 20
     } );
 
-    // Disable the button when the shelf and scale are in their initial state.
-    var quantityObserver = function( quantity ) {
-      //TODO disable resetShelfButton, https://github.com/phetsims/unit-rates/issues/156
+    // Disable the button when all bags are on the shelf
+    var numberOfBagsObserver = function( numberOfBags ) {
+      resetShelfButton.enabled = ( numberOfBags !== shoppingScene.numberOfBags );
     };
-    shoppingScene.scale.quantityProperty.link( quantityObserver ); // unlink in dispose
+    shoppingScene.shelf.numberOfBagsProperty.link( numberOfBagsObserver ); // unlink in dispose
 
     // layers for bags and items
     var dragLayer = new Node(); // all Nodes are in this layer while being dragged
@@ -135,7 +135,7 @@ define( function( require ) {
     // @private
     this.disposeShoppingSceneNode = function() {
 
-      shoppingScene.scale.quantityProperty.unlink( quantityObserver );
+      shoppingScene.shelf.numberOfBagsProperty.link( numberOfBagsObserver );
 
       doubleNumberLineAccordionBox.dispose();
       questionsAccordionBox.dispose();
