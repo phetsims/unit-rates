@@ -1,7 +1,6 @@
 TODO list for unit-rates
 
 High:
-Duplication between ShoppingSceneNode and ShoppingLabSceneNode
 Duplication in BagDragHandler
 
 Medium:
