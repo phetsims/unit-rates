@@ -121,18 +121,21 @@ define( function( require ) {
 
     Node.call( this, options );
 
+    // Debug: show the cells that bags and items can occupy on the shelf and scale
     if ( URQueryParameters.showCells ) {
 
       // cells for bags
-      this.addChild( new RowOfMovablesNode( shoppingScene.shelf.bagRow, { stroke: 'green' } ) );
-      this.addChild( new RowOfMovablesNode( shoppingScene.scale.bagRow, { stroke: 'green' } ) );
+      var bagRowOptions = { stroke: 'green' };
+      this.addChild( new RowOfMovablesNode( shoppingScene.shelf.bagRow, bagRowOptions ) );
+      this.addChild( new RowOfMovablesNode( shoppingScene.scale.bagRow, bagRowOptions ) );
 
       // cells for items
       if ( bagsOpen ) {
-        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.backItemRow, { stroke: 'blue' } ) );
-        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.frontItemRow, { stroke: 'blue' } ) );
-        this.addChild( new RowOfMovablesNode( shoppingScene.scale.backItemRow, { stroke: 'blue' } ) );
-        this.addChild( new RowOfMovablesNode( shoppingScene.scale.frontItemRow, { stroke: 'blue' } ) );
+        var itemRowOptions = { stroke: 'blue' };
+        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.backItemRow, itemRowOptions ) );
+        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.frontItemRow, itemRowOptions ) );
+        this.addChild( new RowOfMovablesNode( shoppingScene.scale.backItemRow, itemRowOptions ) );
+        this.addChild( new RowOfMovablesNode( shoppingScene.scale.frontItemRow, itemRowOptions ) );
       }
     }
 
