@@ -47,7 +47,7 @@ define( function( require ) {
 
   unitRates.register( 'URQueryParameters', URQueryParameters );
 
-  //TODO if this is a production version, URQueryParameters.showAnswers = false; See https://github.com/phetsims/unit-rates/issues/160
+  //FUTURE if this is a production version, URQueryParameters.showAnswers = false; See https://github.com/phetsims/unit-rates/issues/160
 
   // enable logging to the console
   if ( URQueryParameters.log ) {
