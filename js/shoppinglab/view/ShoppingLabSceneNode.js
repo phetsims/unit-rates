@@ -39,8 +39,8 @@ define( function( require ) {
 
     // Double number line, dispose required
     var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
-      axisViewLength: 816, // determined empirically, to take up the full width of the screen
-      expandedProperty: viewProperties.doubleNumberLineExpandedProperty,                  
+      axisViewLength: URConstants.SHOPPING_AXIS_LENGTH,
+      expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
       left: layoutBounds.minX + URConstants.SCREEN_X_MARGIN,
       top: layoutBounds.minY + URConstants.SCREEN_Y_MARGIN
     } );
@@ -96,7 +96,7 @@ define( function( require ) {
     var bagsOpen = false;
     shoppingScene.bags.forEach( function( bag ) {
 
-      // bag
+      // create the bag's Node, put it in the bag layer
       bagLayer.addChild( new BagNode( bag, shoppingScene.shelf, shoppingScene.scale, bagLayer, dragLayer ) );
 
       // optional items in the bag
@@ -150,9 +150,9 @@ define( function( require ) {
       shelfNode.dispose();
       resetShelfButton.dispose();
 
-      bagLayer.getChildren().forEach( function( bagNode ) {
-        assert && assert( bagNode instanceof BagNode );
-        bagNode.dispose();
+      bagLayer.getChildren().forEach( function( node ) {
+        assert && assert( node instanceof BagNode );
+        ndoe.dispose();
       } );
 
       frontItemLayer.getChildren().forEach( function( node ) {
