@@ -180,8 +180,8 @@ define( function( require ) {
           else {
 
             // compare distance between front and back row, put in closest
-            var backCellDistance = item.locationProperty.value.distance( scale.backItemRow.getCellLocation( backCellIndex ) );
-            var frontCellDistance = item.locationProperty.value.distance( scale.frontItemRow.getCellLocation( frontCellIndex ) );
+            var backCellDistance = cellLocation.distance( scale.backItemRow.getCellLocation( backCellIndex ) );
+            var frontCellDistance = cellLocation.distance( scale.frontItemRow.getCellLocation( frontCellIndex ) );
             if ( frontCellDistance < backCellDistance ) {
               scale.frontItemRow.put( item, frontCellIndex );
             }
