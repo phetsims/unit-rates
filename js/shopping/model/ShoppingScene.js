@@ -170,6 +170,9 @@ define( function( require ) {
     // The marker that corresponds to what's currently on the scale
     var scaleMarker = null;
 
+    // @private flag to disable creation of spurious markers during reset
+    this.createMarkerEnabled = true;
+
     // Create a marker when what's on the scale changes
     this.scale.quantityProperty.lazyLink( function( quantity ) {
 
@@ -180,7 +183,7 @@ define( function( require ) {
       }
 
       // the new marker for what's on the scale
-      if ( quantity > 0 ) {
+      if ( quantity > 0 & self.createMarkerEnabled ) {
         scaleMarker = new Marker( self.scale.costProperty.value, quantity, 'scale', {
           isMajor: true, // all scale markers are major, per the design document
           color: URColors.scaleMarker,
@@ -326,9 +329,13 @@ define( function( require ) {
      */
     resetShelfAndScale: function() {
 
-      // clear all cells on the shelf and scale
+      // clear all cells on the shelf
       this.shelf.reset();
+
+      // clear all cells on the scale
+      this.createMarkerEnabled = false; // prevent creation of spurious markers
       this.scale.reset();
+      this.createMarkerEnabled = true;
 
       for ( var i = 0; i < this.bags.length; i++ ) {
 
