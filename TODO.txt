@@ -7,7 +7,6 @@ When selected item changes: cancel marker editor animation (TWEEN), cancel bag/i
 If marker editor is on it's way home when Reset All is pressed, it doesn't move immediately to home.
 Handle cancellation of drags?
 
-
 Performance:
 Reset All is a bit laggy on iPad
 Switching items is a bit laggy on iPad
