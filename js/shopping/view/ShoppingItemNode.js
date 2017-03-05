@@ -19,9 +19,12 @@ define( function( require ) {
    * @param {ShoppingItem} item
    * @param {Shelf} shelf
    * @param {Scale} scale
+   * @param {Node} frontItemLayer
+   * @param {Node} backItemLayer
+   * @param {Node} dragLayer
    * @constructor
    */
-  function ShoppingItemNode( item, shelf, scale ) {
+  function ShoppingItemNode( item, shelf, scale, frontItemLayer, backItemLayer, dragLayer ) {
 
     var self = this;
 
@@ -46,7 +49,7 @@ define( function( require ) {
     item.locationProperty.link( locationObserver ); // must be unlinked in dispose
 
     // @private drag handler
-    this.dragHandler = new ShoppingItemDragHandler( this, item, shelf, scale );
+    this.dragHandler = new ShoppingItemDragHandler( this, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer );
     this.addInputListener( self.dragHandler );
 
     // @private

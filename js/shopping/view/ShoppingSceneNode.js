@@ -77,25 +77,43 @@ define( function( require ) {
     };
     shoppingScene.scale.quantityProperty.link( quantityObserver ); // unlink in dispose
 
+    // layers for bags and items
+    var dragLayer = new Node(); // all Nodes are in this layer while being dragged
+    var bagLayer = new Node();  // the row of bags
+    var frontItemLayer = new Node(); // the front row of items
+    var backItemLayer = new Node(); // the back row of items
+
     // bags and items, dispose required
-    var bagsParent = new Node();
-    var itemsParent = new Node();
     shoppingScene.bags.forEach( function( bag ) {
 
-      // bag
-      bagsParent.addChild( new BagNode( bag, shoppingScene.shelf, shoppingScene.scale ) );
+      // create the bag's Node, put it in the bag layer
+      bagLayer.addChild( new BagNode( bag, shoppingScene.shelf, shoppingScene.scale, bagLayer, dragLayer ) );
 
       // optional items in the bag
       if ( bag.items ) {
         bag.items.forEach( function( item ) {
-          itemsParent.addChild( new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale ) );
+
+          // create the item's Node
+          var itemNode = new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
+            frontItemLayer, backItemLayer, dragLayer );
+
+          // put the item's Node in the proper layer
+          if ( shoppingScene.shelf.isItemInFrontRow( item ) || shoppingScene.scale.isItemInFrontRow( item ) ) {
+            frontItemLayer.addChild( itemNode );
+          }
+          else {
+            backItemLayer.addChild( itemNode );
+          }
         } );
       }
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ doubleNumberLineAccordionBox, questionsAccordionBox,
-      scaleNode, shelfNode, resetShelfButton, bagsParent, itemsParent ];
+    options.children = [
+      doubleNumberLineAccordionBox, questionsAccordionBox,
+      scaleNode, shelfNode, resetShelfButton,
+      bagLayer, backItemLayer, frontItemLayer, dragLayer
+    ];
 
     Node.call( this, options );
 
@@ -110,12 +128,17 @@ define( function( require ) {
       scaleNode.dispose();
       resetShelfButton.dispose();
 
-      bagsParent.getChildren().forEach( function( node ) {
+      bagLayer.getChildren().forEach( function( node ) {
         assert && assert( node instanceof BagNode );
         node.dispose();
       } );
 
-      itemsParent.getChildren().forEach( function( node ) {
+      frontItemLayer.getChildren().forEach( function( node ) {
+        assert && assert( node instanceof ShoppingItemNode );
+        node.dispose();
+      } );
+
+      backItemLayer.getChildren().forEach( function( node ) {
         assert && assert( node instanceof ShoppingItemNode );
         node.dispose();
       } );

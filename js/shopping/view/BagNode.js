@@ -19,9 +19,11 @@ define( function( require ) {
    * @param {Bag} bag
    * @param {Shelf} shelf
    * @param {Scale} scale
+   * @param {Node} bagLayer
+   * @param {Node} dragLayer
    * @constructor
    */
-  function BagNode( bag, shelf, scale ) {
+  function BagNode( bag, shelf, scale, bagLayer, dragLayer ) {
 
     var self = this;
 
@@ -42,7 +44,7 @@ define( function( require ) {
     bag.locationProperty.link( locationObserver ); // must be unlinked in dispose
 
     // @private drag handler
-    this.dragHandler = new BagDragHandler( this, bag, shelf, scale );
+    this.dragHandler = new BagDragHandler( this, bag, shelf, scale, bagLayer, dragLayer );
     this.addInputListener( self.dragHandler );
 
     // @private

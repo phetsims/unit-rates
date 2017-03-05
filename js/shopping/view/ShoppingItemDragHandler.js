@@ -18,9 +18,12 @@ define( function( require ) {
    * @param {item} item
    * @param {Shelf} shelf
    * @param {Scale} scale
+   * @param {Node} frontItemLayer
+   * @param {Node} backItemLayer
+   * @param {Node} dragLayer
    * @constructor
    */
-  function ShoppingItemDragHandler( itemNode, item, shelf, scale ) {
+  function ShoppingItemDragHandler( itemNode, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer ) {
 
     // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
     var startDragOffset;
@@ -38,11 +41,15 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
+        assert && assert( frontItemLayer.hasChild( itemNode ) || backItemLayer.hasChild( itemNode ) );
         assert && assert( !( shelf.containsItem( item ) && scale.containsItem( item ) ),
           'item should not be on both shelf and scale' );
 
+        // move Node to the drag layer
         item.dragging = true;
-        itemNode.moveToFront();
+        frontItemLayer.hasChild( itemNode ) && frontItemLayer.removeChild( itemNode );
+        backItemLayer.hasChild( itemNode ) && backItemLayer.removeChild( itemNode );
+        dragLayer.addChild( itemNode );
 
         // remove item from shelf or scale
         if ( shelf.containsItem( item ) ) {
@@ -110,11 +117,13 @@ define( function( require ) {
           }
         }
 
+        // move Node to front or back item layer
+        dragLayer.removeChild( itemNode );
         if ( itemRow === shoppingContainer.backItemRow ) {
-          itemNode.moveToBack();
+          backItemLayer.addChild( itemNode );
         }
         else {
-          itemNode.moveToFront();
+          frontItemLayer.addChild( itemNode );
         }
 
         // animate to scale

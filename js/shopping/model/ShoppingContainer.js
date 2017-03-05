@@ -158,6 +158,15 @@ define( function( require ) {
       else {
         this.frontItemRow.remove( item );
       }
+    },
+
+    /**
+     * Is the specific item in the front row?
+     * @param {ShoppingItem} item
+     * @returns {boolean}
+     */
+    isItemInFrontRow: function( item ) {
+      return this.frontItemRow.contains( item );
     }
   } );
 } );

@@ -18,9 +18,11 @@ define( function( require ) {
    * @param {Bag} bag
    * @param {Shelf} shelf
    * @param {Scale} scale
+   * @param {Node} bagLayer
+   * @param {Node} dragLayer
    * @constructor
    */
-  function BagDragHandler( bagNode, bag, shelf, scale ) {
+  function BagDragHandler( bagNode, bag, shelf, scale, bagLayer, dragLayer ) {
 
     // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
     var startDragOffset;
@@ -38,11 +40,14 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // prerequisites for the drag sequence
+        assert && assert( bagLayer.hasChild( bagNode ) );
         assert && assert( !( shelf.containsBag( bag ) && scale.containsBag( bag ) ),
           'bag should not be on both shelf and scale' );
 
+        // move Node to the drag layer
         bag.dragging = true;
-        bagNode.moveToFront();
+        bagLayer.removeChild( bagNode );
+        dragLayer.addChild( bagNode );
 
         // remove bag from shelf or scale
         if ( shelf.containsBag( bag ) ) {
@@ -78,6 +83,8 @@ define( function( require ) {
       end: function( event, trail ) {
 
         bag.dragging = false;
+        dragLayer.removeChild( bagNode );
+        bagLayer.addChild( bagNode );
 
         // if the bag is released above the scale's surface ...
         if ( bag.locationProperty.value.y < scale.location.y + ( scale.depth / 2 ) ) {
