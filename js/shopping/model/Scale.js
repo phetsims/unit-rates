@@ -35,7 +35,7 @@ define( function( require ) {
       bagRowYOffset: 5, // {number} offset of bag row from scale origin
       numberOfItems: 15, // {number} maximum number of items on the shelf
       itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
-      backRowYOffset: -8, // // {number} offset of items back row from scale origin
+      backRowYOffset: -4, // // {number} offset of items back row from scale origin
       frontRowYOffset: 12 // // {number} offset of items front row from scale origin
 
     }, options );
