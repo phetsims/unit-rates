@@ -127,7 +127,6 @@ define( function( require ) {
         }
 
         // animate to scale
-        unitRates.log && unitRates.log( 'animating to cell ' + cellIndex );
         beginAnimation( item, cellIndex, shoppingContainer, itemRow );
       }
     } );

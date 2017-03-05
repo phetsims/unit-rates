@@ -94,7 +94,6 @@ define( function( require ) {
           assert && assert( scaleCellIndex !== -1, 'scale is full' );
 
           // animate to scale
-          unitRates.log && unitRates.log( 'animating to scale cell ' + scaleCellIndex );
           beginAnimationToScale( bag, scale, scaleCellIndex );
         }
         else {
@@ -104,7 +103,6 @@ define( function( require ) {
           assert && assert( shelfCellIndex !== -1, 'shelf is full' );
 
           // animate to shelf
-          unitRates.log && unitRates.log( 'animating to shelf cell ' + shelfCellIndex );
           beginAnimationToShelf( bag, shelf, shelfCellIndex );
         }
       }
