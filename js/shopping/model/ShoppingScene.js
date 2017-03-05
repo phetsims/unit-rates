@@ -326,10 +326,10 @@ define( function( require ) {
      */
     resetShelfAndScale: function() {
 
-      this.scale.reset();
+      // clear all cells on the shelf and scale
       this.shelf.reset();
+      this.scale.reset();
 
-      // return all bags to shelf
       for ( var i = 0; i < this.bags.length; i++ ) {
 
         // return bag to shelf
@@ -338,7 +338,7 @@ define( function( require ) {
         this.shelf.bagRow.put( this.bags[ i ], bagCellIndex );
         this.bags[ i ].visibleProperty.value = true;
 
-        // reset items, makes them invisible
+        // reset items, making them invisible
         var items = this.bags[ i ].items;
         if ( items ) {
           for ( var j = 0; j < items.length; j++ ) {
