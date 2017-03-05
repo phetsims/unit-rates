@@ -1,20 +1,10 @@
 TODO list for unit-rates
 
-High:
-Bags should pop to front when drag starts, need a common drag layer for bags & items.
-After Reset All, front/back items are not in correct rendering order
-Organization of items on shelf and scale should be transparent to ShoppingScene and ShoppingItemDragHandler
-Should items (model and view) be created in ShoppingScene and ShoppingSceneNode constructors, or when a bag opens?
-ShoppingScene constructor requires too much logic to create bags & items
-ShoppingScene.reset requires too much logic to reset bags & items
-
 Medium:
-resetShelfButton, https://github.com/phetsims/unit-rates/issues/156
 When selected item changes: cancel marker editor animation (TWEEN), cancel bag/item animations (model.step), cancel drags.
 If marker editor is on it's way home when Reset All is pressed, it doesn't move immediately to home.
 Handle cancellation of drags?
 Duplication between ShoppingSceneNode and ShoppingLabSceneNode
-Duplication between Shelf and Scale
 
 Performance:
 Reset All is a bit laggy on iPad
