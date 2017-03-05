@@ -245,6 +245,15 @@ define( function( require ) {
      */
     isValidCellIndex: function( index ) {
       return ( ( typeof index === 'number' ) && !isNaN( index ) && index >= 0 && index < this.cells.length );
+    },
+
+    /**
+     * For use only by debug code in RowOfMovablesNode.
+     * @returns {*[]}
+     * @private
+     */
+    getCells: function() {
+      return this.cells;
     }
   } );
 } );

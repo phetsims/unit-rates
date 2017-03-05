@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
+  var RowOfMovablesNode = require( 'UNIT_RATES/shopping/view/RowOfMovablesNode' );
   var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
   var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
   var ShoppingItemNode = require( 'UNIT_RATES/shopping/view/ShoppingItemNode' );
@@ -21,6 +22,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {ShoppingScene} shoppingScene
@@ -84,6 +86,7 @@ define( function( require ) {
     var backItemLayer = new Node(); // the back row of items
 
     // bags and items, dispose required
+    var bagsOpen = false;
     shoppingScene.bags.forEach( function( bag ) {
 
       // create the bag's Node, put it in the bag layer
@@ -91,6 +94,7 @@ define( function( require ) {
 
       // optional items in the bag
       if ( bag.items ) {
+        bagsOpen = true;
         bag.items.forEach( function( item ) {
 
           // create the item's Node, adds itself to the proper layer
@@ -109,6 +113,21 @@ define( function( require ) {
     ];
 
     Node.call( this, options );
+
+    if ( URQueryParameters.showCells ) {
+
+      // cells for bags
+      this.addChild( new RowOfMovablesNode( shoppingScene.shelf.bagRow, { stroke: 'red' } ) );
+      this.addChild( new RowOfMovablesNode( shoppingScene.scale.bagRow, { stroke: 'red' } ) );
+
+      // cells for items
+      if ( bagsOpen ) {
+        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.backItemRow, { stroke: 'blue' } ) );
+        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.frontItemRow, { stroke: 'blue' } ) );
+        this.addChild( new RowOfMovablesNode( shoppingScene.scale.backItemRow, { stroke: 'blue' } ) );
+        this.addChild( new RowOfMovablesNode( shoppingScene.scale.frontItemRow, { stroke: 'blue' } ) );
+      }
+    }
 
     // @private
     this.disposeShoppingSceneNode = function() {
