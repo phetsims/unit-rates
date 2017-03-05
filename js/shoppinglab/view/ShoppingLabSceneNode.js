@@ -152,7 +152,7 @@ define( function( require ) {
 
       bagLayer.getChildren().forEach( function( node ) {
         assert && assert( node instanceof BagNode );
-        ndoe.dispose();
+        node.dispose();
       } );
 
       frontItemLayer.getChildren().forEach( function( node ) {
