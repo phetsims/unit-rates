@@ -126,8 +126,7 @@ define( function( require ) {
           frontItemLayer.addChild( itemNode );
         }
 
-        // animate to scale
-        beginAnimation( item, cellIndex, shoppingContainer, itemRow );
+        animateItemToContainer( item, shoppingContainer, itemRow, cellIndex );
       }
     } );
   }
@@ -135,21 +134,22 @@ define( function( require ) {
   unitRates.register( 'ShoppingItemDragHandler', ShoppingItemDragHandler );
 
   /**
-   * Begins the animation of an item to a specified cell (on shelf or scale).
+   * Animates an item to a specified cell in a container.
    * The animation will change course immediately if the specified cell becomes occupied.
    * @param {ShoppingItem} item
-   * @param {number} cellIndex
    * @param {ShoppingContainer} shoppingContainer
    * @param {RowOfMovables} itemRow
+   * @param {number} cellIndex
    * @private
    */
-  function beginAnimation( item, cellIndex, shoppingContainer, itemRow ) {
+  function animateItemToContainer( item, shoppingContainer, itemRow, cellIndex ) {
 
     var cellLocation = itemRow.getCellLocation( cellIndex );
 
     // This function changes course to the next closest unoccupied cell.
     var changeCourse = function() {
 
+      //TODO this should be similar to algorithm in 'end' of drag sequence
       // find another unoccupied cell
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
       itemRow = shoppingContainer.backItemRow;
@@ -160,7 +160,7 @@ define( function( require ) {
       }
       assert && assert( cellIndex !== -1, 'all cells are occupied' );
 
-      beginAnimation( item, cellIndex, shoppingContainer, itemRow );
+      animateItemToContainer( item, shoppingContainer, itemRow, cellIndex );
     };
 
     // This function is called on each animation step.
@@ -176,7 +176,7 @@ define( function( require ) {
     var animationCompletedCallback = function() {
       if ( itemRow.isEmptyCell( cellIndex ) ) {
 
-        // the cell is still empty when we reach it, put the item in that cell
+        // the cell is still unoccupied when we reached it, put the item in that cell
         itemRow.put( item, cellIndex );
       }
       else {

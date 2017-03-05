@@ -1,5 +1,7 @@
 TODO list for unit-rates
 
+Clean up selection of closest cell in ShoppingItemDragHandler, use in both 'end' and 'changeCourse'
+
 Medium:
 When selected item changes: cancel marker editor animation (TWEEN), cancel bag/item animations (model.step), cancel drags.
 If marker editor is on it's way home when Reset All is pressed, it doesn't move immediately to home.
