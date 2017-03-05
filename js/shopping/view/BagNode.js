@@ -43,6 +43,11 @@ define( function( require ) {
     };
     bag.locationProperty.link( locationObserver ); // must be unlinked in dispose
 
+    var visibleObserver = function( visible ) {
+      self.visible = visible;
+    };
+    bag.visibleProperty.link( visibleObserver ); // unlink in dispose
+
     // @private drag handler
     this.dragHandler = new BagDragHandler( this, bag, shelf, scale, bagLayer, dragLayer );
     this.addInputListener( self.dragHandler );
@@ -50,6 +55,7 @@ define( function( require ) {
     // @private
     this.disposeBagNode = function() {
       bag.locationProperty.unlink( locationObserver );
+      bag.visibleProperty.unlink( visibleObserver );
       self.removeInputListener( self.dragHandler );
     };
   }

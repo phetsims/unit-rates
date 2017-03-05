@@ -93,17 +93,10 @@ define( function( require ) {
       if ( bag.items ) {
         bag.items.forEach( function( item ) {
 
-          // create the item's Node
+          // create the item's Node, adds itself to the proper layer
+          // eslint-disable-next-line no-unused-vars
           var itemNode = new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
             frontItemLayer, backItemLayer, dragLayer );
-
-          // put the item's Node in the proper layer
-          if ( shoppingScene.shelf.isItemInFrontRow( item ) || shoppingScene.scale.isItemInFrontRow( item ) ) {
-            frontItemLayer.addChild( itemNode );
-          }
-          else {
-            backItemLayer.addChild( itemNode );
-          }
         } );
       }
     } );

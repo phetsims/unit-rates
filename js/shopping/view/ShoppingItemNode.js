@@ -37,7 +37,7 @@ define( function( require ) {
       cursor: 'pointer'
     } );
 
-    //TODO is this right for items?
+    //TODO make this go away
     // Offset slightly, so that item sit on the shelf and scale more naturally, determined empirically.
     var yOffset = ( 0.07 * self.height );
 
@@ -48,6 +48,22 @@ define( function( require ) {
     };
     item.locationProperty.link( locationObserver ); // must be unlinked in dispose
 
+    var visibleObserver = function( visible ) {
+      self.visible = visible;
+      if ( visible ) {
+        self.getParent() && self.getParent().removeChild( self );
+
+        // put the Node in the proper layer
+        if ( shelf.isItemInFrontRow( item ) || scale.isItemInFrontRow( item ) ) {
+          frontItemLayer.addChild( self );
+        }
+        else {
+          backItemLayer.addChild( self );
+        }
+      }
+    };
+    item.visibleProperty.link( visibleObserver ); // unlink in dispose
+
     // @private drag handler
     this.dragHandler = new ShoppingItemDragHandler( this, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer );
     this.addInputListener( self.dragHandler );
@@ -55,6 +71,7 @@ define( function( require ) {
     // @private
     this.disposeShoppingItemNode = function() {
       item.locationProperty.unlink( locationObserver );
+      item.visibleProperty.unlink( visibleObserver );
       self.removeInputListener( self.dragHandler );
     };
   }

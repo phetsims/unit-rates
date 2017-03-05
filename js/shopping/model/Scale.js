@@ -54,10 +54,18 @@ define( function( require ) {
     this.perspectiveXOffset = 30; // {number} offset for parallel perspective, after flattening to 2D
 
     // @public
+    this.quantityUpdateEnabled = true;
+
+    // @public
     this.quantityProperty = new DerivedProperty(
       [ this.numberOfBagsProperty, this.numberOfItemsProperty ],
       function( numberOfBags, numberOfItems ) {
-        return ( numberOfBags * options.quantityPerBag ) + numberOfItems;
+        if ( self.quantityUpdateEnabled ) {
+          return ( numberOfBags * options.quantityPerBag ) + numberOfItems;
+        }
+        else {
+          return self.quantityProperty.value;
+        }
       } );
 
     // @public dispose required

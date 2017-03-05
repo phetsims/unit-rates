@@ -11,6 +11,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URMovable = require( 'UNIT_RATES/common/model/URMovable' );
   var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
@@ -25,6 +26,8 @@ define( function( require ) {
 
     options = _.extend( {
 
+      visible: true, // {boolean} is the bag initially visible?
+
       // {ShoppingItem[]|null} items in the bag, null means the bag does not open when placed on the scale
       items: null,
 
@@ -38,10 +41,20 @@ define( function( require ) {
     this.image = image;
     this.items = options.items;
 
+    // @public
+    this.visibleProperty = new Property( options.visible );
+
     URMovable.call( this, options );
   }
 
   unitRates.register( 'Bag', Bag );
 
-  return inherit( URMovable, Bag );
+  return inherit( URMovable, Bag, {
+
+    // @public
+    reset: function() {
+      this.visibleProperty.reset();
+      URMovable.prototype.reset.call( this );
+    }
+  } );
 } );

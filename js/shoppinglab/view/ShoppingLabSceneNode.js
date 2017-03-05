@@ -99,9 +99,11 @@ define( function( require ) {
       // optional items in the bag
       if ( bag.items ) {
         bag.items.forEach( function( item ) {
-          //TODO some of these should be in backItemLayer
-          frontItemLayer.addChild( new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
-            frontItemLayer, backItemLayer, dragLayer ) );
+
+          // create the item's Node, adds itself to the proper layer
+          // eslint-disable-next-line no-unused-vars
+          var itemNode = new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
+            frontItemLayer, backItemLayer, dragLayer );
         } );
       }
     } );

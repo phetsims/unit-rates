@@ -238,9 +238,8 @@ define( function( require ) {
       } );
     } );
 
-    // @public (read-only) create bags and items on the shelf
+    // @public (read-only) create bags and items
     this.bags = [];
-    var numberOfItemsAdded = 0;
     for ( var i = 0; i < this.numberOfBags; i++ ) {
 
       // the bag's location on the shelf
@@ -255,25 +254,11 @@ define( function( require ) {
         items = [];
         for ( var j = 0; j < this.quantityPerBag; j++ ) {
 
-          // bottom or top row?
-          var itemRow = ( numberOfItemsAdded < this.shelf.backItemRow.getNumberOfCells() ) ?
-                        this.shelf.backItemRow : this.shelf.frontItemRow;
-
-          // cell and location on shelf
-          var itemCellIndex = itemRow.getFirstUnoccupiedCell();
-          assert && assert( itemCellIndex !== -1, 'shelf is full' );
-          var itemLocation = itemRow.getCellLocation( itemCellIndex );
-
-          // create item
+          // create item, initially invisible and not on shelf or scale
           var item = new ShoppingItem( this.pluralName, this.itemImage, {
-            location: itemLocation
+            visible: false
           } );
           items.push( item );
-
-          // put item on shelf
-          itemRow.put( item, itemCellIndex );
-
-          numberOfItemsAdded++;
         }
       }
 
@@ -318,9 +303,6 @@ define( function( require ) {
     reset: function() {
 
       this.rate.reset();
-
-      this.doubleNumberLine.reset();
-      this.markerEditor.reset();
       this.scale.reset();
       this.shelf.reset();
 
@@ -333,7 +315,6 @@ define( function( require ) {
       } );
       this.questionSetsIndexProperty.reset();
 
-      //TODO this is much too complicated, and possibly incomplete
       // return all bags to shelf
       for ( var i = 0; i < this.bags.length; i++ ) {
 
@@ -341,27 +322,20 @@ define( function( require ) {
         var bagCellIndex = this.shelf.bagRow.getFirstUnoccupiedCell();
         assert && assert( bagCellIndex !== -1, 'shelf is full' );
         this.shelf.bagRow.put( this.bags[ i ], bagCellIndex );
+        this.bags[ i ].visibleProperty.value = true;
 
-        // return bag's items to shelf
+        // reset items, makes them invisible
         var items = this.bags[ i ].items;
         if ( items ) {
-
           for ( var j = 0; j < items.length; j++ ) {
-
-            // find an unoccupied cell on the shelf
-            var itemRow = this.shelf.backItemRow;
-            var itemCellIndex = itemRow.getFirstUnoccupiedCell();
-            if ( itemCellIndex === -1 ) {
-              itemRow = this.shelf.frontItemRow;
-              itemCellIndex = itemRow.getFirstUnoccupiedCell();
-            }
-            assert && assert( itemCellIndex !== -1, 'shelf is full' );
-
-            // put the item in the cell
-            itemRow.put( items[ j ], itemCellIndex );
+            items[ j ].reset();
           }
         }
       }
+
+      // reset these last, since moving bags and items can create markers
+      this.doubleNumberLine.reset();
+      this.markerEditor.reset();
     },
 
     /**

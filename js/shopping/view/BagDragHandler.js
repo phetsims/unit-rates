@@ -94,8 +94,8 @@ define( function( require ) {
           assert && assert( scaleCellIndex !== -1, 'scale is full' );
 
           // animate to scale
-          unitRates.log && unitRates.log( 'animating to scale cell ' +  scaleCellIndex );
-          beginAnimation( bag, scaleCellIndex, scale.bagRow );
+          unitRates.log && unitRates.log( 'animating to scale cell ' + scaleCellIndex );
+          beginAnimationToScale( bag, scale, scaleCellIndex );
         }
         else {
 
@@ -105,7 +105,7 @@ define( function( require ) {
 
           // animate to shelf
           unitRates.log && unitRates.log( 'animating to shelf cell ' + shelfCellIndex );
-          beginAnimation( bag, shelfCellIndex, shelf.bagRow );
+          beginAnimationToShelf( bag, shelf, shelfCellIndex );
         }
       }
     } );
@@ -117,29 +117,29 @@ define( function( require ) {
    * Begins the animation of a bag to a specified cell (on shelf or scale).
    * The animation will change course immediately if the specified cell becomes occupied.
    * @param {Bag} bag
+   * @param {Scale} scale
    * @param {number} cellIndex
-   * @param {RowOfMovables} bagRow
    * @private
    */
-  function beginAnimation( bag, cellIndex, bagRow ) {
+  function beginAnimationToScale( bag, scale, cellIndex ) {
 
-    var cellLocation = bagRow.getCellLocation( cellIndex );
+    var cellLocation = scale.bagRow.getCellLocation( cellIndex );
 
     // This function changes course to the next closest unoccupied cell.
     var changeCourse = function() {
 
       // find another unoccupied cell
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
-      var newCellIndex = bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
+      var newCellIndex = scale.bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
       assert && assert( newCellIndex !== -1, 'all cells are occupied' );
 
-      beginAnimation( bag, newCellIndex, bagRow );
+      beginAnimationToScale( bag, scale, newCellIndex );
     };
 
     // This function is called on each animation step.
     // If the target cell becomes occupied, change course immediately.
     var animationStepCallback = function() {
-      if ( !bagRow.isEmptyCell( cellIndex ) ) {
+      if ( !scale.bagRow.isEmptyCell( cellIndex ) ) {
         changeCourse();
       }
     };
@@ -148,10 +148,111 @@ define( function( require ) {
     // This function is called when animation completes.
     // If the target cell is still empty, add the bag. Otherwise animate to an unoccupied cell.
     var animationCompletedCallback = function() {
-      if ( bagRow.isEmptyCell( cellIndex ) ) {
+
+      if ( bag.items ) {
+
+        // replace bag with items
+        bag.visibleProperty.value = false;
+
+        for ( var i = 0; i < bag.items.length; i++ ) {
+
+          // Update scale quantity only for the last item.
+          // This effectively makes the addition of items atomic, resulting in only 1 marker created.
+          scale.quantityUpdateEnabled = ( i === bag.items.length - 1 );
+
+          var item = bag.items[ i ];
+
+          // find closest cells in front and back rows
+          var backCellIndex = scale.backItemRow.getClosestUnoccupiedCell( cellLocation );
+          var frontCellIndex = scale.frontItemRow.getClosestUnoccupiedCell( cellLocation );
+          assert && assert( !( backCellIndex === -1 && frontCellIndex === -1 ), 'scale is full' );
+
+          // move immediately to closest cell
+          if ( backCellIndex === -1 ) {
+
+            // back row is full, put in front row
+            scale.frontItemRow.put( item, frontCellIndex );
+          }
+          else if ( frontCellIndex === -1 ) {
+
+            // front row is full, put in back row
+            scale.backItemRow.put( item, backCellIndex );
+          }
+          else {
+
+            // compare distance between front and back row, put in closest
+            var backCellDistance = item.locationProperty.value.distance( scale.backItemRow.getCellLocation( backCellIndex ) );
+            var frontCellDistance = item.locationProperty.value.distance( scale.frontItemRow.getCellLocation( frontCellIndex ) );
+            if ( frontCellDistance < backCellDistance ) {
+              scale.frontItemRow.put( item, frontCellIndex );
+            }
+            else {
+              scale.backItemRow.put( item, backCellIndex );
+            }
+          }
+
+          item.visibleProperty.value = true;
+        }
+      }
+      else if ( scale.bagRow.isEmptyCell( cellIndex ) ) {
 
         // the cell is still empty when we reach it, put the bag in that cell
-        bagRow.put( bag, cellIndex );
+        scale.bagRow.put( bag, cellIndex );
+      }
+      else {
+
+        // the cell is occupied, try another cell
+        changeCourse();
+      }
+    };
+
+    // begin the animation
+    bag.animateTo( cellLocation, {
+      animationStepCallback: animationStepCallback,
+      animationCompletedCallback: animationCompletedCallback
+    } );
+  }
+
+  //TODO beginAnimationToShelf and beginAnimationToScale contain duplicate code
+  /**
+   * Begins the animation of a bag to a specified cell on the shelf.
+   * The animation will change course immediately if the specified cell becomes occupied.
+   * @param {Bag} bag
+   * @param {Shelf} shelf
+   * @param {number} cellIndex
+   * @private
+   */
+  function beginAnimationToShelf( bag, shelf, cellIndex ) {
+
+    var cellLocation = shelf.bagRow.getCellLocation( cellIndex );
+
+    // This function changes course to the next closest unoccupied cell.
+    var changeCourse = function() {
+
+      // find another unoccupied cell
+      unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
+      var newCellIndex = shelf.bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
+      assert && assert( newCellIndex !== -1, 'all cells are occupied' );
+
+      beginAnimationToShelf( bag, shelf, newCellIndex );
+    };
+
+    // This function is called on each animation step.
+    // If the target cell becomes occupied, change course immediately.
+    var animationStepCallback = function() {
+      if ( !shelf.bagRow.isEmptyCell( cellIndex ) ) {
+        changeCourse();
+      }
+    };
+
+    // This function is called when animation completes.
+    // If the target cell is still empty, add the bag. Otherwise animate to an unoccupied cell.
+    var animationCompletedCallback = function() {
+
+      if ( shelf.bagRow.isEmptyCell( cellIndex ) ) {
+
+        // the cell is still empty when we reach it, put the bag in that cell
+        shelf.bagRow.put( bag, cellIndex );
       }
       else {
 
