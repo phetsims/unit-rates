@@ -117,8 +117,8 @@ define( function( require ) {
     if ( URQueryParameters.showCells ) {
 
       // cells for bags
-      this.addChild( new RowOfMovablesNode( shoppingScene.shelf.bagRow, { stroke: 'red' } ) );
-      this.addChild( new RowOfMovablesNode( shoppingScene.scale.bagRow, { stroke: 'red' } ) );
+      this.addChild( new RowOfMovablesNode( shoppingScene.shelf.bagRow, { stroke: 'green' } ) );
+      this.addChild( new RowOfMovablesNode( shoppingScene.scale.bagRow, { stroke: 'green' } ) );
 
       // cells for items
       if ( bagsOpen ) {
