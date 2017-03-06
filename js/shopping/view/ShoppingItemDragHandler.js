@@ -40,15 +40,9 @@ define( function( require ) {
        */
       start: function( event, trail ) {
 
-        // prerequisites for the drag sequence
-        assert && assert( frontItemLayer.hasChild( itemNode ) || backItemLayer.hasChild( itemNode ) );
-        assert && assert( !( shelf.containsItem( item ) && scale.containsItem( item ) ),
-          'item should not be on both shelf and scale' );
-
         // move Node to the drag layer
         item.dragging = true;
-        frontItemLayer.hasChild( itemNode ) && frontItemLayer.removeChild( itemNode );
-        backItemLayer.hasChild( itemNode ) && backItemLayer.removeChild( itemNode );
+        itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
         dragLayer.addChild( itemNode );
 
         // remove item from shelf or scale
@@ -170,8 +164,6 @@ define( function( require ) {
    */
   function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cellIndex, frontItemLayer, backItemLayer ) {
 
-    var cellLocation = itemRow.getCellLocation( cellIndex );
-
     // This function changes course to the next closest unoccupied cell.
     var changeCourse = function() {
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
@@ -215,8 +207,10 @@ define( function( require ) {
       }
     };
 
+    var destination = itemRow.getCellLocation( cellIndex ); // {Vector2}
+
     // begin the animation
-    item.animateTo( cellLocation, {
+    item.animateTo( destination, {
       animationStepCallback: animationStepCallback,
       animationCompletedCallback: animationCompletedCallback
     } );

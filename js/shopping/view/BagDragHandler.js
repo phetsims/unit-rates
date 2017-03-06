@@ -113,8 +113,6 @@ define( function( require ) {
     var cellIndex = container.bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
     assert && assert( cellIndex !== -1, 'container is full' );
 
-    var cellLocation = container.bagRow.getCellLocation( cellIndex );
-
     // This function changes course to the next closest unoccupied cell.
     var changeCourse = function() {
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
@@ -150,8 +148,10 @@ define( function( require ) {
       }
     };
 
+    var destination = container.bagRow.getCellLocation( cellIndex ); // {Vector2}
+
     // begin the animation
-    bag.animateTo( cellLocation, {
+    bag.animateTo( destination, {
       animationStepCallback: animationStepCallback,
       animationCompletedCallback: animationCompletedCallback
     } );
