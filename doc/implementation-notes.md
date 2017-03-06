@@ -81,4 +81,8 @@ this.disposeCostNode = function() {
 
 ## Shopping and Shopping Lab screens
 
+Shopping and Shopping Lab screens share a great deal of code. Since the Shopping Lab screen is generally treated as 
+a specialization of the Shopping screen, code shared by these 2 screens lives in the directory for the Shopping 
+screen (`js/shopping/`).
+
 ## Racing Lab screen
