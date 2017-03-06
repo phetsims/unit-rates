@@ -54,11 +54,16 @@ define( function( require ) {
     // When the selected scene changes, replace the UI elements that are item-specific
     var shoppingSceneObserver = function( shoppingScene ) {
 
+      // cancel drags that are in progress
+      self.cancelDrags();
+
+      // remove the old scene
       if ( shoppingSceneNode ) {
         shoppingSceneParent.removeChild( shoppingSceneNode );
         shoppingSceneNode.dispose();
       }
 
+      // add the new scene
       shoppingSceneNode = new ShoppingSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties );
       shoppingSceneParent.addChild( shoppingSceneNode );
     };
@@ -86,7 +91,7 @@ define( function( require ) {
 
     // @public cancels drags that are in progress, see https://github.com/phetsims/unit-rates/issues/168
     cancelDrags: function() {
-      this.shoppingSceneNode.cancelDrags();
+      this.shoppingSceneNode && this.shoppingSceneNode.cancelDrags();
     }
   } );
 } );
