@@ -15,7 +15,7 @@ the rate's denominator.  A *marker* is added to the double number line to indica
 number line, the range of 1 term is fixed, while the range of the other term varies based on the unit rate.
  
 Displayed values are (necessarily) limited to a specific number of decimal places. The same number of decimal places
-is used for all occurrences of a term (double number line, scale, rate control, race track, timer,... )
+is used for all occurrences of a term (double number line, marker editor, scale, rate control, race track, timer,... )
 Values are rounded to the desired number of decimal places using nearest-neighbor rounding.  
 
 This table described the rates that appear in this simulation:
