@@ -20,5 +20,16 @@ decimal places used in the simulation is as follows:
 | miles    | 1              | 3.5 miles   |
 | hours    | 2              | 2.75 hours  |
 
+A *double number line* is used to show that there are many (even infinitely many) pairs of numbers that have
+the same rate.  The top number line corresponds to the rate's numerator; the bottom number line corresponds to
+the rate's denominator.  A *marker* is added to the double number line to indicate a specific rate.
+  
+|           | numerator range | denominator range  |
+| --------- | --------------- | ------------------ |
+| Fruit     | 0-16 items      | variable, cost     |
+| Vegetable | 0-16 items      | variable, cost     |
+| Candy     | 0-1.6 lbs       | variable, cost     |
+| Racing    | variable, hours | 0-200 miles        |
+
 
 
