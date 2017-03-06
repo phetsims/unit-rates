@@ -26,10 +26,10 @@ the rate's denominator.  A *marker* is added to the double number line to indica
   
 |           | numerator range | denominator range  |
 | --------- | --------------- | ------------------ |
-| Fruit     | 0-16 items      | variable, cost     |
-| Vegetable | 0-16 items      | variable, cost     |
-| Candy     | 0-1.6 lbs       | variable, cost     |
-| Racing    | variable, hours | 0-200 miles        |
+| Fruit     | variable, cost  | 0-16 items         |
+| Vegetable | variable, cost  | 0-16 items         | 
+| Candy     | variable, cost  | 0-1.6 lbs          |
+| Racing    | 0-200 miles     | variable, hours    | 
 
 
 
