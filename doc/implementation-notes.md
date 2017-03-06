@@ -73,6 +73,10 @@ required. For example, in `CostNode`:
 ```js
 var costObserver = function( cost ) {...};
 costProperty.link( costObserver ); // unlink in dispose
+...
+this.disposeCostNode = function() {
+  costProperty.unlink( costObserver );
+};
 ```
 
 ## Shopping and Shopping Lab screens
