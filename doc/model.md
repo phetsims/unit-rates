@@ -20,7 +20,7 @@ Values are rounded to the desired number of decimal places using nearest-neighbo
 
 This table described the rates that appear in this simulation:
 
-|           | numerator units | numerator decimals | numerator range | denominator units |  numerator decimals | denominator range  | example |
+|           | numerator units | decimals | range | denominator units |  decimals | range  | example |
 | --------- | --------------- |:------------------:| ------------------ | ------------------ |:------------------:| ------------------ | ----- |
 | Fruit     | dollars  | 2 | variable | fruit name | 2 | 0-16 | $5.00 / 2 Apples |
 | Vegetable | dollars  | 2 | variable | vegetable name | 2 | 0-16 | $3.25 / 10 Carrots |
