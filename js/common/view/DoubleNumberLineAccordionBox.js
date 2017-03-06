@@ -134,6 +134,10 @@ define( function( require ) {
     // animation for marker editor
     var markerEditorNodeAnimation = null;
 
+    // if false, move the marker editor immediately instead of animating.
+    // Used to set the editor's initial position on startup.
+    var markerEditorAnimationEnabled = false;
+
     // Observe marker editor, to position the editor and create markers.
     var markerEditorObserver = function() {
 
@@ -241,25 +245,34 @@ define( function( require ) {
       // if we need to move the marker editor...
       if ( destinationX !== null ) {
 
-        // stop any animation that is in progress
-        markerEditorNodeAnimation && markerEditorNodeAnimation.stop();
+        var destination = new Vector2( destinationX, markerEditorNode.y );
 
-        // animate the marker editor to it's new location
-        markerEditorNodeAnimation = new MoveTo( markerEditorNode, new Vector2( destinationX, markerEditorNode.y ), {
+        if ( !markerEditorAnimationEnabled ) {
+           markerEditorNode.translation = destination;
+        }
+        else {
 
-          // controllable via query parameter
-          duration: 750 / URQueryParameters.animationSpeed,
+          // stop any animation that is in progress
+          markerEditorNodeAnimation && markerEditorNodeAnimation.stop();
 
-          // marker editor is not interactive while animating
-          onStart: function() { markerEditorNode.pickable = false; },
-          onComplete: function() { markerEditorNode.pickable = true; },
-          onStop: function() { markerEditorNode.pickable = true; }
-        } );
-        markerEditorNodeAnimation.start();
+          // animate the marker editor to it's new location
+          markerEditorNodeAnimation = new MoveTo( markerEditorNode, destination, {
+
+            // controllable via query parameter
+            duration: 750 / URQueryParameters.animationSpeed,
+
+            // marker editor is not interactive while animating
+            onStart: function() { markerEditorNode.pickable = false; },
+            onComplete: function() { markerEditorNode.pickable = true; },
+            onStop: function() { markerEditorNode.pickable = true; }
+          } );
+          markerEditorNodeAnimation.start();
+        }
       }
     };
-    markerEditor.numeratorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
-    markerEditor.denominatorProperty.lazyLink( markerEditorObserver ); // unlink in dispose
+    markerEditor.numeratorProperty.link( markerEditorObserver ); // unlink in dispose
+    markerEditor.denominatorProperty.link( markerEditorObserver ); // unlink in dispose
+    markerEditorAnimationEnabled = true;
 
     // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
     // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
