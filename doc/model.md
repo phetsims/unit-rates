@@ -22,14 +22,14 @@ Displayed values are (necessarily) limited to a specific number of decimal place
 is used for all occurrences of a term (double number line, marker editor, scale, rate control, race track, timer,... )
 Values are rounded to the desired number of decimal places using nearest-neighbor rounding.  
 
-This table described the rates that appear in this simulation:
+This table described the terms and rates that appear in this simulation:
 
 |                | term        | units    | decimals | range    | example         |
 | -------------- | ----------- |:--------:| -------- | -------- | --------------- |
 | **Fruit**      | numerator   | dollars  | 2        | variable | $5.00           |
-|                | denominator | name     | 2        | 0-16     | 2.75 Apples     |
+|                | denominator | *name*   | 2        | 0-16     | 2.75 Apples     |
 | **Vegetables** | numerator   | dollars  | 2        | variable | $3.25           |
-|                | denominator | name     | 2        | 0-16     | 10.25 Carrots   |
+|                | denominator | *name*   | 2        | 0-16     | 10.25 Carrots   |
 | **Candy**      | numerator   | dollars  | 2        | variable | $1.25           |
 |                | denominator | pounds   | 2        | 0-1.6    | 1.35 pounds     |
 | **Racing**     | numerator   | miles    | 1        | 0-200    |  105.5 miles    |
