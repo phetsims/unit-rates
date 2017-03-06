@@ -45,7 +45,6 @@ define( function( require ) {
   function ScaleNode( scale, options ) {
 
     options = _.extend( {
-
       costExpandedProperty: null, // {Property.<boolean>|null} null indicates that cost display is not collapsible
       extraCostDecimalVisible: false, // {boolean} does the scale show a 3rd decimal place for cost?
       quantityIsDisplayed: false // {boolean} does the scale show quantity?

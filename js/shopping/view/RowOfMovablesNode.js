@@ -2,6 +2,7 @@
 
 /**
  * Used for debugging purposes to see the cells in each RowOfMovable instance.
+ * See URQueryParameters.showCells.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
