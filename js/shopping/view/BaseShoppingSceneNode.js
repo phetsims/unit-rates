@@ -138,6 +138,10 @@ define( function( require ) {
       scaleNode.dispose();
       resetShelfButton.dispose();
 
+      dragLayer.getChildren().forEach( function( node ) {
+        node.dispose && node.dispose();
+      } );
+
       bagLayer.getChildren().forEach( function( node ) {
         assert && assert( node instanceof BagNode );
         node.dispose();
