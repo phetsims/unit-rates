@@ -14,8 +14,9 @@ the same rate.  The top number line corresponds to the rate's numerator; the bot
 the rate's denominator.  A *marker* is added to the double number line to indicate a specific rate. For each double 
 number line, the range of 1 term is fixed, while the range of the other term varies based on the unit rate.
  
-Displayed values are (necessarily) limited to a consistent number of decimal places. Values are rounded to the 
-desired number of decimal places using nearest-neighbor rounding.  
+Displayed values are (necessarily) limited to a specific number of decimal places. The same number of decimal places
+is used in all occurrences of a term (double number line, scale, rate control, race track, timer,... )
+Values are rounded to the desired number of decimal places using nearest-neighbor rounding.  
 
 This table described the rates that appear in this simulation:
 
