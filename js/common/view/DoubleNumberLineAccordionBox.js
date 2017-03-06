@@ -310,8 +310,8 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      AccordionBox.prototype.dispose.call( this );
       this.disposeDoubleNumberLineAccordionBox();
+      AccordionBox.prototype.dispose.call( this );
     },
 
     /**

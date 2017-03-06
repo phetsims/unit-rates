@@ -147,7 +147,7 @@ define( function( require ) {
     // @public
     dispose: function() {
       this.disposeValuePanel();
-      Node.prototype.dispose.call( this );
+      Panel.prototype.dispose.call( this );
     }
   } );
 } );

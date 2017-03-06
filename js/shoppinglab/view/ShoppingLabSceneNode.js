@@ -60,7 +60,7 @@ define( function( require ) {
     // @public
     dispose: function() {
       this.disposeShoppingLabSceneNode();
-      ShoppingLabSceneNode.prototype.dispose.call( this );
+      BaseShoppingSceneNode.prototype.dispose.call( this );
     }
   } );
 } );
