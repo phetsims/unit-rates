@@ -14,29 +14,21 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
-   * @param {Object} [options]
    * @constructor
    */
-  function ShoppingViewProperties( options ) {
-
-    options = _.extend( {
-      doubleNumberLineExpanded: true,
-      questionsExpanded: true,
-      scaleCostExpanded: true,
-      rateExpanded: true
-    }, options );
+  function ShoppingViewProperties() {
 
     // @public is the 'Double Number Line' accordion box expanded?
-    this.doubleNumberLineExpandedProperty = new Property( options.doubleNumberLineExpanded );
+    this.doubleNumberLineExpandedProperty = new Property( true );
 
     // @public is the 'Questions' accordion box expanded?
-    this.questionsExpandedProperty = new Property( options.questionsExpanded );
+    this.questionsExpandedProperty = new Property( true );
 
     // @public is the cost display expanded on the scale?
-    this.scaleCostExpandedProperty = new Property( options.scaleCostExpanded );
+    this.scaleCostExpandedProperty = new Property( true );
 
     // @public is the 'Rate' accordion box expanded?
-    this.rateExpandedProperty = new Property( options.rateExpanded );
+    this.rateExpandedProperty = new Property( true );
   }
 
   unitRates.register( 'ShoppingViewProperties', ShoppingViewProperties );
