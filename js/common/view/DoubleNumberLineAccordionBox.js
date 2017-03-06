@@ -46,7 +46,7 @@ define( function( require ) {
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // DoubleNumberLineAccordionBox options
-      titleString: doubleNumberLineString,
+      titleString: doubleNumberLineString, // {string} title displayed next to the expand/collapse button
       keypadLocation: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
 
       // DoubleNumberLineNode options
@@ -147,6 +147,7 @@ define( function( require ) {
       // {number} destination for horizontal animation of marker editor, null indicates that no animation is required
       var destinationX = null;
 
+      // if the marker has both a numerator and denominator...
       if ( numerator !== null && denominator !== null ) {
 
         if ( denominator <= maxDenominator ) {
@@ -314,7 +315,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the origin of the double number line's origin in the global view coordinate from.
+     * Gets the origin of the double number line's origin in the global view coordinate frame.
      * This is used to line up other things (like the race track in 'Racing Lab' screen) with the double number line.
      * @returns {*}
      * @public
