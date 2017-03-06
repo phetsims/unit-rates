@@ -2,7 +2,6 @@ TODO list for unit-rates
 
 Medium:
 Marker editor doesn't move immediately to home on Reset All
-Future issue: handle cancellation of drags and animations on Reset All, Reset Shelf and selected item change
 
 Performance:
 Reset All is a bit laggy on iPad
