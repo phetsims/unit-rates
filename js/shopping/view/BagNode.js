@@ -27,9 +27,6 @@ define( function( require ) {
 
     var self = this;
 
-    // @private
-    this.bag = bag;
-
     // This type does not propagate options to the supertype because the model determines location.
     Image.call( this, bag.image, {
       scale: URConstants.BAG_IMAGE_SCALE,
@@ -58,6 +55,9 @@ define( function( require ) {
       bag.visibleProperty.unlink( visibleObserver );
       self.removeInputListener( self.dragHandler );
     };
+
+    // @private used by prototype functions
+    this.bag = bag;
   }
 
   unitRates.register( 'BagNode', BagNode );

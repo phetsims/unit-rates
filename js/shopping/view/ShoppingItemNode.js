@@ -28,9 +28,6 @@ define( function( require ) {
 
     var self = this;
 
-    // @private
-    this.item = item;
-
     // This type does not propagate options to the supertype because the model determines location.
     Image.call( this, item.image, {
       scale: URConstants.SHOPPING_ITEM_IMAGE_SCALE,
@@ -70,6 +67,9 @@ define( function( require ) {
       item.visibleProperty.unlink( visibleObserver );
       self.removeInputListener( self.dragHandler );
     };
+
+    // @private used by prototype functions
+    this.item = item;
   }
 
   unitRates.register( 'ShoppingItemNode', ShoppingItemNode );
