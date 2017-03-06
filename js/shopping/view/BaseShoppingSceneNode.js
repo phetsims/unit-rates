@@ -60,8 +60,8 @@ define( function( require ) {
     // button that resets the shelf to its initial state, dispose required
     var resetShelfButton = new ResetButton( {
       listener: function() {
-        shoppingScene.resetShelfAndScale();
         self.cancelDrags();
+        shoppingScene.resetShelfAndScale();
       },
       baseColor: URColors.resetShelfButton,
       scale: 0.65,
