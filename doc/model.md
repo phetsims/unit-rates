@@ -24,10 +24,14 @@ Values are rounded to the desired number of decimal places using nearest-neighbo
 
 This table described the rates that appear in this simulation:
 
-|                | units    | decimals | range    | /   | units  | decimals | range    | example                  |
-| -------------- | -------- |:--------:| -------- | --- | ------ |:--------:| -------- | ------------------------ |
-| **Fruit**      | dollars  | 2        | variable | /   | name   | 2        | 0-16     | $5.00 / 2.75 Apples      |
-| **Vegetables** | dollars  | 2        | variable | /   | name   | 2        | 0-16     | $3.25 / 10.25 Carrots    |
-| **Candy**      | dollars  | 2        | variable | /   | pounds | 2        | 0-1.6    | $1.25 / 1.35 pound       |
-| **Racing**     | miles    | 1        | 0-200    | /   | hours  | 2        | variable | 105.5 miles / 4.25 hours |
+|                | term        | units    | decimals | range    | example         |
+| -------------- | ----------- |:--------:| -------- | -------- | --------------- |
+| **Fruit**      | numerator   | dollars  | 2        | variable | $5.00           |
+|                | denominator | name     | 2        | 0-16     | 2.75 Apples     |
+| **Vegetables** | numerator   | dollars  | 2        | variable | $3.25           |
+|                | denominator | name     | 2        | 0-16     | 10.25 Carrots   |
+| **Candy**      | numerator   | dollars  | 2        | variable | $1.25           |
+|                | denominator | pounds   | 2        | 0-1.6    | 1.35 pounds     |
+| **Racing**     | numerator   | miles    | 1        | 0-200    |  105.5 miles    |
+|                | denominator | hours    | 2        | variable | 4.25 hours      |
 
