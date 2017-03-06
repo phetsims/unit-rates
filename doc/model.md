@@ -22,8 +22,8 @@ This table described the rates that appear in this simulation:
 
 |           | numerator units | decimals | range | denominator units |  decimals | range  | example |
 | --------- | --------------- |:------------------:| ------------------ | ------------------ |:------------------:| ------------------ | ----- |
-| Fruit     | dollars  | 2 | variable | fruit name | 2 | 0-16 | $5.00 / 2 Apples |
-| Vegetable | dollars  | 2 | variable | vegetable name | 2 | 0-16 | $3.25 / 10 Carrots |
+| Fruit     | dollars  | 2 | variable | name | 2 | 0-16 | $5.00 / 2 Apples |
+| Vegetable | dollars  | 2 | variable | name | 2 | 0-16 | $3.25 / 10 Carrots |
 | Candy     | dollars  | 2 | variable | pounds | 2 | 0-1.6 | $1.25 / 1 pound |
 | Racing    | miles | 1 | 0-200    | hours | 2 | variable  | 100 miles / 3 hours |
 
