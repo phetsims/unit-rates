@@ -95,15 +95,6 @@ define( function( require ) {
         // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
         var rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
 
-        // move Node to front or back item layer
-        dragLayer.removeChild( itemNode );
-        if ( rowAndCell.itemRow === shoppingContainer.backItemRow ) {
-          backItemLayer.addChild( itemNode );
-        }
-        else {
-          frontItemLayer.addChild( itemNode );
-        }
-
         animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
           frontItemLayer, backItemLayer );
       }
@@ -179,15 +170,6 @@ define( function( require ) {
    */
   function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cellIndex, frontItemLayer, backItemLayer ) {
 
-    // move Node to front or back item layer
-    itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
-    if ( itemRow === shoppingContainer.backItemRow ) {
-      backItemLayer.addChild( itemNode );
-    }
-    else {
-      frontItemLayer.addChild( itemNode );
-    }
-
     var cellLocation = itemRow.getCellLocation( cellIndex );
 
     // This function changes course to the next closest unoccupied cell.
@@ -216,6 +198,15 @@ define( function( require ) {
 
         // the cell is still unoccupied when we reached it, put the item in that cell
         itemRow.put( item, cellIndex );
+
+        // move Node to front or back item layer
+       itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
+       if ( itemRow === shoppingContainer.backItemRow ) {
+         backItemLayer.addChild( itemNode );
+       }
+       else {
+         frontItemLayer.addChild( itemNode );
+       }
       }
       else {
 
