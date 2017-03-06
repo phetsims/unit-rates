@@ -1,8 +1,5 @@
 TODO list for unit-rates
 
-Medium:
-Marker editor doesn't move immediately to home on Reset All
-
 Performance:
 Reset All is a bit laggy on iPad
 Switching items is a bit laggy on iPad
