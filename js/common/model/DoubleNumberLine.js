@@ -30,7 +30,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      fixedAxis: 'denominator', // {string} which of the axes has a fixed range
+      fixedAxis: 'denominator', // {string} which of the axes has a fixed (immutable) range
       fixedAxisRange: new Range( 0, 10 ), // {Range} range of the fixed axis
       numerationOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null, // {*} options specific to the rate's denominator, see below
@@ -74,7 +74,7 @@ define( function( require ) {
     
     if ( options.fixedAxis === 'numerator' ) {
 
-      // numerator range is fixed
+      // numerator range is immutable
       this.numeratorRangeProperty = new Property( options.fixedAxisRange );
       this.numeratorRangeProperty.lazyLink( function( range ) {  // unlinkAll in dispose
         throw new Error( 'numeratorRangeProperty should not change' );
@@ -95,7 +95,7 @@ define( function( require ) {
     }
     else {
 
-      // denominator range is fixed
+      // denominator range is immutable
       this.denominatorRangeProperty = new Property( options.fixedAxisRange );
       this.denominatorRangeProperty.lazyLink( function( range ) { // unlinkAll in dispose
         throw new Error( 'denominatorRangeProperty should not change' );
