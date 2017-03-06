@@ -17,17 +17,11 @@
   "cost": {
     "value": "Cost"
   },
-  "costOfNUnits": {
-    "value": "Cost of {0} {1}?"
-  },
   "cucumber": {
     "value": "Cucumber"
   },
   "cucumbers": {
     "value": "Cucumbers"
-  },
-  "currencyValue": {
-    "value": "${0}"
   },
   "dollars": {
     "value": "dollars"
@@ -50,9 +44,6 @@
   "hours": {
     "value": "hours"
   },
-  "itemsForAmount": {
-    "value": "{0} for ${1}?"
-  },
   "lbs": {
     "value": "lbs"
   },
@@ -70,6 +61,18 @@
   },
   "oranges": {
     "value": "Oranges"
+  },
+  "pattern_0cost": {
+    "value": "${0}"
+  },
+  "pattern_costOf_0quantity_1units": {
+    "value": "Cost of {0} {1}?"
+  },
+  "pattern_0items_1cost": {
+    "value": "{0} for ${1}?"
+  },
+  "pattern_0value_1units": {
+    "value": "{0} {1}"
   },
   "pear": {
     "value": "Pear"
@@ -136,8 +139,5 @@
   },
   "unit-rates.title": {
     "value": "Unit Rates"
-  },
-  "valueUnits": {
-    "value": "{0} {1}"
   }
 }

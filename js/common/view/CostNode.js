@@ -22,7 +22,7 @@ define( function( require ) {
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
-  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
+  var pattern0Cost = require( 'string!UNIT_RATES/pattern_0cost' );
 
   /**
    * @param {Property.<number>} costProperty
@@ -104,7 +104,7 @@ define( function( require ) {
    * @returns {*|string}
    */
   function costToString( cost, decimalPlaces ) {
-    return StringUtils.stripEmbeddingMarks( URUtil.formatNumber( currencyValueString, cost, decimalPlaces, false /* trimZeros */ ) );
+    return StringUtils.stripEmbeddingMarks( URUtil.formatNumber( pattern0Cost, cost, decimalPlaces, false /* trimZeros */ ) );
   }
 
   return inherit( Node, CostNode, {

@@ -19,7 +19,7 @@ define( function( require ) {
 
   // strings
   var hoursString = require( 'string!UNIT_RATES/hours' );
-  var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
+  var pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
 
   // constants
   var TIMER_FONT = new URFont( 16 );
@@ -37,7 +37,7 @@ define( function( require ) {
     var valueNode = new ValueNode( timeProperty, {
       font: TIMER_FONT,
       valueToString: function( value ) {
-        return StringUtils.format( valueUnitsString, Util.toFixed( value, DECIMAL_PLACES ), hoursString );
+        return StringUtils.format( pattern0Value1UnitsString, Util.toFixed( value, DECIMAL_PLACES ), hoursString );
       }
     } );
 

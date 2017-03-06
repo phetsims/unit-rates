@@ -36,8 +36,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // strings
-  var currencyValueString = require( 'string!UNIT_RATES/currencyValue' );
   var dollarsString = require( 'string!UNIT_RATES/dollars' );
+  var pattern0Cost = require( 'string!UNIT_RATES/pattern_0cost' );
 
   /**
    * @param {Object} itemData - data structure that describes the item, see ShoppingItemData.
@@ -85,7 +85,7 @@ define( function( require ) {
     // @public (read-only) options specific to the rate's numerator
     this.numeratorOptions = _.extend( {
       axisLabel: dollarsString, // {string} label for the axis on the double number line
-      valueFormat: currencyValueString, // {string} format with '{0}' placeholder for value
+      valueFormat: pattern0Cost, // {string} format with '{0}' placeholder for value
       maxDigits: 4, // {number} number of digits that can be entered via the keypad
       maxDecimals: 2, // {number} maximum number of decimal places
       trimZeros: false, // {boolean} whether to trim trailing zeros from decimal places

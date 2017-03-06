@@ -38,7 +38,7 @@ define( function( require ) {
 
   // strings
   var milesString = require( 'string!UNIT_RATES/miles' );
-  var valueUnitsString = require( 'string!UNIT_RATES/valueUnits' );
+  var pattern0Value1Units = require( 'string!UNIT_RATES/pattern_0value_1units' );
 
   // constants
   var NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates
@@ -170,7 +170,7 @@ define( function( require ) {
       timerNode.bottom = finishFlagNode.top - 3;
 
       // distance label below finish flag
-      lengthNode.text = StringUtils.format( valueUnitsString, length, milesString );
+      lengthNode.text = StringUtils.format( pattern0Value1Units, length, milesString );
       lengthNode.top = solidLineNode.bottom + TRACK_MARKER_SIDE_LENGTH + 4;
       lengthNode.centerX = finishX;
 
