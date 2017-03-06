@@ -68,7 +68,7 @@ testing. All such query parameters are documented in
 **Memory management**: The model exists for the lifetime of the simulation. Large portions of the view are 
 reconstructed when the selected item changes. So `dispose` is implemented throughout, and all function calls 
 that register an observer have an associated comment indicating whether a corresponding de-register call is 
-required. For example, in `CostNode`:
+required. For example, here's the general pattern used in `CostNode`:
 
 ```js
 var costObserver = function( cost ) {...};
