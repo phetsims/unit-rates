@@ -57,11 +57,9 @@ Racing Lab screen:
 
 This section describes how this simulation uses patterns that are common to most PhET simulations.
 
-**Model-view transform**: Many PhET simulations have a model-view transform that maps between model and 
-view coordinate frames. The domain of this simulation has no need for a model coordinate frame, so the model 
-and view coordinate frames are treated as equivalent, and no transform is required. (If you don't understand that, 
-don't worry about it.)  For the double number line, there is a linear function that maps model values to 
-view x-coordinates. See `modelToViewNumerator` and `modelToViewDenominator` in `DoubleNumberLine`.
+**Model-view transform**: All model-view transforms are concerned solely with the horizontal dimension,
+for which we use a linear function. For the double number line, see `modelToViewNumerator` and `modelToViewDenominator` 
+in `DoubleNumberLine`. For the race track, see `modelToView` in `RaceTrackNode`.
 
 **Query parameters**: Query parameters are used to enable sim-specific features, mainly for debugging and
 testing. All such query parameters are documented in
