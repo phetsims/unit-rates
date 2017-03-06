@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Button that restarts a race in the 'Racing Lab' screen.
+ * Button that resets a race in the 'Racing Lab' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -15,15 +15,15 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
-  var restartRaceButtonImage = require( 'image!UNIT_RATES/restart_race_button.png' );
+  var resetRaceButton = require( 'image!UNIT_RATES/reset_race_button.png' );
 
   /**
    * @param {Object} [options]
    * @constructor
    */
-  function RestartRaceButton( options ) {
+  function ResetRaceButton( options ) {
     RectangularPushButton.call( this, _.extend( {
-      content: new Image( restartRaceButtonImage, { scale: 0.5 } ),
+      content: new Image( resetRaceButton, { scale: 0.5 } ),
       xMargin: 12,
       yMargin: 8,
       touchAreaXDilation: 0,
@@ -31,7 +31,7 @@ define( function( require ) {
     }, options ) );
   }
 
-  unitRates.register( 'RestartRaceButton', RestartRaceButton );
+  unitRates.register( 'ResetRaceButton', ResetRaceButton );
 
-  return inherit( RectangularPushButton, RestartRaceButton );
+  return inherit( RectangularPushButton, ResetRaceButton );
 } );

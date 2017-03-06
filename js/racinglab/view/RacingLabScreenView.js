@@ -19,7 +19,7 @@ define( function( require ) {
   var RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
   var RacingLabViewProperties = require( 'UNIT_RATES/racinglab/view/RacingLabViewProperties' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var RestartRaceButton = require( 'UNIT_RATES/racinglab/view/RestartRaceButton' );
+  var ResetRaceButton = require( 'UNIT_RATES/racinglab/view/ResetRaceButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StartStopButton = require( 'UNIT_RATES/racinglab/view/StartStopButton' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -135,8 +135,8 @@ define( function( require ) {
     } );
     playAreaLayer.addChild( startStopButton );
 
-    // Restart Race button
-    var restartRaceButton = new RestartRaceButton( {
+    // Reset Race button
+    var resetRace = new ResetRaceButton( {
       listener: function() {
         model.runningProperty.value = false;
         model.car1.resetRace();
@@ -145,7 +145,7 @@ define( function( require ) {
       right: startStopButton.left - BUTTON_X_SPACE,
       centerY: startStopButton.centerY
     } );
-    playAreaLayer.addChild( restartRaceButton );
+    playAreaLayer.addChild( resetRace );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
@@ -173,7 +173,7 @@ define( function( require ) {
     // Disable the restart button when both cars are at the starting line. unmultilink not needed
     Property.multilink( [ model.car1.distanceProperty, model.car2.distanceProperty ],
       function( distance1, distance2 ) {
-        restartRaceButton.enabled = !( distance1 === 0 && distance2 === 0 );
+        resetRace.enabled = !( distance1 === 0 && distance2 === 0 );
       } );
   }
 
