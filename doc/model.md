@@ -11,10 +11,11 @@ A *rate* is a ratio where the measurements are in different units. A *unit rate*
 
 A *double number line* is used to show that there are many (even infinitely many) pairs of numbers that have
 the same rate.  The top number line corresponds to the rate's numerator; the bottom number line corresponds to
-the rate's denominator.  A *marker* is added to the double number line to indicate a specific rate.
-
-For each double number line, the range of 1 term is fixed, while the range of the other term varies based on the unit rate. 
-And for displaying values, we (necessarily) limit the number of decimal places.  
+the rate's denominator.  A *marker* is added to the double number line to indicate a specific rate. For each double 
+number line, the range of 1 term is fixed, while the range of the other term varies based on the unit rate.
+ 
+Displayed values are (necessarily) limited to a consistent number of decimal places. Values are rounded to the 
+desired number of decimal places using nearest-neighbor rounding.  
 
 This table described the rates that appear in this simulation:
 
