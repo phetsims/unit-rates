@@ -29,7 +29,7 @@ define( function( require ) {
 
     var self = this;
 
-    Text.call( this, '' );
+    Text.call( this, '' ); // string will be filled in by valueObserver
 
     // update value display
     var valueObserver = function( value ) {
