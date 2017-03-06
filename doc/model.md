@@ -13,9 +13,10 @@ A *double number line* is used to show that there are many (even infinitely many
 the same rate.  The top number line corresponds to the rate's numerator; the bottom number line corresponds to
 the rate's denominator.  A *marker* is added to the double number line to indicate a specific rate.
 
-In this simulation, the range of 1 term is fixed, while the range of the other term varies based on the unit rate. 
-And for displaying values, we (necessarily) limit the number of decimal places displayed.  This table described
-the constraints applied to the rates that appear in this simulation:
+For each double number line, the range of 1 term is fixed, while the range of the other term varies based on the unit rate. 
+And for displaying values, we (necessarily) limit the number of decimal places.  
+
+This table described the rates that appear in this simulation:
 
 |           | numerator units | numerator decimals | numerator range | denominator units |  numerator decimals | denominator range  |
 | --------- | --------------- |:------------------:| ------------------ | ------------------ |:------------------:| ------------------ |
