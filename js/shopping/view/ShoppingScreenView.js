@@ -59,10 +59,19 @@ define( function( require ) {
     this.addChild( keypadLayer );
 
     // create the view for each category
+    var categoryNodes = [];
     model.categories.forEach( function( category ) {
-      var node = options.createCategoryNode( category, model.categoryProperty, self.layoutBounds, keypadLayer, viewProperties );
-      playAreaLayer.addChild( node );
+      var categoryNode = options.createCategoryNode( category, model.categoryProperty, self.layoutBounds, keypadLayer, viewProperties );
+      categoryNodes.push( categoryNode );
+      playAreaLayer.addChild( categoryNode );
     } );
+
+    // cancels drags that are in progress, see https://github.com/phetsims/unit-rates/issues/168
+    var cancelDrags = function() {
+      categoryNodes.forEach( function( categoryNode ) {
+        categoryNode.cancelDrags();
+      } );
+    };
 
     // Category radio buttons
     var categoryRadioButtons = new ShoppingCategoryRadioButtons( model.categories, model.categoryProperty, {
@@ -76,6 +85,7 @@ define( function( require ) {
       listener: function() {
         model.reset();
         viewProperties.reset();
+        cancelDrags();
       },
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN

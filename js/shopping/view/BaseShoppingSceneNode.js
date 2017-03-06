@@ -37,6 +37,8 @@ define( function( require ) {
       extraCostDecimalVisible: false // {boolean} does the scale show an extra decimal place for cost?
     }, options );
 
+    var self = this;
+
     // Double number line, dispose required
     var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
       axisViewLength: URConstants.SHOPPING_AXIS_LENGTH,
@@ -59,6 +61,7 @@ define( function( require ) {
     var resetShelfButton = new ResetButton( {
       listener: function() {
         shoppingScene.resetShelfAndScale();
+        self.cancelDrags();
       },
       baseColor: URColors.resetShelfButton,
       scale: 0.65,
@@ -151,6 +154,9 @@ define( function( require ) {
       } );
     };
 
+    // @private
+    this.dragLayer = dragLayer;
+
     // @protected for layout in subtypes
     this.doubleNumberLineAccordionBox = doubleNumberLineAccordionBox;
   }
@@ -163,6 +169,13 @@ define( function( require ) {
     dispose: function() {
       this.disposeBaseShoppingSceneNode();
       Node.prototype.dispose.call( this );
+    },
+
+    // @public cancels drags that are in progress, see https://github.com/phetsims/unit-rates/issues/168
+    cancelDrags: function() {
+      this.dragLayer.getChildren().forEach( function( node ) {
+        node.cancelDrag && node.cancelDrag();
+      } );
     }
   } );
 } );

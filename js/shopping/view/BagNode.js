@@ -68,6 +68,17 @@ define( function( require ) {
     dispose: function() {
       this.disposeBagNode();
       Image.prototype.dispose.call( this );
+    },
+
+    /**
+     * Cancels a drag that is in progress, see see https://github.com/phetsims/unit-rates/issues/168
+     * If no drag is in progress, this is a no-op.
+     * @public
+     */
+    cancelDrag: function() {
+      if ( this.bag.dragging ) {
+        this.dragHandler.endDrag( null /* event */ );
+      }
     }
   } );
 } );
