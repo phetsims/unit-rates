@@ -106,7 +106,11 @@ define( function( require ) {
 
     // @private commits an edit
     commitEdit: function() {
+      
+      // get the string representation of the value from the keypad
       var valueString = this.keypad.valueStringProperty.value;
+
+      // if the keypad contains a valid value ...
       if ( valueString && !( !this.allowZeroEntry && valueString === '0' ) ) {
         this.endEdit();
         this.valueProperty.value = ( 1 * valueString ); // string -> number conversion
