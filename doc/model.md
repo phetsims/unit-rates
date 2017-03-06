@@ -21,7 +21,7 @@ Values are rounded to the desired number of decimal places using nearest-neighbo
 This table described the rates that appear in this simulation:
 
 |           | units | decimals | range | / | units |  decimals | range  | example |
-| --------- | ----- |:-----:| ---- | ---- |:-----:| ----- | ----- |
+| --------- | ----- |:-----:| ---- | --- | ---- |:-----:| ----- | ----- |
 | **Fruit**  | dollars  | 2 | variable | / | name | 2 | 0-16 | $5.00 / 2 Apples |
 | **Vegetables** | dollars  | 2 | variable | / | name | 2 | 0-16 | $3.25 / 10 Carrots |
 | **Candy**     | dollars  | 2 | variable | / | pounds | 2 | 0-1.6 | $1.25 / 1 pound |
