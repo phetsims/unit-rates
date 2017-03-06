@@ -33,11 +33,11 @@ define( function( require ) {
    */
   function BaseShoppingSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties, options ) {
 
+    var self = this;
+
     options = _.extend( {
       extraCostDecimalVisible: false // {boolean} does the scale show an extra decimal place for cost?
     }, options );
-
-    var self = this;
 
     // Double number line, dispose required
     var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {

@@ -26,6 +26,8 @@ define( function( require ) {
    */
   function ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, answerOptions ) {
 
+    var self = this;
+
     // @public (read-only)
     this.answerOptions = _.extend( {
       valueFormat: '{0}', // {string} format used by StringUtils.format to format the guess
@@ -33,8 +35,6 @@ define( function( require ) {
       maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
       trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
     }, answerOptions );
-
-    var self = this;
 
     // @public (read-only)
     this.questionString = questionString;

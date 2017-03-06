@@ -22,12 +22,12 @@ define( function( require ) {
    */
   function ValueNode( valueProperty, options ) {
 
+    var self = this;
+
     options = _.extend( {
       font: new URFont( 20 ),
       valueToString: function( value ) { return '' + value; }
     }, options );
-
-    var self = this;
 
     Text.call( this, '' ); // string will be filled in by valueObserver
 

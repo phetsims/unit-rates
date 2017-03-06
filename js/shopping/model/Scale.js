@@ -23,6 +23,8 @@ define( function( require ) {
    */
   function Scale( unitRateProperty, options ) {
 
+    var self = this;
+
     options = _.extend( {
 
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the scale's top surface
@@ -41,8 +43,6 @@ define( function( require ) {
     }, options );
 
     ShoppingContainer.call( this, options );
-
-    var self = this;
 
     // @public (read-only)
     this.quantityUnits = options.quantityUnits;

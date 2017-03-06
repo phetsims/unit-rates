@@ -21,14 +21,14 @@ define( function( require ) {
    */
   function KeypadLayer( options ) {
 
+    var self = this;
+
     options = _.extend( {
       fill: 'rgba( 0, 0, 0, 0.2 )',
       visible: false
     }, options );
 
     Plane.call( this, options );
-
-    var self = this;
 
     // @private clicking outside the keypad cancels the edit
     this.clickOutsideListener = new DownUpListener( {

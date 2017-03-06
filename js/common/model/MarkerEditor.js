@@ -23,12 +23,12 @@ define( function( require ) {
    */
   function MarkerEditor( unitRateProperty, options ) {
 
+    var self = this;
+
     options = _.extend( {
       numeratorMaxDecimals: 2, // {number} maximum decimal places in the numerator
       denominatorMaxDecimals: 2 // {number} maximum decimal places in the denominator
     }, options );
-
-    var self = this;
 
     // @public
     this.numeratorProperty = new Property( null ); // {Property.<number|null>} the numerator in the editor

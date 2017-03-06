@@ -27,6 +27,8 @@ define( function( require ) {
    */
   function ShoppingScreenView( model, options ) {
 
+    var self = this;
+
     options = _.extend( {
 
       /**
@@ -42,8 +44,6 @@ define( function( require ) {
         return new ShoppingCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties );
       }
     }, options );
-
-    var self = this;
 
     ScreenView.call( this, options );
 

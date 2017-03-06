@@ -32,6 +32,8 @@ define( function( require ) {
    */
   function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
 
+    var self = this;
+
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // AccordionBox options
@@ -49,8 +51,6 @@ define( function( require ) {
       vBoxSpacing: 12 // vertical spacing between UI elements in the accordion box's content
 
     }, options );
-
-    var self = this;
 
     // 'Unit Rate?' question
     var unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, this, keypadLayer, {

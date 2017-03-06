@@ -47,6 +47,8 @@ define( function( require ) {
    */
   function ShoppingScene( itemData, options ) {
 
+    var self = this;
+
     // verify that itemData has all required properties
     assert && ShoppingItemData.assertIsItemData( itemData );
     assert && assert( itemData.questionQuantities.length > 1, 'more than 1 set of questions is required' );
@@ -79,8 +81,6 @@ define( function( require ) {
       }
 
     }, options );
-
-    var self = this;
 
     // @public (read-only) options specific to the rate's numerator
     this.numeratorOptions = _.extend( {

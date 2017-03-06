@@ -32,6 +32,8 @@ define( function( require ) {
    */
   function RaceCar( image, options ) {
 
+    var self = this;
+
     options = _.extend( {
       color: 'black', // {Color|string} color used for things that are associated with the car (markers, spinners, ...)
       rate: new Rate( 50, 2 ), // {Rate} initial rate, in miles per hour
@@ -41,8 +43,6 @@ define( function( require ) {
       denominatorMaxDecimals: 2, // {number} decimal places shown for denominator (hours)
       majorMarkerSpacing: 25 // {number} spacing for major markers on this car's double number line
     }, options );
-
-    var self = this;
 
     // @pubic (read-only)
     this.image = image;

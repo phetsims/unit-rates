@@ -25,11 +25,11 @@ define( function( require ) {
    */
   function StartStopButton( runningProperty, options ) {
 
+    var self = this;
+
     options = _.extend( {
       radius: 45
     }, options );
-
-    var self = this;
 
     var goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
     var stopIcon = new Image( stopButtonImage, { scale: 0.5 } );

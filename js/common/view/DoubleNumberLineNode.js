@@ -28,6 +28,8 @@ define( function( require ) {
    */
   function DoubleNumberLineNode( doubleNumberLine, options ) {
 
+    var self = this;
+
     options = _.extend( {
 
       // common to all axes (horizontal and vertical)
@@ -53,8 +55,6 @@ define( function( require ) {
       indicatorColor: 'green'
 
     }, options );
-
-    var self = this;
 
     Node.call( this );
 
