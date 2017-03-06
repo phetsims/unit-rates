@@ -88,8 +88,11 @@ define( function( require ) {
         dragLayer.removeChild( bagNode );
         bagLayer.addChild( bagNode );
 
-        // if the bag is released above the scale's surface ...
-        if ( bag.locationProperty.value.y < scale.location.y + ( scale.depth / 2 ) ) {
+        // is the bag above the scale?
+        var isAboveScale = ( bag.locationProperty.value.y < scale.location.y + ( scale.depth / 2 ) );
+
+        // if the bag is released above the scale, bag falls to scale, otherwise to shelf.
+        if ( isAboveScale ) {
           animateBagToContainer( bag, scale );
         }
         else {
