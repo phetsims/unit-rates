@@ -94,7 +94,8 @@ define( function( require ) {
         bagsOpen = true;
         bag.items.forEach( function( item ) {
 
-          // create the item's Node, adds itself to the proper layer
+          // Create the item's Node. Adds itself to the proper layer, so there is no addChild call here,
+          // and we need to disable eslint error with this comment line:
           // eslint-disable-next-line no-unused-vars
           var itemNode = new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
             frontItemLayer, backItemLayer, dragLayer );
