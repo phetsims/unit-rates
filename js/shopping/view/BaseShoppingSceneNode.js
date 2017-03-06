@@ -131,7 +131,7 @@ define( function( require ) {
     // @private
     this.disposeBaseShoppingSceneNode = function() {
 
-      shoppingScene.shelf.numberOfBagsProperty.link( numberOfBagsObserver );
+      shoppingScene.shelf.numberOfBagsProperty.unlink( numberOfBagsObserver );
 
       doubleNumberLineAccordionBox.dispose();
       shelfNode.dispose();
