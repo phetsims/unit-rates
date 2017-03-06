@@ -86,52 +86,83 @@ define( function( require ) {
 
         item.dragging = false;
 
-        // if the item is released above the scale's surface, item falls to scale, otherwise to shelf.
-        var shoppingContainer = ( item.locationProperty.value.y < scale.location.y + ( scale.depth / 2 ) ) ? scale : shelf;
+        // is the item above the scale's top surface?
+        var isAboveScale = ( item.locationProperty.value.y < scale.location.y + ( scale.depth / 2 ) );
 
-        // find closest cell
-        var backCellIndex = shoppingContainer.backItemRow.getClosestUnoccupiedCell( item.locationProperty.value );
-        var frontCellIndex = shoppingContainer.frontItemRow.getClosestUnoccupiedCell( item.locationProperty.value );
-        assert && assert( !( backCellIndex === -1 && frontCellIndex === -1 ), 'scale or shelf is full' );
+        // if the item is released above the scale, item falls to scale, otherwise to shelf.
+        var shoppingContainer = isAboveScale ? scale : shelf;
 
-        var cellIndex = -1;
-        var itemRow = null;
-        if ( backCellIndex === -1 ) {
-          cellIndex = frontCellIndex;
-          itemRow = shoppingContainer.frontItemRow;
-        }
-        else if ( frontCellIndex === -1 ) {
-          cellIndex = backCellIndex;
-          itemRow = shoppingContainer.backItemRow;
-        }
-        else {
-          var backCellDistance = item.locationProperty.value.distance( shoppingContainer.backItemRow.getCellLocation( backCellIndex ) );
-          var frontCellDistance = item.locationProperty.value.distance( shoppingContainer.frontItemRow.getCellLocation( frontCellIndex ) );
-          if ( backCellDistance <= frontCellDistance ) {
-            cellIndex = backCellIndex;
-            itemRow = shoppingContainer.backItemRow;
-          }
-          else {
-            cellIndex = frontCellIndex;
-            itemRow = shoppingContainer.frontItemRow;
-          }
-        }
+        // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
+        var rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
 
         // move Node to front or back item layer
         dragLayer.removeChild( itemNode );
-        if ( itemRow === shoppingContainer.backItemRow ) {
+        if ( rowAndCell.itemRow === shoppingContainer.backItemRow ) {
           backItemLayer.addChild( itemNode );
         }
         else {
           frontItemLayer.addChild( itemNode );
         }
 
-        animateItemToContainer( item, shoppingContainer, itemRow, cellIndex );
+        animateItemToContainer( item, shoppingContainer, rowAndCell.itemRow, rowAndCell.cellIndex );
       }
     } );
   }
 
   unitRates.register( 'ShoppingItemDragHandler', ShoppingItemDragHandler );
+
+  /**
+   * Gets the row and unoccupied cell that are closest to the specified location.
+   * @param {ShoppingContainer} shoppingContainer
+   * @param {Vector2} location
+   * @returns {{itemRow: RowOfMovables, cellIndex: number}}
+   */
+  function getClosestRowAndUnoccupiedCell( shoppingContainer, location ) {
+
+    // to improve readability
+    var backItemRow = shoppingContainer.backItemRow;
+    var frontItemRow = shoppingContainer.frontItemRow;
+
+    // find closest cell in each row
+    var backCellIndex = backItemRow.getClosestUnoccupiedCell( location );
+    var frontCellIndex = frontItemRow.getClosestUnoccupiedCell( location );
+    assert && assert( !( backCellIndex === -1 && frontCellIndex === -1 ), 'container is full' );
+
+    var itemRow = null;
+    var cellIndex = -1;
+
+    if ( backCellIndex === -1 ) {
+
+      // back row is full, use front row
+      itemRow = frontItemRow;
+      cellIndex = frontCellIndex;
+    }
+    else if ( frontCellIndex === -1 ) {
+
+      // front row is full, use back row
+      itemRow = backItemRow;
+      cellIndex = backCellIndex;
+    }
+    else {
+
+      // front and back rows both have unoccupied cells, choose the closest one
+      var backCellDistance = location.distance( backItemRow.getCellLocation( backCellIndex ) );
+      var frontCellDistance = location.distance( frontItemRow.getCellLocation( frontCellIndex ) );
+      if ( backCellDistance <= frontCellDistance ) {
+        itemRow = backItemRow;
+        cellIndex = backCellIndex;
+      }
+      else {
+        itemRow = frontItemRow;
+        cellIndex = frontCellIndex;
+      }
+    }
+
+    return {
+      itemRow: itemRow, // {RowOfMovables} the front or back row of items
+      cellIndex: cellIndex // {number} a cell in itemRow
+    };
+  }
 
   /**
    * Animates an item to a specified cell in a container.
@@ -148,19 +179,12 @@ define( function( require ) {
 
     // This function changes course to the next closest unoccupied cell.
     var changeCourse = function() {
-
-      //TODO this should be similar to algorithm in 'end' of drag sequence
-      // find another unoccupied cell
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
-      itemRow = shoppingContainer.backItemRow;
-      cellIndex = itemRow.getClosestUnoccupiedCell( item.locationProperty.value );
-      if ( cellIndex === -1 ) {
-        itemRow = shoppingContainer.frontItemRow;
-        cellIndex = itemRow.getClosestUnoccupiedCell( item.locationProperty.value );
-      }
-      assert && assert( cellIndex !== -1, 'all cells are occupied' );
 
-      animateItemToContainer( item, shoppingContainer, itemRow, cellIndex );
+      // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
+      var rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
+
+      animateItemToContainer( item, shoppingContainer, rowAndCell.itemRow, rowAndCell.cellIndex );
     };
 
     // This function is called on each animation step.
