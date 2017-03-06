@@ -5,7 +5,7 @@ that are not necessarily technical.
 
 A *ratio* is a comparison of two numbers. The two numbers are called *terms*. Ratios can be represented in different 
 ways; in this simulations, they are represented as *fractions*.  The 2 terms in the rate are herein referred to as 
-*numerator* and *denominator*, based on their position in the fraction. 
+the *numerator* and the *denominator*, corresponding to their function in the fraction. 
 
 A *rate* is a ratio where the measurements are in different units. A *unit rate* is a rate where the denominator is 1.
 
