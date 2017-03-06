@@ -35,4 +35,10 @@ The ranges used for terms is as follows:
 | Racing    | 0-200 miles     | variable, hours    | 
 
 
+|           | numerator units | numerator decimals | numerator range | denominator units |  numerator decimals | denominator range  |
+| --------- | --------------- | ------------------ |
+| Fruit     | cost  | 2 | variable | fruit name | 2 | 0-16 |
+| Vegetable | cost  | 2 | variable | vegetable name | 2 | 0-16 | 
+| Candy     | cost  | 2 | variable | candy name | 0-1.6 |
+| Racing    | miles | 1 | 0-200    | hours | 2 | variable  | 
 
