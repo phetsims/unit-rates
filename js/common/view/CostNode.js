@@ -40,12 +40,6 @@ define( function( require ) {
 
     Node.call( this );
 
-    // Format cost as a string, including the extra decimal place.
-    // String embedding marks because we're going to be chopping up this string using substring.
-    var costToString = function( cost ) {
-      return StringUtils.stripEmbeddingMarks( URUtil.formatNumber( currencyValueString, cost, options.decimalPlaces, false /* trimZeros */ ) );
-    };
-
     // the primary part of the value, without the extra decimal place
     var primaryNode = new Text( '', {
       font: options.font
@@ -84,7 +78,7 @@ define( function( require ) {
       costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
       
       // convert to string, then pick it apart
-      var costString = costToString( costTruncated );
+      var costString = costToString( costTruncated, options.decimalPlaces );
       primaryNode.text = costString.substring( 0, costString.length - 1 );
       extraDecimalNode.text = costString.substring( costString.length - 1, costString.length );
       extraDecimalNode.left = primaryNode.right + 1;
@@ -101,6 +95,17 @@ define( function( require ) {
   }
 
   unitRates.register( 'CostNode', CostNode );
+
+  /**
+   * Format cost as a string.
+   * String embedding marks because we're going to be chopping up this string using substring.
+   * @param {number} cost
+   * @param {number} decimalPlaces - number of decimal places
+   * @returns {*|string}
+   */
+  function costToString( cost, decimalPlaces ) {
+    return StringUtils.stripEmbeddingMarks( URUtil.formatNumber( currencyValueString, cost, decimalPlaces, false /* trimZeros */ ) );
+  }
 
   return inherit( Node, CostNode, {
 
