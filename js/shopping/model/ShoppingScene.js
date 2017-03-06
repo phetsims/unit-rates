@@ -324,7 +324,8 @@ define( function( require ) {
     },
 
     /**
-     * Resets the shelf and scale, returning all bags and items to the shelf.
+     * Resets the shelf and scale.
+     * All items are put back into bags, and all bags are returned to the shelf.
      * @public
      */
     resetShelfAndScale: function() {
