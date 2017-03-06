@@ -183,7 +183,7 @@ define( function( require ) {
       }
 
       // the new marker for what's on the scale
-      if ( quantity > 0 & self.createMarkerEnabled ) {
+      if ( quantity > 0 && self.createMarkerEnabled ) {
         scaleMarker = new Marker( self.scale.costProperty.value, quantity, 'scale', {
           isMajor: true, // all scale markers are major, per the design document
           color: URColors.scaleMarker,
