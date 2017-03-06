@@ -35,7 +35,7 @@ define( function( require ) {
     options = _.extend( {
 
       // ShoppingSceneComboBox options
-      iconSize: new Dimension2( 30, 30 ),
+      iconSize: new Dimension2( 30, 30 ), // {Dimension2} size of the icons in the combo box
 
       // ComboBox options
       listPosition: 'above',
