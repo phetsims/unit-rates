@@ -1,9 +1,5 @@
 TODO list for unit-rates
 
-Performance:
-Reset All is a bit laggy on iPad
-Switching items is a bit laggy on iPad
-
 Misc:
 TODO items in code
 multi-touch testing
