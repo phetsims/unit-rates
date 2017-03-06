@@ -104,7 +104,8 @@ define( function( require ) {
           frontItemLayer.addChild( itemNode );
         }
 
-        animateItemToContainer( item, shoppingContainer, rowAndCell.itemRow, rowAndCell.cellIndex );
+        animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
+          frontItemLayer, backItemLayer );
       }
     } );
   }
@@ -167,13 +168,25 @@ define( function( require ) {
   /**
    * Animates an item to a specified cell in a container.
    * The animation will change course immediately if the specified cell becomes occupied.
-   * @param {ShoppingItem} item
    * @param {ShoppingContainer} shoppingContainer
+   * @param {ShoppingItem} item
+   * @param {Node} itemNode
    * @param {RowOfMovables} itemRow
    * @param {number} cellIndex
+   * @param {Node} frontItemLayer
+   * @param {Node} backItemLayer
    * @private
    */
-  function animateItemToContainer( item, shoppingContainer, itemRow, cellIndex ) {
+  function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cellIndex, frontItemLayer, backItemLayer ) {
+
+    // move Node to front or back item layer
+    itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
+    if ( itemRow === shoppingContainer.backItemRow ) {
+      backItemLayer.addChild( itemNode );
+    }
+    else {
+      frontItemLayer.addChild( itemNode );
+    }
 
     var cellLocation = itemRow.getCellLocation( cellIndex );
 
@@ -184,7 +197,8 @@ define( function( require ) {
       // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
       var rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
 
-      animateItemToContainer( item, shoppingContainer, rowAndCell.itemRow, rowAndCell.cellIndex );
+      animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
+        frontItemLayer, backItemLayer );
     };
 
     // This function is called on each animation step.
