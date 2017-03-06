@@ -166,7 +166,7 @@ define( function( require ) {
   }
 
   /**
-   * Animates an item to a specified cell in a container.
+   * Animates an item to a specified row and cell in a container.
    * The animation will change course immediately if the specified cell becomes occupied.
    * @param {ShoppingContainer} shoppingContainer
    * @param {ShoppingItem} item
