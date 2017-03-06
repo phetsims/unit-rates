@@ -16,10 +16,10 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // strings
-  var pattern0Cost = require( 'string!UNIT_RATES/pattern_0cost' );
-  var patternCostOf0Quantity1Units = require( 'string!UNIT_RATES/pattern_costOf_0quantity_1units' );
-  var pattern0Items1Cost = require( 'string!UNIT_RATES/pattern_0items_1cost' );
-  var pattern0Value1Units = require( 'string!UNIT_RATES/pattern_0value_1units' );
+  var pattern0CostString = require( 'string!UNIT_RATES/pattern_0cost' );
+  var patternCostOf0Quantity1UnitsString = require( 'string!UNIT_RATES/pattern_costOf_0quantity_1units' );
+  var pattern0Items1CostString = require( 'string!UNIT_RATES/pattern_0items_1cost' );
+  var pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
   var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
 
   var ShoppingQuestionFactory = {
@@ -39,12 +39,12 @@ define( function( require ) {
 
       // '$0.50'
       var numerator = unitRate;
-      var numeratorString = StringUtils.format( pattern0Cost,
+      var numeratorString = StringUtils.format( pattern0CostString,
         URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '1 Apple'
       var denominator = 1;
-      var denominatorString = StringUtils.format( pattern0Value1Units,
+      var denominatorString = StringUtils.format( pattern0Value1UnitsString,
         URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
         units );
 
@@ -114,16 +114,16 @@ define( function( require ) {
     var units = ( denominator > 1 ) ? pluralUnits : singularUnits;
 
     // '$3.00'
-    var numeratorString = StringUtils.format( pattern0Cost,
+    var numeratorString = StringUtils.format( pattern0CostString,
       URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
     // '10 Apples'
-    var denominatorString = StringUtils.format( pattern0Value1Units,
+    var denominatorString = StringUtils.format( pattern0Value1UnitsString,
       URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
       units );
 
     // 'Cost of 10 Apples?'
-    var questionString = StringUtils.format( patternCostOf0Quantity1Units,
+    var questionString = StringUtils.format( patternCostOf0Quantity1UnitsString,
       URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
       units );
 
@@ -151,16 +151,16 @@ define( function( require ) {
 
     // '$4.00'
     var numerator = denominator * unitRate;
-    var numeratorString = StringUtils.format( pattern0Cost,
+    var numeratorString = StringUtils.format( pattern0CostString,
       URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
     // '8 Apples'
-    var denominatorString = StringUtils.format( pattern0Value1Units,
+    var denominatorString = StringUtils.format( pattern0Value1UnitsString,
       URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
       units );
 
     // 'Apples for $4.00?'
-    var questionString = StringUtils.format( pattern0Items1Cost,
+    var questionString = StringUtils.format( pattern0Items1CostString,
       amountOfQuestionUnits,
       URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 

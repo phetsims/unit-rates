@@ -29,7 +29,7 @@ define( function( require ) {
 
   // strings
   var costString = require( 'string!UNIT_RATES/cost' );
-  var pattern0Value1Units = require( 'string!UNIT_RATES/pattern_0value_1units' );
+  var pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
 
   // constants
   var PANEL_WIDTH = 132;
@@ -203,7 +203,7 @@ define( function( require ) {
    * @returns {string}
    */
   var quantityToString = function( quantity, units ) {
-    return StringUtils.format( pattern0Value1Units,
+    return StringUtils.format( pattern0Value1UnitsString,
       URUtil.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */ ), units );
   };
 
