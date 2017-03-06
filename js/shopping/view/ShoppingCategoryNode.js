@@ -65,7 +65,7 @@ define( function( require ) {
     category.shoppingSceneProperty.link( shoppingSceneObserver ); // unlink in dispose
 
     // @private
-    this.diposeShoppingCategoryNode = function() {
+    this.disposeShoppingCategoryNode = function() {
       categoryProperty.unlink( categoryObserver );
       category.shoppingSceneProperty.unlink( shoppingSceneObserver );
     };
@@ -80,7 +80,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      this.diposeShoppingCategoryNode();
+      this.disposeShoppingCategoryNode();
       Node.prototype.dispose.call( this );
     },
 
