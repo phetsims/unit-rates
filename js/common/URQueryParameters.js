@@ -13,19 +13,19 @@ define( function( require ) {
 
   var URQueryParameters = QueryStringMachine.getAll( {
 
-    // enables console logging
+    // Enables console logging
     log: { type: 'flag' },
 
-    // shows answers for Shopping questions and marker editor
+    // Shows answers for Shopping questions and marker editor
     showAnswers: { type: 'flag' },
 
-    // enables random selection of scenes, items, questions, etc.
+    // Enables random selection of scenes, items, questions, etc.
     randomEnabled: {
       type: 'boolean',
       defaultValue: true
     },
 
-    // Speed of animations for bags, items and marker editor.
+    // Controls the animation speed for bags, items and the marker editor.
     // Larger values make animations run faster. Smaller values are useful for testing multi-touch.
     animationSpeed: {
       type: 'number',
@@ -33,6 +33,7 @@ define( function( require ) {
       isValidValue: function( value ) { return value > 0; }
     },
 
+    // Controls the animation speed of car races.
     // 1 second of sim type is equivalent to this many hours of race time.
     // Larger values make car animation run faster.
     raceTimeScale: {
