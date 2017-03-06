@@ -132,7 +132,7 @@ define( function( require ) {
       this.markerEditor.reset();
     },
 
-    // @public
+    // @public moves the car to the starting line and resets the time
     resetRace: function() {
       this.distanceProperty.reset();
       this.timeProperty.reset();

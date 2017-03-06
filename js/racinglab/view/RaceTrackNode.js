@@ -42,16 +42,16 @@ define( function( require ) {
 
   // constants
   var NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates
-  var ARROW_LENGTH = 28;
-  var ARROW_OPTIONS = {
+  var CUE_ARROW_LENGTH = 28; // length of the 'drag cue' arrows around the finish flag
+  var CUE_ARROW_OPTIONS = {
     fill: 'rgb( 33, 190, 156 )',
     lineWidth: 0.5,
     headWidth: 20,
     headHeight: 16,
     tailWidth: 7
   };
-  var MARKER_SIDE_LENGTH = 5;
-  var MARKER_OPTIONS = {
+  var TRACK_MARKER_SIDE_LENGTH = 5;
+  var TRACK_MARKER_OPTIONS = {
     fill: 'black',
     stroke: null
   };
@@ -122,12 +122,12 @@ define( function( require ) {
     finishFlagNode.mouseArea = finishFlagNode.localBounds.dilatedX( 30 );
 
     // green arrows around the finish flag, cues the user to drag the flag
-    var arrowsNode = new HBox( {
+    var cueArrowsNode = new HBox( {
       cursor: 'pointer',
       spacing: 9,
       children: [
-        new ArrowNode( 0, 0, -ARROW_LENGTH, 0, ARROW_OPTIONS ),
-        new ArrowNode( 0, 0, ARROW_LENGTH, 0, ARROW_OPTIONS )
+        new ArrowNode( 0, 0, -CUE_ARROW_LENGTH, 0, CUE_ARROW_OPTIONS ),
+        new ArrowNode( 0, 0, CUE_ARROW_LENGTH, 0, CUE_ARROW_OPTIONS )
       ],
       centerX: finishFlagNode.left,
       bottom: finishFlagNode.bottom - 2
@@ -148,7 +148,7 @@ define( function( require ) {
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ dashedLineNode, solidLineNode, markersParent,
-      startFlagNode, finishFlagNode, timerNode, lengthNode, arrowsNode, carNode ];
+      startFlagNode, finishFlagNode, timerNode, lengthNode, cueArrowsNode, carNode ];
 
     // Synchronize track length with the model
     var lengthObserver = function( length ) {
@@ -168,7 +168,7 @@ define( function( require ) {
 
       // distance label below finish flag
       lengthNode.text = StringUtils.format( valueUnitsString, length, milesString );
-      lengthNode.top = solidLineNode.bottom + MARKER_SIDE_LENGTH + 4;
+      lengthNode.top = solidLineNode.bottom + TRACK_MARKER_SIDE_LENGTH + 4;
       lengthNode.centerX = finishX;
 
       // grey out markers that are past finish line
@@ -223,7 +223,7 @@ define( function( require ) {
       }
     } );
     finishFlagNode.addInputListener( dragHandler );
-    arrowsNode.addInputListener( dragHandler );
+    cueArrowsNode.addInputListener( dragHandler );
 
     // Synchronize car location with model
     var carObserver = function( distance ) {
@@ -232,7 +232,7 @@ define( function( require ) {
     car.distanceProperty.link( carObserver ); // unlink in dispose
 
     var arrowsVisibleObserver = function( visible ) {
-      arrowsNode.visible = visible;
+      cueArrowsNode.visible = visible;
     };
     arrowsVisibleProperty.link( arrowsVisibleObserver ); // unlink in dispose
 
@@ -255,11 +255,11 @@ define( function( require ) {
 
     var markerShape = new Shape()
       .moveTo( 0, 0 )
-      .lineTo( MARKER_SIDE_LENGTH / 2, MARKER_SIDE_LENGTH )
-      .lineTo( -MARKER_SIDE_LENGTH / 2, MARKER_SIDE_LENGTH )
+      .lineTo( TRACK_MARKER_SIDE_LENGTH / 2, TRACK_MARKER_SIDE_LENGTH )
+      .lineTo( -TRACK_MARKER_SIDE_LENGTH / 2, TRACK_MARKER_SIDE_LENGTH )
       .close();
 
-    return new Path( markerShape, MARKER_OPTIONS );
+    return new Path( markerShape, TRACK_MARKER_OPTIONS );
   }
 
   return inherit( Node, RaceTrackNode, {

@@ -14,7 +14,7 @@ define( function( require ) {
   // constants
   var DEFAULT_BUTTON_COLOR = 'rgb( 242, 242, 242 )';
 
-  // all values are {Color|string}, unless otherwise noted
+  // all values are {Color|string} and read-only, unless otherwise noted
   var URColors = {
 
     // screens
