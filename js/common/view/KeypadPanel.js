@@ -2,7 +2,7 @@
 
 //FUTURE replace NumberKeypad with next-generation keypad, see https://github.com/phetsims/unit-rates/issues/153
 /***
- * Temporary keypad for Unit Rates.
+ * A panel that contains a keypad and Enter button.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
