@@ -37,8 +37,8 @@ The ranges used for terms is as follows:
 
 |           | numerator units | numerator decimals | numerator range | denominator units |  numerator decimals | denominator range  |
 | --------- | --------------- |:------------------:| ------------------ | ------------------ |:------------------:| ------------------ |
-| Fruit     | cost  | 2 | variable | fruit name | 2 | 0-16 |
-| Vegetable | cost  | 2 | variable | vegetable name | 2 | 0-16 | 
-| Candy     | cost  | 2 | variable | candy name | 2 | 0-1.6 |
+| Fruit     | dollars  | 2 | variable | fruit name | 2 | 0-16 |
+| Vegetable | dollars  | 2 | variable | vegetable name | 2 | 0-16 | 
+| Candy     | dollars  | 2 | variable | pounds | 2 | 0-1.6 |
 | Racing    | miles | 1 | 0-200    | hours | 2 | variable  | 
 
