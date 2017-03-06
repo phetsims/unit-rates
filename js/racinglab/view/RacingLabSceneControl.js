@@ -52,7 +52,6 @@ define( function( require ) {
 
   /**
    * Creates the icon for the 1-car scene, scaled to fit a specified width.
-   *
    * @param {number} maxCarWidth
    * @returns {Node}
    */
@@ -62,7 +61,6 @@ define( function( require ) {
 
   /**
    * Creates the icon for the 2-cars scene, scaled to fit a specified width.
-   *
    * @param {number} maxCarWidth
    * @returns {Node}
    */
@@ -78,7 +76,6 @@ define( function( require ) {
 
   /**
    * Creates a car icon, scaled to fit a specified width.
-   *
    * @param {HTMLImageElement} imageFile
    * @param {number} maxCarWidth
    * @returns {Node}
