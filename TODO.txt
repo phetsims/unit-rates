@@ -1,9 +1,8 @@
 TODO list for unit-rates
 
 Medium:
-When selected item changes: cancel marker editor animation (TWEEN), cancel bag/item animations (model.step), cancel drags.
-If marker editor is on it's way home when Reset All is pressed, it doesn't move immediately to home.
-Handle cancellation of drags?
+Marker editor doesn't move immediately to home on Reset All
+Future issue to handle cancellation of drags and animations on Reset All, Reset Shelf and selected item change
 
 Performance:
 Reset All is a bit laggy on iPad
