@@ -88,7 +88,8 @@ define( function( require ) {
       baseColor: URColors.enterButton,
       content: new Text( enterString, {
         font: new URFont( 16 ),
-        fill: 'black'
+        fill: 'black',
+        maxWidth: keypadNode.width // i18n
       } )
     } );
 
