@@ -40,7 +40,7 @@ define( function( require ) {
        */
       start: function( event, trail ) {
 
-        // move Node to the drag layer
+        // move Node to the drag layer, so that it pops to the front
         item.dragging = true;
         itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
         dragLayer.addChild( itemNode );

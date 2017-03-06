@@ -45,7 +45,7 @@ define( function( require ) {
         assert && assert( !( shelf.containsBag( bag ) && scale.containsBag( bag ) ),
           'bag should not be on both shelf and scale' );
 
-        // move Node to the drag layer
+        // move Node to the drag layer, so that it pops to the front
         bag.dragging = true;
         bagLayer.removeChild( bagNode );
         dragLayer.addChild( bagNode );
