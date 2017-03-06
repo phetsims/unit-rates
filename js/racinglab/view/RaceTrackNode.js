@@ -137,7 +137,10 @@ define( function( require ) {
     var timerNode = new RaceTimerNode( car.timeProperty, timerExpandedProperty, options.timerTitleString );
 
     // Label that indicates the length of the track
-    var lengthNode = new Text( '', { font: new URFont( 12 ) } );
+    var lengthNode = new Text( '', {
+      font: new URFont( 12 ),
+      maxWidth: timerNode.width // i18n
+    } );
 
     // Car
     var carNode = new Image( car.image, {
