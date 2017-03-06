@@ -25,7 +25,7 @@ define( function( require ) {
    */
   function BagDragHandler( bagNode, bag, shelf, scale, bagLayer, dragLayer ) {
 
-    // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
+    // {Vector2} where the drag started relative to the bag's location, in parent view coordinates
     var startDragOffset;
 
     SimpleDragHandler.call( this, {

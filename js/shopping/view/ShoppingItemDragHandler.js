@@ -25,7 +25,7 @@ define( function( require ) {
    */
   function ShoppingItemDragHandler( itemNode, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer ) {
 
-    // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
+    // {Vector2} where the drag started relative to the item's location, in parent view coordinates
     var startDragOffset;
 
     SimpleDragHandler.call( this, {
