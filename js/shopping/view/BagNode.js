@@ -68,19 +68,6 @@ define( function( require ) {
     dispose: function() {
       this.disposeBagNode();
       Image.prototype.dispose.call( this );
-    },
-
-    //TODO not currently used, should it be? delete this?
-    //FUTURE revisit when scenery supports drag cancellation, see https://github.com/phetsims/function-builder/issues/57
-    /**
-     * Cancels a drag that is in progress.
-     * If no drag is in progress, this is a no-op.
-     * @public
-     */
-    cancelDrag: function() {
-      if ( this.bag.dragging ) {
-        this.dragHandler.endDrag( null /* event */ );
-      }
     }
   } );
 } );
