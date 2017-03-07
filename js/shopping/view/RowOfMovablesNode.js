@@ -26,10 +26,11 @@ define( function( require ) {
       stroke: 'black'
     }, options );
 
-    var shape = new Shape();
     var cellWidth = rowOfMovables.cellSize.width;
     var cellHeight = rowOfMovables.cellSize.height;
 
+    // add a rectangle for each cell
+    var shape = new Shape();
     rowOfMovables.getCells().forEach( function( cell ) {
       var x = cell.location.x - ( cellWidth / 2 );
       var y = cell.location.y - cellHeight;
