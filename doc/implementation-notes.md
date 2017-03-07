@@ -38,6 +38,7 @@ Shopping and Shopping Lab screens:
 * "Refresh Questions" button - button in the lower-left corner of the Questions accordion box, cycles through questions
 * "Reset Shelf" button - button to the left of the shelf, resets the shelf to its initial state
 * scale - place bags and items here to display their corresponding cost and (optionally) 
+* scene - all of the stuff specific to an item
 * shelf - place below the scale where bags and items live
 * spinner - user-interface control for changing one of the terms in the Rate accordion box
 
@@ -47,6 +48,7 @@ Racing Lab screen:
 * finish flag - checkered flag that appear at the finish line, move it to change track length
 * car position indicator - small colored rectangle that moves along the double number line to indicate car position
 * timer - indicates the time for a race
+* scene - 1 car or 2 cars
 * scene radio buttons - used to select between 1 or 2 cars
 * start/stop button - used to start and stop the race
 * start flag - flag that appears at the starting line on the track
