@@ -96,19 +96,19 @@ options.nestedOptions = _.extend( {
 }, options.nestedOptions );
 ```
 
-## Common
+## Common to all screens
 
 This section highlights a few things that are common to all screens.
 
-There are several ways to create markers - via the marker editor, by changing what is on the scale, by answering questions, and by running a car race.
+**Markers**: There are several ways to create markers - via the marker editor, by changing what is on the scale, by answering questions, and by running a car race.
 Markers have precedence based on how they were created.  Markers with higher precedence replace markers with lower precedence. 
 See `Marker.CREATOR_VALUES` for the list of marker creators and their precedence.
 
-The marker editor appears on all screens, and is one of the more complicated parts of the simulations. See `MarkerEditor` (model) and
+**Marker Editor**: The marker editor appears on all screens, and is one of the more complicated parts of the simulation. See `MarkerEditor` (model) and
 `MarkerEditorNode` (view). In `DoubleNumberLineAccordionBox`, `markerObserver` has primary responsibility for observing the marker editor, 
 creating corresponding markers, and animating the marker editor.
 
-Values associated with marker terms are necessarily rounded to a specific number of decimal places, as described in the table that appears
+**Rounding**: Values associated with marker terms are necessarily rounded to a specific number of decimal places, as described in the table that appears
 in [model.md](https://github.com/phetsims/unit-rates/blob/master/doc/model.md). Because values are rounded, it's possible to have 2 markers that
 have the same value for one term, and different values for the other term. We say that these markers "conflict".  When this situation occurs, 
 the older marker is replaced by the newer marker (subject to the marker precedence rules).  See `Marker.conflictsWith` for details on 
@@ -119,6 +119,28 @@ conflicting markers.
 Shopping and Shopping Lab screens share a great deal of code. Since the Shopping Lab screen is generally treated as 
 a specialization of the Shopping screen, code shared by these 2 screens lives in the directory for the Shopping 
 screen (`js/shopping/`).
+
+`ShoppingItemData` contains data structures that are used to instantiate `ShoppingScene` and its subtypes (`FruitScene`, `VegetableScene` and 
+`CandyScene`).  Using a data structure like this is an alternative to having a large number of constructor parameters.
+
+`Bags` and `ShoppingItems` are subtypes of `URMovable`, which implements model-based animation, complete with a callback systems.
+A thorough review of `URMovable` is highly recommended.
+
+The most complicated part of the implementation is the management of bags and items, especially for Fruit, where bags "open" and become 
+individual items when placed on the scale.  In the model, `Scale` and `Shelf` are both subtypes of `ShoppingContainer`.  A `ShoppingContainer`
+provides 3 rows: `bagRow`, `backItemRow` and `frontItemRow` (rendered in that order, from back to front).  `BaseShoppingSceneNode` 
+implements the layering in Nodes `bagLayer`, `backItemLayer` and `frontItemLayer` respectively. An additional `dragLayer` is provided,
+which serves as the parent for Nodes while they are being dragged.
+
+`BagDragHandler` and `ShoppingItemDragHandler` are also required reading. They utilize the animation callbacks provided by 
+`URMovable` to "change course" when the destination becomes occupied by another object.  They also handle moving Nodes between 
+the layers mentioned above.
+
+## Shopping screen
+
+The Questions panel is unique to the Shopping screen. `ShoppingItemData` provides a data structure that describes the questions, in a 
+"raw" format that matches the description in the design document. `ShoppingQuestionFactory.createQuestionSets` turns this raw data 
+into sets of `ShoppingQuestion`. 
 
 ## Shopping Lab screen
 
