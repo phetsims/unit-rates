@@ -132,6 +132,17 @@ define( function( require ) {
 
   return inherit( Object, DoubleNumberLine, {
 
+    // @public
+    dispose: function() {
+      this.disposeDoubleNumberLine();
+    },
+
+    // @public
+    reset: function() {
+      this.markers.reset();
+      this.undoMarkerProperty.reset();
+    },
+
     /**
      * Maps a rate's numerator from model to view coordinate frame.
      * @param {number} numerator - numerator in model coordinate frame
@@ -256,17 +267,6 @@ define( function( require ) {
     markerIsInRange: function( marker ) {
       return ( this.numeratorRangeProperty.value.contains( marker.numeratorProperty.value ) &&
                this.denominatorRangeProperty.value.contains( marker.denominatorProperty.value ) );
-    },
-
-    // @public
-    dispose: function() {
-      this.disposeDoubleNumberLine();
-    },
-
-    // @public
-    reset: function() {
-      this.markers.reset();
-      this.undoMarkerProperty.reset();
     },
 
     /**
