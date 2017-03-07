@@ -142,7 +142,7 @@ the layers mentioned above.
 For more insight into how the bags and items are arranged on the shelf and scale, run the simulation with the `?showCells` 
 query parameter. Green cells are possible locations for bags, blue cells are possible locations for individual items.  
 Animation is always to the closest cell, and (to support multi-touch) changes course if the target cell becomes occupied 
-during the animation. Bags open to fill the cells that are closest to the bag.
+during the animation. When a bag "opens", it becomes individual items that fill the cells that were closest to the bag.
 
 ## Shopping screen
 
