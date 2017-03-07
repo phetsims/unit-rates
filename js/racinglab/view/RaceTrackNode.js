@@ -133,7 +133,7 @@ define( function( require ) {
       bottom: finishFlagNode.bottom - 2
     } );
 
-    // Timer
+    // Timer, dispose required
     var timerNode = new RaceTimerNode( car.timeProperty, timerExpandedProperty, options.timerTitleString );
 
     // Label that indicates the length of the track
