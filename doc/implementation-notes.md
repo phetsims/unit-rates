@@ -67,22 +67,6 @@ in `DoubleNumberLine`. For the race track, see `modelToView` in `RaceTrackNode`.
 testing. All such query parameters are documented in
 [URQueryParameters](https://github.com/phetsims/unit-rates/blob/master/js/common/URQueryParameters.js).
 
-**Memory management**: In all screens, the model exists for the lifetime of the simulation. 
-In Shopping and Shopping Lab screens, large portions of the view are reconstructed when the selected item changes. 
-So `dispose` is required throughout the view, and all function calls that register an observer have an associated comment 
-indicating whether a corresponding de-register call is required. For example, here's the general pattern used in `CostNode`:
-
-```js
-var costObserver = function( cost ) {...};
-costProperty.link( costObserver ); // unlink in dispose
-...
-this.disposeCostNode = function() {
-  costProperty.unlink( costObserver );
-};
-```
-
-In the Racing Lab screen, model and view components persist for the lifetime of the simulation, so `dispose` is unnecessary.
-
 **Nested options**: In this simulation, I tried a new pattern for nesting options. It allows clients to specify only the nested options 
 that they wish to override.  The pattern is used throughout the sim, mostly for specifying options related to a rate's numerator and denominator
 (e.g. in `DoubleNumberLine`).  The general pattern is:
