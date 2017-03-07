@@ -36,7 +36,7 @@ define( function( require ) {
     var shoppingSceneParent = new Node();
     this.addChild( shoppingSceneParent );
 
-    // combo box, for selecting a scene
+    // combo box, for selecting a scene, dispose required
     var comboBox = new ShoppingSceneComboBox( category.shoppingScenes, category.shoppingSceneProperty, this, {
       left: layoutBounds.left + URConstants.SCREEN_X_MARGIN,
       bottom: layoutBounds.bottom - 80
@@ -71,6 +71,7 @@ define( function( require ) {
 
     // @private
     this.disposeShoppingCategoryNode = function() {
+      comboBox.dispose();
       categoryProperty.unlink( categoryObserver );
       category.shoppingSceneProperty.unlink( shoppingSceneObserver );
       shoppingSceneNode.dispose();
