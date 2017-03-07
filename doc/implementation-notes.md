@@ -31,22 +31,22 @@ General:
 Shopping and Shopping Lab screens:
 
 * bag - a bag of items (Apples, Carrots, Purple Candy, etc.)
-* category - one of 3 collection of items: fruit, vegetables, candy
+* category - one of 3 collections of items: fruit, vegetables, candy
 * category radio buttons - used to select a category
-* item - the fundamental type of thing in the shopping screens
+* item - the fundamental type of thing in the shopping screens (Apple, Pear, Lemon, Carrot, Red Candy,...)
 * items combo box - used to select an item
 * "Refresh Questions" button - button in the lower-left corner of the Questions accordion box, cycles through questions
 * "Reset Shelf" button - button to the left of the shelf, resets the shelf to its initial state
-* scale - place bags and items here to display their corresponding cost and (optionally) 
+* scale - place bags and items here to display their corresponding cost and (for candy) quantity 
 * scene - all of the stuff specific to an item
 * shelf - place below the scale where bags and items live
 * spinner - user-interface control for changing one of the terms in the Rate accordion box
 
 Racing Lab screen:
 
-* cue arrows - green arrows that initially appear around the finish flag
-* finish flag - checkered flag that appear at the finish line, move it to change track length
-* car position indicator - small colored rectangle that moves along the double number line to indicate car position
+* cue arrows - green arrows that initially appear around the finish flag, indicating that the flag can be dragged
+* finish flag - checkered flag that appears at the finish line, move it to change track length
+* car position indicator - small rectangle that moves along the double number line to indicate car position
 * timer - indicates the time for a race
 * scene - 1 car or 2 cars
 * scene radio buttons - used to select between 1 or 2 cars
