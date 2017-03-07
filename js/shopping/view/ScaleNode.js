@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var CostNode = require( 'UNIT_RATES/common/view/CostNode' );
+  var CostNode = require( 'UNIT_RATES/shopping/view/CostNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
