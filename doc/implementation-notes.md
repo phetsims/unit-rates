@@ -139,6 +139,11 @@ of the cells.
 `URMovable` to "change course" when the destination becomes occupied by another object.  They also handle moving Nodes between 
 the layers mentioned above.
 
+For more insight into how the bags and items are arranged on the shelf and scale, run the simulation with the `?showCells` 
+query parameter. Green cells are possible locations for bags, blue cells are possible locations for individual items.  
+Animation is always to the closest cell, and (to support multi-touch) changes course if the target cell becomes occupied 
+during the animation. Bags open to fill the cells that are closest to the bag.
+
 ## Shopping screen
 
 The Questions panel is unique to the Shopping screen. `ShoppingItemData` provides a data structure that describes the questions, in a 
