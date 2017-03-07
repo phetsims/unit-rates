@@ -82,27 +82,18 @@ this.disposeCostNode = function() {
 ```
 
 **Nested options***: In this simulation, I tried a new pattern for nesting options. It allows clients to specify only the nested options 
-that they wish to override.  The pattern is throughout the sim, mostly for specifying options related to a rate's numerator and denominator.
-It is illustrated in `DoubleNumberLine`:
+that they wish to override.  The pattern is throughout the sim, mostly for specifying options related to a rate's numerator and denominator
+(e.g. in `DoubleNumberLine`).  The general pattern is:
 
 ```js
 options = _.extend( {
-  numerationOptions: null, // {*} options specific to the rate's numerator, see below
-  denominatorOptions: null // {*} options specific to the rate's denominator, see below
+  nestedOptions: null, // {*} nest options, to be filled in with defaults below
+  ...
 }, options );
 
-options.numeratorOptions = _.extend( {
-  axisLabel: '', // {string} label for the axis
-  maxDecimals: 1, // {number} maximum number of decimal places
-  trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
-}, options.numeratorOptions );
-
-    // @public (read-only) options for the denominator (bottom) number line
-options.denominatorOptions = _.extend( {
-  axisLabel: '', // {Node} label for the axis
-  maxDecimals: 1, // {number} maximum number of decimal places
-  trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
-}, options.denominatorOptions );
+options.nestedOptions = _.extend( {
+  // default values go here
+}, options.nestedOptions );
 ```
 
 ## Common
