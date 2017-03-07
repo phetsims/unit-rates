@@ -53,8 +53,7 @@ define( function( require ) {
     // Rate pickers (aka spinners)
     NUMBER_PICKER_OPTIONS: {
       xMargin: 8,
-      cornerRadius: 4,
-      touchAreaYDilation: 0
+      cornerRadius: 4
     },
     COST_RANGE: new Range( 1, 20 ),
     QUANTITY_RANGE: new Range( 1, 20 ),
