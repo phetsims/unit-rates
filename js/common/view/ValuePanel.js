@@ -132,15 +132,17 @@ define( function( require ) {
     Panel.call( this, contentNode, options );
 
     // right justify valueNode when its bounds change
-    valueNode.on( 'bounds', function() {
+    var boundsListener = function() {
       valueNode.right = backgroundNode.right;
       valueNode.centerY = backgroundNode.centerY;
-    } );
+    };
+    valueNode.on( 'bounds', boundsListener ); // off in dispose
 
     // @private
     this.disposeValuePanel = function() {
       expandCollapseButton && expandCollapseButton.dispose();
       options.expandedProperty && options.expandedProperty.unlink( expandedObserver );
+      valueNode.off( 'bounds', boundsListener );
     };
   }
 
