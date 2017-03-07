@@ -65,6 +65,10 @@ define( function( require ) {
     var questionSetObserver = function( questionSet ) {
 
       // remove previous questions
+      questionsParent.getChildren().forEach( function( child ) {
+        assert && assert( child instanceof ShoppingQuestionNode );
+        child.dispose();
+      } );
       questionsParent.removeAllChildren();
 
       // add new questions, dispose required
