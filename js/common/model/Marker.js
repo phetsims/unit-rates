@@ -94,10 +94,10 @@ define( function( require ) {
     precedenceOf: function( marker ) {
 
       var thisIndex = CREATOR_VALUES.indexOf( this.creator );
-      assert && assert( thisIndex !== - 1, 'invalid creator: ' + this.creator );
+      assert && assert( thisIndex !== -1, 'invalid creator: ' + this.creator );
 
       var thatIndex = CREATOR_VALUES.indexOf( marker.creator );
-      assert && assert( thatIndex !== - 1, 'invalid creator: ' + marker.creator );
+      assert && assert( thatIndex !== -1, 'invalid creator: ' + marker.creator );
 
       if ( thatIndex > thisIndex ) {
         return 1;

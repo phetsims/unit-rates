@@ -106,7 +106,7 @@ define( function( require ) {
 
     // @private commits an edit
     commitEdit: function() {
-      
+
       // get the string representation of the value from the keypad
       var valueString = this.keypad.valueStringProperty.value;
 

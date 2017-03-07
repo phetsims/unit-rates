@@ -248,7 +248,7 @@ define( function( require ) {
         var destination = new Vector2( destinationX, markerEditorNode.y );
 
         if ( !markerEditorAnimationEnabled ) {
-           markerEditorNode.translation = destination;
+          markerEditorNode.translation = destination;
         }
         else {
 

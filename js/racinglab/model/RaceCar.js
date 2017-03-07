@@ -59,7 +59,7 @@ define( function( require ) {
     this.visibleProperty = new Property( options.visible );
 
     // @public
-    this.track = new RaceTrack( { length: options.trackLength });
+    this.track = new RaceTrack( { length: options.trackLength } );
 
     // Specifies the interval for major markers
     var isMajorMarker = function( numerator, denominator ) {

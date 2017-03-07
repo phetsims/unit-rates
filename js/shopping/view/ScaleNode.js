@@ -51,7 +51,7 @@ define( function( require ) {
     }, options );
 
     // round platter on top, origin at center ---------------------------------------------------
-    
+
     var topThickness = 8;
     var topRadiusX = 0.5 * scale.width;
     var topRadiusY = 0.5 * scale.depth;
@@ -65,7 +65,7 @@ define( function( require ) {
       .close();
 
     var topFaceNode = new Path( topFaceShape, {
-      fill: new LinearGradient( -topRadiusX /2, -topRadiusX /2 , topRadiusX/ 2, topRadiusX / 2)
+      fill: new LinearGradient( -topRadiusX / 2, -topRadiusX / 2, topRadiusX / 2, topRadiusX / 2 )
         .addColorStop( 0, URColors.scaleTopLight )
         .addColorStop( 0.5, URColors.scaleTopDark )
         .addColorStop( 1, URColors.scaleTopLight ),
@@ -87,7 +87,7 @@ define( function( require ) {
     } );
 
     // body of the scale ---------------------------------------------------------------------
-    
+
     // scale.width is the width at the midpoint of the scale's top face, compute the foreground and background widths
     var foregroundWidth = scale.width + scale.perspectiveXOffset;
     var backgroundWidth = scale.width - scale.perspectiveXOffset;
@@ -110,7 +110,7 @@ define( function( require ) {
       centerX: topNode.centerX,
       centerY: topNode.centerY + scale.depth
     } );
-    
+
     // display on front of the scale ---------------------------------------------------------------------
 
     // display background
@@ -168,7 +168,7 @@ define( function( require ) {
           center: displayBackgroundNode.center
         } ) ]
     } );
-    
+
     // put all of the above pieces together ---------------------------------------------------------------------
 
     // This type does not propagate options to the supertype because the model determines location.

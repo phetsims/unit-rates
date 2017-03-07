@@ -50,7 +50,7 @@ define( function( require ) {
       location: new Vector2( options.location.x, options.location.y + options.bagRowYOffset ),
       numberOfCells: options.numberOfBags,
       cellSize: options.bagSize,
-      
+
       // These values were determined empirically, to look visually pleasing.
       // For fruit, the spacing affects how cells are populated when bags open to reveal items.
       cellSpacing: ( options.numberOfBags < 4 ) ? 25 : 15
@@ -99,7 +99,7 @@ define( function( require ) {
       this.numberOfItemsProperty.dispose();
     };
   }
-  
+
   unitRates.register( 'ShoppingContainer', ShoppingContainer );
 
   return inherit( Object, ShoppingContainer, {

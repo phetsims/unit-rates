@@ -87,8 +87,8 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-     this.disposeScale();
-     ShoppingContainer.prototype.dispose.call( this );
+      this.disposeScale();
+      ShoppingContainer.prototype.dispose.call( this );
     }
   } );
 } );

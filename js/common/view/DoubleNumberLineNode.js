@@ -60,7 +60,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.axisViewLength = options.axisViewLength;
-    
+
     // All other nodes are positioned relative to this one
     var verticalAxis = new Line( 0, -options.minorMarkerLength / 2, 0, options.minorMarkerLength / 2, {
       stroke: options.axisColor,
@@ -70,7 +70,7 @@ define( function( require ) {
 
     // Double number line's maximum should be just to the left of the axis' arrow head
     var horizontalAxisLength = this.axisViewLength + options.arrowSize.height + 10;
-    
+
     // numerator axis
     var numeratorAxisNode = new ArrowNode( 0, 0, horizontalAxisLength, 0, {
       fill: options.axisColor,
@@ -126,7 +126,7 @@ define( function( require ) {
       this.addChild( indicatorNode );
 
       indicatorXObserver = function( x ) {
-         indicatorNode.centerX = doubleNumberLine.modelToViewNumerator( x, self.axisViewLength );
+        indicatorNode.centerX = doubleNumberLine.modelToViewNumerator( x, self.axisViewLength );
       };
       options.indicatorXProperty.link( indicatorXObserver ); // unlink in dispose
     }

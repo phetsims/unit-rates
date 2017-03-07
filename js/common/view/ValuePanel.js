@@ -74,7 +74,7 @@ define( function( require ) {
       valueNode.maxWidth = contentWidth;
 
       contentHeight = Math.max( minContentHeight, valueNode.height );
-      
+
       backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight, { stroke: BACKGROUND_RECTANGLE_STROKE } );
       contentNode.addChild( backgroundNode );
     }

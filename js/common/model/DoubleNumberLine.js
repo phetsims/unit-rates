@@ -71,7 +71,7 @@ define( function( require ) {
     // @private defined below
     this.numeratorRangeProperty = null;
     this.denominatorRangeProperty = null;
-    
+
     if ( options.fixedAxis === 'numerator' ) {
 
       // numerator range is immutable
@@ -112,7 +112,7 @@ define( function( require ) {
         self.markers.forEach( function( marker ) {
           marker.numeratorProperty.value = marker.denominatorProperty.value * unitRateProperty.value;
         } );
-      });
+      } );
     }
 
     // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
@@ -140,10 +140,10 @@ define( function( require ) {
      * @public
      */
     modelToViewNumerator: function( numerator, viewMax ) {
-       return Util.linear(
-         this.numeratorRangeProperty.value.min, this.numeratorRangeProperty.value.max,
-         0, viewMax,
-         numerator );
+      return Util.linear(
+        this.numeratorRangeProperty.value.min, this.numeratorRangeProperty.value.max,
+        0, viewMax,
+        numerator );
     },
 
     /**
@@ -154,10 +154,10 @@ define( function( require ) {
      * @public
      */
     modelToViewDenominator: function( denominator, viewMax ) {
-       return Util.linear(
-         this.denominatorRangeProperty.value.min, this.denominatorRangeProperty.value.max,
-         0, viewMax,
-         denominator );
+      return Util.linear(
+        this.denominatorRangeProperty.value.min, this.denominatorRangeProperty.value.max,
+        0, viewMax,
+        denominator );
     },
 
     /**

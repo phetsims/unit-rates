@@ -192,13 +192,13 @@ define( function( require ) {
         itemRow.put( item, cellIndex );
 
         // move Node to front or back item layer
-       itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
-       if ( itemRow === shoppingContainer.backItemRow ) {
-         backItemLayer.addChild( itemNode );
-       }
-       else {
-         frontItemLayer.addChild( itemNode );
-       }
+        itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
+        if ( itemRow === shoppingContainer.backItemRow ) {
+          backItemLayer.addChild( itemNode );
+        }
+        else {
+          frontItemLayer.addChild( itemNode );
+        }
       }
       else {
 

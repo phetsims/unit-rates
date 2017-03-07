@@ -70,7 +70,7 @@ define( function( require ) {
     // Scale the image down if it's larger than iconSize
     var imageNode = new Image( shoppingScene.itemImage );
     if ( imageNode.width > iconSize.width || imageNode.height > iconSize.height ) {
-      var scale = Math.min(  iconSize.width / imageNode.width, iconSize.height / imageNode.height );
+      var scale = Math.min( iconSize.width / imageNode.width, iconSize.height / imageNode.height );
       imageNode.setScaleMagnitude( scale );
     }
 

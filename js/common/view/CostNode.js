@@ -76,7 +76,7 @@ define( function( require ) {
       // This determines the cost value that is displayed.
       powerOfTen = Math.pow( 10, options.decimalPlaces );
       costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
-      
+
       // convert to string, then pick it apart
       var costString = costToString( costTruncated, options.decimalPlaces );
       primaryNode.text = costString.substring( 0, costString.length - 1 );

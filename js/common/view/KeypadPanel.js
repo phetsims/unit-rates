@@ -167,7 +167,7 @@ define( function( require ) {
           // ignore additional decimal points
         }
       }
-      else if ( hasDecimalPoint &&  numberOfDecimals === options.maxDecimals ) {
+      else if ( hasDecimalPoint && numberOfDecimals === options.maxDecimals ) {
 
         // maxDecimals reached, ignore key
       }

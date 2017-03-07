@@ -87,7 +87,7 @@ define( function( require ) {
       var denominator = Math.pow( 10, URUtil.decimalPlaces( unitRate ) );
       var fraction = new Fraction( unitRate * denominator, denominator );
       fraction.reduce();
-      
+
       // use closest integer values
       return new Rate( Util.toFixedNumber( fraction.numerator, 0 ), Util.toFixedNumber( fraction.denominator, 0 ) );
     }

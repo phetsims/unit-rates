@@ -37,30 +37,30 @@ define( function( require ) {
     // @public (read-only) items are grouped into categories
     this.categories = options.categories || [
 
-      // fruits
-      new ShoppingCategory( appleImage, [
-        new FruitScene( ShoppingItemData.Fruit.APPLES ),
-        new FruitScene( ShoppingItemData.Fruit.LEMONS ),
-        new FruitScene( ShoppingItemData.Fruit.ORANGES ),
-        new FruitScene( ShoppingItemData.Fruit.PEARS )
-      ] ),
+        // fruits
+        new ShoppingCategory( appleImage, [
+          new FruitScene( ShoppingItemData.Fruit.APPLES ),
+          new FruitScene( ShoppingItemData.Fruit.LEMONS ),
+          new FruitScene( ShoppingItemData.Fruit.ORANGES ),
+          new FruitScene( ShoppingItemData.Fruit.PEARS )
+        ] ),
 
-      // vegetables
-      new ShoppingCategory( carrotImage, [
-        new VegetableScene( ShoppingItemData.Vegetable.CARROTS ),
-        new VegetableScene( ShoppingItemData.Vegetable.CUCUMBERS ),
-        new VegetableScene( ShoppingItemData.Vegetable.POTATOES ),
-        new VegetableScene( ShoppingItemData.Vegetable.TOMATOES )
-      ] ),
+        // vegetables
+        new ShoppingCategory( carrotImage, [
+          new VegetableScene( ShoppingItemData.Vegetable.CARROTS ),
+          new VegetableScene( ShoppingItemData.Vegetable.CUCUMBERS ),
+          new VegetableScene( ShoppingItemData.Vegetable.POTATOES ),
+          new VegetableScene( ShoppingItemData.Vegetable.TOMATOES )
+        ] ),
 
-      // candies
-      new ShoppingCategory( purpleCandyImage, [
-        new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY ),
-        new CandyScene( ShoppingItemData.Candy.RED_CANDY ),
-        new CandyScene( ShoppingItemData.Candy.GREEN_CANDY ),
-        new CandyScene( ShoppingItemData.Candy.BLUE_CANDY )
-      ] )
-    ];
+        // candies
+        new ShoppingCategory( purpleCandyImage, [
+          new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY ),
+          new CandyScene( ShoppingItemData.Candy.RED_CANDY ),
+          new CandyScene( ShoppingItemData.Candy.GREEN_CANDY ),
+          new CandyScene( ShoppingItemData.Candy.BLUE_CANDY )
+        ] )
+      ];
 
     // validate options
     assert && assert( options.categoryIndex >= 0 && options.categoryIndex < this.categories.length,
