@@ -67,10 +67,10 @@ in `DoubleNumberLine`. For the race track, see `modelToView` in `RaceTrackNode`.
 testing. All such query parameters are documented in
 [URQueryParameters](https://github.com/phetsims/unit-rates/blob/master/js/common/URQueryParameters.js).
 
-**Memory management**: The model exists for the lifetime of the simulation. Large portions of the view are 
-reconstructed when the selected item changes. So `dispose` is implemented throughout, and all function calls 
-that register an observer have an associated comment indicating whether a corresponding de-register call is 
-required. For example, here's the general pattern used in `CostNode`:
+**Memory management**: In all screens, the model exists for the lifetime of the simulation. 
+In Shopping and Shopping Lab screens, large portions of the view are reconstructed when the selected item changes. 
+So `dispose` is required throughout the view, and all function calls that register an observer have an associated comment 
+indicating whether a corresponding de-register call is required. For example, here's the general pattern used in `CostNode`:
 
 ```js
 var costObserver = function( cost ) {...};
@@ -80,6 +80,8 @@ this.disposeCostNode = function() {
   costProperty.unlink( costObserver );
 };
 ```
+
+In the Racing Lab screen, model and view components persist for the lifetime of the simulation, so `dispose` is unnecessary.
 
 **Nested options**: In this simulation, I tried a new pattern for nesting options. It allows clients to specify only the nested options 
 that they wish to override.  The pattern is used throughout the sim, mostly for specifying options related to a rate's numerator and denominator
@@ -120,6 +122,19 @@ Shopping and Shopping Lab screens share a great deal of code. Since the Shopping
 a specialization of the Shopping screen, code shared by these 2 screens lives in the directory for the Shopping 
 screen (`js/shopping/`).
 
+The model in these screens exists for the lifetime of the simulation. But large portions of the view are reconstructed when the selected item changes. 
+So `dispose` is required throughout the view, and all function calls that register an observer have an associated comment 
+indicating whether a corresponding de-register call is required. For example, here's the general pattern used in `CostNode`:
+
+```js
+var costObserver = function( cost ) {...};
+costProperty.link( costObserver ); // unlink in dispose
+...
+this.disposeCostNode = function() {
+  costProperty.unlink( costObserver );
+};
+```
+
 `ShoppingItemData` contains data structures that are used to instantiate `ShoppingScene` and its subtypes (`FruitScene`, `VegetableScene` and 
 `CandyScene`).  Using a data structure like this is an alternative to having a large number of constructor parameters.
 
@@ -159,3 +174,5 @@ the other screens, but adds a pair of race tracks and related controls.  When a 
 marker on the double number line. 
 
 The majority of the model logic resides in `RaceCar`, while `RaceTrackNode` contains most of the view components that are specific to this screen.
+
+In the Racing Lab screen, model and view components persist for the lifetime of the simulation, so `dispose` is unnecessary.
