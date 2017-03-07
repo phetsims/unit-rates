@@ -67,7 +67,7 @@ define( function( require ) {
         allowZeroEntry: true // {boolean} whether to allow '0' to be entered
       }, options );
 
-      this.valueProperty = valueProperty;
+      this.valueProperty = valueProperty; // remove this reference in endEdit
       this.onEndEdit = options.onEndEdit;
       this.allowZeroEntry = options.allowZeroEntry;
 
@@ -102,6 +102,9 @@ define( function( require ) {
 
       // execute client-specific hook
       this.onEndEdit && this.onEndEdit();
+
+      // remove reference to valueProperty that was passed to beginEdit
+      this.valueProperty = null;
     },
 
     // @private commits an edit
@@ -112,8 +115,8 @@ define( function( require ) {
 
       // if the keypad contains a valid value ...
       if ( valueString && !( !this.allowZeroEntry && valueString === '0' ) ) {
-        this.endEdit();
         this.valueProperty.value = ( 1 * valueString ); // string -> number conversion
+        this.endEdit();
       }
       else {
         this.cancelEdit(); // not entering a value in the keypad is effectively a cancel
