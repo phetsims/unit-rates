@@ -39,7 +39,7 @@ define( function( require ) {
       self.centerX = location.x;
       self.bottom = location.y;
     };
-    item.locationProperty.link( locationObserver ); // must be unlinked in dispose
+    item.locationProperty.link( locationObserver ); // unlink in dispose
 
     var visibleObserver = function( visible ) {
       self.visible = visible;
