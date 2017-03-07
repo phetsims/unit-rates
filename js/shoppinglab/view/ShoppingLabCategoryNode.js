@@ -46,6 +46,7 @@ define( function( require ) {
     // @private
     this.diposeShoppingLabCategoryNode = function() {
       categoryProperty.unlink( categoryObserver );
+      shoppingSceneNode.dispose();
     };
 
     // @private used by prototype functions
