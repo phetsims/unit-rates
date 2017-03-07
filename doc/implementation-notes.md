@@ -87,7 +87,7 @@ that they wish to override.  The pattern is throughout the sim, mostly for speci
 
 ```js
 options = _.extend( {
-  nestedOptions: null, // {*} nest options, to be filled in with defaults below
+  nestedOptions: null, // {*} to be filled in with defaults below
   ...
 }, options );
 
