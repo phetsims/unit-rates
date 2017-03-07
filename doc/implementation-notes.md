@@ -81,8 +81,8 @@ this.disposeCostNode = function() {
 };
 ```
 
-**Nested options***: In this simulation, I tried a new pattern for nesting options. It allows clients to specify only the nested options 
-that they wish to override.  The pattern is throughout the sim, mostly for specifying options related to a rate's numerator and denominator
+**Nested options**: In this simulation, I tried a new pattern for nesting options. It allows clients to specify only the nested options 
+that they wish to override.  The pattern is used throughout the sim, mostly for specifying options related to a rate's numerator and denominator
 (e.g. in `DoubleNumberLine`).  The general pattern is:
 
 ```js
@@ -100,7 +100,7 @@ options.nestedOptions = _.extend( {
 
 This section highlights a few things that are common to all screens.
 
-**Markers**: There are several ways to create markers - via the marker editor, by changing what is on the scale, by answering questions, and by running a car race.
+**Markers**: There are several ways to create markers: via the marker editor, by changing what is on the scale, by answering questions, and by running a car race.
 Markers have precedence based on how they were created.  Markers with higher precedence replace markers with lower precedence. 
 See `Marker.CREATOR_VALUES` for the list of marker creators and their precedence.
 
@@ -123,14 +123,18 @@ screen (`js/shopping/`).
 `ShoppingItemData` contains data structures that are used to instantiate `ShoppingScene` and its subtypes (`FruitScene`, `VegetableScene` and 
 `CandyScene`).  Using a data structure like this is an alternative to having a large number of constructor parameters.
 
-`Bags` and `ShoppingItems` are subtypes of `URMovable`, which implements model-based animation, complete with a callback systems.
-A thorough review of `URMovable` is highly recommended.
+`Bags` and `ShoppingItems` are subtypes of `URMovable`, which implements model-based animation, complete with a callback system.
+`URMovable` is required reading.
 
-The most complicated part of the implementation is the management of bags and items, especially for Fruit, where bags "open" and become 
+The most complicated part of the implementation is the management of bags and items. This is especially true for Fruit, where bags "open" and become 
 individual items when placed on the scale.  In the model, `Scale` and `Shelf` are both subtypes of `ShoppingContainer`.  A `ShoppingContainer`
-provides 3 rows: `bagRow`, `backItemRow` and `frontItemRow` (rendered in that order, from back to front).  `BaseShoppingSceneNode` 
+provides 3 rows: `bagRow` (for bags), `backItemRow` and `frontItemRow` (for items).  `BaseShoppingSceneNode` 
 implements the layering in Nodes `bagLayer`, `backItemLayer` and `frontItemLayer` respectively. An additional `dragLayer` is provided,
 which serves as the parent for Nodes while they are being dragged.
+
+See `RowOfMovables` for the implementation of the rows in `ShoppingContainer`. A row consists of a set of cells, each of which can 
+contain at most one `URMovable`.  For some insight into cells, run the sim with query parameter `?showCells` to display the outline 
+of the cells.
 
 `BagDragHandler` and `ShoppingItemDragHandler` are also required reading. They utilize the animation callbacks provided by 
 `URMovable` to "change course" when the destination becomes occupied by another object.  They also handle moving Nodes between 
