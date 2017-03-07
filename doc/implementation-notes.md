@@ -81,10 +81,64 @@ this.disposeCostNode = function() {
 };
 ```
 
+**Nested options***: In this simulation, I tried a new pattern for nesting options. It allows clients to specify only the nested options 
+that they wish to override.  The pattern is throughout the sim, mostly for specifying options related to a rate's numerator and denominator.
+It is illustrated in `DoubleNumberLine`:
+
+```js
+options = _.extend( {
+  numerationOptions: null, // {*} options specific to the rate's numerator, see below
+  denominatorOptions: null // {*} options specific to the rate's denominator, see below
+}, options );
+
+options.numeratorOptions = _.extend( {
+  axisLabel: '', // {string} label for the axis
+  maxDecimals: 1, // {number} maximum number of decimal places
+  trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+}, options.numeratorOptions );
+
+    // @public (read-only) options for the denominator (bottom) number line
+options.denominatorOptions = _.extend( {
+  axisLabel: '', // {Node} label for the axis
+  maxDecimals: 1, // {number} maximum number of decimal places
+  trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+}, options.denominatorOptions );
+```
+
+## Common
+
+This section highlights a few things that are common to all screens.
+
+There are several ways to create markers - via the marker editor, by changing what is on the scale, by answering questions, and by running a car race.
+Markers have precedence based on how they were created.  Markers with higher precedence replace markers with lower precedence. 
+See `Marker.CREATOR_VALUES` for the list of marker creators and their precedence.
+
+The marker editor appears on all screens, and is one of the more complicated parts of the simulations. See `MarkerEditor` (model) and
+`MarkerEditorNode` (view). In `DoubleNumberLineAccordionBox`, `markerObserver` has primary responsibility for observing the marker editor, 
+creating corresponding markers, and animating the marker editor.
+
+Values associated with marker terms are necessarily rounded to a specific number of decimal places, as described in the table that appears
+in [model.md](https://github.com/phetsims/unit-rates/blob/master/doc/model.md). Because values are rounded, it's possible to have 2 markers that
+have the same value for one term, and different values for the other term. We say that these markers "conflict".  When this situation occurs, 
+the older marker is replaced by the newer marker (subject to the marker precedence rules).  See `Marker.conflictsWith` for details on 
+conflicting markers.
+
 ## Shopping and Shopping Lab screens
 
 Shopping and Shopping Lab screens share a great deal of code. Since the Shopping Lab screen is generally treated as 
 a specialization of the Shopping screen, code shared by these 2 screens lives in the directory for the Shopping 
 screen (`js/shopping/`).
 
+## Shopping Lab screen
+
+When cost is not an exact number of cents (i.e., cannot be represented by exactly 2 decimal places), the scale in the Shopping Lab screen 
+displays 1 additional decimal place.  The specification for computing the extra decimal place involved both truncation and rounding, and 
+implementation was a bit tricky. See `CostNode.costObserver` for details.
+
 ## Racing Lab screen
+
+Compared to the shopping screens, the Racing Lab screen is relatively simple. It uses the same double number line and Rate accordion box as
+the other screens, but adds a pair of race tracks and related controls.  When a race completes, it results in the creation of a corresponding
+marker on the double number line. 
+
+The majority of the model logic resides in `RaceCar`, while `RaceTrackNode` contains most of the view components that are specific to this screen.
