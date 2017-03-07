@@ -34,6 +34,7 @@ define( function( require ) {
    */
   function RaceTimerNode( timeProperty, expandedProperty, titleString, options ) {
 
+    // dispose required
     var valueNode = new ValueNode( timeProperty, {
       font: TIMER_FONT,
       valueToString: function( value ) {
@@ -47,9 +48,21 @@ define( function( require ) {
       titleString: titleString,
       titleFont: TIMER_FONT
     }, options ) );
+
+    // @private
+    this.disposeRaceTimerNode = function() {
+      valueNode.dispose();
+    }
   }
 
   unitRates.register( 'RaceTimerNode', RaceTimerNode );
 
-  return inherit( ValuePanel, RaceTimerNode );
+  return inherit( ValuePanel, RaceTimerNode, {
+
+    // @public
+    dispose: function() {
+      this.disposeRaceTimerNode();
+      ValuePanel.prototype.dispose.call( this );
+    }
+  } );
 } );
