@@ -83,22 +83,25 @@ define( function( require ) {
     var backItemLayer = new Node(); // the back row of items
 
     // bags and items, dispose required
+    var bagNodes = [];
+    var itemNodes = [];
     var bagsOpen = false;
     shoppingScene.bags.forEach( function( bag ) {
 
       // create the bag's Node, put it in the bag layer
-      bagLayer.addChild( new BagNode( bag, shoppingScene.shelf, shoppingScene.scale, bagLayer, dragLayer ) );
+      var bagNode = new BagNode( bag, shoppingScene.shelf, shoppingScene.scale, bagLayer, dragLayer );
+      bagNodes.push( bagNode );
+      bagLayer.addChild( bagNode );
 
       // optional items in the bag
       if ( bag.items ) {
         bagsOpen = true;
         bag.items.forEach( function( item ) {
 
-          // Create the item's Node. Adds itself to the proper layer, so there is no addChild call here,
-          // and we need to disable eslint error with this comment line:
-          // eslint-disable-next-line no-new
-          new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
+          // Create the item's Node. Adds itself to the proper layer, so there is no addChild here.
+          var itemNode = new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
             frontItemLayer, backItemLayer, dragLayer );
+          itemNodes.push( itemNode );
         } );
       }
     } );
@@ -138,22 +141,11 @@ define( function( require ) {
       shelfNode.dispose();
       scaleNode.dispose();
 
-      dragLayer.getChildren().forEach( function( node ) {
-        node.dispose && node.dispose();
-      } );
-
-      bagLayer.getChildren().forEach( function( node ) {
-        assert && assert( node instanceof BagNode );
+      bagNodes.forEach( function( node ) {
         node.dispose();
       } );
 
-      frontItemLayer.getChildren().forEach( function( node ) {
-        assert && assert( node instanceof ShoppingItemNode );
-        node.dispose();
-      } );
-
-      backItemLayer.getChildren().forEach( function( node ) {
-        assert && assert( node instanceof ShoppingItemNode );
+      itemNodes.forEach( function( node ) {
         node.dispose();
       } );
     };
