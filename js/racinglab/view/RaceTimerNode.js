@@ -52,7 +52,7 @@ define( function( require ) {
     // @private
     this.disposeRaceTimerNode = function() {
       valueNode.dispose();
-    }
+    };
   }
 
   unitRates.register( 'RaceTimerNode', RaceTimerNode );
