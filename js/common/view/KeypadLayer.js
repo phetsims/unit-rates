@@ -42,11 +42,21 @@ define( function( require ) {
     // @private these will be set when the client calls beginEdit
     this.valueProperty = null;
     this.keypad = null;
-    this.allowZeroEntry = true;
+    this.zeroIsValid = true;
     this.onEndEdit = null; // {function} called by endEdit
   }
 
   unitRates.register( 'KeypadLayer', KeypadLayer );
+
+  /**
+   * Determines if the value string from the keypad is a valid entry.
+   * @param {number} value
+   * @param {boolean} zeroIsValid - is zero a valid value?
+   * @returns {boolean}
+   */
+  function isValidValue( value, zeroIsValid ) {
+    return !isNaN( value ) && !( value === 0 && !zeroIsValid );
+  }
 
   return inherit( Plane, KeypadLayer, {
 
@@ -64,12 +74,12 @@ define( function( require ) {
         setKeypadLocation: null, // {function:KeypadPanel} called by beginEdit to set the keypad location
         maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
         maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
-        allowZeroEntry: true // {boolean} whether to allow '0' to be entered
+        zeroIsValid: true // {boolean} is zero a valid value?
       }, options );
 
       this.valueProperty = valueProperty; // remove this reference in endEdit
       this.onEndEdit = options.onEndEdit;
-      this.allowZeroEntry = options.allowZeroEntry;
+      this.zeroIsValid = options.zeroIsValid;
 
       // create a keypad
       this.keypad = new KeypadPanel( {
@@ -110,12 +120,12 @@ define( function( require ) {
     // @private commits an edit
     commitEdit: function() {
 
-      // get the string representation of the value from the keypad
-      var valueString = this.keypad.valueStringProperty.value;
+      // get the value from the keypad
+      var value = parseFloat( this.keypad.valueStringProperty.value );
 
       // if the keypad contains a valid value ...
-      if ( valueString && !( !this.allowZeroEntry && valueString === '0' ) ) {
-        this.valueProperty.value = ( 1 * valueString ); // string -> number conversion
+      if ( isValidValue( value, this.zeroIsValid ) ) {
+        this.valueProperty.value = value;
         this.endEdit();
       }
       else {

@@ -42,7 +42,7 @@ define( function( require ) {
       valueBoxWidth: 55, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 12 ), // {Font} font for the value
       valueColor: 'black', // {Color|string} color of the value
-      allowZeroEntry: false, // {boolean} whether to allow '0' to be entered in the keypad
+      zeroIsValid: false, // {boolean} zero is not a valid value for markers
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: URConstants.MARKER_Y_SPACING, // {number} vertical margin inside the value box
       ySpacing: 3,  // {number} vertical spacing between UI elements
@@ -175,7 +175,7 @@ define( function( require ) {
         setKeypadLocation: setKeypadLocation,
         maxDigits: numeratorOptions.maxDigits,
         maxDecimals: numeratorOptions.maxDecimals,
-        allowZeroEntry: options.allowZeroEntry
+        zeroIsValid: options.zeroIsValid
       } );
     };
 
@@ -187,7 +187,7 @@ define( function( require ) {
         setKeypadLocation: setKeypadLocation,
         maxDigits: denominatorOptions.maxDigits,
         maxDecimals: denominatorOptions.maxDecimals,
-        allowZeroEntry: options.allowZeroEntry
+        zeroIsValid: options.zeroIsValid
       } );
     };
 
