@@ -52,7 +52,7 @@ define( function( require ) {
 
     }, options );
 
-    // 'Unit Rate?' question
+    // 'Unit Rate?' question, dispose required
     var unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, this, keypadLayer, {
       denominatorVisible: true
     } );
@@ -67,14 +67,14 @@ define( function( require ) {
       // remove previous questions
       questionsParent.removeAllChildren();
 
-      // add new questions
+      // add new questions, dispose required
       var questionNodes = [];
       for ( var i = 0; i < questionSet.length; i++ ) {
         questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], self, keypadLayer ) );
       }
       questionsParent.setChildren( questionNodes );
     };
-    shoppingScene.questionSetProperty.link( questionSetObserver );// unlink in dispose
+    shoppingScene.questionSetProperty.link( questionSetObserver ); // unlink in dispose
 
     // Refresh button, advances to the next question set
     var refreshButton = new RectangularPushButton( {
