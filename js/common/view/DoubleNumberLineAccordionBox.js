@@ -48,6 +48,8 @@ define( function( require ) {
       // DoubleNumberLineAccordionBox options
       titleString: doubleNumberLineString, // {string} title displayed next to the expand/collapse button
       keypadLocation: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
+      buttonTouchAreaYDilation: 2, // prevent overlap with marker editor button
+      buttonMouseAreaYDilation: 2, // prevent overlap with marker editor button
 
       // DoubleNumberLineNode options
       axisViewLength: 1000, // {number} view length of doubleNumberLine's range

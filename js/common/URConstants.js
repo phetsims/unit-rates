@@ -40,8 +40,10 @@ define( function( require ) {
       buttonLength: 16,
       buttonXMargin: 10,
       buttonYMargin: 4,
-      buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 0,
+      buttonTouchAreaXDilation: 8,
+      buttonTouchAreaYDilation: 8,
+      buttonMouseAreaXDilation: 5,
+      buttonMouseAreaYDilation: 5,
       contentXMargin: 10,
       contentYMargin: 8,
       contentYSpacing: 4
