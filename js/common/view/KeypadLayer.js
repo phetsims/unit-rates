@@ -49,7 +49,7 @@ define( function( require ) {
   unitRates.register( 'KeypadLayer', KeypadLayer );
 
   /**
-   * Determines if the value string from the keypad is a valid entry.
+   * Determines if the value from the keypad is a valid entry.
    * @param {number} value
    * @param {boolean} zeroIsValid - is zero a valid value?
    * @returns {boolean}
