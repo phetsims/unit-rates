@@ -1,7 +1,0 @@
-TODO list for unit-rates
-
-Misc:
-check for memory leaks
-implementation-notes.md, https://github.com/phetsims/unit-rates/issues/66
-credits, https://github.com/phetsims/unit-rates/issues/55
-Terminology: team refers to fruit/vegetable/candy as "scene", implementation uses "category", change implementation?
