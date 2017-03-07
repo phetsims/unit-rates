@@ -57,7 +57,7 @@ define( function( require ) {
       quantityIsDisplayed: shoppingScene.scaleQuantityIsDisplayed
     } );
 
-    // button that resets the shelf to its initial state, dispose required
+    // button that resets the shelf to its initial state
     var resetShelfButton = new ResetButton( {
       listener: function() {
         self.cancelDrags();
@@ -137,7 +137,6 @@ define( function( require ) {
       doubleNumberLineAccordionBox.dispose();
       shelfNode.dispose();
       scaleNode.dispose();
-      resetShelfButton.dispose();
 
       dragLayer.getChildren().forEach( function( node ) {
         node.dispose && node.dispose();
