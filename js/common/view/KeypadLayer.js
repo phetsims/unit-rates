@@ -68,6 +68,13 @@ define( function( require ) {
      */
     beginEdit: function( valueProperty, options ) {
 
+      // Ignore attempts to open another keypad. This can happen in unlikely multi-touch scenarios.
+      // See https://github.com/phetsims/unit-rates/issues/181
+      if ( this.keypad ) {
+        unitRates.log( 'ignoring attempt to open another keypad' );
+        return;
+      }
+
       options = _.extend( {
         onBeginEdit: null, // {function} called by beginEdit
         onEndEdit: null, // {function} called by endEdit
