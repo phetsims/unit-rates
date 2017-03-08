@@ -104,6 +104,7 @@ define( function( require ) {
 
     // the user's guess, as entered via the keypad, appears centered in the box
     var guessNode = new Text( '', {
+      pickable: false, // so it doesn't interfere with clicking in valueBox to open keypad
       fill: options.neutralColor,
       font: options.valueFont,
       center: valueBox.center,

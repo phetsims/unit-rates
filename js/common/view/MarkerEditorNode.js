@@ -99,6 +99,7 @@ define( function( require ) {
 
     // numerator value
     var numeratorNode = new Text( '', {
+      pickable: false, // so it doesn't interfere with clicking in numeratorBox to open keypad
       fill: options.neutralColor,
       font: options.valueFont,
       center: numeratorBox.center
@@ -107,6 +108,7 @@ define( function( require ) {
 
     // denominator value
     var denominatorNode = new Text( '', {
+      pickable: false, // so it doesn't interfere with clicking in denominatorBox to open keypad
       fill: options.neutralColor,
       font: options.valueFont,
       center: denominatorBox.center
