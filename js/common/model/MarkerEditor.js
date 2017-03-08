@@ -61,25 +61,15 @@ define( function( require ) {
     } );
 
     // if the unit rate changes, reset the editor, which effectively cancels any edit that is in progress
-    var unitRateObserver = function() {
+    // unlink not needed, exists for sim lifetime
+    unitRateProperty.lazyLink( function() {
       self.reset();
-    };
-    unitRateProperty.lazyLink( unitRateObserver ); // unlink in dispose
-
-    // @private
-    this.disposeMarkerEditor = function() {
-      unitRateProperty.unlink( unitRateObserver );
-    };
+    } );
   }
 
   unitRates.register( 'MarkerEditor', MarkerEditor );
 
   return inherit( Object, MarkerEditor, {
-
-    // @public
-    dispose: function() {
-      this.disposeMarkerEditor();
-    },
 
     // @public
     reset: function() {

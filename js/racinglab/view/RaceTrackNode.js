@@ -229,23 +229,15 @@ define( function( require ) {
     cueArrowsNode.addInputListener( dragHandler );
 
     // Synchronize car location with model
-    var carObserver = function( distance ) {
+    // unlink not needed, exists for sim lifetime
+    car.distanceProperty.link( function( distance ) {
       carNode.right = modelToView( distance );
-    };
-    car.distanceProperty.link( carObserver ); // unlink in dispose
+    } );
 
-    var arrowsVisibleObserver = function( visible ) {
+    // unlink not needed, exists for sim lifetime
+    arrowsVisibleProperty.link( function( visible ) {
       cueArrowsNode.visible = visible;
-    };
-    arrowsVisibleProperty.link( arrowsVisibleObserver ); // unlink in dispose
-
-    // @private
-    this.disposeRaceTrackNode = function() {
-      timerNode.dispose();
-      car.track.lengthProperty.unlink( lengthObserver );
-      car.distanceProperty.unlink( carObserver );
-      arrowsVisibleProperty.unlink( arrowsVisibleObserver );
-    };
+    } );
   }
 
   unitRates.register( 'RaceTrackNode', RaceTrackNode );
@@ -265,12 +257,5 @@ define( function( require ) {
     return new Path( markerShape, TRACK_MARKER_OPTIONS );
   }
 
-  return inherit( Node, RaceTrackNode, {
-
-    // @public
-    dispose: function() {
-      this.disposeRaceTrackNode();
-      Node.prototype.dispose.call( this );
-    }
-  } );
+  return inherit( Node, RaceTrackNode );
 } );

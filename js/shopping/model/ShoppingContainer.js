@@ -45,7 +45,7 @@ define( function( require ) {
     // @public (read-only)
     this.location = options.location;
 
-    // @public row of bags
+    // @public row of bags, dispose not required, exists for sim lifetime
     this.bagRow = new RowOfMovables( {
       location: new Vector2( options.location.x, options.location.y + options.bagRowYOffset ),
       numberOfCells: options.numberOfBags,
@@ -61,7 +61,7 @@ define( function( require ) {
     var frontNumberOfCells = options.numberOfItems - backNumberOfCells;
     assert && assert( backNumberOfCells + frontNumberOfCells === options.numberOfItems );
 
-    // @public back row of items, dispose required
+    // @public back row of items, dispose not required, exists for sim lifetime
     this.backItemRow = new RowOfMovables( {
       location: new Vector2( options.location.x, options.location.y + options.backRowYOffset ),
       numberOfCells: backNumberOfCells,
@@ -69,7 +69,7 @@ define( function( require ) {
       cellSpacing: options.itemCellSpacing
     } );
 
-    // @public front row of items, dispose required
+    // @public front row of items, dispose not required, exists for sim lifetime
     this.frontItemRow = new RowOfMovables( {
       location: new Vector2( options.location.x, options.location.y + options.frontRowYOffset ),
       numberOfCells: frontNumberOfCells,
@@ -77,27 +77,18 @@ define( function( require ) {
       cellSpacing: options.itemCellSpacing
     } );
 
-    // @public dispose required, dispose required
+    // @public dispose not required, exists for sim lifetime
     this.numberOfBagsProperty = new DerivedProperty( [ this.bagRow.numberOfMovablesProperty ],
       function( numberOfMovables ) {
         return numberOfMovables;
       } );
 
-    // @public dispose required
+    // @public dispose not required, exists for sim lifetime
     this.numberOfItemsProperty = new DerivedProperty(
       [ this.frontItemRow.numberOfMovablesProperty, this.backItemRow.numberOfMovablesProperty ],
       function( frontNumberOfMovables, backNumberOfMovables ) {
         return frontNumberOfMovables + backNumberOfMovables;
       } );
-
-    // @private
-    this.disposeShoppingContainer = function() {
-      this.bagRow.dispose();
-      this.backItemRow.dispose();
-      this.frontItemRow.dispose();
-      this.numberOfBagsProperty.dispose();
-      this.numberOfItemsProperty.dispose();
-    };
   }
 
   unitRates.register( 'ShoppingContainer', ShoppingContainer );
@@ -109,11 +100,6 @@ define( function( require ) {
       this.bagRow.reset();
       this.backItemRow.reset();
       this.frontItemRow.reset();
-    },
-
-    // @public
-    dispose: function() {
-      this.disposeShoppingContainer();
     },
 
     /**

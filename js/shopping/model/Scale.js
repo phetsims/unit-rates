@@ -56,7 +56,7 @@ define( function( require ) {
     // @public
     this.quantityUpdateEnabled = true;
 
-    // @public
+    // @public dispose not required, exists for sim lifetime
     this.quantityProperty = new DerivedProperty(
       [ this.numberOfBagsProperty, this.numberOfItemsProperty ],
       function( numberOfBags, numberOfItems ) {
@@ -68,27 +68,14 @@ define( function( require ) {
         }
       } );
 
-    // @public dispose required
+    // @public dispose not required, exists for sim lifetime
     this.costProperty = new DerivedProperty( [ this.quantityProperty, unitRateProperty ],
       function( quantity, unitRate ) {
         return quantity * unitRate;
       } );
-
-    // @private
-    this.disposeScale = function() {
-      self.quantityProperty.dispose();
-      self.costProperty.dispose();
-    };
   }
 
   unitRates.register( 'Scale', Scale );
 
-  return inherit( ShoppingContainer, Scale, {
-
-    // @public
-    dispose: function() {
-      this.disposeScale();
-      ShoppingContainer.prototype.dispose.call( this );
-    }
-  } );
+  return inherit( ShoppingContainer, Scale );
 } );

@@ -37,25 +37,13 @@ define( function( require ) {
     BooleanRoundToggleButton.call( this, stopIcon, goIcon, runningProperty, options );
 
     // adjust button color based on runningProperty
-    var runningObserver = function( running ) {
+    // unlink not needed, exists for sim lifetime
+    runningProperty.link( function( running ) {
       self.baseColor = ( running ? '#6D6E70' : '#85d4a6' );
-    };
-    runningProperty.link( runningObserver ); // unlink in dispose
-
-    // @private
-    this.disposeStartStopButton = function() {
-      runningProperty.unlink( runningObserver );
-    };
+    } );
   }
 
   unitRates.register( 'StartStopButton', StartStopButton );
 
-  return inherit( BooleanRoundToggleButton, StartStopButton, {
-
-    // @public
-    dispose: function() {
-      this.disposeStartStopButton();
-      BooleanRoundToggleButton.prototype.dispose.call( this );
-    }
-  } );
+  return inherit( BooleanRoundToggleButton, StartStopButton );
 } );

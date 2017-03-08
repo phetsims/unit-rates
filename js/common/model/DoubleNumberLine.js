@@ -76,7 +76,7 @@ define( function( require ) {
 
       // numerator range is immutable
       this.numeratorRangeProperty = new Property( options.fixedAxisRange );
-      this.numeratorRangeProperty.lazyLink( function( range ) {  // unlinkAll in dispose
+      this.numeratorRangeProperty.lazyLink( function( range ) {  // unlink not needed, exists for sim lifetime
         throw new Error( 'numeratorRangeProperty should not change' );
       } );
 
@@ -86,7 +86,8 @@ define( function( require ) {
           return new Range( numeratorRange.min / unitRate, numeratorRange.max / unitRate );
         } );
 
-      // when the denominator range changes, adjust the denominator of all markers, unlinkAll in dispose
+      // when the denominator range changes, adjust the denominator of all markers,
+      // unlink not needed, exists for sim lifetime
       this.denominatorRangeProperty.link( function( denominatorRange ) {
         self.markers.forEach( function( marker ) {
           marker.denominatorProperty.value = marker.numeratorProperty.value / unitRateProperty.value;
@@ -97,7 +98,7 @@ define( function( require ) {
 
       // denominator range is immutable
       this.denominatorRangeProperty = new Property( options.fixedAxisRange );
-      this.denominatorRangeProperty.lazyLink( function( range ) { // unlinkAll in dispose
+      this.denominatorRangeProperty.lazyLink( function( range ) { // unlink not needed, exists for sim lifetime
         throw new Error( 'denominatorRangeProperty should not change' );
       } );
 
@@ -107,7 +108,8 @@ define( function( require ) {
           return new Range( denominatorRange.min * unitRate, denominatorRange.max * unitRate );
         } );
 
-      // when the numerator range changes, adjust the numerator of all markers, unlinkAll in dispose
+      // when the numerator range changes, adjust the numerator of all markers
+      // unlink not needed, exists for sim lifetime
       this.numeratorRangeProperty.link( function( numeratorRange ) {
         self.markers.forEach( function( marker ) {
           marker.numeratorProperty.value = marker.denominatorProperty.value * unitRateProperty.value;
@@ -118,24 +120,11 @@ define( function( require ) {
     // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
     // A single level of undo is supported.
     this.undoMarkerProperty = new Property( null );
-
-    // @private
-    this.disposeDoubleNumberLine = function() {
-      this.numeratorRangeProperty.unlinkAll();
-      this.numeratorRangeProperty.dispose();
-      this.denominatorRangeProperty.unlinkAll();
-      this.denominatorRangeProperty.dispose();
-    };
   }
 
   unitRates.register( 'DoubleNumberLine', DoubleNumberLine );
 
   return inherit( Object, DoubleNumberLine, {
-
-    // @public
-    dispose: function() {
-      this.disposeDoubleNumberLine();
-    },
 
     // @public
     reset: function() {
