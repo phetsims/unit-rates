@@ -42,7 +42,7 @@ define( function( require ) {
       visible: false
     } );
 
-    // When both cars reach the finish line, stop the race.
+    // When both cars reach the finish line, stop the race.  unmulitlink not needed.
     Property.lazyMultilink( [ this.car1.distanceProperty, this.car2.distanceProperty ],
       function( distance1, distance2 ) {
         if ( self.car1.isAtFinish() && ( !self.car2.visibleProperty.value || self.car2.isAtFinish() ) ) {
