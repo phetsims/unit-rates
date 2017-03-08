@@ -9,7 +9,7 @@ the *numerator* and the *denominator*, corresponding to their function in the fr
 
 A *rate* is a ratio where the measurements are in different units. A *unit rate* is a rate where the denominator is 1.
 
-A *double number line* is used to show that there are many (even infinitely many) pairs of numbers that have
+A *double number line* (DNL) is used to show that there are many (even infinitely many) pairs of numbers that have
 the same rate.  The top number line corresponds to the rate's numerator; the bottom number line corresponds to
 the rate's denominator. For each double number line, the range of 1 number line is fixed, while the range of the other 
 number line varies based on the unit rate.  
@@ -24,14 +24,14 @@ Values are rounded to the desired number of decimal places using nearest-neighbo
 
 This table described the terms and rates that appear in this simulation:
 
-|                | term        | units    | decimals | range    | example         |
-| -------------- | ----------- |:--------:| -------- | -------- | --------------- |
-| **Fruit**      | numerator   | dollars  | 2        | variable | $5.00           |
-|                | denominator | *name*   | 2        | 0-16     | 2.75 Apples     |
-| **Vegetables** | numerator   | dollars  | 2        | variable | $3.25           |
-|                | denominator | *name*   | 2        | 0-16     | 10.25 Carrots   |
-| **Candy**      | numerator   | dollars  | 2        | variable | $1.25           |
-|                | denominator | pounds   | 2        | 0-1.6    | 1.35 pounds     |
-| **Racing**     | numerator   | miles    | 1        | 0-200    |  105.5 miles    |
-|                | denominator | hours    | 2        | variable | 4.25 hours      |
+|                | term        | units    | decimals | DNL range    | example         |
+| -------------- | ----------- |:--------:| -------- | ------------ | --------------- |
+| **Fruit**      | numerator   | dollars  | 2        | variable     | $5.00           |
+|                | denominator | *name*   | 2        | 0-16         | 2.75 Apples     |
+| **Vegetables** | numerator   | dollars  | 2        | variable     | $3.25           |
+|                | denominator | *name*   | 2        | 0-16         | 10.25 Carrots   |
+| **Candy**      | numerator   | dollars  | 2        | variable     | $1.25           |
+|                | denominator | pounds   | 2        | 0-1.6        | 1.35 pounds     |
+| **Racing**     | numerator   | miles    | 1        | 0-200        |  105.5 miles    |
+|                | denominator | hours    | 2        | variable     | 4.25 hours      |
 
