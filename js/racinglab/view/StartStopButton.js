@@ -32,7 +32,7 @@ define( function( require ) {
     }, options );
 
     var goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
-    var stopIcon = new StopSignNode();
+    var stopIcon = new StopSignNode( { fillRadius: 25 });
 
     BooleanRoundToggleButton.call( this, stopIcon, goIcon, runningProperty, options );
 
