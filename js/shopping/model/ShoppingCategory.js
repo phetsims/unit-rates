@@ -68,9 +68,7 @@ define( function( require ) {
         shoppingScene.reset();
       } );
 
-      // Randomly choose an item
-      var shoppingSceneIndex = URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, this.shoppingScenes.length - 1 ) : 0;
-      this.shoppingSceneProperty.value = this.shoppingScenes[ shoppingSceneIndex ];
+      this.shoppingSceneProperty.reset();
     }
   } );
 } );
