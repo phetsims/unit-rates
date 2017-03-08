@@ -53,6 +53,10 @@ define( function( require ) {
     this.depth = 45; // {number} depth, after flattening to 2D
     this.perspectiveXOffset = 30; // {number} offset for parallel perspective, after flattening to 2D
 
+    // @public (read-only) any y value less than this is considered "above the scale"
+    // Offset determined empirically, see https://github.com/phetsims/unit-rates/issues/174
+    this.yAboveScale = this.location.y + 70;
+
     // @public
     this.quantityUpdateEnabled = true;
 

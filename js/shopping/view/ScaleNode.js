@@ -176,10 +176,11 @@ define( function( require ) {
       children: [ bodyNode, shadowNode, topNode, displayNode ]
     } );
 
-    // red dot at origin, red line where items will be placed
+    // red dot at origin, red line at drag threshold
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 2, { fill: 'red' } ) );
-      this.addChild( new Line( -scale.width / 2, 0, scale.width / 2, 0, { stroke: 'red' } ) );
+      var lineY = scale.yAboveScale - scale.location.y;
+      this.addChild( new Line( -foregroundWidth / 2, lineY, foregroundWidth / 2, lineY, { stroke: 'red' } ) );
     }
 
     // move to model location

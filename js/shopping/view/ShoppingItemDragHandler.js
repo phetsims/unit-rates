@@ -80,11 +80,8 @@ define( function( require ) {
 
         item.dragging = false;
 
-        // is the item above the scale's top surface?
-        var isAboveScale = ( item.locationProperty.value.y < scale.location.y + ( scale.depth / 2 ) );
-
         // if the item is released above the scale, item falls to scale, otherwise to shelf.
-        var shoppingContainer = isAboveScale ? scale : shelf;
+        var shoppingContainer = ( item.locationProperty.value.y < scale.yAboveScale ) ? scale : shelf;
 
         // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
         var rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
