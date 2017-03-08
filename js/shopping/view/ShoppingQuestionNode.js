@@ -19,7 +19,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var ShadowText = require( 'SCENERY_PHET/ShadowText' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
@@ -85,9 +84,9 @@ define( function( require ) {
     this.addChild( strut );
 
     // check mark to right of box, to indicate that the question has been correctly answered
-    var checkMarkNode = new ShadowText( '\u2713', {
+    var checkMarkNode = new FontAwesomeNode( 'check_without_box', {
+      scale: 0.75,
       fill: URColors.checkMark,
-      font: new URFont( 36 ),
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY,
       visible: false
