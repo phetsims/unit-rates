@@ -71,7 +71,7 @@ define( function( require ) {
       // Ignore attempts to open another keypad. This can happen in unlikely multi-touch scenarios.
       // See https://github.com/phetsims/unit-rates/issues/181
       if ( this.keypad ) {
-        unitRates.log( 'ignoring attempt to open another keypad' );
+        unitRates.log && unitRates.log( 'ignoring attempt to open another keypad' );
         return;
       }
 
