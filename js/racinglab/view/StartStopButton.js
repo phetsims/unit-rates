@@ -12,11 +12,11 @@ define( function( require ) {
   var BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var StopSignNode = require( 'SCENERY_PHET/StopSignNode' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
   var goButtonIconImage = require( 'image!UNIT_RATES/go_button_icon.png' );
-  var stopButtonImage = require( 'image!UNIT_RATES/stop_button.png' );
 
   /**
    * @param {Property.<boolean>} runningProperty
@@ -32,7 +32,7 @@ define( function( require ) {
     }, options );
 
     var goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
-    var stopIcon = new Image( stopButtonImage, { scale: 0.5 } );
+    var stopIcon = new StopSignNode();
 
     BooleanRoundToggleButton.call( this, stopIcon, goIcon, runningProperty, options );
 
