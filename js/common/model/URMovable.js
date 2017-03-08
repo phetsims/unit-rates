@@ -29,7 +29,7 @@ define( function( require ) {
       animationSpeed: 100 // {number} distance/second when animating
     }, options );
 
-    // @public (read-only) {Vector2} DO NOT set this directly! Use moveTo or animateTo.
+    // @public (read-only) {Property.<Vector2>} DO NOT set this directly! Use moveTo or animateTo.
     this.locationProperty = new Property( options.location );
 
     // @public drag handlers must manage this flag during a drag sequence
