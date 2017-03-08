@@ -43,7 +43,6 @@ define( function( require ) {
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
       questionFont: new URFont( 14 ), // {Font} font for the question
       valueFont: new URFont( 14 ), // {Font} font for the value
-      checkMarkFont: new URFont( 36 ), // {Font} font for check mark
       valueYMargin: 1, // {number} vertical margin inside the value box
       xSpacing: 25, // {number} horizontal spacing between UI elements
       ySpacing: 5,  // {number} vertical spacing between UI elements
@@ -88,7 +87,7 @@ define( function( require ) {
     // check mark to right of box, to indicate that the question has been correctly answered
     var checkMarkNode = new ShadowText( '\u2713', {
       fill: URColors.checkMark,
-      font: options.checkMarkFont,
+      font: new URFont( 36 ),
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY,
       visible: false
