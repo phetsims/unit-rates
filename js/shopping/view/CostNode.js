@@ -15,14 +15,13 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // strings
-  var pattern0CostString = require( 'string!UNIT_RATES/pattern_0cost' );
+  var dollarSignString = require( 'string!UNIT_RATES/dollarSign' );
 
   /**
    * @param {Property.<number>} costProperty
@@ -39,6 +38,13 @@ define( function( require ) {
     }, options );
 
     Node.call( this );
+
+    // dollar sign (or other currency symbol)
+    // always to the left of the value on the scale, see https://github.com/phetsims/unit-rates/issues/176
+    var dollarSignNode = new Text( dollarSignString, {
+      font: options.font
+    } );
+    this.addChild( dollarSignNode );
 
     // the primary part of the value, without the extra decimal place
     var primaryNode = new Text( '', {
@@ -78,9 +84,13 @@ define( function( require ) {
       costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
 
       // convert to string, then pick it apart
-      var costString = costToString( costTruncated, options.decimalPlaces );
+      var costString = URUtil.numberToString( costTruncated, options.decimalPlaces, false /* trimZeros */ );
       primaryNode.text = costString.substring( 0, costString.length - 1 );
       extraDecimalNode.text = costString.substring( costString.length - 1, costString.length );
+      
+      // adjust layout
+      primaryNode.left = dollarSignNode.right + 1;
+      primaryNode.y = dollarSignNode.y;
       extraDecimalNode.left = primaryNode.right + 1;
       extraDecimalNode.y = primaryNode.y;
     };
@@ -95,17 +105,6 @@ define( function( require ) {
   }
 
   unitRates.register( 'CostNode', CostNode );
-
-  /**
-   * Format cost as a string.
-   * String embedding marks because we're going to be chopping up this string using substring.
-   * @param {number} cost
-   * @param {number} decimalPlaces - number of decimal places
-   * @returns {*|string}
-   */
-  function costToString( cost, decimalPlaces ) {
-    return StringUtils.stripEmbeddingMarks( URUtil.formatNumber( pattern0CostString, cost, decimalPlaces, false /* trimZeros */ ) );
-  }
 
   return inherit( Node, CostNode, {
 
