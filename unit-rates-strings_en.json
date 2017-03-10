@@ -26,6 +26,9 @@
   "dollars": {
     "value": "dollars"
   },
+  "dollarSign": {
+    "value": "$"
+  },
   "doubleNumberLine": {
     "value": "Double Number Line"
   },
