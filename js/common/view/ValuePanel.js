@@ -87,7 +87,7 @@ define( function( require ) {
         sideLength: options.buttonSideLength
       } );
       contentNode.addChild( expandCollapseButton );
-      expandCollapseButton.touchArea = 
+      expandCollapseButton.touchArea =
         expandCollapseButton.localBounds.dilatedXY( options.buttonTouchAreaXDilation, options.buttonTouchAreaYDilation );
       expandCollapseButton.mouseArea =
         expandCollapseButton.localBounds.dilatedXY( options.buttonMouseAreaXDilation, options.buttonMouseAreaYDilation );

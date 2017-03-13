@@ -87,7 +87,7 @@ define( function( require ) {
       var costString = URUtil.numberToString( costTruncated, options.decimalPlaces, false /* trimZeros */ );
       primaryNode.text = costString.substring( 0, costString.length - 1 );
       extraDecimalNode.text = costString.substring( costString.length - 1, costString.length );
-      
+
       // adjust layout
       primaryNode.left = dollarSignNode.right + 1;
       primaryNode.y = dollarSignNode.y;

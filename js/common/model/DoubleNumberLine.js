@@ -163,6 +163,7 @@ define( function( require ) {
     /**
      * Gets the maximum value that fits on the numerator (top) axis.
      * @returns {number}
+     * @public
      */
     getMaxNumerator: function() {
       return this.numeratorRangeProperty.value.max;
@@ -171,6 +172,7 @@ define( function( require ) {
     /**
      * Gets the maximum value that fits on the denominator (bottom) axis.
      * @returns {number}
+     * @public
      */
     getMaxDenominator: function() {
       return this.denominatorRangeProperty.value.max;
@@ -188,7 +190,7 @@ define( function( require ) {
 
       assert && assert( !this.markers.contains( marker ), 'attempt to add marker again: ' + marker );
 
-      var wasAdded = false;
+      var wasAdded = false; //{boolean} state to determine whether the marker was added or not
 
       // look for a marker that conflicts with this one (has same numerator or denominator)
       var conflictingMarker = this.getConflictingMarker( marker );
@@ -222,7 +224,7 @@ define( function( require ) {
     /**
      * Removes a marker.
      * @param {Marker} marker
-     * @public
+     * @private
      */
     removeMarker: function( marker ) {
       assert && assert( this.markers.contains( marker ), 'attempt to remove an unknown marker: ' + marker );

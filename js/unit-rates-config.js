@@ -1,4 +1,4 @@
-// Copyright 2016, University of Colorado Boulder
+// Copyright 2016-2017, University of Colorado Boulder
 
 /**
  * RequireJS configuration file for the sim.
@@ -47,7 +47,6 @@ require.config( {
   },
 
   // optional cache buster to make browser refresh load all included scripts, can be disabled with ?cacheBuster=false
-  // FIXME: uncomment urlArgs on publish, add back to chipper/data/active-runnables
   urlArgs: phet.chipper.getCacheBusterArgs()
 
 } );
