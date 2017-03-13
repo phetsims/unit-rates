@@ -131,6 +131,10 @@ define( function( require ) {
       assert && assert( bag instanceof Bag );
       assert && assert( this.containsBag( bag ), 'does not contain bag' );
       this.bagRow.remove( bag );
+
+      // Make the bag move up a few pixels, to make it obvious that it has been removed.
+      // See https://github.com/phetsims/unit-rates/issues/187
+      bag.moveTo( bag.locationProperty.value.plusXY( 0, -5 ) );
     },
 
     /**
@@ -141,12 +145,17 @@ define( function( require ) {
     removeItem: function( item ) {
       assert && assert( item instanceof ShoppingItem );
       assert && assert( this.containsItem( item ), 'does not contain item' );
+
       if ( this.backItemRow.contains( item ) ) {
         this.backItemRow.remove( item );
       }
       else {
         this.frontItemRow.remove( item );
       }
+
+      // Make the item move up a few pixels, to make it obvious that it has been removed.
+      // See https://github.com/phetsims/unit-rates/issues/187
+      item.moveTo( item.locationProperty.value.plusXY( 0, -5 ) );
     },
 
     /**
