@@ -54,6 +54,10 @@ define( function( require ) {
       denominatorPickerColor: 'black',
       numeratorPickerUpFunction: function( value ) { return value + 1; },
       numeratorPickerDownFunction: function( value ) { return value - 1; },
+      denominatorPickerUpFunction: function( value ) { return value + 1; },
+      denominatorPickerDownFunction: function( value ) { return value - 1; },
+      numeratorDecimals: 0,
+      denominatorDecimals: 0,
       xSpacing: 10,
       ySpacing: 8
 
@@ -75,6 +79,7 @@ define( function( require ) {
       URConstants.NUMBER_PICKER_OPTIONS, {
         upFunction: options.numeratorPickerUpFunction,
         downFunction: options.numeratorPickerDownFunction,
+        decimalPlaces: options.numeratorDecimals,
         font: options.pickerFont,
         color: options.numeratorPickerColor
       } ) );
@@ -88,6 +93,9 @@ define( function( require ) {
     // denominator picker, must be disposed
     var denominatorPicker = new NumberPicker( rate.denominatorProperty, new Property( options.denominatorRange ), _.extend( {},
       URConstants.NUMBER_PICKER_OPTIONS, {
+        upFunction: options.denominatorPickerUpFunction,
+        downFunction: options.denominatorPickerDownFunction,
+        decimalPlaces: options.denominatorDecimals,
         font: options.pickerFont,
         color: options.denominatorPickerColor
       } ) );

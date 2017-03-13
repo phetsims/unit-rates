@@ -58,8 +58,10 @@ define( function( require ) {
     COST_RANGE: new Range( 1, 20 ),
     QUANTITY_RANGE: new Range( 1, 20 ),
     MILES_RANGE: new Range( 20, 100 ),
-    HOURS_RANGE: new Range( 1, 10 ),
+    HOURS_RANGE: new Range( 0.5, 10 ),
     MILES_DELTA: 5,
+    HOURS_DELTA: 0.5,
+    HOURS_DECIMALS: 1, // decimal places in pickers for miles
 
     // markers on the double number line
     MAJOR_MARKER_LENGTH: 55,

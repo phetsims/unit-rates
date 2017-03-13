@@ -35,6 +35,9 @@ define( function( require ) {
       denominatorPickerColor: car.color,
       numeratorPickerUpFunction: function( miles ) { return miles + URConstants.MILES_DELTA; },
       numeratorPickerDownFunction: function( miles ) { return miles - URConstants.MILES_DELTA; },
+      denominatorPickerUpFunction: function( value ) { return value + URConstants.HOURS_DELTA; },
+      denominatorPickerDownFunction: function( value ) { return value - URConstants.HOURS_DELTA; },
+      denominatorDecimals: URConstants.HOURS_DECIMALS,
       pickerFont: new URFont( 20 )
     }, options );
 
