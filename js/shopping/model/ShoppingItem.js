@@ -26,7 +26,7 @@ define( function( require ) {
 
     options = _.extend( {
       animationSpeed: URQueryParameters.animationSpeed,
-      visible: true // {boolean} is the item initially visible?
+      visible: true // {boolean} determines items visibility
     }, options );
 
     // @public (read-only)
