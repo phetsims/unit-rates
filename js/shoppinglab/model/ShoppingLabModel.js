@@ -47,7 +47,7 @@ define( function( require ) {
         // vegetables
         new ShoppingCategory( carrotImage, [
           new VegetableScene( ShoppingItemData.Vegetable.CARROTS, {
-            rate: new Rate( 1, 1 ),
+            rate: new Rate( 3, 4 ),
             denominatorOptions: {
               pickerColor: 'orange'
             }
@@ -57,7 +57,7 @@ define( function( require ) {
         // candies
         new ShoppingCategory( purpleCandyImage, [
           new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY, {
-            rate: new Rate( 1, 1 ),
+            rate: new Rate( 3, 2 ),
             denominatorOptions: {
               pickerColor: 'purple'
             }
