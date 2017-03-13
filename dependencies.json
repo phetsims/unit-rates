@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.0-dev.70 Fri Mar 10 2017 14:32:25 GMT-0700 (MST)",
+  "comment": "# unit-rates 1.0.0-dev.71 Mon Mar 13 2017 13:03:38 GMT-0600 (MDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "c101ae14716aea37f3f696011bc74905bd37a4ce",
+    "sha": "67c42f5c1e30596bb162a37fad500f46d8c81927",
     "branch": "master"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "695d3638a602f93027b09c63895ce4c1e332d2be",
+    "sha": "8243627600c4b93825d8600fd3b35d335017ad08",
     "branch": "master"
   },
   "kite": {
@@ -45,7 +45,7 @@
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "d971cc857d41630d05f34952fb726bd8d040b1df",
+    "sha": "cc0021e55c0241a50db8db1820e23f8c6680c3be",
     "branch": "master"
   },
   "sherpa": {
@@ -53,7 +53,7 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "9227a5f0f0ec2e051cd072a9469e37cbb048903e",
+    "sha": "8e97e2155a770521464b27e5b274f4fcbf54617b",
     "branch": "master"
   },
   "tandem": {
@@ -61,11 +61,11 @@
     "branch": "master"
   },
   "twixt": {
-    "sha": "2451bb22ac422f98a04462bb887a0a924834ebf3",
+    "sha": "d35abfaf8e690edea8e553b6e4812a0b4b75b225",
     "branch": "master"
   },
   "unit-rates": {
-    "sha": "61109c3db44346d757dbff1c7083262a99962f2a",
+    "sha": "8b869980e964a06804e89430f39c22a6ce741771",
     "branch": "master"
   }
 }
