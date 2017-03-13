@@ -80,7 +80,7 @@ define( function( require ) {
         throw new Error( 'numeratorRangeProperty should not change' );
       } );
 
-      // denominator range is mutable, dispose needed
+      // denominator range is mutable, dispose not needed, exists for sim lifetime
       this.denominatorRangeProperty = new DerivedProperty( [ this.numeratorRangeProperty, unitRateProperty ],
         function( numeratorRange, unitRate ) {
           return new Range( numeratorRange.min / unitRate, numeratorRange.max / unitRate );
@@ -102,7 +102,7 @@ define( function( require ) {
         throw new Error( 'denominatorRangeProperty should not change' );
       } );
 
-      // numerator range is mutable, dispose needed
+      // numerator range is mutable, dispose not needed, exists for sim lifetime
       this.numeratorRangeProperty = new DerivedProperty( [ this.denominatorRangeProperty, unitRateProperty ],
         function( denominatorRange, unitRate ) {
           return new Range( denominatorRange.min * unitRate, denominatorRange.max * unitRate );
