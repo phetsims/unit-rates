@@ -25,6 +25,7 @@ define( function( require ) {
 
     options = _.extend( {
       location: new Vector2( 0, 0 ), // {Vector2} initial location
+      // TODO: Is this question answered referring the dragging option?
       dragging: false, // {boolean} is this instance being dragged by the user?
       animationSpeed: 100 // {number} distance/second when animating
     }, options );
