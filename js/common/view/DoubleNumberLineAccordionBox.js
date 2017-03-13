@@ -90,7 +90,6 @@ define( function( require ) {
       centerY: doubleNumberLineNode.centerY
     } );
 
-    // TODO: Is the undo button being overloaded still a concern?
     // The undo button is overloaded (bad design, imo), and can apply to either the marker editor or a marker.
     // This flag indicates whether the undo button applies to the editor (true) or a marker (false).
     var undoAppliesToEditor = true;
