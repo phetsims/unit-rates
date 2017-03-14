@@ -88,6 +88,10 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
+
+      // Cap dt, see https://github.com/phetsims/unit-rates/issues/193
+      dt = Math.min( dt, 0.1 );
+
       if ( this.runningProperty.value ) {
         this.car1.step( dt );
         this.car2.step( dt );

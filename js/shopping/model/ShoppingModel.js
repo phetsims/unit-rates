@@ -83,6 +83,9 @@ define( function( require ) {
      */
     step: function( dt ) {
 
+      // Cap dt, see https://github.com/phetsims/unit-rates/issues/193
+      dt = Math.min( dt, 0.1 );
+      
       // step the selected category
       for ( var i = 0; i < this.categories.length; i++ ) {
         if ( this.categories[ i ] === this.categoryProperty.value ) {
