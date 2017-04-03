@@ -1,19 +1,19 @@
 {
-  "comment": "# unit-rates 1.0.0-dev.74 Wed Mar 15 2017 01:55:37 GMT-0600 (MDT)",
+  "comment": "# unit-rates 1.0.0-rc.1 Mon Apr 03 2017 10:23:58 GMT-0600 (MDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "master"
   },
   "axon": {
-    "sha": "79a65b1584833a3101416bce2ffa3a19fa7f9c9e",
+    "sha": "f7720d0e57be3884aedaa78bd799d1fac8168711",
     "branch": "master"
   },
   "brand": {
-    "sha": "0be722ee4e70a5689a86a246e86651f1b844574d",
+    "sha": "b6bdbc2b7d618f8fbd2851a95476c0eb1205acf5",
     "branch": "master"
   },
   "chipper": {
-    "sha": "eb9f0aa4ef7728399f0a002333b243322770971b",
+    "sha": "52c3aa33c623df4a2ef2470e298c7f2382cb7dc7",
     "branch": "master"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "45df5d8128cb0053d2d1eab8a6748af14c32fe9e",
+    "sha": "c5a6310480e17578e6ecaa98c3e6a65aff2c76e7",
     "branch": "master"
   },
   "kite": {
@@ -33,7 +33,7 @@
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "c7cb85b649c2d22cad0d73acd7cb218b6a64d1c6",
+    "sha": "85801e7b43730588c1e2770fb64d633c58d71759",
     "branch": "master"
   },
   "query-string-machine": {
@@ -41,23 +41,23 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "e8bb0c34eabb61274984d3bb6b1f126b90860c47",
+    "sha": "b8b0944561ac846dcb0d2c8bd4a04edff0eb272c",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "e23b041aa8539a26ead830446571e2919dfbe9bc",
+    "sha": "6213dc27544de739f31722d59f1a756e20ca03fb",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "d04391e2e242e2008d86dc3cf3fd06e717497710",
+    "sha": "3255de0f1edda165ff360076051a56cd31cd3ea5",
     "branch": "master"
   },
   "sun": {
-    "sha": "c5d70d9a6c1eb39b68091d0879f40edafec534cb",
+    "sha": "81abf142c7b9a225ee9ce9e6b398fb105d236012",
     "branch": "master"
   },
   "tandem": {
-    "sha": "8a4a3a15c1234d2a8ec4ea22df38e64e66f2a879",
+    "sha": "a668abd5e2f1d6b80de925c9e7567c4468a34f3a",
     "branch": "master"
   },
   "twixt": {
@@ -65,7 +65,7 @@
     "branch": "master"
   },
   "unit-rates": {
-    "sha": "db6ec91ca28972da796e513a897b534a6b80fcd7",
-    "branch": "master"
+    "sha": "28bf4fae0837163df019d065bea8a2615eb22867",
+    "branch": "1.0"
   }
 }
