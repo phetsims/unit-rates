@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.0-rc.1 Mon Apr 03 2017 10:23:58 GMT-0600 (MDT)",
+  "comment": "# unit-rates 1.0.0-rc.2 Mon Apr 03 2017 13:34:35 GMT-0600 (MDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "master"
@@ -41,7 +41,7 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "b8b0944561ac846dcb0d2c8bd4a04edff0eb272c",
+    "sha": "49e17a1d562459158af859be48357ae0ab00f60d",
     "branch": "master"
   },
   "scenery-phet": {
@@ -53,7 +53,7 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "81abf142c7b9a225ee9ce9e6b398fb105d236012",
+    "sha": "bffd225eb8be0412385b8c542bcf8edc282fe31d",
     "branch": "master"
   },
   "tandem": {
@@ -61,11 +61,11 @@
     "branch": "master"
   },
   "twixt": {
-    "sha": "d35abfaf8e690edea8e553b6e4812a0b4b75b225",
+    "sha": "a6bd3909751e280b7fdbe2f0ecd9ec066d152ff5",
     "branch": "master"
   },
   "unit-rates": {
-    "sha": "28bf4fae0837163df019d065bea8a2615eb22867",
+    "sha": "7be3c97ffe2d1c23d55ec6d593036de91b96b991",
     "branch": "1.0"
   }
 }
