@@ -25,7 +25,7 @@ define( function( require ) {
       leadDesign: 'Amy Rouinfar',
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.), Dave Schmitz (Schmitzware)',
       team: 'Amy Hanson, Amanda McGarry, Susan Miller, Ariel Paul, Kathy Perkins',
-      qualityAssurance: 'Steele Dalton, Amanda Davis, Ethan Johnson',
+      qualityAssurance: 'Steele Dalton, Amanda Davis, Bryce Griebenow, Ethan Johnson',
       graphicArts: 'Mariah Hermsmeyer'
     }
   };
