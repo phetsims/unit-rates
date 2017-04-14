@@ -332,7 +332,7 @@ define( function( require ) {
     /**
      * Gets the origin of the double number line's origin in the global view coordinate frame.
      * This is used to line up other things (like the race track in 'Racing Lab' screen) with the double number line.
-     * @returns {*}
+     * @returns {Vector2}
      * @public
      */
     getGlobalOrigin: function() {
