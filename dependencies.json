@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.2 Thu Apr 13 2017 21:42:46 GMT-0600 (MDT)",
+  "comment": "# unit-rates 1.0.3-rc.1 Thu Apr 13 2017 23:09:34 GMT-0600 (MDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -34,7 +34,7 @@
   },
   "phetcommon": {
     "sha": "85801e7b43730588c1e2770fb64d633c58d71759",
-    "branch": "unit-rates-1.0"
+    "branch": "HEAD"
   },
   "query-string-machine": {
     "sha": "d8a4ff18a12aff003e4896213c1dfed5a79c1a30",
@@ -65,7 +65,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "666ab4e672f4d167dfef4870eadc35617385dbff",
+    "sha": "847feaf73e6556d072c7a79471d175fff263afda",
     "branch": "1.0"
   }
 }
