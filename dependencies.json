@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.2 Mon Apr 10 2017 16:40:54 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# unit-rates 1.0.2 Thu Apr 13 2017 20:24:35 GMT-0600 (MDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -14,15 +14,15 @@
   },
   "chipper": {
     "sha": "2d1b574e80bcf70cbc1ae7ccda6289a51a98875b",
-    "branch": "unit-rates-1.0"
+    "branch": "HEAD"
   },
   "dot": {
     "sha": "569939e1f45973234a3819255a88cd2b80006f76",
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "c5a6310480e17578e6ecaa98c3e6a65aff2c76e7",
-    "branch": "HEAD"
+    "sha": "ab42a2b92849293697db12d3ca148756f5b79dfb",
+    "branch": "unit-rates-1.0"
   },
   "kite": {
     "sha": "81166ce9735f0bcb11b9e68b74eeed46b6f24da6",
@@ -65,7 +65,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "44e33b3175a8770c415eb04aced2968778fd036a",
+    "sha": "578eb5d234864e310572438baf6c70d48371cb89",
     "branch": "1.0"
   }
 }
