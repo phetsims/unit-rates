@@ -44,7 +44,7 @@ define( function( require ) {
       majorMarkerSpacing: 25 // {number} spacing for major markers on this car's double number line
     }, options );
 
-    // @pubic (read-only)
+    // @public (read-only)
     this.image = image;
     this.color = options.color;
     this.rate = options.rate;
