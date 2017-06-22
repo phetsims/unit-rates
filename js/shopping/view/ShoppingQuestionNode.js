@@ -84,7 +84,7 @@ define( function( require ) {
     this.addChild( strut );
 
     // check mark to right of box, to indicate that the question has been correctly answered
-    var checkMarkNode = new FontAwesomeNode( 'check_without_box', {
+    var checkMarkNode = new FontAwesomeNode( 'check', {
       scale: 0.75,
       fill: URColors.checkMark,
       left: valueBox.right + options.xSpacing,
