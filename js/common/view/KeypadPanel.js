@@ -1,6 +1,6 @@
 // Copyright 2016-2017, University of Colorado Boulder
 
-//FUTURE replace NumberKeypad with next-generation keypad, see https://github.com/phetsims/unit-rates/issues/153
+//TODO replace NumberKeypad with next-generation keypad, see https://github.com/phetsims/unit-rates/issues/153
 /***
  * A panel that contains a keypad and Enter button.
  *
