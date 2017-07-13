@@ -42,16 +42,20 @@ define( function( require ) {
     item.locationProperty.link( locationObserver ); // unlink in dispose
 
     var visibleObserver = function( visible ) {
-      self.visible = visible;
-      if ( visible ) {
-        self.getParent() && self.getParent().removeChild( self );
 
-        // put the Node in the proper layer
-        if ( shelf.isItemInFrontRow( item ) || scale.isItemInFrontRow( item ) ) {
-          frontItemLayer.addChild( self );
-        }
-        else {
-          backItemLayer.addChild( self );
+      // dispose may have been called after visibleObserver was queued to be called, see #200
+      if ( !self.disposed ) {
+        self.visible = visible;
+        if ( visible ) {
+          self.getParent() && self.getParent().removeChild( self );
+
+          // put the Node in the proper layer
+          if ( shelf.isItemInFrontRow( item ) || scale.isItemInFrontRow( item ) ) {
+            frontItemLayer.addChild( self );
+          }
+          else {
+            backItemLayer.addChild( self );
+          }
         }
       }
     };
