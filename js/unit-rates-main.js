@@ -20,7 +20,6 @@ define( function( require ) {
   var unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );
 
   var simOptions = {
-    //TODO finalize credits, https://github.com/phetsims/unit-rates/issues/55
     credits: {
       leadDesign: 'Amy Rouinfar',
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.), Dave Schmitz (Schmitzware)',
