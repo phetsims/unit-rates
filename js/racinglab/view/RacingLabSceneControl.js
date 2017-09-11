@@ -12,8 +12,8 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // images
   var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );

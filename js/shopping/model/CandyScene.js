@@ -19,9 +19,9 @@ define( function( require ) {
 
   // strings
   var lbsString = require( 'string!UNIT_RATES/lbs' );
-  var poundString = require( 'string!UNIT_RATES/pound' );
-  var poundsString = require( 'string!UNIT_RATES/pounds' );
   var poundsCapitalizedString = require( 'string!UNIT_RATES/poundsCapitalized' );
+  var poundsString = require( 'string!UNIT_RATES/pounds' );
+  var poundString = require( 'string!UNIT_RATES/pound' );
 
   /**
    * @param {Object} itemData - data structure that describes a type of candy, see ShoppingItemData

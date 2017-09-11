@@ -17,9 +17,9 @@ define( function( require ) {
 
   // strings
   var pattern0CostString = require( 'string!UNIT_RATES/pattern_0cost' );
-  var patternCostOf0Quantity1UnitsString = require( 'string!UNIT_RATES/pattern_costOf_0quantity_1units' );
   var pattern0Items1CostString = require( 'string!UNIT_RATES/pattern_0items_1cost' );
   var pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
+  var patternCostOf0Quantity1UnitsString = require( 'string!UNIT_RATES/pattern_costOf_0quantity_1units' );
   var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
 
   var ShoppingQuestionFactory = {

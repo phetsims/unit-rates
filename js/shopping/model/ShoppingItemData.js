@@ -14,14 +14,14 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   // Fruit strings
-  var appleString = require( 'string!UNIT_RATES/apple' );
   var applesString = require( 'string!UNIT_RATES/apples' );
-  var lemonString = require( 'string!UNIT_RATES/lemon' );
+  var appleString = require( 'string!UNIT_RATES/apple' );
   var lemonsString = require( 'string!UNIT_RATES/lemons' );
-  var orangeString = require( 'string!UNIT_RATES/orange' );
+  var lemonString = require( 'string!UNIT_RATES/lemon' );
   var orangesString = require( 'string!UNIT_RATES/oranges' );
-  var pearString = require( 'string!UNIT_RATES/pear' );
+  var orangeString = require( 'string!UNIT_RATES/orange' );
   var pearsString = require( 'string!UNIT_RATES/pears' );
+  var pearString = require( 'string!UNIT_RATES/pear' );
 
   // Fruit images
   var appleBagImage = require( 'image!UNIT_RATES/apple_bag.png' );
@@ -34,14 +34,14 @@ define( function( require ) {
   var pearImage = require( 'image!UNIT_RATES/pear.png' );
 
   // Vegetable strings
-  var carrotString = require( 'string!UNIT_RATES/carrot' );
   var carrotsString = require( 'string!UNIT_RATES/carrots' );
-  var cucumberString = require( 'string!UNIT_RATES/cucumber' );
+  var carrotString = require( 'string!UNIT_RATES/carrot' );
   var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
-  var potatoString = require( 'string!UNIT_RATES/potato' );
+  var cucumberString = require( 'string!UNIT_RATES/cucumber' );
   var potatoesString = require( 'string!UNIT_RATES/potatoes' );
-  var tomatoString = require( 'string!UNIT_RATES/tomato' );
+  var potatoString = require( 'string!UNIT_RATES/potato' );
   var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
+  var tomatoString = require( 'string!UNIT_RATES/tomato' );
 
   // Vegetable images
   var carrotBagImage = require( 'image!UNIT_RATES/carrot_bag.png' );
