@@ -13,9 +13,6 @@ define( function( require ) {
 
   var URQueryParameters = QueryStringMachine.getAll( {
 
-    // Enables console logging
-    log: { type: 'flag' },
-
     // Shows answers for Shopping questions and marker editor
     showAnswers: { type: 'flag' },
 
@@ -50,17 +47,13 @@ define( function( require ) {
 
   //FUTURE if this is a production version, URQueryParameters.showAnswers = false; See https://github.com/phetsims/unit-rates/issues/160
 
-  // enable logging to the console
-  if ( URQueryParameters.log ) {
-
-    console.log( 'enabling log' );
-    unitRates.log = function( message ) {
-      console.log( '%clog: ' + message, 'color: #009900' ); // display messages in green
-    };
-
-    unitRates.log( 'showAnswers=' + URQueryParameters.showAnswers );
-    unitRates.log( 'randomEnabled=' + URQueryParameters.randomEnabled );
-    unitRates.log( 'animationSpeed=' + URQueryParameters.animationSpeed );
+  // log the values of all sim-specific query parameters
+  if ( phet.log ) {
+    for ( var property in URQueryParameters ) {
+      if ( URQueryParameters.hasOwnProperty( property ) ) {
+        phet.log( property + '=' + URQueryParameters[ property ] );
+      }
+    }
   }
 
   return URQueryParameters;
