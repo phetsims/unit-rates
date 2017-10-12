@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.1.0-dev.1 Wed Oct 11 2017 08:46:00 GMT-0600 (MDT)",
+  "comment": "# unit-rates 1.1.0-dev.2 Wed Oct 11 2017 20:43:46 GMT-0600 (MDT)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
@@ -45,7 +45,7 @@
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "a90363b5f2629cefc880f205cc738a4277f3dc93",
+    "sha": "449f4ae57ac56a5b4d24adfabdd9482139b46068",
     "branch": "master"
   },
   "sherpa": {
@@ -65,7 +65,7 @@
     "branch": "master"
   },
   "unit-rates": {
-    "sha": "f7687931ad6e04b3d8bbcbb3f3be162275979744",
+    "sha": "1d1c1b9027bd1f1bade5d4e1885ce1ef679131c9",
     "branch": "master"
   }
 }
