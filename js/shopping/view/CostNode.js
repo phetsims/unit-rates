@@ -19,6 +19,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var Util = require( 'DOT/Util' );
 
   // strings
   var dollarSignString = require( 'string!UNIT_RATES/dollarSign' );
@@ -63,27 +64,23 @@ define( function( require ) {
     // When cost changes, update the displayed value
     var costObserver = function( cost ) {
 
-      if ( options.extraDecimalVisible ) {
+      assert && assert( cost >= 0, 'negative cost not supported: ' + cost );
 
-        var visibleDecimalPlaces = 3;
-        var maxDecimalPlaces = 10; // the number of decimal places that we'll keep in cost
+      var visibleDecimalPlaces = 3;
 
-        assert && assert( cost >= 0, 'negative cost not supported: ' + cost );
-        assert && assert( visibleDecimalPlaces < maxDecimalPlaces,
-          'visibleDecimalPlaces must be < maxDecimalPlaces: ' + visibleDecimalPlaces );
+      // First round to a large number of decimal places, in an attempt to identify floating point error.
+      // For example, Javascript computes 3 * 0.4 as 1.2000000000000002.
+      // This determines whether the cost has relevant non-zero decimal places,
+      // and therefore whether the extra decimal place should be visible.
+      var costRounded = Util.toFixedNumber( cost, 10 );
+      extraDecimalNode.visible = ( URUtil.decimalPlaces( costRounded ) >= visibleDecimalPlaces );
 
-        // First truncate to maxDecimalPlaces, in an attempt to remove floating point error.
-        // For example, Javascript computes 3 * 0.4 as 1.2000000000000002.
-        // This determines whether the cost has relevant non-zero decimal places,
-        // and therefore whether the extra decimal place should be visible.
-        var powerOfTen = Math.pow( 10, maxDecimalPlaces );
-        var costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
-        extraDecimalNode.visible = ( URUtil.decimalPlaces( costTruncated ) >= visibleDecimalPlaces );
+      if ( options.extraDecimalVisible && extraDecimalNode.visible ) {
 
-        // Now truncate to the number of decimal places that we're interested in.
+        // Truncate to the number of decimal places that we're interested in.
         // This determines the cost value that is displayed.
-        powerOfTen = Math.pow( 10, visibleDecimalPlaces );
-        costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
+        var powerOfTen = Math.pow( 10, visibleDecimalPlaces );
+        var costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
 
         // convert to string, then pick it apart
         var costString = URUtil.numberToString( costTruncated, visibleDecimalPlaces, false /* trimZeros */ );
@@ -91,7 +88,6 @@ define( function( require ) {
         extraDecimalNode.text = costString.substring( costString.length - 1, costString.length );
       }
       else {
-
         primaryNode.text = URUtil.numberToString( cost, 2, false /* trimZeros */ );
         extraDecimalNode.text = '0';
       }
