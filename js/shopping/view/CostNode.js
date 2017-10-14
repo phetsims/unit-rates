@@ -72,6 +72,7 @@ define( function( require ) {
       // For example, Javascript computes 3 * 0.4 as 1.2000000000000002.
       // This determines whether the cost has relevant non-zero decimal places,
       // and therefore whether the extra decimal place should be visible.
+      // See https://github.com/phetsims/unit-rates/issues/202
       var costRounded = Util.toFixedNumber( cost, 10 );
       extraDecimalNode.visible = ( URUtil.decimalPlaces( costRounded ) >= visibleDecimalPlaces );
 
@@ -89,7 +90,7 @@ define( function( require ) {
       }
       else {
         primaryNode.text = URUtil.numberToString( cost, 2, false /* trimZeros */ );
-        extraDecimalNode.text = '0';
+        extraDecimalNode.text = '0'; // will be invisible, but needs a valid digit for layout purposes
       }
 
       // adjust layout
