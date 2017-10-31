@@ -16,7 +16,7 @@ define( function( require ) {
     // Shows answers for Shopping questions and marker editor
     showAnswers: { type: 'flag' },
 
-    // Enables random selection of scenes, items, questions, etc.
+    // Enables random selection of scenes and questions in Shopping and Shopping Lab screens
     randomEnabled: {
       type: 'boolean',
       defaultValue: true
