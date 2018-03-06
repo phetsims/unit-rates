@@ -30,7 +30,7 @@ define( function( require ) {
       font: new URFont( 12 ),
       lineLength: URConstants.MAJOR_MARKER_LENGTH,
       lineWidth: 1,
-      numerationOptions: null, // {*} options specific to the rate's numerator, see below
+      numeratorOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
     }, options );
 

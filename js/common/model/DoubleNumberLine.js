@@ -32,7 +32,7 @@ define( function( require ) {
     options = _.extend( {
       fixedAxis: 'denominator', // {string} which of the axes has a fixed (immutable) range
       fixedAxisRange: new Range( 0, 10 ), // {Range} range of the fixed axis
-      numerationOptions: null, // {*} options specific to the rate's numerator, see below
+      numeratorOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null, // {*} options specific to the rate's denominator, see below
 
       // {function(number,number):boolean} determines whether a marker is major or minor

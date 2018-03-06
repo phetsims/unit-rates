@@ -62,7 +62,7 @@ define( function( require ) {
       fixedAxis: 'denominator',
       fixedAxisRange: new Range( 0, 16 ),
 
-      numerationOptions: null, // {*} options specific to the rate's numerator, see below
+      numeratorOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null, // {*} options specific to the rate's denominator, see below
 
       // questions

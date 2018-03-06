@@ -47,7 +47,7 @@ define( function( require ) {
       valueYMargin: URConstants.MARKER_Y_SPACING, // {number} vertical margin inside the value box
       ySpacing: 3,  // {number} vertical spacing between UI elements
       keypadLocation: 'below', // {string} 'above' or 'below' doubleNumberLinePanel
-      numerationOptions: null, // {*} options specific to the rate's numerator, see below
+      numeratorOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
     }, options );
 
