@@ -51,7 +51,7 @@ define( function( require ) {
 
     // @public (read-only) options for the denominator (bottom) number line
     this.denominatorOptions = _.extend( {
-      axisLabel: '', // {Node} label for the axis
+      axisLabel: '', // {string} label for the axis
       maxDecimals: 1, // {number} maximum number of decimal places
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, options.denominatorOptions );
