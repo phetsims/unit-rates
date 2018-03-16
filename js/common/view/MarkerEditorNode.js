@@ -27,6 +27,11 @@ define( function( require ) {
 
   // constants
   var KEYPAD_LOCATION_VALUES = [ 'above', 'below' ];
+  var SHARED_OPTIONS = {
+    maxDigits: 4, // {number} maximum number of digits that can be entered via keypad
+    maxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
+    trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+  };
 
   /**
    * @param {MarkerEditor} markerEditor
@@ -51,17 +56,9 @@ define( function( require ) {
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
     }, options );
 
-    var numeratorOptions = _.extend( {
-      maxDigits: 4, // {number} maximum number of digits that can be entered via keypad
-      maxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
-      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
-    }, options.numeratorOptions );
+    var numeratorOptions = _.extend( {}, SHARED_OPTIONS, options.numeratorOptions );
 
-    var denominatorOptions = _.extend( {
-      maxDigits: 4, // {number} maximum number of digits that can be entered via keypad
-      maxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
-      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
-    }, options.denominatorOptions );
+    var denominatorOptions = _.extend( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     assert && assert( _.includes( KEYPAD_LOCATION_VALUES, options.keypadLocation ),
       'invalid keypadLocation: ' + options.keypadLocation );

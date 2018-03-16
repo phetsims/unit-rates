@@ -18,6 +18,12 @@ define( function( require ) {
   var URFont = require( 'UNIT_RATES/common/URFont' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
+  // constants
+  var SHARED_OPTIONS = {
+    maxDecimals: 2, // {number} maximum number of decimal places
+    trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
+  };
+
   /**
    * @param {Marker} marker
    * @param {Object} [options]
@@ -37,15 +43,9 @@ define( function( require ) {
     // @public (read-only)
     this.marker = marker;
 
-    var numeratorOptions = _.extend( {
-      maxDecimals: 2, // {number} maximum number of decimal places
-      trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
-    }, options.numeratorOptions );
+    var numeratorOptions = _.extend( {}, SHARED_OPTIONS, options.numeratorOptions );
 
-    var denominatorOptions = _.extend( {
-      maxDecimals: 2, // {number} maximum number of decimal places
-      trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
-    }, options.denominatorOptions );
+    var denominatorOptions = _.extend( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     // vertical line
     var lineNode = new Line( 0, 0, 0, options.lineLength, {
@@ -55,7 +55,7 @@ define( function( require ) {
     // numerator
     var numeratorNode = new Text( '', { font: options.font } );
     var numeratorObserver = function( numerator ) {
-      assert && assert( ( typeof numerator === 'number') && !isNaN( numerator ), 'invalid numerator: ' + numerator );
+      assert && assert( ( typeof numerator === 'number' ) && !isNaN( numerator ), 'invalid numerator: ' + numerator );
       numeratorNode.text = URUtil.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
       numeratorNode.centerX = lineNode.centerX;
       numeratorNode.bottom = lineNode.top - options.ySpacing;
@@ -65,7 +65,7 @@ define( function( require ) {
     // denominator
     var denominatorNode = new Text( '', { font: options.font } );
     var denominatorObserver = function( denominator ) {
-      assert && assert( ( typeof denominator === 'number') && !isNaN( denominator ), 'invalid denominator: ' + denominator );
+      assert && assert( ( typeof denominator === 'number' ) && !isNaN( denominator ), 'invalid denominator: ' + denominator );
       denominatorNode.text = URUtil.numberToString( marker.denominatorProperty.value, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
       denominatorNode.centerX = lineNode.centerX;
       denominatorNode.top = lineNode.bottom + options.ySpacing;

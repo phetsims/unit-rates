@@ -19,6 +19,11 @@ define( function( require ) {
 
   // constants
   var FIXED_AXIS_VALUES = [ 'numerator', 'denominator' ];
+  var SHARED_OPTIONS = {
+    axisLabel: '', // {string} label for the axis
+    maxDecimals: 1, // {number} maximum number of decimal places
+    trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+  };
 
   /**
    * @param {Property.<number>} unitRateProperty
@@ -43,18 +48,10 @@ define( function( require ) {
       'invalid fixedAxis: ' + options.fixedAxis );
 
     // @public (read-only) options for the numerator (top) number line
-    this.numeratorOptions = _.extend( {
-      axisLabel: '', // {string} label for the axis
-      maxDecimals: 1, // {number} maximum number of decimal places
-      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
-    }, options.numeratorOptions );
+    this.numeratorOptions = _.extend( {}, SHARED_OPTIONS, options.numeratorOptions );
 
     // @public (read-only) options for the denominator (bottom) number line
-    this.denominatorOptions = _.extend( {
-      axisLabel: '', // {string} label for the axis
-      maxDecimals: 1, // {number} maximum number of decimal places
-      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
-    }, options.denominatorOptions );
+    this.denominatorOptions = _.extend( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     // @public (read-only) {Property.<number>}
     this.unitRateProperty = unitRateProperty;

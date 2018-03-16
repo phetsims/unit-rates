@@ -38,6 +38,13 @@ define( function( require ) {
   // strings
   var dollarsString = require( 'string!UNIT_RATES/dollars' );
   var pattern0CostString = require( 'string!UNIT_RATES/pattern_0cost' );
+  
+  // constants
+  var SHARED_OPTIONS = {
+    maxDigits: 4, // {number} number of digits that can be entered via the keypad
+    maxDecimals: 2, // {number} maximum number of decimal places
+    pickerColor: 'black' // {Color|string} color of the number picker for the numerator in the Rate accordion box
+  };
 
   /**
    * @param {Object} itemData - data structure that describes the item, see ShoppingItemData.
@@ -86,21 +93,15 @@ define( function( require ) {
     this.numeratorOptions = _.extend( {
       axisLabel: dollarsString, // {string} label for the axis on the double number line
       valueFormat: pattern0CostString, // {string} format with '{0}' placeholder for value
-      maxDigits: 4, // {number} number of digits that can be entered via the keypad
-      maxDecimals: 2, // {number} maximum number of decimal places
-      trimZeros: false, // {boolean} whether to trim trailing zeros from decimal places
-      pickerColor: 'black' // {Color|string} color of the number picker for the numerator in the Rate accordion box
-    }, options.numeratorOptions );
+      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+    }, SHARED_OPTIONS, options.numeratorOptions );
 
     // @public (read-only) options specific to the rate's denominator
     this.denominatorOptions = _.extend( {
       axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
       valueFormat: '{0}', // {string} format with '{0}' placeholder for value
-      maxDigits: 4, // {number} number of digits that can be entered via the keypad
-      maxDecimals: 2, // {number} maximum number of decimal places
-      trimZeros: true, // {boolean} whether to trim trailing zeros from decimal places
-      pickerColor: 'black' // {Color|string} color of the number picker for the denominator in the Rate accordion box
-    }, options.denominatorOptions );
+      trimZeros: true // {boolean} whether to trim trailing zeros from decimal places
+    }, SHARED_OPTIONS, options.denominatorOptions );
 
     // @public {Rate}
     this.rate = options.rate || Rate.withUnitRate( itemData.unitRate );
