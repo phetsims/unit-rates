@@ -28,7 +28,6 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // strings
@@ -260,8 +259,8 @@ define( function( require ) {
           // animate the marker editor to it's new location
           markerEditorNodeAnimation = new MoveTo( markerEditorNode, destination, {
 
-            // controllable via query parameter
-            duration: 750 / URQueryParameters.animationSpeed,
+            // time in ms to move 1 unit of distance
+            duration: 2,
 
             // marker editor is not interactive while animating
             onStart: function() { markerEditorNode.pickable = false; },
