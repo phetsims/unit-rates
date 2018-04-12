@@ -11,9 +11,8 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
   var ShoppingQuestionNode = require( 'UNIT_RATES/shopping/view/ShoppingQuestionNode' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
@@ -81,11 +80,10 @@ define( function( require ) {
     shoppingScene.questionSetProperty.link( questionSetObserver ); // unlink in dispose
 
     // Refresh button, advances to the next question set
-    var refreshButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'refresh', {
-        scale: 0.36 // to approximately match height of marker editor buttons, determined empirically
-      } ),
+    var refreshButton = new RefreshButton( {
+      iconScale: 0.36,
       xMargin: 10,
+      yMargin: 5,
       baseColor: URColors.refreshButton,
       listener: function() {
         shoppingScene.nextQuestionSet();
