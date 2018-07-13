@@ -24,7 +24,6 @@ define( function( require ) {
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
-  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   /**
@@ -156,7 +155,7 @@ define( function( require ) {
         guessNode.text = URUtil.formatNumber( answerOptions.valueFormat, guess, answerOptions.maxDecimals, answerOptions.trimZeros );
         guessNode.fill = correct ? URColors.correctQuestion : URColors.incorrectQuestion;
       }
-      else if ( URQueryParameters.showAnswers ) {
+      else if ( phet.chipper.queryParameters.showAnswers ) {
 
         // show the answer, if query parameter is set
         guessNode.text = URUtil.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );

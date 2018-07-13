@@ -22,7 +22,6 @@ define( function( require ) {
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
-  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
 
   // constants
@@ -215,7 +214,7 @@ define( function( require ) {
       numeratorNode.center = numeratorBox.center;
 
       // show the corresponding denominator
-      if ( URQueryParameters.showAnswers && !markerEditor.denominatorProperty.value ) {
+      if ( phet.chipper.queryParameters.showAnswers && !markerEditor.denominatorProperty.value ) {
         if ( numerator ) {
           var denominator = markerEditor.numeratorProperty.value / markerEditor.unitRateProperty.value;
           denominatorNode.text = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
@@ -244,7 +243,7 @@ define( function( require ) {
       denominatorNode.center = denominatorBox.center;
 
       // show the corresponding numerator
-      if ( URQueryParameters.showAnswers && !markerEditor.numeratorProperty.value ) {
+      if ( phet.chipper.queryParameters.showAnswers && !markerEditor.numeratorProperty.value ) {
         if ( denominator ) {
           var numerator = markerEditor.denominatorProperty.value * markerEditor.unitRateProperty.value;
           numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );

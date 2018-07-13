@@ -13,9 +13,6 @@ define( function( require ) {
 
   var URQueryParameters = QueryStringMachine.getAll( {
 
-    // Shows answers for Shopping questions and marker editor
-    showAnswers: { type: 'flag' },
-
     // Enables random selection of scenes and questions in Shopping and Shopping Lab screens
     randomEnabled: {
       type: 'boolean',
