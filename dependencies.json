@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.6-rc.1 Thu Jul 26 2018 17:44:40 GMT-0600 (MDT)",
+  "comment": "# unit-rates 1.0.6-rc.2 Mon Jul 30 2018 21:26:59 GMT-0600 (MDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -42,7 +42,7 @@
   },
   "scenery": {
     "sha": "10c55c7675a76ed046b1addfb4834764ea80b7ae",
-    "branch": "unit-rates-1.0"
+    "branch": "HEAD"
   },
   "scenery-phet": {
     "sha": "6213dc27544de739f31722d59f1a756e20ca03fb",
@@ -65,7 +65,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "fe3ffaeed73b9dc6012b3b794a838ad634187f13",
+    "sha": "336c8d399bc9a29d74faba59be13e6bc837052c7",
     "branch": "1.0"
   }
 }
