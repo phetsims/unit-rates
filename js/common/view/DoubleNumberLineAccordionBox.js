@@ -1,4 +1,4 @@
-// Copyright 2016-2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * Displays a double number line in an accordion box, with a marker editor, undo button and eraser button.
@@ -15,13 +15,14 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var Animation = require( 'TWIXT/Animation' );
   var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
+  var Easing = require( 'TWIXT/Easing' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditorNode = require( 'UNIT_RATES/common/view/MarkerEditorNode' );
-  var MoveTo = require( 'TWIXT/MoveTo' );
   var Node = require( 'SCENERY/nodes/Node' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -132,8 +133,8 @@ define( function( require ) {
 
     AccordionBox.call( this, contentNode, options );
 
-    // animation for marker editor
-    var markerEditorNodeAnimation = null;
+    // {Animation|null} animation for marker editor
+    var markerEditorAnimation = null;
 
     // if false, move the marker editor immediately instead of animating.
     // Used to set the editor's initial position on startup.
@@ -246,28 +247,35 @@ define( function( require ) {
       // if we need to move the marker editor...
       if ( destinationX !== null ) {
 
-        var destination = new Vector2( destinationX, markerEditorNode.y );
-
         if ( !markerEditorAnimationEnabled ) {
-          markerEditorNode.translation = destination;
+
+          // no animation, move immediately
+          markerEditorNode.x = destinationX;
         }
         else {
 
           // stop any animation that is in progress
-          markerEditorNodeAnimation && markerEditorNodeAnimation.stop();
+          markerEditorAnimation && markerEditorAnimation.stop();
 
-          // animate the marker editor to it's new location
-          markerEditorNodeAnimation = new MoveTo( markerEditorNode, destination, {
-
-            // time in ms to move 1 unit of distance
-            duration: 2,
-
-            // marker editor is not interactive while animating
-            onStart: function() { markerEditorNode.pickable = false; },
-            onComplete: function() { markerEditorNode.pickable = true; },
-            onStop: function() { markerEditorNode.pickable = true; }
+          markerEditorAnimation = new Animation( {
+            stepper: 'timer', // animation is controlled by the global phet-core Timer
+            duration: 0.002 * Math.abs( destinationX - markerEditorNode.x ), // 2ms per 1 unit of distance
+            easing: Easing.QUADRATIC_IN_OUT,
+            setValue: function( value ) { markerEditorNode.x = value; },
+            getValue: function() { return markerEditorNode.x; },
+            to: destinationX
           } );
-          markerEditorNodeAnimation.start();
+          
+          markerEditorAnimation.startEmitter.addListener( function startListener() {
+            markerEditorNode.pickable = false;
+            markerEditorAnimation.startEmitter.removeListener( startListener );
+            markerEditorAnimation.endedEmitter.addListener( function endedListener() {
+              markerEditorNode.pickable = true;
+              markerEditorAnimation.endedEmitter.removeListener( endedListener );
+            } );
+          } );
+          
+          markerEditorAnimation.start();
         }
       }
     };
@@ -309,7 +317,7 @@ define( function( require ) {
       markerEditor.denominatorProperty.unlink( markerEditorObserver );
 
       // view cleanup
-      markerEditorNodeAnimation && markerEditorNodeAnimation.stop();
+      markerEditorAnimation && markerEditorAnimation.stop();
       markerEditorNode.dispose();
       doubleNumberLineNode.dispose();
     };
