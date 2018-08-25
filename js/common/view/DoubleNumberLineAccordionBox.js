@@ -261,8 +261,8 @@ define( function( require ) {
             stepper: 'timer', // animation is controlled by the global phet-core Timer
             duration: 0.002 * Math.abs( destinationX - markerEditorNode.x ), // 2ms per 1 unit of distance
             easing: Easing.QUADRATIC_IN_OUT,
-            setValue: function( value ) { markerEditorNode.x = value; },
-            getValue: function() { return markerEditorNode.x; },
+            object: markerEditorNode,
+            attribute: 'x',
             to: destinationX
           } );
           
