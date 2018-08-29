@@ -3,7 +3,7 @@
 /**
  * Utility functions that are specific to this simulation.
  *
- * @author Chris Malley (PixelZoom, Inc,)
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';
