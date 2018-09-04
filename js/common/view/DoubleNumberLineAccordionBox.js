@@ -258,7 +258,7 @@ define( function( require ) {
           markerEditorAnimation && markerEditorAnimation.stop();
 
           markerEditorAnimation = new Animation( {
-            stepper: 'timer', // animation is controlled by the global phet-core Timer
+            stepper: 'timer', // animation is controlled by the global phet-core timer
             duration: 0.002 * Math.abs( destinationX - markerEditorNode.x ), // 2ms per 1 unit of distance
             easing: Easing.QUADRATIC_IN_OUT,
             object: markerEditorNode,
