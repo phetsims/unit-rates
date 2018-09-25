@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.8-rc.1 Fri Sep 21 2018 20:23:48 GMT-0600 (MDT)",
+  "comment": "# unit-rates 1.0.8 Tue Sep 25 2018 12:13:26 GMT-0600 (MDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -65,7 +65,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "c5cb3e8d9379156b523e4410e26e3af511b66c51",
+    "sha": "4e7d8618fc76e8c353ae9005ed30ce097dc53796",
     "branch": "1.0"
   }
 }
