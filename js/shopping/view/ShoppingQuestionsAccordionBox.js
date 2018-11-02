@@ -118,6 +118,7 @@ define( function( require ) {
         assert && assert( child instanceof ShoppingQuestionNode );
         child.dispose();
       } );
+      refreshButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
   }
 

@@ -220,6 +220,7 @@ define( function( require ) {
     // @private cleanup that's specific to this Node
     this.disposeShoppingQuestionNode = function() {
       question.guessProperty.unlink( guessObserver );
+      editButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
   }
 

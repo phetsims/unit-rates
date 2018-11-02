@@ -319,6 +319,8 @@ define( function( require ) {
       markerEditorAnimation && markerEditorAnimation.stop();
       markerEditorNode.dispose();
       doubleNumberLineNode.dispose();
+      eraserButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      undoButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
 
     // @private required by prototype functions

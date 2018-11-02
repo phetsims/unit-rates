@@ -261,6 +261,8 @@ define( function( require ) {
     this.disposeMarkerEditorNode = function() {
       markerEditor.numeratorProperty.unlink( numeratorObserver );
       markerEditor.denominatorProperty.unlink( denominatorObserver );
+      numeratorEditButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      denominatorEditButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
 
     // @private fields required by prototype functions

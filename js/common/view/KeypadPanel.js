@@ -105,6 +105,12 @@ define( function( require ) {
       valueNode.text = valueString;
       valueNode.center = valueBackgroundNode.center;
     } );
+
+    // @private
+    this.disposeKeypadPanel = function() {
+      keypadNode.disposeSubtree(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      enterButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+    };
   }
 
   unitRates.register( 'KeypadPanel', KeypadPanel );
@@ -181,5 +187,12 @@ define( function( require ) {
     };
   };
 
-  return inherit( Panel, KeypadPanel );
+  return inherit( Panel, KeypadPanel, {
+
+    // @public
+    dispose: function() {
+      this.disposeKeypadPanel();
+      Panel.prototype.dispose.call( this );
+    }
+  } );
 } );
