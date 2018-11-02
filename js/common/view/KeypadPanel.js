@@ -14,9 +14,9 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
   var Panel = require( 'SUN/Panel' );
-  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var StringProperty = require( 'AXON/StringProperty' );
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
@@ -58,7 +58,7 @@ define( function( require ) {
     }, options );
 
     // @public
-    this.valueStringProperty = new Property( options.valueString );
+    this.valueStringProperty = new StringProperty( options.valueString );
 
     var valueNode = new Text( this.valueStringProperty.value, {
       font: options.valueFont

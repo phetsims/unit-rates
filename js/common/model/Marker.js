@@ -14,6 +14,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -39,8 +40,8 @@ define( function( require ) {
     assert && assert( _.includes( CREATOR_VALUES, creator ), 'invalid creator: ' + creator );
 
     // @public
-    this.numeratorProperty = new Property( numerator );
-    this.denominatorProperty = new Property( denominator );
+    this.numeratorProperty = new NumberProperty( numerator );
+    this.denominatorProperty = new NumberProperty( denominator );
     this.colorProperty = new Property( options.color );
     this.erasable = options.erasable;
 

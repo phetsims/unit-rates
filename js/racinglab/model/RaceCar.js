@@ -9,11 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
-  var Property = require( 'AXON/Property' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
   var Range = require( 'DOT/Range' );
   var Rate = require( 'UNIT_RATES/common/model/Rate' );
@@ -50,13 +51,13 @@ define( function( require ) {
     this.rate = options.rate;
 
     // @public the car's distance from the starting line, in miles
-    this.distanceProperty = new Property( 0 );
+    this.distanceProperty = new NumberProperty( 0 );
 
     // @public time for this car, in hours
-    this.timeProperty = new Property( 0 );
+    this.timeProperty = new NumberProperty( 0 );
 
     // @public is this car visible?
-    this.visibleProperty = new Property( options.visible );
+    this.visibleProperty = new BooleanProperty( options.visible );
 
     // @public
     this.track = new RaceTrack( { length: options.trackLength } );

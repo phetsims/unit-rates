@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -19,16 +19,16 @@ define( function( require ) {
   function ShoppingViewProperties() {
 
     // @public is the 'Double Number Line' accordion box expanded?
-    this.doubleNumberLineExpandedProperty = new Property( true );
+    this.doubleNumberLineExpandedProperty = new BooleanProperty( true );
 
     // @public is the 'Questions' accordion box expanded?
-    this.questionsExpandedProperty = new Property( true );
+    this.questionsExpandedProperty = new BooleanProperty( true );
 
     // @public is the cost display expanded on the scale?
-    this.scaleCostExpandedProperty = new Property( true );
+    this.scaleCostExpandedProperty = new BooleanProperty( true );
 
     // @public is the 'Rate' accordion box expanded?
-    this.rateExpandedProperty = new Property( true );
+    this.rateExpandedProperty = new BooleanProperty( true );
   }
 
   unitRates.register( 'ShoppingViewProperties', ShoppingViewProperties );

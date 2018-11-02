@@ -20,7 +20,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URUtil = require( 'UNIT_RATES/common/URUtil' );
   var Util = require( 'DOT/Util' );
@@ -36,8 +36,8 @@ define( function( require ) {
     assert && assert( Util.isInteger( denominator ), 'denominator must be an integer: ' + denominator );
 
     // @public
-    this.numeratorProperty = new Property( numerator );
-    this.denominatorProperty = new Property( denominator );
+    this.numeratorProperty = new NumberProperty( numerator );
+    this.denominatorProperty = new NumberProperty( denominator );
 
     // @public (read-only) dispose not needed
     this.unitRateProperty = new DerivedProperty( [ this.numeratorProperty, this.denominatorProperty ],

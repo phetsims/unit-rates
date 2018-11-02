@@ -17,7 +17,7 @@ define( function( require ) {
   // modules
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -44,7 +44,7 @@ define( function( require ) {
     this.cells = createCells( options.numberOfCells, options.location, options.cellSize, options.cellSpacing );
 
     // @public (read-only) number of movables in the row (number of occupied cells)
-    this.numberOfMovablesProperty = new Property( 0 );
+    this.numberOfMovablesProperty = new NumberProperty( 0 );
   }
 
   unitRates.register( 'RowOfMovables', RowOfMovables );

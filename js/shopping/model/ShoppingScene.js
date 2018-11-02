@@ -20,6 +20,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var Rate = require( 'UNIT_RATES/common/model/Rate' );
@@ -209,7 +210,7 @@ define( function( require ) {
     }
 
     // @private index of the question set that's being shown
-    this.questionSetsIndexProperty = new Property( 0 );
+    this.questionSetsIndexProperty = new NumberProperty( 0 );
 
     // @public (read-only) {Property.<ShoppingQuestion[]>} the current set of questions
     this.questionSetProperty = new Property( this.questionSets[ this.questionSetsIndexProperty.value ] );

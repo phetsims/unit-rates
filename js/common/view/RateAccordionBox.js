@@ -75,8 +75,8 @@ define( function( require ) {
     } );
 
     // numerator picker, must be disposed
-    var numeratorPicker = new NumberPicker( rate.numeratorProperty, new Property( options.numeratorRange ), _.extend( {},
-      URConstants.NUMBER_PICKER_OPTIONS, {
+    var numeratorPicker = new NumberPicker( rate.numeratorProperty, new Property( options.numeratorRange ),
+      _.extend( {}, URConstants.NUMBER_PICKER_OPTIONS, {
         upFunction: options.numeratorPickerUpFunction,
         downFunction: options.numeratorPickerDownFunction,
         decimalPlaces: options.numeratorDecimals,
@@ -91,8 +91,8 @@ define( function( require ) {
     } );
 
     // denominator picker, must be disposed
-    var denominatorPicker = new NumberPicker( rate.denominatorProperty, new Property( options.denominatorRange ), _.extend( {},
-      URConstants.NUMBER_PICKER_OPTIONS, {
+    var denominatorPicker = new NumberPicker( rate.denominatorProperty, new Property( options.denominatorRange ),
+      _.extend( {}, URConstants.NUMBER_PICKER_OPTIONS, {
         upFunction: options.denominatorPickerUpFunction,
         downFunction: options.denominatorPickerDownFunction,
         decimalPlaces: options.denominatorDecimals,

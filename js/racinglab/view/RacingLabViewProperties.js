@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -19,19 +19,19 @@ define( function( require ) {
   function RacingLabViewProperties() {
 
     // @public are the 'Double Number Line' accordion boxes expanded?
-    this.doubleNumberLineExpandedProperty1 = new Property( true );
-    this.doubleNumberLineExpandedProperty2 = new Property( true );
+    this.doubleNumberLineExpandedProperty1 = new BooleanProperty( true );
+    this.doubleNumberLineExpandedProperty2 = new BooleanProperty( true );
 
     // @public are the 'Rate' accordion boxes expanded?
-    this.rateExpandedProperty1 = new Property( true );
-    this.rateExpandedProperty2 = new Property( true );
+    this.rateExpandedProperty1 = new BooleanProperty( true );
+    this.rateExpandedProperty2 = new BooleanProperty( true );
 
     // @public are the race timers expanded?
-    this.timerExpandedProperty1 = new Property( true );
-    this.timerExpandedProperty2 = new Property( true );
+    this.timerExpandedProperty1 = new BooleanProperty( true );
+    this.timerExpandedProperty2 = new BooleanProperty( true );
 
     // @public are the drag arrows visible that surround the finish flag?
-    this.arrowsVisibleProperty = new Property( true );
+    this.arrowsVisibleProperty = new BooleanProperty( true );
   }
 
   unitRates.register( 'RacingLabViewProperties', RacingLabViewProperties );

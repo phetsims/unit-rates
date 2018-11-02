@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var RaceCar = require( 'UNIT_RATES/racinglab/model/RaceCar' );
@@ -27,7 +28,7 @@ define( function( require ) {
     var self = this;
 
     // @public is the race running?
-    this.runningProperty = new Property( false );
+    this.runningProperty = new BooleanProperty( false );
 
     // @public the red (top) car
     this.car1 = new RaceCar( redCarImage, {

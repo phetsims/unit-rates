@@ -10,8 +10,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URMovable = require( 'UNIT_RATES/common/model/URMovable' );
 
@@ -33,7 +33,7 @@ define( function( require ) {
     this.image = image;
 
     // @public
-    this.visibleProperty = new Property( options.visible );
+    this.visibleProperty = new BooleanProperty( options.visible );
 
     URMovable.call( this, options );
   }

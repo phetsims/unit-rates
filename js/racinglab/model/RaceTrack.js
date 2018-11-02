@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -30,7 +30,7 @@ define( function( require ) {
     this.markerSpacing = options.markerSpacing;
 
     // @public
-    this.lengthProperty = new Property( options.length );
+    this.lengthProperty = new NumberProperty( options.length );
 
     // validate length, unlink not needed
     this.lengthProperty.link( function( length ) {
