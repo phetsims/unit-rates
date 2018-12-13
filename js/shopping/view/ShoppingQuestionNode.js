@@ -24,7 +24,7 @@ define( function( require ) {
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var URUtils = require( 'UNIT_RATES/common/URUtils' );
 
   /**
    * @param {ShoppingQuestion} question - model element for the question
@@ -152,14 +152,14 @@ define( function( require ) {
 
       // update the guess
       if ( guess !== null ) {
-        guessNode.text = URUtil.formatNumber( answerOptions.valueFormat, guess, answerOptions.maxDecimals, answerOptions.trimZeros );
+        guessNode.text = URUtils.formatNumber( answerOptions.valueFormat, guess, answerOptions.maxDecimals, answerOptions.trimZeros );
         guessNode.fill = correct ? URColors.correctQuestion : URColors.incorrectQuestion;
       }
       else if ( phet.chipper.queryParameters.showAnswers ) {
 
         // show the answer, if query parameter is set
-        guessNode.text = URUtil.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
-        guessNode.text = URUtil.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
+        guessNode.text = URUtils.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
+        guessNode.text = URUtils.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
         guessNode.fill = URColors.showAnswers;
       }
       else {

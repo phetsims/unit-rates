@@ -15,7 +15,7 @@ define( function( require ) {
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var URUtils = require( 'UNIT_RATES/common/URUtils' );
 
   // strings
   var lbsString = require( 'string!UNIT_RATES/lbs' );
@@ -54,7 +54,7 @@ define( function( require ) {
 
       // Major markers have 1 decimal place in the denominator
       isMajorMarker: function( numerator, denominator ) {
-        return URUtil.decimalPlaces( denominator ) <= 1;
+        return URUtils.decimalPlaces( denominator ) <= 1;
       }
 
     }, options );

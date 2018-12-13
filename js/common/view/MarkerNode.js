@@ -16,7 +16,7 @@ define( function( require ) {
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var URUtils = require( 'UNIT_RATES/common/URUtils' );
 
   // constants
   var SHARED_OPTIONS = {
@@ -56,7 +56,7 @@ define( function( require ) {
     var numeratorNode = new Text( '', { font: options.font } );
     var numeratorObserver = function( numerator ) {
       assert && assert( ( typeof numerator === 'number' ) && !isNaN( numerator ), 'invalid numerator: ' + numerator );
-      numeratorNode.text = URUtil.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+      numeratorNode.text = URUtils.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
       numeratorNode.centerX = lineNode.centerX;
       numeratorNode.bottom = lineNode.top - options.ySpacing;
     };
@@ -66,7 +66,7 @@ define( function( require ) {
     var denominatorNode = new Text( '', { font: options.font } );
     var denominatorObserver = function( denominator ) {
       assert && assert( ( typeof denominator === 'number' ) && !isNaN( denominator ), 'invalid denominator: ' + denominator );
-      denominatorNode.text = URUtil.numberToString( marker.denominatorProperty.value, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+      denominatorNode.text = URUtils.numberToString( marker.denominatorProperty.value, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
       denominatorNode.centerX = lineNode.centerX;
       denominatorNode.top = lineNode.bottom + options.ySpacing;
     };

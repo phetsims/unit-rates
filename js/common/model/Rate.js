@@ -22,7 +22,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var URUtils = require( 'UNIT_RATES/common/URUtils' );
   var Util = require( 'DOT/Util' );
 
   /**
@@ -77,7 +77,7 @@ define( function( require ) {
     withUnitRate: function( unitRate ) {
 
       // compute corresponding numerator and denominator
-      var denominator = Math.pow( 10, URUtil.decimalPlaces( unitRate ) );
+      var denominator = Math.pow( 10, URUtils.decimalPlaces( unitRate ) );
       var fraction = new Fraction( unitRate * denominator, denominator );
       fraction.reduce();
 

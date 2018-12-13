@@ -14,7 +14,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // All functions are @public unless otherwise noted.
-  var URUtil = {
+  var URUtils = {
 
     /**
      * Formats a number, using nearest-neighbor rounding.
@@ -30,7 +30,7 @@ define( function( require ) {
       if ( !phet.chipper.queryParameters.stringTest ) {
         assert && assert( format.indexOf( '{0}' ) !== -1, 'missing {0} in format: ' + format );
       }
-      return StringUtils.format( format, URUtil.numberToString( value, maxDecimals, trimZeros ) );
+      return StringUtils.format( format, URUtils.numberToString( value, maxDecimals, trimZeros ) );
     },
 
     /**
@@ -78,7 +78,7 @@ define( function( require ) {
     }
   };
 
-  unitRates.register( 'URUtil', URUtil );
+  unitRates.register( 'URUtils', URUtils );
 
-  return URUtil;
+  return URUtils;
 } );

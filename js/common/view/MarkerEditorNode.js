@@ -22,7 +22,7 @@ define( function( require ) {
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var URUtils = require( 'UNIT_RATES/common/URUtils' );
 
   // constants
   var KEYPAD_LOCATION_VALUES = [ 'above', 'below' ];
@@ -205,7 +205,7 @@ define( function( require ) {
 
       // update the numerator
       if ( numerator ) {
-        numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+        numeratorNode.text = URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
       }
       else {
         numeratorNode.text = '';
@@ -217,7 +217,7 @@ define( function( require ) {
       if ( phet.chipper.queryParameters.showAnswers && !markerEditor.denominatorProperty.value ) {
         if ( numerator ) {
           var denominator = markerEditor.numeratorProperty.value / markerEditor.unitRateProperty.value;
-          denominatorNode.text = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+          denominatorNode.text = URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
         }
         else {
           denominatorNode.text = '';
@@ -234,7 +234,7 @@ define( function( require ) {
 
       // update the denominator
       if ( denominator ) {
-        denominatorNode.text = URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+        denominatorNode.text = URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
       }
       else {
         denominatorNode.text = '';
@@ -246,7 +246,7 @@ define( function( require ) {
       if ( phet.chipper.queryParameters.showAnswers && !markerEditor.numeratorProperty.value ) {
         if ( denominator ) {
           var numerator = markerEditor.denominatorProperty.value * markerEditor.unitRateProperty.value;
-          numeratorNode.text = URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+          numeratorNode.text = URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
         }
         else {
           numeratorNode.text = '';

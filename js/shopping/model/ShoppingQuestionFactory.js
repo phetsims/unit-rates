@@ -12,7 +12,7 @@ define( function( require ) {
   var ShoppingQuestion = require( 'UNIT_RATES/shopping/model/ShoppingQuestion' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var URUtils = require( 'UNIT_RATES/common/URUtils' );
   var Util = require( 'DOT/Util' );
 
   // strings
@@ -40,12 +40,12 @@ define( function( require ) {
       // '$0.50'
       var numerator = unitRate;
       var numeratorString = StringUtils.format( pattern0CostString,
-        URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+        URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '1 Apple'
       var denominator = 1;
       var denominatorString = StringUtils.format( pattern0Value1UnitsString,
-        URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+        URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
         units );
 
       return new ShoppingQuestion( unitRateQuestionString, unitRate, numerator, denominator, numeratorString, denominatorString, numeratorOptions );
@@ -115,16 +115,16 @@ define( function( require ) {
 
     // '$3.00'
     var numeratorString = StringUtils.format( pattern0CostString,
-      URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+      URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
     // '10 Apples'
     var denominatorString = StringUtils.format( pattern0Value1UnitsString,
-      URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+      URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
       units );
 
     // 'Cost of 10 Apples?'
     var questionString = StringUtils.format( patternCostOf0Quantity1UnitsString,
-      URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+      URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
       units );
 
     return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, numeratorOptions );
@@ -152,17 +152,17 @@ define( function( require ) {
     // '$4.00'
     var numerator = denominator * unitRate;
     var numeratorString = StringUtils.format( pattern0CostString,
-      URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+      URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
     // '8 Apples'
     var denominatorString = StringUtils.format( pattern0Value1UnitsString,
-      URUtil.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+      URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
       units );
 
     // 'Apples for $4.00?'
     var questionString = StringUtils.format( pattern0Items1CostString,
       amountOfQuestionUnits,
-      URUtil.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+      URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
     return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, denominatorOptions );
   };

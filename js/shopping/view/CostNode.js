@@ -18,7 +18,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URFont = require( 'UNIT_RATES/common/URFont' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var URUtils = require( 'UNIT_RATES/common/URUtils' );
   var Util = require( 'DOT/Util' );
 
   // strings
@@ -74,7 +74,7 @@ define( function( require ) {
       // and therefore whether the extra decimal place should be visible.
       // See https://github.com/phetsims/unit-rates/issues/202
       var costRounded = Util.toFixedNumber( cost, 10 );
-      extraDecimalNode.visible = ( URUtil.decimalPlaces( costRounded ) >= visibleDecimalPlaces );
+      extraDecimalNode.visible = ( URUtils.decimalPlaces( costRounded ) >= visibleDecimalPlaces );
 
       if ( options.extraDecimalVisible && extraDecimalNode.visible ) {
 
@@ -84,12 +84,12 @@ define( function( require ) {
         var costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
 
         // convert to string, then pick it apart
-        var costString = URUtil.numberToString( costTruncated, visibleDecimalPlaces, false /* trimZeros */ );
+        var costString = URUtils.numberToString( costTruncated, visibleDecimalPlaces, false /* trimZeros */ );
         primaryNode.text = costString.substring( 0, costString.length - 1 );
         extraDecimalNode.text = costString.substring( costString.length - 1, costString.length );
       }
       else {
-        primaryNode.text = URUtil.numberToString( cost, 2, false /* trimZeros */ );
+        primaryNode.text = URUtils.numberToString( cost, 2, false /* trimZeros */ );
         extraDecimalNode.text = '0'; // will be invisible, but needs a valid digit for layout purposes
       }
 

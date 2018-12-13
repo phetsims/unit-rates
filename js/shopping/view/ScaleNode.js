@@ -23,7 +23,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
-  var URUtil = require( 'UNIT_RATES/common/URUtil' );
+  var URUtils = require( 'UNIT_RATES/common/URUtils' );
   var ValueNode = require( 'UNIT_RATES/common/view/ValueNode' );
   var ValuePanel = require( 'UNIT_RATES/common/view/ValuePanel' );
 
@@ -205,7 +205,7 @@ define( function( require ) {
    */
   var quantityToString = function( quantity, units ) {
     return StringUtils.format( pattern0Value1UnitsString,
-      URUtil.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */ ), units );
+      URUtils.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */ ), units );
   };
 
   return inherit( Node, ScaleNode, {
