@@ -142,7 +142,7 @@ define( function( require ) {
     this.disposeValuePanel = function() {
       expandCollapseButton && expandCollapseButton.dispose();
       options.expandedProperty && options.expandedProperty.unlink( expandedObserver );
-      valueNode.hasListener( 'bounds', boundsListener ) && valueNode.off( 'bounds', boundsListener );
+      valueNode.off( 'bounds', boundsListener );
     };
   }
 
