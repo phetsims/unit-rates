@@ -39,10 +39,10 @@ define( function( require ) {
 
       // ComboBox options
       listPosition: 'above',
-      buttonCornerRadius: 5,
-      listCornerRadius: 5,
-      itemXMargin: 0,
-      itemYMargin: 5,
+      cornerRadius: 5,
+      xMargin: 16,
+      yMargin: 10,
+      arrowHeight: 18,
       maxWidth: 220
 
     }, options );
