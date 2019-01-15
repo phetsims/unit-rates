@@ -66,13 +66,6 @@ define( function( require ) {
       playAreaLayer.addChild( categoryNode );
     } );
 
-    // cancels drags that are in progress, see https://github.com/phetsims/unit-rates/issues/168
-    var cancelDrags = function() {
-      categoryNodes.forEach( function( categoryNode ) {
-        categoryNode.cancelDrags();
-      } );
-    };
-
     // Category radio buttons
     var categoryRadioButtons = new ShoppingCategoryRadioButtons( model.categories, model.categoryProperty, {
       left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
@@ -83,9 +76,9 @@ define( function( require ) {
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
+        self.interruptSubtreeInput();
         model.reset();
         viewProperties.reset();
-        cancelDrags();
       },
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN

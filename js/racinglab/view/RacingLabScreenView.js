@@ -44,6 +44,8 @@ define( function( require ) {
    */
   function RacingLabScreenView( model, options ) {
 
+    var self = this;
+
     ScreenView.call( this, options );
 
     // Properties that are specific to the view
@@ -150,6 +152,7 @@ define( function( require ) {
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
+        self.interruptSubtreeInput();
         model.reset();
         viewProperties.reset();
       },

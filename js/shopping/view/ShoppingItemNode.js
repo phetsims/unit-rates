@@ -57,15 +57,14 @@ define( function( require ) {
     };
     item.visibleProperty.link( visibleObserver ); // unlink in dispose
 
-    // @private drag handler
-    this.dragHandler = new ShoppingItemDragHandler( this, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer );
-    this.addInputListener( self.dragHandler );
+    var dragHandler = new ShoppingItemDragHandler( this, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer );
+    this.addInputListener( dragHandler );
 
     // @private
     this.disposeShoppingItemNode = function() {
       item.locationProperty.unlink( locationObserver );
       item.visibleProperty.unlink( visibleObserver );
-      self.removeInputListener( self.dragHandler );
+      self.removeInputListener( dragHandler );
     };
 
     // @private used by prototype functions
@@ -80,17 +79,6 @@ define( function( require ) {
     dispose: function() {
       this.disposeShoppingItemNode();
       Image.prototype.dispose.call( this );
-    },
-
-    /**
-     * Cancels a drag that is in progress, see https://github.com/phetsims/unit-rates/issues/168
-     * If no drag is in progress, this is a no-op.
-     * @public
-     */
-    cancelDrag: function() {
-      if ( this.item.dragging ) {
-        this.dragHandler.endDrag( null /* event */ );
-      }
     }
   } );
 } );

@@ -33,8 +33,6 @@ define( function( require ) {
    */
   function BaseShoppingSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties, options ) {
 
-    var self = this;
-
     options = _.extend( {
       extraCostDecimalVisible: false // {boolean} does the scale show an extra decimal place for cost?
     }, options );
@@ -60,7 +58,7 @@ define( function( require ) {
     // button that resets the shelf to its initial state
     var resetShelfButton = new ResetButton( {
       listener: function() {
-        self.cancelDrags();
+        dragLayer.interruptSubtreeInput();
         shoppingScene.resetShelfAndScale();
       },
       baseColor: URColors.resetShelfButton,
@@ -165,13 +163,6 @@ define( function( require ) {
     dispose: function() {
       this.disposeBaseShoppingSceneNode();
       Node.prototype.dispose.call( this );
-    },
-
-    // @public cancels drags that are in progress, see https://github.com/phetsims/unit-rates/issues/168
-    cancelDrags: function() {
-      this.dragLayer.getChildren().forEach( function( node ) {
-        node.cancelDrag && node.cancelDrag();
-      } );
     }
   } );
 } );

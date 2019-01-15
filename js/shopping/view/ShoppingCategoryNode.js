@@ -54,11 +54,9 @@ define( function( require ) {
     // When the selected scene changes, replace the UI elements that are item-specific
     var shoppingSceneObserver = function( shoppingScene ) {
 
-      // cancel drags that are in progress
-      self.cancelDrags();
-
       // remove the old scene
       if ( shoppingSceneNode ) {
+        shoppingSceneNode.interruptSubtreeInput(); // cancel drags that are in progress
         shoppingSceneParent.removeChild( shoppingSceneNode );
         shoppingSceneNode.dispose();
       }
@@ -76,9 +74,6 @@ define( function( require ) {
       category.shoppingSceneProperty.unlink( shoppingSceneObserver );
       shoppingSceneNode.dispose();
     };
-
-    // @private used by prototype functions
-    this.shoppingSceneNode = shoppingSceneNode;
   }
 
   unitRates.register( 'ShoppingCategoryNode', ShoppingCategoryNode );
@@ -89,11 +84,6 @@ define( function( require ) {
     dispose: function() {
       this.disposeShoppingCategoryNode();
       Node.prototype.dispose.call( this );
-    },
-
-    // @public cancels drags that are in progress, see https://github.com/phetsims/unit-rates/issues/168
-    cancelDrags: function() {
-      this.shoppingSceneNode && this.shoppingSceneNode.cancelDrags();
     }
   } );
 } );

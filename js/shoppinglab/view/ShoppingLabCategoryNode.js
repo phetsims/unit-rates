@@ -48,9 +48,6 @@ define( function( require ) {
       categoryProperty.unlink( categoryObserver );
       shoppingSceneNode.dispose();
     };
-
-    // @private used by prototype functions
-    this.shoppingSceneNode = shoppingSceneNode;
   }
 
   unitRates.register( 'ShoppingLabCategoryNode', ShoppingLabCategoryNode );
@@ -61,11 +58,6 @@ define( function( require ) {
     dispose: function() {
       this.diposeShoppingLabCategoryNode();
       Node.prototype.dispose.call( this );
-    },
-
-    // @public cancels drags that are in progress, see https://github.com/phetsims/unit-rates/issues/168
-    cancelDrags: function() {
-      this.shoppingSceneNode.cancelDrags();
     }
   } );
 } );
