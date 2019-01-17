@@ -41,7 +41,7 @@ define( function( require ) {
       // ComboBox options
       listPosition: 'above',
       cornerRadius: 5,
-      xMargin: 16,
+      xMargin: 10,
       yMargin: 10,
       maxWidth: 220
 
