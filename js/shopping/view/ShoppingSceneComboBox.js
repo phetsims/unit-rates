@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var ComboBox = require( 'SUN/ComboBox' );
+  var ComboBoxItem = require( 'SUN/ComboBoxItem' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
@@ -63,7 +64,7 @@ define( function( require ) {
    *
    * @param {ShoppingScene} shoppingScene
    * @param {Dimension2} iconSize
-   * @returns {{node: Node, value: *}}
+   * @returns {ComboBoxItem}
    */
   function createItem( shoppingScene, iconSize ) {
 
@@ -96,7 +97,7 @@ define( function( require ) {
       children: [ iconNode, labelNode ]
     } );
 
-    return ComboBox.createItem( itemNode, shoppingScene );
+    return new ComboBoxItem( itemNode, shoppingScene );
   }
 
   return inherit( ComboBox, ShoppingSceneComboBox );
