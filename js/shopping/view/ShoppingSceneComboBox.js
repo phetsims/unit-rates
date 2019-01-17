@@ -43,7 +43,6 @@ define( function( require ) {
       cornerRadius: 5,
       xMargin: 16,
       yMargin: 10,
-      arrowHeight: 18,
       maxWidth: 220
 
     }, options );
