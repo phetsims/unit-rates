@@ -42,8 +42,7 @@ define( function( require ) {
         listPosition: 'above',
         cornerRadius: 5,
         xMargin: 10,
-        yMargin: 10,
-        maxWidth: 220
+        yMargin: 10
 
       }, options );
 
