@@ -20,6 +20,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  var NumberDisplay = require( 'SCENERY_PHET/NumberDisplay' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
@@ -93,14 +94,14 @@ define( function( require ) {
     // @public (read-only) options specific to the rate's numerator
     this.numeratorOptions = _.extend( {
       axisLabel: dollarsString, // {string} label for the axis on the double number line
-      valueFormat: pattern0CostString, // {string} format with '{0}' placeholder for value
+      valueFormat: pattern0CostString, // {string} format with placeholder for value
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, SHARED_OPTIONS, options.numeratorOptions );
 
     // @public (read-only) options specific to the rate's denominator
     this.denominatorOptions = _.extend( {
       axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
-      valueFormat: '{0}', // {string} format with '{0}' placeholder for value
+      valueFormat: NumberDisplay.NUMBERED_PLACEHOLDER, // {string} format with placeholder for value
       trimZeros: true // {boolean} whether to trim trailing zeros from decimal places
     }, SHARED_OPTIONS, options.denominatorOptions );
 
