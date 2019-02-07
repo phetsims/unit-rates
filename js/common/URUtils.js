@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var NumberDisplay = require( 'SCENERY_PHET/NumberDisplay' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var SunConstants = require( 'SUN/SunConstants' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var Util = require( 'DOT/Util' );
 
@@ -19,7 +19,7 @@ define( function( require ) {
 
     /**
      * Formats a number, using nearest-neighbor rounding.
-     * @param {string} format - the format, which must contain NumberDisplay.NUMBERED_PLACEHOLDER for the value
+     * @param {string} format - the format, which must contain SunConstants.VALUE_NUMBERED_PLACEHOLDER for the value
      * @param {number} value - the number
      * @param {number} maxDecimals - the maximum number of decimal places
      * @param {boolean} trimZeros - whether to trim trailing zeros from the decimal places (eg, 1.20 -> 1.2)
@@ -29,7 +29,7 @@ define( function( require ) {
 
       // stringTest indiscriminately replaces all strings, with no regard to formatting placeholders.
       if ( !phet.chipper.queryParameters.stringTest ) {
-        assert && assert( format.indexOf( NumberDisplay.NUMBERED_PLACEHOLDER ) !== -1,
+        assert && assert( format.indexOf( SunConstants.VALUE_NUMBERED_PLACEHOLDER ) !== -1,
           'missing placeholder in format: ' + format );
       }
       return StringUtils.format( format, URUtils.numberToString( value, maxDecimals, trimZeros ) );

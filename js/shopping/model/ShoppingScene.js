@@ -20,7 +20,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Marker = require( 'UNIT_RATES/common/model/Marker' );
   var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
-  var NumberDisplay = require( 'SCENERY_PHET/NumberDisplay' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
@@ -30,6 +29,7 @@ define( function( require ) {
   var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
   var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   var ShoppingQuestionFactory = require( 'UNIT_RATES/shopping/model/ShoppingQuestionFactory' );
+  var SunConstants = require( 'SUN/SunConstants' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
   var URColors = require( 'UNIT_RATES/common/URColors' );
   var URConstants = require( 'UNIT_RATES/common/URConstants' );
@@ -101,7 +101,7 @@ define( function( require ) {
     // @public (read-only) options specific to the rate's denominator
     this.denominatorOptions = _.extend( {
       axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
-      valueFormat: NumberDisplay.NUMBERED_PLACEHOLDER, // {string} format with placeholder for value
+      valueFormat: SunConstants.VALUE_NAMED_PLACEHOLDER, // {string} format with placeholder for value
       trimZeros: true // {boolean} whether to trim trailing zeros from decimal places
     }, SHARED_OPTIONS, options.denominatorOptions );
 

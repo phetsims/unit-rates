@@ -11,8 +11,8 @@ define( function( require ) {
   // modules
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var NumberDisplay = require( 'SCENERY_PHET/NumberDisplay' );
   var Property = require( 'AXON/Property' );
+  var SunConstants = require( 'SUN/SunConstants' );
   var unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
@@ -31,7 +31,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.answerOptions = _.extend( {
-      valueFormat: NumberDisplay.NUMBERED_PLACEHOLDER, // {string} format used by StringUtils.format to format the guess
+      valueFormat: SunConstants.VALUE_NAMED_PLACEHOLDER, // {string} format used by StringUtils.format to format the guess
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
       maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
       trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
