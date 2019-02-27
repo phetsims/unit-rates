@@ -48,13 +48,13 @@ define( function( require ) {
     // @public {Property.<number|null>, the user's guess, null indicates no guess
     this.guessProperty = new Property( null );
 
-    // @public emit1(this) is called when the question is answered correctly
-    this.correctEmitter = new Emitter();
+    // @public emit(this) is called when the question is answered correctly
+    this.correctEmitter = new Emitter( { validationEnabled: false } );
 
     // Notify observers when the question is answered correctly
     this.guessProperty.link( function( guess ) { // no unlink required
       if ( guess === answer ) {
-        self.correctEmitter.emit1( self );
+        self.correctEmitter.emit( self );
       }
     } );
   }
