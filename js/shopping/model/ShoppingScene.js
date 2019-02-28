@@ -101,7 +101,7 @@ define( function( require ) {
     // @public (read-only) options specific to the rate's denominator
     this.denominatorOptions = _.extend( {
       axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
-      valueFormat: SunConstants.VALUE_NAMED_PLACEHOLDER, // {string} format with placeholder for value
+      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER, // {string} format with placeholder for value
       trimZeros: true // {boolean} whether to trim trailing zeros from decimal places
     }, SHARED_OPTIONS, options.denominatorOptions );
 

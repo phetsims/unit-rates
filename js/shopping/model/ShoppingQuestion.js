@@ -31,7 +31,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.answerOptions = _.extend( {
-      valueFormat: SunConstants.VALUE_NAMED_PLACEHOLDER, // {string} format used by StringUtils.format to format the guess
+      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER, // {string} format used by StringUtils.format to format the guess
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
       maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
       trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
