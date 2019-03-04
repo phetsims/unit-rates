@@ -36,16 +36,18 @@ define( function( require ) {
       showTitleWhenExpanded: true,
       fill: 'white',
       cornerRadius: 5,
-      buttonLength: 16,
       buttonXMargin: 10,
       buttonYMargin: 4,
-      buttonTouchAreaXDilation: 8,
-      buttonTouchAreaYDilation: 8,
-      buttonMouseAreaXDilation: 5,
-      buttonMouseAreaYDilation: 5,
       contentXMargin: 10,
       contentYMargin: 8,
-      contentYSpacing: 4
+      contentYSpacing: 4,
+      expandCollapseButtonOptions: {
+        sideLength: 16,
+        touchAreaXDilation: 8,
+        touchAreaYDilation: 8,
+        mouseAreaXDilation: 5,
+        mouseAreaYDilation: 5
+      }
     },
     ACCORDION_BOX_TITLE_FONT: new URFont( 14 ),
 

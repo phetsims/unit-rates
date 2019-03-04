@@ -48,8 +48,6 @@ define( function( require ) {
       // DoubleNumberLineAccordionBox options
       titleString: doubleNumberLineString, // {string} title displayed next to the expand/collapse button
       keypadLocation: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
-      buttonTouchAreaYDilation: 2, // prevent overlap with marker editor button
-      buttonMouseAreaYDilation: 2, // prevent overlap with marker editor button
 
       // DoubleNumberLineNode options
       axisViewLength: 1000, // {number} view length of doubleNumberLine's range
@@ -57,6 +55,12 @@ define( function( require ) {
       indicatorColor: 'green' // {Color|string} color of the indicator
 
     }, options );
+
+    // prevent overlap with marker editor button
+    options.expandCollapseButtonOptions = _.extend( options.expandCollapseButtonOptions, {
+      touchAreaYDilation: 2,
+      mouseAreaYDilation: 2
+    } );
 
     // title on the accordion box
     assert && assert( !options.titleNode, 'creates its own title node' );

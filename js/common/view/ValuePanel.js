@@ -40,11 +40,6 @@ define( function( require ) {
 
       // expand/collapse button
       expandedProperty: null, // {Property.<boolean>|null} null indicates no expand/collapse button
-      buttonSideLength: 15,
-      buttonTouchAreaXDilation: 8,
-      buttonTouchAreaYDilation: 8,
-      buttonMouseAreaXDilation: 5,
-      buttonMouseAreaYDilation: 5,
 
       // title
       titleString: '', // {string} string displayed when the panel is collapsed
@@ -84,13 +79,13 @@ define( function( require ) {
 
       // expand/collapse button, dispose required
       var expandCollapseButton = new ExpandCollapseButton( options.expandedProperty, {
-        sideLength: options.buttonSideLength
+        sideLength: 15,
+        touchAreaXDilation: 8,
+        touchAreaYDilation: 8,
+        mouseAreaXDilation: 5,
+        mouseAreaYDilation: 5
       } );
       contentNode.addChild( expandCollapseButton );
-      expandCollapseButton.touchArea =
-        expandCollapseButton.localBounds.dilatedXY( options.buttonTouchAreaXDilation, options.buttonTouchAreaYDilation );
-      expandCollapseButton.mouseArea =
-        expandCollapseButton.localBounds.dilatedXY( options.buttonMouseAreaXDilation, options.buttonMouseAreaYDilation );
 
       // space to right of button
       var maxExpandedWidth = contentWidth - expandCollapseButton.width - options.xSpacing;
