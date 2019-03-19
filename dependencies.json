@@ -67,5 +67,9 @@
   "unit-rates": {
     "sha": "53b7d00e3b46a5544476efab8fc35eb0348cd5cb",
     "branch": "1.0"
+  },
+  "phetmarks": {
+    "branch": "master",
+    "sha": "3a5691551b8be942d4b0534c82e86701882529f9"
   }
 }
