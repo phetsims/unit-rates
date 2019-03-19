@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.9 Tue Nov 06 2018 14:47:03 GMT-0700 (MST)",
+  "comment": "# unit-rates 1.0.9 Tue Mar 19 2019 15:05:58 GMT-0400 (EDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -9,8 +9,8 @@
     "branch": "HEAD"
   },
   "brand": {
-    "sha": "b6bdbc2b7d618f8fbd2851a95476c0eb1205acf5",
-    "branch": "HEAD"
+    "sha": "2c043405927351a33e0a6091babb7a22583d50d4",
+    "branch": "unit-rates-1.0"
   },
   "chipper": {
     "sha": "e2fe18dfa82f3247e36c87ea9f4c1bbe60d4616e",
@@ -21,8 +21,8 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "4ef2fa6bd42eee2b1218f2cd5340756521c19840",
-    "branch": "HEAD"
+    "sha": "0996756690f07c381a6dd6ec2d4d56c09cd9a672",
+    "branch": "unit-rates-1.0"
   },
   "kite": {
     "sha": "81166ce9735f0bcb11b9e68b74eeed46b6f24da6",
@@ -65,11 +65,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "53b7d00e3b46a5544476efab8fc35eb0348cd5cb",
+    "sha": "5b6ea59f3856d9ce1ec71b783e5b2817d3d46111",
     "branch": "1.0"
-  },
-  "phetmarks": {
-    "branch": "master",
-    "sha": "3a5691551b8be942d4b0534c82e86701882529f9"
   }
 }
