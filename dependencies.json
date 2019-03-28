@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.10-rc.1 Wed Mar 20 2019 20:03:28 GMT-0400 (EDT)",
+  "comment": "# unit-rates 1.0.10-rc.1 Thu Mar 28 2019 12:56:41 GMT-0400 (EDT)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -9,8 +9,8 @@
     "branch": "HEAD"
   },
   "brand": {
-    "sha": "2c043405927351a33e0a6091babb7a22583d50d4",
-    "branch": "HEAD"
+    "sha": "3b689e0de730f0946b356be26a03c8e6b2588014",
+    "branch": "unit-rates-1.0"
   },
   "chipper": {
     "sha": "1bddfe9c693d60280c2d2cd24a6dc6519ea9fdf0",
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "d6872187a93e58da2355d7acef287716e66d6640",
+    "sha": "b153174e1f136e813fdd8f7b20fc682da734b3a1",
     "branch": "1.0"
   }
 }
