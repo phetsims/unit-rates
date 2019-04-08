@@ -11,9 +11,6 @@
   },
   "phet": {
     "requirejsNamespace": "UNIT_RATES",
-    "preload": [
-      "../sherpa/lib/Tween-r12.js"
-    ],
     "phetLibs": [
       "twixt"
     ],
