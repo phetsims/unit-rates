@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.11-rc.1 Thu Apr 18 2019 11:15:31 GMT-0800 (Alaskan Daylight Time)",
+  "comment": "# unit-rates 1.0.11 Wed Apr 24 2019 17:13:35 GMT-0800 (Alaskan Daylight Time)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "a9c4330ab069e1323965f71b9c6fac8a2ecdf859",
+    "sha": "d36415a73f9798b923d94df3299a34e17a8de79f",
     "branch": "1.0"
   }
 }
