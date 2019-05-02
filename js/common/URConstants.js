@@ -45,9 +45,10 @@ define( function( require ) {
       expandCollapseButtonOptions: {
         sideLength: 16,
         touchAreaXDilation: 8,
-        touchAreaYDilation: 8,
-        mouseAreaXDilation: 5,
-        mouseAreaYDilation: 5
+        touchAreaYDilation: 10,
+        touchAreaYShift: -4,
+        mouseAreaXDilation: 4,
+        mouseAreaYDilation: 4
       }
     },
     ACCORDION_BOX_TITLE_FONT: new URFont( 14 ),

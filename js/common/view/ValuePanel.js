@@ -81,7 +81,8 @@ define( function( require ) {
       var expandCollapseButton = new ExpandCollapseButton( options.expandedProperty, {
         sideLength: 15,
         touchAreaXDilation: 8,
-        touchAreaYDilation: 8,
+        touchAreaYDilation: 10,
+        touchAreaYShift: -4,
         mouseAreaXDilation: 5,
         mouseAreaYDilation: 5
       } );

@@ -56,12 +56,6 @@ define( function( require ) {
 
     }, options );
 
-    // prevent overlap with marker editor button
-    options.expandCollapseButtonOptions = _.extend( options.expandCollapseButtonOptions, {
-      touchAreaYDilation: 2,
-      mouseAreaYDilation: 2
-    } );
-
     // title on the accordion box
     assert && assert( !options.titleNode, 'creates its own title node' );
     options.titleNode = new Text( options.titleString, {
