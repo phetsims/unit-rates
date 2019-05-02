@@ -25,9 +25,7 @@ define( function( require ) {
     RectangularPushButton.call( this, _.extend( {
       content: new Image( resetRaceButton, { scale: 0.5 } ),
       xMargin: 12,
-      yMargin: 8,
-      touchAreaXDilation: 0,
-      touchAreaYDilation: 0
+      yMargin: 8
     }, options ) );
   }
 
