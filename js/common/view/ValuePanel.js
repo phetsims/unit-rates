@@ -43,7 +43,6 @@ define( function( require ) {
 
       // title
       titleString: '', // {string} string displayed when the panel is collapsed
-      titleMaxWidth: 100, // i18n, determined empirically
       titleFont: new URFont( 20 ),
       xSpacing: 8,  // space between expand/collapse button and title
 
