@@ -50,7 +50,7 @@ define( function( require ) {
 
     // @public emit is called when the question is answered correctly
     this.correctEmitter = new Emitter( {
-      validators: [ { valueType: ShoppingQuestion } ]
+      parameters: [ { valueType: ShoppingQuestion } ]
     } );
 
     // Notify observers when the question is answered correctly
