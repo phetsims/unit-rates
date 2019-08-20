@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.13 Mon Aug 19 2019 14:52:21 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# unit-rates 1.0.14-rc.1 Tue Aug 20 2019 01:38:18 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -22,7 +22,7 @@
   },
   "joist": {
     "sha": "3e8c30ed7d7c7cc767eda63f4d67e819be75316a",
-    "branch": "unit-rates-1.0"
+    "branch": "HEAD"
   },
   "kite": {
     "sha": "81166ce9735f0bcb11b9e68b74eeed46b6f24da6",
@@ -50,7 +50,7 @@
   },
   "scenery-phet": {
     "sha": "d757c70356febf448bf73c3cab0730318856a275",
-    "branch": "unit-rates-1.0"
+    "branch": "HEAD"
   },
   "sherpa": {
     "sha": "3255de0f1edda165ff360076051a56cd31cd3ea5",
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "97b4cb8b827f4254d2d7ae8e1a09cdf576cb9ad0",
+    "sha": "443cb08807cd75b27970e8ac471bcb0d2e97aeca",
     "branch": "1.0"
   }
 }
