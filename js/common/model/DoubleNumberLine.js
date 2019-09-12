@@ -57,7 +57,7 @@ define( function( require ) {
     this.unitRateProperty = unitRateProperty;
 
     // @public (read-only) {Marker[]} markers must be added/removed via addMarker/removeMarker
-    this.markers = new ObservableArray( [] );
+    this.markers = new ObservableArray();
 
     // @public (read-only) {function(number,number):boolean}
     this.isMajorMarker = options.isMajorMarker;
