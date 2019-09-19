@@ -7,67 +7,67 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
 
   // Fruit strings
-  var applesString = require( 'string!UNIT_RATES/apples' );
-  var appleString = require( 'string!UNIT_RATES/apple' );
-  var lemonsString = require( 'string!UNIT_RATES/lemons' );
-  var lemonString = require( 'string!UNIT_RATES/lemon' );
-  var orangesString = require( 'string!UNIT_RATES/oranges' );
-  var orangeString = require( 'string!UNIT_RATES/orange' );
-  var pearsString = require( 'string!UNIT_RATES/pears' );
-  var pearString = require( 'string!UNIT_RATES/pear' );
+  const applesString = require( 'string!UNIT_RATES/apples' );
+  const appleString = require( 'string!UNIT_RATES/apple' );
+  const lemonsString = require( 'string!UNIT_RATES/lemons' );
+  const lemonString = require( 'string!UNIT_RATES/lemon' );
+  const orangesString = require( 'string!UNIT_RATES/oranges' );
+  const orangeString = require( 'string!UNIT_RATES/orange' );
+  const pearsString = require( 'string!UNIT_RATES/pears' );
+  const pearString = require( 'string!UNIT_RATES/pear' );
 
   // Fruit images
-  var appleBagImage = require( 'image!UNIT_RATES/apple_bag.png' );
-  var appleImage = require( 'image!UNIT_RATES/apple.png' );
-  var lemonBagImage = require( 'image!UNIT_RATES/lemon_bag.png' );
-  var lemonImage = require( 'image!UNIT_RATES/lemon.png' );
-  var orangeBagImage = require( 'image!UNIT_RATES/orange_bag.png' );
-  var orangeImage = require( 'image!UNIT_RATES/orange.png' );
-  var pearBagImage = require( 'image!UNIT_RATES/pear_bag.png' );
-  var pearImage = require( 'image!UNIT_RATES/pear.png' );
+  const appleBagImage = require( 'image!UNIT_RATES/apple_bag.png' );
+  const appleImage = require( 'image!UNIT_RATES/apple.png' );
+  const lemonBagImage = require( 'image!UNIT_RATES/lemon_bag.png' );
+  const lemonImage = require( 'image!UNIT_RATES/lemon.png' );
+  const orangeBagImage = require( 'image!UNIT_RATES/orange_bag.png' );
+  const orangeImage = require( 'image!UNIT_RATES/orange.png' );
+  const pearBagImage = require( 'image!UNIT_RATES/pear_bag.png' );
+  const pearImage = require( 'image!UNIT_RATES/pear.png' );
 
   // Vegetable strings
-  var carrotsString = require( 'string!UNIT_RATES/carrots' );
-  var carrotString = require( 'string!UNIT_RATES/carrot' );
-  var cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
-  var cucumberString = require( 'string!UNIT_RATES/cucumber' );
-  var potatoesString = require( 'string!UNIT_RATES/potatoes' );
-  var potatoString = require( 'string!UNIT_RATES/potato' );
-  var tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
-  var tomatoString = require( 'string!UNIT_RATES/tomato' );
+  const carrotsString = require( 'string!UNIT_RATES/carrots' );
+  const carrotString = require( 'string!UNIT_RATES/carrot' );
+  const cucumbersString = require( 'string!UNIT_RATES/cucumbers' );
+  const cucumberString = require( 'string!UNIT_RATES/cucumber' );
+  const potatoesString = require( 'string!UNIT_RATES/potatoes' );
+  const potatoString = require( 'string!UNIT_RATES/potato' );
+  const tomatoesString = require( 'string!UNIT_RATES/tomatoes' );
+  const tomatoString = require( 'string!UNIT_RATES/tomato' );
 
   // Vegetable images
-  var carrotBagImage = require( 'image!UNIT_RATES/carrot_bag.png' );
-  var carrotImage = require( 'image!UNIT_RATES/carrot.png' );
-  var cucumberBagImage = require( 'image!UNIT_RATES/cucumber_bag.png' );
-  var cucumberImage = require( 'image!UNIT_RATES/cucumber.png' );
-  var potatoBagImage = require( 'image!UNIT_RATES/potato_bag.png' );
-  var potatoImage = require( 'image!UNIT_RATES/potato.png' );
-  var tomatoBagImage = require( 'image!UNIT_RATES/tomato_bag.png' );
-  var tomatoImage = require( 'image!UNIT_RATES/tomato.png' );
+  const carrotBagImage = require( 'image!UNIT_RATES/carrot_bag.png' );
+  const carrotImage = require( 'image!UNIT_RATES/carrot.png' );
+  const cucumberBagImage = require( 'image!UNIT_RATES/cucumber_bag.png' );
+  const cucumberImage = require( 'image!UNIT_RATES/cucumber.png' );
+  const potatoBagImage = require( 'image!UNIT_RATES/potato_bag.png' );
+  const potatoImage = require( 'image!UNIT_RATES/potato.png' );
+  const tomatoBagImage = require( 'image!UNIT_RATES/tomato_bag.png' );
+  const tomatoImage = require( 'image!UNIT_RATES/tomato.png' );
 
   // Candy strings
-  var blueCandyString = require( 'string!UNIT_RATES/blueCandy' );
-  var greenCandyString = require( 'string!UNIT_RATES/greenCandy' );
-  var purpleCandyString = require( 'string!UNIT_RATES/purpleCandy' );
-  var redCandyString = require( 'string!UNIT_RATES/redCandy' );
+  const blueCandyString = require( 'string!UNIT_RATES/blueCandy' );
+  const greenCandyString = require( 'string!UNIT_RATES/greenCandy' );
+  const purpleCandyString = require( 'string!UNIT_RATES/purpleCandy' );
+  const redCandyString = require( 'string!UNIT_RATES/redCandy' );
 
   // Candy images
-  var blueCandyBagImage = require( 'image!UNIT_RATES/blue_candy_bag.png' );
-  var blueCandyImage = require( 'image!UNIT_RATES/blue_candy.png' );
-  var greenCandyBagImage = require( 'image!UNIT_RATES/green_candy_bag.png' );
-  var greenCandyImage = require( 'image!UNIT_RATES/green_candy.png' );
-  var purpleCandyBagImage = require( 'image!UNIT_RATES/purple_candy_bag.png' );
-  var purpleCandyImage = require( 'image!UNIT_RATES/purple_candy.png' );
-  var redCandyBagImage = require( 'image!UNIT_RATES/red_candy_bag.png' );
-  var redCandyImage = require( 'image!UNIT_RATES/red_candy.png' );
+  const blueCandyBagImage = require( 'image!UNIT_RATES/blue_candy_bag.png' );
+  const blueCandyImage = require( 'image!UNIT_RATES/blue_candy.png' );
+  const greenCandyBagImage = require( 'image!UNIT_RATES/green_candy_bag.png' );
+  const greenCandyImage = require( 'image!UNIT_RATES/green_candy.png' );
+  const purpleCandyBagImage = require( 'image!UNIT_RATES/purple_candy_bag.png' );
+  const purpleCandyImage = require( 'image!UNIT_RATES/purple_candy.png' );
+  const redCandyBagImage = require( 'image!UNIT_RATES/red_candy_bag.png' );
+  const redCandyImage = require( 'image!UNIT_RATES/red_candy.png' );
 
   var ShoppingItemData = {
 

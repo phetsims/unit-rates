@@ -5,21 +5,21 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
-  var Util = require( 'DOT/Util' );
-  var ValueNode = require( 'UNIT_RATES/common/view/ValueNode' );
-  var ValuePanel = require( 'UNIT_RATES/common/view/ValuePanel' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
+  const Util = require( 'DOT/Util' );
+  const ValueNode = require( 'UNIT_RATES/common/view/ValueNode' );
+  const ValuePanel = require( 'UNIT_RATES/common/view/ValuePanel' );
 
   // strings
-  var hoursString = require( 'string!UNIT_RATES/hours' );
-  var pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
+  const hoursString = require( 'string!UNIT_RATES/hours' );
+  const pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
 
   // constants
   var TIMER_FONT = new URFont( 16 );

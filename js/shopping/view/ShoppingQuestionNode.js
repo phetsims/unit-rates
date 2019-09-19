@@ -7,24 +7,24 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var DownUpListener = require( 'SCENERY/input/DownUpListener' );
-  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
-  var URUtils = require( 'UNIT_RATES/common/URUtils' );
+  const DownUpListener = require( 'SCENERY/input/DownUpListener' );
+  const FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
+  const HStrut = require( 'SCENERY/nodes/HStrut' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URColors = require( 'UNIT_RATES/common/URColors' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
+  const URUtils = require( 'UNIT_RATES/common/URUtils' );
 
   /**
    * @param {ShoppingQuestion} question - model element for the question

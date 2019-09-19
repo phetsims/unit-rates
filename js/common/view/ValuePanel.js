@@ -10,18 +10,18 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
+  const ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Panel = require( 'SUN/Panel' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
 
   // constants
   var BACKGROUND_RECTANGLE_STROKE = ( phet.chipper.queryParameters.dev ? 'red' : null );

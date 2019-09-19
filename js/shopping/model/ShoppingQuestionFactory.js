@@ -5,22 +5,22 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ShoppingQuestion = require( 'UNIT_RATES/shopping/model/ShoppingQuestion' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URUtils = require( 'UNIT_RATES/common/URUtils' );
-  var Util = require( 'DOT/Util' );
+  const ShoppingQuestion = require( 'UNIT_RATES/shopping/model/ShoppingQuestion' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URUtils = require( 'UNIT_RATES/common/URUtils' );
+  const Util = require( 'DOT/Util' );
 
   // strings
-  var pattern0CostString = require( 'string!UNIT_RATES/pattern_0cost' );
-  var pattern0Items1CostString = require( 'string!UNIT_RATES/pattern_0items_1cost' );
-  var pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
-  var patternCostOf0Quantity1UnitsString = require( 'string!UNIT_RATES/pattern_costOf_0quantity_1units' );
-  var unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
+  const pattern0CostString = require( 'string!UNIT_RATES/pattern_0cost' );
+  const pattern0Items1CostString = require( 'string!UNIT_RATES/pattern_0items_1cost' );
+  const pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
+  const patternCostOf0Quantity1UnitsString = require( 'string!UNIT_RATES/pattern_costOf_0quantity_1units' );
+  const unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
 
   var ShoppingQuestionFactory = {
 

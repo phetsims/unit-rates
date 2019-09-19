@@ -5,13 +5,13 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Range = require( 'DOT/Range' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
+  const Range = require( 'DOT/Range' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
 
   var URConstants = {
 

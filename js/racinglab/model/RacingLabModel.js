@@ -5,20 +5,20 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var RaceCar = require( 'UNIT_RATES/racinglab/model/RaceCar' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const RaceCar = require( 'UNIT_RATES/racinglab/model/RaceCar' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URColors = require( 'UNIT_RATES/common/URColors' );
 
   // images
-  var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
-  var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
+  const blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
+  const redCarImage = require( 'image!UNIT_RATES/red_car.png' );
 
   /**
    * @constructor

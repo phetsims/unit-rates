@@ -10,29 +10,29 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AccordionBox = require( 'SUN/AccordionBox' );
-  var Animation = require( 'TWIXT/Animation' );
-  var DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
-  var Easing = require( 'TWIXT/Easing' );
-  var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
-  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Marker = require( 'UNIT_RATES/common/model/Marker' );
-  var MarkerEditorNode = require( 'UNIT_RATES/common/view/MarkerEditorNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const AccordionBox = require( 'SUN/AccordionBox' );
+  const Animation = require( 'TWIXT/Animation' );
+  const DoubleNumberLineNode = require( 'UNIT_RATES/common/view/DoubleNumberLineNode' );
+  const Easing = require( 'TWIXT/Easing' );
+  const EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
+  const FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Marker = require( 'UNIT_RATES/common/model/Marker' );
+  const MarkerEditorNode = require( 'UNIT_RATES/common/view/MarkerEditorNode' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URColors = require( 'UNIT_RATES/common/URColors' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // strings
-  var doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
+  const doubleNumberLineString = require( 'string!UNIT_RATES/doubleNumberLine' );
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine

@@ -11,15 +11,15 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @param {Object} [options]

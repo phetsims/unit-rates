@@ -5,11 +5,11 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // sim modules
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
 
   var URQueryParameters = QueryStringMachine.getAll( {
 

@@ -5,14 +5,14 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ShoppingLabCategoryNode = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabCategoryNode' );
-  var ShoppingScreenView = require( 'UNIT_RATES/shopping/view/ShoppingScreenView' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ShoppingLabCategoryNode = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabCategoryNode' );
+  const ShoppingScreenView = require( 'UNIT_RATES/shopping/view/ShoppingScreenView' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {ShoppingLabModel} model

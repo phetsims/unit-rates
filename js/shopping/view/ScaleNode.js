@@ -6,30 +6,30 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var CostNode = require( 'UNIT_RATES/shopping/view/CostNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var LinearGradient = require( 'SCENERY/util/LinearGradient' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Shape = require( 'KITE/Shape' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
-  var URUtils = require( 'UNIT_RATES/common/URUtils' );
-  var ValueNode = require( 'UNIT_RATES/common/view/ValueNode' );
-  var ValuePanel = require( 'UNIT_RATES/common/view/ValuePanel' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
+  const CostNode = require( 'UNIT_RATES/shopping/view/CostNode' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const LinearGradient = require( 'SCENERY/util/LinearGradient' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Shape = require( 'KITE/Shape' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URColors = require( 'UNIT_RATES/common/URColors' );
+  const URUtils = require( 'UNIT_RATES/common/URUtils' );
+  const ValueNode = require( 'UNIT_RATES/common/view/ValueNode' );
+  const ValuePanel = require( 'UNIT_RATES/common/view/ValuePanel' );
 
   // strings
-  var costString = require( 'string!UNIT_RATES/cost' );
-  var pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
+  const costString = require( 'string!UNIT_RATES/cost' );
+  const pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
 
   // constants
   var PANEL_WIDTH = 132;

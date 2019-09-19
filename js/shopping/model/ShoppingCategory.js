@@ -5,14 +5,14 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {HTMLImageElement} image - image used to represent the category

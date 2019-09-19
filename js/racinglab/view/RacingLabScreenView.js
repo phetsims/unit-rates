@@ -5,33 +5,33 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Property = require( 'AXON/Property' );
-  var RaceCarRateAccordionBox = require( 'UNIT_RATES/racinglab/view/RaceCarRateAccordionBox' );
-  var RaceTrackNode = require( 'UNIT_RATES/racinglab/view/RaceTrackNode' );
-  var RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
-  var RacingLabViewProperties = require( 'UNIT_RATES/racinglab/view/RacingLabViewProperties' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var ResetRaceButton = require( 'UNIT_RATES/racinglab/view/ResetRaceButton' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var StartStopButton = require( 'UNIT_RATES/racinglab/view/StartStopButton' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Property = require( 'AXON/Property' );
+  const RaceCarRateAccordionBox = require( 'UNIT_RATES/racinglab/view/RaceCarRateAccordionBox' );
+  const RaceTrackNode = require( 'UNIT_RATES/racinglab/view/RaceTrackNode' );
+  const RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
+  const RacingLabViewProperties = require( 'UNIT_RATES/racinglab/view/RacingLabViewProperties' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const ResetRaceButton = require( 'UNIT_RATES/racinglab/view/ResetRaceButton' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const StartStopButton = require( 'UNIT_RATES/racinglab/view/StartStopButton' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   // strings
-  var doubleNumberLine1String = require( 'string!UNIT_RATES/doubleNumberLine1' );
-  var doubleNumberLine2String = require( 'string!UNIT_RATES/doubleNumberLine2' );
-  var rate1String = require( 'string!UNIT_RATES/rate1' );
-  var rate2String = require( 'string!UNIT_RATES/rate2' );
-  var timer1String = require( 'string!UNIT_RATES/timer1' );
-  var timer2String = require( 'string!UNIT_RATES/timer2' );
+  const doubleNumberLine1String = require( 'string!UNIT_RATES/doubleNumberLine1' );
+  const doubleNumberLine2String = require( 'string!UNIT_RATES/doubleNumberLine2' );
+  const rate1String = require( 'string!UNIT_RATES/rate1' );
+  const rate2String = require( 'string!UNIT_RATES/rate2' );
+  const timer1String = require( 'string!UNIT_RATES/timer1' );
+  const timer2String = require( 'string!UNIT_RATES/timer2' );
 
   // constants
   var BUTTON_X_SPACE = 20; // space between buttons

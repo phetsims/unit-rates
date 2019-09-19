@@ -6,14 +6,14 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
 
   /**
    * @param {Property.<number>} valueProperty

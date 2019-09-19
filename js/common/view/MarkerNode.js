@@ -5,18 +5,18 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
-  var URUtils = require( 'UNIT_RATES/common/URUtils' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
+  const URUtils = require( 'UNIT_RATES/common/URUtils' );
 
   // constants
   var SHARED_OPTIONS = {

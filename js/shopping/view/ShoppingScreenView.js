@@ -5,20 +5,20 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var ShoppingCategoryNode = require( 'UNIT_RATES/shopping/view/ShoppingCategoryNode' );
-  var ShoppingCategoryRadioButtons = require( 'UNIT_RATES/shopping/view/ShoppingCategoryRadioButtons' );
-  var ShoppingViewProperties = require( 'UNIT_RATES/shopping/view/ShoppingViewProperties' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const ShoppingCategoryNode = require( 'UNIT_RATES/shopping/view/ShoppingCategoryNode' );
+  const ShoppingCategoryRadioButtons = require( 'UNIT_RATES/shopping/view/ShoppingCategoryRadioButtons' );
+  const ShoppingViewProperties = require( 'UNIT_RATES/shopping/view/ShoppingViewProperties' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   /**
    * @param {ShoppingModel} model

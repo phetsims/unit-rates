@@ -5,19 +5,19 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
 
   // strings
-  var hoursString = require( 'string!UNIT_RATES/hours' );
-  var milesString = require( 'string!UNIT_RATES/miles' );
+  const hoursString = require( 'string!UNIT_RATES/hours' );
+  const milesString = require( 'string!UNIT_RATES/miles' );
 
   /**
    * @param {RaceCar} car

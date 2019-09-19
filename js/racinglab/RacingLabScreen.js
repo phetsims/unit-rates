@@ -6,24 +6,24 @@
  * @author Dave Schmitz (Schmitzware)
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var RacingLabModel = require( 'UNIT_RATES/racinglab/model/RacingLabModel' );
-  var RacingLabScreenView = require( 'UNIT_RATES/racinglab/view/RacingLabScreenView' );
-  var Screen = require( 'JOIST/Screen' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const RacingLabModel = require( 'UNIT_RATES/racinglab/model/RacingLabModel' );
+  const RacingLabScreenView = require( 'UNIT_RATES/racinglab/view/RacingLabScreenView' );
+  const Screen = require( 'JOIST/Screen' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URColors = require( 'UNIT_RATES/common/URColors' );
 
   // images
-  var screenIcon = require( 'image!UNIT_RATES/racing_lab_screen_icon.png' );
+  const screenIcon = require( 'image!UNIT_RATES/racing_lab_screen_icon.png' );
 
   // strings
-  var screenRacingLabString = require( 'string!UNIT_RATES/screen.racingLab' );
+  const screenRacingLabString = require( 'string!UNIT_RATES/screen.racingLab' );
 
   /**
    * @param {Object} options

@@ -10,36 +10,36 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Marker = require( 'UNIT_RATES/common/model/Marker' );
-  var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var Rate = require( 'UNIT_RATES/common/model/Rate' );
-  var Scale = require( 'UNIT_RATES/shopping/model/Scale' );
-  var Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
-  var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
-  var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
-  var ShoppingQuestionFactory = require( 'UNIT_RATES/shopping/model/ShoppingQuestionFactory' );
-  var SunConstants = require( 'SUN/SunConstants' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
-  var Util = require( 'DOT/Util' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const Bag = require( 'UNIT_RATES/shopping/model/Bag' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Marker = require( 'UNIT_RATES/common/model/Marker' );
+  const MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const Rate = require( 'UNIT_RATES/common/model/Rate' );
+  const Scale = require( 'UNIT_RATES/shopping/model/Scale' );
+  const Shelf = require( 'UNIT_RATES/shopping/model/Shelf' );
+  const ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
+  const ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
+  const ShoppingQuestionFactory = require( 'UNIT_RATES/shopping/model/ShoppingQuestionFactory' );
+  const SunConstants = require( 'SUN/SunConstants' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URColors = require( 'UNIT_RATES/common/URColors' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  const Util = require( 'DOT/Util' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // strings
-  var dollarsString = require( 'string!UNIT_RATES/dollars' );
-  var pattern0CostString = require( 'string!UNIT_RATES/pattern_0cost' );
+  const dollarsString = require( 'string!UNIT_RATES/dollars' );
+  const pattern0CostString = require( 'string!UNIT_RATES/pattern_0cost' );
   
   // constants
   var SHARED_OPTIONS = {

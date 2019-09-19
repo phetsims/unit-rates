@@ -5,18 +5,18 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var StopSignNode = require( 'SCENERY_PHET/StopSignNode' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  const BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const StopSignNode = require( 'SCENERY_PHET/StopSignNode' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
-  var goButtonIconImage = require( 'image!UNIT_RATES/go_button_icon.png' );
+  const goButtonIconImage = require( 'image!UNIT_RATES/go_button_icon.png' );
 
   /**
    * @param {Property.<boolean>} runningProperty

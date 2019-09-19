@@ -7,14 +7,14 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Util = require( 'DOT/Util' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const Util = require( 'DOT/Util' );
 
   /**
    * @param {Property.<boolean>} unitRateProperty

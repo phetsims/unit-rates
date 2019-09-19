@@ -5,14 +5,14 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
-  var ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
+  const ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {Object} itemData - data structure that describes a type of vegetable, see ShoppingItemData

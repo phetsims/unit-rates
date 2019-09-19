@@ -5,14 +5,14 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var SunConstants = require( 'SUN/SunConstants' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Util = require( 'DOT/Util' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const SunConstants = require( 'SUN/SunConstants' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const Util = require( 'DOT/Util' );
 
   // All functions are @public unless otherwise noted.
   var URUtils = {

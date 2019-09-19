@@ -5,15 +5,15 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Emitter = require( 'AXON/Emitter' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var SunConstants = require( 'SUN/SunConstants' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  const Emitter = require( 'AXON/Emitter' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const SunConstants = require( 'SUN/SunConstants' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {string} questionString - the question string to be displayed

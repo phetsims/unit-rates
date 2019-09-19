@@ -6,25 +6,25 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
-  var Panel = require( 'SUN/Panel' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var StringProperty = require( 'AXON/StringProperty' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
+  const Panel = require( 'SUN/Panel' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const StringProperty = require( 'AXON/StringProperty' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URColors = require( 'UNIT_RATES/common/URColors' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var enterString = require( 'string!UNIT_RATES/enter' );
+  const enterString = require( 'string!UNIT_RATES/enter' );
 
   // constants
   var DECIMAL_POINT = NumberKeypad.DECIMAL_POINT;

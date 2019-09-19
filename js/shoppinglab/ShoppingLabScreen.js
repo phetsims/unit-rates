@@ -6,24 +6,24 @@
  * @author Dave Schmitz (Schmitzware)
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
-  var ShoppingLabModel = require( 'UNIT_RATES/shoppinglab/model/ShoppingLabModel' );
-  var ShoppingLabScreenView = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabScreenView' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const Screen = require( 'JOIST/Screen' );
+  const ShoppingLabModel = require( 'UNIT_RATES/shoppinglab/model/ShoppingLabModel' );
+  const ShoppingLabScreenView = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabScreenView' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URColors = require( 'UNIT_RATES/common/URColors' );
 
   // images
-  var screenIcon = require( 'image!UNIT_RATES/shopping_lab_screen_icon.png' );
+  const screenIcon = require( 'image!UNIT_RATES/shopping_lab_screen_icon.png' );
 
   // strings
-  var screenShoppingLabString = require( 'string!UNIT_RATES/screen.shoppingLab' );
+  const screenShoppingLabString = require( 'string!UNIT_RATES/screen.shoppingLab' );
 
   /**
    * @param {Object} options

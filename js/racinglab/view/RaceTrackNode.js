@@ -11,34 +11,34 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var LinearFunction = require( 'DOT/LinearFunction' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var RaceTimerNode = require( 'UNIT_RATES/racinglab/view/RaceTimerNode' );
-  var Shape = require( 'KITE/Shape' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
-  var Util = require( 'DOT/Util' );
+  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const LinearFunction = require( 'DOT/LinearFunction' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const RaceTimerNode = require( 'UNIT_RATES/racinglab/view/RaceTimerNode' );
+  const Shape = require( 'KITE/Shape' );
+  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
+  const Util = require( 'DOT/Util' );
 
   // images
-  var finishFlagImage = require( 'image!UNIT_RATES/finish_flag.png' );
-  var startFlagImage = require( 'image!UNIT_RATES/start_flag.png' );
+  const finishFlagImage = require( 'image!UNIT_RATES/finish_flag.png' );
+  const startFlagImage = require( 'image!UNIT_RATES/start_flag.png' );
 
   // strings
-  var milesString = require( 'string!UNIT_RATES/miles' );
-  var pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
+  const milesString = require( 'string!UNIT_RATES/miles' );
+  const pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
 
   // constants
   var NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates

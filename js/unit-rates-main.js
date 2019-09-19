@@ -6,18 +6,18 @@
  * @author Dave Schmitz (Schmitzware)
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var RacingLabScreen = require( 'UNIT_RATES/racinglab/RacingLabScreen' );
-  var ShoppingLabScreen = require( 'UNIT_RATES/shoppinglab/ShoppingLabScreen' );
-  var ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
-  var Sim = require( 'JOIST/Sim' );
-  var SimLauncher = require( 'JOIST/SimLauncher' );
+  const RacingLabScreen = require( 'UNIT_RATES/racinglab/RacingLabScreen' );
+  const ShoppingLabScreen = require( 'UNIT_RATES/shoppinglab/ShoppingLabScreen' );
+  const ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
+  const Sim = require( 'JOIST/Sim' );
+  const SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
-  var unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );
+  const unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );
 
   var simOptions = {
     credits: {

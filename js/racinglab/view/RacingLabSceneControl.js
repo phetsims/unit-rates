@@ -5,19 +5,19 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // images
-  var blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
-  var redCarImage = require( 'image!UNIT_RATES/red_car.png' );
+  const blueCarImage = require( 'image!UNIT_RATES/blue_car.png' );
+  const redCarImage = require( 'image!UNIT_RATES/red_car.png' );
 
   /**
    * @param {Property.<boolean>} car2VisibleProperty - is car2 visible?

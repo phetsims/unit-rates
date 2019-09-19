@@ -6,22 +6,22 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Range = require( 'DOT/Range' );
-  var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
-  var ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URUtils = require( 'UNIT_RATES/common/URUtils' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Range = require( 'DOT/Range' );
+  const ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
+  const ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URUtils = require( 'UNIT_RATES/common/URUtils' );
 
   // strings
-  var lbsString = require( 'string!UNIT_RATES/lbs' );
-  var poundsCapitalizedString = require( 'string!UNIT_RATES/poundsCapitalized' );
-  var poundsString = require( 'string!UNIT_RATES/pounds' );
-  var poundString = require( 'string!UNIT_RATES/pound' );
+  const lbsString = require( 'string!UNIT_RATES/lbs' );
+  const poundsCapitalizedString = require( 'string!UNIT_RATES/poundsCapitalized' );
+  const poundsString = require( 'string!UNIT_RATES/pounds' );
+  const poundString = require( 'string!UNIT_RATES/pound' );
 
   /**
    * @param {Object} itemData - data structure that describes a type of candy, see ShoppingItemData

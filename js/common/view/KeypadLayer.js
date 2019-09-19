@@ -5,15 +5,15 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var DownUpListener = require( 'SCENERY/input/DownUpListener' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadPanel = require( 'UNIT_RATES/common/view/KeypadPanel' );
-  var Plane = require( 'SCENERY/nodes/Plane' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  const DownUpListener = require( 'SCENERY/input/DownUpListener' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const KeypadPanel = require( 'UNIT_RATES/common/view/KeypadPanel' );
+  const Plane = require( 'SCENERY/nodes/Plane' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {Object} [options]

@@ -13,17 +13,17 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URUtils = require( 'UNIT_RATES/common/URUtils' );
-  var Util = require( 'DOT/Util' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const Fraction = require( 'PHETCOMMON/model/Fraction' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URUtils = require( 'UNIT_RATES/common/URUtils' );
+  const Util = require( 'DOT/Util' );
 
   /**
    * @param {number} numerator - the rate's numerator, must be an integer

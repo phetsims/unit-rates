@@ -6,18 +6,18 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Bag = require( 'UNIT_RATES/shopping/model/Bag' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var RowOfMovables = require( 'UNIT_RATES/shopping/model/RowOfMovables' );
-  var ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const Bag = require( 'UNIT_RATES/shopping/model/Bag' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const RowOfMovables = require( 'UNIT_RATES/shopping/model/RowOfMovables' );
+  const ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @param {Object} [options]

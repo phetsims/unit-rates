@@ -5,17 +5,17 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
 
   // images
-  var resetRaceButton = require( 'image!UNIT_RATES/reset_race_button.png' );
+  const resetRaceButton = require( 'image!UNIT_RATES/reset_race_button.png' );
 
   /**
    * @param {Object} [options]

@@ -5,17 +5,17 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var Util = require( 'DOT/Util' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ObservableArray = require( 'AXON/ObservableArray' );
+  const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const Util = require( 'DOT/Util' );
 
   // constants
   var FIXED_AXIS_VALUES = [ 'numerator', 'denominator' ];

@@ -6,22 +6,22 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AccordionBox = require( 'SUN/AccordionBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
-  var ShoppingQuestionNode = require( 'UNIT_RATES/shopping/view/ShoppingQuestionNode' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const AccordionBox = require( 'SUN/AccordionBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
+  const ShoppingQuestionNode = require( 'UNIT_RATES/shopping/view/ShoppingQuestionNode' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URColors = require( 'UNIT_RATES/common/URColors' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var questionsString = require( 'string!UNIT_RATES/questions' );
+  const questionsString = require( 'string!UNIT_RATES/questions' );
 
   /**
    * @param {ShoppingScene} shoppingScene

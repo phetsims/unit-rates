@@ -5,23 +5,23 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BagNode = require( 'UNIT_RATES/shopping/view/BagNode' );
-  var DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
-  var RowOfMovablesNode = require( 'UNIT_RATES/shopping/view/RowOfMovablesNode' );
-  var ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
-  var ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
-  var ShoppingItemNode = require( 'UNIT_RATES/shopping/view/ShoppingItemNode' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URColors = require( 'UNIT_RATES/common/URColors' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  const BagNode = require( 'UNIT_RATES/shopping/view/BagNode' );
+  const DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
+  const RowOfMovablesNode = require( 'UNIT_RATES/shopping/view/RowOfMovablesNode' );
+  const ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
+  const ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
+  const ShoppingItemNode = require( 'UNIT_RATES/shopping/view/ShoppingItemNode' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URColors = require( 'UNIT_RATES/common/URColors' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
 
   /**
    * @param {ShoppingScene} shoppingScene

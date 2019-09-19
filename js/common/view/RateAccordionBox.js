@@ -5,24 +5,24 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AccordionBox = require( 'SUN/AccordionBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
+  const AccordionBox = require( 'SUN/AccordionBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
+  const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
 
   // strings
-  var rateString = require( 'string!UNIT_RATES/rate' );
+  const rateString = require( 'string!UNIT_RATES/rate' );
 
   // If the Rate accordion box appears to change size when switching categories, increase this value. Determined empirically.
   var MIN_FRACTION_LINE_LENGTH = 115;

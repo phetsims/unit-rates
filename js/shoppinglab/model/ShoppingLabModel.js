@@ -5,24 +5,24 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var CandyScene = require( 'UNIT_RATES/shopping/model/CandyScene' );
-  var FruitScene = require( 'UNIT_RATES/shopping/model/FruitScene' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Rate = require( 'UNIT_RATES/common/model/Rate' );
-  var ShoppingCategory = require( 'UNIT_RATES/shopping/model/ShoppingCategory' );
-  var ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
-  var ShoppingModel = require( 'UNIT_RATES/shopping/model/ShoppingModel' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var VegetableScene = require( 'UNIT_RATES/shopping/model/VegetableScene' );
+  const CandyScene = require( 'UNIT_RATES/shopping/model/CandyScene' );
+  const FruitScene = require( 'UNIT_RATES/shopping/model/FruitScene' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Rate = require( 'UNIT_RATES/common/model/Rate' );
+  const ShoppingCategory = require( 'UNIT_RATES/shopping/model/ShoppingCategory' );
+  const ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
+  const ShoppingModel = require( 'UNIT_RATES/shopping/model/ShoppingModel' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const VegetableScene = require( 'UNIT_RATES/shopping/model/VegetableScene' );
 
   // images
-  var appleImage = require( 'image!UNIT_RATES/apple.png' );
-  var carrotImage = require( 'image!UNIT_RATES/carrot.png' );
-  var purpleCandyImage = require( 'image!UNIT_RATES/purple_candy.png' );
+  const appleImage = require( 'image!UNIT_RATES/apple.png' );
+  const carrotImage = require( 'image!UNIT_RATES/carrot.png' );
+  const purpleCandyImage = require( 'image!UNIT_RATES/purple_candy.png' );
 
   /**
    * @constructor

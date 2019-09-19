@@ -5,13 +5,13 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {ShoppingItemNode} itemNode

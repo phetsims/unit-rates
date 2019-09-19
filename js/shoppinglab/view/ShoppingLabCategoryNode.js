@@ -6,14 +6,14 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ShoppingLabSceneNode = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabSceneNode' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const ShoppingLabSceneNode = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabSceneNode' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
 
   /**
    * @param {ShoppingCategory} category

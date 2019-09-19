@@ -5,16 +5,16 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ShoppingSceneComboBox = require( 'UNIT_RATES/shopping/view/ShoppingSceneComboBox' );
-  var ShoppingSceneNode = require( 'UNIT_RATES/shopping/view/ShoppingSceneNode' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URConstants = require( 'UNIT_RATES/common/URConstants' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const ShoppingSceneComboBox = require( 'UNIT_RATES/shopping/view/ShoppingSceneComboBox' );
+  const ShoppingSceneNode = require( 'UNIT_RATES/shopping/view/ShoppingSceneNode' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URConstants = require( 'UNIT_RATES/common/URConstants' );
 
   /**
    * @param {ShoppingCategory} category

@@ -9,20 +9,20 @@
  * - If 3rd decimal is not displayed, it still takes up space, so that cost value doesn't shift around
  * - Cost is truncated (not rounded) to 3 decimals (e.g. $1.2349 becomes $1.234)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URFont = require( 'UNIT_RATES/common/URFont' );
-  var URUtils = require( 'UNIT_RATES/common/URUtils' );
-  var Util = require( 'DOT/Util' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URFont = require( 'UNIT_RATES/common/URFont' );
+  const URUtils = require( 'UNIT_RATES/common/URUtils' );
+  const Util = require( 'DOT/Util' );
 
   // strings
-  var dollarSignString = require( 'string!UNIT_RATES/dollarSign' );
+  const dollarSignString = require( 'string!UNIT_RATES/dollarSign' );
 
   /**
    * @param {Property.<number>} costProperty

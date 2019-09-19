@@ -5,26 +5,26 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Marker = require( 'UNIT_RATES/common/model/Marker' );
-  var MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
-  var Range = require( 'DOT/Range' );
-  var Rate = require( 'UNIT_RATES/common/model/Rate' );
-  var unitRates = require( 'UNIT_RATES/unitRates' );
-  var URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
-  var Util = require( 'DOT/Util' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Marker = require( 'UNIT_RATES/common/model/Marker' );
+  const MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
+  const Range = require( 'DOT/Range' );
+  const Rate = require( 'UNIT_RATES/common/model/Rate' );
+  const unitRates = require( 'UNIT_RATES/unitRates' );
+  const URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+  const Util = require( 'DOT/Util' );
 
   // strings
-  var hoursString = require( 'string!UNIT_RATES/hours' );
-  var milesString = require( 'string!UNIT_RATES/miles' );
+  const hoursString = require( 'string!UNIT_RATES/hours' );
+  const milesString = require( 'string!UNIT_RATES/miles' );
 
   /**
    * @param {HTMLImageElement} image
