@@ -26,7 +26,7 @@ define( require => {
    */
   function ShoppingItemNode( item, shelf, scale, frontItemLayer, backItemLayer, dragLayer ) {
 
-    var self = this;
+    const self = this;
 
     // This type does not propagate options to the supertype because the model determines location.
     Image.call( this, item.image, {
@@ -35,13 +35,13 @@ define( require => {
     } );
 
     // origin is at bottom center
-    var locationObserver = function( location ) {
+    const locationObserver = function( location ) {
       self.centerX = location.x;
       self.bottom = location.y;
     };
     item.locationProperty.link( locationObserver ); // unlink in dispose
 
-    var visibleObserver = function( visible ) {
+    const visibleObserver = function( visible ) {
       self.visible = visible;
       if ( visible ) {
         self.getParent() && self.getParent().removeChild( self );
@@ -57,7 +57,7 @@ define( require => {
     };
     item.visibleProperty.link( visibleObserver ); // unlink in dispose
 
-    var dragHandler = new ShoppingItemDragHandler( this, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer );
+    const dragHandler = new ShoppingItemDragHandler( this, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer );
     this.addInputListener( dragHandler );
 
     // @private

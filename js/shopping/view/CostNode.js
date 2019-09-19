@@ -41,19 +41,19 @@ define( require => {
 
     // dollar sign (or other currency symbol)
     // always to the left of the value on the scale, see https://github.com/phetsims/unit-rates/issues/176
-    var dollarSignNode = new Text( dollarSignString, {
+    const dollarSignNode = new Text( dollarSignString, {
       font: options.font
     } );
     this.addChild( dollarSignNode );
 
     // the primary part of the value, without the extra decimal place
-    var primaryNode = new Text( '', {
+    const primaryNode = new Text( '', {
       font: options.font
     } );
     this.addChild( primaryNode );
 
     // the extra decimal place
-    var extraDecimalNode = new Text( '', {
+    const extraDecimalNode = new Text( '', {
       font: options.font,
       fill: options.extraDecimalColor
     } );
@@ -62,29 +62,29 @@ define( require => {
     }
 
     // When cost changes, update the displayed value
-    var costObserver = function( cost ) {
+    const costObserver = function( cost ) {
 
       assert && assert( cost >= 0, 'negative cost not supported: ' + cost );
 
-      var visibleDecimalPlaces = 3;
+      const visibleDecimalPlaces = 3;
 
       // First round to a large number of decimal places, in an attempt to identify floating point error.
       // For example, Javascript computes 3 * 0.4 as 1.2000000000000002.
       // This determines whether the cost has relevant non-zero decimal places,
       // and therefore whether the extra decimal place should be visible.
       // See https://github.com/phetsims/unit-rates/issues/202
-      var costRounded = Util.toFixedNumber( cost, 10 );
+      const costRounded = Util.toFixedNumber( cost, 10 );
       extraDecimalNode.visible = ( URUtils.decimalPlaces( costRounded ) >= visibleDecimalPlaces );
 
       if ( options.extraDecimalVisible && extraDecimalNode.visible ) {
 
         // Truncate to the number of decimal places that we're interested in.
         // This determines the cost value that is displayed.
-        var powerOfTen = Math.pow( 10, visibleDecimalPlaces );
-        var costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
+        const powerOfTen = Math.pow( 10, visibleDecimalPlaces );
+        const costTruncated = Math.floor( cost * powerOfTen ) / powerOfTen;
 
         // convert to string, then pick it apart
-        var costString = URUtils.numberToString( costTruncated, visibleDecimalPlaces, false /* trimZeros */ );
+        const costString = URUtils.numberToString( costTruncated, visibleDecimalPlaces, false /* trimZeros */ );
         primaryNode.text = costString.substring( 0, costString.length - 1 );
         extraDecimalNode.text = costString.substring( costString.length - 1, costString.length );
       }

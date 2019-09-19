@@ -31,7 +31,7 @@ define( require => {
    */
   function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
@@ -52,16 +52,16 @@ define( require => {
     }, options );
 
     // 'Unit Rate?' question, dispose required
-    var unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, this, keypadLayer, {
+    const unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, this, keypadLayer, {
       denominatorVisible: true
     } );
 
     // Below the 'Unit Rate?' question is a set of questions that change when the refresh button is pressed.
-    var questionsParent = new VBox( {
+    const questionsParent = new VBox( {
       align: 'right',
       spacing: options.vBoxSpacing
     } );
-    var questionSetObserver = function( questionSet ) {
+    const questionSetObserver = function( questionSet ) {
 
       // remove previous questions
       questionsParent.getChildren().forEach( function( child ) {
@@ -71,8 +71,8 @@ define( require => {
       questionsParent.removeAllChildren();
 
       // add new questions, dispose required
-      var questionNodes = [];
-      for ( var i = 0; i < questionSet.length; i++ ) {
+      const questionNodes = [];
+      for ( let i = 0; i < questionSet.length; i++ ) {
         questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], self, keypadLayer ) );
       }
       questionsParent.setChildren( questionNodes );
@@ -80,7 +80,7 @@ define( require => {
     shoppingScene.questionSetProperty.link( questionSetObserver ); // unlink in dispose
 
     // Refresh button, advances to the next question set
-    var refreshButton = new RefreshButton( {
+    const refreshButton = new RefreshButton( {
       iconScale: 0.36,
       xMargin: 10,
       yMargin: 5,
@@ -92,7 +92,7 @@ define( require => {
     refreshButton.touchArea = refreshButton.localBounds.dilatedXY( 5, 5 );
 
     // AccordionBox content
-    var contentNode = new VBox( {
+    const contentNode = new VBox( {
       spacing: 0, // no space here, we want refreshButton snug against bottom question
       align: 'left',
       children: [

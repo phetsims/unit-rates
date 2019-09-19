@@ -34,7 +34,7 @@ define( require => {
     }, options );
 
     // describe a radio button for each category
-    var contentArray = [];
+    const contentArray = [];
     categories.forEach( function( category ) {
       contentArray.push( {
         value: category,

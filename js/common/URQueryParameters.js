@@ -11,7 +11,7 @@ define( require => {
   // sim modules
   const unitRates = require( 'UNIT_RATES/unitRates' );
 
-  var URQueryParameters = QueryStringMachine.getAll( {
+  const URQueryParameters = QueryStringMachine.getAll( {
 
     // Enables random selection of scenes and questions in Shopping and Shopping Lab screens
     randomEnabled: {

@@ -24,7 +24,7 @@ define( require => {
   const URFont = require( 'UNIT_RATES/common/URFont' );
 
   // constants
-  var BACKGROUND_RECTANGLE_STROKE = ( phet.chipper.queryParameters.dev ? 'red' : null );
+  const BACKGROUND_RECTANGLE_STROKE = ( phet.chipper.queryParameters.dev ? 'red' : null );
 
   /**
    * @param {Node} valueNode
@@ -53,17 +53,17 @@ define( require => {
 
     }, options );
 
-    var contentNode = new Node();
+    const contentNode = new Node();
     contentNode.addChild( valueNode );
 
     // width of panel content
-    var contentWidth = options.panelWidth - ( 2 * options.xMargin );
-    var minContentHeight = Math.max( 0, options.panelMinHeight - ( 2 * options.yMargin ) );
+    const contentWidth = options.panelWidth - ( 2 * options.xMargin );
+    const minContentHeight = Math.max( 0, options.panelMinHeight - ( 2 * options.yMargin ) );
 
     // invisible rectangle whose size is equivalent to the size of the panel's content, used for right justifying valueNode
-    var backgroundNode = null; // assigned below
+    let backgroundNode = null; // assigned below
 
-    var contentHeight = 0; // computed below
+    let contentHeight = 0; // computed below
     if ( !options.expandedProperty ) {
 
       // limit valueNode width
@@ -88,10 +88,10 @@ define( require => {
       contentNode.addChild( expandCollapseButton );
 
       // space to right of button
-      var maxExpandedWidth = contentWidth - expandCollapseButton.width - options.xSpacing;
+      const maxExpandedWidth = contentWidth - expandCollapseButton.width - options.xSpacing;
 
       // title, displayed when collapsed
-      var titleNode = new Text( options.titleString, {
+      const titleNode = new Text( options.titleString, {
         font: options.titleFont,
         maxWidth: maxExpandedWidth
       } );
@@ -127,7 +127,7 @@ define( require => {
     Panel.call( this, contentNode, options );
 
     // right justify valueNode when its bounds change
-    var boundsListener = function() {
+    const boundsListener = function() {
       valueNode.right = backgroundNode.right;
       valueNode.centerY = backgroundNode.centerY;
     };

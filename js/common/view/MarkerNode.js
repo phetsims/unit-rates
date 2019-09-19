@@ -19,7 +19,7 @@ define( require => {
   const URUtils = require( 'UNIT_RATES/common/URUtils' );
 
   // constants
-  var SHARED_OPTIONS = {
+  const SHARED_OPTIONS = {
     maxDecimals: 2, // {number} maximum number of decimal places
     trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
   };
@@ -43,18 +43,18 @@ define( require => {
     // @public (read-only)
     this.marker = marker;
 
-    var numeratorOptions = _.extend( {}, SHARED_OPTIONS, options.numeratorOptions );
+    const numeratorOptions = _.extend( {}, SHARED_OPTIONS, options.numeratorOptions );
 
-    var denominatorOptions = _.extend( {}, SHARED_OPTIONS, options.denominatorOptions );
+    const denominatorOptions = _.extend( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     // vertical line
-    var lineNode = new Line( 0, 0, 0, options.lineLength, {
+    const lineNode = new Line( 0, 0, 0, options.lineLength, {
       lineWidth: options.lineWidth
     } );
 
     // numerator
-    var numeratorNode = new Text( '', { font: options.font } );
-    var numeratorObserver = function( numerator ) {
+    const numeratorNode = new Text( '', { font: options.font } );
+    const numeratorObserver = function( numerator ) {
       assert && assert( ( typeof numerator === 'number' ) && !isNaN( numerator ), 'invalid numerator: ' + numerator );
       numeratorNode.text = URUtils.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
       numeratorNode.centerX = lineNode.centerX;
@@ -63,8 +63,8 @@ define( require => {
     marker.numeratorProperty.link( numeratorObserver ); // unlink in dispose
 
     // denominator
-    var denominatorNode = new Text( '', { font: options.font } );
-    var denominatorObserver = function( denominator ) {
+    const denominatorNode = new Text( '', { font: options.font } );
+    const denominatorObserver = function( denominator ) {
       assert && assert( ( typeof denominator === 'number' ) && !isNaN( denominator ), 'invalid denominator: ' + denominator );
       denominatorNode.text = URUtils.numberToString( marker.denominatorProperty.value, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
       denominatorNode.centerX = lineNode.centerX;
@@ -78,7 +78,7 @@ define( require => {
     Node.call( this, options );
 
     // update the marker's color
-    var colorObserver = function( color ) {
+    const colorObserver = function( color ) {
       lineNode.stroke = color;
       numeratorNode.fill = color;
       denominatorNode.fill = color;

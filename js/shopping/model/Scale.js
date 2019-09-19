@@ -23,7 +23,7 @@ define( require => {
    */
   function Scale( unitRateProperty, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 

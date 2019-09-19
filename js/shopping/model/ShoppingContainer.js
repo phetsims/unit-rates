@@ -57,8 +57,8 @@ define( require => {
     } );
 
     // Back row has 1 more cell than front row
-    var backNumberOfCells = Math.floor( options.numberOfItems / 2 ) + 1;
-    var frontNumberOfCells = options.numberOfItems - backNumberOfCells;
+    const backNumberOfCells = Math.floor( options.numberOfItems / 2 ) + 1;
+    const frontNumberOfCells = options.numberOfItems - backNumberOfCells;
     assert && assert( backNumberOfCells + frontNumberOfCells === options.numberOfItems );
 
     // @public back row of items, dispose not required, exists for sim lifetime

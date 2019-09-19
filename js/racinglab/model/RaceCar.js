@@ -33,7 +33,7 @@ define( require => {
    */
   function RaceCar( image, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       color: 'black', // {Color|string} color used for things that are associated with the car (markers, spinners, ...)
@@ -63,7 +63,7 @@ define( require => {
     this.track = new RaceTrack( { length: options.trackLength } );
 
     // Specifies the interval for major markers
-    var isMajorMarker = function( numerator, denominator ) {
+    const isMajorMarker = function( numerator, denominator ) {
       return ( numerator % options.majorMarkerSpacing === 0 );
     };
 
@@ -97,7 +97,7 @@ define( require => {
     } );
 
     // create a marker when the car reaches the finish line. unlink not needed
-    var persistentMarker = null;
+    let persistentMarker = null;
     this.distanceProperty.link( function( distance ) {
 
       // make the current persistent marker erasable
@@ -158,10 +158,10 @@ define( require => {
 
         // Map from sim time (seconds) to race time (hours).
         // see https://github.com/phetsims/unit-rates/issues/95
-        var deltaRaceTime = Util.linear( 0, 1, 0, URQueryParameters.raceTimeScale, dt );
+        const deltaRaceTime = Util.linear( 0, 1, 0, URQueryParameters.raceTimeScale, dt );
 
         // distance traveled, in miles
-        var deltaDistance = deltaRaceTime * this.rate.unitRateProperty.value;
+        const deltaDistance = deltaRaceTime * this.rate.unitRateProperty.value;
 
         if ( this.distanceProperty.value + deltaDistance >= this.track.lengthProperty.value ) {
 

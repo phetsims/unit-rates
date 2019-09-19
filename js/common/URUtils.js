@@ -60,12 +60,12 @@ define( require => {
       assert && assert( typeof numberOrString === 'number' || typeof numberOrString === 'string', 'invalid argument type' );
 
       // convert to string
-      var str = ('' + numberOrString);
+      const str = ('' + numberOrString);
       assert && assert( str.length > 0, 'invalid argument: ' + str );
 
       // find the decimal point
       assert && assert( ( str.match( /\./g ) || []).length <= 1, 'too many decimal points: ' + str );
-      var decimalIndex = str.indexOf( '.' );
+      const decimalIndex = str.indexOf( '.' );
 
       if ( decimalIndex === -1 ) {
 

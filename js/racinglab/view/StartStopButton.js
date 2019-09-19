@@ -25,14 +25,14 @@ define( require => {
    */
   function StartStopButton( runningProperty, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       radius: 45
     }, options );
 
-    var goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
-    var stopIcon = new StopSignNode( { fillRadius: 25 } );
+    const goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
+    const stopIcon = new StopSignNode( { fillRadius: 25 } );
 
     BooleanRoundToggleButton.call( this, stopIcon, goIcon, runningProperty, options );
 

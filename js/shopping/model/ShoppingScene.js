@@ -42,7 +42,7 @@ define( require => {
   const pattern0CostString = require( 'string!UNIT_RATES/pattern_0cost' );
   
   // constants
-  var SHARED_OPTIONS = {
+  const SHARED_OPTIONS = {
     maxDigits: 4, // {number} number of digits that can be entered via the keypad
     maxDecimals: 2, // {number} maximum number of decimal places
     pickerColor: 'black' // {Color|string} color of the number picker for the numerator in the Rate accordion box
@@ -56,7 +56,7 @@ define( require => {
    */
   function ShoppingScene( itemData, options ) {
 
-    var self = this;
+    const self = this;
 
     // verify that itemData has all required properties
     assert && ShoppingItemData.assertIsItemData( itemData );
@@ -138,12 +138,12 @@ define( require => {
     // Does not work for mipmap, bagImage.width is undefined.
     // If considering a switch to mipmaps, see https://github.com/phetsims/unit-rates/issues/157
     assert && assert( this.bagImage.width && this.bagImage.height, 'Are you using the image plugin?' );
-    var bagSize = new Dimension2(
+    const bagSize = new Dimension2(
       URConstants.BAG_IMAGE_SCALE * this.bagImage.width,
       URConstants.BAG_IMAGE_SCALE * this.bagImage.height );
 
     assert && assert( this.itemImage.width && this.itemImage.height, 'Are you using the image plugin?' );
-    var itemSize = new Dimension2(
+    const itemSize = new Dimension2(
       URConstants.SHOPPING_ITEM_IMAGE_SCALE * this.itemImage.width,
       URConstants.SHOPPING_ITEM_IMAGE_SCALE * this.itemImage.height );
 
@@ -171,7 +171,7 @@ define( require => {
     } );
 
     // The marker that corresponds to what's currently on the scale
-    var scaleMarker = null;
+    let scaleMarker = null;
 
     // @private flag to disable creation of spurious markers during reset
     this.createMarkerEnabled = true;
@@ -229,8 +229,8 @@ define( require => {
      * When a question is answered correctly, create a corresponding marker on the double number line.
      * @param {ShoppingQuestion} question
      */
-    var questionCorrectListener = function( question ) {
-      var marker = new Marker( question.numerator, question.denominator, 'question', {
+    const questionCorrectListener = function( question ) {
+      const marker = new Marker( question.numerator, question.denominator, 'question', {
         isMajor: true, // all question markers are major, per the design document
         color: URColors.questionMarker,
         erasable: false
@@ -246,22 +246,22 @@ define( require => {
 
     // @public (read-only) create bags and items
     this.bags = [];
-    for ( var i = 0; i < this.numberOfBags; i++ ) {
+    for ( let i = 0; i < this.numberOfBags; i++ ) {
 
       // the bag's location on the shelf
-      var bagCellIndex = this.shelf.bagRow.getFirstUnoccupiedCell();
+      const bagCellIndex = this.shelf.bagRow.getFirstUnoccupiedCell();
       assert && assert( bagCellIndex !== -1, 'shelf is full' );
-      var bagLocation = this.shelf.bagRow.getCellLocation( bagCellIndex );
+      const bagLocation = this.shelf.bagRow.getCellLocation( bagCellIndex );
 
       // create items if the bag opens when placed on the scale
-      var items = null;
+      let items = null;
       if ( options.bagsOpen ) {
 
         items = [];
-        for ( var j = 0; j < this.quantityPerBag; j++ ) {
+        for ( let j = 0; j < this.quantityPerBag; j++ ) {
 
           // create item, initially invisible and not on shelf or scale
-          var item = new ShoppingItem( this.pluralName, this.itemImage, {
+          const item = new ShoppingItem( this.pluralName, this.itemImage, {
             visible: false
           } );
           items.push( item );
@@ -269,7 +269,7 @@ define( require => {
       }
 
       // create bag
-      var bag = new Bag( this.pluralName, this.bagImage, {
+      const bag = new Bag( this.pluralName, this.bagImage, {
         location: bagLocation,
         items: items
       } );
@@ -292,13 +292,13 @@ define( require => {
     step: function( dt ) {
 
       // animate bags
-      for ( var i = 0; i < this.bags.length; i++ ) {
+      for ( let i = 0; i < this.bags.length; i++ ) {
         this.bags[ i ].step( dt );
 
         // animate items
-        var items = this.bags[ i ].items;
+        const items = this.bags[ i ].items;
         if ( items ) {
-          for ( var j = 0; j < items.length; j++ ) {
+          for ( let j = 0; j < items.length; j++ ) {
             items[ j ].step( dt );
           }
         }
@@ -341,18 +341,18 @@ define( require => {
       this.scale.reset();
       this.createMarkerEnabled = true;
 
-      for ( var i = 0; i < this.bags.length; i++ ) {
+      for ( let i = 0; i < this.bags.length; i++ ) {
 
         // return bag to shelf
-        var bagCellIndex = this.shelf.bagRow.getFirstUnoccupiedCell();
+        const bagCellIndex = this.shelf.bagRow.getFirstUnoccupiedCell();
         assert && assert( bagCellIndex !== -1, 'shelf is full' );
         this.shelf.bagRow.put( this.bags[ i ], bagCellIndex );
         this.bags[ i ].visibleProperty.value = true;
 
         // reset items, making them invisible
-        var items = this.bags[ i ].items;
+        const items = this.bags[ i ].items;
         if ( items ) {
-          for ( var j = 0; j < items.length; j++ ) {
+          for ( let j = 0; j < items.length; j++ ) {
             items[ j ].reset();
           }
         }

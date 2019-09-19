@@ -23,7 +23,7 @@ define( require => {
    */
   function MarkerEditor( unitRateProperty, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       numeratorMaxDecimals: 2, // {number} maximum decimal places in the numerator
@@ -43,7 +43,7 @@ define( require => {
     // if a numerator is entered that can't be computed from the existing denominator, then clear the denominator
     this.numeratorProperty.link( function( numerator ) { // no unlink required
       if ( numerator !== null && self.denominatorProperty.value !== null ) {
-        var correctNumerator = Util.toFixedNumber( self.denominatorProperty.value * unitRateProperty.value, options.numeratorMaxDecimals );
+        const correctNumerator = Util.toFixedNumber( self.denominatorProperty.value * unitRateProperty.value, options.numeratorMaxDecimals );
         if ( numerator !== correctNumerator ) {
           self.denominatorProperty.value = null;
         }
@@ -53,7 +53,7 @@ define( require => {
     // if a denominator is entered that can't be computed from the existing numerator, then clear the numerator
     this.denominatorProperty.link( function( denominator ) { // no unlink required
       if ( denominator !== null && self.numeratorProperty.value !== null ) {
-        var correctDenominator = Util.toFixedNumber( self.numeratorProperty.value / unitRateProperty.value, options.denominatorMaxDecimals );
+        const correctDenominator = Util.toFixedNumber( self.numeratorProperty.value / unitRateProperty.value, options.denominatorMaxDecimals );
         if ( denominator !== correctDenominator ) {
           self.numeratorProperty.value = null;
         }

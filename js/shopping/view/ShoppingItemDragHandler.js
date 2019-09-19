@@ -26,7 +26,7 @@ define( require => {
   function ShoppingItemDragHandler( itemNode, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer ) {
 
     // {Vector2} where the drag started relative to the item's location, in parent view coordinates
-    var startDragOffset;
+    let startDragOffset;
 
     SimpleDragHandler.call( this, {
 
@@ -81,10 +81,10 @@ define( require => {
         item.dragging = false;
 
         // if the item is released above the scale, item falls to scale, otherwise to shelf.
-        var shoppingContainer = ( item.locationProperty.value.y < scale.yAboveScale ) ? scale : shelf;
+        const shoppingContainer = ( item.locationProperty.value.y < scale.yAboveScale ) ? scale : shelf;
 
         // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
-        var rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
+        const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
 
         animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
           frontItemLayer, backItemLayer );
@@ -103,16 +103,16 @@ define( require => {
   function getClosestRowAndUnoccupiedCell( shoppingContainer, location ) {
 
     // to improve readability
-    var backItemRow = shoppingContainer.backItemRow;
-    var frontItemRow = shoppingContainer.frontItemRow;
+    const backItemRow = shoppingContainer.backItemRow;
+    const frontItemRow = shoppingContainer.frontItemRow;
 
     // find closest cell in each row
-    var backCellIndex = backItemRow.getClosestUnoccupiedCell( location );
-    var frontCellIndex = frontItemRow.getClosestUnoccupiedCell( location );
+    const backCellIndex = backItemRow.getClosestUnoccupiedCell( location );
+    const frontCellIndex = frontItemRow.getClosestUnoccupiedCell( location );
     assert && assert( !( backCellIndex === -1 && frontCellIndex === -1 ), 'container is full' );
 
-    var itemRow = null;
-    var cellIndex = -1;
+    let itemRow = null;
+    let cellIndex = -1;
 
     if ( backCellIndex === -1 ) {
 
@@ -129,8 +129,8 @@ define( require => {
     else {
 
       // front and back rows both have unoccupied cells, choose the closest one
-      var backCellDistance = location.distance( backItemRow.getCellLocation( backCellIndex ) );
-      var frontCellDistance = location.distance( frontItemRow.getCellLocation( frontCellIndex ) );
+      const backCellDistance = location.distance( backItemRow.getCellLocation( backCellIndex ) );
+      const frontCellDistance = location.distance( frontItemRow.getCellLocation( frontCellIndex ) );
       if ( backCellDistance <= frontCellDistance ) {
         itemRow = backItemRow;
         cellIndex = backCellIndex;
@@ -162,11 +162,11 @@ define( require => {
   function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cellIndex, frontItemLayer, backItemLayer ) {
 
     // This function changes course to the next closest unoccupied cell.
-    var changeCourse = function() {
+    const changeCourse = function() {
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
 
       // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
-      var rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
+      const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
 
       animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
         frontItemLayer, backItemLayer );
@@ -174,7 +174,7 @@ define( require => {
 
     // This function is called on each animation step.
     // If the target cell becomes occupied, change course immediately.
-    var animationStepCallback = function() {
+    const animationStepCallback = function() {
       if ( !itemRow.isEmptyCell( cellIndex ) ) {
         changeCourse();
       }
@@ -182,7 +182,7 @@ define( require => {
 
     // This function is called when animation completes.
     // If the target cell is still empty, add the item. Otherwise animate to an unoccupied cell.
-    var animationCompletedCallback = function() {
+    const animationCompletedCallback = function() {
       if ( itemRow.isEmptyCell( cellIndex ) ) {
 
         // the cell is still unoccupied when we reached it, put the item in that cell
@@ -204,7 +204,7 @@ define( require => {
       }
     };
 
-    var destination = itemRow.getCellLocation( cellIndex ); // {Vector2}
+    const destination = itemRow.getCellLocation( cellIndex ); // {Vector2}
 
     // begin the animation
     item.animateTo( destination, {

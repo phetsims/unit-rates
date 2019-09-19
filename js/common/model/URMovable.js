@@ -100,17 +100,17 @@ define( require => {
      * @public
      */
     step: function( dt ) {
-      var doStep = !this.dragging && ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
+      const doStep = !this.dragging && ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
       if ( doStep ) {
 
         // optional callback
         this.animationStepCallback && this.animationStepCallback();
 
         // distance from destination
-        var totalDistance = this.locationProperty.get().distance( this.destination );
+        const totalDistance = this.locationProperty.get().distance( this.destination );
 
         // distance to move on this step
-        var stepDistance = this.animationSpeed * dt;
+        const stepDistance = this.animationSpeed * dt;
 
         if ( totalDistance <= stepDistance ) {
 
@@ -118,7 +118,7 @@ define( require => {
           this.locationProperty.set( this.destination );
 
           // callback, which may set a new callback
-          var saveAnimationCompletedCallback = this.animationCompletedCallback;
+          const saveAnimationCompletedCallback = this.animationCompletedCallback;
           this.animationCompletedCallback && this.animationCompletedCallback();
           if ( saveAnimationCompletedCallback === this.animationCompletedCallback ) {
             this.animationCompletedCallback = null;
@@ -127,10 +127,10 @@ define( require => {
         else {
 
           // move one step towards the destination
-          var stepAngle = Math.atan2(
+          const stepAngle = Math.atan2(
             this.destination.y - this.locationProperty.get().y,
             this.destination.x - this.locationProperty.get().x );
-          var stepVector = Vector2.createPolar( stepDistance, stepAngle );
+          const stepVector = Vector2.createPolar( stepDistance, stepAngle );
           this.locationProperty.set( this.locationProperty.get().plus( stepVector ) );
         }
       }

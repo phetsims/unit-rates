@@ -13,7 +13,7 @@ define( require => {
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URFont = require( 'UNIT_RATES/common/URFont' );
 
-  var URConstants = {
+  const URConstants = {
 
     // screen
     SCREEN_X_MARGIN: 15,

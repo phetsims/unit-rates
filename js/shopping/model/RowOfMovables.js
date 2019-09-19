@@ -60,19 +60,19 @@ define( require => {
   function createCells( numberOfCells, location, cellSize, cellSpacing ) {
 
     // distance between the centers of adjacent cells
-    var deltaX = cellSize.width + cellSpacing;
+    const deltaX = cellSize.width + cellSpacing;
 
     // distance between the centers of the left-most and right-most cells
-    var leftToRightDistance = deltaX * ( numberOfCells - 1 );
+    const leftToRightDistance = deltaX * ( numberOfCells - 1 );
 
     // center of the first (left-most) cell
-    var firstCenterX = location.x - ( leftToRightDistance / 2 );
+    const firstCenterX = location.x - ( leftToRightDistance / 2 );
 
     // Each cell contains a data structure with this format:
     // {URMovable|null} movable - the movable that occupies the cell, null if the cell is empty
     // {Vector} location - bottom center of the cell
-    var cells = [];
-    for ( var i = 0; i < numberOfCells; i++ ) {
+    const cells = [];
+    for ( let i = 0; i < numberOfCells; i++ ) {
       cells.push( {
         movable: null,
         location: new Vector2( firstCenterX + ( i * deltaX ), location.y )
@@ -100,8 +100,8 @@ define( require => {
      * @public
      */
     getFirstUnoccupiedCell: function() {
-      var index = -1;
-      for ( var i = 0; i < this.cells.length; i++ ) {
+      let index = -1;
+      for ( let i = 0; i < this.cells.length; i++ ) {
         if ( this.isEmptyCell( i ) ) {
           index = i;
           break;
@@ -117,9 +117,9 @@ define( require => {
      * @public
      */
     getClosestUnoccupiedCell: function( location ) {
-      var index = this.getFirstUnoccupiedCell();
+      let index = this.getFirstUnoccupiedCell();
       if ( index !== -1 ) {
-        for ( var i = index + 1; i < this.cells.length; i++ ) {
+        for ( let i = index + 1; i < this.cells.length; i++ ) {
           if ( this.isEmptyCell( i ) ) {
             if ( this.getDistanceFromCell( i, location ) < this.getDistanceFromCell( index, location ) ) {
               index = i;
@@ -161,7 +161,7 @@ define( require => {
      * @public
      */
     remove: function( movable ) {
-      var index = this.indexOf( movable );
+      const index = this.indexOf( movable );
       assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
       this.cells[ index ].movable = null;
       this.numberOfMovablesProperty.value--;
@@ -215,8 +215,8 @@ define( require => {
      * @private
      */
     indexOf: function( movable ) {
-      var index = -1;
-      for ( var i = 0; i < this.cells.length; i++ ) {
+      let index = -1;
+      for ( let i = 0; i < this.cells.length; i++ ) {
         if ( this.cells[ i ].movable === movable ) {
           index = i;
           break;

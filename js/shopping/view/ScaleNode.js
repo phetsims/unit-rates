@@ -32,10 +32,10 @@ define( require => {
   const pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
 
   // constants
-  var PANEL_WIDTH = 132;
-  var PANEL_MIN_HEIGHT = 32;
-  var DISPLAY_X_MARGIN = 25;
-  var DISPLAY_Y_MARGIN = 7;
+  const PANEL_WIDTH = 132;
+  const PANEL_MIN_HEIGHT = 32;
+  const DISPLAY_X_MARGIN = 25;
+  const DISPLAY_Y_MARGIN = 7;
 
   /**
    * @param {Scale} scale
@@ -52,35 +52,35 @@ define( require => {
 
     // round platter on top, origin at center ---------------------------------------------------
 
-    var topThickness = 8;
-    var topRadiusX = 0.5 * scale.width;
-    var topRadiusY = 0.5 * scale.depth;
-    var topFaceShape = new Shape()
+    const topThickness = 8;
+    const topRadiusX = 0.5 * scale.width;
+    const topRadiusY = 0.5 * scale.depth;
+    const topFaceShape = new Shape()
       .ellipse( 0, 0, topRadiusX, topRadiusY, 0 );
-    var topSideShape = new Shape()
+    const topSideShape = new Shape()
       .moveTo( -topRadiusX, 0 )
       .lineTo( -topRadiusX, topThickness )
       .ellipticalArc( 0, topThickness, topRadiusX, topRadiusY, 0, Math.PI, 0, true )
       .lineTo( topRadiusX, 0 )
       .close();
 
-    var topFaceNode = new Path( topFaceShape, {
+    const topFaceNode = new Path( topFaceShape, {
       fill: new LinearGradient( -topRadiusX / 2, -topRadiusX / 2, topRadiusX / 2, topRadiusX / 2 )
         .addColorStop( 0, URColors.scaleTopLight )
         .addColorStop( 0.5, URColors.scaleTopDark )
         .addColorStop( 1, URColors.scaleTopLight ),
       stroke: 'black'
     } );
-    var topSideNode = new Path( topSideShape, {
+    const topSideNode = new Path( topSideShape, {
       fill: 'rgb( 140, 140, 140 )',
       stroke: 'black'
     } );
-    var topNode = new Node( {
+    const topNode = new Node( {
       children: [ topSideNode, topFaceNode ]
     } );
 
     // shadow under the top platter
-    var shadowNode = new Path( topFaceShape, {
+    const shadowNode = new Path( topFaceShape, {
       fill: 'rgb( 100, 100, 100 )',
       opacity: 0.2,
       y: topFaceNode.y + ( 2 * topThickness )
@@ -89,11 +89,11 @@ define( require => {
     // body of the scale ---------------------------------------------------------------------
 
     // scale.width is the width at the midpoint of the scale's top face, compute the foreground and background widths
-    var foregroundWidth = scale.width + scale.perspectiveXOffset;
-    var backgroundWidth = scale.width - scale.perspectiveXOffset;
+    const foregroundWidth = scale.width + scale.perspectiveXOffset;
+    const backgroundWidth = scale.width - scale.perspectiveXOffset;
 
     // draw top face clockwise, starting at front-left corner, in pseudo-3D using parallel perspective
-    var bodyShape = new Shape()
+    const bodyShape = new Shape()
       .moveTo( 0, 0 )
       .lineTo( scale.perspectiveXOffset, -scale.depth )
       .lineTo( scale.perspectiveXOffset + backgroundWidth, -scale.depth )
@@ -103,7 +103,7 @@ define( require => {
     bodyShape.rect( 0, 0, scale.width + scale.perspectiveXOffset, scale.height );
 
     // origin at center of top face
-    var bodyNode = new Path( bodyShape, {
+    const bodyNode = new Path( bodyShape, {
       fill: URColors.scaleBody,
       stroke: 'black',
       lineJoin: 'round',
@@ -114,7 +114,7 @@ define( require => {
     // display on front of the scale ---------------------------------------------------------------------
 
     // display background
-    var displayBackgroundNode = new Rectangle( 0, 0, foregroundWidth - ( 2 * DISPLAY_X_MARGIN ), scale.height - ( 2 * DISPLAY_Y_MARGIN ), {
+    const displayBackgroundNode = new Rectangle( 0, 0, foregroundWidth - ( 2 * DISPLAY_X_MARGIN ), scale.height - ( 2 * DISPLAY_Y_MARGIN ), {
       fill: 'black',
       cornerRadius: 4,
       left: bodyNode.left + DISPLAY_X_MARGIN,
@@ -122,16 +122,16 @@ define( require => {
     } );
 
     // Nodes that make up the numeric display on the scale
-    var displayChildren = [];
+    const displayChildren = [];
 
     // dispose required
-    var costNode = new CostNode( scale.costProperty, {
+    const costNode = new CostNode( scale.costProperty, {
       extraDecimalVisible: options.extraCostDecimalVisible,
       maxWidth: 90 // i18n, determined empirically
     } );
 
     // dispose required
-    var costPanel = new ValuePanel( costNode, {
+    const costPanel = new ValuePanel( costNode, {
       panelWidth: PANEL_WIDTH,
       panelMinHeight: PANEL_MIN_HEIGHT,
       expandedProperty: options.costExpandedProperty,
@@ -158,7 +158,7 @@ define( require => {
     }
 
     // Assemble the display
-    var displayNode = new Node( {
+    const displayNode = new Node( {
       children: [
         displayBackgroundNode,
         new HBox( {
@@ -179,7 +179,7 @@ define( require => {
     // red dot at origin, red line at drag threshold
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 2, { fill: 'red' } ) );
-      var lineY = scale.yAboveScale - scale.location.y;
+      const lineY = scale.yAboveScale - scale.location.y;
       this.addChild( new Line( -foregroundWidth / 2, lineY, foregroundWidth / 2, lineY, { stroke: 'red' } ) );
     }
 

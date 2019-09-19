@@ -21,7 +21,7 @@ define( require => {
    */
   function KeypadLayer( options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       fill: 'rgba( 0, 0, 0, 0.2 )',
@@ -128,7 +128,7 @@ define( require => {
     commitEdit: function() {
 
       // get the value from the keypad
-      var value = parseFloat( this.keypad.valueStringProperty.value );
+      const value = parseFloat( this.keypad.valueStringProperty.value );
 
       // if the keypad contains a valid value ...
       if ( isValidValue( value, this.zeroIsValid ) ) {

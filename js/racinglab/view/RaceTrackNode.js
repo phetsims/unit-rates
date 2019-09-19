@@ -41,17 +41,17 @@ define( require => {
   const pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
 
   // constants
-  var NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates
-  var CUE_ARROW_LENGTH = 28; // length of the 'drag cue' arrows around the finish flag
-  var CUE_ARROW_OPTIONS = {
+  const NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates
+  const CUE_ARROW_LENGTH = 28; // length of the 'drag cue' arrows around the finish flag
+  const CUE_ARROW_OPTIONS = {
     fill: 'rgb( 33, 190, 156 )',
     lineWidth: 0.5,
     headWidth: 20,
     headHeight: 16,
     tailWidth: 7
   };
-  var TRACK_MARKER_SIDE_LENGTH = 5;
-  var TRACK_MARKER_OPTIONS = {
+  const TRACK_MARKER_SIDE_LENGTH = 5;
+  const TRACK_MARKER_OPTIONS = {
     fill: 'black',
     stroke: null
   };
@@ -71,27 +71,27 @@ define( require => {
     }, options );
 
     // maps 'miles' between model and view coordinate frames
-    var modelToView = new LinearFunction( 0, car.track.maxLength, 0, options.trackViewLength );
+    const modelToView = new LinearFunction( 0, car.track.maxLength, 0, options.trackViewLength );
 
     // Dashed line shows the maximum track length, revealed when the track is shortened.
-    var dashedLineNode = new Line( 0, 0, options.trackViewLength, 0, {
+    const dashedLineNode = new Line( 0, 0, options.trackViewLength, 0, {
       stroke: 'gray',
       lineWidth: 0.5,
       lineDash: [ 5, 5 ]
     } );
 
     // Solid line shows the actual track length.
-    var solidLineNode = new Line( -NEGATIVE_TRACK_LENGTH, 0, options.trackViewLength, 0, {
+    const solidLineNode = new Line( -NEGATIVE_TRACK_LENGTH, 0, options.trackViewLength, 0, {
       stroke: 'black',
       lineWidth: 1
     } );
 
     // markers below the track
-    var markerNodes = [];
-    for ( var x = 0; x <= car.track.maxLength; ) {
+    const markerNodes = [];
+    for ( let x = 0; x <= car.track.maxLength; ) {
 
       // create marker
-      var markerNode = createMarkerNode();
+      const markerNode = createMarkerNode();
       markerNodes.push( markerNode );
 
       // position marker
@@ -101,18 +101,18 @@ define( require => {
       // next marker
       x = x + car.track.markerSpacing;
     }
-    var markersParent = new Node( { children: markerNodes } );
+    const markersParent = new Node( { children: markerNodes } );
     markersParent.top = solidLineNode.centerY;
 
     // Flag at starting line
-    var startFlagNode = new Image( startFlagImage, {
+    const startFlagNode = new Image( startFlagImage, {
       scale: 0.5,
       left: 0,
       bottom: 0
     } );
 
     // Flag at finish line
-    var finishFlagNode = new Image( finishFlagImage, {
+    const finishFlagNode = new Image( finishFlagImage, {
       cursor: 'pointer',
       scale: 0.5,
       left: modelToView( car.track.lengthProperty.value ),
@@ -122,7 +122,7 @@ define( require => {
     finishFlagNode.mouseArea = finishFlagNode.localBounds.dilatedX( 30 );
 
     // green arrows around the finish flag, cues the user to drag the flag
-    var cueArrowsNode = new HBox( {
+    const cueArrowsNode = new HBox( {
       cursor: 'pointer',
       spacing: 9,
       children: [
@@ -134,16 +134,16 @@ define( require => {
     } );
 
     // Timer, dispose required
-    var timerNode = new RaceTimerNode( car.timeProperty, timerExpandedProperty, options.timerTitleString );
+    const timerNode = new RaceTimerNode( car.timeProperty, timerExpandedProperty, options.timerTitleString );
 
     // Label that indicates the length of the track
-    var lengthNode = new Text( '', {
+    const lengthNode = new Text( '', {
       font: new URFont( 12 ),
       maxWidth: timerNode.width // i18n
     } );
 
     // Car
-    var carNode = new Image( car.image, {
+    const carNode = new Image( car.image, {
       scale: 0.5,
       right: startFlagNode.left,
       bottom: solidLineNode.top
@@ -154,9 +154,9 @@ define( require => {
       startFlagNode, finishFlagNode, timerNode, lengthNode, cueArrowsNode, carNode ];
 
     // Synchronize track length with the model
-    var lengthObserver = function( length ) {
+    const lengthObserver = function( length ) {
 
-      var finishX = modelToView( length );
+      const finishX = modelToView( length );
 
       // adjust track length
       solidLineNode.setLine( -NEGATIVE_TRACK_LENGTH, 0, finishX, 0 );
@@ -175,8 +175,8 @@ define( require => {
       lengthNode.centerX = finishX;
 
       // grey out markers that are past finish line
-      for ( var i = 0; i < markerNodes.length; i++ ) {
-        var enabled = ( i * car.track.markerSpacing <= length );
+      for ( let i = 0; i < markerNodes.length; i++ ) {
+        const enabled = ( i * car.track.markerSpacing <= length );
         markerNodes[ i ].opacity = ( enabled ? 1 : 0.4 );
       }
     };
@@ -185,10 +185,10 @@ define( require => {
     Node.call( this, options );
 
     // {number} where the drag started relative to the finish flag's current location, in parent view coordinates
-    var startDragXOffset;
+    let startDragXOffset;
 
     // Drag the finish flag to change the track length
-    var dragHandler = new SimpleDragHandler( {
+    const dragHandler = new SimpleDragHandler( {
 
       // allow touch swipes across a bag to pick it up
       allowTouchSnag: true,
@@ -216,10 +216,10 @@ define( require => {
         arrowsVisibleProperty.value = false;
 
         // compute track length in view coordinates
-        var viewLength = finishFlagNode.globalToParentPoint( event.pointer.point ).x - startDragXOffset;
+        const viewLength = finishFlagNode.globalToParentPoint( event.pointer.point ).x - startDragXOffset;
 
         // convert to model coordinates, constrain to the track length range
-        var modelLength = Util.clamp( modelToView.inverse( viewLength ), 0, car.track.maxLength );
+        const modelLength = Util.clamp( modelToView.inverse( viewLength ), 0, car.track.maxLength );
 
         // update the model, constrain to integer values
         car.track.lengthProperty.value = Util.toFixedNumber( modelLength, 0 );
@@ -248,7 +248,7 @@ define( require => {
    */
   function createMarkerNode() {
 
-    var markerShape = new Shape()
+    const markerShape = new Shape()
       .moveTo( 0, 0 )
       .lineTo( TRACK_MARKER_SIDE_LENGTH / 2, TRACK_MARKER_SIDE_LENGTH )
       .lineTo( -TRACK_MARKER_SIDE_LENGTH / 2, TRACK_MARKER_SIDE_LENGTH )

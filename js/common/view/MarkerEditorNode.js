@@ -25,8 +25,8 @@ define( require => {
   const URUtils = require( 'UNIT_RATES/common/URUtils' );
 
   // constants
-  var KEYPAD_LOCATION_VALUES = [ 'above', 'below' ];
-  var SHARED_OPTIONS = {
+  const KEYPAD_LOCATION_VALUES = [ 'above', 'below' ];
+  const SHARED_OPTIONS = {
     maxDigits: 4, // {number} maximum number of digits that can be entered via keypad
     maxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
     trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
@@ -55,9 +55,9 @@ define( require => {
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
     }, options );
 
-    var numeratorOptions = _.extend( {}, SHARED_OPTIONS, options.numeratorOptions );
+    const numeratorOptions = _.extend( {}, SHARED_OPTIONS, options.numeratorOptions );
 
-    var denominatorOptions = _.extend( {}, SHARED_OPTIONS, options.denominatorOptions );
+    const denominatorOptions = _.extend( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     assert && assert( _.includes( KEYPAD_LOCATION_VALUES, options.keypadLocation ),
       'invalid keypadLocation: ' + options.keypadLocation );
@@ -65,36 +65,36 @@ define( require => {
     Node.call( this );
 
     // vertical line
-    var verticalLine = new Line( 0, 0, 0, options.lineLength, {
+    const verticalLine = new Line( 0, 0, 0, options.lineLength, {
       stroke: 'black'
     } );
     this.addChild( verticalLine );
 
     // common to both value boxes
-    var valueBoxWidth = options.valueBoxWidth;
-    var valueBoxHeight = new Text( '0', { font: options.valueFont } ).height + ( 2 * options.valueYMargin );
-    var valueBoxOptions = {
+    const valueBoxWidth = options.valueBoxWidth;
+    const valueBoxHeight = new Text( '0', { font: options.valueFont } ).height + ( 2 * options.valueYMargin );
+    const valueBoxOptions = {
       stroke: 'black',
       fill: 'white',
       cursor: 'pointer'
     };
 
     // box for the numerator
-    var numeratorBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, _.extend( {}, valueBoxOptions, {
+    const numeratorBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, _.extend( {}, valueBoxOptions, {
       centerX: verticalLine.centerX,
       bottom: verticalLine.top
     } ) );
     this.addChild( numeratorBox );
 
     // box for the denominator
-    var denominatorBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, _.extend( {}, valueBoxOptions, {
+    const denominatorBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, _.extend( {}, valueBoxOptions, {
       centerX: verticalLine.centerX,
       top: verticalLine.bottom
     } ) );
     this.addChild( denominatorBox );
 
     // numerator value
-    var numeratorNode = new Text( '', {
+    const numeratorNode = new Text( '', {
       pickable: false, // so it doesn't interfere with clicking in numeratorBox to open keypad
       fill: options.neutralColor,
       font: options.valueFont,
@@ -103,7 +103,7 @@ define( require => {
     this.addChild( numeratorNode );
 
     // denominator value
-    var denominatorNode = new Text( '', {
+    const denominatorNode = new Text( '', {
       pickable: false, // so it doesn't interfere with clicking in denominatorBox to open keypad
       fill: options.neutralColor,
       font: options.valueFont,
@@ -112,7 +112,7 @@ define( require => {
     this.addChild( denominatorNode );
 
     // edit button for the numerator
-    var numeratorEditButton = new RectangularPushButton( {
+    const numeratorEditButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'pencil_square_o', { scale: URConstants.EDIT_ICON_SCALE } ),
       baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
@@ -122,7 +122,7 @@ define( require => {
     numeratorEditButton.touchArea = numeratorEditButton.localBounds.dilatedXY( 10, 0 );
 
     // edit button for the denominator
-    var denominatorEditButton = new RectangularPushButton( {
+    const denominatorEditButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'pencil_square_o', { scale: URConstants.EDIT_ICON_SCALE } ),
       baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
@@ -134,16 +134,16 @@ define( require => {
     this.mutate( options );
 
     // Sets the location of the keypad
-    var setKeypadLocation = function( keypad ) {
+    const setKeypadLocation = function( keypad ) {
 
       // This algorithm assumes that both buttons have the same centerX,
       // so either button can be used for horizontal positioning.
       assert && assert( numeratorEditButton.centerX === denominatorEditButton.centerX );
 
       // position the keypad relative to edit button and double number line panel
-      var doubleNumberLinePanelBounds =
+      const doubleNumberLinePanelBounds =
         keypad.globalToParentBounds( doubleNumberLinePanel.localToGlobalBounds( doubleNumberLinePanel.localBounds ) );
-      var editButtonBounds =
+      const editButtonBounds =
         keypad.globalToParentBounds( numeratorEditButton.localToGlobalBounds( numeratorEditButton.localBounds ) );
 
       // Try to horizontally center the keypad on the edit button,
@@ -166,7 +166,7 @@ define( require => {
     };
 
     // opens a keypad for editing the numerator
-    var editNumerator = function() {
+    const editNumerator = function() {
       keypadLayer.beginEdit( markerEditor.numeratorProperty, {
         onBeginEdit: function() { numeratorBox.fill = URColors.edit; },
         onEndEdit: function() { numeratorBox.fill = 'white'; },
@@ -178,7 +178,7 @@ define( require => {
     };
 
     // opens a keypad for editing the denominator
-    var editDenominator = function() {
+    const editDenominator = function() {
       keypadLayer.beginEdit( markerEditor.denominatorProperty, {
         onBeginEdit: function() { denominatorBox.fill = URColors.edit; },
         onEndEdit: function() { denominatorBox.fill = 'white'; },
@@ -200,7 +200,7 @@ define( require => {
     } ) );
 
     // Observe edits to the numerator
-    var numeratorObserver = function( numerator ) {
+    const numeratorObserver = function( numerator ) {
       assert && assert( !isNaN( numerator ), 'invalid numerator: ' + numerator );
 
       // update the numerator
@@ -216,7 +216,7 @@ define( require => {
       // show the corresponding denominator
       if ( phet.chipper.queryParameters.showAnswers && !markerEditor.denominatorProperty.value ) {
         if ( numerator ) {
-          var denominator = markerEditor.numeratorProperty.value / markerEditor.unitRateProperty.value;
+          const denominator = markerEditor.numeratorProperty.value / markerEditor.unitRateProperty.value;
           denominatorNode.text = URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
         }
         else {
@@ -229,7 +229,7 @@ define( require => {
     markerEditor.numeratorProperty.link( numeratorObserver ); // unlink in dispose
 
     // Observe edits to the denominator
-    var denominatorObserver = function( denominator ) {
+    const denominatorObserver = function( denominator ) {
       assert && assert( !isNaN( denominator ), 'invalid denominator: ' + denominator );
 
       // update the denominator
@@ -245,7 +245,7 @@ define( require => {
       // show the corresponding numerator
       if ( phet.chipper.queryParameters.showAnswers && !markerEditor.numeratorProperty.value ) {
         if ( denominator ) {
-          var numerator = markerEditor.denominatorProperty.value * markerEditor.unitRateProperty.value;
+          const numerator = markerEditor.denominatorProperty.value * markerEditor.unitRateProperty.value;
           numeratorNode.text = URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
         }
         else {

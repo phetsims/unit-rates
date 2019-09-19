@@ -50,13 +50,13 @@ define( require => {
     Node.call( this );
 
     // local vars to improve readability
-    var answer = question.answer;
-    var answerOptions = question.answerOptions;
+    const answer = question.answer;
+    const answerOptions = question.answerOptions;
 
     // box that is either empty or displays an incorrect value
-    var valueBoxWidth = options.valueBoxWidth;
-    var valueBoxHeight = new Text( '0', { font: options.valueFont } ).height + ( 2 * options.valueYMargin );
-    var valueBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, {
+    const valueBoxWidth = options.valueBoxWidth;
+    const valueBoxHeight = new Text( '0', { font: options.valueFont } ).height + ( 2 * options.valueYMargin );
+    const valueBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, {
       stroke: 'black',
       fill: 'white',
       cursor: 'pointer'
@@ -65,7 +65,7 @@ define( require => {
     valueBox.touchArea = valueBox.localBounds.dilatedXY( 5, 5 );
 
     // edit button, to the right of the box
-    var editButton = new RectangularPushButton( {
+    const editButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'pencil_square_o', { scale: URConstants.EDIT_ICON_SCALE } ),
       baseColor: URColors.editButton,
       left: valueBox.right + options.xSpacing,
@@ -76,14 +76,14 @@ define( require => {
 
     // strut to the left of the box, same width as editButton
     // See layout specification in https://github.com/phetsims/unit-rates/issues/152
-    var strut = new HStrut( editButton.width, {
+    const strut = new HStrut( editButton.width, {
       right: valueBox.left - options.xSpacing,
       centerY: valueBox.centerY
     } );
     this.addChild( strut );
 
     // check mark to right of box, to indicate that the question has been correctly answered
-    var checkMarkNode = new FontAwesomeNode( 'check', {
+    const checkMarkNode = new FontAwesomeNode( 'check', {
       scale: 0.75,
       fill: URColors.checkMark,
       left: valueBox.right + options.xSpacing,
@@ -93,7 +93,7 @@ define( require => {
     this.addChild( checkMarkNode );
 
     // the question, centered above the box
-    var questionTextNode = new Text( question.questionString, {
+    const questionTextNode = new Text( question.questionString, {
       font: options.questionFont,
       centerX: valueBox.centerX,
       bottom: valueBox.top - options.ySpacing,
@@ -102,7 +102,7 @@ define( require => {
     this.addChild( questionTextNode );
 
     // the user's guess, as entered via the keypad, appears centered in the box
-    var guessNode = new Text( '', {
+    const guessNode = new Text( '', {
       pickable: false, // so it doesn't interfere with clicking in valueBox to open keypad
       fill: options.neutralColor,
       font: options.valueFont,
@@ -112,7 +112,7 @@ define( require => {
     this.addChild( guessNode );
 
     // numerator in the revealed answer, replaces the box when the answer is correct
-    var numeratorNode = new Text( question.numeratorString, {
+    const numeratorNode = new Text( question.numeratorString, {
       fill: URColors.correctQuestion,
       font: options.valueFont,
       center: valueBox.center,
@@ -122,7 +122,7 @@ define( require => {
     this.addChild( numeratorNode );
 
     // fraction line in the revealed answer
-    var fractionLineNode = new Line( 0, 0, 1.1 * valueBox.width, 0, {
+    const fractionLineNode = new Line( 0, 0, 1.1 * valueBox.width, 0, {
       stroke: options.neutralColor,
       lineWidth: 1,
       centerX: valueBox.centerX,
@@ -132,7 +132,7 @@ define( require => {
     this.addChild( fractionLineNode );
 
     // denominator in the revealed answer
-    var denominatorNode = new Text( question.denominatorString, {
+    const denominatorNode = new Text( question.denominatorString, {
       fill: options.neutralColor,
       font: options.valueFont,
       centerX: valueBox.centerX,
@@ -145,10 +145,10 @@ define( require => {
     this.mutate( options );
 
     // Update when the guess changes
-    var guessObserver = function( guess ) {
+    const guessObserver = function( guess ) {
 
       // compare guess to answer using the desired number of decimal places
-      var correct = ( guess === answer );
+      const correct = ( guess === answer );
 
       // update the guess
       if ( guess !== null ) {
@@ -184,24 +184,24 @@ define( require => {
     question.guessProperty.link( guessObserver ); // unlink in dispose
 
     // highlight the value box to indicate that an edit is in progress
-    var onBeginEdit = function() {
+    const onBeginEdit = function() {
       valueBox.fill = URColors.edit;
     };
 
     // clear highlight to indicate that the edit is completed
-    var onEndEdit = function() {
+    const onEndEdit = function() {
       valueBox.fill = 'white';
     };
 
     // position the keypad relative to the Questions panel
-    var setKeypadLocation = function( keypad ) {
-      var questionsPanelBounds = keypad.globalToParentBounds( questionsPanel.localToGlobalBounds( questionsPanel.localBounds ) );
+    const setKeypadLocation = function( keypad ) {
+      const questionsPanelBounds = keypad.globalToParentBounds( questionsPanel.localToGlobalBounds( questionsPanel.localBounds ) );
       keypad.right = questionsPanelBounds.left - 10;
       keypad.bottom = questionsPanelBounds.bottom;
     };
 
     // opens a keypad to edit the user's guess
-    var editValue = function() {
+    const editValue = function() {
       keypadLayer.beginEdit( question.guessProperty, {
         onBeginEdit: onBeginEdit,
         onEndEdit: onEndEdit,

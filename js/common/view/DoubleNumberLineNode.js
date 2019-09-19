@@ -28,7 +28,7 @@ define( require => {
    */
   function DoubleNumberLineNode( doubleNumberLine, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 
@@ -62,17 +62,17 @@ define( require => {
     this.axisViewLength = options.axisViewLength;
 
     // All other nodes are positioned relative to this one
-    var verticalAxis = new Line( 0, -options.minorMarkerLength / 2, 0, options.minorMarkerLength / 2, {
+    const verticalAxis = new Line( 0, -options.minorMarkerLength / 2, 0, options.minorMarkerLength / 2, {
       stroke: options.axisColor,
       lineWidth: options.axisLineWidth
     } );
     this.addChild( verticalAxis );
 
     // Double number line's maximum should be just to the left of the axis' arrow head
-    var horizontalAxisLength = this.axisViewLength + options.arrowSize.height + 10;
+    const horizontalAxisLength = this.axisViewLength + options.arrowSize.height + 10;
 
     // numerator axis
-    var numeratorAxisNode = new ArrowNode( 0, 0, horizontalAxisLength, 0, {
+    const numeratorAxisNode = new ArrowNode( 0, 0, horizontalAxisLength, 0, {
       fill: options.axisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
@@ -94,7 +94,7 @@ define( require => {
     } ) );
 
     // denominator axis
-    var denominatorAxisNode = new ArrowNode( 0, 0, horizontalAxisLength, 0, {
+    const denominatorAxisNode = new ArrowNode( 0, 0, horizontalAxisLength, 0, {
       fill: options.axisColor,
       stroke: null,
       headWidth: options.arrowSize.width,
@@ -115,9 +115,9 @@ define( require => {
     } ) );
 
     // position indicator (vertical line)
-    var indicatorXObserver = null;
+    let indicatorXObserver = null;
     if ( options.indicatorXProperty ) {
-      var indicatorNode = new Line( 0, 0, 0, options.axisYSpacing, {
+      const indicatorNode = new Line( 0, 0, 0, options.axisYSpacing, {
         stroke: options.indicatorColor,
         lineWidth: 4,
         // horizontal position set by indicatorXObserver
@@ -141,7 +141,7 @@ define( require => {
     this.outOfRangeXOffset = horizontalAxisLength + ( options.labelXSpacing / 2 );
 
     // when a Marker is added, add a MarkerNode
-    var markerAddedListener = function( marker ) {
+    const markerAddedListener = function( marker ) {
 
       // The model may contain markers that don't fit on the view scale
       if ( doubleNumberLine.markerIsInRange( marker ) ) {
@@ -157,7 +157,7 @@ define( require => {
     doubleNumberLine.markers.addItemAddedListener( markerAddedListener );
 
     // when a Marker is removed, remove the corresponding MarkerNode
-    var markerRemovedListener = function( marker ) {
+    const markerRemovedListener = function( marker ) {
       self.removeMarkerNode( marker );
     };
     doubleNumberLine.markers.addItemRemovedListener( markerRemovedListener );
@@ -192,7 +192,7 @@ define( require => {
     addMarkerNode: function( marker, options ) {
       unitRates.log && unitRates.log( 'addMarker ' + marker );
       assert && assert( !this.getMarkerNode( marker ), 'already have a MarkerNode for ' + marker );
-      var markerNode = new MarkerNode( marker, options );
+      const markerNode = new MarkerNode( marker, options );
       this.markersParent.addChild( markerNode );
     },
 
@@ -205,7 +205,7 @@ define( require => {
       unitRates.log && unitRates.log( 'removeMarker ' + marker );
 
       // find the node that is associated with the marker
-      var markerNode = this.getMarkerNode( marker );
+      const markerNode = this.getMarkerNode( marker );
 
       // the model may contain markers that aren't displayed, because they are outside the range of the view axes
       if ( markerNode ) {
@@ -221,9 +221,9 @@ define( require => {
      * @private
      */
     getMarkerNode: function( marker ) {
-      var markerNode = null;
-      var markerNodes = this.markersParent.getChildren();
-      for ( var i = 0; i < markerNodes.length && !markerNode; i++ ) {
+      let markerNode = null;
+      const markerNodes = this.markersParent.getChildren();
+      for ( let i = 0; i < markerNodes.length && !markerNode; i++ ) {
         if ( markerNodes[ i ].marker === marker ) {
           markerNode = markerNodes[ i ];
         }

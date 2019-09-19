@@ -26,19 +26,19 @@ define( require => {
    */
   function ShoppingLabCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties, options ) {
 
-    var self = this;
+    const self = this;
 
     Node.call( this );
 
     // parent for stuff that's specific to a scene, to maintain rendering order
     assert && assert( category.shoppingScenes.length === 1, 'Shopping Lab screen supports 1 scene per category' );
-    var shoppingSceneNode = new ShoppingLabSceneNode( category.shoppingScenes[ 0 ], layoutBounds, keypadLayer, viewProperties );
+    const shoppingSceneNode = new ShoppingLabSceneNode( category.shoppingScenes[ 0 ], layoutBounds, keypadLayer, viewProperties );
     this.addChild( shoppingSceneNode );
 
     this.mutate( options );
 
     // Show this category when it's selected.
-    var categoryObserver = function( newCategory ) {
+    const categoryObserver = function( newCategory ) {
       self.visible = ( newCategory === category );
     };
     categoryProperty.link( categoryObserver ); // unlink in dispose

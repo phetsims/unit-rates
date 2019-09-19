@@ -40,7 +40,7 @@ define( require => {
 
     }, options );
 
-    var maxCarWidth = options.buttonWidth - ( 2 * options.buttonContentXMargin );
+    const maxCarWidth = options.buttonWidth - ( 2 * options.buttonContentXMargin );
 
     RadioButtonGroup.call( this, car2VisibleProperty, [
       { value: false, node: createOneCarIcon( maxCarWidth ) },
@@ -81,7 +81,7 @@ define( require => {
    * @returns {Node}
    */
   function createCarImage( imageFile, maxCarWidth ) {
-    var carImage = new Image( imageFile );
+    const carImage = new Image( imageFile );
     carImage.setScaleMagnitude( maxCarWidth / carImage.width );
     return carImage;
   }

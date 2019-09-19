@@ -27,7 +27,7 @@ define( require => {
   const enterString = require( 'string!UNIT_RATES/enter' );
 
   // constants
-  var DECIMAL_POINT = NumberKeypad.DECIMAL_POINT;
+  const DECIMAL_POINT = NumberKeypad.DECIMAL_POINT;
 
   /**
    * @param {Object} [options]
@@ -60,21 +60,21 @@ define( require => {
     // @public
     this.valueStringProperty = new StringProperty( options.valueString );
 
-    var valueNode = new Text( this.valueStringProperty.value, {
+    const valueNode = new Text( this.valueStringProperty.value, {
       font: options.valueFont
     } );
 
-    var valueBackgroundNode = new Rectangle( 0, 0, options.valueBoxWidth, valueNode.height + ( 2 * options.valueYMargin ), {
+    const valueBackgroundNode = new Rectangle( 0, 0, options.valueBoxWidth, valueNode.height + ( 2 * options.valueYMargin ), {
       cornerRadius: 3,
       fill: 'white',
       stroke: 'black'
     } );
 
-    var valueParent = new Node( {
+    const valueParent = new Node( {
       children: [ valueBackgroundNode, valueNode ]
     } );
 
-    var keypadNode = new NumberKeypad( {
+    const keypadNode = new NumberKeypad( {
       valueStringProperty: this.valueStringProperty,
       decimalPointKey: options.decimalPointKey,
       validateKey: validateDigitsAndDecimals( {
@@ -83,7 +83,7 @@ define( require => {
       } )
     } );
 
-    var enterButton = new RectangularPushButton( {
+    const enterButton = new RectangularPushButton( {
       listener: options.enterButtonListener,
       baseColor: URColors.enterButton,
       content: new Text( enterString, {
@@ -93,7 +93,7 @@ define( require => {
       } )
     } );
 
-    var contentNode = new VBox( {
+    const contentNode = new VBox( {
       spacing: 10,
       align: 'center',
       children: [ valueParent, keypadNode, enterButton ]
@@ -143,11 +143,11 @@ define( require => {
     return function( keyString, valueString ) {
 
       // start by assuming that keyString will be ignored
-      var newValueString = valueString;
+      let newValueString = valueString;
 
-      var hasDecimalPoint = valueString.indexOf( DECIMAL_POINT ) !== -1;
-      var numberOfDigits = hasDecimalPoint ? valueString.length - 1 : valueString.length;
-      var numberOfDecimals = !hasDecimalPoint ? 0 : ( valueString.length - valueString.indexOf( DECIMAL_POINT ) - 1 );
+      const hasDecimalPoint = valueString.indexOf( DECIMAL_POINT ) !== -1;
+      const numberOfDigits = hasDecimalPoint ? valueString.length - 1 : valueString.length;
+      const numberOfDecimals = !hasDecimalPoint ? 0 : ( valueString.length - valueString.indexOf( DECIMAL_POINT ) - 1 );
 
       if ( valueString === '0' && keyString === '0' ) {
 

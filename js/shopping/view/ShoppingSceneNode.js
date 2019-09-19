@@ -29,7 +29,7 @@ define( require => {
     BaseShoppingSceneNode.call( this, shoppingScene, layoutBounds, keypadLayer, viewProperties, options );
 
     // Questions, dispose required
-    var questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, {
+    const questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, {
       expandedProperty: viewProperties.questionsExpandedProperty,
       right: layoutBounds.right - URConstants.SCREEN_X_MARGIN,
       top: this.doubleNumberLineAccordionBox.bottom + 10

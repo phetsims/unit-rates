@@ -27,7 +27,7 @@ define( require => {
    */
   function ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, answerOptions ) {
 
-    var self = this;
+    const self = this;
 
     // @public (read-only)
     this.answerOptions = _.extend( {

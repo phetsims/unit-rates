@@ -52,7 +52,7 @@ define( require => {
     step: function( dt ) {
 
       // step the selected scene
-      for ( var i = 0; i < this.shoppingScenes.length; i++ ) {
+      for ( let i = 0; i < this.shoppingScenes.length; i++ ) {
         if ( this.shoppingScenes[ i ] === this.shoppingSceneProperty.value ) {
           this.shoppingScenes[ i ].step( dt );
           break;

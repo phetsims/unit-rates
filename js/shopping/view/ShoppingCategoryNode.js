@@ -27,17 +27,17 @@ define( require => {
    */
   function ShoppingCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties, options ) {
 
-    var self = this;
+    const self = this;
 
     Node.call( this );
 
     // parent for stuff that's specific to a scene, to maintain rendering order
-    var shoppingSceneNode = null; // created below
-    var shoppingSceneParent = new Node();
+    let shoppingSceneNode = null; // created below
+    const shoppingSceneParent = new Node();
     this.addChild( shoppingSceneParent );
 
     // combo box, for selecting a scene, dispose required
-    var comboBox = new ShoppingSceneComboBox( category.shoppingScenes, category.shoppingSceneProperty, this, {
+    const comboBox = new ShoppingSceneComboBox( category.shoppingScenes, category.shoppingSceneProperty, this, {
       left: layoutBounds.left + URConstants.SCREEN_X_MARGIN,
       bottom: layoutBounds.bottom - 80
     } );
@@ -46,13 +46,13 @@ define( require => {
     this.mutate( options );
 
     // Show this category when it's selected.
-    var categoryObserver = function( newCategory ) {
+    const categoryObserver = function( newCategory ) {
       self.visible = ( newCategory === category );
     };
     categoryProperty.link( categoryObserver ); // unlink in dispose
 
     // When the selected scene changes, replace the UI elements that are item-specific
-    var shoppingSceneObserver = function( shoppingScene ) {
+    const shoppingSceneObserver = function( shoppingScene ) {
 
       // remove the old scene
       if ( shoppingSceneNode ) {

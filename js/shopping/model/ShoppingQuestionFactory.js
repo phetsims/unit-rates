@@ -22,7 +22,7 @@ define( require => {
   const patternCostOf0Quantity1UnitsString = require( 'string!UNIT_RATES/pattern_costOf_0quantity_1units' );
   const unitRateQuestionString = require( 'string!UNIT_RATES/unitRateQuestion' );
 
-  var ShoppingQuestionFactory = {
+  const ShoppingQuestionFactory = {
 
     /**
      * Creates a question of the form 'Unit Rate?'
@@ -38,13 +38,13 @@ define( require => {
     createUnitRateQuestion: function( unitRate, units, numeratorOptions, denominatorOptions ) {
 
       // '$0.50'
-      var numerator = unitRate;
-      var numeratorString = StringUtils.format( pattern0CostString,
+      const numerator = unitRate;
+      const numeratorString = StringUtils.format( pattern0CostString,
         URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
       // '1 Apple'
-      var denominator = 1;
-      var denominatorString = StringUtils.format( pattern0Value1UnitsString,
+      const denominator = 1;
+      const denominatorString = StringUtils.format( pattern0Value1UnitsString,
         URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
         units );
 
@@ -67,14 +67,14 @@ define( require => {
      */
     createQuestionSets: function( questionQuantities, unitRate, singularUnits, pluralUnits, amountOfQuestionUnits, numeratorOptions, denominatorOptions ) {
 
-      var questionSets = [];  // {ShoppingQuestion[][]}
+      const questionSets = [];  // {ShoppingQuestion[][]}
 
       questionQuantities.forEach( function( quantities ) {
 
-        var questions = [];
+        const questions = [];
 
         // the first N-1 questions are of the form 'Cost of 3 Apples?'
-        for ( var i = 0; i < quantities.length - 1; i++ ) {
+        for ( let i = 0; i < quantities.length - 1; i++ ) {
           questions.push( createCostOfQuestion( quantities[ i ],
             unitRate, singularUnits, pluralUnits,
             numeratorOptions, denominatorOptions ) );
@@ -107,23 +107,23 @@ define( require => {
   var createCostOfQuestion = function( denominator, unitRate, singularUnits, pluralUnits, numeratorOptions, denominatorOptions ) {
 
     // answer
-    var numerator = denominator * unitRate;
-    var answer = Util.toFixedNumber( numerator, numeratorOptions.maxDecimals );
+    const numerator = denominator * unitRate;
+    const answer = Util.toFixedNumber( numerator, numeratorOptions.maxDecimals );
 
     // 'Apples' or 'Apple'
-    var units = ( denominator > 1 ) ? pluralUnits : singularUnits;
+    const units = ( denominator > 1 ) ? pluralUnits : singularUnits;
 
     // '$3.00'
-    var numeratorString = StringUtils.format( pattern0CostString,
+    const numeratorString = StringUtils.format( pattern0CostString,
       URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
     // '10 Apples'
-    var denominatorString = StringUtils.format( pattern0Value1UnitsString,
+    const denominatorString = StringUtils.format( pattern0Value1UnitsString,
       URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
       units );
 
     // 'Cost of 10 Apples?'
-    var questionString = StringUtils.format( patternCostOf0Quantity1UnitsString,
+    const questionString = StringUtils.format( patternCostOf0Quantity1UnitsString,
       URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
       units );
 
@@ -144,23 +144,23 @@ define( require => {
   var createItemsForQuestion = function( denominator, unitRate, singularUnits, pluralUnits, amountOfQuestionUnits, numeratorOptions, denominatorOptions ) {
 
     // answer
-    var answer = Util.toFixedNumber( denominator, denominatorOptions.maxDecimals );
+    const answer = Util.toFixedNumber( denominator, denominatorOptions.maxDecimals );
 
     // 'Apples' or 'Apple'
-    var units = ( denominator > 1 ) ? pluralUnits : singularUnits;
+    const units = ( denominator > 1 ) ? pluralUnits : singularUnits;
 
     // '$4.00'
-    var numerator = denominator * unitRate;
-    var numeratorString = StringUtils.format( pattern0CostString,
+    const numerator = denominator * unitRate;
+    const numeratorString = StringUtils.format( pattern0CostString,
       URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
     // '8 Apples'
-    var denominatorString = StringUtils.format( pattern0Value1UnitsString,
+    const denominatorString = StringUtils.format( pattern0Value1UnitsString,
       URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
       units );
 
     // 'Apples for $4.00?'
-    var questionString = StringUtils.format( pattern0Items1CostString,
+    const questionString = StringUtils.format( pattern0Items1CostString,
       amountOfQuestionUnits,
       URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 

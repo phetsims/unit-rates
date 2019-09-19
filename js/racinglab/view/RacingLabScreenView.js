@@ -34,8 +34,8 @@ define( require => {
   const timer2String = require( 'string!UNIT_RATES/timer2' );
 
   // constants
-  var BUTTON_X_SPACE = 20; // space between buttons
-  var ACCORDION_BOX_X_SPACE = 10; // space between accordion boxes
+  const BUTTON_X_SPACE = 20; // space between buttons
+  const ACCORDION_BOX_X_SPACE = 10; // space between accordion boxes
 
   /**
    * @param {RacingLabModel} model
@@ -44,23 +44,23 @@ define( require => {
    */
   function RacingLabScreenView( model, options ) {
 
-    var self = this;
+    const self = this;
 
     ScreenView.call( this, options );
 
     // Properties that are specific to the view
-    var viewProperties = new RacingLabViewProperties();
+    const viewProperties = new RacingLabViewProperties();
 
     // parent for everything expect the keypad
-    var playAreaLayer = new Node();
+    const playAreaLayer = new Node();
     this.addChild( playAreaLayer );
 
     // separate layer for model keypad
-    var keypadLayer = new KeypadLayer();
+    const keypadLayer = new KeypadLayer();
     this.addChild( keypadLayer );
 
     // Double number line for car1
-    var doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
+    const doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
         axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
         titleString: doubleNumberLine1String,
@@ -74,7 +74,7 @@ define( require => {
     playAreaLayer.addChild( doubleNumberLineAccordionBox1 );
 
     // Double number line for car2
-    var doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
+    const doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
       model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
         axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
         titleString: doubleNumberLine2String,
@@ -88,7 +88,7 @@ define( require => {
     playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
 
     // Rate control for car1
-    var rateAccordionBox1 = new RaceCarRateAccordionBox( model.car1, {
+    const rateAccordionBox1 = new RaceCarRateAccordionBox( model.car1, {
       titleString: rate1String,
       expandedProperty: viewProperties.rateExpandedProperty1,
       left: doubleNumberLineAccordionBox1.right + ACCORDION_BOX_X_SPACE,
@@ -97,7 +97,7 @@ define( require => {
     playAreaLayer.addChild( rateAccordionBox1 );
 
     // Rate control for car2
-    var rateAccordionBox2 = new RaceCarRateAccordionBox( model.car2, {
+    const rateAccordionBox2 = new RaceCarRateAccordionBox( model.car2, {
       titleString: rate2String,
       expandedProperty: viewProperties.rateExpandedProperty2,
       left: doubleNumberLineAccordionBox2.right + ACCORDION_BOX_X_SPACE,
@@ -106,7 +106,7 @@ define( require => {
     playAreaLayer.addChild( rateAccordionBox2 );
 
     // Track for car1
-    var trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, viewProperties.arrowsVisibleProperty, {
+    const trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, viewProperties.arrowsVisibleProperty, {
       timerTitleString: timer1String,
       trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
@@ -115,7 +115,7 @@ define( require => {
     playAreaLayer.addChild( trackNode1 );
 
     // Track for car2
-    var trackNode2 = new RaceTrackNode( model.car2, viewProperties.timerExpandedProperty2, viewProperties.arrowsVisibleProperty, {
+    const trackNode2 = new RaceTrackNode( model.car2, viewProperties.timerExpandedProperty2, viewProperties.arrowsVisibleProperty, {
       timerTitleString: timer2String,
       trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
@@ -124,21 +124,21 @@ define( require => {
     playAreaLayer.addChild( trackNode2 );
 
     // Scene control (1 vs 2 cars)
-    var sceneControl = new RacingLabSceneControl( model.car2.visibleProperty, {
+    const sceneControl = new RacingLabSceneControl( model.car2.visibleProperty, {
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       centerY: this.layoutBounds.centerY
     } );
     playAreaLayer.addChild( sceneControl );
 
     // Start/Stop button
-    var startStopButton = new StartStopButton( model.runningProperty, {
+    const startStopButton = new StartStopButton( model.runningProperty, {
       right: sceneControl.left - BUTTON_X_SPACE,
       centerY: this.layoutBounds.centerY
     } );
     playAreaLayer.addChild( startStopButton );
 
     // Reset Race button
-    var resetRace = new ResetRaceButton( {
+    const resetRace = new ResetRaceButton( {
       listener: function() {
         model.runningProperty.value = false;
         model.car1.resetRace();
@@ -150,7 +150,7 @@ define( require => {
     playAreaLayer.addChild( resetRace );
 
     // Reset All button
-    var resetAllButton = new ResetAllButton( {
+    const resetAllButton = new ResetAllButton( {
       listener: function() {
         self.interruptSubtreeInput();
         model.reset();

@@ -27,7 +27,7 @@ define( require => {
    */
   function ShoppingScreenView( model, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 
@@ -48,33 +48,33 @@ define( require => {
     ScreenView.call( this, options );
 
     // Properties that are specific to the view
-    var viewProperties = new ShoppingViewProperties();
+    const viewProperties = new ShoppingViewProperties();
 
     // parent for everything expect the keypad
-    var playAreaLayer = new Node();
+    const playAreaLayer = new Node();
     this.addChild( playAreaLayer );
 
     // separate layer for model keypad
-    var keypadLayer = new KeypadLayer();
+    const keypadLayer = new KeypadLayer();
     this.addChild( keypadLayer );
 
     // create the view for each category
-    var categoryNodes = [];
+    const categoryNodes = [];
     model.categories.forEach( function( category ) {
-      var categoryNode = options.createCategoryNode( category, model.categoryProperty, self.layoutBounds, keypadLayer, viewProperties );
+      const categoryNode = options.createCategoryNode( category, model.categoryProperty, self.layoutBounds, keypadLayer, viewProperties );
       categoryNodes.push( categoryNode );
       playAreaLayer.addChild( categoryNode );
     } );
 
     // Category radio buttons
-    var categoryRadioButtons = new ShoppingCategoryRadioButtons( model.categories, model.categoryProperty, {
+    const categoryRadioButtons = new ShoppingCategoryRadioButtons( model.categories, model.categoryProperty, {
       left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
       bottom: this.layoutBounds.bottom - ( 2 * URConstants.SCREEN_Y_MARGIN )
     } );
     playAreaLayer.addChild( categoryRadioButtons );
 
     // Reset All button
-    var resetAllButton = new ResetAllButton( {
+    const resetAllButton = new ResetAllButton( {
       listener: function() {
         self.interruptSubtreeInput();
         model.reset();

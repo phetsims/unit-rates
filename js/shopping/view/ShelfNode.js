@@ -26,11 +26,11 @@ define( require => {
   function ShelfNode( shelf ) {
 
     // shelf.width is the width at the midpoint of the shelf's top face, compute the foreground and background widths
-    var foregroundWidth = shelf.width + shelf.perspectiveXOffset;
-    var backgroundWidth = shelf.width - shelf.perspectiveXOffset;
+    const foregroundWidth = shelf.width + shelf.perspectiveXOffset;
+    const backgroundWidth = shelf.width - shelf.perspectiveXOffset;
 
     // draw top face clockwise, starting at front-left corner, in pseudo-3D using parallel perspective
-    var shelfShape = new Shape()
+    const shelfShape = new Shape()
       .moveTo( 0, 0 )
       .lineTo( shelf.perspectiveXOffset, -shelf.depth )
       .lineTo( shelf.perspectiveXOffset + backgroundWidth, -shelf.depth )
@@ -40,7 +40,7 @@ define( require => {
     shelfShape.rect( 0, 0, shelf.width + shelf.perspectiveXOffset, shelf.height );
 
     // origin at center of top face
-    var shelfNode = new Path( shelfShape, {
+    const shelfNode = new Path( shelfShape, {
       fill: URColors.shelf,
       stroke: 'black',
       lineJoin: 'round',

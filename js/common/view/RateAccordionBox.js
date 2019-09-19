@@ -25,7 +25,7 @@ define( require => {
   const rateString = require( 'string!UNIT_RATES/rate' );
 
   // If the Rate accordion box appears to change size when switching categories, increase this value. Determined empirically.
-  var MIN_FRACTION_LINE_LENGTH = 115;
+  const MIN_FRACTION_LINE_LENGTH = 115;
 
   /**
    * @param {Rate} rate
@@ -75,7 +75,7 @@ define( require => {
     } );
 
     // numerator picker, must be disposed
-    var numeratorPicker = new NumberPicker( rate.numeratorProperty, new Property( options.numeratorRange ),
+    const numeratorPicker = new NumberPicker( rate.numeratorProperty, new Property( options.numeratorRange ),
       _.extend( {}, URConstants.NUMBER_PICKER_OPTIONS, {
         upFunction: options.numeratorPickerUpFunction,
         downFunction: options.numeratorPickerDownFunction,
@@ -85,13 +85,13 @@ define( require => {
       } ) );
 
     // numerator units
-    var numeratorUnitsNode = new Text( options.numeratorUnits, {
+    const numeratorUnitsNode = new Text( options.numeratorUnits, {
       font: options.unitsFont,
       maxWidth: options.unitsMaxWidth
     } );
 
     // denominator picker, must be disposed
-    var denominatorPicker = new NumberPicker( rate.denominatorProperty, new Property( options.denominatorRange ),
+    const denominatorPicker = new NumberPicker( rate.denominatorProperty, new Property( options.denominatorRange ),
       _.extend( {}, URConstants.NUMBER_PICKER_OPTIONS, {
         upFunction: options.denominatorPickerUpFunction,
         downFunction: options.denominatorPickerDownFunction,
@@ -101,12 +101,12 @@ define( require => {
       } ) );
 
     // denominator units
-    var denominatorUnitsNode = new Text( options.denominatorUnits, {
+    const denominatorUnitsNode = new Text( options.denominatorUnits, {
       font: options.unitsFont,
       maxWidth: options.unitsMaxWidth
     } );
 
-    var contentNode = new Node( {
+    const contentNode = new Node( {
       children: [ numeratorPicker, numeratorUnitsNode, denominatorPicker, denominatorUnitsNode ]
     } );
 
@@ -116,9 +116,9 @@ define( require => {
     denominatorUnitsNode.left = numeratorUnitsNode.left;
 
     // fraction line
-    var fractionLineLength = Math.max( MIN_FRACTION_LINE_LENGTH,
+    const fractionLineLength = Math.max( MIN_FRACTION_LINE_LENGTH,
       Math.max( numeratorUnitsNode.right - numeratorPicker.left, denominatorUnitsNode.right - denominatorPicker.left ) );
-    var fractionLineNode = new Line( 0, 0, fractionLineLength, 0, {
+    const fractionLineNode = new Line( 0, 0, fractionLineLength, 0, {
       stroke: 'black',
       lineWidth: 2,
       left: Math.min( numeratorPicker.left, denominatorPicker.left )

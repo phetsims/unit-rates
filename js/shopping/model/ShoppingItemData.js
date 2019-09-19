@@ -322,7 +322,7 @@ define( require => {
     assertIsItemData: function( itemData ) {
 
       // Instead of keeping a separate list of property names, assume that the APPLES instance is representative.
-      var keys = _.keys( ShoppingItemData.Fruit.APPLES );
+      const keys = _.keys( ShoppingItemData.Fruit.APPLES );
 
       keys.forEach( function( key ) {
         assert && assert( _.has( itemData, key ), 'missing property: ' + key );

@@ -64,7 +64,7 @@ define( require => {
     } );
 
     // double number line
-    var doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
+    const doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
       axisViewLength: options.axisViewLength,
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
@@ -73,14 +73,14 @@ define( require => {
     } );
 
     // home positions for marker editor and undo button, to left of axes
-    var markerEditorNodeHomeX = doubleNumberLineNode.left - 28;
-    var undoButtonHomePosition = new Vector2( markerEditorNodeHomeX, doubleNumberLineNode.centerY );
+    const markerEditorNodeHomeX = doubleNumberLineNode.left - 28;
+    const undoButtonHomePosition = new Vector2( markerEditorNodeHomeX, doubleNumberLineNode.centerY );
 
     // when the marker editor exceeds the range of the axes, move it to the right of the axes
-    var markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
+    const markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
 
     // marker editor
-    var markerEditorNode = new MarkerEditorNode( markerEditor, this, keypadLayer, {
+    const markerEditorNode = new MarkerEditorNode( markerEditor, this, keypadLayer, {
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
       keypadLocation: options.keypadLocation,
@@ -90,11 +90,11 @@ define( require => {
 
     // The undo button is overloaded (bad design, imo), and can apply to either the marker editor or a marker.
     // This flag indicates whether the undo button applies to the editor (true) or a marker (false).
-    var undoAppliesToEditor = true;
+    let undoAppliesToEditor = true;
 
     // Pressing the undo button moves the marker edit back to its home position,
     // or removes the marker that was most recently added using the editor.
-    var undoButton = new RectangularPushButton( {
+    const undoButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'undo', {
         scale: 0.36 // to approximately match height of marker editor buttons, determined empirically
       } ),
@@ -113,7 +113,7 @@ define( require => {
     undoButton.touchArea = undoButton.localBounds.dilatedXY( 5, 5 );
 
     // Pressing the eraser button erases all 'erasable' markers from the double number line.
-    var eraserButton = new EraserButton( {
+    const eraserButton = new EraserButton( {
       scale: 0.92, // to approximately match height of marker editor buttons, determined empirically
       baseColor: URColors.eraserButton,
       listener: function() {
@@ -125,31 +125,31 @@ define( require => {
     eraserButton.touchArea = eraserButton.localBounds.dilatedXY( 5, 5 );
 
     // assemble the content for the accordion box
-    var contentNode = new Node( {
+    const contentNode = new Node( {
       children: [ doubleNumberLineNode, undoButton, markerEditorNode, eraserButton ]
     } );
 
     AccordionBox.call( this, contentNode, options );
 
     // {Animation|null} animation for marker editor
-    var markerEditorAnimation = null;
+    let markerEditorAnimation = null;
 
     // if false, move the marker editor immediately instead of animating.
     // Used to set the editor's initial position on startup.
-    var markerEditorAnimationEnabled = false;
+    let markerEditorAnimationEnabled = false;
 
     // Observe marker editor, to position the editor and create markers.
-    var markerEditorObserver = function() {
+    const markerEditorObserver = function() {
 
       // local vars to improve readability
-      var numerator = markerEditor.numeratorProperty.value;
-      var denominator = markerEditor.denominatorProperty.value;
-      var maxNumerator = doubleNumberLine.getMaxNumerator();
-      var maxDenominator = doubleNumberLine.getMaxDenominator();
-      var axisViewLength = doubleNumberLineNode.axisViewLength;
+      const numerator = markerEditor.numeratorProperty.value;
+      const denominator = markerEditor.denominatorProperty.value;
+      const maxNumerator = doubleNumberLine.getMaxNumerator();
+      const maxDenominator = doubleNumberLine.getMaxDenominator();
+      const axisViewLength = doubleNumberLineNode.axisViewLength;
 
       // {number} destination for horizontal animation of marker editor, null indicates that no animation is required
-      var destinationX = null;
+      let destinationX = null;
 
       // if the marker has both a numerator and denominator...
       if ( numerator !== null && denominator !== null ) {
@@ -157,8 +157,8 @@ define( require => {
         if ( denominator <= maxDenominator ) {
 
           // create a marker
-          var isMajor = doubleNumberLine.isMajorMarker( numerator, denominator );
-          var marker = new Marker( numerator, denominator, 'editor', {
+          const isMajor = doubleNumberLine.isMajorMarker( numerator, denominator );
+          const marker = new Marker( numerator, denominator, 'editor', {
             isMajor: isMajor,
             color: isMajor ? URColors.majorMarker : URColors.minorMarker
           } );
@@ -282,7 +282,7 @@ define( require => {
 
     // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
     // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
-    var undoMarkerObserver = function( marker ) {
+    const undoMarkerObserver = function( marker ) {
       if ( marker ) {
 
         // associate the undo button with the marker

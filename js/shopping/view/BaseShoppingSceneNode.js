@@ -38,7 +38,7 @@ define( require => {
     }, options );
 
     // Double number line, dispose required
-    var doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
+    const doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
       axisViewLength: URConstants.SHOPPING_AXIS_LENGTH,
       expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
       left: layoutBounds.minX + URConstants.SCREEN_X_MARGIN,
@@ -46,17 +46,17 @@ define( require => {
     } );
 
     // shelf, dispose required
-    var shelfNode = new ShelfNode( shoppingScene.shelf );
+    const shelfNode = new ShelfNode( shoppingScene.shelf );
 
     // scale, dispose required
-    var scaleNode = new ScaleNode( shoppingScene.scale, {
+    const scaleNode = new ScaleNode( shoppingScene.scale, {
       costExpandedProperty: viewProperties.scaleCostExpandedProperty,
       extraCostDecimalVisible: options.extraCostDecimalVisible,
       quantityIsDisplayed: shoppingScene.scaleQuantityIsDisplayed
     } );
 
     // button that resets the shelf to its initial state
-    var resetShelfButton = new ResetButton( {
+    const resetShelfButton = new ResetButton( {
       listener: function() {
         dragLayer.interruptSubtreeInput();
         shoppingScene.resetShelfAndScale();
@@ -69,25 +69,25 @@ define( require => {
     } );
 
     // Disable the button when all bags are on the shelf
-    var numberOfBagsObserver = function( numberOfBags ) {
+    const numberOfBagsObserver = function( numberOfBags ) {
       resetShelfButton.enabled = ( numberOfBags !== shoppingScene.numberOfBags );
     };
     shoppingScene.shelf.numberOfBagsProperty.link( numberOfBagsObserver ); // unlink in dispose
 
     // layers for bags and items
     var dragLayer = new Node(); // all Nodes are in this layer while being dragged
-    var bagLayer = new Node();  // the row of bags
-    var frontItemLayer = new Node(); // the front row of items
-    var backItemLayer = new Node(); // the back row of items
+    const bagLayer = new Node();  // the row of bags
+    const frontItemLayer = new Node(); // the front row of items
+    const backItemLayer = new Node(); // the back row of items
 
     // bags and items, dispose required
-    var bagNodes = [];
-    var itemNodes = [];
-    var bagsOpen = false;
+    const bagNodes = [];
+    const itemNodes = [];
+    let bagsOpen = false;
     shoppingScene.bags.forEach( function( bag ) {
 
       // create the bag's Node, put it in the bag layer
-      var bagNode = new BagNode( bag, shoppingScene.shelf, shoppingScene.scale, bagLayer, dragLayer );
+      const bagNode = new BagNode( bag, shoppingScene.shelf, shoppingScene.scale, bagLayer, dragLayer );
       bagNodes.push( bagNode );
       bagLayer.addChild( bagNode );
 
@@ -97,7 +97,7 @@ define( require => {
         bag.items.forEach( function( item ) {
 
           // Create the item's Node. Adds itself to the proper layer, so there is no addChild here.
-          var itemNode = new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
+          const itemNode = new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
             frontItemLayer, backItemLayer, dragLayer );
           itemNodes.push( itemNode );
         } );
@@ -116,13 +116,13 @@ define( require => {
     if ( URQueryParameters.showCells ) {
 
       // cells for bags
-      var bagRowOptions = { stroke: 'green' };
+      const bagRowOptions = { stroke: 'green' };
       this.addChild( new RowOfMovablesNode( shoppingScene.shelf.bagRow, bagRowOptions ) );
       this.addChild( new RowOfMovablesNode( shoppingScene.scale.bagRow, bagRowOptions ) );
 
       // cells for items
       if ( bagsOpen ) {
-        var itemRowOptions = { stroke: 'blue' };
+        const itemRowOptions = { stroke: 'blue' };
         this.addChild( new RowOfMovablesNode( shoppingScene.shelf.backItemRow, itemRowOptions ) );
         this.addChild( new RowOfMovablesNode( shoppingScene.shelf.frontItemRow, itemRowOptions ) );
         this.addChild( new RowOfMovablesNode( shoppingScene.scale.backItemRow, itemRowOptions ) );

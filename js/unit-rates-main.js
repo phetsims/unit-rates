@@ -19,7 +19,7 @@ define( require => {
   // strings
   const unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );
 
-  var simOptions = {
+  const simOptions = {
     credits: {
       leadDesign: 'Amy Rouinfar',
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.), Dave Schmitz (Schmitzware)',
@@ -31,13 +31,13 @@ define( require => {
 
   SimLauncher.launch( function() {
 
-    var screens = [
+    const screens = [
       new ShoppingScreen(),
       new ShoppingLabScreen(),
       new RacingLabScreen()
     ];
 
-    var sim = new Sim( unitRatesTitleString, screens, simOptions );
+    const sim = new Sim( unitRatesTitleString, screens, simOptions );
     sim.start();
   } );
 } );

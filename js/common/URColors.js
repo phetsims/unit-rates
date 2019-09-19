@@ -12,10 +12,10 @@ define( require => {
   const unitRates = require( 'UNIT_RATES/unitRates' );
 
   // constants
-  var DEFAULT_BUTTON_COLOR = 'rgb( 242, 242, 242 )';
+  const DEFAULT_BUTTON_COLOR = 'rgb( 242, 242, 242 )';
 
   // all values are {Color|string} and read-only, unless otherwise noted
-  var URColors = {
+  const URColors = {
 
     // screens
     shoppingScreenBackground: 'rgb( 226, 255, 249 )',

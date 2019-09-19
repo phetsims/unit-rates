@@ -20,7 +20,7 @@ define( require => {
 
   // constants
   // how the marker was created, ordered by ascending precedence
-  var CREATOR_VALUES = [ 'editor', 'scale', 'question', 'race' ];
+  const CREATOR_VALUES = [ 'editor', 'scale', 'question', 'race' ];
 
   /**
    * @param {number} numerator
@@ -94,10 +94,10 @@ define( require => {
      */
     precedenceOf: function( marker ) {
 
-      var thisIndex = CREATOR_VALUES.indexOf( this.creator );
+      const thisIndex = CREATOR_VALUES.indexOf( this.creator );
       assert && assert( thisIndex !== -1, 'invalid creator: ' + this.creator );
 
-      var thatIndex = CREATOR_VALUES.indexOf( marker.creator );
+      const thatIndex = CREATOR_VALUES.indexOf( marker.creator );
       assert && assert( thatIndex !== -1, 'invalid creator: ' + marker.creator );
 
       if ( thatIndex > thisIndex ) {

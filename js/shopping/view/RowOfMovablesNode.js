@@ -26,14 +26,14 @@ define( require => {
       stroke: 'black'
     }, options );
 
-    var cellWidth = rowOfMovables.cellSize.width;
-    var cellHeight = rowOfMovables.cellSize.height;
+    const cellWidth = rowOfMovables.cellSize.width;
+    const cellHeight = rowOfMovables.cellSize.height;
 
     // add a rectangle for each cell
-    var shape = new Shape();
+    const shape = new Shape();
     rowOfMovables.getCells().forEach( function( cell ) {
-      var x = cell.location.x - ( cellWidth / 2 );
-      var y = cell.location.y - cellHeight;
+      const x = cell.location.x - ( cellWidth / 2 );
+      const y = cell.location.y - cellHeight;
       shape.rect( x, y, cellWidth, cellHeight );
     } );
 

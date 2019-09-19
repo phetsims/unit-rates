@@ -87,7 +87,7 @@ define( require => {
       dt = Math.min( dt, 0.1 );
       
       // step the selected category
-      for ( var i = 0; i < this.categories.length; i++ ) {
+      for ( let i = 0; i < this.categories.length; i++ ) {
         if ( this.categories[ i ] === this.categoryProperty.value ) {
           this.categories[ i ].step( dt );
           break;

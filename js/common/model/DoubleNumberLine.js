@@ -18,8 +18,8 @@ define( require => {
   const Util = require( 'DOT/Util' );
 
   // constants
-  var FIXED_AXIS_VALUES = [ 'numerator', 'denominator' ];
-  var SHARED_OPTIONS = {
+  const FIXED_AXIS_VALUES = [ 'numerator', 'denominator' ];
+  const SHARED_OPTIONS = {
     axisLabel: '', // {string} label for the axis
     maxDecimals: 1, // {number} maximum number of decimal places
     trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
@@ -32,7 +32,7 @@ define( require => {
    */
   function DoubleNumberLine( unitRateProperty, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       fixedAxis: 'denominator', // {string} which of the axes has a fixed (immutable) range
@@ -187,10 +187,10 @@ define( require => {
 
       assert && assert( !this.markers.contains( marker ), 'attempt to add marker again: ' + marker );
 
-      var wasAdded = false; //{boolean} state to determine whether the marker was added or not
+      let wasAdded = false; //{boolean} state to determine whether the marker was added or not
 
       // look for a marker that conflicts with this one (has same numerator or denominator)
-      var conflictingMarker = this.getConflictingMarker( marker );
+      const conflictingMarker = this.getConflictingMarker( marker );
 
       if ( !conflictingMarker ) {
 
@@ -236,9 +236,9 @@ define( require => {
      * @private
      */
     getConflictingMarker: function( marker ) {
-      var conflictingMarker = null;
-      var markers = this.markers.getArray();
-      for ( var i = 0; i < markers.length && !conflictingMarker; i++ ) {
+      let conflictingMarker = null;
+      const markers = this.markers.getArray();
+      for ( let i = 0; i < markers.length && !conflictingMarker; i++ ) {
         if ( marker.conflictsWith( markers[ i ] ) ) {
           conflictingMarker = markers[ i ];
         }
@@ -262,7 +262,7 @@ define( require => {
      * @public
      */
     undo: function() {
-      var undoMarker = this.undoMarkerProperty.value;
+      const undoMarker = this.undoMarkerProperty.value;
       if ( undoMarker ) {
         assert && assert( this.markers.contains( undoMarker ), 'unexpected undoMarker: ' + undoMarker );
         this.undoMarkerProperty.value = null;
@@ -279,7 +279,7 @@ define( require => {
       this.undoMarkerProperty.reset();
 
       // remove all markers that are erasable
-      var self = this;
+      const self = this;
       this.markers.forEach( function( marker ) {
         if ( marker.erasable ) {
           self.removeMarker( marker );

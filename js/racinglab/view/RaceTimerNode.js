@@ -22,8 +22,8 @@ define( require => {
   const pattern0Value1UnitsString = require( 'string!UNIT_RATES/pattern_0value_1units' );
 
   // constants
-  var TIMER_FONT = new URFont( 16 );
-  var DECIMAL_PLACES = 2;
+  const TIMER_FONT = new URFont( 16 );
+  const DECIMAL_PLACES = 2;
 
   /**
    * @param {Property.<number>} timeProperty
@@ -35,7 +35,7 @@ define( require => {
   function RaceTimerNode( timeProperty, expandedProperty, titleString, options ) {
 
     // dispose not required, exists for sim lifetime
-    var valueNode = new ValueNode( timeProperty, {
+    const valueNode = new ValueNode( timeProperty, {
       font: TIMER_FONT,
       valueToString: function( value ) {
         return StringUtils.format( pattern0Value1UnitsString, Util.toFixed( value, DECIMAL_PLACES ), hoursString );

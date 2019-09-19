@@ -25,7 +25,7 @@ define( require => {
    */
   function BagNode( bag, shelf, scale, bagLayer, dragLayer ) {
 
-    var self = this;
+    const self = this;
 
     // This type does not propagate options to the supertype because the model determines location.
     Image.call( this, bag.image, {
@@ -34,18 +34,18 @@ define( require => {
     } );
 
     // origin is at bottom center
-    var locationObserver = function( location ) {
+    const locationObserver = function( location ) {
       self.centerX = location.x;
       self.bottom = location.y;
     };
     bag.locationProperty.link( locationObserver ); // unlink in dispose
 
-    var visibleObserver = function( visible ) {
+    const visibleObserver = function( visible ) {
       self.visible = visible;
     };
     bag.visibleProperty.link( visibleObserver ); // unlink in dispose
 
-    var dragHandler = new BagDragHandler( this, bag, shelf, scale, bagLayer, dragLayer );
+    const dragHandler = new BagDragHandler( this, bag, shelf, scale, bagLayer, dragLayer );
     this.addInputListener( dragHandler );
 
     // @private

@@ -77,8 +77,8 @@ define( require => {
     withUnitRate: function( unitRate ) {
 
       // compute corresponding numerator and denominator
-      var denominator = Math.pow( 10, URUtils.decimalPlaces( unitRate ) );
-      var fraction = new Fraction( unitRate * denominator, denominator );
+      const denominator = Math.pow( 10, URUtils.decimalPlaces( unitRate ) );
+      const fraction = new Fraction( unitRate * denominator, denominator );
       fraction.reduce();
 
       // use closest integer values

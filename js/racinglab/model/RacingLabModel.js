@@ -25,7 +25,7 @@ define( require => {
    */
   function RacingLabModel() {
 
-    var self = this;
+    const self = this;
 
     // @public is the race running?
     this.runningProperty = new BooleanProperty( false );

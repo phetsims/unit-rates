@@ -22,7 +22,7 @@ define( require => {
    */
   function ValueNode( valueProperty, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       font: new URFont( 20 ),
@@ -32,7 +32,7 @@ define( require => {
     Text.call( this, '' ); // string will be filled in by valueObserver
 
     // update value display
-    var valueObserver = function( value ) {
+    const valueObserver = function( value ) {
       self.text = options.valueToString( value );
     };
     valueProperty.link( valueObserver ); // unlink in dispose

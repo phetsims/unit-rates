@@ -33,7 +33,7 @@ define( require => {
     BaseShoppingSceneNode.call( this, shoppingScene, layoutBounds, keypadLayer, viewProperties, options );
 
     // Rate accordion box, dispose required
-    var rateAccordionBox = new RateAccordionBox( shoppingScene.rate, {
+    const rateAccordionBox = new RateAccordionBox( shoppingScene.rate, {
       numeratorRange: URConstants.COST_RANGE,
       denominatorRange: URConstants.QUANTITY_RANGE,
       numeratorUnits: shoppingScene.numeratorOptions.axisLabel,  // matches the axis of the double number line
