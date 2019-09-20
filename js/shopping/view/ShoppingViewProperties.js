@@ -1,4 +1,4 @@
-// Copyright 2016-2018, University of Colorado Boulder
+// Copyright 2016-2019, University of Colorado Boulder
 
 /**
  * The union of view Properties used in the 'Shopping' and 'Shopping Lab' screens.

@@ -1,4 +1,4 @@
-// Copyright 2016-2017, University of Colorado Boulder
+// Copyright 2016-2019, University of Colorado Boulder
 
 /**
  * Model for the 'Shopping' screen. Also used as the base type for the 'Shopping Lab' screen.

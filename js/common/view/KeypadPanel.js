@@ -1,4 +1,4 @@
-// Copyright 2016-2018, University of Colorado Boulder
+// Copyright 2016-2019, University of Colorado Boulder
 
 //TODO replace NumberKeypad with next-generation keypad, see https://github.com/phetsims/unit-rates/issues/153
 /***
