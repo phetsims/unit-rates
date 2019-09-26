@@ -175,7 +175,7 @@ define( require => {
       numeratorNode.visible = correct;
       fractionLineNode.stroke = denominatorNode.fill = ( correct ? URColors.correctQuestion : options.neutralColor );
 
-      // The denominator is sometimes visibile at all times (e.g. for the 'Unit Rate?' question).
+      // The denominator is sometimes visible at all times (e.g. for the 'Unit Rate?' question).
       // If it's not visible at all times, make it visible when the answer is revealed.
       if ( !options.denominatorVisible ) {
         fractionLineNode.visible = denominatorNode.visible = correct;
