@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.16 Mon Oct 14 2019 15:43:47 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# unit-rates 1.0.16 Tue Oct 15 2019 16:19:41 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "phet-core": {
-    "sha": "203831ccc1bf60aac99747ee76d49f75c634404d",
+    "sha": "b9b67611be6138642d25b2c67cbc70ff432fd83d",
     "branch": "unit-rates-1.0"
   },
   "phetcommon": {
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "90024b63ceacbd8a952e2707c2105f324dfaa5d0",
+    "sha": "1a68835acb34d7c68564d1bba22e25942cf6e7fe",
     "branch": "1.0"
   }
 }
