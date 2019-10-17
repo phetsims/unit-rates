@@ -16,6 +16,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
   const LinearGradient = require( 'SCENERY/util/LinearGradient' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -44,7 +45,7 @@ define( require => {
    */
   function ScaleNode( scale, options ) {
 
-    options = _.extend( {
+    options = merge( {
       costExpandedProperty: null, // {Property.<boolean>|null} null indicates that cost display is not collapsible
       extraCostDecimalVisible: false, // {boolean} does the scale show a 3rd decimal place for cost?
       quantityIsDisplayed: false // {boolean} does the scale show quantity?

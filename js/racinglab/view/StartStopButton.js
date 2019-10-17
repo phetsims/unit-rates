@@ -12,6 +12,7 @@ define( require => {
   const BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const StopSignNode = require( 'SCENERY_PHET/StopSignNode' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -27,7 +28,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       radius: 45
     }, options );
 

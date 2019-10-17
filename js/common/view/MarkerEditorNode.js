@@ -14,6 +14,7 @@ define( require => {
   const FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -41,7 +42,7 @@ define( require => {
    */
   function MarkerEditorNode( markerEditor, doubleNumberLinePanel, keypadLayer, options ) {
 
-    options = _.extend( {
+    options = merge( {
       lineLength: URConstants.MAJOR_MARKER_LENGTH, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 55, // {number} width of the value field, height determined by valueFont
       valueFont: new URFont( 12 ), // {Font} font for the value
@@ -55,9 +56,9 @@ define( require => {
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
     }, options );
 
-    const numeratorOptions = _.extend( {}, SHARED_OPTIONS, options.numeratorOptions );
+    const numeratorOptions = merge( {}, SHARED_OPTIONS, options.numeratorOptions );
 
-    const denominatorOptions = _.extend( {}, SHARED_OPTIONS, options.denominatorOptions );
+    const denominatorOptions = merge( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     assert && assert( _.includes( KEYPAD_LOCATION_VALUES, options.keypadLocation ),
       'invalid keypadLocation: ' + options.keypadLocation );
@@ -80,14 +81,14 @@ define( require => {
     };
 
     // box for the numerator
-    const numeratorBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, _.extend( {}, valueBoxOptions, {
+    const numeratorBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, merge( {}, valueBoxOptions, {
       centerX: verticalLine.centerX,
       bottom: verticalLine.top
     } ) );
     this.addChild( numeratorBox );
 
     // box for the denominator
-    const denominatorBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, _.extend( {}, valueBoxOptions, {
+    const denominatorBox = new Rectangle( 0, 0, valueBoxWidth, valueBoxHeight, merge( {}, valueBoxOptions, {
       centerX: verticalLine.centerX,
       top: verticalLine.bottom
     } ) );

@@ -11,6 +11,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Path = require( 'SCENERY/nodes/Path' );
   const Shape = require( 'KITE/Shape' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
@@ -22,7 +23,7 @@ define( require => {
    */
   function RowOfMovablesNode( rowOfMovables, options ) {
 
-    options = _.extend( {
+    options = merge( {
       stroke: 'black'
     }, options );
 

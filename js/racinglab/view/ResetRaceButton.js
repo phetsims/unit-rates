@@ -11,6 +11,7 @@ define( require => {
   // modules
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -22,7 +23,7 @@ define( require => {
    * @constructor
    */
   function ResetRaceButton( options ) {
-    RectangularPushButton.call( this, _.extend( {
+    RectangularPushButton.call( this, merge( {
       content: new Image( resetRaceButton, { scale: 0.5 } ),
       xMargin: 12,
       yMargin: 8

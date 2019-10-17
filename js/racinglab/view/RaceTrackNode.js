@@ -21,6 +21,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
   const LinearFunction = require( 'DOT/LinearFunction' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
   const RaceTimerNode = require( 'UNIT_RATES/racinglab/view/RaceTimerNode' );
@@ -65,7 +66,7 @@ define( require => {
    */
   function RaceTrackNode( car, timerExpandedProperty, arrowsVisibleProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
       trackViewLength: 1000, // {number} view length of the track
       timerTitleString: '' // {string} title for the timer accordion box
     }, options );

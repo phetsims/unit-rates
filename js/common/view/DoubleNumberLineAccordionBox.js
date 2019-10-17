@@ -23,6 +23,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const Marker = require( 'UNIT_RATES/common/model/Marker' );
   const MarkerEditorNode = require( 'UNIT_RATES/common/view/MarkerEditorNode' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -43,7 +44,7 @@ define( require => {
    */
   function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLayer, options ) {
 
-    options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
+    options = merge( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // DoubleNumberLineAccordionBox options
       titleString: doubleNumberLineString, // {string} title displayed next to the expand/collapse button

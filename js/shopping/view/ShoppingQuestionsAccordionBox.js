@@ -12,6 +12,7 @@ define( require => {
   // modules
   const AccordionBox = require( 'SUN/AccordionBox' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
   const ShoppingQuestionNode = require( 'UNIT_RATES/shopping/view/ShoppingQuestionNode' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -33,7 +34,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
+    options = merge( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // AccordionBox options
       // tight vertical margins and spacing, see https://github.com/phetsims/unit-rates/issues/140

@@ -11,6 +11,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const NumberKeypad = require( 'SCENERY_PHET/NumberKeypad' );
   const Panel = require( 'SUN/Panel' );
@@ -35,7 +36,7 @@ define( require => {
    */
   function KeypadPanel( options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // KeypadPanel options
       valueBoxWidth: 85, // {number} width of the value field, height determined by valueFont
@@ -127,7 +128,7 @@ define( require => {
    */
   var validateDigitsAndDecimals = function( options ) {
 
-    options = _.extend( {
+    options = merge( {
       maxDigits: 8, // {number} the maximum number of digits (numbers)
       maxDecimals: 4 // {number} the maximum number of decimal places
     }, options );

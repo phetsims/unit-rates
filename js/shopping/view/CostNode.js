@@ -14,6 +14,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Text = require( 'SCENERY/nodes/Text' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
@@ -31,7 +32,7 @@ define( require => {
    */
   function CostNode( costProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
       extraDecimalVisible: false, // {boolean} is the extra decimal place visible?
       font: new URFont( 20 ), // {Font} font for all parts of the value
       extraDecimalColor: 'gray' // {Color|string} color of the extra decimal place

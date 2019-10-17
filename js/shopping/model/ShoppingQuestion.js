@@ -11,6 +11,7 @@ define( require => {
   // modules
   const Emitter = require( 'AXON/Emitter' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const SunConstants = require( 'SUN/SunConstants' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
@@ -30,7 +31,7 @@ define( require => {
     const self = this;
 
     // @public (read-only)
-    this.answerOptions = _.extend( {
+    this.answerOptions = merge( {
       valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER, // {string} format used by StringUtils.format to format the guess
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
       maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad

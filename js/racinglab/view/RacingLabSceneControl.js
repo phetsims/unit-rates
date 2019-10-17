@@ -11,6 +11,7 @@ define( require => {
   // modules
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const VBox = require( 'SCENERY/nodes/VBox' );
@@ -26,7 +27,7 @@ define( require => {
    */
   function RacingLabSceneControl( car2VisibleProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // RacingLabSceneControl options
       buttonWidth: 68,

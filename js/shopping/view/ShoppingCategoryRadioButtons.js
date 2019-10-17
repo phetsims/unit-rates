@@ -11,6 +11,7 @@ define( require => {
   // modules
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URColors = require( 'UNIT_RATES/common/URColors' );
@@ -23,7 +24,7 @@ define( require => {
    */
   function ShoppingCategoryRadioButtons( categories, categoryProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // RadioButtonGroup options
       orientation: 'horizontal',

@@ -12,6 +12,7 @@ define( require => {
   // modules
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const Screen = require( 'JOIST/Screen' );
   const ShoppingModel = require( 'UNIT_RATES/shopping/model/ShoppingModel' );
@@ -31,7 +32,7 @@ define( require => {
    */
   function ShoppingScreen( options ) {
 
-    options = _.extend( {
+    options = merge( {
       name: screenShoppingString,
       backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
       homeScreenIcon: new Image( screenIcon )

@@ -12,6 +12,7 @@ define( require => {
   // modules
   const BaseShoppingSceneNode = require( 'UNIT_RATES/shopping/view/BaseShoppingSceneNode' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URConstants = require( 'UNIT_RATES/common/URConstants' );
@@ -26,7 +27,7 @@ define( require => {
    */
   function ShoppingLabSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties, options ) {
 
-    options = _.extend( {
+    options = merge( {
       extraCostDecimalVisible: true // {boolean} add an extra decimal place to cost on the scale
     }, options );
 

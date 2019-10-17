@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -19,7 +20,7 @@ define( require => {
    */
   function RaceTrack( options ) {
 
-    options = _.extend( {
+    options = merge( {
       length: 200, // {number} initial distance between start and finish line, in miles
       maxLength: 200, // {number} maximum distance between start and finish line, in miles
       markerSpacing: 50  // {number} track markers are spaced at this interval, in miles

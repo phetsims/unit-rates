@@ -17,6 +17,7 @@ define( require => {
   // modules
   const Dimension2 = require( 'DOT/Dimension2' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -27,7 +28,7 @@ define( require => {
    */
   function RowOfMovables( options ) {
 
-    options = _.extend( {
+    options = merge( {
       location: new Vector2( 0, 0 ), // {number} bottom center of the row
       numberOfCells: 4, // {number} number of cells in the row
       cellSize: new Dimension2( 100, 100 ), // {number} dimensions of each cell

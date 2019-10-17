@@ -11,6 +11,7 @@ define( require => {
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Text = require( 'SCENERY/nodes/Text' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
@@ -31,7 +32,7 @@ define( require => {
    */
   function MarkerNode( marker, options ) {
 
-    options = _.extend( {
+    options = merge( {
       ySpacing: 1,
       font: new URFont( 12 ),
       lineLength: URConstants.MAJOR_MARKER_LENGTH,
@@ -43,9 +44,9 @@ define( require => {
     // @public (read-only)
     this.marker = marker;
 
-    const numeratorOptions = _.extend( {}, SHARED_OPTIONS, options.numeratorOptions );
+    const numeratorOptions = merge( {}, SHARED_OPTIONS, options.numeratorOptions );
 
-    const denominatorOptions = _.extend( {}, SHARED_OPTIONS, options.denominatorOptions );
+    const denominatorOptions = merge( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     // vertical line
     const lineNode = new Line( 0, 0, 0, options.lineLength, {

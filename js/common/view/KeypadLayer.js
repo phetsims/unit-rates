@@ -12,6 +12,7 @@ define( require => {
   const DownUpListener = require( 'SCENERY/input/DownUpListener' );
   const inherit = require( 'PHET_CORE/inherit' );
   const KeypadPanel = require( 'UNIT_RATES/common/view/KeypadPanel' );
+  const merge = require( 'PHET_CORE/merge' );
   const Plane = require( 'SCENERY/nodes/Plane' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
 
@@ -23,7 +24,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       fill: 'rgba( 0, 0, 0, 0.2 )',
       visible: false
     }, options );
@@ -75,7 +76,7 @@ define( require => {
         return;
       }
 
-      options = _.extend( {
+      options = merge( {
         onBeginEdit: null, // {function} called by beginEdit
         onEndEdit: null, // {function} called by endEdit
         setKeypadLocation: null, // {function:KeypadPanel} called by beginEdit to set the keypad location

@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   const ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
@@ -23,7 +24,7 @@ define( require => {
 
     assert && assert( _.includes( _.values( ShoppingItemData.Fruit ), itemData ), 'itemData is not a fruit' );
 
-    options = _.extend( {
+    options = merge( {
 
       // Fruit bags open when placed on the scale
       bagsOpen: true

@@ -14,6 +14,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Property = require( 'AXON/Property' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
@@ -31,7 +32,7 @@ define( require => {
    */
   function Marker( numerator, denominator, creator, options ) {
 
-    options = _.extend( {
+    options = merge( {
       isMajor: true, // {boolean} true: major marker, false: minor marker
       color: 'black', // {Color|string} color used to render the marker
       erasable: true // {boolean} is this marker erased when the Eraser button is pressed?

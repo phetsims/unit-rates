@@ -16,6 +16,7 @@ define( require => {
   // modules
   const ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Panel = require( 'SUN/Panel' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -33,7 +34,7 @@ define( require => {
    */
   function ValuePanel( valueNode, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       panelWidth: 100, // {number} contents are scaled to fit, height depends on contents
       panelMinHeight: 0, // {number} minimum panel height

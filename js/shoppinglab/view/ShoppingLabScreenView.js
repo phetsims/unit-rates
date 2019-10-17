@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const ShoppingLabCategoryNode = require( 'UNIT_RATES/shoppinglab/view/ShoppingLabCategoryNode' );
   const ShoppingScreenView = require( 'UNIT_RATES/shopping/view/ShoppingScreenView' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
@@ -21,7 +22,7 @@ define( require => {
    */
   function ShoppingLabScreenView( model, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // Creates a Node for a category. See ShoppingScreenView options.createCategoryNode
       createCategoryNode: function( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ) {

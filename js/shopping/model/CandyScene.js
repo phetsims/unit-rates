@@ -11,6 +11,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Range = require( 'DOT/Range' );
   const ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
   const ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
@@ -32,7 +33,7 @@ define( require => {
 
     assert && assert( _.includes( _.values( ShoppingItemData.Candy ), itemData ), 'itemData is not a candy' );
 
-    options = _.extend( {
+    options = merge( {
 
       // range of denominator, in pounds
       fixedAxisRange: new Range( 0, 1.6 ),
@@ -59,7 +60,7 @@ define( require => {
 
     }, options );
 
-    options.denominatorOptions = _.extend( {
+    options.denominatorOptions = merge( {
       axisLabel: poundsString
     }, options.denominatorOptions );
 

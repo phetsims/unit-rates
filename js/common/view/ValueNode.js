@@ -11,6 +11,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Text = require( 'SCENERY/nodes/Text' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URFont = require( 'UNIT_RATES/common/URFont' );
@@ -24,7 +25,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       font: new URFont( 20 ),
       valueToString: function( value ) { return '' + value; }
     }, options );

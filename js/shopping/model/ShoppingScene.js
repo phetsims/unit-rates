@@ -20,6 +20,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const Marker = require( 'UNIT_RATES/common/model/Marker' );
   const MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
@@ -63,7 +64,7 @@ define( require => {
     assert && assert( itemData.questionQuantities.length > 1, 'more than 1 set of questions is required' );
 
     // default option values apply to Fruit items
-    options = _.extend( {
+    options = merge( {
 
       rate: null, // {Rate|null} if null, will be initialized to unit rate
 
@@ -92,14 +93,14 @@ define( require => {
     }, options );
 
     // @public (read-only) options specific to the rate's numerator
-    this.numeratorOptions = _.extend( {
+    this.numeratorOptions = merge( {
       axisLabel: dollarsString, // {string} label for the axis on the double number line
       valueFormat: pattern0CostString, // {string} format with placeholder for value
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, SHARED_OPTIONS, options.numeratorOptions );
 
     // @public (read-only) options specific to the rate's denominator
-    this.denominatorOptions = _.extend( {
+    this.denominatorOptions = merge( {
       axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
       valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER, // {string} format with placeholder for value
       trimZeros: true // {boolean} whether to trim trailing zeros from decimal places

@@ -11,6 +11,7 @@ define( require => {
   // modules
   const Dimension2 = require( 'DOT/Dimension2' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const ShoppingContainer = require( 'UNIT_RATES/shopping/model/ShoppingContainer' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -21,7 +22,7 @@ define( require => {
    */
   function Shelf( options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
 

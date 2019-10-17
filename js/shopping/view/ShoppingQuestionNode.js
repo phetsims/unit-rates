@@ -16,6 +16,7 @@ define( require => {
   const HStrut = require( 'SCENERY/nodes/HStrut' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -35,7 +36,7 @@ define( require => {
    */
   function ShoppingQuestionNode( question, questionsPanel, keypadLayer, options ) {
 
-    options = _.extend( {
+    options = merge( {
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct

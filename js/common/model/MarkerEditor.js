@@ -12,6 +12,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const Util = require( 'DOT/Util' );
@@ -25,7 +26,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       numeratorMaxDecimals: 2, // {number} maximum decimal places in the numerator
       denominatorMaxDecimals: 2 // {number} maximum decimal places in the denominator
     }, options );

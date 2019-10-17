@@ -14,6 +14,7 @@ define( require => {
   const DerivedProperty = require( 'AXON/DerivedProperty' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RowOfMovables = require( 'UNIT_RATES/shopping/model/RowOfMovables' );
   const ShoppingItem = require( 'UNIT_RATES/shopping/model/ShoppingItem' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
@@ -25,7 +26,7 @@ define( require => {
    */
   function ShoppingContainer( options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       location: new Vector2( 0, 0 ), // {Vector2} location of the container
 

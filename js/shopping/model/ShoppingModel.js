@@ -12,6 +12,7 @@ define( require => {
   const CandyScene = require( 'UNIT_RATES/shopping/model/CandyScene' );
   const FruitScene = require( 'UNIT_RATES/shopping/model/FruitScene' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const ShoppingCategory = require( 'UNIT_RATES/shopping/model/ShoppingCategory' );
   const ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
@@ -29,7 +30,7 @@ define( require => {
    */
   function ShoppingModel( options ) {
 
-    options = _.extend( {
+    options = merge( {
       categoryIndex: 0, // {number} index of the category that is initially selected
       categories: null // {ShoppingCategory[]} categories, populated below if not provided
     }, options );

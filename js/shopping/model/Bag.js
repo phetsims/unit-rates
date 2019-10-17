@@ -12,6 +12,7 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URMovable = require( 'UNIT_RATES/common/model/URMovable' );
 
@@ -23,7 +24,7 @@ define( require => {
    */
   function Bag( name, image, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       visible: true, // {boolean} is the bag initially visible?
 

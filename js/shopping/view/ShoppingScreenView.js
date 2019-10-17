@@ -11,6 +11,7 @@ define( require => {
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
   const KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
@@ -29,7 +30,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
 
       /**
        * Creates a Node for a category.

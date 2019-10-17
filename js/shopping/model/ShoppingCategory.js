@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
@@ -24,7 +25,7 @@ define( require => {
 
     assert && assert( shoppingScenes.length > 0, 'at least 1 ShoppingScene is required' );
 
-    options = _.extend( {
+    options = merge( {
 
       // index of the scene that is initially selected, randomly chosen
       shoppingSceneIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, shoppingScenes.length - 1 ) : 0

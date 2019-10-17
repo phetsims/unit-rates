@@ -15,6 +15,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
   const MarkerNode = require( 'UNIT_RATES/common/view/MarkerNode' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Text = require( 'SCENERY/nodes/Text' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
@@ -30,7 +31,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
 
       // common to all axes (horizontal and vertical)
       axisColor: 'black',

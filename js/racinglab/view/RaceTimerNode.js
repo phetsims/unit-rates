@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URFont = require( 'UNIT_RATES/common/URFont' );
@@ -42,7 +43,7 @@ define( require => {
       }
     } );
 
-    ValuePanel.call( this, valueNode, _.extend( {
+    ValuePanel.call( this, valueNode, merge( {
       panelWidth: 132,
       expandedProperty: expandedProperty,
       titleString: titleString,

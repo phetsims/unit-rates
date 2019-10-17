@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RateAccordionBox = require( 'UNIT_RATES/common/view/RateAccordionBox' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URConstants = require( 'UNIT_RATES/common/URConstants' );
@@ -26,7 +27,7 @@ define( require => {
    */
   function RaceCarRateAccordionBox( car, options ) {
 
-    options = _.extend( {
+    options = merge( {
       numeratorUnits: milesString,
       denominatorUnits: hoursString,
       numeratorRange: URConstants.MILES_RANGE,

@@ -15,6 +15,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const HStrut = require( 'SCENERY/nodes/HStrut' );
   const Image = require( 'SCENERY/nodes/Image' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -33,7 +34,7 @@ define( require => {
 
       assert && assert( shoppingScenes && shoppingScenes.length > 0, 'at least 1 ShoppingScene is required' );
 
-      options = _.extend( {
+      options = merge( {
 
         // ShoppingSceneComboBox options
         iconSize: new Dimension2( 30, 30 ), // {Dimension2} size of the icons in the combo box

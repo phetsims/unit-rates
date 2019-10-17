@@ -12,6 +12,7 @@ define( require => {
   const AccordionBox = require( 'SUN/AccordionBox' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   const Property = require( 'AXON/Property' );
@@ -34,7 +35,7 @@ define( require => {
    */
   function RateAccordionBox( rate, options ) {
 
-    options = _.extend( {}, URConstants.ACCORDION_BOX_OPTIONS, {
+    options = merge( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // AccordionBox options
       contentXMargin: 20,
@@ -76,7 +77,7 @@ define( require => {
 
     // numerator picker, must be disposed
     const numeratorPicker = new NumberPicker( rate.numeratorProperty, new Property( options.numeratorRange ),
-      _.extend( {}, URConstants.NUMBER_PICKER_OPTIONS, {
+      merge( {}, URConstants.NUMBER_PICKER_OPTIONS, {
         upFunction: options.numeratorPickerUpFunction,
         downFunction: options.numeratorPickerDownFunction,
         decimalPlaces: options.numeratorDecimals,
@@ -92,7 +93,7 @@ define( require => {
 
     // denominator picker, must be disposed
     const denominatorPicker = new NumberPicker( rate.denominatorProperty, new Property( options.denominatorRange ),
-      _.extend( {}, URConstants.NUMBER_PICKER_OPTIONS, {
+      merge( {}, URConstants.NUMBER_PICKER_OPTIONS, {
         upFunction: options.denominatorPickerUpFunction,
         downFunction: options.denominatorPickerDownFunction,
         decimalPlaces: options.denominatorDecimals,

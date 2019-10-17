@@ -12,6 +12,7 @@ define( require => {
   // modules
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const RacingLabModel = require( 'UNIT_RATES/racinglab/model/RacingLabModel' );
   const RacingLabScreenView = require( 'UNIT_RATES/racinglab/view/RacingLabScreenView' );
@@ -31,7 +32,7 @@ define( require => {
    */
   function RacingLabScreen( options ) {
 
-    options = _.extend( {
+    options = merge( {
       name: screenRacingLabString,
       backgroundColorProperty: new Property( URColors.racingLabScreenBackground ),
       homeScreenIcon: new Image( screenIcon )

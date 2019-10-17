@@ -14,6 +14,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const Marker = require( 'UNIT_RATES/common/model/Marker' );
   const MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
   const Range = require( 'DOT/Range' );
@@ -35,7 +36,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       color: 'black', // {Color|string} color used for things that are associated with the car (markers, spinners, ...)
       rate: new Rate( 50, 2 ), // {Rate} initial rate, in miles per hour
       visible: true, // {boolean} is this car visible?
