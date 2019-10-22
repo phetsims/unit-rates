@@ -41,7 +41,8 @@ require.config( {
     TAMBO: '../../tambo/js',
     TANDEM: '../../tandem/js',
     TWIXT: '../../twixt/js',
-    UNIT_RATES: '.'
+    UNIT_RATES: '.',
+    UTTERANCE_QUEUE: '../../utterance-queue/js'
   },
 
   // Cache busting is applied by default, but can be disabled via ?cacheBust=false, see initialize-globals.js
