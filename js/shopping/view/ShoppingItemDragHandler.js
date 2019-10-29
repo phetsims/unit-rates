@@ -86,8 +86,10 @@ define( require => {
         // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
         const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
 
-        animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
-          frontItemLayer, backItemLayer );
+        if ( !itemNode.isDisposed ) {
+          animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
+            frontItemLayer, backItemLayer );
+        }
       }
     } );
   }
