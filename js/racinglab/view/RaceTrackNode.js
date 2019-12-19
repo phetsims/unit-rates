@@ -196,7 +196,7 @@ define( require => {
 
       /**
        * Called when a drag sequence starts.
-       * @param {Event} event
+       * @param {SceneryEvent} event
        * @param {Trail} trail
        */
       start: function( event, trail ) {
@@ -208,7 +208,7 @@ define( require => {
 
       /**
        * Called when the pointer moves during a drag sequence.
-       * @param {Event} event
+       * @param {SceneryEvent} event
        * @param {Trail} trail
        */
       drag: function( event, trail ) {
