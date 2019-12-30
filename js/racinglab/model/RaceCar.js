@@ -21,7 +21,7 @@ define( require => {
   const Rate = require( 'UNIT_RATES/common/model/Rate' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // strings
   const hoursString = require( 'string!UNIT_RATES/hours' );
@@ -159,7 +159,7 @@ define( require => {
 
         // Map from sim time (seconds) to race time (hours).
         // see https://github.com/phetsims/unit-rates/issues/95
-        const deltaRaceTime = Util.linear( 0, 1, 0, URQueryParameters.raceTimeScale, dt );
+        const deltaRaceTime = Utils.linear( 0, 1, 0, URQueryParameters.raceTimeScale, dt );
 
         // distance traveled, in miles
         const deltaDistance = deltaRaceTime * this.rate.unitRateProperty.value;

@@ -23,7 +23,7 @@ define( require => {
   const NumberProperty = require( 'AXON/NumberProperty' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URUtils = require( 'UNIT_RATES/common/URUtils' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * @param {number} numerator - the rate's numerator, must be an integer
@@ -32,8 +32,8 @@ define( require => {
    */
   function Rate( numerator, denominator ) {
 
-    assert && assert( Util.isInteger( numerator ), 'numerator must be an integer: ' + numerator );
-    assert && assert( Util.isInteger( denominator ), 'denominator must be an integer: ' + denominator );
+    assert && assert( Utils.isInteger( numerator ), 'numerator must be an integer: ' + numerator );
+    assert && assert( Utils.isInteger( denominator ), 'denominator must be an integer: ' + denominator );
 
     // @public
     this.numeratorProperty = new NumberProperty( numerator );
@@ -82,7 +82,7 @@ define( require => {
       fraction.reduce();
 
       // use closest integer values
-      return new Rate( Util.toFixedNumber( fraction.numerator, 0 ), Util.toFixedNumber( fraction.denominator, 0 ) );
+      return new Rate( Utils.toFixedNumber( fraction.numerator, 0 ), Utils.toFixedNumber( fraction.denominator, 0 ) );
     }
   } );
 } );

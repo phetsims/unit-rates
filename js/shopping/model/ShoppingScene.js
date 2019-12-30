@@ -35,7 +35,7 @@ define( require => {
   const URColors = require( 'UNIT_RATES/common/URColors' );
   const URConstants = require( 'UNIT_RATES/common/URConstants' );
   const URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // strings
@@ -87,7 +87,7 @@ define( require => {
 
       // Major markers have integer denominators
       isMajorMarker: function( numerator, denominator ) {
-        return Util.isInteger( denominator );
+        return Utils.isInteger( denominator );
       }
 
     }, options );

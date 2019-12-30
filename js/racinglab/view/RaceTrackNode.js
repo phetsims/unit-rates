@@ -31,7 +31,7 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URFont = require( 'UNIT_RATES/common/URFont' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // images
   const finishFlagImage = require( 'image!UNIT_RATES/finish_flag.png' );
@@ -220,10 +220,10 @@ define( require => {
         const viewLength = finishFlagNode.globalToParentPoint( event.pointer.point ).x - startDragXOffset;
 
         // convert to model coordinates, constrain to the track length range
-        const modelLength = Util.clamp( modelToView.inverse( viewLength ), 0, car.track.maxLength );
+        const modelLength = Utils.clamp( modelToView.inverse( viewLength ), 0, car.track.maxLength );
 
         // update the model, constrain to integer values
-        car.track.lengthProperty.value = Util.toFixedNumber( modelLength, 0 );
+        car.track.lengthProperty.value = Utils.toFixedNumber( modelLength, 0 );
       }
     } );
     finishFlagNode.addInputListener( dragHandler );

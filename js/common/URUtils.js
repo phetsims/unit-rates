@@ -12,7 +12,7 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const SunConstants = require( 'SUN/SunConstants' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // All functions are @public unless otherwise noted.
   var URUtils = {
@@ -44,10 +44,10 @@ define( require => {
      */
     numberToString: function( value, maxDecimals, trimZeros ) {
       if ( trimZeros ) {
-        return Util.toFixedNumber( value, maxDecimals ).toString();
+        return Utils.toFixedNumber( value, maxDecimals ).toString();
       }
       else {
-        return Util.toFixed( value, maxDecimals );
+        return Utils.toFixed( value, maxDecimals );
       }
     },
 

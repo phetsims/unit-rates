@@ -20,7 +20,7 @@ define( require => {
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URFont = require( 'UNIT_RATES/common/URFont' );
   const URUtils = require( 'UNIT_RATES/common/URUtils' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // strings
   const dollarSignString = require( 'string!UNIT_RATES/dollarSign' );
@@ -74,7 +74,7 @@ define( require => {
       // This determines whether the cost has relevant non-zero decimal places,
       // and therefore whether the extra decimal place should be visible.
       // See https://github.com/phetsims/unit-rates/issues/202
-      const costRounded = Util.toFixedNumber( cost, 10 );
+      const costRounded = Utils.toFixedNumber( cost, 10 );
       extraDecimalNode.visible = ( URUtils.decimalPlaces( costRounded ) >= visibleDecimalPlaces );
 
       if ( options.extraDecimalVisible && extraDecimalNode.visible ) {

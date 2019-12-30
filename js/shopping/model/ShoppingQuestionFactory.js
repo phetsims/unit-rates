@@ -13,7 +13,7 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URUtils = require( 'UNIT_RATES/common/URUtils' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // strings
   const pattern0CostString = require( 'string!UNIT_RATES/pattern_0cost' );
@@ -108,7 +108,7 @@ define( require => {
 
     // answer
     const numerator = denominator * unitRate;
-    const answer = Util.toFixedNumber( numerator, numeratorOptions.maxDecimals );
+    const answer = Utils.toFixedNumber( numerator, numeratorOptions.maxDecimals );
 
     // 'Apples' or 'Apple'
     const units = ( denominator > 1 ) ? pluralUnits : singularUnits;
@@ -144,7 +144,7 @@ define( require => {
   var createItemsForQuestion = function( denominator, unitRate, singularUnits, pluralUnits, amountOfQuestionUnits, numeratorOptions, denominatorOptions ) {
 
     // answer
-    const answer = Util.toFixedNumber( denominator, denominatorOptions.maxDecimals );
+    const answer = Utils.toFixedNumber( denominator, denominatorOptions.maxDecimals );
 
     // 'Apples' or 'Apple'
     const units = ( denominator > 1 ) ? pluralUnits : singularUnits;

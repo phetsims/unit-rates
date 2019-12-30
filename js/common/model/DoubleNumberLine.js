@@ -16,7 +16,7 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // constants
   const FIXED_AXIS_VALUES = [ 'numerator', 'denominator' ];
@@ -138,7 +138,7 @@ define( require => {
      * @public
      */
     modelToViewNumerator: function( numerator, viewMax ) {
-      return Util.linear(
+      return Utils.linear(
         this.numeratorRangeProperty.value.min, this.numeratorRangeProperty.value.max,
         0, viewMax,
         numerator );
@@ -152,7 +152,7 @@ define( require => {
      * @public
      */
     modelToViewDenominator: function( denominator, viewMax ) {
-      return Util.linear(
+      return Utils.linear(
         this.denominatorRangeProperty.value.min, this.denominatorRangeProperty.value.max,
         0, viewMax,
         denominator );

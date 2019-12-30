@@ -15,7 +15,7 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * @param {Property.<boolean>} unitRateProperty
@@ -44,7 +44,7 @@ define( require => {
     // if a numerator is entered that can't be computed from the existing denominator, then clear the denominator
     this.numeratorProperty.link( function( numerator ) { // no unlink required
       if ( numerator !== null && self.denominatorProperty.value !== null ) {
-        const correctNumerator = Util.toFixedNumber( self.denominatorProperty.value * unitRateProperty.value, options.numeratorMaxDecimals );
+        const correctNumerator = Utils.toFixedNumber( self.denominatorProperty.value * unitRateProperty.value, options.numeratorMaxDecimals );
         if ( numerator !== correctNumerator ) {
           self.denominatorProperty.value = null;
         }
@@ -54,7 +54,7 @@ define( require => {
     // if a denominator is entered that can't be computed from the existing numerator, then clear the numerator
     this.denominatorProperty.link( function( denominator ) { // no unlink required
       if ( denominator !== null && self.numeratorProperty.value !== null ) {
-        const correctDenominator = Util.toFixedNumber( self.numeratorProperty.value / unitRateProperty.value, options.denominatorMaxDecimals );
+        const correctDenominator = Utils.toFixedNumber( self.numeratorProperty.value / unitRateProperty.value, options.denominatorMaxDecimals );
         if ( denominator !== correctDenominator ) {
           self.numeratorProperty.value = null;
         }

@@ -14,7 +14,7 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const unitRates = require( 'UNIT_RATES/unitRates' );
   const URFont = require( 'UNIT_RATES/common/URFont' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const ValueNode = require( 'UNIT_RATES/common/view/ValueNode' );
   const ValuePanel = require( 'UNIT_RATES/common/view/ValuePanel' );
 
@@ -39,7 +39,7 @@ define( require => {
     const valueNode = new ValueNode( timeProperty, {
       font: TIMER_FONT,
       valueToString: function( value ) {
-        return StringUtils.format( pattern0Value1UnitsString, Util.toFixed( value, DECIMAL_PLACES ), hoursString );
+        return StringUtils.format( pattern0Value1UnitsString, Utils.toFixed( value, DECIMAL_PLACES ), hoursString );
       }
     } );
 
