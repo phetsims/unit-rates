@@ -5,8 +5,8 @@
  * Responsibilities include:
  * - creation of markers, based on contents of the marker editor
  * - a single level of undo for markers
- * - location and animation of the marker editor
- * - location and visibility of the undo button
+ * - position and animation of the marker editor
+ * - position and visibility of the undo button
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

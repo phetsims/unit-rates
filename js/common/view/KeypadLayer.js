@@ -79,7 +79,7 @@ define( require => {
       options = merge( {
         onBeginEdit: null, // {function} called by beginEdit
         onEndEdit: null, // {function} called by endEdit
-        setKeypadLocation: null, // {function:KeypadPanel} called by beginEdit to set the keypad location
+        setKeypadPosition: null, // {function:KeypadPanel} called by beginEdit to set the keypad position
         maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
         maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
         zeroIsValid: true // {boolean} is zero a valid value?
@@ -102,7 +102,7 @@ define( require => {
       this.addInputListener( this.clickOutsideListener );
 
       // position the keypad
-      options.setKeypadLocation && options.setKeypadLocation( this.keypad );
+      options.setKeypadPosition && options.setKeypadPosition( this.keypad );
 
       // execute client-specific hook
       options.onBeginEdit && options.onBeginEdit();

@@ -172,7 +172,7 @@ define( require => {
 
     // put all of the above pieces together ---------------------------------------------------------------------
 
-    // This type does not propagate options to the supertype because the model determines location.
+    // This type does not propagate options to the supertype because the model determines position.
     Node.call( this, {
       children: [ bodyNode, shadowNode, topNode, displayNode ]
     } );
@@ -180,12 +180,12 @@ define( require => {
     // red dot at origin, red line at drag threshold
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 2, { fill: 'red' } ) );
-      const lineY = scale.yAboveScale - scale.location.y;
+      const lineY = scale.yAboveScale - scale.position.y;
       this.addChild( new Line( -foregroundWidth / 2, lineY, foregroundWidth / 2, lineY, { stroke: 'red' } ) );
     }
 
-    // move to model location
-    this.translation = scale.location;
+    // move to model position
+    this.translation = scale.position;
 
     // @private
     this.disposeScaleNode = function() {

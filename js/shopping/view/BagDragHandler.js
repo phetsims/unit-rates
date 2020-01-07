@@ -25,7 +25,7 @@ define( require => {
    */
   function BagDragHandler( bagNode, bag, shelf, scale, bagLayer, dragLayer ) {
 
-    // {Vector2} where the drag started relative to the bag's location, in parent view coordinates
+    // {Vector2} where the drag started relative to the bag's position, in parent view coordinates
     let startDragOffset;
 
     SimpleDragHandler.call( this, {
@@ -61,8 +61,8 @@ define( require => {
           // bag was grabbed while animating
         }
 
-        // compute the offset between the pointer and the bag's location
-        startDragOffset = bagNode.globalToParentPoint( event.pointer.point ).minus( bag.locationProperty.value );
+        // compute the offset between the pointer and the bag's position
+        startDragOffset = bagNode.globalToParentPoint( event.pointer.point ).minus( bag.positionProperty.value );
       },
 
       /**
@@ -89,7 +89,7 @@ define( require => {
         bagLayer.addChild( bagNode );
 
         // if the bag is released above the scale, bag falls to scale, otherwise to shelf.
-        if ( bag.locationProperty.value.y < scale.yAboveScale ) {
+        if ( bag.positionProperty.value.y < scale.yAboveScale ) {
           animateBagToContainer( bag, scale );
         }
         else {
@@ -110,7 +110,7 @@ define( require => {
    */
   function animateBagToContainer( bag, container ) {
 
-    const cellIndex = container.bagRow.getClosestUnoccupiedCell( bag.locationProperty.value );
+    const cellIndex = container.bagRow.getClosestUnoccupiedCell( bag.positionProperty.value );
     assert && assert( cellIndex !== -1, 'container is full' );
 
     // This function changes course to the next closest unoccupied cell.
@@ -148,7 +148,7 @@ define( require => {
       }
     };
 
-    const destination = container.bagRow.getCellLocation( cellIndex ); // {Vector2}
+    const destination = container.bagRow.getCellPosition( cellIndex ); // {Vector2}
 
     // begin the animation
     bag.animateTo( destination, {
@@ -169,8 +169,8 @@ define( require => {
     // replace bag with items
     bag.visibleProperty.value = false;
 
-    // items will be placed in cells that are closest to the bag's location
-    const bagLocation = bag.locationProperty.value;
+    // items will be placed in cells that are closest to the bag's position
+    const bagPosition = bag.positionProperty.value;
 
     for ( let i = 0; i < bag.items.length; i++ ) {
 
@@ -181,8 +181,8 @@ define( require => {
       const item = bag.items[ i ];
 
       // find closest cells in front and back rows
-      const backCellIndex = scale.backItemRow.getClosestUnoccupiedCell( bagLocation );
-      const frontCellIndex = scale.frontItemRow.getClosestUnoccupiedCell( bagLocation );
+      const backCellIndex = scale.backItemRow.getClosestUnoccupiedCell( bagPosition );
+      const frontCellIndex = scale.frontItemRow.getClosestUnoccupiedCell( bagPosition );
       assert && assert( !( backCellIndex === -1 && frontCellIndex === -1 ), 'scale is full' );
 
       // move immediately to closest cell
@@ -199,8 +199,8 @@ define( require => {
       else {
 
         // compare distance between front and back row, put in closest
-        const backCellDistance = bagLocation.distance( scale.backItemRow.getCellLocation( backCellIndex ) );
-        const frontCellDistance = bagLocation.distance( scale.frontItemRow.getCellLocation( frontCellIndex ) );
+        const backCellDistance = bagPosition.distance( scale.backItemRow.getCellPosition( backCellIndex ) );
+        const frontCellDistance = bagPosition.distance( scale.frontItemRow.getCellPosition( frontCellIndex ) );
         if ( frontCellDistance < backCellDistance ) {
           scale.frontItemRow.put( item, frontCellIndex );
         }

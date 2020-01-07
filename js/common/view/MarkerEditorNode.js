@@ -134,8 +134,8 @@ define( require => {
 
     this.mutate( options );
 
-    // Sets the location of the keypad
-    const setKeypadLocation = function( keypad ) {
+    // Sets the position of the keypad
+    const setKeypadPosition = function( keypad ) {
 
       // This algorithm assumes that both buttons have the same centerX,
       // so either button can be used for horizontal positioning.
@@ -171,7 +171,7 @@ define( require => {
       keypadLayer.beginEdit( markerEditor.numeratorProperty, {
         onBeginEdit: function() { numeratorBox.fill = URColors.edit; },
         onEndEdit: function() { numeratorBox.fill = 'white'; },
-        setKeypadLocation: setKeypadLocation,
+        setKeypadPosition: setKeypadPosition,
         maxDigits: numeratorOptions.maxDigits,
         maxDecimals: numeratorOptions.maxDecimals,
         zeroIsValid: options.zeroIsValid
@@ -183,7 +183,7 @@ define( require => {
       keypadLayer.beginEdit( markerEditor.denominatorProperty, {
         onBeginEdit: function() { denominatorBox.fill = URColors.edit; },
         onEndEdit: function() { denominatorBox.fill = 'white'; },
-        setKeypadLocation: setKeypadLocation,
+        setKeypadPosition: setKeypadPosition,
         maxDigits: denominatorOptions.maxDigits,
         maxDecimals: denominatorOptions.maxDecimals,
         zeroIsValid: options.zeroIsValid

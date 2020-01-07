@@ -48,7 +48,7 @@ define( require => {
       y: shelf.depth / 2
     } );
 
-    // This type does not propagate options to the supertype because the model determines location.
+    // This type does not propagate options to the supertype because the model determines position.
     Node.call( this, {
       children: [ shelfNode ]
     } );
@@ -59,8 +59,8 @@ define( require => {
       this.addChild( new Line( -shelf.width / 2, 0, shelf.width / 2, 0, { stroke: 'red' } ) );
     }
 
-    // move to model location
-    this.translation = shelf.location;
+    // move to model position
+    this.translation = shelf.position;
   }
 
   unitRates.register( 'ShelfNode', ShelfNode );

@@ -28,7 +28,7 @@ define( require => {
 
     options = merge( {
 
-      location: new Vector2( 0, 0 ), // {Vector2} location of the container
+      position: new Vector2( 0, 0 ), // {Vector2} position of the container
 
       // bags
       numberOfBags: 4, // {number} maximum number of bags on the shelf
@@ -44,11 +44,11 @@ define( require => {
     }, options );
 
     // @public (read-only)
-    this.location = options.location;
+    this.position = options.position;
 
     // @public row of bags, dispose not required, exists for sim lifetime
     this.bagRow = new RowOfMovables( {
-      location: new Vector2( options.location.x, options.location.y + options.bagRowYOffset ),
+      position: new Vector2( options.position.x, options.position.y + options.bagRowYOffset ),
       numberOfCells: options.numberOfBags,
       cellSize: options.bagSize,
 
@@ -64,7 +64,7 @@ define( require => {
 
     // @public back row of items, dispose not required, exists for sim lifetime
     this.backItemRow = new RowOfMovables( {
-      location: new Vector2( options.location.x, options.location.y + options.backRowYOffset ),
+      position: new Vector2( options.position.x, options.position.y + options.backRowYOffset ),
       numberOfCells: backNumberOfCells,
       cellSize: options.itemSize,
       cellSpacing: options.itemCellSpacing
@@ -72,7 +72,7 @@ define( require => {
 
     // @public front row of items, dispose not required, exists for sim lifetime
     this.frontItemRow = new RowOfMovables( {
-      location: new Vector2( options.location.x, options.location.y + options.frontRowYOffset ),
+      position: new Vector2( options.position.x, options.position.y + options.frontRowYOffset ),
       numberOfCells: frontNumberOfCells,
       cellSize: options.itemSize,
       cellSpacing: options.itemCellSpacing
@@ -135,7 +135,7 @@ define( require => {
 
       // Make the bag move up a few pixels, to make it obvious that it has been removed.
       // See https://github.com/phetsims/unit-rates/issues/187
-      bag.moveTo( bag.locationProperty.value.plusXY( 0, -5 ) );
+      bag.moveTo( bag.positionProperty.value.plusXY( 0, -5 ) );
     },
 
     /**
@@ -156,7 +156,7 @@ define( require => {
 
       // Make the item move up a few pixels, to make it obvious that it has been removed.
       // See https://github.com/phetsims/unit-rates/issues/187
-      item.moveTo( item.locationProperty.value.plusXY( 0, -5 ) );
+      item.moveTo( item.positionProperty.value.plusXY( 0, -5 ) );
     },
 
     /**

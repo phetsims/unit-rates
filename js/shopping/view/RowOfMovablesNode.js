@@ -33,8 +33,8 @@ define( require => {
     // add a rectangle for each cell
     const shape = new Shape();
     rowOfMovables.getCells().forEach( function( cell ) {
-      const x = cell.location.x - ( cellWidth / 2 );
-      const y = cell.location.y - cellHeight;
+      const x = cell.position.x - ( cellWidth / 2 );
+      const y = cell.position.y - cellHeight;
       shape.rect( x, y, cellWidth, cellHeight );
     } );
 

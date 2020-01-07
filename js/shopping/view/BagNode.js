@@ -27,18 +27,18 @@ define( require => {
 
     const self = this;
 
-    // This type does not propagate options to the supertype because the model determines location.
+    // This type does not propagate options to the supertype because the model determines position.
     Image.call( this, bag.image, {
       scale: URConstants.BAG_IMAGE_SCALE,
       cursor: 'pointer'
     } );
 
     // origin is at bottom center
-    const locationObserver = function( location ) {
-      self.centerX = location.x;
-      self.bottom = location.y;
+    const positionObserver = function( position ) {
+      self.centerX = position.x;
+      self.bottom = position.y;
     };
-    bag.locationProperty.link( locationObserver ); // unlink in dispose
+    bag.positionProperty.link( positionObserver ); // unlink in dispose
 
     const visibleObserver = function( visible ) {
       self.visible = visible;
@@ -50,7 +50,7 @@ define( require => {
 
     // @private
     this.disposeBagNode = function() {
-      bag.locationProperty.unlink( locationObserver );
+      bag.positionProperty.unlink( positionObserver );
       bag.visibleProperty.unlink( visibleObserver );
       self.removeInputListener( dragHandler );
     };

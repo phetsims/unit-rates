@@ -25,7 +25,7 @@ define( require => {
    */
   function ShoppingItemDragHandler( itemNode, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer ) {
 
-    // {Vector2} where the drag started relative to the item's location, in parent view coordinates
+    // {Vector2} where the drag started relative to the item's position, in parent view coordinates
     let startDragOffset;
 
     SimpleDragHandler.call( this, {
@@ -56,8 +56,8 @@ define( require => {
           // item was grabbed while animating
         }
 
-        // compute the offset between the pointer and the item's location
-        startDragOffset = itemNode.globalToParentPoint( event.pointer.point ).minus( item.locationProperty.value );
+        // compute the offset between the pointer and the item's position
+        startDragOffset = itemNode.globalToParentPoint( event.pointer.point ).minus( item.positionProperty.value );
       },
 
       /**
@@ -81,10 +81,10 @@ define( require => {
         item.dragging = false;
 
         // if the item is released above the scale, item falls to scale, otherwise to shelf.
-        const shoppingContainer = ( item.locationProperty.value.y < scale.yAboveScale ) ? scale : shelf;
+        const shoppingContainer = ( item.positionProperty.value.y < scale.yAboveScale ) ? scale : shelf;
 
         // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
-        const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
+        const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.positionProperty.value );
 
         if ( !itemNode.isDisposed ) {
           animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
@@ -97,20 +97,20 @@ define( require => {
   unitRates.register( 'ShoppingItemDragHandler', ShoppingItemDragHandler );
 
   /**
-   * Gets the row and unoccupied cell that are closest to the specified location.
+   * Gets the row and unoccupied cell that are closest to the specified position.
    * @param {ShoppingContainer} shoppingContainer
-   * @param {Vector2} location
+   * @param {Vector2} position
    * @returns {{itemRow: RowOfMovables, cellIndex: number}}
    */
-  function getClosestRowAndUnoccupiedCell( shoppingContainer, location ) {
+  function getClosestRowAndUnoccupiedCell( shoppingContainer, position ) {
 
     // to improve readability
     const backItemRow = shoppingContainer.backItemRow;
     const frontItemRow = shoppingContainer.frontItemRow;
 
     // find closest cell in each row
-    const backCellIndex = backItemRow.getClosestUnoccupiedCell( location );
-    const frontCellIndex = frontItemRow.getClosestUnoccupiedCell( location );
+    const backCellIndex = backItemRow.getClosestUnoccupiedCell( position );
+    const frontCellIndex = frontItemRow.getClosestUnoccupiedCell( position );
     assert && assert( !( backCellIndex === -1 && frontCellIndex === -1 ), 'container is full' );
 
     let itemRow = null;
@@ -131,8 +131,8 @@ define( require => {
     else {
 
       // front and back rows both have unoccupied cells, choose the closest one
-      const backCellDistance = location.distance( backItemRow.getCellLocation( backCellIndex ) );
-      const frontCellDistance = location.distance( frontItemRow.getCellLocation( frontCellIndex ) );
+      const backCellDistance = position.distance( backItemRow.getCellPosition( backCellIndex ) );
+      const frontCellDistance = position.distance( frontItemRow.getCellPosition( frontCellIndex ) );
       if ( backCellDistance <= frontCellDistance ) {
         itemRow = backItemRow;
         cellIndex = backCellIndex;
@@ -168,7 +168,7 @@ define( require => {
       unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
 
       // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
-      const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.locationProperty.value );
+      const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.positionProperty.value );
 
       animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
         frontItemLayer, backItemLayer );
@@ -206,7 +206,7 @@ define( require => {
       }
     };
 
-    const destination = itemRow.getCellLocation( cellIndex ); // {Vector2}
+    const destination = itemRow.getCellPosition( cellIndex ); // {Vector2}
 
     // begin the animation
     item.animateTo( destination, {

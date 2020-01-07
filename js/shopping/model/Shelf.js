@@ -24,7 +24,7 @@ define( require => {
 
     options = merge( {
 
-      location: new Vector2( 0, 0 ), // {Vector2} location of the center of the shelf's top face
+      position: new Vector2( 0, 0 ), // {Vector2} position of the center of the shelf's top face
 
       // ShoppingContainer options
       numberOfBags: 4, // {number} maximum number of bags on the shelf

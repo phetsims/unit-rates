@@ -150,7 +150,7 @@ define( require => {
 
     // @public
     this.shelf = new Shelf( {
-      location: new Vector2( 512, 560 ),
+      position: new Vector2( 512, 560 ),
       numberOfBags: this.numberOfBags,
       bagSize: bagSize,
       bagRowYOffset: ( options.bagsOpen ? 0 : 10 ),
@@ -161,7 +161,7 @@ define( require => {
 
     // @public
     this.scale = new Scale( this.rate.unitRateProperty, {
-      location: this.shelf.location.minusXY( 0, 220 ), // centered above the shelf
+      position: this.shelf.position.minusXY( 0, 220 ), // centered above the shelf
       numberOfBags: this.numberOfBags,
       bagSize: bagSize,
       numberOfItems: this.numberOfBags * this.quantityPerBag,
@@ -249,10 +249,10 @@ define( require => {
     this.bags = [];
     for ( let i = 0; i < this.numberOfBags; i++ ) {
 
-      // the bag's location on the shelf
+      // the bag's position on the shelf
       const bagCellIndex = this.shelf.bagRow.getFirstUnoccupiedCell();
       assert && assert( bagCellIndex !== -1, 'shelf is full' );
-      const bagLocation = this.shelf.bagRow.getCellLocation( bagCellIndex );
+      const bagPosition = this.shelf.bagRow.getCellPosition( bagCellIndex );
 
       // create items if the bag opens when placed on the scale
       let items = null;
@@ -271,7 +271,7 @@ define( require => {
 
       // create bag
       const bag = new Bag( this.pluralName, this.bagImage, {
-        location: bagLocation,
+        position: bagPosition,
         items: items
       } );
       this.bags.push( bag );

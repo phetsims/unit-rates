@@ -28,7 +28,7 @@ define( require => {
 
     options = merge( {
 
-      location: new Vector2( 0, 0 ), // {Vector2} location of the center of the scale's top surface
+      position: new Vector2( 0, 0 ), // {Vector2} position of the center of the scale's top surface
       quantityUnits: '', // {string} units for quantity
 
       // ShoppingContainer options
@@ -56,7 +56,7 @@ define( require => {
 
     // @public (read-only) any y value less than this is considered "above the scale"
     // Offset determined empirically, see https://github.com/phetsims/unit-rates/issues/174
-    this.yAboveScale = this.location.y + 70;
+    this.yAboveScale = this.position.y + 70;
 
     // @public
     this.quantityUpdateEnabled = true;

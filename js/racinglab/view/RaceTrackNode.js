@@ -185,7 +185,7 @@ define( require => {
 
     Node.call( this, options );
 
-    // {number} where the drag started relative to the finish flag's current location, in parent view coordinates
+    // {number} where the drag started relative to the finish flag's current position, in parent view coordinates
     let startDragXOffset;
 
     // Drag the finish flag to change the track length
@@ -229,7 +229,7 @@ define( require => {
     finishFlagNode.addInputListener( dragHandler );
     cueArrowsNode.addInputListener( dragHandler );
 
-    // Synchronize car location with model
+    // Synchronize car position with model
     // unlink not needed, exists for sim lifetime
     car.distanceProperty.link( function( distance ) {
       carNode.right = modelToView( distance );
