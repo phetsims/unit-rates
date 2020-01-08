@@ -67,7 +67,7 @@ define( require => {
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
         indicatorXProperty: model.car1.distanceProperty,
         indicatorColor: model.car1.color,
-        keypadLocation: 'below',
+        keypadPosition: 'below',
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
       } );
@@ -81,7 +81,7 @@ define( require => {
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
         indicatorXProperty: model.car2.distanceProperty,
         indicatorColor: model.car2.color,
-        keypadLocation: 'above',
+        keypadPosition: 'above',
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
       } );

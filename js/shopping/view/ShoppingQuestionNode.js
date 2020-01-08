@@ -195,7 +195,7 @@ define( require => {
     };
 
     // position the keypad relative to the Questions panel
-    const setKeypadLocation = function( keypad ) {
+    const setKeypadPosition = function( keypad ) {
       const questionsPanelBounds = keypad.globalToParentBounds( questionsPanel.localToGlobalBounds( questionsPanel.localBounds ) );
       keypad.right = questionsPanelBounds.left - 10;
       keypad.bottom = questionsPanelBounds.bottom;
@@ -206,7 +206,7 @@ define( require => {
       keypadLayer.beginEdit( question.guessProperty, {
         onBeginEdit: onBeginEdit,
         onEndEdit: onEndEdit,
-        setKeypadLocation: setKeypadLocation,
+        setKeypadPosition: setKeypadPosition,
         maxDigits: answerOptions.maxDigits,
         maxDecimals: answerOptions.maxDecimals
       } );

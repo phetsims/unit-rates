@@ -26,7 +26,7 @@ define( require => {
   const URUtils = require( 'UNIT_RATES/common/URUtils' );
 
   // constants
-  const KEYPAD_LOCATION_VALUES = [ 'above', 'below' ];
+  const KEYPAD_POSITION_VALUES = [ 'above', 'below' ];
   const SHARED_OPTIONS = {
     maxDigits: 4, // {number} maximum number of digits that can be entered via keypad
     maxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
@@ -51,7 +51,7 @@ define( require => {
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: URConstants.MARKER_Y_SPACING, // {number} vertical margin inside the value box
       ySpacing: 3,  // {number} vertical spacing between UI elements
-      keypadLocation: 'below', // {string} 'above' or 'below' doubleNumberLinePanel
+      keypadPosition: 'below', // {string} 'above' or 'below' doubleNumberLinePanel
       numeratorOptions: null, // {*} options specific to the rate's numerator, see below
       denominatorOptions: null // {*} options specific to the rate's denominator, see below
     }, options );
@@ -60,8 +60,8 @@ define( require => {
 
     const denominatorOptions = merge( {}, SHARED_OPTIONS, options.denominatorOptions );
 
-    assert && assert( _.includes( KEYPAD_LOCATION_VALUES, options.keypadLocation ),
-      'invalid keypadLocation: ' + options.keypadLocation );
+    assert && assert( _.includes( KEYPAD_POSITION_VALUES, options.keypadPosition ),
+      'invalid keypadPosition: ' + options.keypadPosition );
 
     Node.call( this );
 
@@ -158,7 +158,7 @@ define( require => {
       }
 
       // Put the key pad above or below the double number line panel.
-      if ( options.keypadLocation === 'above' ) {
+      if ( options.keypadPosition === 'above' ) {
         keypad.bottom = doubleNumberLinePanelBounds.top - 10;
       }
       else { // 'below'

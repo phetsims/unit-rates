@@ -48,7 +48,7 @@ define( require => {
 
       // DoubleNumberLineAccordionBox options
       titleString: doubleNumberLineString, // {string} title displayed next to the expand/collapse button
-      keypadLocation: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
+      keypadPosition: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
 
       // DoubleNumberLineNode options
       axisViewLength: 1000, // {number} view length of doubleNumberLine's range
@@ -84,7 +84,7 @@ define( require => {
     const markerEditorNode = new MarkerEditorNode( markerEditor, this, keypadLayer, {
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
-      keypadLocation: options.keypadLocation,
+      keypadPosition: options.keypadPosition,
       x: markerEditorNodeHomeX,
       centerY: doubleNumberLineNode.centerY
     } );

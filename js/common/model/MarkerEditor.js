@@ -3,7 +3,7 @@
 /**
  * Model for the marker editor.
  * The rate created by the marker editor is used as the basis for creating markers on the double number line.
- * Location of the marker editor is handled by the view.
+ * Position of the marker editor is handled by the view.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
