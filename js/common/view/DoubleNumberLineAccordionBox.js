@@ -243,7 +243,7 @@ define( require => {
         }
       }
 
-      // if we need to move the marker editor...
+      // Move the marker editor...
       if ( destinationX !== null ) {
 
         if ( !markerEditorAnimationEnabled ) {
@@ -256,24 +256,29 @@ define( require => {
           // stop any animation that is in progress
           markerEditorAnimation && markerEditorAnimation.stop();
 
-          markerEditorAnimation = new Animation( {
-            duration: 0.002 * Math.abs( destinationX - markerEditorNode.x ), // 2ms per 1 unit of distance
-            easing: Easing.QUADRATIC_IN_OUT,
-            object: markerEditorNode,
-            attribute: 'x',
-            to: destinationX
-          } );
-          
-          markerEditorAnimation.startEmitter.addListener( function startListener() {
-            markerEditorNode.pickable = false;
-            markerEditorAnimation.startEmitter.removeListener( startListener );
-            markerEditorAnimation.endedEmitter.addListener( function endedListener() {
-              markerEditorNode.pickable = true;
-              markerEditorAnimation.endedEmitter.removeListener( endedListener );
+          // move the marker editor if it's at a new position
+          const dx = destinationX - markerEditorNode.x;
+          if ( dx !== 0 ) {
+
+            markerEditorAnimation = new Animation( {
+              duration: 0.002 * Math.abs( dx ), // 2ms per 1 unit of distance
+              easing: Easing.QUADRATIC_IN_OUT,
+              object: markerEditorNode,
+              attribute: 'x',
+              to: destinationX
             } );
-          } );
-          
-          markerEditorAnimation.start();
+
+            markerEditorAnimation.startEmitter.addListener( function startListener() {
+              markerEditorNode.pickable = false;
+              markerEditorAnimation.startEmitter.removeListener( startListener );
+              markerEditorAnimation.endedEmitter.addListener( function endedListener() {
+                markerEditorNode.pickable = true;
+                markerEditorAnimation.endedEmitter.removeListener( endedListener );
+              } );
+            } );
+
+            markerEditorAnimation.start();
+          }
         }
       }
     };
