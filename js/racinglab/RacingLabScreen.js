@@ -27,7 +27,7 @@ define( require => {
   const screenRacingLabString = require( 'string!UNIT_RATES/screen.racingLab' );
 
   /**
-   * @param {Object} options
+   * @param {Object} [options]
    * @constructor
    */
   function RacingLabScreen( options ) {

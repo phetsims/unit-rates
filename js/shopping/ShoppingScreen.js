@@ -27,7 +27,7 @@ define( require => {
   const screenShoppingString = require( 'string!UNIT_RATES/screen.shopping' );
 
   /**
-   * @param {Object} options
+   * @param {Object} [options]
    * @constructor
    */
   function ShoppingScreen( options ) {

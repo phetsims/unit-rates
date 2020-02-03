@@ -27,7 +27,7 @@ define( require => {
   const screenShoppingLabString = require( 'string!UNIT_RATES/screen.shoppingLab' );
 
   /**
-   * @param {Object} options
+   * @param {Object} [options]
    * @constructor
    */
   function ShoppingLabScreen( options ) {
