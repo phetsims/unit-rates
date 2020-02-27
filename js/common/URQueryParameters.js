@@ -5,37 +5,35 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // sim modules
-  const unitRates = require( 'UNIT_RATES/unitRates' );
 
-  const URQueryParameters = QueryStringMachine.getAll( {
+// sim modules
+import unitRates from '../unitRates.js';
 
-    // Enables random selection of scenes and questions in Shopping and Shopping Lab screens
-    randomEnabled: {
-      type: 'boolean',
-      defaultValue: true
-    },
+const URQueryParameters = QueryStringMachine.getAll( {
 
-    // Controls the animation speed of car races.
-    // 1 second of sim type is equivalent to this many hours of race time.
-    // Larger values make car animation run faster.
-    raceTimeScale: {
-      type: 'number',
-      defaultValue: 8, // hours
-      isValidValue: function( value ) { return value > 0; }
-    },
+  // Enables random selection of scenes and questions in Shopping and Shopping Lab screens
+  randomEnabled: {
+    type: 'boolean',
+    defaultValue: true
+  },
 
-    // shows cells on the scale and shelf, indicating where bags and items may reside
-    showCells: { type: 'flag' }
-  } );
+  // Controls the animation speed of car races.
+  // 1 second of sim type is equivalent to this many hours of race time.
+  // Larger values make car animation run faster.
+  raceTimeScale: {
+    type: 'number',
+    defaultValue: 8, // hours
+    isValidValue: function( value ) { return value > 0; }
+  },
 
-  unitRates.register( 'URQueryParameters', URQueryParameters );
-
-  // log the values of all sim-specific query parameters
-  phet.log && phet.log( 'query parameters: ' + JSON.stringify( URQueryParameters, null, 2 ) );
-
-  return URQueryParameters;
+  // shows cells on the scale and shelf, indicating where bags and items may reside
+  showCells: { type: 'flag' }
 } );
+
+unitRates.register( 'URQueryParameters', URQueryParameters );
+
+// log the values of all sim-specific query parameters
+phet.log && phet.log( 'query parameters: ' + JSON.stringify( URQueryParameters, null, 2 ) );
+
+export default URQueryParameters;

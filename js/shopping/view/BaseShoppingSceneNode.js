@@ -5,165 +5,161 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BagNode = require( 'UNIT_RATES/shopping/view/BagNode' );
-  const DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
-  const RowOfMovablesNode = require( 'UNIT_RATES/shopping/view/RowOfMovablesNode' );
-  const ScaleNode = require( 'UNIT_RATES/shopping/view/ScaleNode' );
-  const ShelfNode = require( 'UNIT_RATES/shopping/view/ShelfNode' );
-  const ShoppingItemNode = require( 'UNIT_RATES/shopping/view/ShoppingItemNode' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
-  const URColors = require( 'UNIT_RATES/common/URColors' );
-  const URConstants = require( 'UNIT_RATES/common/URConstants' );
-  const URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import ResetButton from '../../../../scenery-phet/js/buttons/ResetButton.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import URColors from '../../common/URColors.js';
+import URConstants from '../../common/URConstants.js';
+import URQueryParameters from '../../common/URQueryParameters.js';
+import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAccordionBox.js';
+import unitRates from '../../unitRates.js';
+import BagNode from './BagNode.js';
+import RowOfMovablesNode from './RowOfMovablesNode.js';
+import ScaleNode from './ScaleNode.js';
+import ShelfNode from './ShelfNode.js';
+import ShoppingItemNode from './ShoppingItemNode.js';
 
-  /**
-   * @param {ShoppingScene} shoppingScene
-   * @param {Bounds2} layoutBounds
-   * @param {KeypadLayer} keypadLayer
-   * @param {ShoppingViewProperties} viewProperties
-   * @param {Object} [options]
-   * @constructor
-   */
-  function BaseShoppingSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties, options ) {
+/**
+ * @param {ShoppingScene} shoppingScene
+ * @param {Bounds2} layoutBounds
+ * @param {KeypadLayer} keypadLayer
+ * @param {ShoppingViewProperties} viewProperties
+ * @param {Object} [options]
+ * @constructor
+ */
+function BaseShoppingSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties, options ) {
 
-    options = merge( {
-      extraCostDecimalVisible: false // {boolean} does the scale show an extra decimal place for cost?
-    }, options );
+  options = merge( {
+    extraCostDecimalVisible: false // {boolean} does the scale show an extra decimal place for cost?
+  }, options );
 
-    // Double number line, dispose required
-    const doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
-      axisViewLength: URConstants.SHOPPING_AXIS_LENGTH,
-      expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
-      left: layoutBounds.minX + URConstants.SCREEN_X_MARGIN,
-      top: layoutBounds.minY + URConstants.SCREEN_Y_MARGIN
-    } );
+  // Double number line, dispose required
+  const doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
+    axisViewLength: URConstants.SHOPPING_AXIS_LENGTH,
+    expandedProperty: viewProperties.doubleNumberLineExpandedProperty,
+    left: layoutBounds.minX + URConstants.SCREEN_X_MARGIN,
+    top: layoutBounds.minY + URConstants.SCREEN_Y_MARGIN
+  } );
 
-    // shelf, dispose required
-    const shelfNode = new ShelfNode( shoppingScene.shelf );
+  // shelf, dispose required
+  const shelfNode = new ShelfNode( shoppingScene.shelf );
 
-    // scale, dispose required
-    const scaleNode = new ScaleNode( shoppingScene.scale, {
-      costExpandedProperty: viewProperties.scaleCostExpandedProperty,
-      extraCostDecimalVisible: options.extraCostDecimalVisible,
-      quantityIsDisplayed: shoppingScene.scaleQuantityIsDisplayed
-    } );
+  // scale, dispose required
+  const scaleNode = new ScaleNode( shoppingScene.scale, {
+    costExpandedProperty: viewProperties.scaleCostExpandedProperty,
+    extraCostDecimalVisible: options.extraCostDecimalVisible,
+    quantityIsDisplayed: shoppingScene.scaleQuantityIsDisplayed
+  } );
 
-    // button that resets the shelf to its initial state
-    const resetShelfButton = new ResetButton( {
-      listener: function() {
-        dragLayer.interruptSubtreeInput();
-        shoppingScene.resetShelfAndScale();
-      },
-      baseColor: URColors.resetShelfButton,
-      scale: 0.65,
-      touchAreaDilation: 5,
-      right: scaleNode.left,
-      top: scaleNode.bottom + 20
-    } );
+  // button that resets the shelf to its initial state
+  const resetShelfButton = new ResetButton( {
+    listener: function() {
+      dragLayer.interruptSubtreeInput();
+      shoppingScene.resetShelfAndScale();
+    },
+    baseColor: URColors.resetShelfButton,
+    scale: 0.65,
+    touchAreaDilation: 5,
+    right: scaleNode.left,
+    top: scaleNode.bottom + 20
+  } );
 
-    // Disable the button when all bags are on the shelf
-    const numberOfBagsObserver = function( numberOfBags ) {
-      resetShelfButton.enabled = ( numberOfBags !== shoppingScene.numberOfBags );
-    };
-    shoppingScene.shelf.numberOfBagsProperty.link( numberOfBagsObserver ); // unlink in dispose
+  // Disable the button when all bags are on the shelf
+  const numberOfBagsObserver = function( numberOfBags ) {
+    resetShelfButton.enabled = ( numberOfBags !== shoppingScene.numberOfBags );
+  };
+  shoppingScene.shelf.numberOfBagsProperty.link( numberOfBagsObserver ); // unlink in dispose
 
-    // layers for bags and items
-    var dragLayer = new Node(); // all Nodes are in this layer while being dragged
-    const bagLayer = new Node();  // the row of bags
-    const frontItemLayer = new Node(); // the front row of items
-    const backItemLayer = new Node(); // the back row of items
+  // layers for bags and items
+  var dragLayer = new Node(); // all Nodes are in this layer while being dragged
+  const bagLayer = new Node();  // the row of bags
+  const frontItemLayer = new Node(); // the front row of items
+  const backItemLayer = new Node(); // the back row of items
 
-    // bags and items, dispose required
-    const bagNodes = [];
-    const itemNodes = [];
-    let bagsOpen = false;
-    shoppingScene.bags.forEach( function( bag ) {
+  // bags and items, dispose required
+  const bagNodes = [];
+  const itemNodes = [];
+  let bagsOpen = false;
+  shoppingScene.bags.forEach( function( bag ) {
 
-      // create the bag's Node, put it in the bag layer
-      const bagNode = new BagNode( bag, shoppingScene.shelf, shoppingScene.scale, bagLayer, dragLayer );
-      bagNodes.push( bagNode );
-      bagLayer.addChild( bagNode );
+    // create the bag's Node, put it in the bag layer
+    const bagNode = new BagNode( bag, shoppingScene.shelf, shoppingScene.scale, bagLayer, dragLayer );
+    bagNodes.push( bagNode );
+    bagLayer.addChild( bagNode );
 
-      // optional items in the bag
-      if ( bag.items ) {
-        bagsOpen = true;
-        bag.items.forEach( function( item ) {
+    // optional items in the bag
+    if ( bag.items ) {
+      bagsOpen = true;
+      bag.items.forEach( function( item ) {
 
-          // Create the item's Node. Adds itself to the proper layer, so there is no addChild here.
-          const itemNode = new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
-            frontItemLayer, backItemLayer, dragLayer );
-          itemNodes.push( itemNode );
-        } );
-      }
-    } );
-
-    assert && assert( !options.children, 'decoration not supported' );
-    options.children = [
-      doubleNumberLineAccordionBox, scaleNode, shelfNode, resetShelfButton,
-      bagLayer, backItemLayer, frontItemLayer, dragLayer
-    ];
-
-    Node.call( this, options );
-
-    // Debug: show the cells that bags and items can occupy on the shelf and scale
-    if ( URQueryParameters.showCells ) {
-
-      // cells for bags
-      const bagRowOptions = { stroke: 'green' };
-      this.addChild( new RowOfMovablesNode( shoppingScene.shelf.bagRow, bagRowOptions ) );
-      this.addChild( new RowOfMovablesNode( shoppingScene.scale.bagRow, bagRowOptions ) );
-
-      // cells for items
-      if ( bagsOpen ) {
-        const itemRowOptions = { stroke: 'blue' };
-        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.backItemRow, itemRowOptions ) );
-        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.frontItemRow, itemRowOptions ) );
-        this.addChild( new RowOfMovablesNode( shoppingScene.scale.backItemRow, itemRowOptions ) );
-        this.addChild( new RowOfMovablesNode( shoppingScene.scale.frontItemRow, itemRowOptions ) );
-      }
-    }
-
-    // @private
-    this.disposeBaseShoppingSceneNode = function() {
-
-      shoppingScene.shelf.numberOfBagsProperty.unlink( numberOfBagsObserver );
-
-      doubleNumberLineAccordionBox.dispose();
-      shelfNode.dispose();
-      scaleNode.dispose();
-
-      bagNodes.forEach( function( node ) {
-        node.dispose();
+        // Create the item's Node. Adds itself to the proper layer, so there is no addChild here.
+        const itemNode = new ShoppingItemNode( item, shoppingScene.shelf, shoppingScene.scale,
+          frontItemLayer, backItemLayer, dragLayer );
+        itemNodes.push( itemNode );
       } );
-
-      itemNodes.forEach( function( node ) {
-        node.dispose();
-      } );
-    };
-
-    // @private
-    this.dragLayer = dragLayer;
-
-    // @protected for layout in subtypes
-    this.doubleNumberLineAccordionBox = doubleNumberLineAccordionBox;
-  }
-
-  unitRates.register( 'BaseShoppingSceneNode', BaseShoppingSceneNode );
-
-  return inherit( Node, BaseShoppingSceneNode, {
-
-    // @public
-    dispose: function() {
-      this.disposeBaseShoppingSceneNode();
-      Node.prototype.dispose.call( this );
     }
   } );
+
+  assert && assert( !options.children, 'decoration not supported' );
+  options.children = [
+    doubleNumberLineAccordionBox, scaleNode, shelfNode, resetShelfButton,
+    bagLayer, backItemLayer, frontItemLayer, dragLayer
+  ];
+
+  Node.call( this, options );
+
+  // Debug: show the cells that bags and items can occupy on the shelf and scale
+  if ( URQueryParameters.showCells ) {
+
+    // cells for bags
+    const bagRowOptions = { stroke: 'green' };
+    this.addChild( new RowOfMovablesNode( shoppingScene.shelf.bagRow, bagRowOptions ) );
+    this.addChild( new RowOfMovablesNode( shoppingScene.scale.bagRow, bagRowOptions ) );
+
+    // cells for items
+    if ( bagsOpen ) {
+      const itemRowOptions = { stroke: 'blue' };
+      this.addChild( new RowOfMovablesNode( shoppingScene.shelf.backItemRow, itemRowOptions ) );
+      this.addChild( new RowOfMovablesNode( shoppingScene.shelf.frontItemRow, itemRowOptions ) );
+      this.addChild( new RowOfMovablesNode( shoppingScene.scale.backItemRow, itemRowOptions ) );
+      this.addChild( new RowOfMovablesNode( shoppingScene.scale.frontItemRow, itemRowOptions ) );
+    }
+  }
+
+  // @private
+  this.disposeBaseShoppingSceneNode = function() {
+
+    shoppingScene.shelf.numberOfBagsProperty.unlink( numberOfBagsObserver );
+
+    doubleNumberLineAccordionBox.dispose();
+    shelfNode.dispose();
+    scaleNode.dispose();
+
+    bagNodes.forEach( function( node ) {
+      node.dispose();
+    } );
+
+    itemNodes.forEach( function( node ) {
+      node.dispose();
+    } );
+  };
+
+  // @private
+  this.dragLayer = dragLayer;
+
+  // @protected for layout in subtypes
+  this.doubleNumberLineAccordionBox = doubleNumberLineAccordionBox;
+}
+
+unitRates.register( 'BaseShoppingSceneNode', BaseShoppingSceneNode );
+
+export default inherit( Node, BaseShoppingSceneNode, {
+
+  // @public
+  dispose: function() {
+    this.disposeBaseShoppingSceneNode();
+    Node.prototype.dispose.call( this );
+  }
 } );

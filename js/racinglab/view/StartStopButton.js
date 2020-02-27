@@ -5,46 +5,41 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BooleanRoundToggleButton = require( 'SUN/buttons/BooleanRoundToggleButton' );
-  const Image = require( 'SCENERY/nodes/Image' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const StopSignNode = require( 'SCENERY_PHET/StopSignNode' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import StopSignNode from '../../../../scenery-phet/js/StopSignNode.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import BooleanRoundToggleButton from '../../../../sun/js/buttons/BooleanRoundToggleButton.js';
+import goButtonIconImage from '../../../images/go_button_icon_png.js';
+import unitRates from '../../unitRates.js';
 
-  // images
-  const goButtonIconImage = require( 'image!UNIT_RATES/go_button_icon.png' );
+/**
+ * @param {Property.<boolean>} runningProperty
+ * @param {Object} [options]
+ * @constructor
+ */
+function StartStopButton( runningProperty, options ) {
 
-  /**
-   * @param {Property.<boolean>} runningProperty
-   * @param {Object} [options]
-   * @constructor
-   */
-  function StartStopButton( runningProperty, options ) {
+  const self = this;
 
-    const self = this;
+  options = merge( {
+    radius: 45
+  }, options );
 
-    options = merge( {
-      radius: 45
-    }, options );
+  const goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
+  const stopIcon = new StopSignNode( { fillRadius: 25 } );
 
-    const goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
-    const stopIcon = new StopSignNode( { fillRadius: 25 } );
+  BooleanRoundToggleButton.call( this, stopIcon, goIcon, runningProperty, options );
 
-    BooleanRoundToggleButton.call( this, stopIcon, goIcon, runningProperty, options );
+  // adjust button color based on runningProperty
+  // unlink not needed, exists for sim lifetime
+  runningProperty.link( function( running ) {
+    self.baseColor = ( running ? '#6D6E70' : '#85d4a6' );
+  } );
+}
 
-    // adjust button color based on runningProperty
-    // unlink not needed, exists for sim lifetime
-    runningProperty.link( function( running ) {
-      self.baseColor = ( running ? '#6D6E70' : '#85d4a6' );
-    } );
-  }
+unitRates.register( 'StartStopButton', StartStopButton );
 
-  unitRates.register( 'StartStopButton', StartStopButton );
-
-  return inherit( BooleanRoundToggleButton, StartStopButton );
-} );
+inherit( BooleanRoundToggleButton, StartStopButton );
+export default StartStopButton;

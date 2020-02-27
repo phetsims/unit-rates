@@ -5,178 +5,174 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BooleanProperty = require( 'AXON/BooleanProperty' );
-  const DoubleNumberLine = require( 'UNIT_RATES/common/model/DoubleNumberLine' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Marker = require( 'UNIT_RATES/common/model/Marker' );
-  const MarkerEditor = require( 'UNIT_RATES/common/model/MarkerEditor' );
-  const merge = require( 'PHET_CORE/merge' );
-  const NumberProperty = require( 'AXON/NumberProperty' );
-  const RaceTrack = require( 'UNIT_RATES/racinglab/model/RaceTrack' );
-  const Range = require( 'DOT/Range' );
-  const Rate = require( 'UNIT_RATES/common/model/Rate' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
-  const URQueryParameters = require( 'UNIT_RATES/common/URQueryParameters' );
-  const Utils = require( 'DOT/Utils' );
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Range from '../../../../dot/js/Range.js';
+import Utils from '../../../../dot/js/Utils.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import DoubleNumberLine from '../../common/model/DoubleNumberLine.js';
+import Marker from '../../common/model/Marker.js';
+import MarkerEditor from '../../common/model/MarkerEditor.js';
+import Rate from '../../common/model/Rate.js';
+import URQueryParameters from '../../common/URQueryParameters.js';
+import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRates from '../../unitRates.js';
+import RaceTrack from './RaceTrack.js';
 
-  // strings
-  const hoursString = require( 'string!UNIT_RATES/hours' );
-  const milesString = require( 'string!UNIT_RATES/miles' );
+const hoursString = unitRatesStrings.hours;
+const milesString = unitRatesStrings.miles;
 
-  /**
-   * @param {HTMLImageElement} image
-   * @param {Object} [options]
-   * @constructor
-   */
-  function RaceCar( image, options ) {
+/**
+ * @param {HTMLImageElement} image
+ * @param {Object} [options]
+ * @constructor
+ */
+function RaceCar( image, options ) {
 
-    const self = this;
+  const self = this;
 
-    options = merge( {
-      color: 'black', // {Color|string} color used for things that are associated with the car (markers, spinners, ...)
-      rate: new Rate( 50, 2 ), // {Rate} initial rate, in miles per hour
-      visible: true, // {boolean} is this car visible?
-      trackLength: 200, // {number} length of this car's track
-      numeratorMaxDecimals: 1, // {number} decimal places shown for numerator (miles)
-      denominatorMaxDecimals: 2, // {number} decimal places shown for denominator (hours)
-      majorMarkerSpacing: 25 // {number} spacing for major markers on this car's double number line
-    }, options );
+  options = merge( {
+    color: 'black', // {Color|string} color used for things that are associated with the car (markers, spinners, ...)
+    rate: new Rate( 50, 2 ), // {Rate} initial rate, in miles per hour
+    visible: true, // {boolean} is this car visible?
+    trackLength: 200, // {number} length of this car's track
+    numeratorMaxDecimals: 1, // {number} decimal places shown for numerator (miles)
+    denominatorMaxDecimals: 2, // {number} decimal places shown for denominator (hours)
+    majorMarkerSpacing: 25 // {number} spacing for major markers on this car's double number line
+  }, options );
 
-    // @public (read-only)
-    this.image = image;
-    this.color = options.color;
-    this.rate = options.rate;
+  // @public (read-only)
+  this.image = image;
+  this.color = options.color;
+  this.rate = options.rate;
 
-    // @public the car's distance from the starting line, in miles
-    this.distanceProperty = new NumberProperty( 0 );
+  // @public the car's distance from the starting line, in miles
+  this.distanceProperty = new NumberProperty( 0 );
 
-    // @public time for this car, in hours
-    this.timeProperty = new NumberProperty( 0 );
+  // @public time for this car, in hours
+  this.timeProperty = new NumberProperty( 0 );
 
-    // @public is this car visible?
-    this.visibleProperty = new BooleanProperty( options.visible );
+  // @public is this car visible?
+  this.visibleProperty = new BooleanProperty( options.visible );
 
-    // @public
-    this.track = new RaceTrack( { length: options.trackLength } );
+  // @public
+  this.track = new RaceTrack( { length: options.trackLength } );
+
+  // Specifies the interval for major markers
+  const isMajorMarker = function( numerator, denominator ) {
+    return ( numerator % options.majorMarkerSpacing === 0 );
+  };
+
+  // @public
+  this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
+    numeratorOptions: {
+      axisLabel: milesString,
+      maxDigits: 5,
+      maxDecimals: options.numeratorMaxDecimals,
+      trimZeros: true
+    },
+    denominatorOptions: {
+      axisLabel: hoursString,
+      maxDigits: 4,
+      maxDecimals: options.denominatorMaxDecimals,
+      trimZeros: true
+    },
+
+    // Numerator axis is fixed at 200 miles, so we will mutate the denominator (hours) when rate changes
+    fixedAxis: 'numerator',
+    fixedAxisRange: new Range( 0, 200 ),
 
     // Specifies the interval for major markers
-    const isMajorMarker = function( numerator, denominator ) {
-      return ( numerator % options.majorMarkerSpacing === 0 );
-    };
+    isMajorMarker: isMajorMarker
+  } );
 
-    // @public
-    this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
-      numeratorOptions: {
-        axisLabel: milesString,
-        maxDigits: 5,
-        maxDecimals: options.numeratorMaxDecimals,
-        trimZeros: true
-      },
-      denominatorOptions: {
-        axisLabel: hoursString,
-        maxDigits: 4,
-        maxDecimals: options.denominatorMaxDecimals,
-        trimZeros: true
-      },
+  // @public
+  this.markerEditor = new MarkerEditor( this.rate.unitRateProperty, {
+    numeratorMaxDecimals: options.numeratorMaxDecimals,
+    denominatorMaxDecimals: options.denominatorMaxDecimals
+  } );
 
-      // Numerator axis is fixed at 200 miles, so we will mutate the denominator (hours) when rate changes
-      fixedAxis: 'numerator',
-      fixedAxisRange: new Range( 0, 200 ),
+  // create a marker when the car reaches the finish line. unlink not needed
+  let persistentMarker = null;
+  this.distanceProperty.link( function( distance ) {
 
-      // Specifies the interval for major markers
-      isMajorMarker: isMajorMarker
-    } );
+    // make the current persistent marker erasable
+    if ( persistentMarker ) {
+      persistentMarker.erasable = true;
+      persistentMarker = null;
+    }
 
-    // @public
-    this.markerEditor = new MarkerEditor( this.rate.unitRateProperty, {
-      numeratorMaxDecimals: options.numeratorMaxDecimals,
-      denominatorMaxDecimals: options.denominatorMaxDecimals
-    } );
-
-    // create a marker when the car reaches the finish line. unlink not needed
-    let persistentMarker = null;
-    this.distanceProperty.link( function( distance ) {
-
-      // make the current persistent marker erasable
-      if ( persistentMarker ) {
-        persistentMarker.erasable = true;
-        persistentMarker = null;
-      }
-
-      // create a marker that is not erasable
-      if ( distance === self.track.lengthProperty.value ) {
-        persistentMarker = new Marker( distance, self.timeProperty.value, 'race', {
-          isMajor: isMajorMarker( distance, self.timeProperty.value ),
-          color: self.color,
-          erasable: false
-        } );
-        self.doubleNumberLine.addMarker( persistentMarker );
-      }
-    } );
-  }
-
-  unitRates.register( 'RaceCar', RaceCar );
-
-  return inherit( Object, RaceCar, {
-
-    // @public
-    reset: function() {
-      this.rate.reset();
-      this.distanceProperty.reset();
-      this.visibleProperty.reset();
-      this.timeProperty.reset();
-      this.track.reset();
-      this.doubleNumberLine.reset();
-      this.markerEditor.reset();
-    },
-
-    // @public moves the car to the starting line and resets the time
-    resetRace: function() {
-      this.distanceProperty.reset();
-      this.timeProperty.reset();
-    },
-
-    /**
-     * Is the car at the finish line?
-     * @returns {boolean}
-     * @public
-     */
-    isAtFinish: function() {
-      return ( this.distanceProperty.value === this.track.lengthProperty.value );
-    },
-
-    /**
-     * Updates the car and timer.
-     * @param {number} dt - elapsed time since previous call to step, in seconds
-     * @public
-     */
-    step: function( dt ) {
-      if ( this.visibleProperty.value && ( this.distanceProperty.value < this.track.lengthProperty.value ) ) {
-
-        // Map from sim time (seconds) to race time (hours).
-        // see https://github.com/phetsims/unit-rates/issues/95
-        const deltaRaceTime = Utils.linear( 0, 1, 0, URQueryParameters.raceTimeScale, dt );
-
-        // distance traveled, in miles
-        const deltaDistance = deltaRaceTime * this.rate.unitRateProperty.value;
-
-        if ( this.distanceProperty.value + deltaDistance >= this.track.lengthProperty.value ) {
-
-          // car has reached the finish line
-          this.timeProperty.value = this.track.lengthProperty.value / this.rate.unitRateProperty.value;
-          this.distanceProperty.value = this.track.lengthProperty.value;
-        }
-        else {
-
-          // move incrementally
-          this.timeProperty.value = this.timeProperty.value + deltaRaceTime;
-          this.distanceProperty.value = this.distanceProperty.value + deltaDistance;
-        }
-      }
+    // create a marker that is not erasable
+    if ( distance === self.track.lengthProperty.value ) {
+      persistentMarker = new Marker( distance, self.timeProperty.value, 'race', {
+        isMajor: isMajorMarker( distance, self.timeProperty.value ),
+        color: self.color,
+        erasable: false
+      } );
+      self.doubleNumberLine.addMarker( persistentMarker );
     }
   } );
+}
+
+unitRates.register( 'RaceCar', RaceCar );
+
+export default inherit( Object, RaceCar, {
+
+  // @public
+  reset: function() {
+    this.rate.reset();
+    this.distanceProperty.reset();
+    this.visibleProperty.reset();
+    this.timeProperty.reset();
+    this.track.reset();
+    this.doubleNumberLine.reset();
+    this.markerEditor.reset();
+  },
+
+  // @public moves the car to the starting line and resets the time
+  resetRace: function() {
+    this.distanceProperty.reset();
+    this.timeProperty.reset();
+  },
+
+  /**
+   * Is the car at the finish line?
+   * @returns {boolean}
+   * @public
+   */
+  isAtFinish: function() {
+    return ( this.distanceProperty.value === this.track.lengthProperty.value );
+  },
+
+  /**
+   * Updates the car and timer.
+   * @param {number} dt - elapsed time since previous call to step, in seconds
+   * @public
+   */
+  step: function( dt ) {
+    if ( this.visibleProperty.value && ( this.distanceProperty.value < this.track.lengthProperty.value ) ) {
+
+      // Map from sim time (seconds) to race time (hours).
+      // see https://github.com/phetsims/unit-rates/issues/95
+      const deltaRaceTime = Utils.linear( 0, 1, 0, URQueryParameters.raceTimeScale, dt );
+
+      // distance traveled, in miles
+      const deltaDistance = deltaRaceTime * this.rate.unitRateProperty.value;
+
+      if ( this.distanceProperty.value + deltaDistance >= this.track.lengthProperty.value ) {
+
+        // car has reached the finish line
+        this.timeProperty.value = this.track.lengthProperty.value / this.rate.unitRateProperty.value;
+        this.distanceProperty.value = this.track.lengthProperty.value;
+      }
+      else {
+
+        // move incrementally
+        this.timeProperty.value = this.timeProperty.value + deltaRaceTime;
+        this.distanceProperty.value = this.distanceProperty.value + deltaDistance;
+      }
+    }
+  }
 } );

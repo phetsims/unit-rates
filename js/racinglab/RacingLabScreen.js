@@ -6,46 +6,41 @@
  * @author Dave Schmitz (Schmitzware)
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Image = require( 'SCENERY/nodes/Image' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Property = require( 'AXON/Property' );
-  const RacingLabModel = require( 'UNIT_RATES/racinglab/model/RacingLabModel' );
-  const RacingLabScreenView = require( 'UNIT_RATES/racinglab/view/RacingLabScreenView' );
-  const Screen = require( 'JOIST/Screen' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
-  const URColors = require( 'UNIT_RATES/common/URColors' );
+import Property from '../../../axon/js/Property.js';
+import Screen from '../../../joist/js/Screen.js';
+import inherit from '../../../phet-core/js/inherit.js';
+import merge from '../../../phet-core/js/merge.js';
+import Image from '../../../scenery/js/nodes/Image.js';
+import screenIcon from '../../images/racing_lab_screen_icon_png.js';
+import URColors from '../common/URColors.js';
+import unitRatesStrings from '../unit-rates-strings.js';
+import unitRates from '../unitRates.js';
+import RacingLabModel from './model/RacingLabModel.js';
+import RacingLabScreenView from './view/RacingLabScreenView.js';
 
-  // images
-  const screenIcon = require( 'image!UNIT_RATES/racing_lab_screen_icon.png' );
+const screenRacingLabString = unitRatesStrings.screen.racingLab;
 
-  // strings
-  const screenRacingLabString = require( 'string!UNIT_RATES/screen.racingLab' );
+/**
+ * @param {Object} [options]
+ * @constructor
+ */
+function RacingLabScreen( options ) {
 
-  /**
-   * @param {Object} [options]
-   * @constructor
-   */
-  function RacingLabScreen( options ) {
+  options = merge( {
+    name: screenRacingLabString,
+    backgroundColorProperty: new Property( URColors.racingLabScreenBackground ),
+    homeScreenIcon: new Image( screenIcon )
+  }, options );
 
-    options = merge( {
-      name: screenRacingLabString,
-      backgroundColorProperty: new Property( URColors.racingLabScreenBackground ),
-      homeScreenIcon: new Image( screenIcon )
-    }, options );
+  Screen.call( this,
+    function() { return new RacingLabModel(); },
+    function( model ) { return new RacingLabScreenView( model ); },
+    options
+  );
+}
 
-    Screen.call( this,
-      function() { return new RacingLabModel(); },
-      function( model ) { return new RacingLabScreenView( model ); },
-      options
-    );
-  }
+unitRates.register( 'RacingLabScreen', RacingLabScreen );
 
-  unitRates.register( 'RacingLabScreen', RacingLabScreen );
-
-  return inherit( Screen, RacingLabScreen );
-} );
+inherit( Screen, RacingLabScreen );
+export default RacingLabScreen;

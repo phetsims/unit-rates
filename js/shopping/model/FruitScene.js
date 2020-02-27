@@ -5,35 +5,32 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
-  const ShoppingScene = require( 'UNIT_RATES/shopping/model/ShoppingScene' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import unitRates from '../../unitRates.js';
+import ShoppingItemData from './ShoppingItemData.js';
+import ShoppingScene from './ShoppingScene.js';
 
-  /**
-   * @param {Object} itemData - data structure that describes a type of vegetable, see ShoppingItemData
-   * @param {Object} [options]
-   * @constructor
-   */
-  function FruitScene( itemData, options ) {
+/**
+ * @param {Object} itemData - data structure that describes a type of vegetable, see ShoppingItemData
+ * @param {Object} [options]
+ * @constructor
+ */
+function FruitScene( itemData, options ) {
 
-    assert && assert( _.includes( _.values( ShoppingItemData.Fruit ), itemData ), 'itemData is not a fruit' );
+  assert && assert( _.includes( _.values( ShoppingItemData.Fruit ), itemData ), 'itemData is not a fruit' );
 
-    options = merge( {
+  options = merge( {
 
-      // Fruit bags open when placed on the scale
-      bagsOpen: true
-    }, options );
+    // Fruit bags open when placed on the scale
+    bagsOpen: true
+  }, options );
 
-    ShoppingScene.call( this, itemData, options );
-  }
+  ShoppingScene.call( this, itemData, options );
+}
 
-  unitRates.register( 'FruitScene', FruitScene );
+unitRates.register( 'FruitScene', FruitScene );
 
-  return inherit( ShoppingScene, FruitScene );
-} );
+inherit( ShoppingScene, FruitScene );
+export default FruitScene;

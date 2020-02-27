@@ -8,133 +8,129 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
-  const Vector2 = require( 'DOT/Vector2' );
-  const Vector2Property = require( 'DOT/Vector2Property' );
+import Vector2 from '../../../../dot/js/Vector2.js';
+import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import unitRates from '../../unitRates.js';
+
+/**
+ * @param {Object} [options]
+ * @constructor
+ */
+function URMovable( options ) {
+
+  options = merge( {
+    position: new Vector2( 0, 0 ), // {Vector2} initial position
+    dragging: false, // {boolean} is this instance being dragged by the user?
+    animationSpeed: 100 // {number} distance/second when animating
+  }, options );
+
+  // @public (read-only) DO NOT set this directly! Use moveTo or animateTo.
+  this.positionProperty = new Vector2Property( options.position );
+
+  // @public drag handlers must manage this flag during a drag sequence
+  this.dragging = options.dragging;
+
+  // @private
+  this.animationSpeed = options.animationSpeed;
+
+  // @private {Vector2} destination to animate to, set using animateTo
+  this.destination = options.position.copy();
+
+  // @private {function|null} called when animation step occurs, set using animateTo. Don't do anything expensive here!
+  this.animationStepCallback = null;
+
+  // @private {function|null} called when animation to destination completes, set using animateTo
+  this.animationCompletedCallback = null;
+}
+
+unitRates.register( 'URMovable', URMovable );
+
+export default inherit( Object, URMovable, {
+
+  // @public
+  reset: function() {
+
+    // call moveTo instead of positionProperty.set, so that any animation in progress is cancelled
+    this.moveTo( this.positionProperty.initialValue );
+  },
 
   /**
-   * @param {Object} [options]
-   * @constructor
+   * Moves immediately to the specified position, without animation.
+   * @param {Vector2} position
+   * @public
    */
-  function URMovable( options ) {
+  moveTo: function( position ) {
+
+    // cancel any pending callbacks
+    this.animationStepCallback = null;
+    this.animationCompletedCallback = null;
+
+    // move immediately to the position
+    this.destination = position;
+    this.positionProperty.set( position );
+  },
+
+  /**
+   * Animates to the specified position.
+   * Provides optional callback that occur on animation step and completion.
+   * @param {Vector2} destination
+   * @param {Object} [options]
+   * @public
+   */
+  animateTo: function( destination, options ) {
 
     options = merge( {
-      position: new Vector2( 0, 0 ), // {Vector2} initial position
-      dragging: false, // {boolean} is this instance being dragged by the user?
-      animationSpeed: 100 // {number} distance/second when animating
+      animationStepCallback: null, // {function} called when animation step occurs
+      animationCompletedCallback: null // {function} called when animation has completed
     }, options );
 
-    // @public (read-only) DO NOT set this directly! Use moveTo or animateTo.
-    this.positionProperty = new Vector2Property( options.position );
+    this.destination = destination;
+    this.animationStepCallback = options.animationStepCallback;
+    this.animationCompletedCallback = options.animationCompletedCallback;
+  },
 
-    // @public drag handlers must manage this flag during a drag sequence
-    this.dragging = options.dragging;
+  /**
+   * Animates position, when not being dragged by the user.
+   * @param {number} dt - time since the previous step, in seconds
+   * @public
+   */
+  step: function( dt ) {
+    const doStep = !this.dragging && ( !this.positionProperty.get().equals( this.destination ) || this.animationCompletedCallback );
+    if ( doStep ) {
 
-    // @private
-    this.animationSpeed = options.animationSpeed;
+      // optional callback
+      this.animationStepCallback && this.animationStepCallback();
 
-    // @private {Vector2} destination to animate to, set using animateTo
-    this.destination = options.position.copy();
+      // distance from destination
+      const totalDistance = this.positionProperty.get().distance( this.destination );
 
-    // @private {function|null} called when animation step occurs, set using animateTo. Don't do anything expensive here!
-    this.animationStepCallback = null;
+      // distance to move on this step
+      const stepDistance = this.animationSpeed * dt;
 
-    // @private {function|null} called when animation to destination completes, set using animateTo
-    this.animationCompletedCallback = null;
-  }
+      if ( totalDistance <= stepDistance ) {
 
-  unitRates.register( 'URMovable', URMovable );
+        // move directly to the destination
+        this.positionProperty.set( this.destination );
 
-  return inherit( Object, URMovable, {
-
-    // @public
-    reset: function() {
-
-      // call moveTo instead of positionProperty.set, so that any animation in progress is cancelled
-      this.moveTo( this.positionProperty.initialValue );
-    },
-
-    /**
-     * Moves immediately to the specified position, without animation.
-     * @param {Vector2} position
-     * @public
-     */
-    moveTo: function( position ) {
-
-      // cancel any pending callbacks
-      this.animationStepCallback = null;
-      this.animationCompletedCallback = null;
-
-      // move immediately to the position
-      this.destination = position;
-      this.positionProperty.set( position );
-    },
-
-    /**
-     * Animates to the specified position.
-     * Provides optional callback that occur on animation step and completion.
-     * @param {Vector2} destination
-     * @param {Object} [options]
-     * @public
-     */
-    animateTo: function( destination, options ) {
-
-      options = merge( {
-        animationStepCallback: null, // {function} called when animation step occurs
-        animationCompletedCallback: null // {function} called when animation has completed
-      }, options );
-
-      this.destination = destination;
-      this.animationStepCallback = options.animationStepCallback;
-      this.animationCompletedCallback = options.animationCompletedCallback;
-    },
-
-    /**
-     * Animates position, when not being dragged by the user.
-     * @param {number} dt - time since the previous step, in seconds
-     * @public
-     */
-    step: function( dt ) {
-      const doStep = !this.dragging && ( !this.positionProperty.get().equals( this.destination ) || this.animationCompletedCallback );
-      if ( doStep ) {
-
-        // optional callback
-        this.animationStepCallback && this.animationStepCallback();
-
-        // distance from destination
-        const totalDistance = this.positionProperty.get().distance( this.destination );
-
-        // distance to move on this step
-        const stepDistance = this.animationSpeed * dt;
-
-        if ( totalDistance <= stepDistance ) {
-
-          // move directly to the destination
-          this.positionProperty.set( this.destination );
-
-          // callback, which may set a new callback
-          const saveAnimationCompletedCallback = this.animationCompletedCallback;
-          this.animationCompletedCallback && this.animationCompletedCallback();
-          if ( saveAnimationCompletedCallback === this.animationCompletedCallback ) {
-            this.animationCompletedCallback = null;
-          }
-        }
-        else {
-
-          // move one step towards the destination
-          const stepAngle = Math.atan2(
-            this.destination.y - this.positionProperty.get().y,
-            this.destination.x - this.positionProperty.get().x );
-          const stepVector = Vector2.createPolar( stepDistance, stepAngle );
-          this.positionProperty.set( this.positionProperty.get().plus( stepVector ) );
+        // callback, which may set a new callback
+        const saveAnimationCompletedCallback = this.animationCompletedCallback;
+        this.animationCompletedCallback && this.animationCompletedCallback();
+        if ( saveAnimationCompletedCallback === this.animationCompletedCallback ) {
+          this.animationCompletedCallback = null;
         }
       }
+      else {
+
+        // move one step towards the destination
+        const stepAngle = Math.atan2(
+          this.destination.y - this.positionProperty.get().y,
+          this.destination.x - this.positionProperty.get().x );
+        const stepVector = Vector2.createPolar( stepDistance, stepAngle );
+        this.positionProperty.set( this.positionProperty.get().plus( stepVector ) );
+      }
     }
-  } );
+  }
 } );

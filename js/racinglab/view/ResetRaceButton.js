@@ -5,32 +5,27 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Image = require( 'SCENERY/nodes/Image' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import resetRaceButton from '../../../images/reset_race_button_png.js';
+import unitRates from '../../unitRates.js';
 
-  // images
-  const resetRaceButton = require( 'image!UNIT_RATES/reset_race_button.png' );
+/**
+ * @param {Object} [options]
+ * @constructor
+ */
+function ResetRaceButton( options ) {
+  RectangularPushButton.call( this, merge( {
+    content: new Image( resetRaceButton, { scale: 0.5 } ),
+    xMargin: 12,
+    yMargin: 8
+  }, options ) );
+}
 
-  /**
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ResetRaceButton( options ) {
-    RectangularPushButton.call( this, merge( {
-      content: new Image( resetRaceButton, { scale: 0.5 } ),
-      xMargin: 12,
-      yMargin: 8
-    }, options ) );
-  }
+unitRates.register( 'ResetRaceButton', ResetRaceButton );
 
-  unitRates.register( 'ResetRaceButton', ResetRaceButton );
-
-  return inherit( RectangularPushButton, ResetRaceButton );
-} );
+inherit( RectangularPushButton, ResetRaceButton );
+export default ResetRaceButton;

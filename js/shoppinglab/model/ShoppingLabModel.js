@@ -5,69 +5,64 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const CandyScene = require( 'UNIT_RATES/shopping/model/CandyScene' );
-  const FruitScene = require( 'UNIT_RATES/shopping/model/FruitScene' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Rate = require( 'UNIT_RATES/common/model/Rate' );
-  const ShoppingCategory = require( 'UNIT_RATES/shopping/model/ShoppingCategory' );
-  const ShoppingItemData = require( 'UNIT_RATES/shopping/model/ShoppingItemData' );
-  const ShoppingModel = require( 'UNIT_RATES/shopping/model/ShoppingModel' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
-  const VegetableScene = require( 'UNIT_RATES/shopping/model/VegetableScene' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import appleImage from '../../../images/apple_png.js';
+import carrotImage from '../../../images/carrot_png.js';
+import purpleCandyImage from '../../../images/purple_candy_png.js';
+import Rate from '../../common/model/Rate.js';
+import CandyScene from '../../shopping/model/CandyScene.js';
+import FruitScene from '../../shopping/model/FruitScene.js';
+import ShoppingCategory from '../../shopping/model/ShoppingCategory.js';
+import ShoppingItemData from '../../shopping/model/ShoppingItemData.js';
+import ShoppingModel from '../../shopping/model/ShoppingModel.js';
+import VegetableScene from '../../shopping/model/VegetableScene.js';
+import unitRates from '../../unitRates.js';
 
-  // images
-  const appleImage = require( 'image!UNIT_RATES/apple.png' );
-  const carrotImage = require( 'image!UNIT_RATES/carrot.png' );
-  const purpleCandyImage = require( 'image!UNIT_RATES/purple_candy.png' );
+/**
+ * @constructor
+ */
+function ShoppingLabModel() {
 
-  /**
-   * @constructor
-   */
-  function ShoppingLabModel() {
+  ShoppingModel.call( this, {
 
-    ShoppingModel.call( this, {
+    // unlike the 'Shopping' screen, each category in 'Shopping Lab' has only 1 associated item
+    categories: [
 
-      // unlike the 'Shopping' screen, each category in 'Shopping Lab' has only 1 associated item
-      categories: [
+      // fruits
+      new ShoppingCategory( appleImage, [
+        new FruitScene( ShoppingItemData.Fruit.APPLES, {
+          rate: new Rate( 1, 1 ),
+          denominatorOptions: {
+            pickerColor: 'red'
+          }
+        } )
+      ] ),
 
-        // fruits
-        new ShoppingCategory( appleImage, [
-          new FruitScene( ShoppingItemData.Fruit.APPLES, {
-            rate: new Rate( 1, 1 ),
-            denominatorOptions: {
-              pickerColor: 'red'
-            }
-          } )
-        ] ),
+      // vegetables
+      new ShoppingCategory( carrotImage, [
+        new VegetableScene( ShoppingItemData.Vegetable.CARROTS, {
+          rate: new Rate( 3, 4 ),
+          denominatorOptions: {
+            pickerColor: 'orange'
+          }
+        } )
+      ] ),
 
-        // vegetables
-        new ShoppingCategory( carrotImage, [
-          new VegetableScene( ShoppingItemData.Vegetable.CARROTS, {
-            rate: new Rate( 3, 4 ),
-            denominatorOptions: {
-              pickerColor: 'orange'
-            }
-          } )
-        ] ),
+      // candies
+      new ShoppingCategory( purpleCandyImage, [
+        new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY, {
+          rate: new Rate( 3, 2 ),
+          denominatorOptions: {
+            pickerColor: 'purple'
+          }
+        } )
+      ] )
+    ]
+  } );
+}
 
-        // candies
-        new ShoppingCategory( purpleCandyImage, [
-          new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY, {
-            rate: new Rate( 3, 2 ),
-            denominatorOptions: {
-              pickerColor: 'purple'
-            }
-          } )
-        ] )
-      ]
-    } );
-  }
+unitRates.register( 'ShoppingLabModel', ShoppingLabModel );
 
-  unitRates.register( 'ShoppingLabModel', ShoppingLabModel );
-
-  return inherit( ShoppingModel, ShoppingLabModel );
-} );
+inherit( ShoppingModel, ShoppingLabModel );
+export default ShoppingLabModel;

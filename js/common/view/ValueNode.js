@@ -6,54 +6,50 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
-  const URFont = require( 'UNIT_RATES/common/URFont' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import unitRates from '../../unitRates.js';
+import URFont from '../URFont.js';
 
-  /**
-   * @param {Property.<number>} valueProperty
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ValueNode( valueProperty, options ) {
+/**
+ * @param {Property.<number>} valueProperty
+ * @param {Object} [options]
+ * @constructor
+ */
+function ValueNode( valueProperty, options ) {
 
-    const self = this;
+  const self = this;
 
-    options = merge( {
-      font: new URFont( 20 ),
-      valueToString: function( value ) { return '' + value; }
-    }, options );
+  options = merge( {
+    font: new URFont( 20 ),
+    valueToString: function( value ) { return '' + value; }
+  }, options );
 
-    Text.call( this, '' ); // string will be filled in by valueObserver
+  Text.call( this, '' ); // string will be filled in by valueObserver
 
-    // update value display
-    const valueObserver = function( value ) {
-      self.text = options.valueToString( value );
-    };
-    valueProperty.link( valueObserver ); // unlink in dispose
+  // update value display
+  const valueObserver = function( value ) {
+    self.text = options.valueToString( value );
+  };
+  valueProperty.link( valueObserver ); // unlink in dispose
 
-    // @private
-    this.disposeValueNode = function() {
-      valueProperty.unlink( valueObserver );
-    };
+  // @private
+  this.disposeValueNode = function() {
+    valueProperty.unlink( valueObserver );
+  };
 
-    this.mutate( options );
+  this.mutate( options );
+}
+
+unitRates.register( 'ValueNode', ValueNode );
+
+export default inherit( Text, ValueNode, {
+
+  // @public
+  dispose: function() {
+    this.disposeValueNode();
+    Text.prototype.dispose.call( this );
   }
-
-  unitRates.register( 'ValueNode', ValueNode );
-
-  return inherit( Text, ValueNode, {
-
-    // @public
-    dispose: function() {
-      this.disposeValueNode();
-      Text.prototype.dispose.call( this );
-    }
-  } );
 } );

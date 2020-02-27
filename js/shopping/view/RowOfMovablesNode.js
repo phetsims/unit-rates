@@ -6,42 +6,39 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Path = require( 'SCENERY/nodes/Path' );
-  const Shape = require( 'KITE/Shape' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
+import Shape from '../../../../kite/js/Shape.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import unitRates from '../../unitRates.js';
 
-  /**
-   * @param {RowOfMovables} rowOfMovables
-   * @param {Object} [options]
-   * @constructor
-   */
-  function RowOfMovablesNode( rowOfMovables, options ) {
+/**
+ * @param {RowOfMovables} rowOfMovables
+ * @param {Object} [options]
+ * @constructor
+ */
+function RowOfMovablesNode( rowOfMovables, options ) {
 
-    options = merge( {
-      stroke: 'black'
-    }, options );
+  options = merge( {
+    stroke: 'black'
+  }, options );
 
-    const cellWidth = rowOfMovables.cellSize.width;
-    const cellHeight = rowOfMovables.cellSize.height;
+  const cellWidth = rowOfMovables.cellSize.width;
+  const cellHeight = rowOfMovables.cellSize.height;
 
-    // add a rectangle for each cell
-    const shape = new Shape();
-    rowOfMovables.getCells().forEach( function( cell ) {
-      const x = cell.position.x - ( cellWidth / 2 );
-      const y = cell.position.y - cellHeight;
-      shape.rect( x, y, cellWidth, cellHeight );
-    } );
+  // add a rectangle for each cell
+  const shape = new Shape();
+  rowOfMovables.getCells().forEach( function( cell ) {
+    const x = cell.position.x - ( cellWidth / 2 );
+    const y = cell.position.y - cellHeight;
+    shape.rect( x, y, cellWidth, cellHeight );
+  } );
 
-    Path.call( this, shape, options );
-  }
+  Path.call( this, shape, options );
+}
 
-  unitRates.register( 'RowOfMovablesNode', RowOfMovablesNode );
+unitRates.register( 'RowOfMovablesNode', RowOfMovablesNode );
 
-  return inherit( Path, RowOfMovablesNode );
-} );
+inherit( Path, RowOfMovablesNode );
+export default RowOfMovablesNode;

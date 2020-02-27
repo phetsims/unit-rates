@@ -5,183 +5,179 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const DoubleNumberLineAccordionBox = require( 'UNIT_RATES/common/view/DoubleNumberLineAccordionBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const KeypadLayer = require( 'UNIT_RATES/common/view/KeypadLayer' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const Property = require( 'AXON/Property' );
-  const RaceCarRateAccordionBox = require( 'UNIT_RATES/racinglab/view/RaceCarRateAccordionBox' );
-  const RaceTrackNode = require( 'UNIT_RATES/racinglab/view/RaceTrackNode' );
-  const RacingLabSceneControl = require( 'UNIT_RATES/racinglab/view/RacingLabSceneControl' );
-  const RacingLabViewProperties = require( 'UNIT_RATES/racinglab/view/RacingLabViewProperties' );
-  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  const ResetRaceButton = require( 'UNIT_RATES/racinglab/view/ResetRaceButton' );
-  const ScreenView = require( 'JOIST/ScreenView' );
-  const StartStopButton = require( 'UNIT_RATES/racinglab/view/StartStopButton' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
-  const URConstants = require( 'UNIT_RATES/common/URConstants' );
+import Property from '../../../../axon/js/Property.js';
+import ScreenView from '../../../../joist/js/ScreenView.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import URConstants from '../../common/URConstants.js';
+import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAccordionBox.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
+import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRates from '../../unitRates.js';
+import RaceCarRateAccordionBox from './RaceCarRateAccordionBox.js';
+import RaceTrackNode from './RaceTrackNode.js';
+import RacingLabSceneControl from './RacingLabSceneControl.js';
+import RacingLabViewProperties from './RacingLabViewProperties.js';
+import ResetRaceButton from './ResetRaceButton.js';
+import StartStopButton from './StartStopButton.js';
 
-  // strings
-  const doubleNumberLine1String = require( 'string!UNIT_RATES/doubleNumberLine1' );
-  const doubleNumberLine2String = require( 'string!UNIT_RATES/doubleNumberLine2' );
-  const rate1String = require( 'string!UNIT_RATES/rate1' );
-  const rate2String = require( 'string!UNIT_RATES/rate2' );
-  const timer1String = require( 'string!UNIT_RATES/timer1' );
-  const timer2String = require( 'string!UNIT_RATES/timer2' );
+const doubleNumberLine1String = unitRatesStrings.doubleNumberLine1;
+const doubleNumberLine2String = unitRatesStrings.doubleNumberLine2;
+const rate1String = unitRatesStrings.rate1;
+const rate2String = unitRatesStrings.rate2;
+const timer1String = unitRatesStrings.timer1;
+const timer2String = unitRatesStrings.timer2;
 
-  // constants
-  const BUTTON_X_SPACE = 20; // space between buttons
-  const ACCORDION_BOX_X_SPACE = 10; // space between accordion boxes
+// constants
+const BUTTON_X_SPACE = 20; // space between buttons
+const ACCORDION_BOX_X_SPACE = 10; // space between accordion boxes
 
-  /**
-   * @param {RacingLabModel} model
-   * @param {Object} [options]
-   * @constructor
-   */
-  function RacingLabScreenView( model, options ) {
+/**
+ * @param {RacingLabModel} model
+ * @param {Object} [options]
+ * @constructor
+ */
+function RacingLabScreenView( model, options ) {
 
-    const self = this;
+  const self = this;
 
-    ScreenView.call( this, options );
+  ScreenView.call( this, options );
 
-    // Properties that are specific to the view
-    const viewProperties = new RacingLabViewProperties();
+  // Properties that are specific to the view
+  const viewProperties = new RacingLabViewProperties();
 
-    // parent for everything expect the keypad
-    const playAreaLayer = new Node();
-    this.addChild( playAreaLayer );
+  // parent for everything expect the keypad
+  const playAreaLayer = new Node();
+  this.addChild( playAreaLayer );
 
-    // separate layer for model keypad
-    const keypadLayer = new KeypadLayer();
-    this.addChild( keypadLayer );
+  // separate layer for model keypad
+  const keypadLayer = new KeypadLayer();
+  this.addChild( keypadLayer );
 
-    // Double number line for car1
-    const doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
-      model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
-        axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
-        titleString: doubleNumberLine1String,
-        expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
-        indicatorXProperty: model.car1.distanceProperty,
-        indicatorColor: model.car1.color,
-        keypadPosition: 'below',
-        left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
-        top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
-      } );
-    playAreaLayer.addChild( doubleNumberLineAccordionBox1 );
-
-    // Double number line for car2
-    const doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
-      model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
-        axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
-        titleString: doubleNumberLine2String,
-        expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
-        indicatorXProperty: model.car2.distanceProperty,
-        indicatorColor: model.car2.color,
-        keypadPosition: 'above',
-        left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
-        bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
-      } );
-    playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
-
-    // Rate control for car1
-    const rateAccordionBox1 = new RaceCarRateAccordionBox( model.car1, {
-      titleString: rate1String,
-      expandedProperty: viewProperties.rateExpandedProperty1,
-      left: doubleNumberLineAccordionBox1.right + ACCORDION_BOX_X_SPACE,
-      top: doubleNumberLineAccordionBox1.top
+  // Double number line for car1
+  const doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
+    model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
+      axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
+      titleString: doubleNumberLine1String,
+      expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
+      indicatorXProperty: model.car1.distanceProperty,
+      indicatorColor: model.car1.color,
+      keypadPosition: 'below',
+      left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
+      top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
     } );
-    playAreaLayer.addChild( rateAccordionBox1 );
+  playAreaLayer.addChild( doubleNumberLineAccordionBox1 );
 
-    // Rate control for car2
-    const rateAccordionBox2 = new RaceCarRateAccordionBox( model.car2, {
-      titleString: rate2String,
-      expandedProperty: viewProperties.rateExpandedProperty2,
-      left: doubleNumberLineAccordionBox2.right + ACCORDION_BOX_X_SPACE,
-      top: doubleNumberLineAccordionBox2.top
+  // Double number line for car2
+  const doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
+    model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
+      axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
+      titleString: doubleNumberLine2String,
+      expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
+      indicatorXProperty: model.car2.distanceProperty,
+      indicatorColor: model.car2.color,
+      keypadPosition: 'above',
+      left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
+      bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
     } );
-    playAreaLayer.addChild( rateAccordionBox2 );
+  playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
 
-    // Track for car1
-    const trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, viewProperties.arrowsVisibleProperty, {
-      timerTitleString: timer1String,
-      trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
-      x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
-      bottom: this.layoutBounds.centerY - 10
+  // Rate control for car1
+  const rateAccordionBox1 = new RaceCarRateAccordionBox( model.car1, {
+    titleString: rate1String,
+    expandedProperty: viewProperties.rateExpandedProperty1,
+    left: doubleNumberLineAccordionBox1.right + ACCORDION_BOX_X_SPACE,
+    top: doubleNumberLineAccordionBox1.top
+  } );
+  playAreaLayer.addChild( rateAccordionBox1 );
+
+  // Rate control for car2
+  const rateAccordionBox2 = new RaceCarRateAccordionBox( model.car2, {
+    titleString: rate2String,
+    expandedProperty: viewProperties.rateExpandedProperty2,
+    left: doubleNumberLineAccordionBox2.right + ACCORDION_BOX_X_SPACE,
+    top: doubleNumberLineAccordionBox2.top
+  } );
+  playAreaLayer.addChild( rateAccordionBox2 );
+
+  // Track for car1
+  const trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, viewProperties.arrowsVisibleProperty, {
+    timerTitleString: timer1String,
+    trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
+    x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
+    bottom: this.layoutBounds.centerY - 10
+  } );
+  playAreaLayer.addChild( trackNode1 );
+
+  // Track for car2
+  const trackNode2 = new RaceTrackNode( model.car2, viewProperties.timerExpandedProperty2, viewProperties.arrowsVisibleProperty, {
+    timerTitleString: timer2String,
+    trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
+    x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
+    top: this.layoutBounds.centerY + ( this.layoutBounds.centerY - trackNode1.bottom )
+  } );
+  playAreaLayer.addChild( trackNode2 );
+
+  // Scene control (1 vs 2 cars)
+  const sceneControl = new RacingLabSceneControl( model.car2.visibleProperty, {
+    right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
+    centerY: this.layoutBounds.centerY
+  } );
+  playAreaLayer.addChild( sceneControl );
+
+  // Start/Stop button
+  const startStopButton = new StartStopButton( model.runningProperty, {
+    right: sceneControl.left - BUTTON_X_SPACE,
+    centerY: this.layoutBounds.centerY
+  } );
+  playAreaLayer.addChild( startStopButton );
+
+  // Reset Race button
+  const resetRace = new ResetRaceButton( {
+    listener: function() {
+      model.runningProperty.value = false;
+      model.car1.resetRace();
+      model.car2.resetRace();
+    },
+    right: startStopButton.left - BUTTON_X_SPACE,
+    centerY: startStopButton.centerY
+  } );
+  playAreaLayer.addChild( resetRace );
+
+  // Reset All button
+  const resetAllButton = new ResetAllButton( {
+    listener: function() {
+      self.interruptSubtreeInput();
+      model.reset();
+      viewProperties.reset();
+    },
+    right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
+    bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
+  } );
+  playAreaLayer.addChild( resetAllButton );
+
+  // car1 should always be visible, because the view doesn't doesn't support hiding it. unlink not needed.
+  model.car1.visibleProperty.link( function( visible ) {
+    assert && assert( model.car1.visibleProperty.value, 'car1 should always be visible' );
+  } );
+
+  // Show/hide components related to car2. unlink not needed.
+  model.car2.visibleProperty.link( function( visible ) {
+    rateAccordionBox2.visible = visible;
+    doubleNumberLineAccordionBox2.visible = visible;
+    trackNode2.visible = visible;
+  } );
+
+  // Disable the restart button when both cars are at the starting line. unmultilink not needed
+  Property.multilink( [ model.car1.distanceProperty, model.car2.distanceProperty ],
+    function( distance1, distance2 ) {
+      resetRace.enabled = !( distance1 === 0 && distance2 === 0 );
     } );
-    playAreaLayer.addChild( trackNode1 );
+}
 
-    // Track for car2
-    const trackNode2 = new RaceTrackNode( model.car2, viewProperties.timerExpandedProperty2, viewProperties.arrowsVisibleProperty, {
-      timerTitleString: timer2String,
-      trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
-      x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
-      top: this.layoutBounds.centerY + ( this.layoutBounds.centerY - trackNode1.bottom )
-    } );
-    playAreaLayer.addChild( trackNode2 );
+unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
 
-    // Scene control (1 vs 2 cars)
-    const sceneControl = new RacingLabSceneControl( model.car2.visibleProperty, {
-      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
-      centerY: this.layoutBounds.centerY
-    } );
-    playAreaLayer.addChild( sceneControl );
-
-    // Start/Stop button
-    const startStopButton = new StartStopButton( model.runningProperty, {
-      right: sceneControl.left - BUTTON_X_SPACE,
-      centerY: this.layoutBounds.centerY
-    } );
-    playAreaLayer.addChild( startStopButton );
-
-    // Reset Race button
-    const resetRace = new ResetRaceButton( {
-      listener: function() {
-        model.runningProperty.value = false;
-        model.car1.resetRace();
-        model.car2.resetRace();
-      },
-      right: startStopButton.left - BUTTON_X_SPACE,
-      centerY: startStopButton.centerY
-    } );
-    playAreaLayer.addChild( resetRace );
-
-    // Reset All button
-    const resetAllButton = new ResetAllButton( {
-      listener: function() {
-        self.interruptSubtreeInput();
-        model.reset();
-        viewProperties.reset();
-      },
-      right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
-      bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
-    } );
-    playAreaLayer.addChild( resetAllButton );
-
-    // car1 should always be visible, because the view doesn't doesn't support hiding it. unlink not needed.
-    model.car1.visibleProperty.link( function( visible ) {
-      assert && assert( model.car1.visibleProperty.value, 'car1 should always be visible' );
-    } );
-
-    // Show/hide components related to car2. unlink not needed.
-    model.car2.visibleProperty.link( function( visible ) {
-      rateAccordionBox2.visible = visible;
-      doubleNumberLineAccordionBox2.visible = visible;
-      trackNode2.visible = visible;
-    } );
-
-    // Disable the restart button when both cars are at the starting line. unmultilink not needed
-    Property.multilink( [ model.car1.distanceProperty, model.car2.distanceProperty ],
-      function( distance1, distance2 ) {
-        resetRace.enabled = !( distance1 === 0 && distance2 === 0 );
-      } );
-  }
-
-  unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
-
-  return inherit( ScreenView, RacingLabScreenView );
-} );
-
+inherit( ScreenView, RacingLabScreenView );
+export default RacingLabScreenView;

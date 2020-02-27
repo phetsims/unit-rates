@@ -6,35 +6,32 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
+import inherit from '../../../phet-core/js/inherit.js';
+import merge from '../../../phet-core/js/merge.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import unitRates from '../unitRates.js';
 
-  /**
-   * @param {number|*} options font size or font options
-   * @constructor
-   */
-  function URFont( options ) {
+/**
+ * @param {number|*} options font size or font options
+ * @constructor
+ */
+function URFont( options ) {
 
-    // convenience for specifying font size only, e.g. new URFont(24)
-    if ( typeof options === 'number' ) {
-      options = { size: options };
-    }
-
-    // font attributes, as specified in the design document
-    options = merge( {
-      family: 'Arial'
-    }, options );
-
-    PhetFont.call( this, options );
+  // convenience for specifying font size only, e.g. new URFont(24)
+  if ( typeof options === 'number' ) {
+    options = { size: options };
   }
 
-  unitRates.register( 'URFont', URFont );
+  // font attributes, as specified in the design document
+  options = merge( {
+    family: 'Arial'
+  }, options );
 
-  return inherit( PhetFont, URFont );
-} );
+  PhetFont.call( this, options );
+}
+
+unitRates.register( 'URFont', URFont );
+
+inherit( PhetFont, URFont );
+export default URFont;

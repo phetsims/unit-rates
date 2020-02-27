@@ -6,38 +6,34 @@
  * @author Dave Schmitz (Schmitzware)
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const RacingLabScreen = require( 'UNIT_RATES/racinglab/RacingLabScreen' );
-  const ShoppingLabScreen = require( 'UNIT_RATES/shoppinglab/ShoppingLabScreen' );
-  const ShoppingScreen = require( 'UNIT_RATES/shopping/ShoppingScreen' );
-  const Sim = require( 'JOIST/Sim' );
-  const SimLauncher = require( 'JOIST/SimLauncher' );
+import Sim from '../../joist/js/Sim.js';
+import SimLauncher from '../../joist/js/SimLauncher.js';
+import RacingLabScreen from './racinglab/RacingLabScreen.js';
+import ShoppingScreen from './shopping/ShoppingScreen.js';
+import ShoppingLabScreen from './shoppinglab/ShoppingLabScreen.js';
+import unitRatesStrings from './unit-rates-strings.js';
 
-  // strings
-  const unitRatesTitleString = require( 'string!UNIT_RATES/unit-rates.title' );
+const unitRatesTitleString = unitRatesStrings[ 'unit-rates' ].title;
 
-  const simOptions = {
-    credits: {
-      leadDesign: 'Amy Rouinfar',
-      softwareDevelopment: 'Chris Malley (PixelZoom, Inc.), Dave Schmitz (Schmitzware)',
-      team: 'Amy Hanson, Amanda McGarry, Susan Miller, Ariel Paul, Kathy Perkins',
-      qualityAssurance: 'Steele Dalton, Amanda Davis, Bryce Griebenow, Ethan Johnson',
-      graphicArts: 'Mariah Hermsmeyer'
-    }
-  };
+const simOptions = {
+  credits: {
+    leadDesign: 'Amy Rouinfar',
+    softwareDevelopment: 'Chris Malley (PixelZoom, Inc.), Dave Schmitz (Schmitzware)',
+    team: 'Amy Hanson, Amanda McGarry, Susan Miller, Ariel Paul, Kathy Perkins',
+    qualityAssurance: 'Steele Dalton, Amanda Davis, Bryce Griebenow, Ethan Johnson',
+    graphicArts: 'Mariah Hermsmeyer'
+  }
+};
 
-  SimLauncher.launch( () => {
+SimLauncher.launch( () => {
 
-    const screens = [
-      new ShoppingScreen(),
-      new ShoppingLabScreen(),
-      new RacingLabScreen()
-    ];
+  const screens = [
+    new ShoppingScreen(),
+    new ShoppingLabScreen(),
+    new RacingLabScreen()
+  ];
 
-    const sim = new Sim( unitRatesTitleString, screens, simOptions );
-    sim.start();
-  } );
+  const sim = new Sim( unitRatesTitleString, screens, simOptions );
+  sim.start();
 } );

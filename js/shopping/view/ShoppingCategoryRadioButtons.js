@@ -5,48 +5,45 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Image = require( 'SCENERY/nodes/Image' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
-  const unitRates = require( 'UNIT_RATES/unitRates' );
-  const URColors = require( 'UNIT_RATES/common/URColors' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
+import URColors from '../../common/URColors.js';
+import unitRates from '../../unitRates.js';
 
-  /**
-   * @param {ShoppingCategory[]} categories
-   * @param {Property.<ShoppingCategory>} categoryProperty
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ShoppingCategoryRadioButtons( categories, categoryProperty, options ) {
+/**
+ * @param {ShoppingCategory[]} categories
+ * @param {Property.<ShoppingCategory>} categoryProperty
+ * @param {Object} [options]
+ * @constructor
+ */
+function ShoppingCategoryRadioButtons( categories, categoryProperty, options ) {
 
-    options = merge( {
+  options = merge( {
 
-      // RadioButtonGroup options
-      orientation: 'horizontal',
-      baseColor: URColors.categoryButton,
-      spacing: 12,
-      buttonContentXMargin: 5,
-      buttonContentYMargin: 5
-    }, options );
+    // RadioButtonGroup options
+    orientation: 'horizontal',
+    baseColor: URColors.categoryButton,
+    spacing: 12,
+    buttonContentXMargin: 5,
+    buttonContentYMargin: 5
+  }, options );
 
-    // describe a radio button for each category
-    const contentArray = [];
-    categories.forEach( function( category ) {
-      contentArray.push( {
-        value: category,
-        node: new Image( category.image, { scale: 0.5 } )
-      } );
+  // describe a radio button for each category
+  const contentArray = [];
+  categories.forEach( function( category ) {
+    contentArray.push( {
+      value: category,
+      node: new Image( category.image, { scale: 0.5 } )
     } );
+  } );
 
-    RadioButtonGroup.call( this, categoryProperty, contentArray, options );
-  }
+  RadioButtonGroup.call( this, categoryProperty, contentArray, options );
+}
 
-  unitRates.register( 'ShoppingCategoryRadioButtons', ShoppingCategoryRadioButtons );
+unitRates.register( 'ShoppingCategoryRadioButtons', ShoppingCategoryRadioButtons );
 
-  return inherit( RadioButtonGroup, ShoppingCategoryRadioButtons );
-} );
+inherit( RadioButtonGroup, ShoppingCategoryRadioButtons );
+export default ShoppingCategoryRadioButtons;
