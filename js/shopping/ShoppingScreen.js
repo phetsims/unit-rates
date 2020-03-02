@@ -9,7 +9,6 @@
 
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
-import inherit from '../../../phet-core/js/inherit.js';
 import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import screenIcon from '../../images/shopping_screen_icon_png.js';
@@ -19,28 +18,30 @@ import unitRates from '../unitRates.js';
 import ShoppingModel from './model/ShoppingModel.js';
 import ShoppingScreenView from './view/ShoppingScreenView.js';
 
+// strings
 const screenShoppingString = unitRatesStrings.screen.shopping;
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function ShoppingScreen( options ) {
+class ShoppingScreen extends Screen {
 
-  options = merge( {
-    name: screenShoppingString,
-    backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
-    homeScreenIcon: new Image( screenIcon )
-  }, options );
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-  Screen.call( this,
-    function() { return new ShoppingModel(); },
-    function( model ) { return new ShoppingScreenView( model ); },
-    options
-  );
+    options = merge( {
+      name: screenShoppingString,
+      backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
+      homeScreenIcon: new Image( screenIcon )
+    }, options );
+
+    super(
+      () => new ShoppingModel(),
+      model => new ShoppingScreenView( model ),
+      options
+    );
+  }
 }
 
 unitRates.register( 'ShoppingScreen', ShoppingScreen );
 
-inherit( Screen, ShoppingScreen );
 export default ShoppingScreen;

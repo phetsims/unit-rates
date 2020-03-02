@@ -9,7 +9,6 @@
 
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
-import inherit from '../../../phet-core/js/inherit.js';
 import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import screenIcon from '../../images/racing_lab_screen_icon_png.js';
@@ -19,28 +18,30 @@ import unitRates from '../unitRates.js';
 import RacingLabModel from './model/RacingLabModel.js';
 import RacingLabScreenView from './view/RacingLabScreenView.js';
 
+// strings
 const screenRacingLabString = unitRatesStrings.screen.racingLab;
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function RacingLabScreen( options ) {
+class RacingLabScreen extends Screen {
 
-  options = merge( {
-    name: screenRacingLabString,
-    backgroundColorProperty: new Property( URColors.racingLabScreenBackground ),
-    homeScreenIcon: new Image( screenIcon )
-  }, options );
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-  Screen.call( this,
-    function() { return new RacingLabModel(); },
-    function( model ) { return new RacingLabScreenView( model ); },
-    options
-  );
+    options = merge( {
+      name: screenRacingLabString,
+      backgroundColorProperty: new Property( URColors.racingLabScreenBackground ),
+      homeScreenIcon: new Image( screenIcon )
+    }, options );
+
+    super(
+      () => new RacingLabModel(),
+      model => new RacingLabScreenView( model ),
+      options
+    );
+  }
 }
 
 unitRates.register( 'RacingLabScreen', RacingLabScreen );
 
-inherit( Screen, RacingLabScreen );
 export default RacingLabScreen;

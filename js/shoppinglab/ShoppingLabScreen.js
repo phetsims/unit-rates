@@ -9,7 +9,6 @@
 
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
-import inherit from '../../../phet-core/js/inherit.js';
 import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import screenIcon from '../../images/shopping_lab_screen_icon_png.js';
@@ -19,28 +18,30 @@ import unitRates from '../unitRates.js';
 import ShoppingLabModel from './model/ShoppingLabModel.js';
 import ShoppingLabScreenView from './view/ShoppingLabScreenView.js';
 
+// strings
 const screenShoppingLabString = unitRatesStrings.screen.shoppingLab;
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function ShoppingLabScreen( options ) {
+class ShoppingLabScreen extends Screen {
 
-  options = merge( {
-    name: screenShoppingLabString,
-    backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
-    homeScreenIcon: new Image( screenIcon )
-  }, options );
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-  Screen.call( this,
-    function() { return new ShoppingLabModel(); },
-    function( model ) { return new ShoppingLabScreenView( model ); },
-    options
-  );
+    options = merge( {
+      name: screenShoppingLabString,
+      backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
+      homeScreenIcon: new Image( screenIcon )
+    }, options );
+
+    super(
+      () => new ShoppingLabModel(),
+      model => new ShoppingLabScreenView( model ),
+      options
+    );
+  }
 }
 
 unitRates.register( 'ShoppingLabScreen', ShoppingLabScreen );
 
-inherit( Screen, ShoppingLabScreen );
 export default ShoppingLabScreen;
