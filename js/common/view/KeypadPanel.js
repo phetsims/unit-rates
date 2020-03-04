@@ -8,7 +8,6 @@
  */
 
 import StringProperty from '../../../../axon/js/StringProperty.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import NumberKeypad from '../../../../scenery-phet/js/NumberKeypad.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -27,88 +26,100 @@ const enterString = unitRatesStrings.enter;
 // constants
 const DECIMAL_POINT = NumberKeypad.DECIMAL_POINT;
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function KeypadPanel( options ) {
+class KeypadPanel extends Panel {
 
-  options = merge( {
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-    // KeypadPanel options
-    valueBoxWidth: 85, // {number} width of the value field, height determined by valueFont
-    valueYMargin: 3, // {number} vertical margin inside the value box
-    valueFont: new URFont( 16 ),
-    valueString: '', // {string} initial value shown in the keypad
-    decimalPointKey: true, // {boolean} does the keypad have a decimal point key?
-    maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
-    maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypd
+    options = merge( {
 
-    // Panel options
-    fill: 'rgb( 230, 230, 230 )', // {Color|string} the keypad's background color
-    backgroundPickable: true, // {boolean} so that clicking in the keypad's background doesn't close the keypad
-    xMargin: 10,
-    yMargin: 10,
+      // KeypadPanel options
+      valueBoxWidth: 85, // {number} width of the value field, height determined by valueFont
+      valueYMargin: 3, // {number} vertical margin inside the value box
+      valueFont: new URFont( 16 ),
+      valueString: '', // {string} initial value shown in the keypad
+      decimalPointKey: true, // {boolean} does the keypad have a decimal point key?
+      maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
+      maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypd
 
-    // RectangularPushButton options
-    enterButtonListener: null  // {function} called when the Enter button is pressed
+      // Panel options
+      fill: 'rgb( 230, 230, 230 )', // {Color|string} the keypad's background color
+      backgroundPickable: true, // {boolean} so that clicking in the keypad's background doesn't close the keypad
+      xMargin: 10,
+      yMargin: 10,
 
-  }, options );
+      // RectangularPushButton options
+      enterButtonListener: null  // {function} called when the Enter button is pressed
 
-  // @public
-  this.valueStringProperty = new StringProperty( options.valueString );
+    }, options );
 
-  const valueNode = new Text( this.valueStringProperty.value, {
-    font: options.valueFont
-  } );
+    const valueStringProperty = new StringProperty( options.valueString );
 
-  const valueBackgroundNode = new Rectangle( 0, 0, options.valueBoxWidth, valueNode.height + ( 2 * options.valueYMargin ), {
-    cornerRadius: 3,
-    fill: 'white',
-    stroke: 'black'
-  } );
+    const valueNode = new Text( valueStringProperty.value, {
+      font: options.valueFont
+    } );
 
-  const valueParent = new Node( {
-    children: [ valueBackgroundNode, valueNode ]
-  } );
+    const valueBackgroundNode = new Rectangle( 0, 0, options.valueBoxWidth, valueNode.height + ( 2 * options.valueYMargin ), {
+      cornerRadius: 3,
+      fill: 'white',
+      stroke: 'black'
+    } );
 
-  const keypadNode = new NumberKeypad( {
-    valueStringProperty: this.valueStringProperty,
-    decimalPointKey: options.decimalPointKey,
-    validateKey: validateDigitsAndDecimals( {
-      maxDigits: options.maxDigits,
-      maxDecimals: options.maxDecimals
-    } )
-  } );
+    const valueParent = new Node( {
+      children: [ valueBackgroundNode, valueNode ]
+    } );
 
-  const enterButton = new RectangularPushButton( {
-    listener: options.enterButtonListener,
-    baseColor: URColors.enterButton,
-    content: new Text( enterString, {
-      font: new URFont( 16 ),
-      fill: 'black',
-      maxWidth: keypadNode.width // i18n
-    } )
-  } );
+    const keypadNode = new NumberKeypad( {
+      valueStringProperty: valueStringProperty,
+      decimalPointKey: options.decimalPointKey,
+      validateKey: validateDigitsAndDecimals( {
+        maxDigits: options.maxDigits,
+        maxDecimals: options.maxDecimals
+      } )
+    } );
 
-  const contentNode = new VBox( {
-    spacing: 10,
-    align: 'center',
-    children: [ valueParent, keypadNode, enterButton ]
-  } );
+    const enterButton = new RectangularPushButton( {
+      listener: options.enterButtonListener,
+      baseColor: URColors.enterButton,
+      content: new Text( enterString, {
+        font: new URFont( 16 ),
+        fill: 'black',
+        maxWidth: keypadNode.width // i18n
+      } )
+    } );
 
-  Panel.call( this, contentNode, options );
+    const contentNode = new VBox( {
+      spacing: 10,
+      align: 'center',
+      children: [ valueParent, keypadNode, enterButton ]
+    } );
 
-  this.valueStringProperty.link( valueString => { // no unlink required
-    valueNode.text = valueString;
-    valueNode.center = valueBackgroundNode.center;
-  } );
+    super( contentNode, options );
 
-  // @private
-  this.disposeKeypadPanel = () => {
-    keypadNode.disposeSubtree(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
-    enterButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
-  };
+    // @public
+    this.valueStringProperty = valueStringProperty;
+    this.valueStringProperty.link( valueString => { // no unlink required
+      valueNode.text = valueString;
+      valueNode.center = valueBackgroundNode.center;
+    } );
+
+    // @private
+    this.disposeKeypadPanel = () => {
+      keypadNode.disposeSubtree(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      enterButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+    };
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeKeypadPanel();
+    super.dispose();
+  }
 }
 
 /**
@@ -185,14 +196,4 @@ function validateDigitsAndDecimals( options ) {
 
 unitRates.register( 'KeypadPanel', KeypadPanel );
 
-export default inherit( Panel, KeypadPanel, {
-
-  /**
-   * @public
-   * @override
-   */
-  dispose: function() {
-    this.disposeKeypadPanel();
-    Panel.prototype.dispose.call( this );
-  }
-} );
+export default KeypadPanel;
