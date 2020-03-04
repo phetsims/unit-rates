@@ -111,8 +111,6 @@ function KeypadPanel( options ) {
   };
 }
 
-unitRates.register( 'KeypadPanel', KeypadPanel );
-
 /**
  * Conforms to the API for NumberKeypad options.validateKey.
  * Creates a validation function that constrains the value to have:
@@ -184,6 +182,8 @@ function validateDigitsAndDecimals( options ) {
     return newValueString;
   };
 }
+
+unitRates.register( 'KeypadPanel', KeypadPanel );
 
 export default inherit( Panel, KeypadPanel, {
 
