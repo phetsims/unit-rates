@@ -31,7 +31,7 @@ class RaceTrack {
     this.lengthProperty = new NumberProperty( options.length );
 
     // validate length, unlink not needed
-    this.lengthProperty.link( function( length ) {
+    this.lengthProperty.link( length => {
       assert && assert( length >= 0 && length <= options.maxLength, 'invalid length: ' + length );
     } );
   }

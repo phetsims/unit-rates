@@ -36,9 +36,7 @@ class RaceTimerNode extends ValuePanel {
     // dispose not required, exists for sim lifetime
     const valueNode = new ValueNode( timeProperty, {
       font: TIMER_FONT,
-      valueToString: function( value ) {
-        return StringUtils.format( pattern0Value1UnitsString, Utils.toFixed( value, DECIMAL_PLACES ), hoursString );
-      }
+      valueToString: value => StringUtils.format( pattern0Value1UnitsString, Utils.toFixed( value, DECIMAL_PLACES ), hoursString )
     } );
 
     super( valueNode, merge( {
