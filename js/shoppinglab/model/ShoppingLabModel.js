@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import appleImage from '../../../images/apple_png.js';
 import carrotImage from '../../../images/carrot_png.js';
 import purpleCandyImage from '../../../images/purple_candy_png.js';
@@ -19,50 +18,49 @@ import ShoppingModel from '../../shopping/model/ShoppingModel.js';
 import VegetableScene from '../../shopping/model/VegetableScene.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @constructor
- */
-function ShoppingLabModel() {
+class ShoppingLabModel extends ShoppingModel {
 
-  ShoppingModel.call( this, {
+  constructor() {
 
-    // unlike the 'Shopping' screen, each category in 'Shopping Lab' has only 1 associated item
-    categories: [
+    super( {
 
-      // fruits
-      new ShoppingCategory( appleImage, [
-        new FruitScene( ShoppingItemData.Fruit.APPLES, {
-          rate: new Rate( 1, 1 ),
-          denominatorOptions: {
-            pickerColor: 'red'
-          }
-        } )
-      ] ),
+      // unlike the 'Shopping' screen, each category in 'Shopping Lab' has only 1 associated item
+      categories: [
 
-      // vegetables
-      new ShoppingCategory( carrotImage, [
-        new VegetableScene( ShoppingItemData.Vegetable.CARROTS, {
-          rate: new Rate( 3, 4 ),
-          denominatorOptions: {
-            pickerColor: 'orange'
-          }
-        } )
-      ] ),
+        // fruits
+        new ShoppingCategory( appleImage, [
+          new FruitScene( ShoppingItemData.Fruit.APPLES, {
+            rate: new Rate( 1, 1 ),
+            denominatorOptions: {
+              pickerColor: 'red'
+            }
+          } )
+        ] ),
 
-      // candies
-      new ShoppingCategory( purpleCandyImage, [
-        new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY, {
-          rate: new Rate( 3, 2 ),
-          denominatorOptions: {
-            pickerColor: 'purple'
-          }
-        } )
-      ] )
-    ]
-  } );
+        // vegetables
+        new ShoppingCategory( carrotImage, [
+          new VegetableScene( ShoppingItemData.Vegetable.CARROTS, {
+            rate: new Rate( 3, 4 ),
+            denominatorOptions: {
+              pickerColor: 'orange'
+            }
+          } )
+        ] ),
+
+        // candies
+        new ShoppingCategory( purpleCandyImage, [
+          new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY, {
+            rate: new Rate( 3, 2 ),
+            denominatorOptions: {
+              pickerColor: 'purple'
+            }
+          } )
+        ] )
+      ]
+    } );
+  }
 }
 
 unitRates.register( 'ShoppingLabModel', ShoppingLabModel );
 
-inherit( ShoppingModel, ShoppingLabModel );
 export default ShoppingLabModel;

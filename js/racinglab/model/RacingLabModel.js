@@ -8,82 +8,89 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import blueCarImage from '../../../images/blue_car_png.js';
 import redCarImage from '../../../images/red_car_png.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 import RaceCar from './RaceCar.js';
 
-/**
- * @constructor
- */
-function RacingLabModel() {
+class RacingLabModel {
 
-  const self = this;
+  constructor() {
 
-  // @public is the race running?
-  this.runningProperty = new BooleanProperty( false );
+    // @public is the race running?
+    this.runningProperty = new BooleanProperty( false );
 
-  // @public the red (top) car
-  this.car1 = new RaceCar( redCarImage, {
-    color: URColors.car1,
-    trackLength: 150
-  } );
+    // @public the red (top) car
+    this.car1 = new RaceCar( redCarImage, {
+      color: URColors.car1,
+      trackLength: 150
+    } );
 
-  // @public the blue (bottom) car
-  this.car2 = new RaceCar( blueCarImage, {
-    color: URColors.car2,
-    trackLength: 100,
-    visible: false
-  } );
+    // @public the blue (bottom) car
+    this.car2 = new RaceCar( blueCarImage, {
+      color: URColors.car2,
+      trackLength: 100,
+      visible: false
+    } );
 
-  // When both cars reach the finish line, stop the race.  unmulitlink not needed.
-  Property.lazyMultilink( [ this.car1.distanceProperty, this.car2.distanceProperty ],
-    function( distance1, distance2 ) {
-      if ( self.car1.isAtFinish() && ( !self.car2.visibleProperty.value || self.car2.isAtFinish() ) ) {
-        self.runningProperty.value = false;
+    // When both cars reach the finish line, stop the race.  unmulitlink not needed.
+    Property.lazyMultilink(
+      [ this.car1.distanceProperty, this.car2.distanceProperty ],
+      ( distance1, distance2 ) => {
+        if ( this.car1.isAtFinish() && ( !this.car2.visibleProperty.value || this.car2.isAtFinish() ) ) {
+          this.runningProperty.value = false;
+        }
+      } );
+
+    // If both cars are at the finish line, changing the state to running restarts the race. unlink not needed.
+    this.runningProperty.link( running => {
+      if ( running && this.car1.isAtFinish() && ( !this.car2.visibleProperty.value || this.car2.isAtFinish() ) ) {
+        this.car1.resetRace();
+        this.car2.resetRace();
       }
     } );
 
-  // If both cars are at the finish line, changing the state to running restarts the race. unlink not needed.
-  this.runningProperty.link( function( running ) {
-    if ( running && self.car1.isAtFinish() && ( !self.car2.visibleProperty.value || self.car2.isAtFinish() ) ) {
-      self.car1.resetRace();
-      self.car2.resetRace();
-    }
-  } );
+    // Reset the race when any of these Properties is changed. unmultilink not needed
+    // See https://github.com/phetsims/unit-rates/issues/93
+    Property.lazyMultilink( [
 
-  // Reset the race when any of these Properties is changed. unmultilink not needed
-  // See https://github.com/phetsims/unit-rates/issues/93
-  Property.lazyMultilink( [
+        // changed via the scene radio buttons
+        this.car2.visibleProperty,
 
-      // changed via the scene radio buttons
-      this.car2.visibleProperty,
+        // changed via the Rate spinners
+        this.car1.rate.numeratorProperty,
+        this.car1.rate.denominatorProperty,
+        this.car2.rate.numeratorProperty,
+        this.car2.rate.denominatorProperty,
 
-      // changed via the Rate spinners
-      this.car1.rate.numeratorProperty,
-      this.car1.rate.denominatorProperty,
-      this.car2.rate.numeratorProperty,
-      this.car2.rate.denominatorProperty,
+        // changed by dragging the finish line flags
+        this.car1.track.lengthProperty,
+        this.car2.track.lengthProperty
+      ],
+      this.resetRace.bind( this ) );
+  }
 
-      // changed by dragging the finish line flags
-      this.car1.track.lengthProperty,
-      this.car2.track.lengthProperty
-    ],
-    this.resetRace.bind( this ) );
-}
+  // @public
+  reset() {
+    this.runningProperty.reset();
+    this.car1.reset();
+    this.car2.reset();
+  }
 
-unitRates.register( 'RacingLabModel', RacingLabModel );
-
-export default inherit( Object, RacingLabModel, {
+  // @private resets the race
+  resetRace() {
+    this.runningProperty.reset();
+    this.car1.resetRace();
+    this.car2.resetRace();
+  }
 
   /**
    * Updates time-dependent parts of the model.
    * @param {number} dt - time since the previous step, in seconds
    * @public
    */
-  step: function( dt ) {
+  step( dt ) {
 
     // Cap dt, see https://github.com/phetsims/unit-rates/issues/193
     dt = Math.min( dt, 0.1 );
@@ -92,19 +99,9 @@ export default inherit( Object, RacingLabModel, {
       this.car1.step( dt );
       this.car2.step( dt );
     }
-  },
-
-  // @public
-  reset: function() {
-    this.runningProperty.reset();
-    this.car1.reset();
-    this.car2.reset();
-  },
-
-  // @private resets the race
-  resetRace: function() {
-    this.runningProperty.reset();
-    this.car1.resetRace();
-    this.car2.resetRace();
   }
-} );
+}
+
+unitRates.register( 'RacingLabModel', RacingLabModel );
+
+export default RacingLabModel;

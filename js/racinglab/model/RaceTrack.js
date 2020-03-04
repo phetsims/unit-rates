@@ -7,41 +7,41 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function RaceTrack( options ) {
+class RaceTrack {
 
-  options = merge( {
-    length: 200, // {number} initial distance between start and finish line, in miles
-    maxLength: 200, // {number} maximum distance between start and finish line, in miles
-    markerSpacing: 50  // {number} track markers are spaced at this interval, in miles
-  }, options );
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-  // @public (read-only)
-  this.maxLength = options.maxLength;
-  this.markerSpacing = options.markerSpacing;
+    options = merge( {
+      length: 200, // {number} initial distance between start and finish line, in miles
+      maxLength: 200, // {number} maximum distance between start and finish line, in miles
+      markerSpacing: 50  // {number} track markers are spaced at this interval, in miles
+    }, options );
+
+    // @public (read-only)
+    this.maxLength = options.maxLength;
+    this.markerSpacing = options.markerSpacing;
+
+    // @public
+    this.lengthProperty = new NumberProperty( options.length );
+
+    // validate length, unlink not needed
+    this.lengthProperty.link( function( length ) {
+      assert && assert( length >= 0 && length <= options.maxLength, 'invalid length: ' + length );
+    } );
+  }
 
   // @public
-  this.lengthProperty = new NumberProperty( options.length );
-
-  // validate length, unlink not needed
-  this.lengthProperty.link( function( length ) {
-    assert && assert( length >= 0 && length <= options.maxLength, 'invalid length: ' + length );
-  } );
+  reset() {
+    this.lengthProperty.reset();
+  }
 }
 
 unitRates.register( 'RaceTrack', RaceTrack );
 
-export default inherit( Object, RaceTrack, {
-
-  // @public
-  reset: function() {
-    this.lengthProperty.reset();
-  }
-} );
+export default RaceTrack;

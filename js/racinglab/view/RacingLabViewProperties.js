@@ -7,36 +7,30 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @constructor
- */
-function RacingLabViewProperties() {
+class RacingLabViewProperties {
 
-  // @public are the 'Double Number Line' accordion boxes expanded?
-  this.doubleNumberLineExpandedProperty1 = new BooleanProperty( true );
-  this.doubleNumberLineExpandedProperty2 = new BooleanProperty( true );
+  constructor() {
 
-  // @public are the 'Rate' accordion boxes expanded?
-  this.rateExpandedProperty1 = new BooleanProperty( true );
-  this.rateExpandedProperty2 = new BooleanProperty( true );
+    // @public are the 'Double Number Line' accordion boxes expanded?
+    this.doubleNumberLineExpandedProperty1 = new BooleanProperty( true );
+    this.doubleNumberLineExpandedProperty2 = new BooleanProperty( true );
 
-  // @public are the race timers expanded?
-  this.timerExpandedProperty1 = new BooleanProperty( true );
-  this.timerExpandedProperty2 = new BooleanProperty( true );
+    // @public are the 'Rate' accordion boxes expanded?
+    this.rateExpandedProperty1 = new BooleanProperty( true );
+    this.rateExpandedProperty2 = new BooleanProperty( true );
 
-  // @public are the drag arrows visible that surround the finish flag?
-  this.arrowsVisibleProperty = new BooleanProperty( true );
-}
+    // @public are the race timers expanded?
+    this.timerExpandedProperty1 = new BooleanProperty( true );
+    this.timerExpandedProperty2 = new BooleanProperty( true );
 
-unitRates.register( 'RacingLabViewProperties', RacingLabViewProperties );
-
-export default inherit( Object, RacingLabViewProperties, {
+    // @public are the drag arrows visible that surround the finish flag?
+    this.arrowsVisibleProperty = new BooleanProperty( true );
+  }
 
   // @public
-  reset: function() {
+  reset() {
     this.doubleNumberLineExpandedProperty1.reset();
     this.doubleNumberLineExpandedProperty2.reset();
     this.rateExpandedProperty1.reset();
@@ -45,4 +39,8 @@ export default inherit( Object, RacingLabViewProperties, {
     this.timerExpandedProperty2.reset();
     this.arrowsVisibleProperty.reset();
   }
-} );
+}
+
+unitRates.register( 'RacingLabViewProperties', RacingLabViewProperties );
+
+export default RacingLabViewProperties;
