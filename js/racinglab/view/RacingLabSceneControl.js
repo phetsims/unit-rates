@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
@@ -15,36 +14,36 @@ import blueCarImage from '../../../images/blue_car_png.js';
 import redCarImage from '../../../images/red_car_png.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @param {Property.<boolean>} car2VisibleProperty - is car2 visible?
- * @param {Object} [options]
- * @constructor
- */
-function RacingLabSceneControl( car2VisibleProperty, options ) {
+class RacingLabSceneControl extends RadioButtonGroup {
 
-  options = merge( {
+  /**
+   * @param {Property.<boolean>} car2VisibleProperty - is car2 visible?
+   * @param {Object} [options]
+   */
+  constructor( car2VisibleProperty, options ) {
 
-    // RacingLabSceneControl options
-    buttonWidth: 68,
+    options = merge( {
 
-    // RadioButtonGroup options
-    orientation: 'vertical',
-    baseColor: 'white',
-    buttonContentXMargin: 12,
-    buttonContentYMargin: 10,
-    spacing: 11 // space between the buttons
+      // RacingLabSceneControl options
+      buttonWidth: 68,
 
-  }, options );
+      // RadioButtonGroup options
+      orientation: 'vertical',
+      baseColor: 'white',
+      buttonContentXMargin: 12,
+      buttonContentYMargin: 10,
+      spacing: 11 // space between the buttons
 
-  const maxCarWidth = options.buttonWidth - ( 2 * options.buttonContentXMargin );
+    }, options );
 
-  RadioButtonGroup.call( this, car2VisibleProperty, [
-    { value: false, node: createOneCarIcon( maxCarWidth ) },
-    { value: true, node: createTwoCarsIcon( maxCarWidth ) }
-  ], options );
+    const maxCarWidth = options.buttonWidth - ( 2 * options.buttonContentXMargin );
+
+    super( car2VisibleProperty, [
+      { value: false, node: createOneCarIcon( maxCarWidth ) },
+      { value: true, node: createTwoCarsIcon( maxCarWidth ) }
+    ], options );
+  }
 }
-
-unitRates.register( 'RacingLabSceneControl', RacingLabSceneControl );
 
 /**
  * Creates the icon for the 1-car scene, scaled to fit a specified width.
@@ -82,5 +81,5 @@ function createCarImage( imageFile, maxCarWidth ) {
   return carImage;
 }
 
-inherit( RadioButtonGroup, RacingLabSceneControl );
+unitRates.register( 'RacingLabSceneControl', RacingLabSceneControl );
 export default RacingLabSceneControl;

@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StopSignNode from '../../../../scenery-phet/js/StopSignNode.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
@@ -14,32 +13,31 @@ import BooleanRoundToggleButton from '../../../../sun/js/buttons/BooleanRoundTog
 import goButtonIconImage from '../../../images/go_button_icon_png.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @param {Property.<boolean>} runningProperty
- * @param {Object} [options]
- * @constructor
- */
-function StartStopButton( runningProperty, options ) {
+class StartStopButton extends BooleanRoundToggleButton {
 
-  const self = this;
+  /**
+   * @param {Property.<boolean>} runningProperty
+   * @param {Object} [options]
+   */
+  constructor( runningProperty, options ) {
 
-  options = merge( {
-    radius: 45
-  }, options );
+    options = merge( {
+      radius: 45
+    }, options );
 
-  const goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
-  const stopIcon = new StopSignNode( { fillRadius: 25 } );
+    const goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
+    const stopIcon = new StopSignNode( { fillRadius: 25 } );
 
-  BooleanRoundToggleButton.call( this, stopIcon, goIcon, runningProperty, options );
+    super( stopIcon, goIcon, runningProperty, options );
 
-  // adjust button color based on runningProperty
-  // unlink not needed, exists for sim lifetime
-  runningProperty.link( function( running ) {
-    self.baseColor = ( running ? '#6D6E70' : '#85d4a6' );
-  } );
+    // adjust button color based on runningProperty
+    // unlink not needed, exists for sim lifetime
+    runningProperty.link( running => {
+      this.baseColor = ( running ? '#6D6E70' : '#85d4a6' );
+    } );
+  }
 }
 
 unitRates.register( 'StartStopButton', StartStopButton );
 
-inherit( BooleanRoundToggleButton, StartStopButton );
 export default StartStopButton;
