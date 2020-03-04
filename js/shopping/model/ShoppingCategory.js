@@ -7,65 +7,58 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @param {HTMLImageElement} image - image used to represent the category
- * @param {ShoppingScene[]} shoppingScenes - scenes in the category
- * @param {Object} [options]
- * @constructor
- */
-function ShoppingCategory( image, shoppingScenes, options ) {
+class ShoppingCategory {
 
-  assert && assert( shoppingScenes.length > 0, 'at least 1 ShoppingScene is required' );
+  /**
+   * @param {HTMLImageElement} image - image used to represent the category
+   * @param {ShoppingScene[]} shoppingScenes - scenes in the category
+   * @param {Object} [options]
+   */
+  constructor( image, shoppingScenes, options ) {
 
-  options = merge( {
+    assert && assert( shoppingScenes.length > 0, 'at least 1 ShoppingScene is required' );
 
-    // index of the scene that is initially selected, randomly chosen
-    shoppingSceneIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, shoppingScenes.length - 1 ) : 0
-  }, options );
+    options = merge( {
 
-  // validate options
-  assert && assert( options.shoppingSceneIndex >= 0 && options.shoppingSceneIndex < shoppingScenes.length,
-    'invalid shoppingSceneIndex: ' + options.shoppingSceneIndex );
+      // index of the scene that is initially selected, randomly chosen
+      shoppingSceneIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, shoppingScenes.length - 1 ) : 0
+    }, options );
 
-  // @public (read-only)
-  this.image = image;
-  this.shoppingScenes = shoppingScenes;
-  this.shoppingSceneProperty = new Property( shoppingScenes[ options.shoppingSceneIndex ] );
-}
+    // validate options
+    assert && assert( options.shoppingSceneIndex >= 0 && options.shoppingSceneIndex < shoppingScenes.length,
+      'invalid shoppingSceneIndex: ' + options.shoppingSceneIndex );
 
-unitRates.register( 'ShoppingCategory', ShoppingCategory );
+    // @public (read-only)
+    this.image = image;
+    this.shoppingScenes = shoppingScenes;
+    this.shoppingSceneProperty = new Property( shoppingScenes[ options.shoppingSceneIndex ] );
+  }
 
-export default inherit( Object, ShoppingCategory, {
+  // @public
+  reset() {
+
+    // Reset all scenes
+    this.shoppingScenes.forEach( shoppingScene => shoppingScene.reset() );
+
+    this.shoppingSceneProperty.reset();
+  }
 
   /**
    * Updates time-dependent parts of the model.
    * @param {number} dt - time since the previous step, in seconds
    * @public
    */
-  step: function( dt ) {
+  step( dt ) {
 
     // step the selected scene
-    for ( let i = 0; i < this.shoppingScenes.length; i++ ) {
-      if ( this.shoppingScenes[ i ] === this.shoppingSceneProperty.value ) {
-        this.shoppingScenes[ i ].step( dt );
-        break;
-      }
-    }
-  },
-
-  // @public
-  reset: function() {
-
-    // Reset all scenes
-    this.shoppingScenes.forEach( function( shoppingScene ) {
-      shoppingScene.reset();
-    } );
-
-    this.shoppingSceneProperty.reset();
+    this.shoppingSceneProperty.value.step( dt );
   }
-} );
+}
+
+unitRates.register( 'ShoppingCategory', ShoppingCategory );
+
+export default ShoppingCategory;

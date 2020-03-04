@@ -45,8 +45,6 @@ const orangeString = unitRatesStrings.orange;
 const pearsString = unitRatesStrings.pears;
 const pearString = unitRatesStrings.pear;
 
-// Fruit images
-
 // Vegetable strings
 const carrotsString = unitRatesStrings.carrots;
 const carrotString = unitRatesStrings.carrot;
@@ -57,17 +55,13 @@ const potatoString = unitRatesStrings.potato;
 const tomatoesString = unitRatesStrings.tomatoes;
 const tomatoString = unitRatesStrings.tomato;
 
-// Vegetable images
-
 // Candy strings
 const blueCandyString = unitRatesStrings.blueCandy;
 const greenCandyString = unitRatesStrings.greenCandy;
 const purpleCandyString = unitRatesStrings.purpleCandy;
 const redCandyString = unitRatesStrings.redCandy;
 
-// Candy images
-
-var ShoppingItemData = {
+const ShoppingItemData = {
 
   // Data structures that describe types of Fruit
   Fruit: {
@@ -317,14 +311,12 @@ var ShoppingItemData = {
    * Verification occurs only when assertions are enabled. The first missing property causes an assertion failure.
    * @param {*} itemData
    */
-  assertIsItemData: function( itemData ) {
+  assertIsItemData: itemData => {
 
     // Instead of keeping a separate list of property names, assume that the APPLES instance is representative.
     const keys = _.keys( ShoppingItemData.Fruit.APPLES );
 
-    keys.forEach( function( key ) {
-      assert && assert( _.has( itemData, key ), 'missing property: ' + key );
-    } );
+    keys.forEach( key => assert && assert( _.has( itemData, key ), 'missing property: ' + key ) );
   }
 };
 

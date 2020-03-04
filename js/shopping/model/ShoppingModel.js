@@ -7,7 +7,6 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import appleImage from '../../../images/apple_png.js';
 import carrotImage from '../../../images/carrot_png.js';
@@ -19,65 +18,68 @@ import ShoppingCategory from './ShoppingCategory.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import VegetableScene from './VegetableScene.js';
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function ShoppingModel( options ) {
+class ShoppingModel {
 
-  options = merge( {
-    categoryIndex: 0, // {number} index of the category that is initially selected
-    categories: null // {ShoppingCategory[]} categories, populated below if not provided
-  }, options );
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-  // @public (read-only) items are grouped into categories
-  this.categories = options.categories || [
+    options = merge( {
+      categoryIndex: 0, // {number} index of the category that is initially selected
+      categories: null // {ShoppingCategory[]} categories, populated below if not provided
+    }, options );
 
-    // fruits
-    new ShoppingCategory( appleImage, [
-      new FruitScene( ShoppingItemData.Fruit.APPLES ),
-      new FruitScene( ShoppingItemData.Fruit.LEMONS ),
-      new FruitScene( ShoppingItemData.Fruit.ORANGES ),
-      new FruitScene( ShoppingItemData.Fruit.PEARS )
-    ] ),
+    // @public (read-only) items are grouped into categories
+    this.categories = options.categories || [
 
-    // vegetables
-    new ShoppingCategory( carrotImage, [
-      new VegetableScene( ShoppingItemData.Vegetable.CARROTS ),
-      new VegetableScene( ShoppingItemData.Vegetable.CUCUMBERS ),
-      new VegetableScene( ShoppingItemData.Vegetable.POTATOES ),
-      new VegetableScene( ShoppingItemData.Vegetable.TOMATOES )
-    ] ),
+      // fruits
+      new ShoppingCategory( appleImage, [
+        new FruitScene( ShoppingItemData.Fruit.APPLES ),
+        new FruitScene( ShoppingItemData.Fruit.LEMONS ),
+        new FruitScene( ShoppingItemData.Fruit.ORANGES ),
+        new FruitScene( ShoppingItemData.Fruit.PEARS )
+      ] ),
 
-    // candies
-    new ShoppingCategory( purpleCandyImage, [
-      new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY ),
-      new CandyScene( ShoppingItemData.Candy.RED_CANDY ),
-      new CandyScene( ShoppingItemData.Candy.GREEN_CANDY ),
-      new CandyScene( ShoppingItemData.Candy.BLUE_CANDY )
-    ] )
-  ];
+      // vegetables
+      new ShoppingCategory( carrotImage, [
+        new VegetableScene( ShoppingItemData.Vegetable.CARROTS ),
+        new VegetableScene( ShoppingItemData.Vegetable.CUCUMBERS ),
+        new VegetableScene( ShoppingItemData.Vegetable.POTATOES ),
+        new VegetableScene( ShoppingItemData.Vegetable.TOMATOES )
+      ] ),
 
-  // validate options
-  assert && assert( options.categoryIndex >= 0 && options.categoryIndex < this.categories.length,
-    'invalid categoryIndex: ' + options.categoryIndex );
+      // candies
+      new ShoppingCategory( purpleCandyImage, [
+        new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY ),
+        new CandyScene( ShoppingItemData.Candy.RED_CANDY ),
+        new CandyScene( ShoppingItemData.Candy.GREEN_CANDY ),
+        new CandyScene( ShoppingItemData.Candy.BLUE_CANDY )
+      ] )
+    ];
 
-  // @public the selected category
-  this.categoryProperty = new Property( this.categories[ options.categoryIndex ], {
-    validValues: this.categories
-  } );
-}
+    // validate options
+    assert && assert( options.categoryIndex >= 0 && options.categoryIndex < this.categories.length,
+      'invalid categoryIndex: ' + options.categoryIndex );
 
-unitRates.register( 'ShoppingModel', ShoppingModel );
+    // @public the selected category
+    this.categoryProperty = new Property( this.categories[ options.categoryIndex ], {
+      validValues: this.categories
+    } );
+  }
 
-export default inherit( Object, ShoppingModel, {
+  // @public
+  reset() {
+    this.categoryProperty.reset();
+    this.categories.forEach( category => category.reset() );
+  }
 
   /**
    * Updates time-dependent parts of the model.
    * @param {number} dt - time since the previous step, in seconds
    * @public
    */
-  step: function( dt ) {
+  step( dt ) {
 
     // Cap dt, see https://github.com/phetsims/unit-rates/issues/193
     dt = Math.min( dt, 0.1 );
@@ -89,13 +91,9 @@ export default inherit( Object, ShoppingModel, {
         break;
       }
     }
-  },
-
-  // @public
-  reset: function() {
-    this.categoryProperty.reset();
-    this.categories.forEach( function( category ) {
-      category.reset();
-    } );
   }
-} );
+}
+
+unitRates.register( 'ShoppingModel', ShoppingModel );
+
+export default ShoppingModel;
