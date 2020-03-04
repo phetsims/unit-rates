@@ -123,7 +123,7 @@ unitRates.register( 'KeypadPanel', KeypadPanel );
  * @param {Object} [options]
  * @returns {function(string, string)}
  */
-var validateDigitsAndDecimals = function( options ) {
+function validateDigitsAndDecimals( options ) {
 
   options = merge( {
     maxDigits: 8, // {number} the maximum number of digits (numbers)
@@ -183,7 +183,7 @@ var validateDigitsAndDecimals = function( options ) {
 
     return newValueString;
   };
-};
+}
 
 export default inherit( Panel, KeypadPanel, {
 

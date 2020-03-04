@@ -62,6 +62,8 @@ class ValuePanel extends Panel {
     let backgroundNode = null; // assigned below
 
     let contentHeight = 0; // computed below
+    let expandCollapseButton = null;
+    let expandedObserver = null;
     if ( !options.expandedProperty ) {
 
       // limit valueNode width
@@ -75,7 +77,7 @@ class ValuePanel extends Panel {
     else {
 
       // expand/collapse button, dispose required
-      var expandCollapseButton = new ExpandCollapseButton( options.expandedProperty, {
+      expandCollapseButton = new ExpandCollapseButton( options.expandedProperty, {
         sideLength: 15,
         touchAreaXDilation: 8,
         touchAreaYDilation: 10,
@@ -110,7 +112,7 @@ class ValuePanel extends Panel {
       titleNode.centerY = backgroundNode.centerY;
 
       // expand/collapse
-      var expandedObserver = expanded => {
+      expandedObserver = expanded => {
         valueNode.visible = expanded;
         titleNode.visible = !expanded;
       };
