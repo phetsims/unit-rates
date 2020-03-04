@@ -22,7 +22,7 @@ class ValueNode extends Text {
 
     options = merge( {
       font: new URFont( 20 ),
-      valueToString: function( value ) { return '' + value; }
+      valueToString: value => ( '' + value )
     }, options );
 
     super( '' ); // string will be filled in by valueObserver

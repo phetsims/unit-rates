@@ -22,9 +22,9 @@ class ShoppingLabScreenView extends ShoppingScreenView {
     options = merge( {
 
       // Creates a Node for a category. See ShoppingScreenView options.createCategoryNode
-      createCategoryNode: function( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ) {
-        return new ShoppingLabCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties );
-      }
+      createCategoryNode: ( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ) =>
+        new ShoppingLabCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties )
+
     }, options );
 
     super( model, options );

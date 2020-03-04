@@ -52,7 +52,7 @@ function MarkerNode( marker, options ) {
 
   // numerator
   const numeratorNode = new Text( '', { font: options.font } );
-  const numeratorObserver = function( numerator ) {
+  const numeratorObserver = numerator => {
     assert && assert( ( typeof numerator === 'number' ) && !isNaN( numerator ), 'invalid numerator: ' + numerator );
     numeratorNode.text = URUtils.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
     numeratorNode.centerX = lineNode.centerX;
@@ -62,7 +62,7 @@ function MarkerNode( marker, options ) {
 
   // denominator
   const denominatorNode = new Text( '', { font: options.font } );
-  const denominatorObserver = function( denominator ) {
+  const denominatorObserver = denominator => {
     assert && assert( ( typeof denominator === 'number' ) && !isNaN( denominator ), 'invalid denominator: ' + denominator );
     denominatorNode.text = URUtils.numberToString( marker.denominatorProperty.value, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
     denominatorNode.centerX = lineNode.centerX;
@@ -76,7 +76,7 @@ function MarkerNode( marker, options ) {
   Node.call( this, options );
 
   // update the marker's color
-  const colorObserver = function( color ) {
+  const colorObserver = color => {
     lineNode.stroke = color;
     numeratorNode.fill = color;
     denominatorNode.fill = color;
@@ -84,7 +84,7 @@ function MarkerNode( marker, options ) {
   marker.colorProperty.link( colorObserver ); // unlink in dispose
 
   // @private
-  this.disposeMarkerNode = function() {
+  this.disposeMarkerNode = () => {
     marker.numeratorProperty.unlink( numeratorObserver );
     marker.denominatorProperty.unlink( denominatorObserver );
     marker.colorProperty.unlink( colorObserver );
@@ -95,7 +95,10 @@ unitRates.register( 'MarkerNode', MarkerNode );
 
 export default inherit( Node, MarkerNode, {
 
-  // @public
+  /**
+   * @public
+   * @override
+   */
   dispose: function() {
     this.disposeMarkerNode();
     Node.prototype.dispose.call( this );

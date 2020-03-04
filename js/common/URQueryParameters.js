@@ -23,7 +23,7 @@ const URQueryParameters = QueryStringMachine.getAll( {
   raceTimeScale: {
     type: 'number',
     defaultValue: 8, // hours
-    isValidValue: function( value ) { return value > 0; }
+    isValidValue: value => ( value > 0 )
   },
 
   // shows cells on the scale and shelf, indicating where bags and items may reside

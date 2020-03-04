@@ -98,7 +98,7 @@ function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLay
     } ),
     visible: false,
     baseColor: URColors.undoButton,
-    listener: function() {
+    listener: () => {
       if ( undoAppliesToEditor ) {
         markerEditor.reset();
       }
@@ -114,9 +114,7 @@ function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLay
   const eraserButton = new EraserButton( {
     scale: 0.92, // to approximately match height of marker editor buttons, determined empirically
     baseColor: URColors.eraserButton,
-    listener: function() {
-      doubleNumberLine.erase();
-    },
+    listener: () => doubleNumberLine.erase(),
     right: doubleNumberLineNode.right,
     bottom: markerEditorNode.bottom
   } );
@@ -137,7 +135,7 @@ function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLay
   let markerEditorAnimationEnabled = false;
 
   // Observe marker editor, to position the editor and create markers.
-  const markerEditorObserver = function() {
+  const markerEditorObserver = () => {
 
     // local vars to improve readability
     const numerator = markerEditor.numeratorProperty.value;
@@ -280,7 +278,7 @@ function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLay
 
   // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
   // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
-  const undoMarkerObserver = function( marker ) {
+  const undoMarkerObserver = marker => {
     if ( marker ) {
 
       // associate the undo button with the marker
@@ -304,7 +302,7 @@ function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLay
   doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver ); // unlink in dispose
 
   // @private
-  this.disposeDoubleNumberLineAccordionBox = function() {
+  this.disposeDoubleNumberLineAccordionBox = () => {
 
     // model cleanup
     doubleNumberLine.undoMarkerProperty.unlink( undoMarkerObserver );
@@ -327,7 +325,10 @@ unitRates.register( 'DoubleNumberLineAccordionBox', DoubleNumberLineAccordionBox
 
 export default inherit( AccordionBox, DoubleNumberLineAccordionBox, {
 
-  // @public
+  /**
+   * @public
+   * @override
+   */
   dispose: function() {
     this.disposeDoubleNumberLineAccordionBox();
     AccordionBox.prototype.dispose.call( this );

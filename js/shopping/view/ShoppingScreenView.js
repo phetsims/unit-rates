@@ -36,9 +36,9 @@ class ShoppingScreenView extends ScreenView {
        * @param {ShoppingViewProperties} viewProperties
        * @returns {Node}
        */
-      createCategoryNode: function( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ) {
-        return new ShoppingCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties );
-      }
+      createCategoryNode: ( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ) =>
+        new ShoppingCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties )
+
     }, options );
 
     super( options );

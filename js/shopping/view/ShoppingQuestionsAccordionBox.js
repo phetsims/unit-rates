@@ -108,7 +108,7 @@ function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
   this.disposeShoppingQuestionsAccordionBox = () => {
     shoppingScene.questionSetProperty.unlink( questionSetObserver );
     unitRateQuestionNode.dispose();
-    questionsParent.getChildren().forEach( function( child ) {
+    questionsParent.getChildren().forEach( child => {
       assert && assert( child instanceof ShoppingQuestionNode );
       child.dispose();
     } );

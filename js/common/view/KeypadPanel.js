@@ -99,13 +99,13 @@ function KeypadPanel( options ) {
 
   Panel.call( this, contentNode, options );
 
-  this.valueStringProperty.link( function( valueString ) { // no unlink required
+  this.valueStringProperty.link( valueString => { // no unlink required
     valueNode.text = valueString;
     valueNode.center = valueBackgroundNode.center;
   } );
 
   // @private
-  this.disposeKeypadPanel = function() {
+  this.disposeKeypadPanel = () => {
     keypadNode.disposeSubtree(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     enterButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
   };
@@ -138,7 +138,7 @@ function validateDigitsAndDecimals( options ) {
    * @param {string} valueString - string that corresponds to the sequence of keys that have been pressed
    * @returns {string} the result
    */
-  return function( keyString, valueString ) {
+  return ( keyString, valueString ) => {
 
     // start by assuming that keyString will be ignored
     let newValueString = valueString;
@@ -187,7 +187,10 @@ function validateDigitsAndDecimals( options ) {
 
 export default inherit( Panel, KeypadPanel, {
 
-  // @public
+  /**
+   * @public
+   * @override
+   */
   dispose: function() {
     this.disposeKeypadPanel();
     Panel.prototype.dispose.call( this );
