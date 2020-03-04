@@ -10,77 +10,75 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @param {Property.<boolean>} unitRateProperty
- * @param {Object} [options]
- * @constructor
- */
-function MarkerEditor( unitRateProperty, options ) {
+class MarkerEditor {
 
-  const self = this;
+  /**
+   * @param {Property.<boolean>} unitRateProperty
+   * @param {Object} [options]
+   */
+  constructor( unitRateProperty, options ) {
 
-  options = merge( {
-    numeratorMaxDecimals: 2, // {number} maximum decimal places in the numerator
-    denominatorMaxDecimals: 2 // {number} maximum decimal places in the denominator
-  }, options );
+    options = merge( {
+      numeratorMaxDecimals: 2, // {number} maximum decimal places in the numerator
+      denominatorMaxDecimals: 2 // {number} maximum decimal places in the denominator
+    }, options );
+
+    // @public
+    this.numeratorProperty = new Property( null ); // {Property.<number|null>} the numerator in the editor
+    this.denominatorProperty = new Property( null ); // {Property.<number|null>} the denominator in the editor
+
+    // @public (read-only)
+    this.unitRateProperty = unitRateProperty;
+
+    // @private
+    this.denominatorMaxDecimals = options.denominatorMaxDecimals;
+
+    // if a numerator is entered that can't be computed from the existing denominator, then clear the denominator
+    this.numeratorProperty.link( numerator => { // no unlink required
+      if ( numerator !== null && this.denominatorProperty.value !== null ) {
+        const correctNumerator = Utils.toFixedNumber( this.denominatorProperty.value * unitRateProperty.value, options.numeratorMaxDecimals );
+        if ( numerator !== correctNumerator ) {
+          this.denominatorProperty.value = null;
+        }
+      }
+    } );
+
+    // if a denominator is entered that can't be computed from the existing numerator, then clear the numerator
+    this.denominatorProperty.link( denominator => { // no unlink required
+      if ( denominator !== null && this.numeratorProperty.value !== null ) {
+        const correctDenominator = Utils.toFixedNumber( this.numeratorProperty.value / unitRateProperty.value, options.denominatorMaxDecimals );
+        if ( denominator !== correctDenominator ) {
+          this.numeratorProperty.value = null;
+        }
+      }
+    } );
+
+    // if the unit rate changes, reset the editor, which effectively cancels any edit that is in progress
+    // unlink not needed, exists for sim lifetime
+    unitRateProperty.lazyLink( () => {
+      this.reset();
+    } );
+  }
 
   // @public
-  this.numeratorProperty = new Property( null ); // {Property.<number|null>} the numerator in the editor
-  this.denominatorProperty = new Property( null ); // {Property.<number|null>} the denominator in the editor
-
-  // @public (read-only)
-  this.unitRateProperty = unitRateProperty;
-
-  // @private
-  this.denominatorMaxDecimals = options.denominatorMaxDecimals;
-
-  // if a numerator is entered that can't be computed from the existing denominator, then clear the denominator
-  this.numeratorProperty.link( function( numerator ) { // no unlink required
-    if ( numerator !== null && self.denominatorProperty.value !== null ) {
-      const correctNumerator = Utils.toFixedNumber( self.denominatorProperty.value * unitRateProperty.value, options.numeratorMaxDecimals );
-      if ( numerator !== correctNumerator ) {
-        self.denominatorProperty.value = null;
-      }
-    }
-  } );
-
-  // if a denominator is entered that can't be computed from the existing numerator, then clear the numerator
-  this.denominatorProperty.link( function( denominator ) { // no unlink required
-    if ( denominator !== null && self.numeratorProperty.value !== null ) {
-      const correctDenominator = Utils.toFixedNumber( self.numeratorProperty.value / unitRateProperty.value, options.denominatorMaxDecimals );
-      if ( denominator !== correctDenominator ) {
-        self.numeratorProperty.value = null;
-      }
-    }
-  } );
-
-  // if the unit rate changes, reset the editor, which effectively cancels any edit that is in progress
-  // unlink not needed, exists for sim lifetime
-  unitRateProperty.lazyLink( function() {
-    self.reset();
-  } );
-}
-
-unitRates.register( 'MarkerEditor', MarkerEditor );
-
-export default inherit( Object, MarkerEditor, {
-
-  // @public
-  reset: function() {
+  reset() {
     this.numeratorProperty.reset();
     this.denominatorProperty.reset();
-  },
+  }
 
   /**
    * The marker editor is 'empty' when both the numerator and denominator are null.
    * @returns {boolean}
    * @public
    */
-  isEmpty: function() {
+  isEmpty() {
     return ( this.numeratorProperty.value === null && this.denominatorProperty.value === null );
   }
-} );
+}
+
+unitRates.register( 'MarkerEditor', MarkerEditor );
+
+export default MarkerEditor;

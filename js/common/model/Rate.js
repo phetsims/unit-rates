@@ -17,51 +17,46 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import unitRates from '../../unitRates.js';
 import URUtils from '../URUtils.js';
 
-/**
- * @param {number} numerator - the rate's numerator, must be an integer
- * @param {number} denominator - the rate's denominator, must be an integer
- * @constructor
- */
-function Rate( numerator, denominator ) {
+class Rate {
 
-  assert && assert( Utils.isInteger( numerator ), 'numerator must be an integer: ' + numerator );
-  assert && assert( Utils.isInteger( denominator ), 'denominator must be an integer: ' + denominator );
+  /**
+   * @param {number} numerator - the rate's numerator, must be an integer
+   * @param {number} denominator - the rate's denominator, must be an integer
+   */
+  constructor( numerator, denominator ) {
 
-  // @public
-  this.numeratorProperty = new NumberProperty( numerator );
-  this.denominatorProperty = new NumberProperty( denominator );
+    assert && assert( Utils.isInteger( numerator ), 'numerator must be an integer: ' + numerator );
+    assert && assert( Utils.isInteger( denominator ), 'denominator must be an integer: ' + denominator );
 
-  // @public (read-only) dispose not needed
-  this.unitRateProperty = new DerivedProperty( [ this.numeratorProperty, this.denominatorProperty ],
-    function( numerator, denominator ) {
-      return numerator / denominator;
-    } );
-}
+    // @public
+    this.numeratorProperty = new NumberProperty( numerator );
+    this.denominatorProperty = new NumberProperty( denominator );
 
-unitRates.register( 'Rate', Rate );
-
-export default inherit( Object, Rate, {
+    // @public (read-only) dispose not needed
+    this.unitRateProperty = new DerivedProperty(
+      [ this.numeratorProperty, this.denominatorProperty ],
+      ( numerator, denominator ) => ( numerator / denominator )
+    );
+  }
 
   // @public
-  reset: function() {
+  reset() {
     this.numeratorProperty.reset();
     this.denominatorProperty.reset();
-  },
+  }
 
   /**
    * String representation. For debugging and logging only. Do not rely on the format of this!
    * @returns {string}
    * @public
    */
-  toString: function() {
+  toString() {
     return this.numeratorProperty.value + '/' + this.denominatorProperty.value;
   }
-}, {
 
   /**
    * Creates a Rate using a unit rate.
@@ -71,7 +66,7 @@ export default inherit( Object, Rate, {
    * @public
    * @static
    */
-  withUnitRate: function( unitRate ) {
+  static withUnitRate( unitRate ) {
 
     // compute corresponding numerator and denominator
     const denominator = Math.pow( 10, URUtils.decimalPlaces( unitRate ) );
@@ -81,4 +76,8 @@ export default inherit( Object, Rate, {
     // use closest integer values
     return new Rate( Utils.toFixedNumber( fraction.numerator, 0 ), Utils.toFixedNumber( fraction.denominator, 0 ) );
   }
-} );
+}
+
+unitRates.register( 'Rate', Rate );
+
+export default Rate;

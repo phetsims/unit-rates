@@ -12,7 +12,6 @@
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 
@@ -20,51 +19,48 @@ import unitRates from '../../unitRates.js';
 // how the marker was created, ordered by ascending precedence
 const CREATOR_VALUES = [ 'editor', 'scale', 'question', 'race' ];
 
-/**
- * @param {number} numerator
- * @param {number} denominator
- * @param {string} creator - indicates how the marker was created, see CREATOR_VALUES
- * @param {Object} [options]
- * @constructor
- */
-function Marker( numerator, denominator, creator, options ) {
+class Marker {
 
-  options = merge( {
-    isMajor: true, // {boolean} true: major marker, false: minor marker
-    color: 'black', // {Color|string} color used to render the marker
-    erasable: true // {boolean} is this marker erased when the Eraser button is pressed?
-  }, options );
+  /**
+   * @param {number} numerator
+   * @param {number} denominator
+   * @param {string} creator - indicates how the marker was created, see CREATOR_VALUES
+   * @param {Object} [options]
+   */
+  constructor( numerator, denominator, creator, options ) {
 
-  assert && assert( _.includes( CREATOR_VALUES, creator ), 'invalid creator: ' + creator );
+    options = merge( {
+      isMajor: true, // {boolean} true: major marker, false: minor marker
+      color: 'black', // {Color|string} color used to render the marker
+      erasable: true // {boolean} is this marker erased when the Eraser button is pressed?
+    }, options );
 
-  // @public
-  this.numeratorProperty = new NumberProperty( numerator );
-  this.denominatorProperty = new NumberProperty( denominator );
-  this.colorProperty = new Property( options.color );
-  this.erasable = options.erasable;
+    assert && assert( _.includes( CREATOR_VALUES, creator ), 'invalid creator: ' + creator );
 
-  // @public (read-only)
-  this.creator = creator;
-  this.isMajor = options.isMajor;
-}
+    // @public
+    this.numeratorProperty = new NumberProperty( numerator );
+    this.denominatorProperty = new NumberProperty( denominator );
+    this.colorProperty = new Property( options.color );
+    this.erasable = options.erasable;
 
-unitRates.register( 'Marker', Marker );
-
-export default inherit( Object, Marker, {
+    // @public (read-only)
+    this.creator = creator;
+    this.isMajor = options.isMajor;
+  }
 
   /**
    * String representation. For debugging and logging only. Do not rely on the format of this!
    * @returns {string}
    * @public
    */
-  toString: function() {
+  toString() {
     return 'Marker[' +
            ' rate=' + this.numeratorProperty.value + '/' + this.denominatorProperty.value +
            ' creator=' + this.creator +
            ' isMajor=' + this.isMajor +
            ' erasable=' + this.erasable +
            ' ]';
-  },
+  }
 
   /**
    * Does the specified marker conflict with this one?
@@ -75,11 +71,11 @@ export default inherit( Object, Marker, {
    * @returns {boolean}
    * @public
    */
-  conflictsWith: function( marker ) {
+  conflictsWith( marker ) {
     assert && assert( marker instanceof Marker );
     return ( marker.numeratorProperty.value === this.numeratorProperty.value ) ||
            ( marker.denominatorProperty.value === this.denominatorProperty.value );
-  },
+  }
 
   /**
    * Gets the precedence of the specified marker, relative to this marker.
@@ -90,7 +86,7 @@ export default inherit( Object, Marker, {
    *    0 : marker has same precedence
    * @public
    */
-  precedenceOf: function( marker ) {
+  precedenceOf( marker ) {
 
     const thisIndex = CREATOR_VALUES.indexOf( this.creator );
     assert && assert( thisIndex !== -1, 'invalid creator: ' + this.creator );
@@ -108,4 +104,8 @@ export default inherit( Object, Marker, {
       return 0;
     }
   }
-} );
+}
+
+unitRates.register( 'Marker', Marker );
+
+export default Marker;

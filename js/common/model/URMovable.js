@@ -11,58 +11,54 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function URMovable( options ) {
+class URMovable {
 
-  options = merge( {
-    position: new Vector2( 0, 0 ), // {Vector2} initial position
-    dragging: false, // {boolean} is this instance being dragged by the user?
-    animationSpeed: 100 // {number} distance/second when animating
-  }, options );
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-  // @public (read-only) DO NOT set this directly! Use moveTo or animateTo.
-  this.positionProperty = new Vector2Property( options.position );
+    options = merge( {
+      position: new Vector2( 0, 0 ), // {Vector2} initial position
+      dragging: false, // {boolean} is this instance being dragged by the user?
+      animationSpeed: 100 // {number} distance/second when animating
+    }, options );
 
-  // @public drag handlers must manage this flag during a drag sequence
-  this.dragging = options.dragging;
+    // @public (read-only) DO NOT set this directly! Use moveTo or animateTo.
+    this.positionProperty = new Vector2Property( options.position );
 
-  // @private
-  this.animationSpeed = options.animationSpeed;
+    // @public drag handlers must manage this flag during a drag sequence
+    this.dragging = options.dragging;
 
-  // @private {Vector2} destination to animate to, set using animateTo
-  this.destination = options.position.copy();
+    // @private
+    this.animationSpeed = options.animationSpeed;
 
-  // @private {function|null} called when animation step occurs, set using animateTo. Don't do anything expensive here!
-  this.animationStepCallback = null;
+    // @private {Vector2} destination to animate to, set using animateTo
+    this.destination = options.position.copy();
 
-  // @private {function|null} called when animation to destination completes, set using animateTo
-  this.animationCompletedCallback = null;
-}
+    // @private {function|null} called when animation step occurs, set using animateTo. Don't do anything expensive here!
+    this.animationStepCallback = null;
 
-unitRates.register( 'URMovable', URMovable );
-
-export default inherit( Object, URMovable, {
+    // @private {function|null} called when animation to destination completes, set using animateTo
+    this.animationCompletedCallback = null;
+  }
 
   // @public
-  reset: function() {
+  reset() {
 
     // call moveTo instead of positionProperty.set, so that any animation in progress is cancelled
     this.moveTo( this.positionProperty.initialValue );
-  },
+  }
 
   /**
    * Moves immediately to the specified position, without animation.
    * @param {Vector2} position
    * @public
    */
-  moveTo: function( position ) {
+  moveTo( position ) {
 
     // cancel any pending callbacks
     this.animationStepCallback = null;
@@ -71,7 +67,7 @@ export default inherit( Object, URMovable, {
     // move immediately to the position
     this.destination = position;
     this.positionProperty.set( position );
-  },
+  }
 
   /**
    * Animates to the specified position.
@@ -80,7 +76,7 @@ export default inherit( Object, URMovable, {
    * @param {Object} [options]
    * @public
    */
-  animateTo: function( destination, options ) {
+  animateTo( destination, options ) {
 
     options = merge( {
       animationStepCallback: null, // {function} called when animation step occurs
@@ -90,14 +86,14 @@ export default inherit( Object, URMovable, {
     this.destination = destination;
     this.animationStepCallback = options.animationStepCallback;
     this.animationCompletedCallback = options.animationCompletedCallback;
-  },
+  }
 
   /**
    * Animates position, when not being dragged by the user.
    * @param {number} dt - time since the previous step, in seconds
    * @public
    */
-  step: function( dt ) {
+  step( dt ) {
     const doStep = !this.dragging && ( !this.positionProperty.get().equals( this.destination ) || this.animationCompletedCallback );
     if ( doStep ) {
 
@@ -133,4 +129,8 @@ export default inherit( Object, URMovable, {
       }
     }
   }
-} );
+}
+
+unitRates.register( 'URMovable', URMovable );
+
+export default URMovable;

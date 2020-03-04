@@ -11,7 +11,6 @@ import ObservableArray from '../../../../axon/js/ObservableArray.js';
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 
@@ -23,109 +22,104 @@ const SHARED_OPTIONS = {
   trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
 };
 
-/**
- * @param {Property.<number>} unitRateProperty
- * @param {Object} [options]
- * @constructor
- */
-function DoubleNumberLine( unitRateProperty, options ) {
+class DoubleNumberLine {
 
-  const self = this;
+  /**
+   * @param {Property.<number>} unitRateProperty
+   * @param {Object} [options]
+   */
+  constructor( unitRateProperty, options ) {
 
-  options = merge( {
-    fixedAxis: 'denominator', // {string} which of the axes has a fixed (immutable) range
-    fixedAxisRange: new Range( 0, 10 ), // {Range} range of the fixed axis
-    numeratorOptions: null, // {*} options specific to the rate's numerator, see below
-    denominatorOptions: null, // {*} options specific to the rate's denominator, see below
+    options = merge( {
+      fixedAxis: 'denominator', // {string} which of the axes has a fixed (immutable) range
+      fixedAxisRange: new Range( 0, 10 ), // {Range} range of the fixed axis
+      numeratorOptions: null, // {*} options specific to the rate's numerator, see below
+      denominatorOptions: null, // {*} options specific to the rate's denominator, see below
 
-    // {function(number,number):boolean} determines whether a marker is major or minor
-    isMajorMarker: function( numerator, denominator ) { return true; }
-  }, options );
+      // {function(number,number):boolean} determines whether a marker is major
+      isMajorMarker: ( numerator, denominator ) => true
+    }, options );
 
-  assert && assert( _.includes( FIXED_AXIS_VALUES, options.fixedAxis ),
-    'invalid fixedAxis: ' + options.fixedAxis );
+    assert && assert( _.includes( FIXED_AXIS_VALUES, options.fixedAxis ),
+      'invalid fixedAxis: ' + options.fixedAxis );
 
-  // @public (read-only) options for the numerator (top) number line
-  this.numeratorOptions = merge( {}, SHARED_OPTIONS, options.numeratorOptions );
+    // @public (read-only) options for the numerator (top) number line
+    this.numeratorOptions = merge( {}, SHARED_OPTIONS, options.numeratorOptions );
 
-  // @public (read-only) options for the denominator (bottom) number line
-  this.denominatorOptions = merge( {}, SHARED_OPTIONS, options.denominatorOptions );
+    // @public (read-only) options for the denominator (bottom) number line
+    this.denominatorOptions = merge( {}, SHARED_OPTIONS, options.denominatorOptions );
 
-  // @public (read-only) {Property.<number>}
-  this.unitRateProperty = unitRateProperty;
+    // @public (read-only) {Property.<number>}
+    this.unitRateProperty = unitRateProperty;
 
-  // @public (read-only) {Marker[]} markers must be added/removed via addMarker/removeMarker
-  this.markers = new ObservableArray();
+    // @public (read-only) {Marker[]} markers must be added/removed via addMarker/removeMarker
+    this.markers = new ObservableArray();
 
-  // @public (read-only) {function(number,number):boolean}
-  this.isMajorMarker = options.isMajorMarker;
+    // @public (read-only) {function(number,number):boolean}
+    this.isMajorMarker = options.isMajorMarker;
 
-  // @public (read-only) which of the axes has a fixed range, see FIXED_AXIS_VALUES
-  this.fixedAxis = options.fixedAxis;
+    // @public (read-only) which of the axes has a fixed range, see FIXED_AXIS_VALUES
+    this.fixedAxis = options.fixedAxis;
 
-  // @private defined below
-  this.numeratorRangeProperty = null;
-  this.denominatorRangeProperty = null;
+    // @private defined below
+    this.numeratorRangeProperty = null;
+    this.denominatorRangeProperty = null;
 
-  if ( options.fixedAxis === 'numerator' ) {
+    if ( options.fixedAxis === 'numerator' ) {
 
-    // numerator range is immutable
-    this.numeratorRangeProperty = new Property( options.fixedAxisRange );
-    this.numeratorRangeProperty.lazyLink( function( range ) {  // unlink not needed, exists for sim lifetime
-      throw new Error( 'numeratorRangeProperty should not change' );
-    } );
-
-    // denominator range is mutable, dispose not needed, exists for sim lifetime
-    this.denominatorRangeProperty = new DerivedProperty( [ this.numeratorRangeProperty, unitRateProperty ],
-      function( numeratorRange, unitRate ) {
-        return new Range( numeratorRange.min / unitRate, numeratorRange.max / unitRate );
+      // numerator range is immutable
+      this.numeratorRangeProperty = new Property( options.fixedAxisRange );
+      this.numeratorRangeProperty.lazyLink( range => {  // unlink not needed, exists for sim lifetime
+        throw new Error( 'numeratorRangeProperty should not change' );
       } );
 
-    // when the denominator range changes, adjust the denominator of all markers,
-    // unlink not needed, exists for sim lifetime
-    this.denominatorRangeProperty.link( function( denominatorRange ) {
-      self.markers.forEach( function( marker ) {
-        marker.denominatorProperty.value = marker.numeratorProperty.value / unitRateProperty.value;
+      // denominator range is mutable, dispose not needed, exists for sim lifetime
+      this.denominatorRangeProperty = new DerivedProperty( [ this.numeratorRangeProperty, unitRateProperty ],
+        ( numeratorRange, unitRate ) => {
+          return new Range( numeratorRange.min / unitRate, numeratorRange.max / unitRate );
+        } );
+
+      // when the denominator range changes, adjust the denominator of all markers,
+      // unlink not needed, exists for sim lifetime
+      this.denominatorRangeProperty.link( denominatorRange => {
+        this.markers.forEach( marker => {
+          marker.denominatorProperty.value = marker.numeratorProperty.value / unitRateProperty.value;
+        } );
       } );
-    } );
+    }
+    else {
+
+      // denominator range is immutable
+      this.denominatorRangeProperty = new Property( options.fixedAxisRange );
+      this.denominatorRangeProperty.lazyLink( range => { // unlink not needed, exists for sim lifetime
+        throw new Error( 'denominatorRangeProperty should not change' );
+      } );
+
+      // numerator range is mutable, dispose not needed, exists for sim lifetime
+      this.numeratorRangeProperty = new DerivedProperty( [ this.denominatorRangeProperty, unitRateProperty ],
+        ( denominatorRange, unitRate ) => {
+          return new Range( denominatorRange.min * unitRate, denominatorRange.max * unitRate );
+        } );
+
+      // when the numerator range changes, adjust the numerator of all markers
+      // unlink not needed, exists for sim lifetime
+      this.numeratorRangeProperty.link( numeratorRange => {
+        this.markers.forEach( marker => {
+          marker.numeratorProperty.value = marker.denominatorProperty.value * unitRateProperty.value;
+        } );
+      } );
+    }
+
+    // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
+    // A single level of undo is supported.
+    this.undoMarkerProperty = new Property( null );
   }
-  else {
-
-    // denominator range is immutable
-    this.denominatorRangeProperty = new Property( options.fixedAxisRange );
-    this.denominatorRangeProperty.lazyLink( function( range ) { // unlink not needed, exists for sim lifetime
-      throw new Error( 'denominatorRangeProperty should not change' );
-    } );
-
-    // numerator range is mutable, dispose not needed, exists for sim lifetime
-    this.numeratorRangeProperty = new DerivedProperty( [ this.denominatorRangeProperty, unitRateProperty ],
-      function( denominatorRange, unitRate ) {
-        return new Range( denominatorRange.min * unitRate, denominatorRange.max * unitRate );
-      } );
-
-    // when the numerator range changes, adjust the numerator of all markers
-    // unlink not needed, exists for sim lifetime
-    this.numeratorRangeProperty.link( function( numeratorRange ) {
-      self.markers.forEach( function( marker ) {
-        marker.numeratorProperty.value = marker.denominatorProperty.value * unitRateProperty.value;
-      } );
-    } );
-  }
-
-  // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
-  // A single level of undo is supported.
-  this.undoMarkerProperty = new Property( null );
-}
-
-unitRates.register( 'DoubleNumberLine', DoubleNumberLine );
-
-export default inherit( Object, DoubleNumberLine, {
 
   // @public
-  reset: function() {
+  reset() {
     this.markers.reset();
     this.undoMarkerProperty.reset();
-  },
+  }
 
   /**
    * Maps a rate's numerator from model to view coordinate frame.
@@ -134,12 +128,12 @@ export default inherit( Object, DoubleNumberLine, {
    * @returns {number}
    * @public
    */
-  modelToViewNumerator: function( numerator, viewMax ) {
+  modelToViewNumerator( numerator, viewMax ) {
     return Utils.linear(
       this.numeratorRangeProperty.value.min, this.numeratorRangeProperty.value.max,
       0, viewMax,
       numerator );
-  },
+  }
 
   /**
    * Maps a rate's denominator from model to view coordinate frame.
@@ -148,30 +142,30 @@ export default inherit( Object, DoubleNumberLine, {
    * @returns {number}
    * @public
    */
-  modelToViewDenominator: function( denominator, viewMax ) {
+  modelToViewDenominator( denominator, viewMax ) {
     return Utils.linear(
       this.denominatorRangeProperty.value.min, this.denominatorRangeProperty.value.max,
       0, viewMax,
       denominator );
-  },
+  }
 
   /**
    * Gets the maximum value that fits on the numerator (top) axis.
    * @returns {number}
    * @public
    */
-  getMaxNumerator: function() {
+  getMaxNumerator() {
     return this.numeratorRangeProperty.value.max;
-  },
+  }
 
   /**
    * Gets the maximum value that fits on the denominator (bottom) axis.
    * @returns {number}
    * @public
    */
-  getMaxDenominator: function() {
+  getMaxDenominator() {
     return this.denominatorRangeProperty.value.max;
-  },
+  }
 
   /**
    * This is a request to add a marker, subject to rules about uniqueness and marker precedence.
@@ -181,7 +175,7 @@ export default inherit( Object, DoubleNumberLine, {
    * @returns {boolean} true if the marker was added, false if the request was ignored
    * @public
    */
-  addMarker: function( marker ) {
+  addMarker( marker ) {
 
     assert && assert( !this.markers.contains( marker ), 'attempt to add marker again: ' + marker );
 
@@ -214,17 +208,17 @@ export default inherit( Object, DoubleNumberLine, {
     }
 
     return wasAdded;
-  },
+  }
 
   /**
    * Removes a marker.
    * @param {Marker} marker
    * @private
    */
-  removeMarker: function( marker ) {
+  removeMarker( marker ) {
     assert && assert( this.markers.contains( marker ), 'attempt to remove an unknown marker: ' + marker );
     this.markers.remove( marker );
-  },
+  }
 
   /**
    * Gets a marker that conflicts with the specified marker.
@@ -233,7 +227,7 @@ export default inherit( Object, DoubleNumberLine, {
    * @returns {Marker|null} null if there is no conflicting
    * @private
    */
-  getConflictingMarker: function( marker ) {
+  getConflictingMarker( marker ) {
     let conflictingMarker = null;
     const markers = this.markers.getArray();
     for ( let i = 0; i < markers.length && !conflictingMarker; i++ ) {
@@ -242,7 +236,7 @@ export default inherit( Object, DoubleNumberLine, {
       }
     }
     return conflictingMarker;
-  },
+  }
 
   /**
    * Does this marker fall within the range of the axes?
@@ -250,38 +244,41 @@ export default inherit( Object, DoubleNumberLine, {
    * @returns {boolean}
    * @public
    */
-  markerIsInRange: function( marker ) {
+  markerIsInRange( marker ) {
     return ( this.numeratorRangeProperty.value.contains( marker.numeratorProperty.value ) &&
              this.denominatorRangeProperty.value.contains( marker.denominatorProperty.value ) );
-  },
+  }
 
   /**
    * Undoes (removes) the undo marker. If there is no undo marker, this is a no-op.
    * @public
    */
-  undo: function() {
+  undo() {
     const undoMarker = this.undoMarkerProperty.value;
     if ( undoMarker ) {
       assert && assert( this.markers.contains( undoMarker ), 'unexpected undoMarker: ' + undoMarker );
       this.undoMarkerProperty.value = null;
       this.removeMarker( undoMarker );
     }
-  },
+  }
 
   /**
    * Erases all markers that are erasable.
    * @public
    */
-  erase: function() {
+  erase() {
 
     this.undoMarkerProperty.reset();
 
     // remove all markers that are erasable
-    const self = this;
-    this.markers.forEach( function( marker ) {
+    this.markers.forEach( marker => {
       if ( marker.erasable ) {
-        self.removeMarker( marker );
+        this.removeMarker( marker );
       }
     } );
   }
-} );
+}
+
+unitRates.register( 'DoubleNumberLine', DoubleNumberLine );
+
+export default DoubleNumberLine;
