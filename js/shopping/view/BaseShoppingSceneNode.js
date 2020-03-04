@@ -72,7 +72,7 @@ class BaseShoppingSceneNode extends Node {
     shoppingScene.shelf.numberOfBagsProperty.link( numberOfBagsObserver ); // unlink in dispose
 
     // layers for bags and items
-    var dragLayer = new Node(); // all Nodes are in this layer while being dragged
+    const dragLayer = new Node(); // all Nodes are in this layer while being dragged
     const bagLayer = new Node();  // the row of bags
     const frontItemLayer = new Node(); // the front row of items
     const backItemLayer = new Node(); // the back row of items

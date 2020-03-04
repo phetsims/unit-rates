@@ -54,8 +54,6 @@ class ShoppingScene {
    */
   constructor( itemData, options ) {
 
-    const self = this;
-
     // verify that itemData has all required properties
     assert && ShoppingItemData.assertIsItemData( itemData );
     assert && assert( itemData.questionQuantities.length > 1, 'more than 1 set of questions is required' );
@@ -182,13 +180,13 @@ class ShoppingScene {
       }
 
       // the new marker for what's on the scale
-      if ( quantity > 0 && self.createMarkerEnabled ) {
-        scaleMarker = new Marker( self.scale.costProperty.value, quantity, 'scale', {
+      if ( quantity > 0 && this.createMarkerEnabled ) {
+        scaleMarker = new Marker( this.scale.costProperty.value, quantity, 'scale', {
           isMajor: true, // all scale markers are major, per the design document
           color: URColors.scaleMarker,
           erasable: false
         } );
-        self.doubleNumberLine.addMarker( scaleMarker );
+        this.doubleNumberLine.addMarker( scaleMarker );
       }
     } );
 
@@ -213,12 +211,12 @@ class ShoppingScene {
     this.questionSetProperty = new Property( this.questionSets[ this.questionSetsIndexProperty.value ] );
 
     this.questionSetsIndexProperty.lazyLink( questionSetsIndex => { // no unlink required
-      self.questionSetProperty.value = self.questionSets[ questionSetsIndex ];
+      this.questionSetProperty.value = this.questionSets[ questionSetsIndex ];
     } );
 
     // When the unit rate changes, cancel any marker edit that is in progress, unlink not needed
     this.rate.unitRateProperty.lazyLink( unitRate => {
-      self.markerEditor.reset();
+      this.markerEditor.reset();
     } );
 
     /**
@@ -231,7 +229,7 @@ class ShoppingScene {
         color: URColors.questionMarker,
         erasable: false
       } );
-      self.doubleNumberLine.addMarker( marker );
+      this.doubleNumberLine.addMarker( marker );
     };
     this.unitRateQuestion.correctEmitter.addListener( questionCorrectListener ); // no removeListener required
     this.questionSets.forEach( questionSet => {

@@ -25,8 +25,6 @@ class ShoppingQuestion {
    */
   constructor( questionString, answer, numerator, denominator, numeratorString, denominatorString, answerOptions ) {
 
-    const self = this;
-
     // @public (read-only)
     this.answerOptions = merge( {
       valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER, // {string} format used by StringUtils.format to format the guess
@@ -54,7 +52,7 @@ class ShoppingQuestion {
     // Notify observers when the question is answered correctly, no unlink required
     this.guessProperty.link( guess => {
       if ( guess === answer ) {
-        self.correctEmitter.emit( self );
+        this.correctEmitter.emit( this );
       }
     } );
   }

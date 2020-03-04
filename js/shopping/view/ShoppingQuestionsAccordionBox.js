@@ -29,8 +29,6 @@ const questionsString = unitRatesStrings.questions;
  */
 function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
 
-  const self = this;
-
   options = merge( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
     // AccordionBox options
@@ -59,10 +57,10 @@ function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
     align: 'right',
     spacing: options.vBoxSpacing
   } );
-  const questionSetObserver = function( questionSet ) {
+  const questionSetObserver = questionSet => {
 
     // remove previous questions
-    questionsParent.getChildren().forEach( function( child ) {
+    questionsParent.getChildren().forEach( child => {
       assert && assert( child instanceof ShoppingQuestionNode );
       child.dispose();
     } );
@@ -71,7 +69,7 @@ function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
     // add new questions, dispose required
     const questionNodes = [];
     for ( let i = 0; i < questionSet.length; i++ ) {
-      questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], self, keypadLayer ) );
+      questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], this, keypadLayer ) );
     }
     questionsParent.setChildren( questionNodes );
   };
@@ -83,9 +81,7 @@ function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
     xMargin: 10,
     yMargin: 5,
     baseColor: URColors.refreshButton,
-    listener: function() {
-      shoppingScene.nextQuestionSet();
-    }
+    listener: () => shoppingScene.nextQuestionSet()
   } );
   refreshButton.touchArea = refreshButton.localBounds.dilatedXY( 5, 5 );
 
@@ -109,7 +105,7 @@ function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
   AccordionBox.call( this, contentNode, options );
 
   // @private cleanup that's specific to this Node
-  this.disposeShoppingQuestionsAccordionBox = function() {
+  this.disposeShoppingQuestionsAccordionBox = () => {
     shoppingScene.questionSetProperty.unlink( questionSetObserver );
     unitRateQuestionNode.dispose();
     questionsParent.getChildren().forEach( function( child ) {
@@ -124,7 +120,10 @@ unitRates.register( 'ShoppingQuestionsAccordionBox', ShoppingQuestionsAccordionB
 
 export default inherit( AccordionBox, ShoppingQuestionsAccordionBox, {
 
-  // @public
+  /**
+   * @public
+   * @override
+   */
   dispose: function() {
     this.disposeShoppingQuestionsAccordionBox();
     AccordionBox.prototype.dispose.call( this );
