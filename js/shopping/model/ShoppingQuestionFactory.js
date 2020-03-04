@@ -13,6 +13,7 @@ import unitRatesStrings from '../../unit-rates-strings.js';
 import unitRates from '../../unitRates.js';
 import ShoppingQuestion from './ShoppingQuestion.js';
 
+// strings
 const pattern0CostString = unitRatesStrings.pattern_0cost;
 const pattern0Items1CostString = unitRatesStrings.pattern_0items_1cost;
 const pattern0Value1UnitsString = unitRatesStrings.pattern_0value_1units;
@@ -64,9 +65,9 @@ const ShoppingQuestionFactory = {
    */
   createQuestionSets: function( questionQuantities, unitRate, singularUnits, pluralUnits, amountOfQuestionUnits, numeratorOptions, denominatorOptions ) {
 
-    const questionSets = [];  // {ShoppingQuestion[][]}
+    const questionSets = []; // {ShoppingQuestion[][]}
 
-    questionQuantities.forEach( function( quantities ) {
+    questionQuantities.forEach( quantities => {
 
       const questions = [];
 
@@ -89,8 +90,6 @@ const ShoppingQuestionFactory = {
   }
 };
 
-unitRates.register( 'ShoppingQuestionFactory', ShoppingQuestionFactory );
-
 /**
  * Creates a question of the form 'Cost of 10 Apples?' or 'Cost of 2.2 pounds?'
  * @param {number} denominator
@@ -101,7 +100,7 @@ unitRates.register( 'ShoppingQuestionFactory', ShoppingQuestionFactory );
  * @param {Object} denominatorOptions - see ShoppingItem options.denominatorOptions
  * @returns {ShoppingQuestion}
  */
-var createCostOfQuestion = function( denominator, unitRate, singularUnits, pluralUnits, numeratorOptions, denominatorOptions ) {
+function createCostOfQuestion( denominator, unitRate, singularUnits, pluralUnits, numeratorOptions, denominatorOptions ) {
 
   // answer
   const numerator = denominator * unitRate;
@@ -125,7 +124,7 @@ var createCostOfQuestion = function( denominator, unitRate, singularUnits, plura
     units );
 
   return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, numeratorOptions );
-};
+}
 
 /**
  * Creates a question of the form 'Apples for $3.00?'
@@ -138,7 +137,7 @@ var createCostOfQuestion = function( denominator, unitRate, singularUnits, plura
  * @param {Object} denominatorOptions - see ShoppingItem options.denominatorOptions
  * @returns {ShoppingQuestion}
  */
-var createItemsForQuestion = function( denominator, unitRate, singularUnits, pluralUnits, amountOfQuestionUnits, numeratorOptions, denominatorOptions ) {
+function createItemsForQuestion( denominator, unitRate, singularUnits, pluralUnits, amountOfQuestionUnits, numeratorOptions, denominatorOptions ) {
 
   // answer
   const answer = Utils.toFixedNumber( denominator, denominatorOptions.maxDecimals );
@@ -162,6 +161,8 @@ var createItemsForQuestion = function( denominator, unitRate, singularUnits, plu
     URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
   return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, denominatorOptions );
-};
+}
+
+unitRates.register( 'ShoppingQuestionFactory', ShoppingQuestionFactory );
 
 export default ShoppingQuestionFactory;

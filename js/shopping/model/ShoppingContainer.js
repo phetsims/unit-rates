@@ -10,122 +10,117 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 import Bag from './Bag.js';
 import RowOfMovables from './RowOfMovables.js';
 import ShoppingItem from './ShoppingItem.js';
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function ShoppingContainer( options ) {
+class ShoppingContainer {
 
-  options = merge( {
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-    position: new Vector2( 0, 0 ), // {Vector2} position of the container
+    options = merge( {
 
-    // bags
-    numberOfBags: 4, // {number} maximum number of bags on the shelf
-    bagSize: new Dimension2( 100, 100 ), // {number} dimensions of each bag
-    bagRowYOffset: 0, // {number} offset of bag row from the container's origin
+      position: new Vector2( 0, 0 ), // {Vector2} position of the container
 
-    // items
-    itemSize: new Dimension2( 10, 10 ), // {number} dimensions of each item
-    itemCellSpacing: 8, // {number} horizontal spacing between cells in each row
-    backRowYOffset: 0, // {number} offset of items front row from the container's origin
-    frontRowYOffset: 0 // {number} offset of items back row from the container's origin
+      // bags
+      numberOfBags: 4, // {number} maximum number of bags on the shelf
+      bagSize: new Dimension2( 100, 100 ), // {number} dimensions of each bag
+      bagRowYOffset: 0, // {number} offset of bag row from the container's origin
 
-  }, options );
+      // items
+      itemSize: new Dimension2( 10, 10 ), // {number} dimensions of each item
+      itemCellSpacing: 8, // {number} horizontal spacing between cells in each row
+      backRowYOffset: 0, // {number} offset of items front row from the container's origin
+      frontRowYOffset: 0 // {number} offset of items back row from the container's origin
 
-  // @public (read-only)
-  this.position = options.position;
+    }, options );
 
-  // @public row of bags, dispose not required, exists for sim lifetime
-  this.bagRow = new RowOfMovables( {
-    position: new Vector2( options.position.x, options.position.y + options.bagRowYOffset ),
-    numberOfCells: options.numberOfBags,
-    cellSize: options.bagSize,
+    // @public (read-only)
+    this.position = options.position;
 
-    // These values were determined empirically, to look visually pleasing.
-    // For fruit, the spacing affects how cells are populated when bags open to reveal items.
-    cellSpacing: ( options.numberOfBags < 4 ) ? 25 : 15
-  } );
+    // @public row of bags, dispose not required, exists for sim lifetime
+    this.bagRow = new RowOfMovables( {
+      position: new Vector2( options.position.x, options.position.y + options.bagRowYOffset ),
+      numberOfCells: options.numberOfBags,
+      cellSize: options.bagSize,
 
-  // Back row has 1 more cell than front row
-  const backNumberOfCells = Math.floor( options.numberOfItems / 2 ) + 1;
-  const frontNumberOfCells = options.numberOfItems - backNumberOfCells;
-  assert && assert( backNumberOfCells + frontNumberOfCells === options.numberOfItems );
-
-  // @public back row of items, dispose not required, exists for sim lifetime
-  this.backItemRow = new RowOfMovables( {
-    position: new Vector2( options.position.x, options.position.y + options.backRowYOffset ),
-    numberOfCells: backNumberOfCells,
-    cellSize: options.itemSize,
-    cellSpacing: options.itemCellSpacing
-  } );
-
-  // @public front row of items, dispose not required, exists for sim lifetime
-  this.frontItemRow = new RowOfMovables( {
-    position: new Vector2( options.position.x, options.position.y + options.frontRowYOffset ),
-    numberOfCells: frontNumberOfCells,
-    cellSize: options.itemSize,
-    cellSpacing: options.itemCellSpacing
-  } );
-
-  // @public dispose not required, exists for sim lifetime
-  this.numberOfBagsProperty = new DerivedProperty( [ this.bagRow.numberOfMovablesProperty ],
-    function( numberOfMovables ) {
-      return numberOfMovables;
+      // These values were determined empirically, to look visually pleasing.
+      // For fruit, the spacing affects how cells are populated when bags open to reveal items.
+      cellSpacing: ( options.numberOfBags < 4 ) ? 25 : 15
     } );
 
-  // @public dispose not required, exists for sim lifetime
-  this.numberOfItemsProperty = new DerivedProperty(
-    [ this.frontItemRow.numberOfMovablesProperty, this.backItemRow.numberOfMovablesProperty ],
-    function( frontNumberOfMovables, backNumberOfMovables ) {
-      return frontNumberOfMovables + backNumberOfMovables;
+    // Back row has 1 more cell than front row
+    const backNumberOfCells = Math.floor( options.numberOfItems / 2 ) + 1;
+    const frontNumberOfCells = options.numberOfItems - backNumberOfCells;
+    assert && assert( backNumberOfCells + frontNumberOfCells === options.numberOfItems );
+
+    // @public back row of items, dispose not required, exists for sim lifetime
+    this.backItemRow = new RowOfMovables( {
+      position: new Vector2( options.position.x, options.position.y + options.backRowYOffset ),
+      numberOfCells: backNumberOfCells,
+      cellSize: options.itemSize,
+      cellSpacing: options.itemCellSpacing
     } );
-}
 
-unitRates.register( 'ShoppingContainer', ShoppingContainer );
+    // @public front row of items, dispose not required, exists for sim lifetime
+    this.frontItemRow = new RowOfMovables( {
+      position: new Vector2( options.position.x, options.position.y + options.frontRowYOffset ),
+      numberOfCells: frontNumberOfCells,
+      cellSize: options.itemSize,
+      cellSpacing: options.itemCellSpacing
+    } );
 
-export default inherit( Object, ShoppingContainer, {
+    // @public dispose not required, exists for sim lifetime
+    this.numberOfBagsProperty = new DerivedProperty(
+      [ this.bagRow.numberOfMovablesProperty ],
+      numberOfMovables => numberOfMovables
+    );
+
+    // @public dispose not required, exists for sim lifetime
+    this.numberOfItemsProperty = new DerivedProperty(
+      [ this.frontItemRow.numberOfMovablesProperty, this.backItemRow.numberOfMovablesProperty ],
+      ( frontNumberOfMovables, backNumberOfMovables ) => frontNumberOfMovables + backNumberOfMovables
+    );
+  }
 
   // @public
-  reset: function() {
+  reset() {
     this.bagRow.reset();
     this.backItemRow.reset();
     this.frontItemRow.reset();
-  },
+  }
 
   /**
    * @param {Bag} bag
    * @returns {boolean}
    * @public
    */
-  containsBag: function( bag ) {
+  containsBag( bag ) {
     assert && assert( bag instanceof Bag );
     return this.bagRow.contains( bag );
-  },
+  }
 
   /**
    * @param {ShoppingItem} item
    * @returns {boolean}
    * @public
    */
-  containsItem: function( item ) {
+  containsItem( item ) {
     assert && assert( item instanceof ShoppingItem );
     return ( this.backItemRow.contains( item ) || this.frontItemRow.contains( item ) );
-  },
+  }
 
   /**
    * Removes a bag.
    * @param {Bag} bag
    * @public
    */
-  removeBag: function( bag ) {
+  removeBag( bag ) {
     assert && assert( bag instanceof Bag );
     assert && assert( this.containsBag( bag ), 'does not contain bag' );
     this.bagRow.remove( bag );
@@ -133,14 +128,14 @@ export default inherit( Object, ShoppingContainer, {
     // Make the bag move up a few pixels, to make it obvious that it has been removed.
     // See https://github.com/phetsims/unit-rates/issues/187
     bag.moveTo( bag.positionProperty.value.plusXY( 0, -5 ) );
-  },
+  }
 
   /**
    * Removes an item.
    * @param {ShoppingItem} item
    * @public
    */
-  removeItem: function( item ) {
+  removeItem( item ) {
     assert && assert( item instanceof ShoppingItem );
     assert && assert( this.containsItem( item ), 'does not contain item' );
 
@@ -154,14 +149,18 @@ export default inherit( Object, ShoppingContainer, {
     // Make the item move up a few pixels, to make it obvious that it has been removed.
     // See https://github.com/phetsims/unit-rates/issues/187
     item.moveTo( item.positionProperty.value.plusXY( 0, -5 ) );
-  },
+  }
 
   /**
    * Is the specific item in the front row?
    * @param {ShoppingItem} item
    * @returns {boolean}
    */
-  isItemInFrontRow: function( item ) {
+  isItemInFrontRow( item ) {
     return this.frontItemRow.contains( item );
   }
-} );
+}
+
+unitRates.register( 'ShoppingContainer', ShoppingContainer );
+
+export default ShoppingContainer;
