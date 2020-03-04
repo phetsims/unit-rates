@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-
 // sim modules
 import unitRates from '../unitRates.js';
 

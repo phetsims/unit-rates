@@ -20,6 +20,7 @@ import URFont from '../../common/URFont.js';
 import unitRates from '../../unitRates.js';
 
 class ShoppingSceneComboBox extends ComboBox {
+
   /**
    * @param {ShoppingScene[]} shoppingScenes
    * @param {Property.<ShoppingScene>} shoppingSceneProperty - the selected scene
@@ -50,8 +51,6 @@ class ShoppingSceneComboBox extends ComboBox {
     super( items, shoppingSceneProperty, parentNode, options );
   }
 }
-
-unitRates.register( 'ShoppingSceneComboBox', ShoppingSceneComboBox );
 
 /**
  * Creates an item for the combo box.
@@ -93,5 +92,7 @@ function createItem( shoppingScene, iconSize ) {
 
   return new ComboBoxItem( itemNode, shoppingScene );
 }
+
+unitRates.register( 'ShoppingSceneComboBox', ShoppingSceneComboBox );
 
 export default ShoppingSceneComboBox;

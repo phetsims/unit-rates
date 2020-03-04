@@ -6,44 +6,44 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @param {ShoppingCategory[]} categories
- * @param {Property.<ShoppingCategory>} categoryProperty
- * @param {Object} [options]
- * @constructor
- */
-function ShoppingCategoryRadioButtons( categories, categoryProperty, options ) {
+class ShoppingCategoryRadioButtons extends RadioButtonGroup {
 
-  options = merge( {
+  /**
+   * @param {ShoppingCategory[]} categories
+   * @param {Property.<ShoppingCategory>} categoryProperty
+   * @param {Object} [options]
+   */
+  constructor( categories, categoryProperty, options ) {
 
-    // RadioButtonGroup options
-    orientation: 'horizontal',
-    baseColor: URColors.categoryButton,
-    spacing: 12,
-    buttonContentXMargin: 5,
-    buttonContentYMargin: 5
-  }, options );
+    options = merge( {
 
-  // describe a radio button for each category
-  const contentArray = [];
-  categories.forEach( function( category ) {
-    contentArray.push( {
-      value: category,
-      node: new Image( category.image, { scale: 0.5 } )
+      // RadioButtonGroup options
+      orientation: 'horizontal',
+      baseColor: URColors.categoryButton,
+      spacing: 12,
+      buttonContentXMargin: 5,
+      buttonContentYMargin: 5
+    }, options );
+
+    // describe a radio button for each category
+    const contentArray = [];
+    categories.forEach( category => {
+      contentArray.push( {
+        value: category,
+        node: new Image( category.image, { scale: 0.5 } )
+      } );
     } );
-  } );
 
-  RadioButtonGroup.call( this, categoryProperty, contentArray, options );
+    super( categoryProperty, contentArray, options );
+  }
 }
 
 unitRates.register( 'ShoppingCategoryRadioButtons', ShoppingCategoryRadioButtons );
 
-inherit( RadioButtonGroup, ShoppingCategoryRadioButtons );
 export default ShoppingCategoryRadioButtons;

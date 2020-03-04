@@ -8,37 +8,37 @@
  */
 
 import Shape from '../../../../kite/js/Shape.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @param {RowOfMovables} rowOfMovables
- * @param {Object} [options]
- * @constructor
- */
-function RowOfMovablesNode( rowOfMovables, options ) {
+class RowOfMovablesNode extends Path {
 
-  options = merge( {
-    stroke: 'black'
-  }, options );
+  /**
+   * @param {RowOfMovables} rowOfMovables
+   * @param {Object} [options]
+   */
+  constructor( rowOfMovables, options ) {
 
-  const cellWidth = rowOfMovables.cellSize.width;
-  const cellHeight = rowOfMovables.cellSize.height;
+    options = merge( {
+      stroke: 'black'
+    }, options );
 
-  // add a rectangle for each cell
-  const shape = new Shape();
-  rowOfMovables.getCells().forEach( function( cell ) {
-    const x = cell.position.x - ( cellWidth / 2 );
-    const y = cell.position.y - cellHeight;
-    shape.rect( x, y, cellWidth, cellHeight );
-  } );
+    const cellWidth = rowOfMovables.cellSize.width;
+    const cellHeight = rowOfMovables.cellSize.height;
 
-  Path.call( this, shape, options );
+    // add a rectangle for each cell
+    const shape = new Shape();
+    rowOfMovables.getCells().forEach( cell => {
+      const x = cell.position.x - ( cellWidth / 2 );
+      const y = cell.position.y - cellHeight;
+      shape.rect( x, y, cellWidth, cellHeight );
+    } );
+
+    super( shape, options );
+  }
 }
 
 unitRates.register( 'RowOfMovablesNode', RowOfMovablesNode );
 
-inherit( Path, RowOfMovablesNode );
 export default RowOfMovablesNode;

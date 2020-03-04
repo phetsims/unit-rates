@@ -6,92 +6,91 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
 import unitRates from '../../unitRates.js';
 
-/**
- * @param {ShoppingItemNode} itemNode
- * @param {item} item
- * @param {Shelf} shelf
- * @param {Scale} scale
- * @param {Node} frontItemLayer
- * @param {Node} backItemLayer
- * @param {Node} dragLayer
- * @constructor
- */
-function ShoppingItemDragHandler( itemNode, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer ) {
+class ShoppingItemDragHandler extends SimpleDragHandler {
 
-  // {Vector2} where the drag started relative to the item's position, in parent view coordinates
-  let startDragOffset;
+  /**
+   * @param {ShoppingItemNode} itemNode
+   * @param {item} item
+   * @param {Shelf} shelf
+   * @param {Scale} scale
+   * @param {Node} frontItemLayer
+   * @param {Node} backItemLayer
+   * @param {Node} dragLayer
+   */
+  constructor( itemNode, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer ) {
 
-  SimpleDragHandler.call( this, {
+    // {Vector2} where the drag started relative to the item's position, in parent view coordinates
+    let startDragOffset;
 
-    // allow touch swipes across an item to pick it up
-    allowTouchSnag: true,
+    super( {
 
-    /**
-     * Called when a drag sequence starts.
-     * @param {SceneryEvent} event
-     * @param {Trail} trail
-     */
-    start: function( event, trail ) {
+      // allow touch swipes across an item to pick it up
+      allowTouchSnag: true,
 
-      // move Node to the drag layer, so that it pops to the front
-      item.dragging = true;
-      itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
-      dragLayer.addChild( itemNode );
+      /**
+       * Called when a drag sequence starts.
+       * @param {SceneryEvent} event
+       * @param {Trail} trail
+       */
+      start: ( event, trail ) => {
 
-      // remove item from shelf or scale
-      if ( shelf.containsItem( item ) ) {
-        shelf.removeItem( item );
+        // move Node to the drag layer, so that it pops to the front
+        item.dragging = true;
+        itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
+        dragLayer.addChild( itemNode );
+
+        // remove item from shelf or scale
+        if ( shelf.containsItem( item ) ) {
+          shelf.removeItem( item );
+        }
+        else if ( scale.containsItem( item ) ) {
+          scale.removeItem( item );
+        }
+        else {
+          // item was grabbed while animating
+        }
+
+        // compute the offset between the pointer and the item's position
+        startDragOffset = itemNode.globalToParentPoint( event.pointer.point ).minus( item.positionProperty.value );
+      },
+
+      /**
+       * Called when the pointer moves during a drag sequence.
+       * @param {SceneryEvent} event
+       * @param {Trail} trail
+       */
+      drag: ( event, trail ) => {
+
+        // move the item immediately while dragging
+        item.moveTo( itemNode.globalToParentPoint( event.pointer.point ).minus( startDragOffset ) );
+      },
+
+      /**
+       * Called when a drag sequence ends.
+       * @param {SceneryEvent} event
+       * @param {Trail} trail
+       */
+      end: ( event, trail ) => {
+
+        item.dragging = false;
+
+        // if the item is released above the scale, item falls to scale, otherwise to shelf.
+        const shoppingContainer = ( item.positionProperty.value.y < scale.yAboveScale ) ? scale : shelf;
+
+        // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
+        const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.positionProperty.value );
+
+        if ( !itemNode.isDisposed ) {
+          animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
+            frontItemLayer, backItemLayer );
+        }
       }
-      else if ( scale.containsItem( item ) ) {
-        scale.removeItem( item );
-      }
-      else {
-        // item was grabbed while animating
-      }
-
-      // compute the offset between the pointer and the item's position
-      startDragOffset = itemNode.globalToParentPoint( event.pointer.point ).minus( item.positionProperty.value );
-    },
-
-    /**
-     * Called when the pointer moves during a drag sequence.
-     * @param {SceneryEvent} event
-     * @param {Trail} trail
-     */
-    drag: function( event, trail ) {
-
-      // move the item immediately while dragging
-      item.moveTo( itemNode.globalToParentPoint( event.pointer.point ).minus( startDragOffset ) );
-    },
-
-    /**
-     * Called when a drag sequence ends.
-     * @param {SceneryEvent} event
-     * @param {Trail} trail
-     */
-    end: function( event, trail ) {
-
-      item.dragging = false;
-
-      // if the item is released above the scale, item falls to scale, otherwise to shelf.
-      const shoppingContainer = ( item.positionProperty.value.y < scale.yAboveScale ) ? scale : shelf;
-
-      // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
-      const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.positionProperty.value );
-
-      if ( !itemNode.isDisposed ) {
-        animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
-          frontItemLayer, backItemLayer );
-      }
-    }
-  } );
+    } );
+  }
 }
-
-unitRates.register( 'ShoppingItemDragHandler', ShoppingItemDragHandler );
 
 /**
  * Gets the row and unoccupied cell that are closest to the specified position.
@@ -161,7 +160,7 @@ function getClosestRowAndUnoccupiedCell( shoppingContainer, position ) {
 function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cellIndex, frontItemLayer, backItemLayer ) {
 
   // This function changes course to the next closest unoccupied cell.
-  const changeCourse = function() {
+  const changeCourse = () => {
     unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
 
     // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
@@ -173,7 +172,7 @@ function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cel
 
   // This function is called on each animation step.
   // If the target cell becomes occupied, change course immediately.
-  const animationStepCallback = function() {
+  const animationStepCallback = () => {
     if ( !itemRow.isEmptyCell( cellIndex ) ) {
       changeCourse();
     }
@@ -181,7 +180,7 @@ function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cel
 
   // This function is called when animation completes.
   // If the target cell is still empty, add the item. Otherwise animate to an unoccupied cell.
-  const animationCompletedCallback = function() {
+  const animationCompletedCallback = () => {
     if ( itemRow.isEmptyCell( cellIndex ) ) {
 
       // the cell is still unoccupied when we reached it, put the item in that cell
@@ -212,5 +211,6 @@ function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cel
   } );
 }
 
-inherit( SimpleDragHandler, ShoppingItemDragHandler );
+unitRates.register( 'ShoppingItemDragHandler', ShoppingItemDragHandler );
+
 export default ShoppingItemDragHandler;

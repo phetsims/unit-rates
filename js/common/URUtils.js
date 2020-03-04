@@ -12,7 +12,7 @@ import SunConstants from '../../../sun/js/SunConstants.js';
 import unitRates from '../unitRates.js';
 
 // All functions are @public unless otherwise noted.
-var URUtils = {
+const URUtils = {
 
   /**
    * Formats a number, using nearest-neighbor rounding.
