@@ -6,57 +6,41 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import DownUpListener from '../../../../scenery/js/input/DownUpListener.js';
 import Plane from '../../../../scenery/js/nodes/Plane.js';
 import unitRates from '../../unitRates.js';
 import KeypadPanel from './KeypadPanel.js';
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function KeypadLayer( options ) {
+class KeypadLayer extends Plane {
 
-  const self = this;
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-  options = merge( {
-    fill: 'rgba( 0, 0, 0, 0.2 )',
-    visible: false
-  }, options );
+    options = merge( {
+      fill: 'rgba( 0, 0, 0, 0.2 )',
+      visible: false
+    }, options );
 
-  Plane.call( this, options );
+    super( options );
 
-  // @private clicking outside the keypad cancels the edit
-  this.clickOutsideListener = new DownUpListener( {
-    down: function( event ) {
-      if ( event.trail.lastNode() === self ) {
-        self.cancelEdit();
+    // @private clicking outside the keypad cancels the edit
+    this.clickOutsideListener = new DownUpListener( {
+      down: event => {
+        if ( event.trail.lastNode() === this ) {
+          this.cancelEdit();
+        }
       }
-    }
-  } );
+    } );
 
-  // @private these will be set when the client calls beginEdit
-  this.valueProperty = null;
-  this.keypad = null;
-  this.zeroIsValid = true;
-  this.onEndEdit = null; // {function} called by endEdit
-}
-
-unitRates.register( 'KeypadLayer', KeypadLayer );
-
-/**
- * Determines if the value from the keypad is a valid entry.
- * @param {number} value
- * @param {boolean} zeroIsValid - is zero a valid value?
- * @returns {boolean}
- */
-function isValidValue( value, zeroIsValid ) {
-  return !isNaN( value ) && !( value === 0 && !zeroIsValid );
-}
-
-export default inherit( Plane, KeypadLayer, {
+    // @private these will be set when the client calls beginEdit
+    this.valueProperty = null;
+    this.keypad = null;
+    this.zeroIsValid = true;
+    this.onEndEdit = null; // {function} called by endEdit
+  }
 
   /**
    * Begins an edit, by opening a modal keypad.
@@ -64,7 +48,7 @@ export default inherit( Plane, KeypadLayer, {
    * @param {Object} [options]
    * @public
    */
-  beginEdit: function( valueProperty, options ) {
+  beginEdit( valueProperty, options ) {
 
     // Ignore attempts to open another keypad. This can happen in unlikely multi-touch scenarios.
     // See https://github.com/phetsims/unit-rates/issues/181
@@ -103,10 +87,10 @@ export default inherit( Plane, KeypadLayer, {
 
     // execute client-specific hook
     options.onBeginEdit && options.onBeginEdit();
-  },
+  }
 
   // @private ends an edit
-  endEdit: function() {
+  endEdit() {
 
     // hide the keypad
     this.visible = false;
@@ -120,10 +104,10 @@ export default inherit( Plane, KeypadLayer, {
 
     // remove reference to valueProperty that was passed to beginEdit
     this.valueProperty = null;
-  },
+  }
 
   // @private commits an edit
-  commitEdit: function() {
+  commitEdit() {
 
     // get the value from the keypad
     const value = parseFloat( this.keypad.valueStringProperty.value );
@@ -136,10 +120,24 @@ export default inherit( Plane, KeypadLayer, {
     else {
       this.cancelEdit(); // not entering a value in the keypad is effectively a cancel
     }
-  },
+  }
 
   // @private cancels an edit
-  cancelEdit: function() {
+  cancelEdit() {
     this.endEdit();
   }
-} );
+}
+
+/**
+ * Determines if the value from the keypad is a valid entry.
+ * @param {number} value
+ * @param {boolean} zeroIsValid - is zero a valid value?
+ * @returns {boolean}
+ */
+function isValidValue( value, zeroIsValid ) {
+  return !isNaN( value ) && !( value === 0 && !zeroIsValid );
+}
+
+unitRates.register( 'KeypadLayer', KeypadLayer );
+
+export default KeypadLayer;

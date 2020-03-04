@@ -7,49 +7,50 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import unitRates from '../../unitRates.js';
 import URFont from '../URFont.js';
 
-/**
- * @param {Property.<number>} valueProperty
- * @param {Object} [options]
- * @constructor
- */
-function ValueNode( valueProperty, options ) {
+class ValueNode extends Text {
 
-  const self = this;
+  /**
+   * @param {Property.<number>} valueProperty
+   * @param {Object} [options]
+   */
+  constructor( valueProperty, options ) {
 
-  options = merge( {
-    font: new URFont( 20 ),
-    valueToString: function( value ) { return '' + value; }
-  }, options );
+    options = merge( {
+      font: new URFont( 20 ),
+      valueToString: function( value ) { return '' + value; }
+    }, options );
 
-  Text.call( this, '' ); // string will be filled in by valueObserver
+    super( '' ); // string will be filled in by valueObserver
 
-  // update value display
-  const valueObserver = function( value ) {
-    self.text = options.valueToString( value );
-  };
-  valueProperty.link( valueObserver ); // unlink in dispose
+    // update value display
+    const valueObserver = value => {
+      this.text = options.valueToString( value );
+    };
+    valueProperty.link( valueObserver ); // unlink in dispose
 
-  // @private
-  this.disposeValueNode = function() {
-    valueProperty.unlink( valueObserver );
-  };
+    // @private
+    this.disposeValueNode = () => {
+      valueProperty.unlink( valueObserver );
+    };
 
-  this.mutate( options );
+    this.mutate( options );
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeValueNode();
+    super.dispose();
+  }
 }
 
 unitRates.register( 'ValueNode', ValueNode );
 
-export default inherit( Text, ValueNode, {
-
-  // @public
-  dispose: function() {
-    this.disposeValueNode();
-    Text.prototype.dispose.call( this );
-  }
-} );
+export default ValueNode;

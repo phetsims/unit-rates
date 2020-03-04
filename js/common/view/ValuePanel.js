@@ -11,7 +11,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -24,128 +23,131 @@ import URFont from '../URFont.js';
 // constants
 const BACKGROUND_RECTANGLE_STROKE = ( phet.chipper.queryParameters.dev ? 'red' : null );
 
-/**
- * @param {Node} valueNode
- * @param {Object} [options]
- * @constructor
- */
-function ValuePanel( valueNode, options ) {
+class ValuePanel extends Panel {
 
-  options = merge( {
+  /**
+   * @param {Node} valueNode
+   * @param {Object} [options]
+   */
+  constructor( valueNode, options ) {
 
-    panelWidth: 100, // {number} contents are scaled to fit, height depends on contents
-    panelMinHeight: 0, // {number} minimum panel height
+    options = merge( {
 
-    // expand/collapse button
-    expandedProperty: null, // {Property.<boolean>|null} null indicates no expand/collapse button
+      panelWidth: 100, // {number} contents are scaled to fit, height depends on contents
+      panelMinHeight: 0, // {number} minimum panel height
 
-    // title
-    titleString: '', // {string} string displayed when the panel is collapsed
-    titleFont: new URFont( 20 ),
-    xSpacing: 8,  // space between expand/collapse button and title
+      // expand/collapse button
+      expandedProperty: null, // {Property.<boolean>|null} null indicates no expand/collapse button
 
-    // Panel options
-    cornerRadius: 4,
-    xMargin: 8,
-    yMargin: 4
+      // title
+      titleString: '', // {string} string displayed when the panel is collapsed
+      titleFont: new URFont( 20 ),
+      xSpacing: 8,  // space between expand/collapse button and title
 
-  }, options );
+      // Panel options
+      cornerRadius: 4,
+      xMargin: 8,
+      yMargin: 4
 
-  const contentNode = new Node();
-  contentNode.addChild( valueNode );
+    }, options );
 
-  // width of panel content
-  const contentWidth = options.panelWidth - ( 2 * options.xMargin );
-  const minContentHeight = Math.max( 0, options.panelMinHeight - ( 2 * options.yMargin ) );
+    const contentNode = new Node();
+    contentNode.addChild( valueNode );
 
-  // invisible rectangle whose size is equivalent to the size of the panel's content, used for right justifying valueNode
-  let backgroundNode = null; // assigned below
+    // width of panel content
+    const contentWidth = options.panelWidth - ( 2 * options.xMargin );
+    const minContentHeight = Math.max( 0, options.panelMinHeight - ( 2 * options.yMargin ) );
 
-  let contentHeight = 0; // computed below
-  if ( !options.expandedProperty ) {
+    // invisible rectangle whose size is equivalent to the size of the panel's content, used for right justifying valueNode
+    let backgroundNode = null; // assigned below
 
-    // limit valueNode width
-    valueNode.maxWidth = contentWidth;
+    let contentHeight = 0; // computed below
+    if ( !options.expandedProperty ) {
 
-    contentHeight = Math.max( minContentHeight, valueNode.height );
+      // limit valueNode width
+      valueNode.maxWidth = contentWidth;
 
-    backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight, { stroke: BACKGROUND_RECTANGLE_STROKE } );
-    contentNode.addChild( backgroundNode );
-  }
-  else {
+      contentHeight = Math.max( minContentHeight, valueNode.height );
 
-    // expand/collapse button, dispose required
-    var expandCollapseButton = new ExpandCollapseButton( options.expandedProperty, {
-      sideLength: 15,
-      touchAreaXDilation: 8,
-      touchAreaYDilation: 10,
-      touchAreaYShift: -4,
-      mouseAreaXDilation: 5,
-      mouseAreaYDilation: 5
-    } );
-    contentNode.addChild( expandCollapseButton );
+      backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight, { stroke: BACKGROUND_RECTANGLE_STROKE } );
+      contentNode.addChild( backgroundNode );
+    }
+    else {
 
-    // space to right of button
-    const maxExpandedWidth = contentWidth - expandCollapseButton.width - options.xSpacing;
+      // expand/collapse button, dispose required
+      var expandCollapseButton = new ExpandCollapseButton( options.expandedProperty, {
+        sideLength: 15,
+        touchAreaXDilation: 8,
+        touchAreaYDilation: 10,
+        touchAreaYShift: -4,
+        mouseAreaXDilation: 5,
+        mouseAreaYDilation: 5
+      } );
+      contentNode.addChild( expandCollapseButton );
 
-    // title, displayed when collapsed
-    const titleNode = new Text( options.titleString, {
-      font: options.titleFont,
-      maxWidth: maxExpandedWidth
-    } );
-    contentNode.addChild( titleNode );
+      // space to right of button
+      const maxExpandedWidth = contentWidth - expandCollapseButton.width - options.xSpacing;
 
-    // limit valueNode width
-    valueNode.maxWidth = maxExpandedWidth;
+      // title, displayed when collapsed
+      const titleNode = new Text( options.titleString, {
+        font: options.titleFont,
+        maxWidth: maxExpandedWidth
+      } );
+      contentNode.addChild( titleNode );
 
-    contentHeight = Math.max( minContentHeight, _.maxBy( [ titleNode, valueNode, expandCollapseButton ], function( node ) {
-      return node.height;
-    } ).height );
-    backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight, { stroke: BACKGROUND_RECTANGLE_STROKE } );
-    contentNode.addChild( backgroundNode );
+      // limit valueNode width
+      valueNode.maxWidth = maxExpandedWidth;
 
-    // layout
-    expandCollapseButton.left = backgroundNode.left;
-    expandCollapseButton.centerY = backgroundNode.centerY;
-    titleNode.left = expandCollapseButton.right + options.xSpacing;
-    titleNode.centerY = backgroundNode.centerY;
+      contentHeight = Math.max( minContentHeight,
+        _.maxBy( [ titleNode, valueNode, expandCollapseButton ], node => node.height ).height );
+      backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight, { stroke: BACKGROUND_RECTANGLE_STROKE } );
+      contentNode.addChild( backgroundNode );
 
-    // expand/collapse
-    var expandedObserver = function( expanded ) {
-      valueNode.visible = expanded;
-      titleNode.visible = !expanded;
-    };
-    options.expandedProperty.link( expandedObserver ); // unlink in dispose
-  }
+      // layout
+      expandCollapseButton.left = backgroundNode.left;
+      expandCollapseButton.centerY = backgroundNode.centerY;
+      titleNode.left = expandCollapseButton.right + options.xSpacing;
+      titleNode.centerY = backgroundNode.centerY;
 
-  backgroundNode.moveToBack();
-  valueNode.right = backgroundNode.right;
-  valueNode.centerY = backgroundNode.centerY;
+      // expand/collapse
+      var expandedObserver = expanded => {
+        valueNode.visible = expanded;
+        titleNode.visible = !expanded;
+      };
+      options.expandedProperty.link( expandedObserver ); // unlink in dispose
+    }
 
-  Panel.call( this, contentNode, options );
-
-  // right justify valueNode when its bounds change
-  const boundsListener = function() {
+    backgroundNode.moveToBack();
     valueNode.right = backgroundNode.right;
     valueNode.centerY = backgroundNode.centerY;
-  };
-  valueNode.on( 'bounds', boundsListener ); // off in dispose
 
-  // @private
-  this.disposeValuePanel = function() {
-    expandCollapseButton && expandCollapseButton.dispose();
-    options.expandedProperty && options.expandedProperty.unlink( expandedObserver );
-    valueNode.off( 'bounds', boundsListener );
-  };
+    super( contentNode, options );
+
+    // right justify valueNode when its bounds change
+    const boundsListener = () => {
+      valueNode.right = backgroundNode.right;
+      valueNode.centerY = backgroundNode.centerY;
+    };
+    valueNode.on( 'bounds', boundsListener ); // off in dispose
+
+    // @private
+    this.disposeValuePanel = () => {
+      expandCollapseButton && expandCollapseButton.dispose();
+      options.expandedProperty && options.expandedProperty.unlink( expandedObserver );
+      valueNode.off( 'bounds', boundsListener );
+    };
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeValuePanel();
+    super.dispose();
+  }
 }
 
 unitRates.register( 'ValuePanel', ValuePanel );
 
-export default inherit( Panel, ValuePanel, {
-
-  // @public
-  dispose: function() {
-    this.disposeValuePanel();
-    Panel.prototype.dispose.call( this );
-  }
-} );
+export default ValuePanel;
