@@ -16,6 +16,7 @@ import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
@@ -54,6 +55,14 @@ function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLay
 
   }, options );
 
+  // An invisible rectangle that has the same bounds as the accordion box. Used to position the keypad.
+  // Dimensions will be set after calling super.  This was added so when converting to an ES6 class, because
+  // we can't use this before super.  See https://github.com/phetsims/tasks/issues/1026#issuecomment-594357784
+  const thisBoundsNode = new Rectangle( 0, 0, 1, 1, {
+    visible: false,
+    pickable: false
+  } );
+
   // title on the accordion box
   assert && assert( !options.titleNode, 'creates its own title node' );
   options.titleNode = new Text( options.titleString, {
@@ -78,7 +87,7 @@ function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLay
   const markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
 
   // marker editor
-  const markerEditorNode = new MarkerEditorNode( markerEditor, this, keypadLayer, {
+  const markerEditorNode = new MarkerEditorNode( markerEditor, thisBoundsNode, keypadLayer, {
     numeratorOptions: doubleNumberLine.numeratorOptions,
     denominatorOptions: doubleNumberLine.denominatorOptions,
     keypadPosition: options.keypadPosition,
@@ -126,6 +135,11 @@ function DoubleNumberLineAccordionBox( doubleNumberLine, markerEditor, keypadLay
   } );
 
   AccordionBox.call( this, contentNode, options );
+
+  // Adjust rectangle to match accordion box size.
+  thisBoundsNode.setRectBounds( this.localBounds );
+  this.addChild( thisBoundsNode );
+  thisBoundsNode.moveToBack();
 
   // {Animation|null} animation for marker editor
   let markerEditorAnimation = null;
