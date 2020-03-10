@@ -10,6 +10,7 @@
 import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
@@ -47,9 +48,17 @@ function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
 
   }, options );
 
+  // An invisible rectangle that has the same bounds as the accordion box. Used to position the keypad.
+  // Dimensions will be set after calling super.  This was added so when converting to an ES6 class, because
+  // we can't use this before super.  See https://github.com/phetsims/tasks/issues/1026#issuecomment-594357784
+  const thisBoundsNode = new Rectangle( 0, 0, 1, 1, {
+    visible: false,
+    pickable: false
+  } );
+
   // 'Unit Rate?' question, dispose required.
   // This question is separate because it does not change when the refresh button is pressed.
-  const unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, this, keypadLayer, {
+  const unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, thisBoundsNode, keypadLayer, {
     denominatorVisible: true
   } );
 
@@ -70,7 +79,7 @@ function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
     // add new questions, dispose required
     const questionNodes = [];
     for ( let i = 0; i < questionSet.length; i++ ) {
-      questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], this, keypadLayer ) );
+      questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], thisBoundsNode, keypadLayer ) );
     }
     questionsParent.setChildren( questionNodes );
   };
@@ -104,6 +113,11 @@ function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
   } );
 
   AccordionBox.call( this, contentNode, options );
+
+  // Adjust rectangle to match accordion box size.
+  thisBoundsNode.setRectBounds( this.localBounds );
+  this.addChild( thisBoundsNode );
+  thisBoundsNode.moveToBack();
 
   // @private cleanup that's specific to this Node
   this.disposeShoppingQuestionsAccordionBox = () => {
