@@ -47,7 +47,8 @@ function ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, options ) {
 
   }, options );
 
-  // 'Unit Rate?' question, dispose required
+  // 'Unit Rate?' question, dispose required.
+  // This question is separate because it does not change when the refresh button is pressed.
   const unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, this, keypadLayer, {
     denominatorVisible: true
   } );
