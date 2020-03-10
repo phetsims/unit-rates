@@ -33,6 +33,7 @@ import MarkerEditorNode from './MarkerEditorNode.js';
 const doubleNumberLineString = unitRatesStrings.doubleNumberLine;
 
 class DoubleNumberLineAccordionBox extends AccordionBox {
+
   /**
    * @param {DoubleNumberLine} doubleNumberLine
    * @param {MarkerEditor} markerEditor

@@ -22,6 +22,7 @@ import ShoppingQuestionNode from './ShoppingQuestionNode.js';
 const questionsString = unitRatesStrings.questions;
 
 class ShoppingQuestionsAccordionBox extends AccordionBox {
+
   /**
    * @param {ShoppingScene} shoppingScene
    * @param {Node} keypadLayer
