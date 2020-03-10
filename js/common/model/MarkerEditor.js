@@ -26,9 +26,15 @@ class MarkerEditor {
       denominatorMaxDecimals: 2 // {number} maximum decimal places in the denominator
     }, options );
 
-    // @public
-    this.numeratorProperty = new Property( null ); // {Property.<number|null>} the numerator in the editor
-    this.denominatorProperty = new Property( null ); // {Property.<number|null>} the denominator in the editor
+    // @public {Property.<number|null>} the numerator in the editor
+    this.numeratorProperty = new Property( null, {
+      reentrant: true // see https://github.com/phetsims/unit-rates/issues/216
+    } );
+
+    // @public {Property.<number|null>} the denominator in the editor
+    this.denominatorProperty = new Property( null, {
+      reentrant: true // see https://github.com/phetsims/unit-rates/issues/216
+    } );
 
     // @public (read-only)
     this.unitRateProperty = unitRateProperty;
