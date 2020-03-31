@@ -32,7 +32,7 @@ import redCandyBagImage from '../../../images/red_candy_bag_png.js';
 import redCandyImage from '../../../images/red_candy_png.js';
 import tomatoBagImage from '../../../images/tomato_bag_png.js';
 import tomatoImage from '../../../images/tomato_png.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 
 // Fruit strings

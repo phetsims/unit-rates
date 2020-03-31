@@ -16,7 +16,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import URFont from '../../common/URFont.js';
 import URUtils from '../../common/URUtils.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 
 // strings

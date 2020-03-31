@@ -13,7 +13,7 @@ import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import screenIcon from '../../images/racing_lab_screen_icon_png.js';
 import URColors from '../common/URColors.js';
-import unitRatesStrings from '../unit-rates-strings.js';
+import unitRatesStrings from '../unitRatesStrings.js';
 import unitRates from '../unitRates.js';
 import RacingLabModel from './model/RacingLabModel.js';
 import RacingLabScreenView from './view/RacingLabScreenView.js';

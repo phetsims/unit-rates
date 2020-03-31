@@ -28,7 +28,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import finishFlagImage from '../../../images/finish_flag_png.js';
 import startFlagImage from '../../../images/start_flag_png.js';
 import URFont from '../../common/URFont.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 import RaceTimerNode from './RaceTimerNode.js';
 

@@ -16,7 +16,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 import URColors from '../URColors.js';
 import URFont from '../URFont.js';

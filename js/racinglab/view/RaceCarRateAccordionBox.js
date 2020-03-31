@@ -10,7 +10,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import URConstants from '../../common/URConstants.js';
 import URFont from '../../common/URFont.js';
 import RateAccordionBox from '../../common/view/RateAccordionBox.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 
 // strings

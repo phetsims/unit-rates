@@ -12,7 +12,7 @@ import SimLauncher from '../../joist/js/SimLauncher.js';
 import RacingLabScreen from './racinglab/RacingLabScreen.js';
 import ShoppingScreen from './shopping/ShoppingScreen.js';
 import ShoppingLabScreen from './shoppinglab/ShoppingLabScreen.js';
-import unitRatesStrings from './unit-rates-strings.js';
+import unitRatesStrings from './unitRatesStrings.js';
 
 const unitRatesTitleString = unitRatesStrings[ 'unit-rates' ].title;
 

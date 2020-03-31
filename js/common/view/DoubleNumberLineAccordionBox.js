@@ -22,7 +22,7 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 import Marker from '../model/Marker.js';
 import URColors from '../URColors.js';

@@ -16,7 +16,7 @@ import Marker from '../../common/model/Marker.js';
 import MarkerEditor from '../../common/model/MarkerEditor.js';
 import Rate from '../../common/model/Rate.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 import RaceTrack from './RaceTrack.js';
 

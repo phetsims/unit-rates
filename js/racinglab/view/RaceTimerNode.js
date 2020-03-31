@@ -12,7 +12,7 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import URFont from '../../common/URFont.js';
 import ValueNode from '../../common/view/ValueNode.js';
 import ValuePanel from '../../common/view/ValuePanel.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 
 // strings

@@ -21,7 +21,7 @@ import URColors from '../../common/URColors.js';
 import URUtils from '../../common/URUtils.js';
 import ValueNode from '../../common/view/ValueNode.js';
 import ValuePanel from '../../common/view/ValuePanel.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 import CostNode from './CostNode.js';
 

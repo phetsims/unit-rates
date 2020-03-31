@@ -15,7 +15,7 @@ import VBox from '../../../../scenery/js/nodes/VBox.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 import ShoppingQuestionNode from './ShoppingQuestionNode.js';
 

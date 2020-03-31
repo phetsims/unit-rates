@@ -13,7 +13,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import URConstants from '../../common/URConstants.js';
 import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAccordionBox.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 import RaceCarRateAccordionBox from './RaceCarRateAccordionBox.js';
 import RaceTrackNode from './RaceTrackNode.js';

@@ -26,7 +26,7 @@ import Rate from '../../common/model/Rate.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
-import unitRatesStrings from '../../unit-rates-strings.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 import Bag from './Bag.js';
 import Scale from './Scale.js';
