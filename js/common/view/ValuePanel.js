@@ -130,13 +130,13 @@ class ValuePanel extends Panel {
       valueNode.right = backgroundNode.right;
       valueNode.centerY = backgroundNode.centerY;
     };
-    valueNode.on( 'bounds', boundsListener ); // off in dispose
+    valueNode.boundsProperty.lazyLink( boundsListener ); // off in dispose
 
     // @private
     this.disposeValuePanel = () => {
       expandCollapseButton && expandCollapseButton.dispose();
       options.expandedProperty && options.expandedProperty.unlink( expandedObserver );
-      valueNode.off( 'bounds', boundsListener );
+      valueNode.boundsProperty.unlink( boundsListener );
     };
   }
 
