@@ -9,12 +9,13 @@
 
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import screenIcon from '../../images/shopping_screen_icon_png.js';
 import URColors from '../common/URColors.js';
-import unitRatesStrings from '../unitRatesStrings.js';
 import unitRates from '../unitRates.js';
+import unitRatesStrings from '../unitRatesStrings.js';
 import ShoppingModel from './model/ShoppingModel.js';
 import ShoppingScreenView from './view/ShoppingScreenView.js';
 
@@ -31,7 +32,10 @@ class ShoppingScreen extends Screen {
     options = merge( {
       name: screenShoppingString,
       backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
-      homeScreenIcon: new Image( screenIcon )
+      homeScreenIcon: new ScreenIcon( new Image( screenIcon ), {
+        maxIconWidthProportion: 1,
+        maxIconHeightProportion: 1
+      } )
     }, options );
 
     super(
