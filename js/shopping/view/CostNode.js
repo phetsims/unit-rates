@@ -16,11 +16,8 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import URFont from '../../common/URFont.js';
 import URUtils from '../../common/URUtils.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
-
-// strings
-const dollarSignString = unitRatesStrings.dollarSign;
+import unitRatesStrings from '../../unitRatesStrings.js';
 
 class CostNode extends Node {
 
@@ -40,7 +37,7 @@ class CostNode extends Node {
 
     // dollar sign (or other currency symbol)
     // always to the left of the value on the scale, see https://github.com/phetsims/unit-rates/issues/176
-    const dollarSignNode = new Text( dollarSignString, {
+    const dollarSignNode = new Text( unitRatesStrings.dollarSign, {
       font: options.font
     } );
     this.addChild( dollarSignNode );

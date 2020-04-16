@@ -28,13 +28,9 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import finishFlagImage from '../../../images/finish_flag_png.js';
 import startFlagImage from '../../../images/start_flag_png.js';
 import URFont from '../../common/URFont.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import RaceTimerNode from './RaceTimerNode.js';
-
-// strings
-const milesString = unitRatesStrings.miles;
-const pattern0Value1UnitsString = unitRatesStrings.pattern_0value_1units;
 
 // constants
 const NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates
@@ -167,7 +163,7 @@ class RaceTrackNode extends Node {
       timerNode.bottom = finishFlagNode.top - 3;
 
       // distance label below finish flag
-      lengthNode.text = StringUtils.format( pattern0Value1UnitsString, length, milesString );
+      lengthNode.text = StringUtils.format( unitRatesStrings.pattern_0value_1units, length, unitRatesStrings.miles );
       lengthNode.top = solidLineNode.bottom + TRACK_MARKER_SIDE_LENGTH + 4;
       lengthNode.centerX = finishX;
 

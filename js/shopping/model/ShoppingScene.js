@@ -26,18 +26,14 @@ import Rate from '../../common/model/Rate.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import Bag from './Bag.js';
 import Scale from './Scale.js';
 import Shelf from './Shelf.js';
 import ShoppingItem from './ShoppingItem.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import ShoppingQuestionFactory from './ShoppingQuestionFactory.js';
-
-// strings
-const dollarsString = unitRatesStrings.dollars;
-const pattern0CostString = unitRatesStrings.pattern_0cost;
 
 // constants
 const SHARED_OPTIONS = {
@@ -87,8 +83,8 @@ class ShoppingScene {
 
     // @public (read-only) options specific to the rate's numerator
     this.numeratorOptions = merge( {
-      axisLabel: dollarsString, // {string} label for the axis on the double number line
-      valueFormat: pattern0CostString, // {string} format with placeholder for value
+      axisLabel: unitRatesStrings.dollars, // {string} label for the axis on the double number line
+      valueFormat: unitRatesStrings.pattern_0cost, // {string} format with placeholder for value
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, SHARED_OPTIONS, options.numeratorOptions );
 

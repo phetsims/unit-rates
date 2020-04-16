@@ -21,13 +21,9 @@ import URColors from '../../common/URColors.js';
 import URUtils from '../../common/URUtils.js';
 import ValueNode from '../../common/view/ValueNode.js';
 import ValuePanel from '../../common/view/ValuePanel.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import CostNode from './CostNode.js';
-
-// strings
-const costString = unitRatesStrings.cost;
-const pattern0Value1UnitsString = unitRatesStrings.pattern_0value_1units;
 
 // constants
 const PANEL_WIDTH = 132;
@@ -133,7 +129,7 @@ class ScaleNode extends Node {
       panelWidth: PANEL_WIDTH,
       panelMinHeight: PANEL_MIN_HEIGHT,
       expandedProperty: options.costExpandedProperty,
-      titleString: costString
+      titleString: unitRatesStrings.cost
     } );
     displayChildren.push( costPanel );
 
@@ -210,7 +206,7 @@ class ScaleNode extends Node {
  * @returns {string}
  */
 function quantityToString( quantity, units ) {
-  return StringUtils.format( pattern0Value1UnitsString,
+  return StringUtils.format( unitRatesStrings.pattern_0value_1units,
     URUtils.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */ ), units );
 }
 

@@ -16,12 +16,10 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import URColors from '../URColors.js';
 import URFont from '../URFont.js';
-
-const enterString = unitRatesStrings.enter;
 
 // constants
 const DECIMAL_POINT = NumberKeypad.DECIMAL_POINT;
@@ -83,7 +81,7 @@ class KeypadPanel extends Panel {
     const enterButton = new RectangularPushButton( {
       listener: options.enterButtonListener,
       baseColor: URColors.enterButton,
-      content: new Text( enterString, {
+      content: new Text( unitRatesStrings.enter, {
         font: new URFont( 16 ),
         fill: 'black',
         maxWidth: keypadNode.width // i18n

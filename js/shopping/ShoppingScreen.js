@@ -19,9 +19,6 @@ import unitRatesStrings from '../unitRatesStrings.js';
 import ShoppingModel from './model/ShoppingModel.js';
 import ShoppingScreenView from './view/ShoppingScreenView.js';
 
-// strings
-const screenShoppingString = unitRatesStrings.screen.shopping;
-
 class ShoppingScreen extends Screen {
 
   /**
@@ -30,7 +27,7 @@ class ShoppingScreen extends Screen {
   constructor( options ) {
 
     options = merge( {
-      name: screenShoppingString,
+      name: unitRatesStrings.screen.shopping,
       backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
       homeScreenIcon: new ScreenIcon( new Image( screenIcon ), {
         maxIconWidthProportion: 1,

@@ -13,22 +13,14 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import URConstants from '../../common/URConstants.js';
 import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAccordionBox.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import RaceCarRateAccordionBox from './RaceCarRateAccordionBox.js';
 import RaceTrackNode from './RaceTrackNode.js';
 import RacingLabSceneControl from './RacingLabSceneControl.js';
 import RacingLabViewProperties from './RacingLabViewProperties.js';
 import ResetRaceButton from './ResetRaceButton.js';
 import StartStopButton from './StartStopButton.js';
-
-// strings
-const doubleNumberLine1String = unitRatesStrings.doubleNumberLine1;
-const doubleNumberLine2String = unitRatesStrings.doubleNumberLine2;
-const rate1String = unitRatesStrings.rate1;
-const rate2String = unitRatesStrings.rate2;
-const timer1String = unitRatesStrings.timer1;
-const timer2String = unitRatesStrings.timer2;
 
 // constants
 const BUTTON_X_SPACE = 20; // space between buttons
@@ -59,7 +51,7 @@ class RacingLabScreenView extends ScreenView {
     const doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
         axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
-        titleString: doubleNumberLine1String,
+        titleString: unitRatesStrings.doubleNumberLine1,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
         indicatorXProperty: model.car1.distanceProperty,
         indicatorColor: model.car1.color,
@@ -73,7 +65,7 @@ class RacingLabScreenView extends ScreenView {
     const doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
       model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
         axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
-        titleString: doubleNumberLine2String,
+        titleString: unitRatesStrings.doubleNumberLine2,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
         indicatorXProperty: model.car2.distanceProperty,
         indicatorColor: model.car2.color,
@@ -85,7 +77,7 @@ class RacingLabScreenView extends ScreenView {
 
     // Rate control for car1
     const rateAccordionBox1 = new RaceCarRateAccordionBox( model.car1, {
-      titleString: rate1String,
+      titleString: unitRatesStrings.rate1,
       expandedProperty: viewProperties.rateExpandedProperty1,
       left: doubleNumberLineAccordionBox1.right + ACCORDION_BOX_X_SPACE,
       top: doubleNumberLineAccordionBox1.top
@@ -94,7 +86,7 @@ class RacingLabScreenView extends ScreenView {
 
     // Rate control for car2
     const rateAccordionBox2 = new RaceCarRateAccordionBox( model.car2, {
-      titleString: rate2String,
+      titleString: unitRatesStrings.rate2,
       expandedProperty: viewProperties.rateExpandedProperty2,
       left: doubleNumberLineAccordionBox2.right + ACCORDION_BOX_X_SPACE,
       top: doubleNumberLineAccordionBox2.top
@@ -103,7 +95,7 @@ class RacingLabScreenView extends ScreenView {
 
     // Track for car1
     const trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, viewProperties.arrowsVisibleProperty, {
-      timerTitleString: timer1String,
+      timerTitleString: unitRatesStrings.timer1,
       trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
       bottom: this.layoutBounds.centerY - 10
@@ -112,7 +104,7 @@ class RacingLabScreenView extends ScreenView {
 
     // Track for car2
     const trackNode2 = new RaceTrackNode( model.car2, viewProperties.timerExpandedProperty2, viewProperties.arrowsVisibleProperty, {
-      timerTitleString: timer2String,
+      timerTitleString: unitRatesStrings.timer2,
       trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
       top: this.layoutBounds.centerY + ( this.layoutBounds.centerY - trackNode1.bottom )

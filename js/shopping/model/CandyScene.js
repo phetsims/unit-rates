@@ -10,15 +10,10 @@
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
 import URUtils from '../../common/URUtils.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import ShoppingScene from './ShoppingScene.js';
-
-const lbsString = unitRatesStrings.lbs;
-const poundsCapitalizedString = unitRatesStrings.poundsCapitalized;
-const poundsString = unitRatesStrings.pounds;
-const poundString = unitRatesStrings.pound;
 
 class CandyScene extends ShoppingScene {
 
@@ -36,19 +31,19 @@ class CandyScene extends ShoppingScene {
       fixedAxisRange: new Range( 0, 1.6 ),
 
       // Candy quantity is in pounds
-      quantitySingularUnits: poundString,
-      quantityPluralUnits: poundsString,
+      quantitySingularUnits: unitRatesStrings.pound,
+      quantityPluralUnits: unitRatesStrings.pounds,
 
       // Candy questions require capitalization of 'Pounds', e.g. 'Pounds for $10.50?'
       // This hack was required by https://github.com/phetsims/unit-rates/issues/20
-      amountOfQuestionUnits: poundsCapitalizedString,
+      amountOfQuestionUnits: unitRatesStrings.poundsCapitalized,
 
       // {*|null} nest options for the rate's denominator, defaults provided below
       denominatorOptions: null,
 
       // Scale displays quantity in 'lbs' for Candy
       scaleQuantityIsDisplayed: true,
-      scaleQuantityUnits: lbsString,
+      scaleQuantityUnits: unitRatesStrings.lbs,
 
       // Major markers have 1 decimal place in the denominator
       isMajorMarker: ( numerator, denominator ) => ( URUtils.decimalPlaces( denominator ) <= 1 )
@@ -56,7 +51,7 @@ class CandyScene extends ShoppingScene {
     }, options );
 
     options.denominatorOptions = merge( {
-      axisLabel: poundsString
+      axisLabel: unitRatesStrings.pounds
     }, options.denominatorOptions );
 
     super( itemData, options );

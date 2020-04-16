@@ -10,12 +10,8 @@ import merge from '../../../../phet-core/js/merge.js';
 import URConstants from '../../common/URConstants.js';
 import URFont from '../../common/URFont.js';
 import RateAccordionBox from '../../common/view/RateAccordionBox.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
-
-// strings
-const hoursString = unitRatesStrings.hours;
-const milesString = unitRatesStrings.miles;
+import unitRatesStrings from '../../unitRatesStrings.js';
 
 class RaceCarRateAccordionBox extends RateAccordionBox {
 
@@ -26,8 +22,8 @@ class RaceCarRateAccordionBox extends RateAccordionBox {
   constructor( car, options ) {
 
     options = merge( {
-      numeratorUnits: milesString,
-      denominatorUnits: hoursString,
+      numeratorUnits: unitRatesStrings.miles,
+      denominatorUnits: unitRatesStrings.hours,
       numeratorRange: URConstants.MILES_RANGE,
       denominatorRange: URConstants.HOURS_RANGE,
       numeratorPickerColor: car.color,

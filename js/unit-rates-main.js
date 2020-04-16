@@ -14,8 +14,6 @@ import ShoppingScreen from './shopping/ShoppingScreen.js';
 import ShoppingLabScreen from './shoppinglab/ShoppingLabScreen.js';
 import unitRatesStrings from './unitRatesStrings.js';
 
-const unitRatesTitleString = unitRatesStrings[ 'unit-rates' ].title;
-
 const simOptions = {
   credits: {
     leadDesign: 'Amy Rouinfar',
@@ -34,6 +32,6 @@ SimLauncher.launch( () => {
     new RacingLabScreen()
   ];
 
-  const sim = new Sim( unitRatesTitleString, screens, simOptions );
+  const sim = new Sim( unitRatesStrings[ 'unit-rates' ].title, screens, simOptions );
   sim.start();
 } );

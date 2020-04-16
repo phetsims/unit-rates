@@ -19,9 +19,6 @@ import unitRatesStrings from '../unitRatesStrings.js';
 import RacingLabModel from './model/RacingLabModel.js';
 import RacingLabScreenView from './view/RacingLabScreenView.js';
 
-// strings
-const screenRacingLabString = unitRatesStrings.screen.racingLab;
-
 class RacingLabScreen extends Screen {
 
   /**
@@ -30,7 +27,7 @@ class RacingLabScreen extends Screen {
   constructor( options ) {
 
     options = merge( {
-      name: screenRacingLabString,
+      name: unitRatesStrings.screen.racingLab,
       backgroundColorProperty: new Property( URColors.racingLabScreenBackground ),
       homeScreenIcon: new ScreenIcon( new Image( screenIcon ), {
         maxIconWidthProportion: 1,

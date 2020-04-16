@@ -14,13 +14,10 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import URConstants from '../URConstants.js';
 import URFont from '../URFont.js';
-
-// strings
-const rateString = unitRatesStrings.rate;
 
 // If the Rate accordion box appears to change size when switching categories, increase this value. Determined empirically.
 const MIN_FRACTION_LINE_LENGTH = 115;
@@ -41,7 +38,7 @@ class RateAccordionBox extends AccordionBox {
       contentYSpacing: 20,
 
       // RateAccordionBox options
-      titleString: rateString,
+      titleString: unitRatesStrings.rate,
       unitsFont: new URFont( 16 ),
       unitsMaxWidth: 60, // i18n, determined empirically
       numeratorRange: new Range( 0, 10 ),

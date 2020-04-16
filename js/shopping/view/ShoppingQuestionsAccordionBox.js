@@ -15,11 +15,9 @@ import VBox from '../../../../scenery/js/nodes/VBox.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
 import unitRates from '../../unitRates.js';
+import unitRatesStrings from '../../unitRatesStrings.js';
 import ShoppingQuestionNode from './ShoppingQuestionNode.js';
-
-const questionsString = unitRatesStrings.questions;
 
 class ShoppingQuestionsAccordionBox extends AccordionBox {
 
@@ -38,7 +36,7 @@ class ShoppingQuestionsAccordionBox extends AccordionBox {
       contentXMargin: 10,
       contentYMargin: 6,
       contentYSpacing: 2,
-      titleNode: new Text( questionsString, {
+      titleNode: new Text( unitRatesStrings.questions, {
         font: URConstants.ACCORDION_BOX_TITLE_FONT,
         maxWidth: 100
       } ),
