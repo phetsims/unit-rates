@@ -8,7 +8,7 @@
  */
 
 import Sim from '../../joist/js/Sim.js';
-import SimLauncher from '../../joist/js/SimLauncher.js';
+import simLauncher from '../../joist/js/simLauncher.js';
 import RacingLabScreen from './racinglab/RacingLabScreen.js';
 import ShoppingScreen from './shopping/ShoppingScreen.js';
 import ShoppingLabScreen from './shoppinglab/ShoppingLabScreen.js';
@@ -24,7 +24,7 @@ const simOptions = {
   }
 };
 
-SimLauncher.launch( () => {
+simLauncher.launch( () => {
 
   const screens = [
     new ShoppingScreen(),
