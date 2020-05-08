@@ -155,6 +155,7 @@ class ShoppingContainer {
    * Is the specific item in the front row?
    * @param {ShoppingItem} item
    * @returns {boolean}
+   * @public
    */
   isItemInFrontRow( item ) {
     return this.frontItemRow.contains( item );
