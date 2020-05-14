@@ -12,6 +12,7 @@ import unitRates from '../unitRates.js';
 const URQueryParameters = QueryStringMachine.getAll( {
 
   // Enables random selection of scenes and questions in Shopping and Shopping Lab screens
+  // For internal use only.
   randomEnabled: {
     type: 'boolean',
     defaultValue: true
@@ -20,13 +21,15 @@ const URQueryParameters = QueryStringMachine.getAll( {
   // Controls the animation speed of car races.
   // 1 second of sim type is equivalent to this many hours of race time.
   // Larger values make car animation run faster.
+  // For internal use only.
   raceTimeScale: {
     type: 'number',
     defaultValue: 8, // hours
     isValidValue: value => ( value > 0 )
   },
 
-  // shows cells on the scale and shelf, indicating where bags and items may reside
+  // Shows cells on the scale and shelf, indicating where bags and items may reside.
+  // For internal use only.
   showCells: { type: 'flag' }
 } );
 
