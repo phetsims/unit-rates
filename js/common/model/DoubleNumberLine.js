@@ -177,7 +177,7 @@ class DoubleNumberLine {
    */
   addMarker( marker ) {
 
-    assert && assert( !this.markers.contains( marker ), 'attempt to add marker again: ' + marker );
+    assert && assert( !this.markers.includes( marker ), 'attempt to add marker again: ' + marker );
 
     let wasAdded = false; //{boolean} state to determine whether the marker was added or not
 
@@ -216,7 +216,7 @@ class DoubleNumberLine {
    * @private
    */
   removeMarker( marker ) {
-    assert && assert( this.markers.contains( marker ), 'attempt to remove an unknown marker: ' + marker );
+    assert && assert( this.markers.includes( marker ), 'attempt to remove an unknown marker: ' + marker );
     this.markers.remove( marker );
   }
 
@@ -256,7 +256,7 @@ class DoubleNumberLine {
   undo() {
     const undoMarker = this.undoMarkerProperty.value;
     if ( undoMarker ) {
-      assert && assert( this.markers.contains( undoMarker ), 'unexpected undoMarker: ' + undoMarker );
+      assert && assert( this.markers.includes( undoMarker ), 'unexpected undoMarker: ' + undoMarker );
       this.undoMarkerProperty.value = null;
       this.removeMarker( undoMarker );
     }
