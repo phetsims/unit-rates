@@ -9,7 +9,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import DownUpListener from '../../../../scenery/js/input/DownUpListener.js';
+import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import HStrut from '../../../../scenery/js/nodes/HStrut.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -209,10 +209,10 @@ class ShoppingQuestionNode extends Node {
       } );
     };
 
-    // Click on editButton or in valueBox to begin editing
+    // Press on editButton or in valueBox to begin editing
     editButton.addListener( editValue ); // no removeListener required
-    valueBox.addInputListener( new DownUpListener( { // no removeInputListener required
-      down: editValue
+    valueBox.addInputListener( new FireListener( { // no removeInputListener required
+      fire: editValue
     } ) );
 
     // @private cleanup that's specific to this Node

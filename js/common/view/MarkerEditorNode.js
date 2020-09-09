@@ -189,7 +189,7 @@ class MarkerEditorNode extends Node {
       } );
     };
 
-    // Click on an edit button or box to begin editing
+    // Press on an edit button or box to begin editing
     numeratorEditButton.addListener( editNumerator ); // no removeListener required
     numeratorBox.addInputListener( new FireListener( { // no removeInputListener required
       fire: editNumerator
