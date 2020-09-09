@@ -18,7 +18,7 @@ import Shape from '../../../../kite/js/Shape.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
+import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
@@ -181,7 +181,7 @@ class RaceTrackNode extends Node {
     let startDragXOffset;
 
     // Drag the finish flag to change the track length
-    const dragHandler = new SimpleDragHandler( {
+    const dragListener = new DragListener( {
 
       // allow touch swipes across a bag to pick it up
       allowTouchSnag: true,
@@ -189,9 +189,8 @@ class RaceTrackNode extends Node {
       /**
        * Called when a drag sequence starts.
        * @param {SceneryEvent} event
-       * @param {Trail} trail
        */
-      start: ( event, trail ) => {
+      start: event => {
 
         // compute offset from current track length
         startDragXOffset = finishFlagNode.globalToParentPoint( event.pointer.point ).x -
@@ -201,9 +200,8 @@ class RaceTrackNode extends Node {
       /**
        * Called when the pointer moves during a drag sequence.
        * @param {SceneryEvent} event
-       * @param {Trail} trail
        */
-      drag: ( event, trail ) => {
+      drag: event => {
 
         // hide the 'drag cue' arrows
         arrowsVisibleProperty.value = false;
@@ -218,8 +216,8 @@ class RaceTrackNode extends Node {
         car.track.lengthProperty.value = Utils.toFixedNumber( modelLength, 0 );
       }
     } );
-    finishFlagNode.addInputListener( dragHandler );
-    cueArrowsNode.addInputListener( dragHandler );
+    finishFlagNode.addInputListener( dragListener );
+    cueArrowsNode.addInputListener( dragListener );
 
     // Synchronize car position with model
     // unlink not needed, exists for sim lifetime
