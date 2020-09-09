@@ -7,7 +7,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import DownUpListener from '../../../../scenery/js/input/DownUpListener.js';
+import PressListener from '../../../../scenery/js/listeners/PressListener.js';
 import Plane from '../../../../scenery/js/nodes/Plane.js';
 import unitRates from '../../unitRates.js';
 import KeypadPanel from './KeypadPanel.js';
@@ -26,14 +26,15 @@ class KeypadLayer extends Plane {
 
     super( options );
 
-    // @private clicking outside the keypad cancels the edit
-    this.clickOutsideListener = new DownUpListener( {
-      down: event => {
-        if ( event.trail.lastNode() === this ) {
+    // clicking outside the keypad cancels the edit
+    this.addInputListener( new PressListener( {
+      attach: false,
+      press: event => {
+        if ( this.visible && event.trail.lastNode() === this ) {
           this.cancelEdit();
         }
       }
-    } );
+    } ) );
 
     // @private these will be set when the client calls beginEdit
     this.valueProperty = null;
@@ -80,7 +81,6 @@ class KeypadLayer extends Plane {
     // display the keypad
     this.addChild( this.keypad );
     this.visible = true;
-    this.addInputListener( this.clickOutsideListener );
 
     // position the keypad
     options.setKeypadPosition && options.setKeypadPosition( this.keypad );
@@ -94,7 +94,6 @@ class KeypadLayer extends Plane {
 
     // hide the keypad
     this.visible = false;
-    this.removeInputListener( this.clickOutsideListener );
     this.removeChild( this.keypad );
     this.keypad.dispose();
     this.keypad = null;
