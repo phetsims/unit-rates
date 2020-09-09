@@ -6,11 +6,11 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
+import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import unitRates from '../../unitRates.js';
 import Scale from '../model/Scale.js';
 
-class BagDragHandler extends SimpleDragHandler {
+class BagDragListener extends DragListener {
 
   /**
    * @param {BagNode} bagNode
@@ -33,9 +33,8 @@ class BagDragHandler extends SimpleDragHandler {
       /**
        * Called when a drag sequence starts.
        * @param {SceneryEvent} event
-       * @param {Trail} trail
        */
-      start: ( event, trail ) => {
+      start: event => {
 
         // prerequisites for the drag sequence
         assert && assert( bagLayer.hasChild( bagNode ) );
@@ -65,9 +64,8 @@ class BagDragHandler extends SimpleDragHandler {
       /**
        * Called when the pointer moves during a drag sequence.
        * @param {SceneryEvent} event
-       * @param {Trail} trail
        */
-      drag: ( event, trail ) => {
+      drag: event => {
 
         // move the bag immediately while dragging
         bag.moveTo( bagNode.globalToParentPoint( event.pointer.point ).minus( startDragOffset ) );
@@ -76,9 +74,8 @@ class BagDragHandler extends SimpleDragHandler {
       /**
        * Called when a drag sequence ends.
        * @param {SceneryEvent} event
-       * @param {Trail} trail
        */
-      end: ( event, trail ) => {
+      end: event => {
 
         // return Node to bag layer
         bag.dragging = false;
@@ -209,6 +206,6 @@ function replaceBagWithItems( bag, scale ) {
   }
 }
 
-unitRates.register( 'BagDragHandler', BagDragHandler );
+unitRates.register( 'BagDragListener', BagDragListener );
 
-export default BagDragHandler;
+export default BagDragListener;

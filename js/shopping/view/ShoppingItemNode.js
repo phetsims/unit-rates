@@ -9,7 +9,7 @@
 import Image from '../../../../scenery/js/nodes/Image.js';
 import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
-import ShoppingItemDragHandler from './ShoppingItemDragHandler.js';
+import ShoppingItemDragListener from './ShoppingItemDragListener.js';
 
 class ShoppingItemNode extends Image {
 
@@ -52,14 +52,14 @@ class ShoppingItemNode extends Image {
     };
     item.visibleProperty.link( visibleObserver ); // unlink in dispose
 
-    const dragHandler = new ShoppingItemDragHandler( this, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer );
-    this.addInputListener( dragHandler ); // removeInputListener in dispose
+    const dragListener = new ShoppingItemDragListener( this, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer );
+    this.addInputListener( dragListener ); // removeInputListener in dispose
 
     // @private
     this.disposeShoppingItemNode = () => {
       item.positionProperty.unlink( positionObserver );
       item.visibleProperty.unlink( visibleObserver );
-      this.removeInputListener( dragHandler );
+      this.removeInputListener( dragListener );
     };
   }
 

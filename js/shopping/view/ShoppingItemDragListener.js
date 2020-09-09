@@ -6,10 +6,10 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
+import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingItemDragHandler extends SimpleDragHandler {
+class ShoppingItemDragListener extends DragListener {
 
   /**
    * @param {ShoppingItemNode} itemNode
@@ -33,9 +33,8 @@ class ShoppingItemDragHandler extends SimpleDragHandler {
       /**
        * Called when a drag sequence starts.
        * @param {SceneryEvent} event
-       * @param {Trail} trail
        */
-      start: ( event, trail ) => {
+      start: event => {
 
         // move Node to the drag layer, so that it pops to the front
         item.dragging = true;
@@ -60,9 +59,8 @@ class ShoppingItemDragHandler extends SimpleDragHandler {
       /**
        * Called when the pointer moves during a drag sequence.
        * @param {SceneryEvent} event
-       * @param {Trail} trail
        */
-      drag: ( event, trail ) => {
+      drag: event => {
 
         // move the item immediately while dragging
         item.moveTo( itemNode.globalToParentPoint( event.pointer.point ).minus( startDragOffset ) );
@@ -71,9 +69,8 @@ class ShoppingItemDragHandler extends SimpleDragHandler {
       /**
        * Called when a drag sequence ends.
        * @param {SceneryEvent} event
-       * @param {Trail} trail
        */
-      end: ( event, trail ) => {
+      end: event => {
 
         item.dragging = false;
 
@@ -211,6 +208,6 @@ function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cel
   } );
 }
 
-unitRates.register( 'ShoppingItemDragHandler', ShoppingItemDragHandler );
+unitRates.register( 'ShoppingItemDragListener', ShoppingItemDragListener );
 
-export default ShoppingItemDragHandler;
+export default ShoppingItemDragListener;

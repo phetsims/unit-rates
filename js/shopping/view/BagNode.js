@@ -9,7 +9,7 @@
 import Image from '../../../../scenery/js/nodes/Image.js';
 import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
-import BagDragHandler from './BagDragHandler.js';
+import BagDragListener from './BagDragListener.js';
 
 class BagNode extends Image {
 
@@ -40,14 +40,14 @@ class BagNode extends Image {
     };
     bag.visibleProperty.link( visibleObserver ); // unlink in dispose
 
-    const dragHandler = new BagDragHandler( this, bag, shelf, scale, bagLayer, dragLayer );
-    this.addInputListener( dragHandler ); // removeInputListener in dispose
+    const dragListener = new BagDragListener( this, bag, shelf, scale, bagLayer, dragLayer );
+    this.addInputListener( dragListener ); // removeInputListener in dispose
 
     // @private
     this.disposeBagNode = () => {
       bag.positionProperty.unlink( positionObserver );
       bag.visibleProperty.unlink( visibleObserver );
-      this.removeInputListener( dragHandler );
+      this.removeInputListener( dragListener );
     };
   }
 
