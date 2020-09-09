@@ -8,7 +8,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import DownUpListener from '../../../../scenery/js/input/DownUpListener.js';
+import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -191,12 +191,12 @@ class MarkerEditorNode extends Node {
 
     // Click on an edit button or box to begin editing
     numeratorEditButton.addListener( editNumerator ); // no removeListener required
-    numeratorBox.addInputListener( new DownUpListener( { // no removeInputListener required
-      down: editNumerator
+    numeratorBox.addInputListener( new FireListener( { // no removeInputListener required
+      fire: editNumerator
     } ) );
     denominatorEditButton.addListener( editDenominator ); // no removeListener required
-    denominatorBox.addInputListener( new DownUpListener( { // no removeInputListener required
-      down: editDenominator
+    denominatorBox.addInputListener( new FireListener( { // no removeInputListener required
+      fire: editDenominator
     } ) );
 
     // Observe edits to the numerator
