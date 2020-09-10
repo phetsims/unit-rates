@@ -8,6 +8,7 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
 import HStrut from '../../../../scenery/js/nodes/HStrut.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
@@ -16,7 +17,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
 import ComboBoxItem from '../../../../sun/js/ComboBoxItem.js';
-import URFont from '../../common/URFont.js';
 import unitRates from '../../unitRates.js';
 
 class ShoppingSceneComboBox extends ComboBox {
@@ -78,7 +78,7 @@ function createItem( shoppingScene, iconSize ) {
 
   // Use the plural name to label the item
   const labelNode = new Text( shoppingScene.pluralName, {
-    font: new URFont( 18 ),
+    font: new PhetFont( 18 ),
     maxWidth: 140,
     children: [ new HStrut( 140 ) ] // makes labels for all items the same width
   } );

@@ -10,6 +10,7 @@
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import NumberKeypad from '../../../../scenery-phet/js/NumberKeypad.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
@@ -19,7 +20,6 @@ import Panel from '../../../../sun/js/Panel.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
 import URColors from '../URColors.js';
-import URFont from '../URFont.js';
 
 // constants
 const DECIMAL_POINT = NumberKeypad.DECIMAL_POINT;
@@ -36,7 +36,7 @@ class KeypadPanel extends Panel {
       // KeypadPanel options
       valueBoxWidth: 85, // {number} width of the value field, height determined by valueFont
       valueYMargin: 3, // {number} vertical margin inside the value box
-      valueFont: new URFont( 16 ),
+      valueFont: new PhetFont( 16 ),
       valueString: '', // {string} initial value shown in the keypad
       decimalPointKey: true, // {boolean} does the keypad have a decimal point key?
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
@@ -82,7 +82,7 @@ class KeypadPanel extends Panel {
       listener: options.enterButtonListener,
       baseColor: URColors.enterButton,
       content: new Text( unitRatesStrings.enter, {
-        font: new URFont( 16 ),
+        font: new PhetFont( 16 ),
         fill: 'black',
         maxWidth: keypadNode.width // i18n
       } )

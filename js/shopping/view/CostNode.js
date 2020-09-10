@@ -12,9 +12,9 @@
 
 import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import URFont from '../../common/URFont.js';
 import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
@@ -29,7 +29,7 @@ class CostNode extends Node {
 
     options = merge( {
       extraDecimalVisible: false, // {boolean} is the extra decimal place visible?
-      font: new URFont( 20 ), // {Font} font for all parts of the value
+      font: new PhetFont( 20 ), // {Font} font for all parts of the value
       extraDecimalColor: 'gray' // {Color|string} color of the extra decimal place
     }, options );
 

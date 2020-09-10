@@ -7,8 +7,8 @@
  */
 
 import Range from '../../../dot/js/Range.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import unitRates from '../unitRates.js';
-import URFont from './URFont.js';
 
 const URConstants = {
 
@@ -48,7 +48,7 @@ const URConstants = {
       mouseAreaYDilation: 4
     }
   },
-  ACCORDION_BOX_TITLE_FONT: new URFont( 14 ),
+  ACCORDION_BOX_TITLE_FONT: new PhetFont( 14 ),
 
   // Rate pickers (aka spinners)
   NUMBER_PICKER_OPTIONS: {

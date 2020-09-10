@@ -7,8 +7,8 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import URConstants from '../../common/URConstants.js';
-import URFont from '../../common/URFont.js';
 import RateAccordionBox from '../../common/view/RateAccordionBox.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
@@ -33,7 +33,7 @@ class RaceCarRateAccordionBox extends RateAccordionBox {
       denominatorPickerUpFunction: value => ( value + URConstants.HOURS_DELTA ),
       denominatorPickerDownFunction: value => ( value - URConstants.HOURS_DELTA ),
       denominatorDecimals: URConstants.HOURS_DECIMALS,
-      pickerFont: new URFont( 20 )
+      pickerFont: new PhetFont( 20 )
     }, options );
 
     super( car.rate, options );

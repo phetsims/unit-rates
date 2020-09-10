@@ -8,6 +8,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -18,7 +19,6 @@ import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import unitRates from '../../unitRates.js';
 import URColors from '../URColors.js';
 import URConstants from '../URConstants.js';
-import URFont from '../URFont.js';
 import URUtils from '../URUtils.js';
 
 // constants
@@ -42,7 +42,7 @@ class MarkerEditorNode extends Node {
     options = merge( {
       lineLength: URConstants.MAJOR_MARKER_LENGTH, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 55, // {number} width of the value field, height determined by valueFont
-      valueFont: new URFont( 12 ), // {Font} font for the value
+      valueFont: new PhetFont( 12 ), // {Font} font for the value
       valueColor: 'black', // {Color|string} color of the value
       zeroIsValid: false, // {boolean} zero is not a valid value for markers
       valueXMargin: 5, // {number} horizontal margin inside the value box

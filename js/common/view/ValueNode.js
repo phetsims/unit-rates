@@ -8,9 +8,9 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import unitRates from '../../unitRates.js';
-import URFont from '../URFont.js';
 
 class ValueNode extends Text {
 
@@ -21,7 +21,7 @@ class ValueNode extends Text {
   constructor( valueProperty, options ) {
 
     options = merge( {
-      font: new URFont( 20 ),
+      font: new PhetFont( 20 ),
       valueToString: value => ( '' + value )
     }, options );
 

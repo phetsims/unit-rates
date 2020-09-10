@@ -10,6 +10,7 @@ import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
 import NumberPicker from '../../../../scenery-phet/js/NumberPicker.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
@@ -17,7 +18,6 @@ import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
 import URConstants from '../URConstants.js';
-import URFont from '../URFont.js';
 
 // If the Rate accordion box appears to change size when switching categories, increase this value. Determined empirically.
 const MIN_FRACTION_LINE_LENGTH = 115;
@@ -39,13 +39,13 @@ class RateAccordionBox extends AccordionBox {
 
       // RateAccordionBox options
       titleString: unitRatesStrings.rate,
-      unitsFont: new URFont( 16 ),
+      unitsFont: new PhetFont( 16 ),
       unitsMaxWidth: 60, // i18n, determined empirically
       numeratorRange: new Range( 0, 10 ),
       denominatorRange: new Range( 0, 10 ),
       numeratorUnits: '',
       denominatorUnits: '',
-      pickerFont: new URFont( 24 ),
+      pickerFont: new PhetFont( 24 ),
       numeratorPickerColor: 'black',
       denominatorPickerColor: 'black',
       numeratorPickerUpFunction: value => value + 1,

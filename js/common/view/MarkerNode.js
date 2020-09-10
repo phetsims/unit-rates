@@ -7,12 +7,12 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import unitRates from '../../unitRates.js';
 import URConstants from '../URConstants.js';
-import URFont from '../URFont.js';
 import URUtils from '../URUtils.js';
 
 // constants
@@ -30,7 +30,7 @@ class MarkerNode extends Node {
 
     options = merge( {
       ySpacing: 1,
-      font: new URFont( 12 ),
+      font: new PhetFont( 12 ),
       lineLength: URConstants.MAJOR_MARKER_LENGTH,
       lineWidth: 1,
       numeratorOptions: null, // {*} options specific to the rate's numerator, see below

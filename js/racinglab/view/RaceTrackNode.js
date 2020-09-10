@@ -18,6 +18,7 @@ import Shape from '../../../../kite/js/Shape.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
@@ -27,7 +28,6 @@ import Path from '../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import finishFlagImage from '../../../images/finish_flag_png.js';
 import startFlagImage from '../../../images/start_flag_png.js';
-import URFont from '../../common/URFont.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
 import RaceTimerNode from './RaceTimerNode.js';
@@ -131,7 +131,7 @@ class RaceTrackNode extends Node {
 
     // Label that indicates the length of the track
     const lengthNode = new Text( '', {
-      font: new URFont( 12 ),
+      font: new PhetFont( 12 ),
       maxWidth: timerNode.width // i18n
     } );
 

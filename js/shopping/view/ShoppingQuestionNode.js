@@ -9,6 +9,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import HStrut from '../../../../scenery/js/nodes/HStrut.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
@@ -19,7 +20,6 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
-import URFont from '../../common/URFont.js';
 import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
 
@@ -37,8 +37,8 @@ class ShoppingQuestionNode extends Node {
       valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
       denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
       neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
-      questionFont: new URFont( 14 ), // {Font} font for the question
-      valueFont: new URFont( 14 ), // {Font} font for the value
+      questionFont: new PhetFont( 14 ), // {Font} font for the question
+      valueFont: new PhetFont( 14 ), // {Font} font for the value
       valueYMargin: 1, // {number} vertical margin inside the value box
       xSpacing: 25, // {number} horizontal spacing between UI elements
       ySpacing: 5,  // {number} vertical spacing between UI elements

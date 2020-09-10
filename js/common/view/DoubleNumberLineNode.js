@@ -9,13 +9,13 @@
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HStrut from '../../../../scenery/js/nodes/HStrut.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import unitRates from '../../unitRates.js';
 import URConstants from '../URConstants.js';
-import URFont from '../URFont.js';
 import MarkerNode from './MarkerNode.js';
 
 class DoubleNumberLineNode extends Node {
@@ -36,7 +36,7 @@ class DoubleNumberLineNode extends Node {
       axisViewLength: 1000, // {number} view length of doubleNumberLine's range
       arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
       axisYSpacing: 20, // {number} vertical spacing between top and bottom axes
-      labelFont: new URFont( 14 ), // {Font} for axis labels
+      labelFont: new PhetFont( 14 ), // {Font} for axis labels
       labelColor: 'black', // {Color|string} color of axis labels
       labelMaxWidth: 70, // i18n, determined empirically
       labelXSpacing: 12, // horizontal spacing between axis and its label

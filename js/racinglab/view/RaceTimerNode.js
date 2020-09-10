@@ -9,14 +9,14 @@
 import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import URFont from '../../common/URFont.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import ValueNode from '../../common/view/ValueNode.js';
 import ValuePanel from '../../common/view/ValuePanel.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
 
 // constants
-const TIMER_FONT = new URFont( 16 );
+const TIMER_FONT = new PhetFont( 16 );
 const DECIMAL_PLACES = 2;
 
 class RaceTimerNode extends ValuePanel {

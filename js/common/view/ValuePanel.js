@@ -12,13 +12,13 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
 import Panel from '../../../../sun/js/Panel.js';
 import unitRates from '../../unitRates.js';
-import URFont from '../URFont.js';
 
 // constants
 const BACKGROUND_RECTANGLE_STROKE = ( phet.chipper.queryParameters.dev ? 'red' : null );
@@ -41,7 +41,7 @@ class ValuePanel extends Panel {
 
       // title
       titleString: '', // {string} string displayed when the panel is collapsed
-      titleFont: new URFont( 20 ),
+      titleFont: new PhetFont( 20 ),
       xSpacing: 8,  // space between expand/collapse button and title
 
       // Panel options
