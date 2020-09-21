@@ -28,10 +28,10 @@ class RaceCarRateAccordionBox extends RateAccordionBox {
       denominatorRange: URConstants.HOURS_RANGE,
       numeratorPickerColor: car.color,
       denominatorPickerColor: car.color,
-      numeratorPickerUpFunction: miles => ( miles + URConstants.MILES_DELTA ),
-      numeratorPickerDownFunction: miles => ( miles - URConstants.MILES_DELTA ),
-      denominatorPickerUpFunction: value => ( value + URConstants.HOURS_DELTA ),
-      denominatorPickerDownFunction: value => ( value - URConstants.HOURS_DELTA ),
+      numeratorPickerIncrementFunction: miles => ( miles + URConstants.MILES_DELTA ),
+      numeratorPickerDecrementFunction: miles => ( miles - URConstants.MILES_DELTA ),
+      denominatorPickerIncrementFunction: value => ( value + URConstants.HOURS_DELTA ),
+      denominatorPickerDecrementFunction: value => ( value - URConstants.HOURS_DELTA ),
       denominatorDecimals: URConstants.HOURS_DECIMALS,
       pickerFont: new PhetFont( 20 )
     }, options );

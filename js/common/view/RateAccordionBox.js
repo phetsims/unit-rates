@@ -48,10 +48,10 @@ class RateAccordionBox extends AccordionBox {
       pickerFont: new PhetFont( 24 ),
       numeratorPickerColor: 'black',
       denominatorPickerColor: 'black',
-      numeratorPickerUpFunction: value => value + 1,
-      numeratorPickerDownFunction: value => value - 1,
-      denominatorPickerUpFunction: value => value + 1,
-      denominatorPickerDownFunction: value => value - 1,
+      numeratorPickerIncrementFunction: value => value + 1,
+      numeratorPickerDecrementFunction: value => value - 1,
+      denominatorPickerIncrementFunction: value => value + 1,
+      denominatorPickerDecrementFunction: value => value - 1,
       numeratorDecimals: 0,
       denominatorDecimals: 0,
       xSpacing: 10,
@@ -73,8 +73,8 @@ class RateAccordionBox extends AccordionBox {
     // numerator picker, must be disposed
     const numeratorPicker = new NumberPicker( rate.numeratorProperty, new Property( options.numeratorRange ),
       merge( {}, URConstants.NUMBER_PICKER_OPTIONS, {
-        upFunction: options.numeratorPickerUpFunction,
-        downFunction: options.numeratorPickerDownFunction,
+        incrementFunction: options.numeratorPickerIncrementFunction,
+        decrementFunction: options.numeratorPickerDecrementFunction,
         decimalPlaces: options.numeratorDecimals,
         font: options.pickerFont,
         color: options.numeratorPickerColor
@@ -89,8 +89,8 @@ class RateAccordionBox extends AccordionBox {
     // denominator picker, must be disposed
     const denominatorPicker = new NumberPicker( rate.denominatorProperty, new Property( options.denominatorRange ),
       merge( {}, URConstants.NUMBER_PICKER_OPTIONS, {
-        upFunction: options.denominatorPickerUpFunction,
-        downFunction: options.denominatorPickerDownFunction,
+        incrementFunction: options.denominatorPickerIncrementFunction,
+        decrementFunction: options.denominatorPickerDecrementFunction,
         decimalPlaces: options.denominatorDecimals,
         font: options.pickerFont,
         color: options.denominatorPickerColor
