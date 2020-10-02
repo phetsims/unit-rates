@@ -7,7 +7,7 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import ObservableArray from '../../../../axon/js/ObservableArray.js';
+import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -53,7 +53,7 @@ class DoubleNumberLine {
     this.unitRateProperty = unitRateProperty;
 
     // @public (read-only) {Marker[]} markers must be added/removed via addMarker/removeMarker
-    this.markers = new ObservableArray();
+    this.markers = createObservableArray();
 
     // @public (read-only) {function(number,number):boolean}
     this.isMajorMarker = options.isMajorMarker;
