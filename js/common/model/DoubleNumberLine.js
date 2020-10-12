@@ -229,10 +229,9 @@ class DoubleNumberLine {
    */
   getConflictingMarker( marker ) {
     let conflictingMarker = null;
-    const markers = this.markers.getArray();
-    for ( let i = 0; i < markers.length && !conflictingMarker; i++ ) {
-      if ( marker.conflictsWith( markers[ i ] ) ) {
-        conflictingMarker = markers[ i ];
+    for ( let i = 0; i < this.markers.length && !conflictingMarker; i++ ) {
+      if ( marker.conflictsWith( this.markers[ i ] ) ) {
+        conflictingMarker = this.markers[ i ];
       }
     }
     return conflictingMarker;
