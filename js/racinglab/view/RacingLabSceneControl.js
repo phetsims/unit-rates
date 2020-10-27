@@ -9,12 +9,12 @@
 import merge from '../../../../phet-core/js/merge.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
-import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import blueCarImage from '../../../images/blue_car_png.js';
 import redCarImage from '../../../images/red_car_png.js';
 import unitRates from '../../unitRates.js';
 
-class RacingLabSceneControl extends RadioButtonGroup {
+class RacingLabSceneControl extends RectangularRadioButtonGroup {
 
   /**
    * @param {Property.<boolean>} car2VisibleProperty - is car2 visible?
@@ -27,7 +27,7 @@ class RacingLabSceneControl extends RadioButtonGroup {
       // RacingLabSceneControl options
       buttonWidth: 68,
 
-      // RadioButtonGroup options
+      // RectangularRadioButtonGroup options
       orientation: 'vertical',
       baseColor: 'white',
       buttonContentXMargin: 12,

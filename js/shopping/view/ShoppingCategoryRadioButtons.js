@@ -8,11 +8,11 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
-import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingCategoryRadioButtons extends RadioButtonGroup {
+class ShoppingCategoryRadioButtons extends RectangularRadioButtonGroup {
 
   /**
    * @param {ShoppingCategory[]} categories
@@ -23,7 +23,7 @@ class ShoppingCategoryRadioButtons extends RadioButtonGroup {
 
     options = merge( {
 
-      // RadioButtonGroup options
+      // RectangularRadioButtonGroup options
       orientation: 'horizontal',
       baseColor: URColors.categoryButton,
       spacing: 12,
