@@ -55,10 +55,8 @@ class ShoppingScreenView extends ScreenView {
     this.addChild( keypadLayer );
 
     // create the view for each category
-    const categoryNodes = [];
     model.categories.forEach( category => {
       const categoryNode = options.createCategoryNode( category, model.categoryProperty, this.layoutBounds, keypadLayer, viewProperties );
-      categoryNodes.push( categoryNode );
       playAreaLayer.addChild( categoryNode );
     } );
 
