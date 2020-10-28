@@ -17,7 +17,7 @@ import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
 import RaceCarRateAccordionBox from './RaceCarRateAccordionBox.js';
 import RaceTrackNode from './RaceTrackNode.js';
-import RacingLabSceneControl from './RacingLabSceneControl.js';
+import NumberOfCarsRadioButtonGroup from './NumberOfCarsRadioButtonGroup.js';
 import RacingLabViewProperties from './RacingLabViewProperties.js';
 import ResetRaceButton from './ResetRaceButton.js';
 import StartStopButton from './StartStopButton.js';
@@ -111,16 +111,16 @@ class RacingLabScreenView extends ScreenView {
     } );
     playAreaLayer.addChild( trackNode2 );
 
-    // Scene control (1 vs 2 cars)
-    const sceneControl = new RacingLabSceneControl( model.car2.visibleProperty, {
+    // Radio button group for number of cars
+    const numberOfCarsRadioButtonGroup = new NumberOfCarsRadioButtonGroup( model.car2.visibleProperty, {
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       centerY: this.layoutBounds.centerY
     } );
-    playAreaLayer.addChild( sceneControl );
+    playAreaLayer.addChild( numberOfCarsRadioButtonGroup );
 
     // Start/Stop button
     const startStopButton = new StartStopButton( model.runningProperty, {
-      right: sceneControl.left - BUTTON_X_SPACE,
+      right: numberOfCarsRadioButtonGroup.left - BUTTON_X_SPACE,
       centerY: this.layoutBounds.centerY
     } );
     playAreaLayer.addChild( startStopButton );

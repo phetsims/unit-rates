@@ -1,7 +1,7 @@
 // Copyright 2016-2020, University of Colorado Boulder
 
 /**
- * Scene control for the 'Racing Screen', switches between 1 and 2 cars.
+ * NumberOfCarsRadioButtonGroup switches between 1 and 2 cars in the 'Racing Lab' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,7 +14,7 @@ import blueCarImage from '../../../images/blue_car_png.js';
 import redCarImage from '../../../images/red_car_png.js';
 import unitRates from '../../unitRates.js';
 
-class RacingLabSceneControl extends RectangularRadioButtonGroup {
+class NumberOfCarsRadioButtonGroup extends RectangularRadioButtonGroup {
 
   /**
    * @param {Property.<boolean>} car2VisibleProperty - is car2 visible?
@@ -24,7 +24,7 @@ class RacingLabSceneControl extends RectangularRadioButtonGroup {
 
     options = merge( {
 
-      // RacingLabSceneControl options
+      // NumberOfCarsRadioButtonGroup options
       buttonWidth: 68,
 
       // RectangularRadioButtonGroup options
@@ -81,5 +81,5 @@ function createCarImage( imageFile, maxCarWidth ) {
   return carImage;
 }
 
-unitRates.register( 'RacingLabSceneControl', RacingLabSceneControl );
-export default RacingLabSceneControl;
+unitRates.register( 'NumberOfCarsRadioButtonGroup', NumberOfCarsRadioButtonGroup );
+export default NumberOfCarsRadioButtonGroup;
