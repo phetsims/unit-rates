@@ -1,7 +1,7 @@
 // Copyright 2016-2020, University of Colorado Boulder
 
 /**
- * Radio buttons for selecting a category of items in the 'Shopping' screen.
+ * Radio button group for selecting a category of items in the 'Shopping' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -12,7 +12,7 @@ import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularR
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingCategoryRadioButtons extends RectangularRadioButtonGroup {
+class ShoppingCategoryRadioButtonGroup extends RectangularRadioButtonGroup {
 
   /**
    * @param {ShoppingCategory[]} categories
@@ -44,6 +44,6 @@ class ShoppingCategoryRadioButtons extends RectangularRadioButtonGroup {
   }
 }
 
-unitRates.register( 'ShoppingCategoryRadioButtons', ShoppingCategoryRadioButtons );
+unitRates.register( 'ShoppingCategoryRadioButtonGroup', ShoppingCategoryRadioButtonGroup );
 
-export default ShoppingCategoryRadioButtons;
+export default ShoppingCategoryRadioButtonGroup;

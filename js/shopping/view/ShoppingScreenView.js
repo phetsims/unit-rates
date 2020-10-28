@@ -14,7 +14,7 @@ import URConstants from '../../common/URConstants.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
 import unitRates from '../../unitRates.js';
 import ShoppingCategoryNode from './ShoppingCategoryNode.js';
-import ShoppingCategoryRadioButtons from './ShoppingCategoryRadioButtons.js';
+import ShoppingCategoryRadioButtonGroup from './ShoppingCategoryRadioButtonGroup.js';
 import ShoppingViewProperties from './ShoppingViewProperties.js';
 
 class ShoppingScreenView extends ScreenView {
@@ -62,12 +62,12 @@ class ShoppingScreenView extends ScreenView {
       playAreaLayer.addChild( categoryNode );
     } );
 
-    // Category radio buttons
-    const categoryRadioButtons = new ShoppingCategoryRadioButtons( model.categories, model.categoryProperty, {
+    // Category radio button group
+    const categoryRadioButtonGroup = new ShoppingCategoryRadioButtonGroup( model.categories, model.categoryProperty, {
       left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
       bottom: this.layoutBounds.bottom - ( 2 * URConstants.SCREEN_Y_MARGIN )
     } );
-    playAreaLayer.addChild( categoryRadioButtons );
+    playAreaLayer.addChild( categoryRadioButtonGroup );
 
     // Reset All button
     const resetAllButton = new ResetAllButton( {
