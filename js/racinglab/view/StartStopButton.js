@@ -22,7 +22,9 @@ class StartStopButton extends BooleanRoundToggleButton {
   constructor( runningProperty, options ) {
 
     options = merge( {
-      radius: 45
+      radius: 45,
+      xMargin: 8,
+      yMargin: 8
     }, options );
 
     const goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
