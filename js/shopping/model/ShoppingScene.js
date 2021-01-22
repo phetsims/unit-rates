@@ -14,6 +14,7 @@
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import merge from '../../../../phet-core/js/merge.js';
@@ -196,7 +197,7 @@ class ShoppingScene {
 
     // Randomize the order of the question sets
     if ( URQueryParameters.randomEnabled ) {
-      this.questionSets = phet.joist.random.shuffle( this.questionSets );
+      this.questionSets = dotRandom.shuffle( this.questionSets );
     }
 
     // @private index of the question set that's being shown

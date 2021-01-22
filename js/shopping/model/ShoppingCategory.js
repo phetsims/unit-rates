@@ -7,6 +7,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import merge from '../../../../phet-core/js/merge.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
 import unitRates from '../../unitRates.js';
@@ -25,7 +26,7 @@ class ShoppingCategory {
     options = merge( {
 
       // index of the scene that is initially selected, randomly chosen
-      shoppingSceneIndex: URQueryParameters.randomEnabled ? phet.joist.random.nextIntBetween( 0, shoppingScenes.length - 1 ) : 0
+      shoppingSceneIndex: URQueryParameters.randomEnabled ? dotRandom.nextIntBetween( 0, shoppingScenes.length - 1 ) : 0
     }, options );
 
     // validate options
