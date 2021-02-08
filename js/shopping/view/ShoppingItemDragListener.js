@@ -80,10 +80,8 @@ class ShoppingItemDragListener extends DragListener {
         // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
         const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.positionProperty.value );
 
-        if ( !itemNode.isDisposed ) {
-          animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
-            frontItemLayer, backItemLayer );
-        }
+        animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
+          frontItemLayer, backItemLayer );
       }
     } );
   }
@@ -156,6 +154,12 @@ function getClosestRowAndUnoccupiedCell( shoppingContainer, position ) {
  */
 function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cellIndex, frontItemLayer, backItemLayer ) {
 
+  // If the item's Node has been disposed (which means the item no longer exists), then ignore all of this.
+  // See https://github.com/phetsims/unit-rates/issues/214
+  if ( itemNode.isDisposed ) {
+    return;
+  }
+
   // This function changes course to the next closest unoccupied cell.
   const changeCourse = () => {
     unitRates.log && unitRates.log( 'cell ' + cellIndex + ' is occupied, trying another cell' );
@@ -178,6 +182,13 @@ function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cel
   // This function is called when animation completes.
   // If the target cell is still empty, add the item. Otherwise animate to an unoccupied cell.
   const animationCompletedCallback = () => {
+
+    // If the item's Node has been disposed (which means the item no longer exists), then ignore this.
+    // See https://github.com/phetsims/unit-rates/issues/214
+    if ( itemNode.isDisposed ) {
+      return;
+    }
+
     if ( itemRow.isEmptyCell( cellIndex ) ) {
 
       // the cell is still unoccupied when we reached it, put the item in that cell
