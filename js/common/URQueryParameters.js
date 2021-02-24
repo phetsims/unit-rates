@@ -6,6 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import logGlobal from '../../../phet-core/js/logGlobal.js';
 // sim modules
 import unitRates from '../unitRates.js';
 
@@ -35,7 +36,9 @@ const URQueryParameters = QueryStringMachine.getAll( {
 
 unitRates.register( 'URQueryParameters', URQueryParameters );
 
-// log the values of all sim-specific query parameters
-phet.log && phet.log( 'query parameters: ' + JSON.stringify( URQueryParameters, null, 2 ) );
+// Log query parameters
+logGlobal( 'phet.chipper.queryParameters' );
+logGlobal( 'phet.preloads.phetio.queryParameters' );
+logGlobal( 'phet.unitRates.URQueryParameters' );
 
 export default URQueryParameters;
