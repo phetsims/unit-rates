@@ -18,7 +18,7 @@ import ShoppingCategoryRadioButtonGroup from './ShoppingCategoryRadioButtonGroup
 import ShoppingViewProperties from './ShoppingViewProperties.js';
 
 class ShoppingScreenView extends ScreenView {
-  
+
   /**
    * @param {ShoppingModel} model
    * @param {Object} [options]

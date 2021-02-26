@@ -27,7 +27,7 @@ const BUTTON_X_SPACE = 20; // space between buttons
 const ACCORDION_BOX_X_SPACE = 10; // space between accordion boxes
 
 class RacingLabScreenView extends ScreenView {
-  
+
   /**
    * @param {RacingLabModel} model
    * @param {Object} [options]
