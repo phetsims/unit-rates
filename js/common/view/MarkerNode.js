@@ -49,7 +49,7 @@ class MarkerNode extends Node {
     // numerator
     const numeratorNode = new Text( '', { font: options.font } );
     const numeratorObserver = numerator => {
-      assert && assert( ( typeof numerator === 'number' ) && !isNaN( numerator ), 'invalid numerator: ' + numerator );
+      assert && assert( ( typeof numerator === 'number' ) && !isNaN( numerator ), `invalid numerator: ${numerator}` );
       numeratorNode.text = URUtils.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
       numeratorNode.centerX = lineNode.centerX;
       numeratorNode.bottom = lineNode.top - options.ySpacing;
@@ -59,7 +59,7 @@ class MarkerNode extends Node {
     // denominator
     const denominatorNode = new Text( '', { font: options.font } );
     const denominatorObserver = denominator => {
-      assert && assert( ( typeof denominator === 'number' ) && !isNaN( denominator ), 'invalid denominator: ' + denominator );
+      assert && assert( ( typeof denominator === 'number' ) && !isNaN( denominator ), `invalid denominator: ${denominator}` );
       denominatorNode.text = URUtils.numberToString( marker.denominatorProperty.value, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
       denominatorNode.centerX = lineNode.centerX;
       denominatorNode.top = lineNode.bottom + options.ySpacing;

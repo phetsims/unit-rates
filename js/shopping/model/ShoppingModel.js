@@ -60,7 +60,7 @@ class ShoppingModel {
 
     // validate options
     assert && assert( options.categoryIndex >= 0 && options.categoryIndex < this.categories.length,
-      'invalid categoryIndex: ' + options.categoryIndex );
+      `invalid categoryIndex: ${options.categoryIndex}` );
 
     // @public the selected category
     this.categoryProperty = new Property( this.categories[ options.categoryIndex ], {

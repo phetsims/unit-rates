@@ -136,8 +136,8 @@ function validateDigitsAndDecimals( options ) {
     maxDigits: 8, // {number} the maximum number of digits (numbers)
     maxDecimals: 4 // {number} the maximum number of decimal places
   }, options );
-  assert && assert( options.maxDigits > 0, 'invalid maxDigits: ' + options.maxDigits );
-  assert && assert( options.maxDecimals >= 0, 'invalid maxDecimals: ' + options.maxDecimals );
+  assert && assert( options.maxDigits > 0, `invalid maxDigits: ${options.maxDigits}` );
+  assert && assert( options.maxDecimals >= 0, `invalid maxDecimals: ${options.maxDecimals}` );
 
   /**
    * Creates the new string that results from pressing a key.

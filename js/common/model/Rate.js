@@ -29,8 +29,8 @@ class Rate {
    */
   constructor( numerator, denominator ) {
 
-    assert && assert( Number.isInteger( numerator ), 'numerator must be an integer: ' + numerator );
-    assert && assert( Number.isInteger( denominator ), 'denominator must be an integer: ' + denominator );
+    assert && assert( Number.isInteger( numerator ), `numerator must be an integer: ${numerator}` );
+    assert && assert( Number.isInteger( denominator ), `denominator must be an integer: ${denominator}` );
 
     // @public
     this.numeratorProperty = new NumberProperty( numerator );
@@ -55,7 +55,7 @@ class Rate {
    * @public
    */
   toString() {
-    return this.numeratorProperty.value + '/' + this.denominatorProperty.value;
+    return `${this.numeratorProperty.value}/${this.denominatorProperty.value}`;
   }
 
   /**

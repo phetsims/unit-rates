@@ -41,7 +41,7 @@ class DoubleNumberLine {
     }, options );
 
     assert && assert( _.includes( FIXED_AXIS_VALUES, options.fixedAxis ),
-      'invalid fixedAxis: ' + options.fixedAxis );
+      `invalid fixedAxis: ${options.fixedAxis}` );
 
     // @public (read-only) options for the numerator (top) number line
     this.numeratorOptions = merge( {}, SHARED_OPTIONS, options.numeratorOptions );
@@ -177,7 +177,7 @@ class DoubleNumberLine {
    */
   addMarker( marker ) {
 
-    assert && assert( !this.markers.includes( marker ), 'attempt to add marker again: ' + marker );
+    assert && assert( !this.markers.includes( marker ), `attempt to add marker again: ${marker}` );
 
     let wasAdded = false; //{boolean} state to determine whether the marker was added or not
 
@@ -204,7 +204,7 @@ class DoubleNumberLine {
     else {
 
       // ignore lower precedence marker
-      unitRates.log && unitRates.log( 'ignoring lower precedence marker: ' + marker.toString() );
+      unitRates.log && unitRates.log( `ignoring lower precedence marker: ${marker.toString()}` );
     }
 
     return wasAdded;
@@ -216,7 +216,7 @@ class DoubleNumberLine {
    * @private
    */
   removeMarker( marker ) {
-    assert && assert( this.markers.includes( marker ), 'attempt to remove an unknown marker: ' + marker );
+    assert && assert( this.markers.includes( marker ), `attempt to remove an unknown marker: ${marker}` );
     this.markers.remove( marker );
   }
 
@@ -255,7 +255,7 @@ class DoubleNumberLine {
   undo() {
     const undoMarker = this.undoMarkerProperty.value;
     if ( undoMarker ) {
-      assert && assert( this.markers.includes( undoMarker ), 'unexpected undoMarker: ' + undoMarker );
+      assert && assert( this.markers.includes( undoMarker ), `unexpected undoMarker: ${undoMarker}` );
       this.undoMarkerProperty.value = null;
       this.removeMarker( undoMarker );
     }

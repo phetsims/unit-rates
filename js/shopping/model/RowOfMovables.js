@@ -104,9 +104,9 @@ class RowOfMovables {
   put( movable, index ) {
 
     assert && assert( !this.contains( movable ),
-      'movable is already in row at index ' + this.indexOf( movable ) );
-    assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
-    assert && assert( this.isEmptyCell( index ), 'cell is occupied: ' + index );
+      `movable is already in row at index ${this.indexOf( movable )}` );
+    assert && assert( this.isValidCellIndex( index ), `invalid index: ${index}` );
+    assert && assert( this.isEmptyCell( index ), `cell is occupied: ${index}` );
 
     // put in cell
     this.cells[ index ].movable = movable;
@@ -123,7 +123,7 @@ class RowOfMovables {
    */
   remove( movable ) {
     const index = this.indexOf( movable );
-    assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
+    assert && assert( this.isValidCellIndex( index ), `invalid index: ${index}` );
     this.cells[ index ].movable = null;
     this.numberOfMovablesProperty.value--;
   }
@@ -145,7 +145,7 @@ class RowOfMovables {
    * @public
    */
   isEmptyCell( index ) {
-    assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
+    assert && assert( this.isValidCellIndex( index ), `invalid index: ${index}` );
     return ( this.cells[ index ].movable === null );
   }
 
@@ -156,7 +156,7 @@ class RowOfMovables {
    * @public
    */
   getCellPosition( index ) {
-    assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
+    assert && assert( this.isValidCellIndex( index ), `invalid index: ${index}` );
     return this.cells[ index ].position;
   }
 
@@ -194,7 +194,7 @@ class RowOfMovables {
    * @private
    */
   getDistanceFromCell( index, position ) {
-    assert && assert( this.isValidCellIndex( index ), 'invalid index: ' + index );
+    assert && assert( this.isValidCellIndex( index ), `invalid index: ${index}` );
     return this.getCellPosition( index ).distance( position );
   }
 

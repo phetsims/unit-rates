@@ -60,7 +60,7 @@ class CostNode extends Node {
     // When cost changes, update the displayed value
     const costObserver = cost => {
 
-      assert && assert( cost >= 0, 'negative cost not supported: ' + cost );
+      assert && assert( cost >= 0, `negative cost not supported: ${cost}` );
 
       const visibleDecimalPlaces = 3;
 

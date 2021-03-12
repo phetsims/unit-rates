@@ -27,7 +27,7 @@ const URUtils = {
     // stringTest indiscriminately replaces all strings, with no regard to formatting placeholders.
     if ( !phet.chipper.queryParameters.stringTest ) {
       assert && assert( format.indexOf( SunConstants.VALUE_NUMBERED_PLACEHOLDER ) !== -1,
-        'missing placeholder in format: ' + format );
+        `missing placeholder in format: ${format}` );
     }
     return StringUtils.format( format, URUtils.numberToString( value, maxDecimals, trimZeros ) );
   },
@@ -57,11 +57,11 @@ const URUtils = {
     assert && assert( typeof numberOrString === 'number' || typeof numberOrString === 'string', 'invalid argument type' );
 
     // convert to string
-    const str = ( '' + numberOrString );
-    assert && assert( str.length > 0, 'invalid argument: ' + str );
+    const str = ( `${numberOrString}` );
+    assert && assert( str.length > 0, `invalid argument: ${str}` );
 
     // find the decimal point
-    assert && assert( ( str.match( /\./g ) || [] ).length <= 1, 'too many decimal points: ' + str );
+    assert && assert( ( str.match( /\./g ) || [] ).length <= 1, `too many decimal points: ${str}` );
     const decimalIndex = str.indexOf( '.' );
 
     if ( decimalIndex === -1 ) {

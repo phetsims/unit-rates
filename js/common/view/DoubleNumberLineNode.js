@@ -185,8 +185,8 @@ class DoubleNumberLineNode extends Node {
    * @private
    */
   addMarkerNode( marker, options ) {
-    unitRates.log && unitRates.log( 'addMarker ' + marker );
-    assert && assert( !this.getMarkerNode( marker ), 'already have a MarkerNode for ' + marker );
+    unitRates.log && unitRates.log( `addMarker ${marker}` );
+    assert && assert( !this.getMarkerNode( marker ), `already have a MarkerNode for ${marker}` );
     const markerNode = new MarkerNode( marker, options );
     this.markersParent.addChild( markerNode );
   }
@@ -197,7 +197,7 @@ class DoubleNumberLineNode extends Node {
    * @private
    */
   removeMarkerNode( marker ) {
-    unitRates.log && unitRates.log( 'removeMarker ' + marker );
+    unitRates.log && unitRates.log( `removeMarker ${marker}` );
 
     // find the node that is associated with the marker
     const markerNode = this.getMarkerNode( marker );

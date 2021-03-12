@@ -35,7 +35,7 @@ class Marker {
       erasable: true // {boolean} is this marker erased when the Eraser button is pressed?
     }, options );
 
-    assert && assert( _.includes( CREATOR_VALUES, creator ), 'invalid creator: ' + creator );
+    assert && assert( _.includes( CREATOR_VALUES, creator ), `invalid creator: ${creator}` );
 
     // @public
     this.numeratorProperty = new NumberProperty( numerator );
@@ -54,12 +54,12 @@ class Marker {
    * @public
    */
   toString() {
-    return 'Marker[' +
-           ' rate=' + this.numeratorProperty.value + '/' + this.denominatorProperty.value +
-           ' creator=' + this.creator +
-           ' isMajor=' + this.isMajor +
-           ' erasable=' + this.erasable +
-           ' ]';
+    return `${'Marker[' +
+           ' rate='}${this.numeratorProperty.value}/${this.denominatorProperty.value
+           } creator=${this.creator
+           } isMajor=${this.isMajor
+           } erasable=${this.erasable
+           } ]`;
   }
 
   /**
@@ -89,10 +89,10 @@ class Marker {
   precedenceOf( marker ) {
 
     const thisIndex = CREATOR_VALUES.indexOf( this.creator );
-    assert && assert( thisIndex !== -1, 'invalid creator: ' + this.creator );
+    assert && assert( thisIndex !== -1, `invalid creator: ${this.creator}` );
 
     const thatIndex = CREATOR_VALUES.indexOf( marker.creator );
-    assert && assert( thatIndex !== -1, 'invalid creator: ' + marker.creator );
+    assert && assert( thatIndex !== -1, `invalid creator: ${marker.creator}` );
 
     if ( thatIndex > thisIndex ) {
       return 1;

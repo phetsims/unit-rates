@@ -32,7 +32,7 @@ class RaceTrack {
 
     // validate length, unlink not needed
     this.lengthProperty.link( length => {
-      assert && assert( length >= 0 && length <= options.maxLength, 'invalid length: ' + length );
+      assert && assert( length >= 0 && length <= options.maxLength, `invalid length: ${length}` );
     } );
   }
 

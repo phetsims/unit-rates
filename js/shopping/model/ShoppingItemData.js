@@ -290,7 +290,7 @@ const ShoppingItemData = {
     // Instead of keeping a separate list of property names, assume that the APPLES instance is representative.
     const keys = _.keys( ShoppingItemData.Fruit.APPLES );
 
-    keys.forEach( key => assert && assert( _.has( itemData, key ), 'missing property: ' + key ) );
+    keys.forEach( key => assert && assert( _.has( itemData, key ), `missing property: ${key}` ) );
   }
 };
 

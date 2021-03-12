@@ -22,7 +22,7 @@ class ValueNode extends Text {
 
     options = merge( {
       font: new PhetFont( 20 ),
-      valueToString: value => ( '' + value )
+      valueToString: value => ( `${value}` )
     }, options );
 
     super( '' ); // string will be filled in by valueObserver

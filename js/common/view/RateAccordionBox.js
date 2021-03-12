@@ -60,9 +60,9 @@ class RateAccordionBox extends AccordionBox {
     }, options );
 
     assert && assert( options.numeratorRange.contains( rate.numeratorProperty.value ),
-      'numerator out of range: ' + rate.numeratorProperty.value );
+      `numerator out of range: ${rate.numeratorProperty.value}` );
     assert && assert( options.denominatorRange.contains( rate.denominatorProperty.value ),
-      'denominator out of range: ' + rate.denominatorProperty.value );
+      `denominator out of range: ${rate.denominatorProperty.value}` );
 
     assert && assert( !options.titleNode, 'creates its own title node' );
     options.titleNode = new Text( options.titleString, {

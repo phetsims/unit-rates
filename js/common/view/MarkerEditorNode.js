@@ -58,7 +58,7 @@ class MarkerEditorNode extends Node {
     const denominatorOptions = merge( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     assert && assert( _.includes( KEYPAD_POSITION_VALUES, options.keypadPosition ),
-      'invalid keypadPosition: ' + options.keypadPosition );
+      `invalid keypadPosition: ${options.keypadPosition}` );
 
     super();
 
@@ -201,7 +201,7 @@ class MarkerEditorNode extends Node {
 
     // Observe edits to the numerator
     const numeratorObserver = numerator => {
-      assert && assert( !isNaN( numerator ), 'invalid numerator: ' + numerator );
+      assert && assert( !isNaN( numerator ), `invalid numerator: ${numerator}` );
 
       // update the numerator
       if ( numerator ) {
@@ -230,7 +230,7 @@ class MarkerEditorNode extends Node {
 
     // Observe edits to the denominator
     const denominatorObserver = denominator => {
-      assert && assert( !isNaN( denominator ), 'invalid denominator: ' + denominator );
+      assert && assert( !isNaN( denominator ), `invalid denominator: ${denominator}` );
 
       // update the denominator
       if ( denominator ) {

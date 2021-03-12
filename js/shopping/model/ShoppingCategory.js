@@ -31,7 +31,7 @@ class ShoppingCategory {
 
     // validate options
     assert && assert( options.shoppingSceneIndex >= 0 && options.shoppingSceneIndex < shoppingScenes.length,
-      'invalid shoppingSceneIndex: ' + options.shoppingSceneIndex );
+      `invalid shoppingSceneIndex: ${options.shoppingSceneIndex}` );
 
     // @public (read-only)
     this.image = image;
