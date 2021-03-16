@@ -55,11 +55,11 @@ class Marker {
    */
   toString() {
     return `${'Marker[' +
-           ' rate='}${this.numeratorProperty.value}/${this.denominatorProperty.value
-           } creator=${this.creator
-           } isMajor=${this.isMajor
-           } erasable=${this.erasable
-           } ]`;
+              ' rate='}${this.numeratorProperty.value}/${this.denominatorProperty.value
+    } creator=${this.creator
+    } isMajor=${this.isMajor
+    } erasable=${this.erasable
+    } ]`;
   }
 
   /**
