@@ -21,7 +21,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "aacfe0a84fc04842e4b1e900a1c1b6068dfd4241",
+    "sha": "862305c9a5771cf7433f4a349250c71dea3cac21",
     "branch": "HEAD"
   },
   "kite": {
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "bb356adb2706f344a5590a06453c3c609ce6c688",
+    "sha": "80210724454990837d2b51433c21e726d3db5507",
     "branch": "1.0"
   }
 }
