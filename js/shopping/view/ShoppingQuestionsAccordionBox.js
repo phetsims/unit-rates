@@ -85,7 +85,7 @@ class ShoppingQuestionsAccordionBox extends AccordionBox {
 
     // Refresh button, advances to the next question set
     const refreshButton = new RefreshButton( {
-      iconScale: 0.36,
+      iconHeight: 14,
       xMargin: 10,
       yMargin: 5,
       baseColor: URColors.refreshButton,
