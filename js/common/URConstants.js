@@ -19,7 +19,7 @@ const URConstants = {
   // image scaling
   BAG_IMAGE_SCALE: 0.5,
   SHOPPING_ITEM_IMAGE_SCALE: 0.5,
-  EDIT_ICON_SCALE: 0.4,
+  EDIT_ICON_SCALE: 0.032,
 
   // double number lines
   SHOPPING_AXIS_LENGTH: 816, // determined empirically, to take up the full width of the screen

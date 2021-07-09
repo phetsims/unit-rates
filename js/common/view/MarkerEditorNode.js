@@ -12,10 +12,11 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
+import editRegularShape from '../../../../sherpa/js/fontawesome-5/editRegularShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import unitRates from '../../unitRates.js';
 import URColors from '../URColors.js';
 import URConstants from '../URConstants.js';
@@ -113,7 +114,10 @@ class MarkerEditorNode extends Node {
 
     // edit button for the numerator
     const numeratorEditButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'pencil_square_o', { scale: URConstants.EDIT_ICON_SCALE } ),
+      content: new Path( editRegularShape, {
+        scale: URConstants.EDIT_ICON_SCALE,
+        fill: 'black'
+      } ),
       baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
       bottom: numeratorBox.top - options.ySpacing
@@ -123,7 +127,10 @@ class MarkerEditorNode extends Node {
 
     // edit button for the denominator
     const denominatorEditButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'pencil_square_o', { scale: URConstants.EDIT_ICON_SCALE } ),
+      content: new Path( editRegularShape, {
+        scale: URConstants.EDIT_ICON_SCALE,
+        fill: 'black'
+      } ),
       baseColor: URColors.editButton,
       centerX: verticalLine.centerX,
       top: denominatorBox.bottom + options.ySpacing

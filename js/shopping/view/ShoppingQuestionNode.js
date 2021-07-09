@@ -14,10 +14,12 @@ import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import HStrut from '../../../../scenery/js/nodes/HStrut.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
+import checkSolidShape from '../../../../sherpa/js/fontawesome-5/checkSolidShape.js';
+import editRegularShape from '../../../../sherpa/js/fontawesome-5/editRegularShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import URUtils from '../../common/URUtils.js';
@@ -64,7 +66,10 @@ class ShoppingQuestionNode extends Node {
 
     // edit button, to the right of the box
     const editButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'pencil_square_o', { scale: URConstants.EDIT_ICON_SCALE } ),
+      content: new Path( editRegularShape, {
+        scale: URConstants.EDIT_ICON_SCALE,
+        fill: 'black'
+      } ),
       baseColor: URColors.editButton,
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY
@@ -81,8 +86,8 @@ class ShoppingQuestionNode extends Node {
     this.addChild( strut );
 
     // check mark to right of box, to indicate that the question has been correctly answered
-    const checkMarkNode = new FontAwesomeNode( 'check', {
-      scale: 0.75,
+    const checkMarkNode = new Path( checkSolidShape, {
+      scale: 0.06,
       fill: URColors.checkMark,
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY,

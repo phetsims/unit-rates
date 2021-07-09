@@ -15,11 +15,12 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
+import undoSolidShape from '../../../../sherpa/js/fontawesome-5/undoSolidShape.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import unitRates from '../../unitRates.js';
@@ -100,8 +101,9 @@ class DoubleNumberLineAccordionBox extends AccordionBox {
     // Pressing the undo button moves the marker edit back to its home position,
     // or removes the marker that was most recently added using the editor.
     const undoButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'undo', {
-        scale: 0.36 // to approximately match height of marker editor buttons, determined empirically
+      content: new Path( undoSolidShape, {
+        scale: 0.03, // to approximately match height of marker editor buttons, determined empirically
+        fill: 'black'
       } ),
       visible: false,
       baseColor: URColors.undoButton,
