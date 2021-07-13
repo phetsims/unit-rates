@@ -1,15 +1,13 @@
 // Copyright 2016-2021, University of Colorado Boulder
 
-//TODO replace NumberKeypad with next-generation keypad, see https://github.com/phetsims/unit-rates/issues/153
 /***
- * A panel that contains a keypad and Enter button.
+ * KeypadPanel is a panel that contains a value display, keypad, and Enter button.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import StringProperty from '../../../../axon/js/StringProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
-import NumberKeypad from '../../../../scenery-phet/js/NumberKeypad.js';
+import Keypad from '../../../../scenery-phet/js/keypad/Keypad.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -20,9 +18,6 @@ import Panel from '../../../../sun/js/Panel.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
 import URColors from '../URColors.js';
-
-// constants
-const DECIMAL_POINT = NumberKeypad.DECIMAL_POINT;
 
 class KeypadPanel extends Panel {
 
@@ -40,7 +35,7 @@ class KeypadPanel extends Panel {
       valueString: '', // {string} initial value shown in the keypad
       decimalPointKey: true, // {boolean} does the keypad have a decimal point key?
       maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
-      maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypd
+      maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
 
       // Panel options
       fill: 'rgb( 230, 230, 230 )', // {Color|string} the keypad's background color
@@ -53,9 +48,17 @@ class KeypadPanel extends Panel {
 
     }, options );
 
-    const valueStringProperty = new StringProperty( options.valueString );
+    const keypad = new Keypad( Keypad.PositiveDecimalLayout, {
+      accumulatorOptions: {
+        maxDigits: options.maxDigits,
+        maxDigitsRightOfMantissa: options.maxDecimals
+      },
+      minButtonWidth: 35,
+      minButtonHeight: 35,
+      buttonFont: new PhetFont( 20 )
+    } );
 
-    const valueNode = new Text( valueStringProperty.value, {
+    const valueNode = new Text( '', {
       font: options.valueFont
     } );
 
@@ -69,13 +72,14 @@ class KeypadPanel extends Panel {
       children: [ valueBackgroundNode, valueNode ]
     } );
 
-    const keypadNode = new NumberKeypad( {
-      valueStringProperty: valueStringProperty,
-      decimalPointKey: options.decimalPointKey,
-      validateKey: validateDigitsAndDecimals( {
-        maxDigits: options.maxDigits,
-        maxDecimals: options.maxDecimals
-      } )
+    // Show the value entered on the keypad. No unlink is required.
+    keypad.stringProperty.link( string => {
+      valueNode.text = string;
+    } );
+
+    // Keep the value centered in the background. No unlink is required.
+    valueNode.boundsProperty.link( () => {
+      valueNode.center = valueBackgroundNode.center;
     } );
 
     const enterButton = new RectangularPushButton( {
@@ -84,28 +88,24 @@ class KeypadPanel extends Panel {
       content: new Text( unitRatesStrings.enter, {
         font: new PhetFont( 16 ),
         fill: 'black',
-        maxWidth: keypadNode.width // i18n
+        maxWidth: keypad.width // i18n
       } )
     } );
 
     const contentNode = new VBox( {
       spacing: 10,
       align: 'center',
-      children: [ valueParent, keypadNode, enterButton ]
+      children: [ valueParent, keypad, enterButton ]
     } );
 
     super( contentNode, options );
 
     // @public
-    this.valueStringProperty = valueStringProperty;
-    this.valueStringProperty.link( valueString => { // no unlink required
-      valueNode.text = valueString;
-      valueNode.center = valueBackgroundNode.center;
-    } );
+    this.valueStringProperty = keypad.stringProperty;
 
     // @private
     this.disposeKeypadPanel = () => {
-      keypadNode.disposeSubtree(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      keypad.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
       enterButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
   }
@@ -120,78 +120,5 @@ class KeypadPanel extends Panel {
   }
 }
 
-/**
- * Conforms to the API for NumberKeypad options.validateKey.
- * Creates a validation function that constrains the value to have:
- * - a maximum number of digits
- * - a maximum number of decimal places
- * - at most 1 zero to the left of the decimal point
- *
- * @param {Object} [options]
- * @returns {function(string, string)}
- */
-function validateDigitsAndDecimals( options ) {
-
-  options = merge( {
-    maxDigits: 8, // {number} the maximum number of digits (numbers)
-    maxDecimals: 4 // {number} the maximum number of decimal places
-  }, options );
-  assert && assert( options.maxDigits > 0, `invalid maxDigits: ${options.maxDigits}` );
-  assert && assert( options.maxDecimals >= 0, `invalid maxDecimals: ${options.maxDecimals}` );
-
-  /**
-   * Creates the new string that results from pressing a key.
-   * @param {string} keyString - string associated with the key that was pressed
-   * @param {string} valueString - string that corresponds to the sequence of keys that have been pressed
-   * @returns {string} the result
-   */
-  return ( keyString, valueString ) => {
-
-    // start by assuming that keyString will be ignored
-    let newValueString = valueString;
-
-    const hasDecimalPoint = valueString.indexOf( DECIMAL_POINT ) !== -1;
-    const numberOfDigits = hasDecimalPoint ? valueString.length - 1 : valueString.length;
-    const numberOfDecimals = !hasDecimalPoint ? 0 : ( valueString.length - valueString.indexOf( DECIMAL_POINT ) - 1 );
-
-    if ( valueString === '0' && keyString === '0' ) {
-
-      // ignore multiple leading zeros
-    }
-    else if ( valueString === '0' && keyString !== '0' && keyString !== DECIMAL_POINT ) {
-
-      // replace a leading 0 that's not followed by a decimal point with this key
-      newValueString = keyString;
-    }
-    else if ( numberOfDigits === options.maxDigits ) {
-
-      // maxDigits reached, ignore key
-    }
-    else if ( keyString === DECIMAL_POINT ) {
-      if ( !hasDecimalPoint ) {
-
-        // allow one decimal point
-        newValueString = valueString + keyString;
-      }
-      else {
-
-        // ignore additional decimal points
-      }
-    }
-    else if ( hasDecimalPoint && numberOfDecimals === options.maxDecimals ) {
-
-      // maxDecimals reached, ignore key
-    }
-    else {
-
-      // add digit
-      newValueString = valueString + keyString;
-    }
-
-    return newValueString;
-  };
-}
-
 unitRates.register( 'KeypadPanel', KeypadPanel );
-
 export default KeypadPanel;
