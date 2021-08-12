@@ -9,7 +9,7 @@
 import merge from '../../../../phet-core/js/merge.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import resetRaceButton from '../../../images/reset_race_button_png.js';
+import resetRaceButton_png from '../../../images/resetRaceButton_png.js';
 import unitRates from '../../unitRates.js';
 
 class ResetRaceButton extends RectangularPushButton {
@@ -19,7 +19,7 @@ class ResetRaceButton extends RectangularPushButton {
    */
   constructor( options ) {
     super( merge( {
-      content: new Image( resetRaceButton, { scale: 0.5 } ),
+      content: new Image( resetRaceButton_png, { scale: 0.5 } ),
       xMargin: 12,
       yMargin: 8
     }, options ) );

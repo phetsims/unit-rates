@@ -6,9 +6,9 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import appleImage from '../../../images/apple_png.js';
-import carrotImage from '../../../images/carrot_png.js';
-import purpleCandyImage from '../../../images/purple_candy_png.js';
+import apple_png from '../../../images/apple_png.js';
+import carrot_png from '../../../images/carrot_png.js';
+import purpleCandy_png from '../../../images/purpleCandy_png.js';
 import Rate from '../../common/model/Rate.js';
 import CandyScene from '../../shopping/model/CandyScene.js';
 import FruitScene from '../../shopping/model/FruitScene.js';
@@ -28,7 +28,7 @@ class ShoppingLabModel extends ShoppingModel {
       categories: [
 
         // fruits
-        new ShoppingCategory( appleImage, [
+        new ShoppingCategory( apple_png, [
           new FruitScene( ShoppingItemData.Fruit.APPLES, {
             rate: new Rate( 1, 1 ),
             denominatorOptions: {
@@ -38,7 +38,7 @@ class ShoppingLabModel extends ShoppingModel {
         ] ),
 
         // vegetables
-        new ShoppingCategory( carrotImage, [
+        new ShoppingCategory( carrot_png, [
           new VegetableScene( ShoppingItemData.Vegetable.CARROTS, {
             rate: new Rate( 3, 4 ),
             denominatorOptions: {
@@ -48,7 +48,7 @@ class ShoppingLabModel extends ShoppingModel {
         ] ),
 
         // candies
-        new ShoppingCategory( purpleCandyImage, [
+        new ShoppingCategory( purpleCandy_png, [
           new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY, {
             rate: new Rate( 3, 2 ),
             denominatorOptions: {

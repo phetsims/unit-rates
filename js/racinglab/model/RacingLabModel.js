@@ -8,8 +8,8 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import blueCarImage from '../../../images/blue_car_png.js';
-import redCarImage from '../../../images/red_car_png.js';
+import blueCar_png from '../../../images/blueCar_png.js';
+import redCar_png from '../../../images/redCar_png.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 import RaceCar from './RaceCar.js';
@@ -22,13 +22,13 @@ class RacingLabModel {
     this.runningProperty = new BooleanProperty( false );
 
     // @public the red (top) car
-    this.car1 = new RaceCar( redCarImage, {
+    this.car1 = new RaceCar( redCar_png, {
       color: URColors.car1,
       trackLength: 150
     } );
 
     // @public the blue (bottom) car
-    this.car2 = new RaceCar( blueCarImage, {
+    this.car2 = new RaceCar( blueCar_png, {
       color: URColors.car2,
       trackLength: 100,
       visible: false

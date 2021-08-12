@@ -8,30 +8,30 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import appleBagImage from '../../../images/apple_bag_png.js';
-import appleImage from '../../../images/apple_png.js';
-import blueCandyBagImage from '../../../images/blue_candy_bag_png.js';
-import blueCandyImage from '../../../images/blue_candy_png.js';
-import carrotBagImage from '../../../images/carrot_bag_png.js';
-import carrotImage from '../../../images/carrot_png.js';
-import cucumberBagImage from '../../../images/cucumber_bag_png.js';
-import cucumberImage from '../../../images/cucumber_png.js';
-import greenCandyBagImage from '../../../images/green_candy_bag_png.js';
-import greenCandyImage from '../../../images/green_candy_png.js';
-import lemonBagImage from '../../../images/lemon_bag_png.js';
-import lemonImage from '../../../images/lemon_png.js';
-import orangeBagImage from '../../../images/orange_bag_png.js';
-import orangeImage from '../../../images/orange_png.js';
-import pearBagImage from '../../../images/pear_bag_png.js';
-import pearImage from '../../../images/pear_png.js';
-import potatoBagImage from '../../../images/potato_bag_png.js';
-import potatoImage from '../../../images/potato_png.js';
-import purpleCandyBagImage from '../../../images/purple_candy_bag_png.js';
-import purpleCandyImage from '../../../images/purple_candy_png.js';
-import redCandyBagImage from '../../../images/red_candy_bag_png.js';
-import redCandyImage from '../../../images/red_candy_png.js';
-import tomatoBagImage from '../../../images/tomato_bag_png.js';
-import tomatoImage from '../../../images/tomato_png.js';
+import appleBag_png from '../../../images/appleBag_png.js';
+import apple_png from '../../../images/apple_png.js';
+import blueCandyBag_png from '../../../images/blueCandyBag_png.js';
+import blueCandy_png from '../../../images/blueCandy_png.js';
+import carrotBag_png from '../../../images/carrotBag_png.js';
+import carrot_png from '../../../images/carrot_png.js';
+import cucumberBag_png from '../../../images/cucumberBag_png.js';
+import cucumber_png from '../../../images/cucumber_png.js';
+import greenCandyBag_png from '../../../images/greenCandyBag_png.js';
+import greenCandy_png from '../../../images/greenCandy_png.js';
+import lemonBag_png from '../../../images/lemonBag_png.js';
+import lemon_png from '../../../images/lemon_png.js';
+import orangeBag_png from '../../../images/orangeBag_png.js';
+import orange_png from '../../../images/orange_png.js';
+import pearBag_png from '../../../images/pearBag_png.js';
+import pear_png from '../../../images/pear_png.js';
+import potatoBag_png from '../../../images/potatoBag_png.js';
+import potato_png from '../../../images/potato_png.js';
+import purpleCandyBag_png from '../../../images/purpleCandyBag_png.js';
+import purpleCandy_png from '../../../images/purpleCandy_png.js';
+import redCandyBag_png from '../../../images/redCandyBag_png.js';
+import redCandy_png from '../../../images/redCandy_png.js';
+import tomatoBag_png from '../../../images/tomatoBag_png.js';
+import tomato_png from '../../../images/tomato_png.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
 
@@ -47,9 +47,9 @@ const ShoppingItemData = {
       quantityPerBag: 5, // {number} quantity in each bag
       singularName: unitRatesStrings.apple, // {string} name to use for singular quantities (e.g. '1 Apple')
       pluralName: unitRatesStrings.apples, // {string} name to use for plural quantities (e.g. '2 Apples')
-      itemImage: appleImage, // {HTMLImageElement} image for individual items
+      itemImage: apple_png, // {HTMLImageElement} image for individual items
       itemRowOverlap: 7, // {number} for tweaking how items overlap when stacked, specific to itemImage
-      bagImage: appleBagImage, // {HTMLImageElement} image for a bag of items
+      bagImage: appleBag_png, // {HTMLImageElement} image for a bag of items
 
       // {number[][]} Number of items (or pounds, for Candy) for each question, grouped into 'question sets'.
       // See 'Unit Rates & Challenge Prompts' table in design document.
@@ -68,9 +68,9 @@ const ShoppingItemData = {
       quantityPerBag: 5,
       singularName: unitRatesStrings.lemon,
       pluralName: unitRatesStrings.lemons,
-      itemImage: lemonImage,
+      itemImage: lemon_png,
       itemRowOverlap: 5,
-      bagImage: lemonBagImage,
+      bagImage: lemonBag_png,
 
       // number of items
       questionQuantities: [
@@ -87,9 +87,9 @@ const ShoppingItemData = {
       quantityPerBag: 5,
       singularName: unitRatesStrings.orange,
       pluralName: unitRatesStrings.oranges,
-      itemImage: orangeImage,
+      itemImage: orange_png,
       itemRowOverlap: 5,
-      bagImage: orangeBagImage,
+      bagImage: orangeBag_png,
 
       // number of items
       questionQuantities: [
@@ -106,9 +106,9 @@ const ShoppingItemData = {
       quantityPerBag: 5,
       singularName: unitRatesStrings.pear,
       pluralName: unitRatesStrings.pears,
-      itemImage: pearImage,
+      itemImage: pear_png,
       itemRowOverlap: 5,
-      bagImage: pearBagImage,
+      bagImage: pearBag_png,
 
       // number of items
       questionQuantities: [
@@ -129,9 +129,9 @@ const ShoppingItemData = {
       quantityPerBag: 4,
       singularName: unitRatesStrings.carrot,
       pluralName: unitRatesStrings.carrots,
-      itemImage: carrotImage,
+      itemImage: carrot_png,
       itemRowOverlap: 0,
-      bagImage: carrotBagImage,
+      bagImage: carrotBag_png,
 
       // number of items
       questionQuantities: [
@@ -148,9 +148,9 @@ const ShoppingItemData = {
       quantityPerBag: 3,
       singularName: unitRatesStrings.cucumber,
       pluralName: unitRatesStrings.cucumbers,
-      itemImage: cucumberImage,
+      itemImage: cucumber_png,
       itemRowOverlap: 0,
-      bagImage: cucumberBagImage,
+      bagImage: cucumberBag_png,
 
       // number of items
       questionQuantities: [
@@ -167,9 +167,9 @@ const ShoppingItemData = {
       quantityPerBag: 3,
       singularName: unitRatesStrings.potato,
       pluralName: unitRatesStrings.potatoes,
-      itemImage: potatoImage,
+      itemImage: potato_png,
       itemRowOverlap: 0,
-      bagImage: potatoBagImage,
+      bagImage: potatoBag_png,
 
       // number of items
       questionQuantities: [
@@ -186,9 +186,9 @@ const ShoppingItemData = {
       quantityPerBag: 4,
       singularName: unitRatesStrings.tomato,
       pluralName: unitRatesStrings.tomatoes,
-      itemImage: tomatoImage,
+      itemImage: tomato_png,
       itemRowOverlap: 0,
-      bagImage: tomatoBagImage,
+      bagImage: tomatoBag_png,
 
       // number of items
       questionQuantities: [
@@ -209,9 +209,9 @@ const ShoppingItemData = {
       quantityPerBag: 0.4,
       singularName: unitRatesStrings.purpleCandy,
       pluralName: unitRatesStrings.purpleCandy,
-      itemImage: purpleCandyImage,
+      itemImage: purpleCandy_png,
       itemRowOverlap: 0,
-      bagImage: purpleCandyBagImage,
+      bagImage: purpleCandyBag_png,
 
       // pounds
       questionQuantities: [
@@ -228,9 +228,9 @@ const ShoppingItemData = {
       quantityPerBag: 0.3,
       singularName: unitRatesStrings.redCandy,
       pluralName: unitRatesStrings.redCandy,
-      itemImage: redCandyImage,
+      itemImage: redCandy_png,
       itemRowOverlap: 0,
-      bagImage: redCandyBagImage,
+      bagImage: redCandyBag_png,
 
       // pounds
       questionQuantities: [
@@ -247,9 +247,9 @@ const ShoppingItemData = {
       quantityPerBag: 0.3,
       singularName: unitRatesStrings.greenCandy,
       pluralName: unitRatesStrings.greenCandy,
-      itemImage: greenCandyImage,
+      itemImage: greenCandy_png,
       itemRowOverlap: 0,
-      bagImage: greenCandyBagImage,
+      bagImage: greenCandyBag_png,
 
       // pounds
       questionQuantities: [
@@ -266,9 +266,9 @@ const ShoppingItemData = {
       quantityPerBag: 0.4,
       singularName: unitRatesStrings.blueCandy,
       pluralName: unitRatesStrings.blueCandy,
-      itemImage: blueCandyImage,
+      itemImage: blueCandy_png,
       itemRowOverlap: 0,
-      bagImage: blueCandyBagImage,
+      bagImage: blueCandyBag_png,
 
       // pounds
       questionQuantities: [

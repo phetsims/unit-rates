@@ -8,9 +8,9 @@
 
 import Property from '../../../../axon/js/Property.js';
 import merge from '../../../../phet-core/js/merge.js';
-import appleImage from '../../../images/apple_png.js';
-import carrotImage from '../../../images/carrot_png.js';
-import purpleCandyImage from '../../../images/purple_candy_png.js';
+import apple_png from '../../../images/apple_png.js';
+import carrot_png from '../../../images/carrot_png.js';
+import purpleCandy_png from '../../../images/purpleCandy_png.js';
 import unitRates from '../../unitRates.js';
 import CandyScene from './CandyScene.js';
 import FruitScene from './FruitScene.js';
@@ -34,7 +34,7 @@ class ShoppingModel {
     this.categories = options.categories || [
 
       // fruits
-      new ShoppingCategory( appleImage, [
+      new ShoppingCategory( apple_png, [
         new FruitScene( ShoppingItemData.Fruit.APPLES ),
         new FruitScene( ShoppingItemData.Fruit.LEMONS ),
         new FruitScene( ShoppingItemData.Fruit.ORANGES ),
@@ -42,7 +42,7 @@ class ShoppingModel {
       ] ),
 
       // vegetables
-      new ShoppingCategory( carrotImage, [
+      new ShoppingCategory( carrot_png, [
         new VegetableScene( ShoppingItemData.Vegetable.CARROTS ),
         new VegetableScene( ShoppingItemData.Vegetable.CUCUMBERS ),
         new VegetableScene( ShoppingItemData.Vegetable.POTATOES ),
@@ -50,7 +50,7 @@ class ShoppingModel {
       ] ),
 
       // candies
-      new ShoppingCategory( purpleCandyImage, [
+      new ShoppingCategory( purpleCandy_png, [
         new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY ),
         new CandyScene( ShoppingItemData.Candy.RED_CANDY ),
         new CandyScene( ShoppingItemData.Candy.GREEN_CANDY ),

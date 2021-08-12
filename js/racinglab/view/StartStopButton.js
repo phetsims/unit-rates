@@ -10,7 +10,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import StopSignNode from '../../../../scenery-phet/js/StopSignNode.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import BooleanRoundToggleButton from '../../../../sun/js/buttons/BooleanRoundToggleButton.js';
-import goButtonIconImage from '../../../images/go_button_icon_png.js';
+import goButtonIcon_png from '../../../images/goButtonIcon_png.js';
 import unitRates from '../../unitRates.js';
 
 class StartStopButton extends BooleanRoundToggleButton {
@@ -27,7 +27,7 @@ class StartStopButton extends BooleanRoundToggleButton {
       yMargin: 8
     }, options );
 
-    const goIcon = new Image( goButtonIconImage, { scale: 0.5 } );
+    const goIcon = new Image( goButtonIcon_png, { scale: 0.5 } );
     const stopIcon = new StopSignNode( { fillRadius: 25 } );
 
     super( stopIcon, goIcon, runningProperty, options );

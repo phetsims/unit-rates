@@ -12,7 +12,7 @@ import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
-import screenIcon from '../../images/shopping_screen_icon_png.js';
+import shoppingScreenIcon_png from '../../images/shoppingScreenIcon_png.js';
 import URColors from '../common/URColors.js';
 import unitRates from '../unitRates.js';
 import unitRatesStrings from '../unitRatesStrings.js';
@@ -29,7 +29,7 @@ class ShoppingScreen extends Screen {
     options = merge( {
       name: unitRatesStrings.screen.shopping,
       backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
-      homeScreenIcon: new ScreenIcon( new Image( screenIcon ), {
+      homeScreenIcon: new ScreenIcon( new Image( shoppingScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } )

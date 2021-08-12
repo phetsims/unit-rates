@@ -10,8 +10,8 @@ import merge from '../../../../phet-core/js/merge.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import blueCarImage from '../../../images/blue_car_png.js';
-import redCarImage from '../../../images/red_car_png.js';
+import blueCar_png from '../../../images/blueCar_png.js';
+import redCar_png from '../../../images/redCar_png.js';
 import unitRates from '../../unitRates.js';
 
 class NumberOfCarsRadioButtonGroup extends RectangularRadioButtonGroup {
@@ -51,7 +51,7 @@ class NumberOfCarsRadioButtonGroup extends RectangularRadioButtonGroup {
  * @returns {Node}
  */
 function createOneCarIcon( maxCarWidth ) {
-  return createCarImage( redCarImage, maxCarWidth );
+  return createCarImage( redCar_png, maxCarWidth );
 }
 
 /**
@@ -63,8 +63,8 @@ function createTwoCarsIcon( maxCarWidth ) {
   return new VBox( {
     spacing: 7, // space between the 2 cars
     children: [
-      createCarImage( redCarImage, maxCarWidth ),
-      createCarImage( blueCarImage, maxCarWidth )
+      createCarImage( redCar_png, maxCarWidth ),
+      createCarImage( blueCar_png, maxCarWidth )
     ]
   } );
 }

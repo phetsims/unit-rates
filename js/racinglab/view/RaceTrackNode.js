@@ -26,8 +26,8 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import finishFlagImage from '../../../images/finish_flag_png.js';
-import startFlagImage from '../../../images/start_flag_png.js';
+import finishFlag_png from '../../../images/finishFlag_png.js';
+import startFlag_png from '../../../images/startFlag_png.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
 import RaceTimerNode from './RaceTimerNode.js';
@@ -98,14 +98,14 @@ class RaceTrackNode extends Node {
     markersParent.top = solidLineNode.centerY;
 
     // Flag at starting line
-    const startFlagNode = new Image( startFlagImage, {
+    const startFlagNode = new Image( startFlag_png, {
       scale: 0.5,
       left: 0,
       bottom: 0
     } );
 
     // Flag at finish line
-    const finishFlagNode = new Image( finishFlagImage, {
+    const finishFlagNode = new Image( finishFlag_png, {
       cursor: 'pointer',
       scale: 0.5,
       left: modelToView( car.track.lengthProperty.value ),

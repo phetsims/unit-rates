@@ -12,7 +12,7 @@ import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
-import screenIcon from '../../images/racing_lab_screen_icon_png.js';
+import racingLabScreenIcon_png from '../../images/racingLabScreenIcon_png.js';
 import URColors from '../common/URColors.js';
 import unitRates from '../unitRates.js';
 import unitRatesStrings from '../unitRatesStrings.js';
@@ -29,7 +29,7 @@ class RacingLabScreen extends Screen {
     options = merge( {
       name: unitRatesStrings.screen.racingLab,
       backgroundColorProperty: new Property( URColors.racingLabScreenBackground ),
-      homeScreenIcon: new ScreenIcon( new Image( screenIcon ), {
+      homeScreenIcon: new ScreenIcon( new Image( racingLabScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } )
