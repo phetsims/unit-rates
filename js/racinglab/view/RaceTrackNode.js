@@ -88,7 +88,7 @@ class RaceTrackNode extends Node {
       markerNodes.push( markerNode );
 
       // position marker
-      markerNode.centerX = modelToView( x );
+      markerNode.centerX = modelToView.evaluate( x );
       markerNode.top = solidLineNode.bottom;
 
       // next marker
@@ -108,7 +108,7 @@ class RaceTrackNode extends Node {
     const finishFlagNode = new Image( finishFlag_png, {
       cursor: 'pointer',
       scale: 0.5,
-      left: modelToView( car.track.lengthProperty.value ),
+      left: modelToView.evaluate( car.track.lengthProperty.value ),
       bottom: 0
     } );
     finishFlagNode.touchArea = finishFlagNode.localBounds.dilatedX( 30 );
@@ -149,7 +149,7 @@ class RaceTrackNode extends Node {
     // Synchronize track length with the model
     const lengthObserver = length => {
 
-      const finishX = modelToView( length );
+      const finishX = modelToView.evaluate( length );
 
       // adjust track length
       solidLineNode.setLine( -NEGATIVE_TRACK_LENGTH, 0, finishX, 0 );
@@ -194,7 +194,7 @@ class RaceTrackNode extends Node {
 
         // compute offset from current track length
         startDragXOffset = finishFlagNode.globalToParentPoint( event.pointer.point ).x -
-                           modelToView( car.track.lengthProperty.value );
+                           modelToView.evaluate( car.track.lengthProperty.value );
       },
 
       /**
@@ -222,7 +222,7 @@ class RaceTrackNode extends Node {
     // Synchronize car position with model
     // unlink not needed, exists for sim lifetime
     car.distanceProperty.link( distance => {
-      carNode.right = modelToView( distance );
+      carNode.right = modelToView.evaluate( distance );
     } );
 
     // unlink not needed, exists for sim lifetime
