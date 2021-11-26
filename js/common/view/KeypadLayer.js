@@ -7,8 +7,8 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import PressListener from '../../../../scenery/js/listeners/PressListener.js';
-import Plane from '../../../../scenery/js/nodes/Plane.js';
+import { PressListener } from '../../../../scenery/js/imports.js';
+import { Plane } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 import KeypadPanel from './KeypadPanel.js';
 

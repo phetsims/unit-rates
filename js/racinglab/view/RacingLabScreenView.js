@@ -9,7 +9,7 @@
 import Property from '../../../../axon/js/Property.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import URConstants from '../../common/URConstants.js';
 import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAccordionBox.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';

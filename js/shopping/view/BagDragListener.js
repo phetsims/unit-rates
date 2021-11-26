@@ -6,7 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import { DragListener } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 import Scale from '../model/Scale.js';
 

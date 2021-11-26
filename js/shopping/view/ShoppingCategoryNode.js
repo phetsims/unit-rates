@@ -6,7 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
 import ShoppingSceneComboBox from './ShoppingSceneComboBox.js';

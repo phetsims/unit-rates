@@ -9,9 +9,9 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import Text from '../../../../scenery/js/nodes/Text.js';
-import VBox from '../../../../scenery/js/nodes/VBox.js';
+import { Rectangle } from '../../../../scenery/js/imports.js';
+import { Text } from '../../../../scenery/js/imports.js';
+import { VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';

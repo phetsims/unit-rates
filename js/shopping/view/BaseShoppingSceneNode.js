@@ -8,7 +8,7 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import ResetButton from '../../../../scenery-phet/js/buttons/ResetButton.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import URQueryParameters from '../../common/URQueryParameters.js';

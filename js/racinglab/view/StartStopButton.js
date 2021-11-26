@@ -8,7 +8,7 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import StopSignNode from '../../../../scenery-phet/js/StopSignNode.js';
-import Image from '../../../../scenery/js/nodes/Image.js';
+import { Image } from '../../../../scenery/js/imports.js';
 import BooleanRoundToggleButton from '../../../../sun/js/buttons/BooleanRoundToggleButton.js';
 import goButtonIcon_png from '../../../images/goButtonIcon_png.js';
 import unitRates from '../../unitRates.js';

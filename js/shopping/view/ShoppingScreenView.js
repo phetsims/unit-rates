@@ -9,7 +9,7 @@
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import merge from '../../../../phet-core/js/merge.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import URConstants from '../../common/URConstants.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
 import unitRates from '../../unitRates.js';

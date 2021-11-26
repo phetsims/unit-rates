@@ -6,7 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Image from '../../../../scenery/js/nodes/Image.js';
+import { Image } from '../../../../scenery/js/imports.js';
 import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
 import BagDragListener from './BagDragListener.js';

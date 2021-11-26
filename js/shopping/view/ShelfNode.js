@@ -8,10 +8,10 @@
  */
 
 import Shape from '../../../../kite/js/Shape.js';
-import Circle from '../../../../scenery/js/nodes/Circle.js';
-import Line from '../../../../scenery/js/nodes/Line.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
-import Path from '../../../../scenery/js/nodes/Path.js';
+import { Circle } from '../../../../scenery/js/imports.js';
+import { Line } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import { Path } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 
