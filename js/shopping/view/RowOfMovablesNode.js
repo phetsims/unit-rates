@@ -1,4 +1,4 @@
-// Copyright 2017-2021, University of Colorado Boulder
+// Copyright 2017-2022, University of Colorado Boulder
 
 /**
  * Used for debugging purposes to see the cells in each RowOfMovable instance.
