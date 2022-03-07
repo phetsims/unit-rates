@@ -68,9 +68,8 @@ class ShoppingItemDragListener extends DragListener {
 
       /**
        * Called when a drag sequence ends.
-       * @param {SceneryEvent} event
        */
-      end: event => {
+      end: () => {
 
         item.dragging = false;
 

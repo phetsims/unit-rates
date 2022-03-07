@@ -73,9 +73,8 @@ class BagDragListener extends DragListener {
 
       /**
        * Called when a drag sequence ends.
-       * @param {SceneryEvent} event
        */
-      end: event => {
+      end: () => {
 
         // return Node to bag layer
         bag.dragging = false;
