@@ -6,7 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { Node } from '../../../../scenery/js/imports.js';
@@ -162,7 +162,7 @@ class RacingLabScreenView extends ScreenView {
     } );
 
     // Disable the restart button when both cars are at the starting line. unmultilink not needed
-    Property.multilink( [ model.car1.distanceProperty, model.car2.distanceProperty ],
+    Multilink.multilink( [ model.car1.distanceProperty, model.car2.distanceProperty ],
       ( distance1, distance2 ) => {
         resetRace.enabled = !( distance1 === 0 && distance2 === 0 );
       } );

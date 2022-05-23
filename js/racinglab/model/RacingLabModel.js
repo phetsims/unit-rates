@@ -7,7 +7,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import blueCar_png from '../../../images/blueCar_png.js';
 import redCar_png from '../../../images/redCar_png.js';
 import URColors from '../../common/URColors.js';
@@ -35,7 +35,7 @@ class RacingLabModel {
     } );
 
     // When both cars reach the finish line, stop the race.  unmulitlink not needed.
-    Property.lazyMultilink(
+    Multilink.lazyMultilink(
       [ this.car1.distanceProperty, this.car2.distanceProperty ],
       ( distance1, distance2 ) => {
         if ( this.car1.isAtFinish() && ( !this.car2.visibleProperty.value || this.car2.isAtFinish() ) ) {
@@ -53,7 +53,7 @@ class RacingLabModel {
 
     // Reset the race when any of these Properties is changed. unmultilink not needed
     // See https://github.com/phetsims/unit-rates/issues/93
-    Property.lazyMultilink( [
+    Multilink.lazyMultilink( [
 
         // changed via the scene radio buttons
         this.car2.visibleProperty,
