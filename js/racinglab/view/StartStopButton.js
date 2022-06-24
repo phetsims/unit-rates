@@ -30,7 +30,7 @@ class StartStopButton extends BooleanRoundToggleButton {
     const goIcon = new Image( goButtonIcon_png, { scale: 0.5 } );
     const stopIcon = new StopSignNode( { fillRadius: 25 } );
 
-    super( stopIcon, goIcon, runningProperty, options );
+    super( runningProperty, stopIcon, goIcon, options );
 
     // adjust button color based on runningProperty
     // unlink not needed, exists for sim lifetime
