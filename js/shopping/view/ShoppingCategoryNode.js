@@ -32,7 +32,7 @@ class ShoppingCategoryNode extends Node {
     this.addChild( shoppingSceneParent );
 
     // combo box, for selecting a scene, dispose required
-    const comboBox = new ShoppingSceneComboBox( category.shoppingScenes, category.shoppingSceneProperty, this, {
+    const comboBox = new ShoppingSceneComboBox( category.shoppingSceneProperty, category.shoppingScenes, this, {
       left: layoutBounds.left + URConstants.SCREEN_X_MARGIN,
       bottom: layoutBounds.bottom - 80
     } );

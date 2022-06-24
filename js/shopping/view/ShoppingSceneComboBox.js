@@ -22,13 +22,13 @@ import unitRates from '../../unitRates.js';
 class ShoppingSceneComboBox extends ComboBox {
 
   /**
-   * @param {ShoppingScene[]} shoppingScenes
    * @param {Property.<ShoppingScene>} shoppingSceneProperty - the selected scene
+   * @param {ShoppingScene[]} shoppingScenes
    * @param {Node} parentNode - the parent node of the combo box
    * @param {Object} [options]
    * @constructor
    */
-  constructor( shoppingScenes, shoppingSceneProperty, parentNode, options ) {
+  constructor( shoppingSceneProperty, shoppingScenes, parentNode, options ) {
 
     assert && assert( shoppingScenes && shoppingScenes.length > 0, 'at least 1 ShoppingScene is required' );
 
@@ -48,7 +48,7 @@ class ShoppingSceneComboBox extends ComboBox {
     // {ComboBoxItem[]}
     const items = shoppingScenes.map( shoppingScene => createItem( shoppingScene, options.iconSize ) );
 
-    super( items, shoppingSceneProperty, parentNode, options );
+    super( shoppingSceneProperty, items, parentNode, options );
   }
 }
 
