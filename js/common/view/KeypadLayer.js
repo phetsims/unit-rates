@@ -109,7 +109,7 @@ class KeypadLayer extends Plane {
   commitEdit() {
 
     // get the value from the keypad
-    const value = parseFloat( this.keypad.valueStringProperty.value );
+    const value = Number( this.keypad.valueStringProperty.value );
 
     // if the keypad contains a valid value ...
     if ( isValidValue( value, this.zeroIsValid ) ) {
