@@ -9,14 +9,8 @@
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox } from '../../../../scenery/js/imports.js';
-import { HStrut } from '../../../../scenery/js/imports.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { HBox, HStrut, Image, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
-import ComboBoxItem from '../../../../sun/js/ComboBoxItem.js';
 import unitRates from '../../unitRates.js';
 
 class ShoppingSceneComboBox extends ComboBox {
@@ -90,7 +84,7 @@ function createItem( shoppingScene, iconSize ) {
     children: [ iconNode, labelNode ]
   } );
 
-  return new ComboBoxItem( itemNode, shoppingScene );
+  return { value: shoppingScene, node: itemNode };
 }
 
 unitRates.register( 'ShoppingSceneComboBox', ShoppingSceneComboBox );
