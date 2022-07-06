@@ -29,14 +29,15 @@ class NumberOfCarsRadioButtonGroup extends RectangularRadioButtonGroup {
 
       // RectangularRadioButtonGroup options
       orientation: 'vertical',
-      baseColor: 'white',
-      buttonContentXMargin: 12,
-      buttonContentYMargin: 10,
-      spacing: 11 // space between the buttons
-
+      spacing: 11, // space between the buttons
+      radioButtonOptions: {
+        baseColor: 'white',
+        xMargin: 12,
+        yMargin: 10
+      }
     }, options );
 
-    const maxCarWidth = options.buttonWidth - ( 2 * options.buttonContentXMargin );
+    const maxCarWidth = options.buttonWidth - ( 2 * options.radioButtonOptions.xMargin );
 
     super( car2VisibleProperty, [
       { value: false, node: createOneCarIcon( maxCarWidth ) },

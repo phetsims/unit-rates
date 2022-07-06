@@ -25,10 +25,12 @@ class ShoppingCategoryRadioButtonGroup extends RectangularRadioButtonGroup {
 
       // RectangularRadioButtonGroup options
       orientation: 'horizontal',
-      baseColor: URColors.categoryButton,
       spacing: 12,
-      buttonContentXMargin: 5,
-      buttonContentYMargin: 5
+      radioButtonOptions: {
+        baseColor: URColors.categoryButton,
+        xMargin: 5,
+        yMargin: 5
+      }
     }, options );
 
     // describe a radio button for each category
