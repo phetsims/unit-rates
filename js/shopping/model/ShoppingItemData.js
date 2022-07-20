@@ -8,30 +8,30 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import appleBag_png from '../../../images/appleBag_png.js';
 import apple_png from '../../../images/apple_png.js';
-import blueCandyBag_png from '../../../images/blueCandyBag_png.js';
+import appleBag_png from '../../../images/appleBag_png.js';
 import blueCandy_png from '../../../images/blueCandy_png.js';
-import carrotBag_png from '../../../images/carrotBag_png.js';
+import blueCandyBag_png from '../../../images/blueCandyBag_png.js';
 import carrot_png from '../../../images/carrot_png.js';
-import cucumberBag_png from '../../../images/cucumberBag_png.js';
+import carrotBag_png from '../../../images/carrotBag_png.js';
 import cucumber_png from '../../../images/cucumber_png.js';
-import greenCandyBag_png from '../../../images/greenCandyBag_png.js';
+import cucumberBag_png from '../../../images/cucumberBag_png.js';
 import greenCandy_png from '../../../images/greenCandy_png.js';
-import lemonBag_png from '../../../images/lemonBag_png.js';
+import greenCandyBag_png from '../../../images/greenCandyBag_png.js';
 import lemon_png from '../../../images/lemon_png.js';
-import orangeBag_png from '../../../images/orangeBag_png.js';
+import lemonBag_png from '../../../images/lemonBag_png.js';
 import orange_png from '../../../images/orange_png.js';
-import pearBag_png from '../../../images/pearBag_png.js';
+import orangeBag_png from '../../../images/orangeBag_png.js';
 import pear_png from '../../../images/pear_png.js';
-import potatoBag_png from '../../../images/potatoBag_png.js';
+import pearBag_png from '../../../images/pearBag_png.js';
 import potato_png from '../../../images/potato_png.js';
-import purpleCandyBag_png from '../../../images/purpleCandyBag_png.js';
+import potatoBag_png from '../../../images/potatoBag_png.js';
 import purpleCandy_png from '../../../images/purpleCandy_png.js';
-import redCandyBag_png from '../../../images/redCandyBag_png.js';
+import purpleCandyBag_png from '../../../images/purpleCandyBag_png.js';
 import redCandy_png from '../../../images/redCandy_png.js';
-import tomatoBag_png from '../../../images/tomatoBag_png.js';
+import redCandyBag_png from '../../../images/redCandyBag_png.js';
 import tomato_png from '../../../images/tomato_png.js';
+import tomatoBag_png from '../../../images/tomatoBag_png.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
 

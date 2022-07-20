@@ -8,10 +8,7 @@
  */
 
 import { Shape } from '../../../../kite/js/imports.js';
-import { Circle } from '../../../../scenery/js/imports.js';
-import { Line } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
+import { Circle, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 

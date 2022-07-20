@@ -7,8 +7,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { VBox } from '../../../../scenery/js/imports.js';
+import { Image, VBox } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import blueCar_png from '../../../images/blueCar_png.js';
 import redCar_png from '../../../images/redCar_png.js';

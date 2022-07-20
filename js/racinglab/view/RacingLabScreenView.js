@@ -15,9 +15,9 @@ import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAcco
 import KeypadLayer from '../../common/view/KeypadLayer.js';
 import unitRates from '../../unitRates.js';
 import unitRatesStrings from '../../unitRatesStrings.js';
+import NumberOfCarsRadioButtonGroup from './NumberOfCarsRadioButtonGroup.js';
 import RaceCarRateAccordionBox from './RaceCarRateAccordionBox.js';
 import RaceTrackNode from './RaceTrackNode.js';
-import NumberOfCarsRadioButtonGroup from './NumberOfCarsRadioButtonGroup.js';
 import RacingLabViewProperties from './RacingLabViewProperties.js';
 import ResetRaceButton from './ResetRaceButton.js';
 import StartStopButton from './StartStopButton.js';

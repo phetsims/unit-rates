@@ -10,13 +10,7 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { FireListener } from '../../../../scenery/js/imports.js';
-import { HStrut } from '../../../../scenery/js/imports.js';
-import { Line } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { FireListener, HStrut, Line, Node, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import checkSolidShape from '../../../../sherpa/js/fontawesome-5/checkSolidShape.js';
 import editRegularShape from '../../../../sherpa/js/fontawesome-5/editRegularShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';

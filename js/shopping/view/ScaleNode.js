@@ -10,13 +10,7 @@
 import { Shape } from '../../../../kite/js/imports.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import { Circle } from '../../../../scenery/js/imports.js';
-import { HBox } from '../../../../scenery/js/imports.js';
-import { Line } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
-import { LinearGradient } from '../../../../scenery/js/imports.js';
+import { Circle, HBox, Line, LinearGradient, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import URUtils from '../../common/URUtils.js';
 import ValueNode from '../../common/view/ValueNode.js';
