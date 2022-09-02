@@ -32,6 +32,6 @@ simLauncher.launch( () => {
     new RacingLabScreen()
   ];
 
-  const sim = new Sim( unitRatesStrings[ 'unit-rates' ].title, screens, simOptions );
+  const sim = new Sim( unitRatesStrings[ 'unit-rates' ].titleStringProperty, screens, simOptions );
   sim.start();
 } );
