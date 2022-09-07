@@ -13,7 +13,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import ValueNode from '../../common/view/ValueNode.js';
 import ValuePanel from '../../common/view/ValuePanel.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 
 // constants
 const TIMER_FONT = new PhetFont( 16 );
@@ -32,8 +32,8 @@ class RaceTimerNode extends ValuePanel {
     // dispose not required, exists for sim lifetime
     const valueNode = new ValueNode( timeProperty, {
       font: TIMER_FONT,
-      valueToString: value => StringUtils.format( unitRatesStrings.pattern_0value_1units,
-        Utils.toFixed( value, DECIMAL_PLACES ), unitRatesStrings.hours )
+      valueToString: value => StringUtils.format( UnitRatesStrings.pattern_0value_1units,
+        Utils.toFixed( value, DECIMAL_PLACES ), UnitRatesStrings.hours )
     } );
 
     super( valueNode, merge( {

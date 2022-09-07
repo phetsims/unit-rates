@@ -11,7 +11,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import URConstants from '../../common/URConstants.js';
 import RateAccordionBox from '../../common/view/RateAccordionBox.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 
 class RaceCarRateAccordionBox extends RateAccordionBox {
 
@@ -22,8 +22,8 @@ class RaceCarRateAccordionBox extends RateAccordionBox {
   constructor( car, options ) {
 
     options = merge( {
-      numeratorUnits: unitRatesStrings.miles,
-      denominatorUnits: unitRatesStrings.hours,
+      numeratorUnits: UnitRatesStrings.miles,
+      denominatorUnits: UnitRatesStrings.hours,
       numeratorRange: URConstants.MILES_RANGE,
       denominatorRange: URConstants.HOURS_RANGE,
       numeratorPickerColor: car.color,

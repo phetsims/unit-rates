@@ -27,7 +27,7 @@ import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 import Bag from './Bag.js';
 import Scale from './Scale.js';
 import Shelf from './Shelf.js';
@@ -83,8 +83,8 @@ class ShoppingScene {
 
     // @public (read-only) options specific to the rate's numerator
     this.numeratorOptions = merge( {
-      axisLabel: unitRatesStrings.dollars, // {string} label for the axis on the double number line
-      valueFormat: unitRatesStrings.pattern_0cost, // {string} format with placeholder for value
+      axisLabel: UnitRatesStrings.dollars, // {string} label for the axis on the double number line
+      valueFormat: UnitRatesStrings.pattern_0cost, // {string} format with placeholder for value
       trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
     }, SHARED_OPTIONS, options.numeratorOptions );
 

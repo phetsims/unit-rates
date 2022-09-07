@@ -15,7 +15,7 @@ import { Image } from '../../../scenery/js/imports.js';
 import shoppingScreenIcon_png from '../../images/shoppingScreenIcon_png.js';
 import URColors from '../common/URColors.js';
 import unitRates from '../unitRates.js';
-import unitRatesStrings from '../unitRatesStrings.js';
+import UnitRatesStrings from '../UnitRatesStrings.js';
 import ShoppingModel from './model/ShoppingModel.js';
 import ShoppingScreenView from './view/ShoppingScreenView.js';
 
@@ -27,7 +27,7 @@ class ShoppingScreen extends Screen {
   constructor( options ) {
 
     options = merge( {
-      name: unitRatesStrings.screen.shopping,
+      name: UnitRatesStrings.screen.shopping,
       backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
       homeScreenIcon: new ScreenIcon( new Image( shoppingScreenIcon_png ), {
         maxIconWidthProportion: 1,

@@ -21,7 +21,7 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 import Marker from '../model/Marker.js';
 import URColors from '../URColors.js';
 import URConstants from '../URConstants.js';
@@ -41,7 +41,7 @@ class DoubleNumberLineAccordionBox extends AccordionBox {
     options = merge( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // DoubleNumberLineAccordionBox options
-      titleString: unitRatesStrings.doubleNumberLine, // {string} title displayed next to the expand/collapse button
+      titleString: UnitRatesStrings.doubleNumberLine, // {string} title displayed next to the expand/collapse button
       keypadPosition: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
 
       // DoubleNumberLineNode options

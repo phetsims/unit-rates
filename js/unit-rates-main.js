@@ -12,7 +12,7 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import RacingLabScreen from './racinglab/RacingLabScreen.js';
 import ShoppingScreen from './shopping/ShoppingScreen.js';
 import ShoppingLabScreen from './shoppinglab/ShoppingLabScreen.js';
-import unitRatesStrings from './unitRatesStrings.js';
+import UnitRatesStrings from './UnitRatesStrings.js';
 
 const simOptions = {
   credits: {
@@ -32,6 +32,6 @@ simLauncher.launch( () => {
     new RacingLabScreen()
   ];
 
-  const sim = new Sim( unitRatesStrings[ 'unit-rates' ].titleStringProperty, screens, simOptions );
+  const sim = new Sim( UnitRatesStrings[ 'unit-rates' ].titleStringProperty, screens, simOptions );
   sim.start();
 } );

@@ -10,7 +10,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingQuestion from './ShoppingQuestion.js';
 
 const ShoppingQuestionFactory = {
@@ -30,16 +30,16 @@ const ShoppingQuestionFactory = {
 
     // '$0.50'
     const numerator = unitRate;
-    const numeratorString = StringUtils.format( unitRatesStrings.pattern_0cost,
+    const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
       URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
     // '1 Apple'
     const denominator = 1;
-    const denominatorString = StringUtils.format( unitRatesStrings.pattern_0value_1units,
+    const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
       URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
       units );
 
-    return new ShoppingQuestion( unitRatesStrings.unitRateQuestion, unitRate, numerator, denominator, numeratorString, denominatorString, numeratorOptions );
+    return new ShoppingQuestion( UnitRatesStrings.unitRateQuestion, unitRate, numerator, denominator, numeratorString, denominatorString, numeratorOptions );
   },
 
   /**
@@ -103,16 +103,16 @@ function createCostOfQuestion( denominator, unitRate, singularUnits, pluralUnits
   const units = ( denominator > 1 ) ? pluralUnits : singularUnits;
 
   // '$3.00'
-  const numeratorString = StringUtils.format( unitRatesStrings.pattern_0cost,
+  const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
     URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
   // '10 Apples'
-  const denominatorString = StringUtils.format( unitRatesStrings.pattern_0value_1units,
+  const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
     URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
     units );
 
   // 'Cost of 10 Apples?'
-  const questionString = StringUtils.format( unitRatesStrings.pattern_costOf_0quantity_1units,
+  const questionString = StringUtils.format( UnitRatesStrings.pattern_costOf_0quantity_1units,
     URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
     units );
 
@@ -140,16 +140,16 @@ function createItemsForQuestion( denominator, unitRate, singularUnits, pluralUni
 
   // '$4.00'
   const numerator = denominator * unitRate;
-  const numeratorString = StringUtils.format( unitRatesStrings.pattern_0cost,
+  const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
     URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 
   // '8 Apples'
-  const denominatorString = StringUtils.format( unitRatesStrings.pattern_0value_1units,
+  const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
     URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
     units );
 
   // 'Apples for $4.00?'
-  const questionString = StringUtils.format( unitRatesStrings.pattern_0items_1cost,
+  const questionString = StringUtils.format( UnitRatesStrings.pattern_0items_1cost,
     amountOfQuestionUnits,
     URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
 

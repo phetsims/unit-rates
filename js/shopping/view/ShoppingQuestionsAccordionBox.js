@@ -14,7 +14,7 @@ import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingQuestionNode from './ShoppingQuestionNode.js';
 
 class ShoppingQuestionsAccordionBox extends AccordionBox {
@@ -34,7 +34,7 @@ class ShoppingQuestionsAccordionBox extends AccordionBox {
       contentXMargin: 10,
       contentYMargin: 6,
       contentYSpacing: 2,
-      titleNode: new Text( unitRatesStrings.questions, {
+      titleNode: new Text( UnitRatesStrings.questions, {
         font: URConstants.ACCORDION_BOX_TITLE_FONT,
         maxWidth: 100
       } ),

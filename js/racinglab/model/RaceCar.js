@@ -17,7 +17,7 @@ import MarkerEditor from '../../common/model/MarkerEditor.js';
 import Rate from '../../common/model/Rate.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceTrack from './RaceTrack.js';
 
 class RaceCar {
@@ -63,13 +63,13 @@ class RaceCar {
     // @public
     this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
       numeratorOptions: {
-        axisLabel: unitRatesStrings.miles,
+        axisLabel: UnitRatesStrings.miles,
         maxDigits: 5,
         maxDecimals: options.numeratorMaxDecimals,
         trimZeros: true
       },
       denominatorOptions: {
-        axisLabel: unitRatesStrings.hours,
+        axisLabel: UnitRatesStrings.hours,
         maxDigits: 4,
         maxDecimals: options.denominatorMaxDecimals,
         trimZeros: true

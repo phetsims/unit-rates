@@ -33,7 +33,7 @@ import redCandyBag_png from '../../../images/redCandyBag_png.js';
 import tomato_png from '../../../images/tomato_png.js';
 import tomatoBag_png from '../../../images/tomatoBag_png.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 
 const ShoppingItemData = {
 
@@ -45,8 +45,8 @@ const ShoppingItemData = {
       unitRate: 0.5, // {number} cost per item, in $
       numberOfBags: 3, // {number} number of bags of the item
       quantityPerBag: 5, // {number} quantity in each bag
-      singularName: unitRatesStrings.apple, // {string} name to use for singular quantities (e.g. '1 Apple')
-      pluralName: unitRatesStrings.apples, // {string} name to use for plural quantities (e.g. '2 Apples')
+      singularName: UnitRatesStrings.apple, // {string} name to use for singular quantities (e.g. '1 Apple')
+      pluralName: UnitRatesStrings.apples, // {string} name to use for plural quantities (e.g. '2 Apples')
       itemImage: apple_png, // {HTMLImageElement} image for individual items
       itemRowOverlap: 7, // {number} for tweaking how items overlap when stacked, specific to itemImage
       bagImage: appleBag_png, // {HTMLImageElement} image for a bag of items
@@ -66,8 +66,8 @@ const ShoppingItemData = {
       unitRate: 0.25,
       numberOfBags: 3,
       quantityPerBag: 5,
-      singularName: unitRatesStrings.lemon,
-      pluralName: unitRatesStrings.lemons,
+      singularName: UnitRatesStrings.lemon,
+      pluralName: UnitRatesStrings.lemons,
       itemImage: lemon_png,
       itemRowOverlap: 5,
       bagImage: lemonBag_png,
@@ -85,8 +85,8 @@ const ShoppingItemData = {
       unitRate: 0.75,
       numberOfBags: 3,
       quantityPerBag: 5,
-      singularName: unitRatesStrings.orange,
-      pluralName: unitRatesStrings.oranges,
+      singularName: UnitRatesStrings.orange,
+      pluralName: UnitRatesStrings.oranges,
       itemImage: orange_png,
       itemRowOverlap: 5,
       bagImage: orangeBag_png,
@@ -104,8 +104,8 @@ const ShoppingItemData = {
       unitRate: 0.40,
       numberOfBags: 3,
       quantityPerBag: 5,
-      singularName: unitRatesStrings.pear,
-      pluralName: unitRatesStrings.pears,
+      singularName: UnitRatesStrings.pear,
+      pluralName: UnitRatesStrings.pears,
       itemImage: pear_png,
       itemRowOverlap: 5,
       bagImage: pearBag_png,
@@ -127,8 +127,8 @@ const ShoppingItemData = {
       unitRate: 0.15,
       numberOfBags: 4,
       quantityPerBag: 4,
-      singularName: unitRatesStrings.carrot,
-      pluralName: unitRatesStrings.carrots,
+      singularName: UnitRatesStrings.carrot,
+      pluralName: UnitRatesStrings.carrots,
       itemImage: carrot_png,
       itemRowOverlap: 0,
       bagImage: carrotBag_png,
@@ -146,8 +146,8 @@ const ShoppingItemData = {
       unitRate: 0.22,
       numberOfBags: 4,
       quantityPerBag: 3,
-      singularName: unitRatesStrings.cucumber,
-      pluralName: unitRatesStrings.cucumbers,
+      singularName: UnitRatesStrings.cucumber,
+      pluralName: UnitRatesStrings.cucumbers,
       itemImage: cucumber_png,
       itemRowOverlap: 0,
       bagImage: cucumberBag_png,
@@ -165,8 +165,8 @@ const ShoppingItemData = {
       unitRate: 0.45,
       numberOfBags: 4,
       quantityPerBag: 3,
-      singularName: unitRatesStrings.potato,
-      pluralName: unitRatesStrings.potatoes,
+      singularName: UnitRatesStrings.potato,
+      pluralName: UnitRatesStrings.potatoes,
       itemImage: potato_png,
       itemRowOverlap: 0,
       bagImage: potatoBag_png,
@@ -184,8 +184,8 @@ const ShoppingItemData = {
       unitRate: 0.3,
       numberOfBags: 4,
       quantityPerBag: 4,
-      singularName: unitRatesStrings.tomato,
-      pluralName: unitRatesStrings.tomatoes,
+      singularName: UnitRatesStrings.tomato,
+      pluralName: UnitRatesStrings.tomatoes,
       itemImage: tomato_png,
       itemRowOverlap: 0,
       bagImage: tomatoBag_png,
@@ -207,8 +207,8 @@ const ShoppingItemData = {
       unitRate: 5.40,
       numberOfBags: 4,
       quantityPerBag: 0.4,
-      singularName: unitRatesStrings.purpleCandy,
-      pluralName: unitRatesStrings.purpleCandy,
+      singularName: UnitRatesStrings.purpleCandy,
+      pluralName: UnitRatesStrings.purpleCandy,
       itemImage: purpleCandy_png,
       itemRowOverlap: 0,
       bagImage: purpleCandyBag_png,
@@ -226,8 +226,8 @@ const ShoppingItemData = {
       unitRate: 3.80,
       numberOfBags: 4,
       quantityPerBag: 0.3,
-      singularName: unitRatesStrings.redCandy,
-      pluralName: unitRatesStrings.redCandy,
+      singularName: UnitRatesStrings.redCandy,
+      pluralName: UnitRatesStrings.redCandy,
       itemImage: redCandy_png,
       itemRowOverlap: 0,
       bagImage: redCandyBag_png,
@@ -245,8 +245,8 @@ const ShoppingItemData = {
       unitRate: 8.20,
       numberOfBags: 4,
       quantityPerBag: 0.3,
-      singularName: unitRatesStrings.greenCandy,
-      pluralName: unitRatesStrings.greenCandy,
+      singularName: UnitRatesStrings.greenCandy,
+      pluralName: UnitRatesStrings.greenCandy,
       itemImage: greenCandy_png,
       itemRowOverlap: 0,
       bagImage: greenCandyBag_png,
@@ -264,8 +264,8 @@ const ShoppingItemData = {
       unitRate: 1.30,
       numberOfBags: 4,
       quantityPerBag: 0.4,
-      singularName: unitRatesStrings.blueCandy,
-      pluralName: unitRatesStrings.blueCandy,
+      singularName: UnitRatesStrings.blueCandy,
+      pluralName: UnitRatesStrings.blueCandy,
       itemImage: blueCandy_png,
       itemRowOverlap: 0,
       bagImage: blueCandyBag_png,

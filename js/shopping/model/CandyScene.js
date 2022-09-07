@@ -11,7 +11,7 @@ import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
 import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import ShoppingScene from './ShoppingScene.js';
 
@@ -31,19 +31,19 @@ class CandyScene extends ShoppingScene {
       fixedAxisRange: new Range( 0, 1.6 ),
 
       // Candy quantity is in pounds
-      quantitySingularUnits: unitRatesStrings.pound,
-      quantityPluralUnits: unitRatesStrings.pounds,
+      quantitySingularUnits: UnitRatesStrings.pound,
+      quantityPluralUnits: UnitRatesStrings.pounds,
 
       // Candy questions require capitalization of 'Pounds', e.g. 'Pounds for $10.50?'
       // This hack was required by https://github.com/phetsims/unit-rates/issues/20
-      amountOfQuestionUnits: unitRatesStrings.poundsCapitalized,
+      amountOfQuestionUnits: UnitRatesStrings.poundsCapitalized,
 
       // {*|null} nest options for the rate's denominator, defaults provided below
       denominatorOptions: null,
 
       // Scale displays quantity in 'lbs' for Candy
       scaleQuantityIsDisplayed: true,
-      scaleQuantityUnits: unitRatesStrings.lbs,
+      scaleQuantityUnits: UnitRatesStrings.lbs,
 
       // Major markers have 1 decimal place in the denominator
       isMajorMarker: ( numerator, denominator ) => ( URUtils.decimalPlaces( denominator ) <= 1 )
@@ -51,7 +51,7 @@ class CandyScene extends ShoppingScene {
     }, options );
 
     options.denominatorOptions = merge( {
-      axisLabel: unitRatesStrings.pounds
+      axisLabel: UnitRatesStrings.pounds
     }, options.denominatorOptions );
 
     super( itemData, options );

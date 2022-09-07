@@ -23,7 +23,7 @@ import { DragListener, HBox, Image, Line, Node, Path, Text } from '../../../../s
 import finishFlag_png from '../../../images/finishFlag_png.js';
 import startFlag_png from '../../../images/startFlag_png.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceTimerNode from './RaceTimerNode.js';
 
 // constants
@@ -157,7 +157,7 @@ class RaceTrackNode extends Node {
       timerNode.bottom = finishFlagNode.top - 3;
 
       // distance label below finish flag
-      lengthNode.text = StringUtils.format( unitRatesStrings.pattern_0value_1units, length, unitRatesStrings.miles );
+      lengthNode.text = StringUtils.format( UnitRatesStrings.pattern_0value_1units, length, UnitRatesStrings.miles );
       lengthNode.top = solidLineNode.bottom + TRACK_MARKER_SIDE_LENGTH + 4;
       lengthNode.centerX = finishX;
 

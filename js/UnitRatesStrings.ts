@@ -111,8 +111,8 @@ type StringsType = {
   }
 };
 
-const unitRatesStrings = getStringModule( 'UNIT_RATES' ) as StringsType;
+const UnitRatesStrings = getStringModule( 'UNIT_RATES' ) as StringsType;
 
-unitRates.register( 'unitRatesStrings', unitRatesStrings );
+unitRates.register( 'UnitRatesStrings', UnitRatesStrings );
 
-export default unitRatesStrings;
+export default UnitRatesStrings;

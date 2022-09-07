@@ -13,7 +13,7 @@ import { Node, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 import URColors from '../URColors.js';
 
 class KeypadPanel extends Panel {
@@ -82,7 +82,7 @@ class KeypadPanel extends Panel {
     const enterButton = new RectangularPushButton( {
       listener: options.enterButtonListener,
       baseColor: URColors.enterButton,
-      content: new Text( unitRatesStrings.enter, {
+      content: new Text( UnitRatesStrings.enter, {
         font: new PhetFont( 16 ),
         fill: 'black',
         maxWidth: keypad.width // i18n

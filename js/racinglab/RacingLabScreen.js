@@ -15,7 +15,7 @@ import { Image } from '../../../scenery/js/imports.js';
 import racingLabScreenIcon_png from '../../images/racingLabScreenIcon_png.js';
 import URColors from '../common/URColors.js';
 import unitRates from '../unitRates.js';
-import unitRatesStrings from '../unitRatesStrings.js';
+import UnitRatesStrings from '../UnitRatesStrings.js';
 import RacingLabModel from './model/RacingLabModel.js';
 import RacingLabScreenView from './view/RacingLabScreenView.js';
 
@@ -27,7 +27,7 @@ class RacingLabScreen extends Screen {
   constructor( options ) {
 
     options = merge( {
-      name: unitRatesStrings.screen.racingLab,
+      name: UnitRatesStrings.screen.racingLab,
       backgroundColorProperty: new Property( URColors.racingLabScreenBackground ),
       homeScreenIcon: new ScreenIcon( new Image( racingLabScreenIcon_png ), {
         maxIconWidthProportion: 1,

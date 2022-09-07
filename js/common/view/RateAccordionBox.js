@@ -14,7 +14,7 @@ import { Line, Node, Text } from '../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
 import unitRates from '../../unitRates.js';
-import unitRatesStrings from '../../unitRatesStrings.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 import URConstants from '../URConstants.js';
 
 // If the Rate accordion box appears to change size when switching categories, increase this value. Determined empirically.
@@ -36,7 +36,7 @@ class RateAccordionBox extends AccordionBox {
       contentYSpacing: 20,
 
       // RateAccordionBox options
-      titleString: unitRatesStrings.rate,
+      titleString: UnitRatesStrings.rate,
       unitsFont: new PhetFont( 16 ),
       unitsMaxWidth: 60, // i18n, determined empirically
       numeratorRange: new Range( 0, 10 ),
