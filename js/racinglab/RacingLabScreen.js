@@ -27,7 +27,7 @@ class RacingLabScreen extends Screen {
   constructor( options ) {
 
     options = merge( {
-      name: UnitRatesStrings.screen.racingLab,
+      name: UnitRatesStrings.screen.racingLabStringProperty,
       backgroundColorProperty: new Property( URColors.racingLabScreenBackground ),
       homeScreenIcon: new ScreenIcon( new Image( racingLabScreenIcon_png ), {
         maxIconWidthProportion: 1,

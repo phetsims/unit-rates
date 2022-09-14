@@ -27,7 +27,7 @@ class ShoppingLabScreen extends Screen {
   constructor( options ) {
 
     options = merge( {
-      name: UnitRatesStrings.screen.shoppingLab,
+      name: UnitRatesStrings.screen.shoppingLabStringProperty,
       backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
       homeScreenIcon: new ScreenIcon( new Image( shoppingLabScreenIcon_png ), {
         maxIconWidthProportion: 1,
