@@ -39,8 +39,8 @@ class NumberOfCarsRadioButtonGroup extends RectangularRadioButtonGroup {
     const maxCarWidth = options.buttonWidth - ( 2 * options.radioButtonOptions.xMargin );
 
     super( car2VisibleProperty, [
-      { value: false, node: createOneCarIcon( maxCarWidth ) },
-      { value: true, node: createTwoCarsIcon( maxCarWidth ) }
+      { value: false, createNode: tandem => createOneCarIcon( maxCarWidth ) },
+      { value: true, createNode: tandem => createTwoCarsIcon( maxCarWidth ) }
     ], options );
   }
 }

@@ -38,7 +38,7 @@ class ShoppingCategoryRadioButtonGroup extends RectangularRadioButtonGroup {
     categories.forEach( category => {
       contentArray.push( {
         value: category,
-        node: new Image( category.image, { scale: 0.5 } )
+        createNode: tandem => new Image( category.image, { scale: 0.5 } )
       } );
     } );
 
