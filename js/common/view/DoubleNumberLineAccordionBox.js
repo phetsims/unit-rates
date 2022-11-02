@@ -41,7 +41,7 @@ class DoubleNumberLineAccordionBox extends AccordionBox {
     options = merge( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // DoubleNumberLineAccordionBox options
-      titleString: UnitRatesStrings.doubleNumberLine, // {string} title displayed next to the expand/collapse button
+      titleString: UnitRatesStrings.doubleNumberLineStringProperty, // title displayed next to the expand/collapse button
       keypadPosition: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
 
       // DoubleNumberLineNode options

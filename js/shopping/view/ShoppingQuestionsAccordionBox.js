@@ -34,7 +34,7 @@ class ShoppingQuestionsAccordionBox extends AccordionBox {
       contentXMargin: 10,
       contentYMargin: 6,
       contentYSpacing: 2,
-      titleNode: new Text( UnitRatesStrings.questions, {
+      titleNode: new Text( UnitRatesStrings.questionsStringProperty, {
         font: URConstants.ACCORDION_BOX_TITLE_FONT,
         maxWidth: 100
       } ),

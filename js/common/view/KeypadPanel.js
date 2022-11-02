@@ -82,7 +82,7 @@ class KeypadPanel extends Panel {
     const enterButton = new RectangularPushButton( {
       listener: options.enterButtonListener,
       baseColor: URColors.enterButton,
-      content: new Text( UnitRatesStrings.enter, {
+      content: new Text( UnitRatesStrings.enterStringProperty, {
         font: new PhetFont( 16 ),
         fill: 'black',
         maxWidth: keypad.width // i18n

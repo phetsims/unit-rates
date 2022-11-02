@@ -51,7 +51,7 @@ class RacingLabScreenView extends ScreenView {
     const doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
         axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
-        titleString: UnitRatesStrings.doubleNumberLine1,
+        titleString: UnitRatesStrings.doubleNumberLine1StringProperty,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty1,
         indicatorXProperty: model.car1.distanceProperty,
         indicatorColor: model.car1.color,
@@ -65,7 +65,7 @@ class RacingLabScreenView extends ScreenView {
     const doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
       model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
         axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
-        titleString: UnitRatesStrings.doubleNumberLine2,
+        titleString: UnitRatesStrings.doubleNumberLine2StringProperty,
         expandedProperty: viewProperties.doubleNumberLineExpandedProperty2,
         indicatorXProperty: model.car2.distanceProperty,
         indicatorColor: model.car2.color,
@@ -77,7 +77,7 @@ class RacingLabScreenView extends ScreenView {
 
     // Rate control for car1
     const rateAccordionBox1 = new RaceCarRateAccordionBox( model.car1, {
-      titleString: UnitRatesStrings.rate1,
+      titleString: UnitRatesStrings.rate1StringProperty,
       expandedProperty: viewProperties.rateExpandedProperty1,
       left: doubleNumberLineAccordionBox1.right + ACCORDION_BOX_X_SPACE,
       top: doubleNumberLineAccordionBox1.top
@@ -86,7 +86,7 @@ class RacingLabScreenView extends ScreenView {
 
     // Rate control for car2
     const rateAccordionBox2 = new RaceCarRateAccordionBox( model.car2, {
-      titleString: UnitRatesStrings.rate2,
+      titleString: UnitRatesStrings.rate2StringProperty,
       expandedProperty: viewProperties.rateExpandedProperty2,
       left: doubleNumberLineAccordionBox2.right + ACCORDION_BOX_X_SPACE,
       top: doubleNumberLineAccordionBox2.top
@@ -95,7 +95,7 @@ class RacingLabScreenView extends ScreenView {
 
     // Track for car1
     const trackNode1 = new RaceTrackNode( model.car1, viewProperties.timerExpandedProperty1, viewProperties.arrowsVisibleProperty, {
-      timerTitleString: UnitRatesStrings.timer1,
+      timerTitleString: UnitRatesStrings.timer1StringProperty,
       trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
       bottom: this.layoutBounds.centerY - 10
@@ -104,7 +104,7 @@ class RacingLabScreenView extends ScreenView {
 
     // Track for car2
     const trackNode2 = new RaceTrackNode( model.car2, viewProperties.timerExpandedProperty2, viewProperties.arrowsVisibleProperty, {
-      timerTitleString: UnitRatesStrings.timer2,
+      timerTitleString: UnitRatesStrings.timer2StringProperty,
       trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
       top: this.layoutBounds.centerY + ( this.layoutBounds.centerY - trackNode1.bottom )

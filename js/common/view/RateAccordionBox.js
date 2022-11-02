@@ -36,7 +36,7 @@ class RateAccordionBox extends AccordionBox {
       contentYSpacing: 20,
 
       // RateAccordionBox options
-      titleString: UnitRatesStrings.rate,
+      titleString: UnitRatesStrings.rateStringProperty,
       unitsFont: new PhetFont( 16 ),
       unitsMaxWidth: 60, // i18n, determined empirically
       numeratorRange: new Range( 0, 10 ),
