@@ -33,7 +33,7 @@
     "branch": "HEAD"
   },
   "phetcommon": {
-    "sha": "6eb40bae1cf1ad457ed2c79456f41dbaef5accf8",
+    "sha": "0a59cc3f0a7f108aa8d947081b84a2f8d7f6ce8a",
     "branch": "HEAD"
   },
   "phetmarks": {
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "dbb792bace87128e5c8801d163645f55673afe28",
+    "sha": "d3441c1c8f85374876e35b1bfbc0b7173c10c1ad",
     "branch": "1.0"
   }
 }
