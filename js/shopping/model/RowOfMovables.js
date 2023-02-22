@@ -18,7 +18,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 
-class RowOfMovables {
+export default class RowOfMovables {
 
   /**
    * @param {Object} [options]
@@ -252,5 +252,3 @@ function createCells( numberOfCells, position, cellSize, cellSpacing ) {
 }
 
 unitRates.register( 'RowOfMovables', RowOfMovables );
-
-export default RowOfMovables;

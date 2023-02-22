@@ -13,7 +13,7 @@ import { HBox, HStrut, Image, Node, Rectangle, Text } from '../../../../scenery/
 import ComboBox from '../../../../sun/js/ComboBox.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingSceneComboBox extends ComboBox {
+export default class ShoppingSceneComboBox extends ComboBox {
 
   /**
    * @param {Property.<ShoppingScene>} shoppingSceneProperty - the selected scene
@@ -88,5 +88,3 @@ function createItem( shoppingScene, iconSize ) {
 }
 
 unitRates.register( 'ShoppingSceneComboBox', ShoppingSceneComboBox );
-
-export default ShoppingSceneComboBox;

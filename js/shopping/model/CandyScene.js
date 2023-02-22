@@ -15,7 +15,7 @@ import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import ShoppingScene from './ShoppingScene.js';
 
-class CandyScene extends ShoppingScene {
+export default class CandyScene extends ShoppingScene {
 
   /**
    * @param {Object} itemData - data structure that describes a type of candy, see ShoppingItemData
@@ -59,5 +59,3 @@ class CandyScene extends ShoppingScene {
 }
 
 unitRates.register( 'CandyScene', CandyScene );
-
-export default CandyScene;

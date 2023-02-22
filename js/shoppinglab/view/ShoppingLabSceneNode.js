@@ -13,7 +13,7 @@ import RateAccordionBox from '../../common/view/RateAccordionBox.js';
 import BaseShoppingSceneNode from '../../shopping/view/BaseShoppingSceneNode.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingLabSceneNode extends BaseShoppingSceneNode {
+export default class ShoppingLabSceneNode extends BaseShoppingSceneNode {
 
   /**
    * @param {ShoppingScene} shoppingScene
@@ -63,5 +63,3 @@ class ShoppingLabSceneNode extends BaseShoppingSceneNode {
 }
 
 unitRates.register( 'ShoppingLabSceneNode', ShoppingLabSceneNode );
-
-export default ShoppingLabSceneNode;

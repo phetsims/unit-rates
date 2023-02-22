@@ -12,7 +12,7 @@ import { Circle, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 
-class ShelfNode extends Node {
+export default class ShelfNode extends Node {
 
   /**
    * @param {Shelf} shelf
@@ -59,5 +59,3 @@ class ShelfNode extends Node {
 }
 
 unitRates.register( 'ShelfNode', ShelfNode );
-
-export default ShelfNode;

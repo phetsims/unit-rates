@@ -11,7 +11,7 @@ import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
 import ShoppingItemDragListener from './ShoppingItemDragListener.js';
 
-class ShoppingItemNode extends Image {
+export default class ShoppingItemNode extends Image {
 
   /**
    * @param {ShoppingItem} item
@@ -74,5 +74,3 @@ class ShoppingItemNode extends Image {
 }
 
 unitRates.register( 'ShoppingItemNode', ShoppingItemNode );
-
-export default ShoppingItemNode;

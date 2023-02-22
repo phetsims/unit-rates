@@ -12,7 +12,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingCategory {
+export default class ShoppingCategory {
 
   /**
    * @param {HTMLImageElement} image - image used to represent the category
@@ -61,5 +61,3 @@ class ShoppingCategory {
 }
 
 unitRates.register( 'ShoppingCategory', ShoppingCategory );
-
-export default ShoppingCategory;

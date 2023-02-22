@@ -16,7 +16,7 @@ import Bag from './Bag.js';
 import RowOfMovables from './RowOfMovables.js';
 import ShoppingItem from './ShoppingItem.js';
 
-class ShoppingContainer {
+export default class ShoppingContainer {
 
   /**
    * @param {Object} [options]
@@ -163,5 +163,3 @@ class ShoppingContainer {
 }
 
 unitRates.register( 'ShoppingContainer', ShoppingContainer );
-
-export default ShoppingContainer;

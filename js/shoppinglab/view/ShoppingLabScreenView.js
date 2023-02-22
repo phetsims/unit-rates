@@ -11,7 +11,7 @@ import ShoppingScreenView from '../../shopping/view/ShoppingScreenView.js';
 import unitRates from '../../unitRates.js';
 import ShoppingLabCategoryNode from './ShoppingLabCategoryNode.js';
 
-class ShoppingLabScreenView extends ShoppingScreenView {
+export default class ShoppingLabScreenView extends ShoppingScreenView {
 
   /**
    * @param {ShoppingLabModel} model
@@ -32,5 +32,3 @@ class ShoppingLabScreenView extends ShoppingScreenView {
 }
 
 unitRates.register( 'ShoppingLabScreenView', ShoppingLabScreenView );
-
-export default ShoppingLabScreenView;

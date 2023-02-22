@@ -25,7 +25,7 @@ const PANEL_MIN_HEIGHT = 32;
 const DISPLAY_X_MARGIN = 25;
 const DISPLAY_Y_MARGIN = 7;
 
-class ScaleNode extends Node {
+export default class ScaleNode extends Node {
   /**
    * @param {Scale} scale
    * @param {Object} [options]
@@ -205,5 +205,3 @@ function quantityToString( quantity, units ) {
 }
 
 unitRates.register( 'ScaleNode', ScaleNode );
-
-export default ScaleNode;

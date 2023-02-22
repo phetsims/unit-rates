@@ -11,7 +11,7 @@ import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
 import BagDragListener from './BagDragListener.js';
 
-class BagNode extends Image {
+export default class BagNode extends Image {
 
   /**
    * @param {Bag} bag
@@ -62,5 +62,3 @@ class BagNode extends Image {
 }
 
 unitRates.register( 'BagNode', BagNode );
-
-export default BagNode;

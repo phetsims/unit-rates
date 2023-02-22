@@ -20,7 +20,7 @@ import ScaleNode from './ScaleNode.js';
 import ShelfNode from './ShelfNode.js';
 import ShoppingItemNode from './ShoppingItemNode.js';
 
-class BaseShoppingSceneNode extends Node {
+export default class BaseShoppingSceneNode extends Node {
   /**
    * @param {ShoppingScene} shoppingScene
    * @param {Bounds2} layoutBounds
@@ -157,5 +157,3 @@ class BaseShoppingSceneNode extends Node {
 }
 
 unitRates.register( 'BaseShoppingSceneNode', BaseShoppingSceneNode );
-
-export default BaseShoppingSceneNode;

@@ -12,7 +12,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import SunConstants from '../../../../sun/js/SunConstants.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingQuestion {
+export default class ShoppingQuestion {
 
   /**
    * @param {string} questionString - the question string to be displayed
@@ -64,5 +64,3 @@ class ShoppingQuestion {
 }
 
 unitRates.register( 'ShoppingQuestion', ShoppingQuestion );
-
-export default ShoppingQuestion;

@@ -42,7 +42,8 @@ const SHARED_OPTIONS = {
   pickerColor: 'black' // {Color|string} color of the number picker for the numerator in the Rate accordion box
 };
 
-class ShoppingScene {
+export default class ShoppingScene {
+
   /**
    * @param {Object} itemData - data structure that describes the item, see ShoppingItemData.
    *   Using a data structure like this is an alternative to having a large number of constructor parameters.
@@ -363,5 +364,3 @@ class ShoppingScene {
 }
 
 unitRates.register( 'ShoppingScene', ShoppingScene );
-
-export default ShoppingScene;

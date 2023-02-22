@@ -18,7 +18,7 @@ import ShoppingCategory from './ShoppingCategory.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import VegetableScene from './VegetableScene.js';
 
-class ShoppingModel {
+export default class ShoppingModel {
 
   /**
    * @param {Object} [options]
@@ -95,5 +95,3 @@ class ShoppingModel {
 }
 
 unitRates.register( 'ShoppingModel', ShoppingModel );
-
-export default ShoppingModel;

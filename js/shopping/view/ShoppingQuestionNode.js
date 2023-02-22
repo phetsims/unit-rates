@@ -19,7 +19,7 @@ import URConstants from '../../common/URConstants.js';
 import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingQuestionNode extends Node {
+export default class ShoppingQuestionNode extends Node {
 
   /**
    * @param {ShoppingQuestion} question - model element for the question
@@ -232,5 +232,3 @@ class ShoppingQuestionNode extends Node {
 }
 
 unitRates.register( 'ShoppingQuestionNode', ShoppingQuestionNode );
-
-export default ShoppingQuestionNode;

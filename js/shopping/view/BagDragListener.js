@@ -10,7 +10,7 @@ import { DragListener } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 import Scale from '../model/Scale.js';
 
-class BagDragListener extends DragListener {
+export default class BagDragListener extends DragListener {
 
   /**
    * @param {BagNode} bagNode
@@ -206,5 +206,3 @@ function replaceBagWithItems( bag, scale ) {
 }
 
 unitRates.register( 'BagDragListener', BagDragListener );
-
-export default BagDragListener;

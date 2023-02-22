@@ -12,7 +12,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 import ShoppingContainer from './ShoppingContainer.js';
 
-class Shelf extends ShoppingContainer {
+export default class Shelf extends ShoppingContainer {
 
   /**
    * @param {Object} [options]
@@ -45,5 +45,3 @@ class Shelf extends ShoppingContainer {
 }
 
 unitRates.register( 'Shelf', Shelf );
-
-export default Shelf;

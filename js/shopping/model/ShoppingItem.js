@@ -12,7 +12,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import URMovable from '../../common/model/URMovable.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingItem extends URMovable {
+export default class ShoppingItem extends URMovable {
 
   /**
    * @param {string} name - for internal use
@@ -47,5 +47,3 @@ class ShoppingItem extends URMovable {
 }
 
 unitRates.register( 'ShoppingItem', ShoppingItem );
-
-export default ShoppingItem;

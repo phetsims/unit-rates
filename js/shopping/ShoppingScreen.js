@@ -19,7 +19,7 @@ import UnitRatesStrings from '../UnitRatesStrings.js';
 import ShoppingModel from './model/ShoppingModel.js';
 import ShoppingScreenView from './view/ShoppingScreenView.js';
 
-class ShoppingScreen extends Screen {
+export default class ShoppingScreen extends Screen {
 
   /**
    * @param {Object} [options]
@@ -44,5 +44,3 @@ class ShoppingScreen extends Screen {
 }
 
 unitRates.register( 'ShoppingScreen', ShoppingScreen );
-
-export default ShoppingScreen;

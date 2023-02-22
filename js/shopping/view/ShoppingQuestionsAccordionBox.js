@@ -17,7 +17,7 @@ import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingQuestionNode from './ShoppingQuestionNode.js';
 
-class ShoppingQuestionsAccordionBox extends AccordionBox {
+export default class ShoppingQuestionsAccordionBox extends AccordionBox {
 
   /**
    * @param {ShoppingScene} shoppingScene
@@ -138,5 +138,3 @@ class ShoppingQuestionsAccordionBox extends AccordionBox {
 }
 
 unitRates.register( 'ShoppingQuestionsAccordionBox', ShoppingQuestionsAccordionBox );
-
-export default ShoppingQuestionsAccordionBox;

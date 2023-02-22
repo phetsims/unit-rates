@@ -18,7 +18,7 @@ import ShoppingModel from '../../shopping/model/ShoppingModel.js';
 import VegetableScene from '../../shopping/model/VegetableScene.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingLabModel extends ShoppingModel {
+export default class ShoppingLabModel extends ShoppingModel {
 
   constructor() {
 
@@ -62,5 +62,3 @@ class ShoppingLabModel extends ShoppingModel {
 }
 
 unitRates.register( 'ShoppingLabModel', ShoppingLabModel );
-
-export default ShoppingLabModel;

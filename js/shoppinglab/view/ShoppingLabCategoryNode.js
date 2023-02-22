@@ -11,7 +11,7 @@ import { Node } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 import ShoppingLabSceneNode from './ShoppingLabSceneNode.js';
 
-class ShoppingLabCategoryNode extends Node {
+export default class ShoppingLabCategoryNode extends Node {
 
   /**
    * @param {ShoppingCategory} category
@@ -56,5 +56,3 @@ class ShoppingLabCategoryNode extends Node {
 }
 
 unitRates.register( 'ShoppingLabCategoryNode', ShoppingLabCategoryNode );
-
-export default ShoppingLabCategoryNode;

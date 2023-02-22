@@ -12,7 +12,7 @@ import unitRates from '../../unitRates.js';
 import ShoppingSceneComboBox from './ShoppingSceneComboBox.js';
 import ShoppingSceneNode from './ShoppingSceneNode.js';
 
-class ShoppingCategoryNode extends Node {
+export default class ShoppingCategoryNode extends Node {
 
   /**
    * @param {ShoppingCategory} category
@@ -82,5 +82,3 @@ class ShoppingCategoryNode extends Node {
 }
 
 unitRates.register( 'ShoppingCategoryNode', ShoppingCategoryNode );
-
-export default ShoppingCategoryNode;

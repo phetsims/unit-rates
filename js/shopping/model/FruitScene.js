@@ -11,7 +11,7 @@ import unitRates from '../../unitRates.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import ShoppingScene from './ShoppingScene.js';
 
-class FruitScene extends ShoppingScene {
+export default class FruitScene extends ShoppingScene {
 
   /**
    * @param {Object} itemData - data structure that describes a type of vegetable, see ShoppingItemData
@@ -32,5 +32,3 @@ class FruitScene extends ShoppingScene {
 }
 
 unitRates.register( 'FruitScene', FruitScene );
-
-export default FruitScene;

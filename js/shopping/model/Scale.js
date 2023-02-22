@@ -13,7 +13,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 import ShoppingContainer from './ShoppingContainer.js';
 
-class Scale extends ShoppingContainer {
+export default class Scale extends ShoppingContainer {
 
   /**
    * @param {Property.<number>} unitRateProperty
@@ -77,5 +77,3 @@ class Scale extends ShoppingContainer {
 }
 
 unitRates.register( 'Scale', Scale );
-
-export default Scale;

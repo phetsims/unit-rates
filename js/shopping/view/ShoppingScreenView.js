@@ -17,7 +17,7 @@ import ShoppingCategoryNode from './ShoppingCategoryNode.js';
 import ShoppingCategoryRadioButtonGroup from './ShoppingCategoryRadioButtonGroup.js';
 import ShoppingViewProperties from './ShoppingViewProperties.js';
 
-class ShoppingScreenView extends ScreenView {
+export default class ShoppingScreenView extends ScreenView {
 
   /**
    * @param {ShoppingModel} model
@@ -82,5 +82,3 @@ class ShoppingScreenView extends ScreenView {
 }
 
 unitRates.register( 'ShoppingScreenView', ShoppingScreenView );
-
-export default ShoppingScreenView;

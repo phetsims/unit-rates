@@ -12,7 +12,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import { Path } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 
-class RowOfMovablesNode extends Path {
+export default class RowOfMovablesNode extends Path {
 
   /**
    * @param {RowOfMovables} rowOfMovables
@@ -40,5 +40,3 @@ class RowOfMovablesNode extends Path {
 }
 
 unitRates.register( 'RowOfMovablesNode', RowOfMovablesNode );
-
-export default RowOfMovablesNode;

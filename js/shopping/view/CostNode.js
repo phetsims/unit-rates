@@ -18,7 +18,7 @@ import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 
-class CostNode extends Node {
+export default class CostNode extends Node {
 
   /**
    * @param {Property.<number>} costProperty
@@ -115,5 +115,3 @@ class CostNode extends Node {
 }
 
 unitRates.register( 'CostNode', CostNode );
-
-export default CostNode;

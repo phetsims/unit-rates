@@ -12,7 +12,7 @@ import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularR
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingCategoryRadioButtonGroup extends RectangularRadioButtonGroup {
+export default class ShoppingCategoryRadioButtonGroup extends RectangularRadioButtonGroup {
 
   /**
    * @param {ShoppingCategory[]} categories
@@ -47,5 +47,3 @@ class ShoppingCategoryRadioButtonGroup extends RectangularRadioButtonGroup {
 }
 
 unitRates.register( 'ShoppingCategoryRadioButtonGroup', ShoppingCategoryRadioButtonGroup );
-
-export default ShoppingCategoryRadioButtonGroup;

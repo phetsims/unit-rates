@@ -9,7 +9,7 @@
 import { DragListener } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 
-class ShoppingItemDragListener extends DragListener {
+export default class ShoppingItemDragListener extends DragListener {
 
   /**
    * @param {ShoppingItemNode} itemNode
@@ -219,5 +219,3 @@ function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cel
 }
 
 unitRates.register( 'ShoppingItemDragListener', ShoppingItemDragListener );
-
-export default ShoppingItemDragListener;
