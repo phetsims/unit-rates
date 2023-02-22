@@ -19,7 +19,7 @@ import UnitRatesStrings from '../UnitRatesStrings.js';
 import RacingLabModel from './model/RacingLabModel.js';
 import RacingLabScreenView from './view/RacingLabScreenView.js';
 
-class RacingLabScreen extends Screen {
+export default class RacingLabScreen extends Screen {
 
   /**
    * @param {Object} [options]
@@ -44,5 +44,3 @@ class RacingLabScreen extends Screen {
 }
 
 unitRates.register( 'RacingLabScreen', RacingLabScreen );
-
-export default RacingLabScreen;

@@ -13,7 +13,7 @@ import RateAccordionBox from '../../common/view/RateAccordionBox.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 
-class RaceCarRateAccordionBox extends RateAccordionBox {
+export default class RaceCarRateAccordionBox extends RateAccordionBox {
 
   /**
    * @param {RaceCar} car
@@ -41,5 +41,3 @@ class RaceCarRateAccordionBox extends RateAccordionBox {
 }
 
 unitRates.register( 'RaceCarRateAccordionBox', RaceCarRateAccordionBox );
-
-export default RaceCarRateAccordionBox;

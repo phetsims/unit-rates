@@ -21,7 +21,7 @@ import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import unitRates from '../../unitRates.js';
 import URUtils from '../URUtils.js';
 
-class Rate {
+export default class Rate {
 
   /**
    * @param {number} numerator - the rate's numerator, must be an integer
@@ -79,5 +79,3 @@ class Rate {
 }
 
 unitRates.register( 'Rate', Rate );
-
-export default Rate;

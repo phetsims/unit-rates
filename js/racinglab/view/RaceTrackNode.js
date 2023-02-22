@@ -42,7 +42,7 @@ const TRACK_MARKER_OPTIONS = {
   stroke: null
 };
 
-class RaceTrackNode extends Node {
+export default class RaceTrackNode extends Node {
 
   /**
    * @param {RaceCar} car
@@ -242,5 +242,3 @@ function createMarkerNode() {
 }
 
 unitRates.register( 'RaceTrackNode', RaceTrackNode );
-
-export default RaceTrackNode;

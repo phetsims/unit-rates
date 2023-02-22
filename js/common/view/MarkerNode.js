@@ -19,7 +19,7 @@ const SHARED_OPTIONS = {
   trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
 };
 
-class MarkerNode extends Node {
+export default class MarkerNode extends Node {
   /**
    * @param {Marker} marker
    * @param {Object} [options]
@@ -99,5 +99,3 @@ class MarkerNode extends Node {
 }
 
 unitRates.register( 'MarkerNode', MarkerNode );
-
-export default MarkerNode;

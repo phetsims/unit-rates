@@ -13,7 +13,7 @@ import BooleanRoundToggleButton from '../../../../sun/js/buttons/BooleanRoundTog
 import goButtonIcon_png from '../../../images/goButtonIcon_png.js';
 import unitRates from '../../unitRates.js';
 
-class StartStopButton extends BooleanRoundToggleButton {
+export default class StartStopButton extends BooleanRoundToggleButton {
 
   /**
    * @param {Property.<boolean>} runningProperty
@@ -41,5 +41,3 @@ class StartStopButton extends BooleanRoundToggleButton {
 }
 
 unitRates.register( 'StartStopButton', StartStopButton );
-
-export default StartStopButton;

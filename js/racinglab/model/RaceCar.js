@@ -20,7 +20,7 @@ import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceTrack from './RaceTrack.js';
 
-class RaceCar {
+export default class RaceCar {
 
   /**
    * @param {HTMLImageElement} image
@@ -169,5 +169,3 @@ class RaceCar {
 }
 
 unitRates.register( 'RaceCar', RaceCar );
-
-export default RaceCar;

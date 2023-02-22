@@ -22,7 +22,7 @@ const SHARED_OPTIONS = {
   trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
 };
 
-class DoubleNumberLine {
+export default class DoubleNumberLine {
 
   /**
    * @param {Property.<number>} unitRateProperty
@@ -279,5 +279,3 @@ class DoubleNumberLine {
 }
 
 unitRates.register( 'DoubleNumberLine', DoubleNumberLine );
-
-export default DoubleNumberLine;

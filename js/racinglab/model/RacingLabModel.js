@@ -14,7 +14,7 @@ import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 import RaceCar from './RaceCar.js';
 
-class RacingLabModel {
+export default class RacingLabModel {
 
   constructor() {
 
@@ -103,5 +103,3 @@ class RacingLabModel {
 }
 
 unitRates.register( 'RacingLabModel', RacingLabModel );
-
-export default RacingLabModel;

@@ -13,7 +13,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 
-class MarkerEditor {
+export default class MarkerEditor {
 
   /**
    * @param {Property.<boolean>} unitRateProperty
@@ -86,5 +86,3 @@ class MarkerEditor {
 }
 
 unitRates.register( 'MarkerEditor', MarkerEditor );
-
-export default MarkerEditor;

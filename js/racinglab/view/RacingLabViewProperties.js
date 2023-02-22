@@ -9,7 +9,7 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import unitRates from '../../unitRates.js';
 
-class RacingLabViewProperties {
+export default class RacingLabViewProperties {
 
   constructor() {
 
@@ -42,5 +42,3 @@ class RacingLabViewProperties {
 }
 
 unitRates.register( 'RacingLabViewProperties', RacingLabViewProperties );
-
-export default RacingLabViewProperties;

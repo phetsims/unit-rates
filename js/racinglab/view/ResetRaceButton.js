@@ -12,7 +12,7 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import resetRaceButton_png from '../../../images/resetRaceButton_png.js';
 import unitRates from '../../unitRates.js';
 
-class ResetRaceButton extends RectangularPushButton {
+export default class ResetRaceButton extends RectangularPushButton {
 
   /**
    * @param {Object} [options]
@@ -27,5 +27,3 @@ class ResetRaceButton extends RectangularPushButton {
 }
 
 unitRates.register( 'ResetRaceButton', ResetRaceButton );
-
-export default ResetRaceButton;

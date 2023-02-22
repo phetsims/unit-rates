@@ -15,7 +15,7 @@ import unitRates from '../../unitRates.js';
 import URConstants from '../URConstants.js';
 import MarkerNode from './MarkerNode.js';
 
-class DoubleNumberLineNode extends Node {
+export default class DoubleNumberLineNode extends Node {
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine
@@ -225,5 +225,3 @@ class DoubleNumberLineNode extends Node {
 }
 
 unitRates.register( 'DoubleNumberLineNode', DoubleNumberLineNode );
-
-export default DoubleNumberLineNode;

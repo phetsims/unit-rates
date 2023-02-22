@@ -28,7 +28,7 @@ import URConstants from '../URConstants.js';
 import DoubleNumberLineNode from './DoubleNumberLineNode.js';
 import MarkerEditorNode from './MarkerEditorNode.js';
 
-class DoubleNumberLineAccordionBox extends AccordionBox {
+export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
   /**
    * @param {DoubleNumberLine} doubleNumberLine
@@ -353,5 +353,3 @@ class DoubleNumberLineAccordionBox extends AccordionBox {
 }
 
 unitRates.register( 'DoubleNumberLineAccordionBox', DoubleNumberLineAccordionBox );
-
-export default DoubleNumberLineAccordionBox;

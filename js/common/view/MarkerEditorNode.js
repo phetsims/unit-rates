@@ -25,7 +25,7 @@ const SHARED_OPTIONS = {
   trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
 };
 
-class MarkerEditorNode extends Node {
+export default class MarkerEditorNode extends Node {
 
   /**
    * @param {MarkerEditor} markerEditor
@@ -283,5 +283,3 @@ class MarkerEditorNode extends Node {
 }
 
 unitRates.register( 'MarkerEditorNode', MarkerEditorNode );
-
-export default MarkerEditorNode;

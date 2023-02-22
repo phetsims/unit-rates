@@ -21,7 +21,7 @@ import unitRates from '../../unitRates.js';
 // constants
 const BACKGROUND_RECTANGLE_STROKE = ( phet.chipper.queryParameters.dev ? 'red' : null );
 
-class ValuePanel extends Panel {
+export default class ValuePanel extends Panel {
 
   /**
    * @param {Node} valueNode
@@ -149,5 +149,3 @@ class ValuePanel extends Panel {
 }
 
 unitRates.register( 'ValuePanel', ValuePanel );
-
-export default ValuePanel;

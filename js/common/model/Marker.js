@@ -19,7 +19,7 @@ import unitRates from '../../unitRates.js';
 // how the marker was created, ordered by ascending precedence
 const CREATOR_VALUES = [ 'editor', 'scale', 'question', 'race' ];
 
-class Marker {
+export default class Marker {
 
   /**
    * @param {number} numerator
@@ -107,5 +107,3 @@ class Marker {
 }
 
 unitRates.register( 'Marker', Marker );
-
-export default Marker;

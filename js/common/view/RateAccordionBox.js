@@ -20,7 +20,7 @@ import URConstants from '../URConstants.js';
 // If the Rate accordion box appears to change size when switching categories, increase this value. Determined empirically.
 const MIN_FRACTION_LINE_LENGTH = 115;
 
-class RateAccordionBox extends AccordionBox {
+export default class RateAccordionBox extends AccordionBox {
 
   /**
    * @param {Rate} rate
@@ -145,5 +145,3 @@ class RateAccordionBox extends AccordionBox {
 }
 
 unitRates.register( 'RateAccordionBox', RateAccordionBox );
-
-export default RateAccordionBox;

@@ -26,7 +26,7 @@ import StartStopButton from './StartStopButton.js';
 const BUTTON_X_SPACE = 20; // space between buttons
 const ACCORDION_BOX_X_SPACE = 10; // space between accordion boxes
 
-class RacingLabScreenView extends ScreenView {
+export default class RacingLabScreenView extends ScreenView {
 
   /**
    * @param {RacingLabModel} model
@@ -170,5 +170,3 @@ class RacingLabScreenView extends ScreenView {
 }
 
 unitRates.register( 'RacingLabScreenView', RacingLabScreenView );
-
-export default RacingLabScreenView;

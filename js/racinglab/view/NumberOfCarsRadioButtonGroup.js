@@ -13,7 +13,7 @@ import blueCar_png from '../../../images/blueCar_png.js';
 import redCar_png from '../../../images/redCar_png.js';
 import unitRates from '../../unitRates.js';
 
-class NumberOfCarsRadioButtonGroup extends RectangularRadioButtonGroup {
+export default class NumberOfCarsRadioButtonGroup extends RectangularRadioButtonGroup {
 
   /**
    * @param {Property.<boolean>} car2VisibleProperty - is car2 visible?
@@ -82,4 +82,3 @@ function createCarImage( imageFile, maxCarWidth ) {
 }
 
 unitRates.register( 'NumberOfCarsRadioButtonGroup', NumberOfCarsRadioButtonGroup );
-export default NumberOfCarsRadioButtonGroup;

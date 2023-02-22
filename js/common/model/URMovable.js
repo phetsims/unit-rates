@@ -14,7 +14,7 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 
-class URMovable {
+export default class URMovable {
 
   /**
    * @param {Object} [options]
@@ -132,5 +132,3 @@ class URMovable {
 }
 
 unitRates.register( 'URMovable', URMovable );
-
-export default URMovable;

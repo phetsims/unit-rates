@@ -16,7 +16,7 @@ import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import URColors from '../URColors.js';
 
-class KeypadPanel extends Panel {
+export default class KeypadPanel extends Panel {
 
   /**
    * @param {Object} [options]
@@ -118,4 +118,3 @@ class KeypadPanel extends Panel {
 }
 
 unitRates.register( 'KeypadPanel', KeypadPanel );
-export default KeypadPanel;

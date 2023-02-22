@@ -11,7 +11,7 @@ import { Plane, PressListener } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 import KeypadPanel from './KeypadPanel.js';
 
-class KeypadLayer extends Plane {
+export default class KeypadLayer extends Plane {
 
   /**
    * @param {Object} [options]
@@ -137,5 +137,3 @@ function isValidValue( value, zeroIsValid ) {
 }
 
 unitRates.register( 'KeypadLayer', KeypadLayer );
-
-export default KeypadLayer;

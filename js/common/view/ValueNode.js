@@ -12,7 +12,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Text } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 
-class ValueNode extends Text {
+export default class ValueNode extends Text {
 
   /**
    * @param {Property.<number>} valueProperty
@@ -52,5 +52,3 @@ class ValueNode extends Text {
 }
 
 unitRates.register( 'ValueNode', ValueNode );
-
-export default ValueNode;

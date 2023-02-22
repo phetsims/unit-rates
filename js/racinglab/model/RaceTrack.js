@@ -10,7 +10,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 
-class RaceTrack {
+export default class RaceTrack {
 
   /**
    * @param {Object} [options]
@@ -43,5 +43,3 @@ class RaceTrack {
 }
 
 unitRates.register( 'RaceTrack', RaceTrack );
-
-export default RaceTrack;

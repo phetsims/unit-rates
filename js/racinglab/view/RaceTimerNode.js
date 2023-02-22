@@ -19,7 +19,7 @@ import UnitRatesStrings from '../../UnitRatesStrings.js';
 const TIMER_FONT = new PhetFont( 16 );
 const DECIMAL_PLACES = 2;
 
-class RaceTimerNode extends ValuePanel {
+export default class RaceTimerNode extends ValuePanel {
 
   /**
    * @param {Property.<number>} timeProperty
@@ -46,5 +46,3 @@ class RaceTimerNode extends ValuePanel {
 }
 
 unitRates.register( 'RaceTimerNode', RaceTimerNode );
-
-export default RaceTimerNode;
