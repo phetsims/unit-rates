@@ -149,18 +149,18 @@ export default class ShoppingQuestionNode extends Node {
 
       // update the guess
       if ( guess !== null ) {
-        guessNode.text = URUtils.formatNumber( answerOptions.valueFormat, guess, answerOptions.maxDecimals, answerOptions.trimZeros );
+        guessNode.string = URUtils.formatNumber( answerOptions.valueFormat, guess, answerOptions.maxDecimals, answerOptions.trimZeros );
         guessNode.fill = correct ? URColors.correctQuestion : URColors.incorrectQuestion;
       }
       else if ( phet.chipper.queryParameters.showAnswers ) {
 
         // show the answer, if query parameter is set
-        guessNode.text = URUtils.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
-        guessNode.text = URUtils.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
+        guessNode.string = URUtils.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
+        guessNode.string = URUtils.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
         guessNode.fill = URColors.showAnswers;
       }
       else {
-        guessNode.text = '';
+        guessNode.string = '';
       }
       guessNode.visible = !correct;
       guessNode.center = valueBox.center; // center guess in box

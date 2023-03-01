@@ -29,7 +29,7 @@ export default class ValueNode extends Text {
 
     // update value display
     const valueObserver = value => {
-      this.text = options.valueToString( value );
+      this.string = options.valueToString( value );
     };
     valueProperty.link( valueObserver ); // unlink in dispose
 

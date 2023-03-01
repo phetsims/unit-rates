@@ -207,10 +207,10 @@ export default class MarkerEditorNode extends Node {
 
       // update the numerator
       if ( numerator ) {
-        numeratorNode.text = URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+        numeratorNode.string = URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
       }
       else {
-        numeratorNode.text = '';
+        numeratorNode.string = '';
       }
       numeratorNode.fill = options.valueColor;
       numeratorNode.center = numeratorBox.center;
@@ -219,10 +219,10 @@ export default class MarkerEditorNode extends Node {
       if ( phet.chipper.queryParameters.showAnswers && !markerEditor.denominatorProperty.value ) {
         if ( numerator ) {
           const denominator = markerEditor.numeratorProperty.value / markerEditor.unitRateProperty.value;
-          denominatorNode.text = URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+          denominatorNode.string = URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
         }
         else {
-          denominatorNode.text = '';
+          denominatorNode.string = '';
         }
         denominatorNode.fill = URColors.showAnswers;
         denominatorNode.center = denominatorBox.center;
@@ -236,10 +236,10 @@ export default class MarkerEditorNode extends Node {
 
       // update the denominator
       if ( denominator ) {
-        denominatorNode.text = URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+        denominatorNode.string = URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
       }
       else {
-        denominatorNode.text = '';
+        denominatorNode.string = '';
       }
       denominatorNode.fill = options.valueColor;
       denominatorNode.center = denominatorBox.center;
@@ -248,10 +248,10 @@ export default class MarkerEditorNode extends Node {
       if ( phet.chipper.queryParameters.showAnswers && !markerEditor.numeratorProperty.value ) {
         if ( denominator ) {
           const numerator = markerEditor.denominatorProperty.value * markerEditor.unitRateProperty.value;
-          numeratorNode.text = URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+          numeratorNode.string = URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
         }
         else {
-          numeratorNode.text = '';
+          numeratorNode.string = '';
         }
         numeratorNode.fill = URColors.showAnswers;
         numeratorNode.center = numeratorBox.center;

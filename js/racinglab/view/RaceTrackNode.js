@@ -157,7 +157,7 @@ export default class RaceTrackNode extends Node {
       timerNode.bottom = finishFlagNode.top - 3;
 
       // distance label below finish flag
-      lengthNode.text = StringUtils.format( UnitRatesStrings.pattern_0value_1units, length, UnitRatesStrings.miles );
+      lengthNode.string = StringUtils.format( UnitRatesStrings.pattern_0value_1units, length, UnitRatesStrings.miles );
       lengthNode.top = solidLineNode.bottom + TRACK_MARKER_SIDE_LENGTH + 4;
       lengthNode.centerX = finishX;
 

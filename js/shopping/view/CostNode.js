@@ -80,12 +80,12 @@ export default class CostNode extends Node {
 
         // convert to string, then pick it apart
         const costString = URUtils.numberToString( costTruncated, visibleDecimalPlaces, false /* trimZeros */ );
-        primaryNode.text = costString.substring( 0, costString.length - 1 );
-        extraDecimalNode.text = costString.substring( costString.length - 1, costString.length );
+        primaryNode.string = costString.substring( 0, costString.length - 1 );
+        extraDecimalNode.string = costString.substring( costString.length - 1, costString.length );
       }
       else {
-        primaryNode.text = URUtils.numberToString( cost, 2, false /* trimZeros */ );
-        extraDecimalNode.text = '0'; // will be invisible, but needs a valid digit for layout purposes
+        primaryNode.string = URUtils.numberToString( cost, 2, false /* trimZeros */ );
+        extraDecimalNode.string = '0'; // will be invisible, but needs a valid digit for layout purposes
       }
 
       // adjust layout

@@ -71,7 +71,7 @@ export default class KeypadPanel extends Panel {
 
     // Show the value entered on the keypad. No unlink is required.
     keypad.stringProperty.link( string => {
-      valueNode.text = string;
+      valueNode.string = string;
     } );
 
     // Keep the value centered in the background. No unlink is required.
