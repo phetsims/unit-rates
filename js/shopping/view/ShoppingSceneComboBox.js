@@ -77,14 +77,16 @@ function createItem( shoppingScene, iconSize ) {
     children: [ new HStrut( 140 ) ] // makes labels for all items the same width
   } );
 
-  // icon to the left of label
-  const itemNode = new HBox( {
-    align: 'center',
-    spacing: 10,
-    children: [ iconNode, labelNode ]
-  } );
+  return {
+    value: shoppingScene,
 
-  return { value: shoppingScene, node: itemNode };
+    // icon to the left of label
+    createNode: () => new HBox( {
+      align: 'center',
+      spacing: 10,
+      children: [ iconNode, labelNode ]
+    } )
+  };
 }
 
 unitRates.register( 'ShoppingSceneComboBox', ShoppingSceneComboBox );
