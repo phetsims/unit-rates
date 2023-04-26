@@ -14,15 +14,7 @@ import ShoppingScreen from './shopping/ShoppingScreen.js';
 import ShoppingLabScreen from './shoppinglab/ShoppingLabScreen.js';
 import UnitRatesStrings from './UnitRatesStrings.js';
 
-const simOptions = {
-  credits: {
-    leadDesign: 'Amy Rouinfar',
-    softwareDevelopment: 'Chris Malley (PixelZoom, Inc.), Dave Schmitz (Schmitzware)',
-    team: 'Amy Hanson, Amanda McGarry, Susan Miller, Ariel Paul, Kathy Perkins',
-    qualityAssurance: 'Steele Dalton, Amanda Davis, Bryce Griebenow, Ethan Johnson',
-    graphicArts: 'Mariah Hermsmeyer'
-  }
-};
+const titleStringProperty = UnitRatesStrings[ 'unit-rates' ].titleStringProperty;
 
 simLauncher.launch( () => {
 
@@ -32,6 +24,15 @@ simLauncher.launch( () => {
     new RacingLabScreen()
   ];
 
-  const sim = new Sim( UnitRatesStrings[ 'unit-rates' ].titleStringProperty, screens, simOptions );
+  const sim = new Sim( titleStringProperty, screens, {
+    credits: {
+      leadDesign: 'Amy Rouinfar',
+      softwareDevelopment: 'Chris Malley (PixelZoom, Inc.), Dave Schmitz (Schmitzware)',
+      team: 'Amy Hanson, Amanda McGarry, Susan Miller, Ariel Paul, Kathy Perkins',
+      qualityAssurance: 'Steele Dalton, Amanda Davis, Bryce Griebenow, Ethan Johnson',
+      graphicArts: 'Mariah Hermsmeyer'
+    }
+  } );
+
   sim.start();
 } );
