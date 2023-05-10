@@ -21,7 +21,12 @@
     ],
     "simulation": true,
     "supportsOutputJS": true,
-    "published": true
+    "published": true,
+    "screenNameKeys": [
+      "UNIT_RATES/screen.shopping",
+      "UNIT_RATES/screen.shoppingLab",
+      "UNIT_RATES/screen.racingLab"
+    ]
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js",
