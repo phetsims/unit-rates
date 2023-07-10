@@ -10,40 +10,59 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
 import Bag from './Bag.js';
 import RowOfMovables from './RowOfMovables.js';
 import ShoppingItem from './ShoppingItem.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Disposable from '../../../../axon/js/Disposable.js';
+
+type SelfOptions = {
+  position?: Vector2; // position of the container
+
+  // bags
+  numberOfBags?: number; // maximum number of bags on the shelf
+  bagSize?: Dimension2; // dimensions of each bag
+  bagRowYOffset?: number; // offset of bag row from the container's origin
+
+  // items
+  numberOfItems?: number;
+  itemSize?: Dimension2;// dimensions of each item
+  itemCellSpacing?: number; // horizontal spacing between cells in each row
+  backRowYOffset?: number; // offset of items front row from the container's origin
+  frontRowYOffset?: number; // offset of items back row from the container's origin
+};
+
+export type ShoppingContainerOptions = SelfOptions;
 
 export default class ShoppingContainer {
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+  public readonly position: Vector2;
+  public readonly bagRow: RowOfMovables; // row of bags
+  public readonly backItemRow: RowOfMovables; // back row of items
+  public readonly frontItemRow: RowOfMovables; // front row of items
+  public readonly numberOfBagsProperty: TReadOnlyProperty<number>;
+  public readonly numberOfItemsProperty: TReadOnlyProperty<number>;
 
-    options = merge( {
+  protected constructor( providedOptions?: ShoppingContainerOptions ) {
 
-      position: new Vector2( 0, 0 ), // {Vector2} position of the container
+    const options = optionize<ShoppingContainerOptions, SelfOptions>()( {
 
-      // bags
-      numberOfBags: 4, // {number} maximum number of bags on the shelf
-      bagSize: new Dimension2( 100, 100 ), // {number} dimensions of each bag
-      bagRowYOffset: 0, // {number} offset of bag row from the container's origin
+      // SelfOptions
+      position: new Vector2( 0, 0 ),
+      numberOfBags: 4,
+      bagSize: new Dimension2( 100, 100 ),
+      bagRowYOffset: 0,
+      numberOfItems: 1,
+      itemSize: new Dimension2( 10, 10 ),
+      itemCellSpacing: 8,
+      backRowYOffset: 0,
+      frontRowYOffset: 0
+    }, providedOptions );
 
-      // items
-      itemSize: new Dimension2( 10, 10 ), // {number} dimensions of each item
-      itemCellSpacing: 8, // {number} horizontal spacing between cells in each row
-      backRowYOffset: 0, // {number} offset of items front row from the container's origin
-      frontRowYOffset: 0 // {number} offset of items back row from the container's origin
-
-    }, options );
-
-    // @public (read-only)
     this.position = options.position;
 
-    // @public row of bags, dispose not required, exists for sim lifetime
     this.bagRow = new RowOfMovables( {
       position: new Vector2( options.position.x, options.position.y + options.bagRowYOffset ),
       numberOfCells: options.numberOfBags,
@@ -59,7 +78,6 @@ export default class ShoppingContainer {
     const frontNumberOfCells = options.numberOfItems - backNumberOfCells;
     assert && assert( backNumberOfCells + frontNumberOfCells === options.numberOfItems );
 
-    // @public back row of items, dispose not required, exists for sim lifetime
     this.backItemRow = new RowOfMovables( {
       position: new Vector2( options.position.x, options.position.y + options.backRowYOffset ),
       numberOfCells: backNumberOfCells,
@@ -67,7 +85,6 @@ export default class ShoppingContainer {
       cellSpacing: options.itemCellSpacing
     } );
 
-    // @public front row of items, dispose not required, exists for sim lifetime
     this.frontItemRow = new RowOfMovables( {
       position: new Vector2( options.position.x, options.position.y + options.frontRowYOffset ),
       numberOfCells: frontNumberOfCells,
@@ -75,53 +92,39 @@ export default class ShoppingContainer {
       cellSpacing: options.itemCellSpacing
     } );
 
-    // @public dispose not required, exists for sim lifetime
     this.numberOfBagsProperty = new DerivedProperty(
       [ this.bagRow.numberOfMovablesProperty ],
       numberOfMovables => numberOfMovables
     );
 
-    // @public dispose not required, exists for sim lifetime
     this.numberOfItemsProperty = new DerivedProperty(
       [ this.frontItemRow.numberOfMovablesProperty, this.backItemRow.numberOfMovablesProperty ],
       ( frontNumberOfMovables, backNumberOfMovables ) => frontNumberOfMovables + backNumberOfMovables
     );
   }
 
-  // @public
-  reset() {
+  public dispose(): void {
+    Disposable.assertNotDisposable();
+  }
+
+  public reset(): void {
     this.bagRow.reset();
     this.backItemRow.reset();
     this.frontItemRow.reset();
   }
 
-  /**
-   * @param {Bag} bag
-   * @returns {boolean}
-   * @public
-   */
-  containsBag( bag ) {
-    assert && assert( bag instanceof Bag );
+  public containsBag( bag: Bag ): boolean {
     return this.bagRow.contains( bag );
   }
 
-  /**
-   * @param {ShoppingItem} item
-   * @returns {boolean}
-   * @public
-   */
-  containsItem( item ) {
-    assert && assert( item instanceof ShoppingItem );
+  public containsItem( item: ShoppingItem ): boolean {
     return ( this.backItemRow.contains( item ) || this.frontItemRow.contains( item ) );
   }
 
   /**
    * Removes a bag.
-   * @param {Bag} bag
-   * @public
    */
-  removeBag( bag ) {
-    assert && assert( bag instanceof Bag );
+  public removeBag( bag: Bag ): void {
     assert && assert( this.containsBag( bag ), 'does not contain bag' );
     this.bagRow.remove( bag );
 
@@ -132,11 +135,8 @@ export default class ShoppingContainer {
 
   /**
    * Removes an item.
-   * @param {ShoppingItem} item
-   * @public
    */
-  removeItem( item ) {
-    assert && assert( item instanceof ShoppingItem );
+  public removeItem( item: ShoppingItem ): void {
     assert && assert( this.containsItem( item ), 'does not contain item' );
 
     if ( this.backItemRow.contains( item ) ) {
@@ -153,11 +153,8 @@ export default class ShoppingContainer {
 
   /**
    * Is the specific item in the front row?
-   * @param {ShoppingItem} item
-   * @returns {boolean}
-   * @public
    */
-  isItemInFrontRow( item ) {
+  public isItemInFrontRow( item: ShoppingItem ): boolean {
     return this.frontItemRow.contains( item );
   }
 }

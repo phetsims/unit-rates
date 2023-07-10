@@ -8,39 +8,38 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
-import ShoppingContainer from './ShoppingContainer.js';
+import ShoppingContainer, { ShoppingContainerOptions } from './ShoppingContainer.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = EmptySelfOptions;
+
+type ShelfOptions = SelfOptions & ShoppingContainerOptions;
 
 export default class Shelf extends ShoppingContainer {
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+  // Description of pseudo-3D shape
+  public readonly width = 350; // width of the top face, at its center
+  public readonly height = 15; // height of the front face
+  public readonly depth = 45; // depth, after flattening to 2D
+  public readonly perspectiveXOffset = 30; // offset for parallel perspective, after flattening to 2D
 
-    options = merge( {
+  public constructor( providedOptions?: ShelfOptions ) {
 
-      position: new Vector2( 0, 0 ), // {Vector2} position of the center of the shelf's top face
+    const options = optionize<ShelfOptions, SelfOptions, ShoppingContainerOptions>()( {
 
-      // ShoppingContainer options
-      numberOfBags: 4, // {number} maximum number of bags on the shelf
-      bagSize: new Dimension2( 100, 100 ), // {number} dimensions of each bag
-      bagRowYOffset: 0, // {number} offset of bag row from shelf origin
-      numberOfItems: 15, // {number} maximum number of items on the shelf
-      itemSize: new Dimension2( 25, 25 ), // {number} dimensions of each item
-      backRowYOffset: 8, // {number} offset of items back row from shelf origin
-      frontRowYOffset: 16 // {number} offset of items front row from shelf origin
-
-    }, options );
+      // ShoppingContainerOptions
+      position: new Vector2( 0, 0 ), // position of the center of the shelf's top face
+      numberOfBags: 4, // maximum number of bags on the shelf
+      bagSize: new Dimension2( 100, 100 ), // dimensions of each bag
+      bagRowYOffset: 0, // offset of bag row from shelf origin
+      numberOfItems: 15, // maximum number of items on the shelf
+      itemSize: new Dimension2( 25, 25 ), // dimensions of each item
+      backRowYOffset: 8, // offset of items back row from shelf origin
+      frontRowYOffset: 16 // offset of items front row from shelf origin
+    }, providedOptions );
 
     super( options );
-
-    // @public (read-only) description of pseudo-3D shape
-    this.width = 350; // {number} width of the top face, at its center
-    this.height = 15; // {number} height of the front face
-    this.depth = 45; // {number} depth, after flattening to 2D
-    this.perspectiveXOffset = 30; // {number} offset for parallel perspective, after flattening to 2D
   }
 }
 
