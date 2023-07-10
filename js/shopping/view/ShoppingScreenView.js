@@ -10,9 +10,11 @@ import ScreenView from '../../../../joist/js/ScreenView.js';
 import merge from '../../../../phet-core/js/merge.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import URConstants from '../../common/URConstants.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
 import unitRates from '../../unitRates.js';
+import ShoppingModel from '../model/ShoppingModel.js';
 import ShoppingCategoryNode from './ShoppingCategoryNode.js';
 import ShoppingCategoryRadioButtonGroup from './ShoppingCategoryRadioButtonGroup.js';
 import ShoppingViewProperties from './ShoppingViewProperties.js';
@@ -21,9 +23,12 @@ export default class ShoppingScreenView extends ScreenView {
 
   /**
    * @param {ShoppingModel} model
+   * @param {Tandem} tandem
    * @param {Object} [options]
    */
-  constructor( model, options ) {
+  constructor( model, tandem, options ) {
+    assert && assert( model instanceof ShoppingModel );
+    assert && assert( tandem instanceof Tandem );
 
     options = merge( {
 

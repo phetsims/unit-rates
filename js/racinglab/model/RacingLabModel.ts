@@ -14,6 +14,7 @@ import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 import RaceCar from './RaceCar.js';
 import TModel from '../../../../joist/js/TModel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class RacingLabModel implements TModel {
 
@@ -21,7 +22,7 @@ export default class RacingLabModel implements TModel {
   public readonly car1: RaceCar; // the red (top) car
   public readonly car2: RaceCar; // the blue (bottom) car
 
-  public constructor() {
+  public constructor( tandem: Tandem ) {
 
     this.runningProperty = new BooleanProperty( false );
 

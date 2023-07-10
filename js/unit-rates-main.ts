@@ -13,15 +13,16 @@ import RacingLabScreen from './racinglab/RacingLabScreen.js';
 import ShoppingScreen from './shopping/ShoppingScreen.js';
 import ShoppingLabScreen from './shoppinglab/ShoppingLabScreen.js';
 import UnitRatesStrings from './UnitRatesStrings.js';
+import Tandem from '../../tandem/js/Tandem.js';
 
 const titleStringProperty = UnitRatesStrings[ 'unit-rates' ].titleStringProperty;
 
 simLauncher.launch( () => {
 
   const screens = [
-    new ShoppingScreen(),
-    new ShoppingLabScreen(),
-    new RacingLabScreen()
+    new ShoppingScreen( Tandem.ROOT.createTandem( 'shoppingScreen' ) ),
+    new ShoppingLabScreen( Tandem.ROOT.createTandem( 'shoppingLabScreen' ) ),
+    new RacingLabScreen( Tandem.ROOT.createTandem( 'racingLabScreen' ) )
   ];
 
   const sim = new Sim( titleStringProperty, screens, {

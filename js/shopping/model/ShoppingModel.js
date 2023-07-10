@@ -8,6 +8,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import merge from '../../../../phet-core/js/merge.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import apple_png from '../../../images/apple_png.js';
 import carrot_png from '../../../images/carrot_png.js';
 import purpleCandy_png from '../../../images/purpleCandy_png.js';
@@ -21,9 +22,11 @@ import VegetableScene from './VegetableScene.js';
 export default class ShoppingModel {
 
   /**
+   * @param {Tandem} tandem
    * @param {Object} [options]
    */
-  constructor( options ) {
+  constructor( tandem, options ) {
+    assert && assert( tandem instanceof Tandem );
 
     options = merge( {
       categoryIndex: 0, // {number} index of the category that is initially selected

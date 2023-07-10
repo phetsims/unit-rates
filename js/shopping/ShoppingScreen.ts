@@ -8,9 +8,8 @@
  */
 
 import Property from '../../../axon/js/Property.js';
-import Screen from '../../../joist/js/Screen.js';
+import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import merge from '../../../phet-core/js/merge.js';
 import { Image } from '../../../scenery/js/imports.js';
 import shoppingScreenIcon_png from '../../images/shoppingScreenIcon_png.js';
 import URColors from '../common/URColors.js';
@@ -18,26 +17,25 @@ import unitRates from '../unitRates.js';
 import UnitRatesStrings from '../UnitRatesStrings.js';
 import ShoppingModel from './model/ShoppingModel.js';
 import ShoppingScreenView from './view/ShoppingScreenView.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
-export default class ShoppingScreen extends Screen {
+export default class ShoppingScreen extends Screen<ShoppingModel, ShoppingScreenView> {
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+  public constructor( tandem: Tandem ) {
 
-    options = merge( {
+    const options: ScreenOptions = {
       name: UnitRatesStrings.screen.shoppingStringProperty,
       backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
       homeScreenIcon: new ScreenIcon( new Image( shoppingScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
-      } )
-    }, options );
+      } ),
+      tandem: tandem
+    };
 
     super(
-      () => new ShoppingModel(),
-      model => new ShoppingScreenView( model ),
+      () => new ShoppingModel( tandem.createTandem( 'model' ) ),
+      model => new ShoppingScreenView( model, tandem.createTandem( 'view' ) ),
       options
     );
   }

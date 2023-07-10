@@ -10,11 +10,13 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import URConstants from '../../common/URConstants.js';
 import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAccordionBox.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
+import RacingLabModel from '../model/RacingLabModel.js';
 import NumberOfCarsRadioButtonGroup from './NumberOfCarsRadioButtonGroup.js';
 import RaceCarRateAccordionBox from './RaceCarRateAccordionBox.js';
 import RaceTrackNode from './RaceTrackNode.js';
@@ -30,11 +32,15 @@ export default class RacingLabScreenView extends ScreenView {
 
   /**
    * @param {RacingLabModel} model
-   * @param {Object} [options]
+   * @param {Tandem} tandem
    */
-  constructor( model, options ) {
+  constructor( model, tandem ) {
+    assert && assert( model instanceof RacingLabModel );
+    assert && assert( tandem instanceof Tandem );
 
-    super( options );
+    super( {
+      tandem: tandem
+    } );
 
     // Properties that are specific to the view
     const viewProperties = new RacingLabViewProperties();

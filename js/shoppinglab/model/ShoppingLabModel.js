@@ -6,6 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Tandem from '../../../../tandem/js/Tandem.js';
 import apple_png from '../../../images/apple_png.js';
 import carrot_png from '../../../images/carrot_png.js';
 import purpleCandy_png from '../../../images/purpleCandy_png.js';
@@ -20,9 +21,10 @@ import unitRates from '../../unitRates.js';
 
 export default class ShoppingLabModel extends ShoppingModel {
 
-  constructor() {
+  constructor( tandem ) {
+    assert && assert( tandem instanceof Tandem );
 
-    super( {
+    super( tandem, {
 
       // unlike the 'Shopping' screen, each category in 'Shopping Lab' has only 1 associated item
       categories: [
