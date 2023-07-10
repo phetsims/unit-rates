@@ -9,6 +9,36 @@
 import Range from '../../../dot/js/Range.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import unitRates from '../unitRates.js';
+import { AccordionBoxOptions } from '../../../sun/js/AccordionBox.js';
+import { NumberPickerOptions } from '../../../sun/js/NumberPicker.js';
+
+const ACCORDION_BOX_OPTIONS: AccordionBoxOptions = {
+  titleBarExpandCollapse: false,
+  titleAlignX: 'left',
+  titleXMargin: 10,
+  titleYMargin: 4,
+  showTitleWhenExpanded: true,
+  fill: 'white',
+  cornerRadius: 5,
+  buttonXMargin: 10,
+  buttonYMargin: 4,
+  contentXMargin: 10,
+  contentYMargin: 8,
+  contentYSpacing: 4,
+  expandCollapseButtonOptions: {
+    sideLength: 16,
+    touchAreaXDilation: 8,
+    touchAreaYDilation: 10,
+    touchAreaYShift: -4,
+    mouseAreaXDilation: 4,
+    mouseAreaYDilation: 4
+  }
+};
+
+const NUMBER_PICKER_OPTIONS: NumberPickerOptions = {
+  xMargin: 8,
+  cornerRadius: 4
+};
 
 const URConstants = {
 
@@ -26,35 +56,11 @@ const URConstants = {
   RACING_LAB_AXIS_LENGTH: 582, // determined empirically
 
   // AccordionBoxes
-  ACCORDION_BOX_OPTIONS: {
-    titleBarExpandCollapse: false,
-    titleAlignX: 'left',
-    titleXMargin: 10,
-    titleYMargin: 4,
-    showTitleWhenExpanded: true,
-    fill: 'white',
-    cornerRadius: 5,
-    buttonXMargin: 10,
-    buttonYMargin: 4,
-    contentXMargin: 10,
-    contentYMargin: 8,
-    contentYSpacing: 4,
-    expandCollapseButtonOptions: {
-      sideLength: 16,
-      touchAreaXDilation: 8,
-      touchAreaYDilation: 10,
-      touchAreaYShift: -4,
-      mouseAreaXDilation: 4,
-      mouseAreaYDilation: 4
-    }
-  },
+  ACCORDION_BOX_OPTIONS: ACCORDION_BOX_OPTIONS,
   ACCORDION_BOX_TITLE_FONT: new PhetFont( 14 ),
 
-  // Rate pickers (aka spinners)
-  NUMBER_PICKER_OPTIONS: {
-    xMargin: 8,
-    cornerRadius: 4
-  },
+  // Rate pickers
+  NUMBER_PICKER_OPTIONS: NUMBER_PICKER_OPTIONS,
   COST_RANGE: new Range( 1, 20 ),
   QUANTITY_RANGE: new Range( 1, 20 ),
   MILES_RANGE: new Range( 20, 100 ),
