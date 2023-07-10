@@ -7,7 +7,6 @@
  */
 
 import logGlobal from '../../../phet-core/js/logGlobal.js';
-// sim modules
 import unitRates from '../unitRates.js';
 
 const URQueryParameters = QueryStringMachine.getAll( {
