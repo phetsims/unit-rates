@@ -10,36 +10,46 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
-import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+  numeratorMaxDecimals?: number; // maximum decimal places in the numerator, integer >= 0
+  denominatorMaxDecimals?: number; // maximum decimal places in the denominator, integer >= 0
+};
+
+type MarkerEditorOptions = SelfOptions;
 
 export default class MarkerEditor {
 
-  /**
-   * @param {Property.<boolean>} unitRateProperty
-   * @param {Object} [options]
-   */
-  constructor( unitRateProperty, options ) {
+  public readonly unitRateProperty: NumberProperty;
+  public readonly numeratorProperty: Property<number | null>; // the numerator in the editor, null if no numerator
+  public readonly denominatorProperty: Property<number | null>; // the denominator in the editor, null if no denominator
+  private readonly denominatorMaxDecimals: number;
 
-    options = merge( {
-      numeratorMaxDecimals: 2, // {number} maximum decimal places in the numerator
-      denominatorMaxDecimals: 2 // {number} maximum decimal places in the denominator
-    }, options );
+  public constructor( unitRateProperty: NumberProperty, providedOptions?: MarkerEditorOptions ) {
 
-    // @public {Property.<number|null>} the numerator in the editor
-    this.numeratorProperty = new Property( null, {
-      reentrant: true // see https://github.com/phetsims/unit-rates/issues/216
-    } );
+    const options = optionize<MarkerEditorOptions, SelfOptions>()( {
 
-    // @public {Property.<number|null>} the denominator in the editor
-    this.denominatorProperty = new Property( null, {
-      reentrant: true // see https://github.com/phetsims/unit-rates/issues/216
-    } );
+      // SelfOptions
+      numeratorMaxDecimals: 2,
+      denominatorMaxDecimals: 2
+    }, providedOptions );
 
-    // @public (read-only)
+    assert && assert( Number.isInteger( options.numeratorMaxDecimals ) && options.numeratorMaxDecimals >= 0 );
+    assert && assert( Number.isInteger( options.denominatorMaxDecimals ) && options.denominatorMaxDecimals >= 0 );
+
     this.unitRateProperty = unitRateProperty;
 
-    // @private
+    this.numeratorProperty = new Property<number | null>( null, {
+      reentrant: true // see https://github.com/phetsims/unit-rates/issues/216
+    } );
+
+    this.denominatorProperty = new Property<number | null>( null, {
+      reentrant: true // see https://github.com/phetsims/unit-rates/issues/216
+    } );
+
     this.denominatorMaxDecimals = options.denominatorMaxDecimals;
 
     // if a numerator is entered that can't be computed from the existing denominator, then clear the denominator
@@ -69,18 +79,15 @@ export default class MarkerEditor {
     } );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.numeratorProperty.reset();
     this.denominatorProperty.reset();
   }
 
   /**
    * The marker editor is 'empty' when both the numerator and denominator are null.
-   * @returns {boolean}
-   * @public
    */
-  isEmpty() {
+  public isEmpty(): boolean {
     return ( this.numeratorProperty.value === null && this.denominatorProperty.value === null );
   }
 }
