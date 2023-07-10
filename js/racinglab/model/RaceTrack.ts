@@ -7,37 +7,41 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+  length?: number; // initial distance between start and finish line, in miles
+  maxLength?: number; // maximum distance between start and finish line, in miles
+  markerSpacing?: number; // track markers are spaced at this interval, in miles
+};
+
+type RaceTrackOptions = SelfOptions;
 
 export default class RaceTrack {
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+  public readonly maxLength: number;
+  public readonly markerSpacing: number;
+  public readonly lengthProperty: NumberProperty;
 
-    options = merge( {
-      length: 200, // {number} initial distance between start and finish line, in miles
-      maxLength: 200, // {number} maximum distance between start and finish line, in miles
-      markerSpacing: 50  // {number} track markers are spaced at this interval, in miles
-    }, options );
+  public constructor( providedOptions?: RaceTrackOptions ) {
 
-    // @public (read-only)
+    const options = optionize<RaceTrackOptions, SelfOptions>()( {
+
+      // SelfOptions
+      length: 200,
+      maxLength: 200,
+      markerSpacing: 50
+    }, providedOptions );
+
     this.maxLength = options.maxLength;
     this.markerSpacing = options.markerSpacing;
-
-    // @public
-    this.lengthProperty = new NumberProperty( options.length );
-
-    // validate length, unlink not needed
-    this.lengthProperty.link( length => {
-      assert && assert( length >= 0 && length <= options.maxLength, `invalid length: ${length}` );
+    this.lengthProperty = new NumberProperty( options.length, {
+      isValidValue: length => ( length >= 0 && length <= options.maxLength )
     } );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.lengthProperty.reset();
   }
 }
