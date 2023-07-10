@@ -20,53 +20,49 @@ import Utils from '../../../../dot/js/Utils.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import unitRates from '../../unitRates.js';
 import URUtils from '../URUtils.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 export default class Rate {
 
+  public readonly numeratorProperty: NumberProperty;
+  public readonly denominatorProperty: NumberProperty;
+  public readonly unitRateProperty: TReadOnlyProperty<number>;
+
   /**
-   * @param {number} numerator - the rate's numerator, must be an integer
-   * @param {number} denominator - the rate's denominator, must be an integer
+   * @param numerator - the rate's numerator, must be an integer
+   * @param denominator - the rate's denominator, must be an integer
    */
-  constructor( numerator, denominator ) {
+  public constructor( numerator: number, denominator: number ) {
 
     assert && assert( Number.isInteger( numerator ), `numerator must be an integer: ${numerator}` );
     assert && assert( Number.isInteger( denominator ), `denominator must be an integer: ${denominator}` );
 
-    // @public
     this.numeratorProperty = new NumberProperty( numerator );
     this.denominatorProperty = new NumberProperty( denominator );
 
-    // @public (read-only) dispose not needed
     this.unitRateProperty = new DerivedProperty(
       [ this.numeratorProperty, this.denominatorProperty ],
       ( numerator, denominator ) => ( numerator / denominator )
     );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.numeratorProperty.reset();
     this.denominatorProperty.reset();
   }
 
   /**
    * String representation. For debugging and logging only. Do not rely on the format of this!
-   * @returns {string}
-   * @public
    */
-  toString() {
+  public toString(): string {
     return `${this.numeratorProperty.value}/${this.denominatorProperty.value}`;
   }
 
   /**
    * Creates a Rate using a unit rate.
    * The Rate returned is the closest rate that can be represented with integers.
-   * @param {number} unitRate
-   * @returns {Rate}
-   * @public
-   * @static
    */
-  static withUnitRate( unitRate ) {
+  public static withUnitRate( unitRate: number ): Rate {
 
     // compute corresponding numerator and denominator
     const denominator = Math.pow( 10, URUtils.decimalPlaces( unitRate ) );
