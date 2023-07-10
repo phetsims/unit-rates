@@ -11,22 +11,20 @@ import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import SunConstants from '../../../sun/js/SunConstants.js';
 import unitRates from '../unitRates.js';
 
-// All functions are @public unless otherwise noted.
 const URUtils = {
 
   /**
    * Formats a number, using nearest-neighbor rounding.
-   * @param {string} format - the format, which must contain SunConstants.VALUE_NUMBERED_PLACEHOLDER for the value
-   * @param {number} value - the number
-   * @param {number} maxDecimals - the maximum number of decimal places
-   * @param {boolean} trimZeros - whether to trim trailing zeros from the decimal places (eg, 1.20 -> 1.2)
-   * @returns {string}
+   * @param format - the format, which must contain SunConstants.VALUE_NUMBERED_PLACEHOLDER for the value
+   * @param value - the number
+   * @param maxDecimals - the maximum number of decimal places
+   * @param trimZeros - whether to trim trailing zeros from the decimal places (eg, 1.20 -> 1.2)
    */
-  formatNumber: function( format, value, maxDecimals, trimZeros ) {
+  formatNumber( format: string, value: number, maxDecimals: number, trimZeros: boolean ): string {
 
     // stringTest indiscriminately replaces all strings, with no regard to formatting placeholders.
     if ( !phet.chipper.queryParameters.stringTest ) {
-      assert && assert( format.indexOf( SunConstants.VALUE_NUMBERED_PLACEHOLDER ) !== -1,
+      assert && assert( format.includes( SunConstants.VALUE_NUMBERED_PLACEHOLDER ),
         `missing placeholder in format: ${format}` );
     }
     return StringUtils.format( format, URUtils.numberToString( value, maxDecimals, trimZeros ) );
@@ -34,12 +32,11 @@ const URUtils = {
 
   /**
    * Converts a number to a string, using nearest-neighbor rounding.
-   * @param {number} value - the number
-   * @param {number} maxDecimals - the maximum number of decimal places
-   * @param {boolean} trimZeros - whether to trim trailing zeros from the decimal places (eg, 1.20 -> 1.2)
-   * @returns {string}
+   * @param value - the number
+   * @param maxDecimals - the maximum number of decimal places
+   * @param trimZeros - whether to trim trailing zeros from the decimal places (eg, 1.20 -> 1.2)
    */
-  numberToString: function( value, maxDecimals, trimZeros ) {
+  numberToString( value: number, maxDecimals: number, trimZeros: boolean ): string {
     if ( trimZeros ) {
       return Utils.toFixedNumber( value, maxDecimals ).toString();
     }
@@ -50,11 +47,8 @@ const URUtils = {
 
   /**
    * Gets the number of decimal places in a number, or a number that has been converted to a string.
-   * @param {number|string} numberOrString
-   * @returns {number}
    */
-  decimalPlaces: function( numberOrString ) {
-    assert && assert( typeof numberOrString === 'number' || typeof numberOrString === 'string', 'invalid argument type' );
+  decimalPlaces( numberOrString: number | string ): number {
 
     // convert to string
     const str = ( `${numberOrString}` );
