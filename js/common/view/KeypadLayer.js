@@ -53,7 +53,7 @@ export default class KeypadLayer extends Plane {
     // Ignore attempts to open another keypad. This can happen in unlikely multi-touch scenarios.
     // See https://github.com/phetsims/unit-rates/issues/181
     if ( this.keypad ) {
-      unitRates.log && unitRates.log( 'ignoring attempt to open another keypad' );
+      phet.log && phet.log( 'ignoring attempt to open another keypad' );
       return;
     }
 

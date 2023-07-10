@@ -107,7 +107,7 @@ function animateBagToContainer( bag, container ) {
 
   // This function changes course to the next closest unoccupied cell.
   const changeCourse = () => {
-    unitRates.log && unitRates.log( `cell ${cellIndex} is occupied, trying another cell` );
+    phet.log && phet.log( `cell ${cellIndex} is occupied, trying another cell` );
     animateBagToContainer( bag, container );
   };
 
