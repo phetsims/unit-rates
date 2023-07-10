@@ -13,21 +13,23 @@ import redCar_png from '../../../images/redCar_png.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 import RaceCar from './RaceCar.js';
+import TModel from '../../../../joist/js/TModel.js';
 
-export default class RacingLabModel {
+export default class RacingLabModel implements TModel {
 
-  constructor() {
+  public readonly runningProperty: BooleanProperty; // is the race running?
+  public readonly car1: RaceCar; // the red (top) car
+  public readonly car2: RaceCar; // the blue (bottom) car
 
-    // @public is the race running?
+  public constructor() {
+
     this.runningProperty = new BooleanProperty( false );
 
-    // @public the red (top) car
     this.car1 = new RaceCar( redCar_png, {
       color: URColors.car1,
       trackLength: 150
     } );
 
-    // @public the blue (bottom) car
     this.car2 = new RaceCar( blueCar_png, {
       color: URColors.car2,
       trackLength: 100,
@@ -71,15 +73,14 @@ export default class RacingLabModel {
       this.resetRace.bind( this ) );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.runningProperty.reset();
     this.car1.reset();
     this.car2.reset();
   }
 
-  // @private resets the race
-  resetRace() {
+  // resets the race
+  private resetRace(): void {
     this.runningProperty.reset();
     this.car1.resetRace();
     this.car2.resetRace();
@@ -87,10 +88,9 @@ export default class RacingLabModel {
 
   /**
    * Updates time-dependent parts of the model.
-   * @param {number} dt - time since the previous step, in seconds
-   * @public
+   * @param dt - time since the previous step, in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
 
     // Cap dt, see https://github.com/phetsims/unit-rates/issues/193
     dt = Math.min( dt, 0.1 );
