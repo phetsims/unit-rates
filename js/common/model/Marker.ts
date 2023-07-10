@@ -12,48 +12,60 @@
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
+import { Color } from '../../../../scenery/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
-// constants
-// how the marker was created, ordered by ascending precedence
-const CREATOR_VALUES = [ 'editor', 'scale', 'question', 'race' ];
+// how the marker was created, values ordered by ascending precedence
+const CreatorValues = [ 'editor', 'scale', 'question', 'race' ] as const;
+type Creator = ( typeof CreatorValues )[number];
+
+type SelfOptions = {
+  isMajor?: boolean; // true: major marker, false: minor marker
+  color?: Color | string; // color used to render the marker
+  erasable?: boolean; // is this marker erased when the Eraser button is pressed?
+};
+
+type MarkerOptions = SelfOptions;
 
 export default class Marker {
 
+  public readonly numeratorProperty: NumberProperty;
+  public readonly denominatorProperty: NumberProperty;
+  public readonly creator: Creator;
+  public readonly isMajor: boolean;
+  public readonly colorProperty: Property<Color | string>;
+
+  public erasable: boolean;
+
   /**
-   * @param {number} numerator
-   * @param {number} denominator
-   * @param {string} creator - indicates how the marker was created, see CREATOR_VALUES
-   * @param {Object} [options]
+   * @param numerator
+   * @param denominator
+   * @param creator - indicates how the marker was created, see CREATOR_VALUES
+   * @param [providedOptions]
    */
-  constructor( numerator, denominator, creator, options ) {
+  public constructor( numerator: number, denominator: number, creator: Creator, providedOptions?: MarkerOptions ) {
 
-    options = merge( {
-      isMajor: true, // {boolean} true: major marker, false: minor marker
-      color: 'black', // {Color|string} color used to render the marker
-      erasable: true // {boolean} is this marker erased when the Eraser button is pressed?
-    }, options );
+    const options = optionize<MarkerOptions, SelfOptions>()( {
 
-    assert && assert( _.includes( CREATOR_VALUES, creator ), `invalid creator: ${creator}` );
+      // SelfOptions
+      isMajor: true,
+      color: 'black',
+      erasable: true
+    }, providedOptions );
 
-    // @public
     this.numeratorProperty = new NumberProperty( numerator );
     this.denominatorProperty = new NumberProperty( denominator );
-    this.colorProperty = new Property( options.color );
-    this.erasable = options.erasable;
-
-    // @public (read-only)
     this.creator = creator;
     this.isMajor = options.isMajor;
+    this.colorProperty = new Property( options.color );
+    this.erasable = options.erasable;
   }
 
   /**
    * String representation. For debugging and logging only. Do not rely on the format of this!
-   * @returns {string}
-   * @public
    */
-  toString() {
+  public toString(): string {
     return `${'Marker[' +
               ' rate='}${this.numeratorProperty.value}/${this.denominatorProperty.value
     } creator=${this.creator
@@ -67,42 +79,22 @@ export default class Marker {
    * Two markers conflict if they have the same numerator or denominator.
    * This is possible due to rounding errors.
    * See https://github.com/phetsims/unit-rates/issues/148.
-   * @param {Marker} marker
-   * @returns {boolean}
-   * @public
    */
-  conflictsWith( marker ) {
-    assert && assert( marker instanceof Marker );
+  public conflictsWith( marker: Marker ): boolean {
     return ( marker.numeratorProperty.value === this.numeratorProperty.value ) ||
            ( marker.denominatorProperty.value === this.denominatorProperty.value );
   }
 
   /**
    * Gets the precedence of the specified marker, relative to this marker.
-   * @param {Marker} marker
-   * @returns {number}
-   *    1 : marker has higher precedence
-   *   -1 : marker has lower precedence
-   *    0 : marker has same precedence
-   * @public
+   * The value returned indicates the precedence, as follows:
+   *   0: marker has same precedence
+   *   > 0: marker has higher precedence
+   *   < 0: marker has lower precedence
+   *
    */
-  precedenceOf( marker ) {
-
-    const thisIndex = CREATOR_VALUES.indexOf( this.creator );
-    assert && assert( thisIndex !== -1, `invalid creator: ${this.creator}` );
-
-    const thatIndex = CREATOR_VALUES.indexOf( marker.creator );
-    assert && assert( thatIndex !== -1, `invalid creator: ${marker.creator}` );
-
-    if ( thatIndex > thisIndex ) {
-      return 1;
-    }
-    else if ( thatIndex < thisIndex ) {
-      return -1;
-    }
-    else {
-      return 0;
-    }
+  public precedenceOf( marker: Marker ): number {
+    return CreatorValues.indexOf( marker.creator ) - CreatorValues.indexOf( this.creator );
   }
 }
 
