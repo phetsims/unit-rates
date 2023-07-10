@@ -11,43 +11,59 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+  position?: Vector2; // initial position
+  dragging?: boolean; // is this instance being dragged by the user?
+  animationSpeed?: number; // distance/second when animating
+};
+
+export type URMovableOptions = SelfOptions;
+
+type AnimateToOptions = {
+  animationStepCallback?: ( () => void ) | null; // called when animation step occurs
+  animationCompletedCallback?: ( () => void ) | null; // called when animation has completed
+};
 
 export default class URMovable {
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+  // DO NOT set this directly! Use moveTo or animateTo.
+  public readonly positionProperty: Vector2Property;
 
-    options = merge( {
-      position: new Vector2( 0, 0 ), // {Vector2} initial position
-      dragging: false, // {boolean} is this instance being dragged by the user?
-      animationSpeed: 100 // {number} distance/second when animating
-    }, options );
+  // drag handlers must manage this flag during a drag sequence
+  public dragging: boolean;
 
-    // @public (read-only) DO NOT set this directly! Use moveTo or animateTo.
+  private readonly animationSpeed: number; // distance/second when animating
+  private destination: Vector2; // destination to animate to, set using animateTo
+
+  // called when animation step occurs, set using animateTo. Don't do anything expensive here!
+  private animationStepCallback: ( () => void ) | null;
+
+  // called when animation to destination completes, set using animateTo
+  private animationCompletedCallback: ( () => void ) | null;
+
+  protected constructor( providedOptions?: URMovableOptions ) {
+
+    const options = optionize<URMovableOptions, SelfOptions>()( {
+
+      // SelfOptions
+      position: new Vector2( 0, 0 ),
+      dragging: false,
+      animationSpeed: 100
+    }, providedOptions );
+
     this.positionProperty = new Vector2Property( options.position );
 
-    // @public drag handlers must manage this flag during a drag sequence
     this.dragging = options.dragging;
-
-    // @private
     this.animationSpeed = options.animationSpeed;
-
-    // @private {Vector2} destination to animate to, set using animateTo
     this.destination = options.position.copy();
-
-    // @private {function|null} called when animation step occurs, set using animateTo. Don't do anything expensive here!
     this.animationStepCallback = null;
-
-    // @private {function|null} called when animation to destination completes, set using animateTo
     this.animationCompletedCallback = null;
   }
 
-  // @public
-  reset() {
+  public reset(): void {
 
     // call moveTo instead of positionProperty.set, so that any animation in progress is cancelled
     this.moveTo( this.positionProperty.initialValue );
@@ -55,10 +71,8 @@ export default class URMovable {
 
   /**
    * Moves immediately to the specified position, without animation.
-   * @param {Vector2} position
-   * @public
    */
-  moveTo( position ) {
+  public moveTo( position: Vector2 ): void {
 
     // cancel any pending callbacks
     this.animationStepCallback = null;
@@ -72,28 +86,19 @@ export default class URMovable {
   /**
    * Animates to the specified position.
    * Provides optional callback that occur on animation step and completion.
-   * @param {Vector2} destination
-   * @param {Object} [options]
-   * @public
    */
-  animateTo( destination, options ) {
-
-    options = merge( {
-      animationStepCallback: null, // {function} called when animation step occurs
-      animationCompletedCallback: null // {function} called when animation has completed
-    }, options );
-
+  public animateTo( destination: Vector2, providedOptions?: AnimateToOptions ): void {
+    const options = providedOptions || {};
     this.destination = destination;
-    this.animationStepCallback = options.animationStepCallback;
-    this.animationCompletedCallback = options.animationCompletedCallback;
+    this.animationStepCallback = options.animationStepCallback || null;
+    this.animationCompletedCallback = options.animationCompletedCallback || null;
   }
 
   /**
    * Animates position, when not being dragged by the user.
-   * @param {number} dt - time since the previous step, in seconds
-   * @public
+   * @param dt - time since the previous step, in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
     const doStep = !this.dragging && ( !this.positionProperty.get().equals( this.destination ) || this.animationCompletedCallback );
     if ( doStep ) {
 
