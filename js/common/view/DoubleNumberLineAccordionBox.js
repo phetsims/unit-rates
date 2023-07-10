@@ -47,8 +47,10 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
       // DoubleNumberLineNode options
       axisViewLength: 1000, // {number} view length of doubleNumberLine's range
       indicatorXProperty: null, // {Property.<number>|null} position of the indicator, in view coordinates. null means no indicator.
-      indicatorColor: 'green' // {Color|string} color of the indicator
+      indicatorColor: 'green', // {Color|string} color of the indicator
 
+      // AccordionBoxOptions
+      resize: false // see https://github.com/phetsims/unit-rates/issues/218
     }, options );
 
     // An invisible rectangle that has the same bounds as the accordion box. Used to position the keypad.
