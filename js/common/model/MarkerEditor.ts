@@ -11,8 +11,8 @@
 import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
 import unitRates from '../../unitRates.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
   numeratorMaxDecimals?: number; // maximum decimal places in the numerator, integer >= 0
@@ -23,12 +23,12 @@ type MarkerEditorOptions = SelfOptions;
 
 export default class MarkerEditor {
 
-  public readonly unitRateProperty: NumberProperty;
+  public readonly unitRateProperty: TReadOnlyProperty<number>;
   public readonly numeratorProperty: Property<number | null>; // the numerator in the editor, null if no numerator
   public readonly denominatorProperty: Property<number | null>; // the denominator in the editor, null if no denominator
   private readonly denominatorMaxDecimals: number;
 
-  public constructor( unitRateProperty: NumberProperty, providedOptions?: MarkerEditorOptions ) {
+  public constructor( unitRateProperty: TReadOnlyProperty<number>, providedOptions?: MarkerEditorOptions ) {
 
     const options = optionize<MarkerEditorOptions, SelfOptions>()( {
 

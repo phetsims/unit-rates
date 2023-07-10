@@ -12,7 +12,6 @@ import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import unitRates from '../../unitRates.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -24,14 +23,15 @@ type FixedAxis = ( typeof FixedAxisValues )[number];
 
 export type AxisOptions = {
   axisLabel: string; // label for the axis
-  maxDecimals?: number; // {number} maximum number of decimal places, integer >= 0
+  maxDecimals?: number; // maximum number of decimal places, integer >= 0
+  maxDigits?: number; // maximum number of digits on the keypad
   trimZeros?: boolean; // whether to trim trailing zeros from decimal places
 };
 
 const DEFAULT_AXIS_OPTIONS = {
-  axisLabel: '', // {string} label for the axis
-  maxDecimals: 1, // {number} maximum number of decimal places
-  trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
+  maxDecimals: 1,
+  maxDigits: 1,
+  trimZeros: false
 };
 
 type SelfOptions = {
@@ -46,7 +46,7 @@ type DoubleNumberLineOptions = SelfOptions;
 
 export default class DoubleNumberLine {
 
-  public readonly unitRateProperty: NumberProperty;
+  public readonly unitRateProperty: TReadOnlyProperty<number>;
   public readonly fixedAxis: FixedAxis; // which of the axes has a fixed range, see FIXED_AXIS_VALUES
   public readonly numeratorOptions: AxisOptions; // options for the numerator (top) number line
   public readonly denominatorOptions: AxisOptions; // options for the denominator (bottom) number line
@@ -60,7 +60,7 @@ export default class DoubleNumberLine {
   // Marker that can be removed by pressing the undo button. A single level of undo is supported.
   public readonly undoMarkerProperty: Property<Marker | null>;
 
-  public constructor( unitRateProperty: NumberProperty, providedOptions?: DoubleNumberLineOptions ) {
+  public constructor( unitRateProperty: TReadOnlyProperty<number>, providedOptions?: DoubleNumberLineOptions ) {
 
     const options = optionize<DoubleNumberLineOptions, StrictOmit<SelfOptions, 'numeratorOptions' | 'denominatorOptions'>>()( {
 

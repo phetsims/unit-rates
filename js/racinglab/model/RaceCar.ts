@@ -10,7 +10,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import merge from '../../../../phet-core/js/merge.js';
+import { Color } from '../../../../scenery/js/imports.js';
 import DoubleNumberLine from '../../common/model/DoubleNumberLine.js';
 import Marker from '../../common/model/Marker.js';
 import MarkerEditor from '../../common/model/MarkerEditor.js';
@@ -19,48 +19,59 @@ import URQueryParameters from '../../common/URQueryParameters.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceTrack from './RaceTrack.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+  color?: Color | string; // color used for things that are associated with the car (markers, spinners, ...)
+  rate?: Rate; // initial rate, in miles per hour
+  visible?: boolean; // is this car visible?
+  trackLength?: number; // length of this car's track
+  numeratorMaxDecimals?: number; // decimal places shown for numerator (miles)
+  denominatorMaxDecimals?: number; // decimal places shown for denominator (hours)
+  majorMarkerSpacing?: number; // spacing for major markers on this car's double number line
+};
+
+type RaceCarOptions = SelfOptions;
 
 export default class RaceCar {
 
-  /**
-   * @param {HTMLImageElement} image
-   * @param {Object} [options]
-   */
-  constructor( image, options ) {
+  public readonly image: HTMLImageElement;
+  public readonly color: Color | string;
+  public readonly rate: Rate;
+  public readonly distanceProperty: NumberProperty; // the car's distance from the starting line, in miles
+  public readonly timeProperty: NumberProperty; // time for this car, in hours
+  public readonly visibleProperty: BooleanProperty; // is this car visible?
+  public readonly track: RaceTrack;
+  public readonly doubleNumberLine: DoubleNumberLine;
+  public readonly markerEditor: MarkerEditor;
 
-    options = merge( {
-      color: 'black', // {Color|string} color used for things that are associated with the car (markers, spinners, ...)
-      rate: new Rate( 50, 2 ), // {Rate} initial rate, in miles per hour
-      visible: true, // {boolean} is this car visible?
-      trackLength: 200, // {number} length of this car's track
-      numeratorMaxDecimals: 1, // {number} decimal places shown for numerator (miles)
-      denominatorMaxDecimals: 2, // {number} decimal places shown for denominator (hours)
-      majorMarkerSpacing: 25 // {number} spacing for major markers on this car's double number line
-    }, options );
+  public constructor( image: HTMLImageElement, providedOptions?: RaceCarOptions ) {
 
-    // @public (read-only)
+    const options = optionize<RaceCarOptions, SelfOptions>()( {
+
+      // SelfOptions
+      color: 'black',
+      rate: new Rate( 50, 2 ),
+      visible: true,
+      trackLength: 200,
+      numeratorMaxDecimals: 1,
+      denominatorMaxDecimals: 2,
+      majorMarkerSpacing: 25
+    }, providedOptions );
+
     this.image = image;
     this.color = options.color;
     this.rate = options.rate;
-
-    // @public the car's distance from the starting line, in miles
     this.distanceProperty = new NumberProperty( 0 );
-
-    // @public time for this car, in hours
     this.timeProperty = new NumberProperty( 0 );
-
-    // @public is this car visible?
     this.visibleProperty = new BooleanProperty( options.visible );
-
-    // @public
     this.track = new RaceTrack( { length: options.trackLength } );
 
     // Specifies the interval for major markers
-    const isMajorMarker = ( numerator, denominator ) => {
+    const isMajorMarker = ( numerator: number, denominator: number ) => {
       return ( numerator % options.majorMarkerSpacing === 0 );
     };
 
-    // @public
     this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
       numeratorOptions: {
         axisLabel: UnitRatesStrings.miles,
@@ -83,14 +94,13 @@ export default class RaceCar {
       isMajorMarker: isMajorMarker
     } );
 
-    // @public
     this.markerEditor = new MarkerEditor( this.rate.unitRateProperty, {
       numeratorMaxDecimals: options.numeratorMaxDecimals,
       denominatorMaxDecimals: options.denominatorMaxDecimals
     } );
 
     // create a marker when the car reaches the finish line. unlink not needed
-    let persistentMarker = null;
+    let persistentMarker: Marker | null = null;
     this.distanceProperty.link( distance => {
 
       // make the current persistent marker erasable
@@ -111,8 +121,7 @@ export default class RaceCar {
     } );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.rate.reset();
     this.distanceProperty.reset();
     this.visibleProperty.reset();
@@ -122,27 +131,26 @@ export default class RaceCar {
     this.markerEditor.reset();
   }
 
-  // @public moves the car to the starting line and resets the time
-  resetRace() {
+  /**
+   * Moves the car to the starting line and resets the time.
+   */
+  public resetRace(): void {
     this.distanceProperty.reset();
     this.timeProperty.reset();
   }
 
   /**
    * Is the car at the finish line?
-   * @returns {boolean}
-   * @public
    */
-  isAtFinish() {
+  public isAtFinish(): boolean {
     return ( this.distanceProperty.value === this.track.lengthProperty.value );
   }
 
   /**
    * Updates the car and timer.
-   * @param {number} dt - elapsed time since previous call to step, in seconds
-   * @public
+   * @param dt - elapsed time since previous call to step, in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
     if ( this.visibleProperty.value && ( this.distanceProperty.value < this.track.lengthProperty.value ) ) {
 
       // Map from sim time (seconds) to race time (hours).
