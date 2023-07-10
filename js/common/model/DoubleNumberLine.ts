@@ -6,64 +6,78 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import createObservableArray from '../../../../axon/js/createObservableArray.js';
+import createObservableArray, { ObservableArray } from '../../../../axon/js/createObservableArray.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Marker from './Marker.js';
 
-// constants
-const FIXED_AXIS_VALUES = [ 'numerator', 'denominator' ];
-const SHARED_OPTIONS = {
+// Which of the axes has a fix (immutable) range
+const FixedAxisValues = [ 'numerator', 'denominator' ] as const;
+type FixedAxis = ( typeof FixedAxisValues )[number];
+
+export type AxisOptions = {
+  axisLabel: string; // label for the axis
+  maxDecimals?: number; // {number} maximum number of decimal places, integer >= 0
+  trimZeros?: boolean; // whether to trim trailing zeros from decimal places
+};
+
+const DEFAULT_AXIS_OPTIONS = {
   axisLabel: '', // {string} label for the axis
   maxDecimals: 1, // {number} maximum number of decimal places
   trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
 };
 
+type SelfOptions = {
+  fixedAxis?: FixedAxis; // which of the axes has a fixed (immutable) range
+  fixedAxisRange?: Range; // range of the fixed axis
+  numeratorOptions?: AxisOptions; // options specific to the rate's numerator
+  denominatorOptions?: AxisOptions; // options specific to the rate's denominator
+  isMajorMarker?: ( numerator: number, denominator: number ) => boolean; // determines whether a marker is major
+};
+
+type DoubleNumberLineOptions = SelfOptions;
+
 export default class DoubleNumberLine {
 
-  /**
-   * @param {Property.<number>} unitRateProperty
-   * @param {Object} [options]
-   */
-  constructor( unitRateProperty, options ) {
+  public readonly unitRateProperty: NumberProperty;
+  public readonly fixedAxis: FixedAxis; // which of the axes has a fixed range, see FIXED_AXIS_VALUES
+  public readonly numeratorOptions: AxisOptions; // options for the numerator (top) number line
+  public readonly denominatorOptions: AxisOptions; // options for the denominator (bottom) number line
+  public readonly isMajorMarker: ( numerator: number, denominator: number ) => boolean; // determines whether a marker is major
+  private readonly numeratorRangeProperty: TReadOnlyProperty<Range>;
+  private readonly denominatorRangeProperty: TReadOnlyProperty<Range>;
 
-    options = merge( {
-      fixedAxis: 'denominator', // {string} which of the axes has a fixed (immutable) range
-      fixedAxisRange: new Range( 0, 10 ), // {Range} range of the fixed axis
-      numeratorOptions: null, // {*} options specific to the rate's numerator, see below
-      denominatorOptions: null, // {*} options specific to the rate's denominator, see below
+  // NOTE: markers must be added/removed via addMarker/removeMarker
+  public readonly markers: ObservableArray<Marker>;
 
-      // {function(number,number):boolean} determines whether a marker is major
-      isMajorMarker: ( numerator, denominator ) => true
-    }, options );
+  // Marker that can be removed by pressing the undo button. A single level of undo is supported.
+  public readonly undoMarkerProperty: Property<Marker | null>;
 
-    assert && assert( _.includes( FIXED_AXIS_VALUES, options.fixedAxis ),
-      `invalid fixedAxis: ${options.fixedAxis}` );
+  public constructor( unitRateProperty: NumberProperty, providedOptions?: DoubleNumberLineOptions ) {
 
-    // @public (read-only) options for the numerator (top) number line
-    this.numeratorOptions = merge( {}, SHARED_OPTIONS, options.numeratorOptions );
+    const options = optionize<DoubleNumberLineOptions, StrictOmit<SelfOptions, 'numeratorOptions' | 'denominatorOptions'>>()( {
 
-    // @public (read-only) options for the denominator (bottom) number line
-    this.denominatorOptions = merge( {}, SHARED_OPTIONS, options.denominatorOptions );
+      // SelfOptions
+      fixedAxis: 'denominator',
+      fixedAxisRange: new Range( 0, 10 ),
+      isMajorMarker: ( numerator: number, denominator: number ) => true
+    }, providedOptions );
 
-    // @public (read-only) {Property.<number>}
     this.unitRateProperty = unitRateProperty;
-
-    // @public (read-only) {Marker[]} markers must be added/removed via addMarker/removeMarker
-    this.markers = createObservableArray();
-
-    // @public (read-only) {function(number,number):boolean}
+    this.fixedAxis = options.fixedAxis;
+    this.numeratorOptions = combineOptions<AxisOptions>( {}, DEFAULT_AXIS_OPTIONS, options.numeratorOptions );
+    this.denominatorOptions = combineOptions<AxisOptions>( {}, DEFAULT_AXIS_OPTIONS, options.denominatorOptions );
     this.isMajorMarker = options.isMajorMarker;
 
-    // @public (read-only) which of the axes has a fixed range, see FIXED_AXIS_VALUES
-    this.fixedAxis = options.fixedAxis;
-
-    // @private defined below
-    this.numeratorRangeProperty = null;
-    this.denominatorRangeProperty = null;
+    this.markers = createObservableArray();
+    this.undoMarkerProperty = new Property<Marker | null>( null );
 
     if ( options.fixedAxis === 'numerator' ) {
 
@@ -109,26 +123,19 @@ export default class DoubleNumberLine {
         } );
       } );
     }
-
-    // @public {Property.<number|null>} marker that can be removed by pressing the undo button.
-    // A single level of undo is supported.
-    this.undoMarkerProperty = new Property( null );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.markers.reset();
     this.undoMarkerProperty.reset();
   }
 
   /**
    * Maps a rate's numerator from model to view coordinate frame.
-   * @param {number} numerator - numerator in model coordinate frame
-   * @param {number} viewMax - numerator's maximum in view coordinate frame
-   * @returns {number}
-   * @public
+   * @param numerator - numerator in model coordinate frame
+   * @param viewMax - numerator's maximum in view coordinate frame
    */
-  modelToViewNumerator( numerator, viewMax ) {
+  public modelToViewNumerator( numerator: number, viewMax: number ): number {
     return Utils.linear(
       this.numeratorRangeProperty.value.min, this.numeratorRangeProperty.value.max,
       0, viewMax,
@@ -137,12 +144,10 @@ export default class DoubleNumberLine {
 
   /**
    * Maps a rate's denominator from model to view coordinate frame.
-   * @param {number} denominator - denominator in model coordinate frame
-   * @param {number} viewMax - denominator's maximum in view coordinate frame
-   * @returns {number}
-   * @public
+   * @param denominator - denominator in model coordinate frame
+   * @param viewMax - denominator's maximum in view coordinate frame
    */
-  modelToViewDenominator( denominator, viewMax ) {
+  public modelToViewDenominator( denominator: number, viewMax: number ): number {
     return Utils.linear(
       this.denominatorRangeProperty.value.min, this.denominatorRangeProperty.value.max,
       0, viewMax,
@@ -151,19 +156,15 @@ export default class DoubleNumberLine {
 
   /**
    * Gets the maximum value that fits on the numerator (top) axis.
-   * @returns {number}
-   * @public
    */
-  getMaxNumerator() {
+  public getMaxNumerator(): number {
     return this.numeratorRangeProperty.value.max;
   }
 
   /**
    * Gets the maximum value that fits on the denominator (bottom) axis.
-   * @returns {number}
-   * @public
    */
-  getMaxDenominator() {
+  public getMaxDenominator(): number {
     return this.denominatorRangeProperty.value.max;
   }
 
@@ -171,11 +172,10 @@ export default class DoubleNumberLine {
    * This is a request to add a marker, subject to rules about uniqueness and marker precedence.
    * The rules are complicated to describe, so please consult the implementation.
    * Calling this function may result in a lower precedence marker being deleted as a side effect.
-   * @param {Marker} marker
-   * @returns {boolean} true if the marker was added, false if the request was ignored
-   * @public
+   * @param marker
+   * @returns true if the marker was added, false if the request was ignored
    */
-  addMarker( marker ) {
+  public addMarker( marker: Marker ): boolean {
 
     assert && assert( !this.markers.includes( marker ), `attempt to add marker again: ${marker}` );
 
@@ -204,7 +204,7 @@ export default class DoubleNumberLine {
     else {
 
       // ignore lower precedence marker
-      unitRates.log && unitRates.log( `ignoring lower precedence marker: ${marker.toString()}` );
+      phet.log && phet.log( `ignoring lower precedence marker: ${marker.toString()}` );
     }
 
     return wasAdded;
@@ -212,10 +212,8 @@ export default class DoubleNumberLine {
 
   /**
    * Removes a marker.
-   * @param {Marker} marker
-   * @private
    */
-  removeMarker( marker ) {
+  public removeMarker( marker: Marker ): void {
     assert && assert( this.markers.includes( marker ), `attempt to remove an unknown marker: ${marker}` );
     this.markers.remove( marker );
   }
@@ -223,11 +221,10 @@ export default class DoubleNumberLine {
   /**
    * Gets a marker that conflicts with the specified marker.
    * Two markers conflict if they have the same numerator or denominator, which is possible due to rounding errors.
-   * @param {Marker} marker
-   * @returns {Marker|null} null if there is no conflicting
-   * @private
+   * @param marker
+   * @returns null if there is no conflicting
    */
-  getConflictingMarker( marker ) {
+  private getConflictingMarker( marker: Marker ): Marker | null {
     let conflictingMarker = null;
     for ( let i = 0; i < this.markers.length && !conflictingMarker; i++ ) {
       if ( marker.conflictsWith( this.markers[ i ] ) ) {
@@ -239,20 +236,16 @@ export default class DoubleNumberLine {
 
   /**
    * Does this marker fall within the range of the axes?
-   * @param {Marker} marker
-   * @returns {boolean}
-   * @public
    */
-  markerIsInRange( marker ) {
+  public markerIsInRange( marker: Marker ): boolean {
     return ( this.numeratorRangeProperty.value.contains( marker.numeratorProperty.value ) &&
              this.denominatorRangeProperty.value.contains( marker.denominatorProperty.value ) );
   }
 
   /**
    * Undoes (removes) the undo marker. If there is no undo marker, this is a no-op.
-   * @public
    */
-  undo() {
+  public undo(): void {
     const undoMarker = this.undoMarkerProperty.value;
     if ( undoMarker ) {
       assert && assert( this.markers.includes( undoMarker ), `unexpected undoMarker: ${undoMarker}` );
@@ -263,9 +256,8 @@ export default class DoubleNumberLine {
 
   /**
    * Erases all markers that are erasable.
-   * @public
    */
-  erase() {
+  public erase(): void {
 
     this.undoMarkerProperty.reset();
 
