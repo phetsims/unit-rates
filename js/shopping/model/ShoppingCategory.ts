@@ -8,39 +8,34 @@
 
 import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import merge from '../../../../phet-core/js/merge.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
 import unitRates from '../../unitRates.js';
+import ShoppingScene from './ShoppingScene.js';
 
 export default class ShoppingCategory {
 
+  public readonly image: HTMLImageElement; // image used to represent the category
+  public readonly shoppingScenes: ShoppingScene[]; // scenes in the category
+  public readonly shoppingSceneProperty: Property<ShoppingScene>; // the selected scene
+
   /**
-   * @param {HTMLImageElement} image - image used to represent the category
-   * @param {ShoppingScene[]} shoppingScenes - scenes in the category
-   * @param {Object} [options]
+   * @param image - image used to represent the category
+   * @param shoppingScenes - scenes in the category
    */
-  constructor( image, shoppingScenes, options ) {
+  public constructor( image: HTMLImageElement, shoppingScenes: ShoppingScene[] ) {
 
     assert && assert( shoppingScenes.length > 0, 'at least 1 ShoppingScene is required' );
 
-    options = merge( {
-
-      // index of the scene that is initially selected, randomly chosen
-      shoppingSceneIndex: URQueryParameters.randomEnabled ? dotRandom.nextIntBetween( 0, shoppingScenes.length - 1 ) : 0
-    }, options );
-
-    // validate options
-    assert && assert( options.shoppingSceneIndex >= 0 && options.shoppingSceneIndex < shoppingScenes.length,
-      `invalid shoppingSceneIndex: ${options.shoppingSceneIndex}` );
-
-    // @public (read-only)
     this.image = image;
     this.shoppingScenes = shoppingScenes;
-    this.shoppingSceneProperty = new Property( shoppingScenes[ options.shoppingSceneIndex ] );
+
+    // validate
+    const shoppingSceneIndex = URQueryParameters.randomEnabled ? dotRandom.nextIntBetween( 0, shoppingScenes.length - 1 ) : 0;
+    assert && assert( shoppingSceneIndex >= 0 && shoppingSceneIndex < shoppingScenes.length, `invalid shoppingSceneIndex: ${shoppingSceneIndex}` );
+    this.shoppingSceneProperty = new Property( shoppingScenes[ shoppingSceneIndex ] );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
 
     // Reset all scenes
     this.shoppingScenes.forEach( shoppingScene => shoppingScene.reset() );
@@ -50,10 +45,9 @@ export default class ShoppingCategory {
 
   /**
    * Updates time-dependent parts of the model.
-   * @param {number} dt - time since the previous step, in seconds
-   * @public
+   * @param dt - time since the previous step, in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
 
     // step the selected scene
     this.shoppingSceneProperty.value.step( dt );
