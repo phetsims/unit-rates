@@ -1,46 +1,52 @@
 // Copyright 2017-2023, University of Colorado Boulder
 
 /**
- * Model of a shopping item.
- * Origin is at the bottom center of the item.
+ * Model of a shopping item. Origin is at the bottom center of the item.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import merge from '../../../../phet-core/js/merge.js';
-import URMovable from '../../common/model/URMovable.js';
+import URMovable, { URMovableOptions } from '../../common/model/URMovable.js';
 import unitRates from '../../unitRates.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+  visible?: boolean; // is the item initially visible?
+};
+
+type ShoppingItemOptions = SelfOptions & URMovableOptions;
 
 export default class ShoppingItem extends URMovable {
 
-  /**
-   * @param {string} name - for internal use
-   * @param {HTMLImageElement} image - image used by the view to represent this item
-   * @param {Object} [options]
-   */
-  constructor( name, image, options ) {
+  public readonly name: string;
+  public readonly image: HTMLImageElement;
+  public readonly visibleProperty: BooleanProperty;
 
-    options = merge( {
-      animationSpeed: 400, // distance/second
-      visible: true // {boolean} is the item initially visible?
-    }, options );
+  /**
+   * @param name - for internal use
+   * @param image - image used by the view to represent this item
+   * @param [providedOptions]
+   */
+  public constructor( name: string, image: HTMLImageElement, providedOptions?: ShoppingItemOptions ) {
+
+    const options = optionize<ShoppingItemOptions, SelfOptions, URMovableOptions>()( {
+
+      // SelfOptions
+      visible: true,
+
+      // URMovableOptions
+      animationSpeed: 400
+    }, providedOptions );
 
     super( options );
 
-    // @public (read-only)
     this.name = name;
     this.image = image;
-
-    // @public
     this.visibleProperty = new BooleanProperty( options.visible );
   }
 
-  /**
-   * @public
-   * @override
-   */
-  reset() {
+  public override reset(): void {
     this.visibleProperty.reset();
     super.reset();
   }
