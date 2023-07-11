@@ -15,38 +15,53 @@
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import URMovable from '../../common/model/URMovable.js';
+
+type Cell = {
+  movable: URMovable | null; // the URMovable that occupies cell, null if the cell is unoccupied
+  position: Vector2;
+};
+
+type SelfOptions = {
+  position?: Vector2; // bottom center of the row
+  numberOfCells?:number; // number of cells in the row
+  cellSize?: Dimension2; // dimensions of each cell
+  cellSpacing?: number; // horizontal space between cells
+};
+
+type RowOfMovablesOptions = SelfOptions;
 
 export default class RowOfMovables {
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+  public readonly position?: Vector2;
+  public readonly cellSize: Dimension2;
+  public readonly cells: Cell[]; // the container's cells
+  public readonly numberOfMovablesProperty: NumberProperty; // number of movables in the row (number of occupied cells)
 
-    options = merge( {
-      position: new Vector2( 0, 0 ), // {number} bottom center of the row
-      numberOfCells: 4, // {number} number of cells in the row
-      cellSize: new Dimension2( 100, 100 ), // {number} dimensions of each cell
-      cellSpacing: 0 // {number} horizontal space between cells
-    }, options );
+  public constructor( providedOptions?: RowOfMovablesOptions ) {
 
-    // @public (read-only)
+    const options = optionize<RowOfMovablesOptions, SelfOptions>()( {
+
+      // SelfOptions
+      position: new Vector2( 0, 0 ),
+      numberOfCells: 4,
+      cellSize: new Dimension2( 100, 100 ),
+      cellSpacing: 0
+    }, providedOptions );
+
+    this.position = options.position;
     this.cellSize = options.cellSize;
 
-    // @public (read-only) bottom center of the row
-    this.position = options.position;
-
-    // @private the container's cells.
     this.cells = createCells( options.numberOfCells, options.position, options.cellSize, options.cellSpacing );
 
-    // @public (read-only) number of movables in the row (number of occupied cells)
-    this.numberOfMovablesProperty = new NumberProperty( 0 );
+    this.numberOfMovablesProperty = new NumberProperty( 0, {
+      numberType: 'Integer'
+    } );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
 
     // empty all cells
     this.cells.forEach( cell => {
@@ -57,10 +72,9 @@ export default class RowOfMovables {
 
   /**
    * Gets the index of the first unoccupied cell. Cells are visited left to right.
-   * @returns {number} - cell index, -1 if all cells are occupied
-   * @public
+   * @returns cell index, -1 if all cells are occupied
    */
-  getFirstUnoccupiedCell() {
+  public getFirstUnoccupiedCell(): number {
     let index = -1;
     for ( let i = 0; i < this.cells.length; i++ ) {
       if ( this.isEmptyCell( i ) ) {
@@ -73,11 +87,10 @@ export default class RowOfMovables {
 
   /**
    * Gets the index of the closest unoccupied cell.
-   * @param {Vector2} position
-   * @returns {number} - cell index, -1 if all cells are occupied
-   * @public
+   * @param position
+   * @returns cell index, -1 if all cells are occupied
    */
-  getClosestUnoccupiedCell( position ) {
+  public getClosestUnoccupiedCell( position: Vector2 ): number {
     let index = this.getFirstUnoccupiedCell();
     if ( index !== -1 ) {
       for ( let i = index + 1; i < this.cells.length; i++ ) {
@@ -97,11 +110,8 @@ export default class RowOfMovables {
   /**
    * Puts a movable in the specified cell.
    * The cell must be empty, and the movable cannot occupy more than 1 cell.
-   * @param {URMovable} movable
-   * @param {number} index - the cell index
-   * @public
    */
-  put( movable, index ) {
+  public put( movable: URMovable, index: number ): void {
 
     assert && assert( !this.contains( movable ),
       `movable is already in row at index ${this.indexOf( movable )}` );
@@ -118,10 +128,8 @@ export default class RowOfMovables {
 
   /**
    * Removes a movable from the container.
-   * @param {URMovable} movable
-   * @public
    */
-  remove( movable ) {
+  public remove( movable: URMovable ): void {
     const index = this.indexOf( movable );
     assert && assert( this.isValidCellIndex( index ), `invalid index: ${index}` );
     this.cells[ index ].movable = null;
@@ -130,52 +138,40 @@ export default class RowOfMovables {
 
   /**
    * Does the row contain a specified movable?
-   * @param {URMovable} movable
-   * @returns {boolean}
-   * @public
    */
-  contains( movable ) {
+  public contains( movable: URMovable ): boolean {
     return ( this.indexOf( movable ) !== -1 );
   }
 
   /**
-   * Is a cell empty?
-   * @param {number} index - the cell index
-   * @returns {boolean}
-   * @public
+   * Is the specified cell empty?
    */
-  isEmptyCell( index ) {
+  public isEmptyCell( index: number ): boolean {
     assert && assert( this.isValidCellIndex( index ), `invalid index: ${index}` );
     return ( this.cells[ index ].movable === null );
   }
 
   /**
    * Gets the position of a cell.
-   * @param {number} index - the cell index
-   * @returns {Vector2}
-   * @public
    */
-  getCellPosition( index ) {
+  public getCellPosition( index: number ): Vector2 {
     assert && assert( this.isValidCellIndex( index ), `invalid index: ${index}` );
     return this.cells[ index ].position;
   }
 
   /**
    * Gets the number of cells in the row.
-   * @returns {number}
-   * @public
    */
-  getNumberOfCells() {
+  public getNumberOfCells(): number {
     return this.cells.length;
   }
 
   /**
    * Gets the index of the cell that is occupied by a specified movable.
-   * @param {URMovable} movable
-   * @returns {number} -1 if the movable is not found
-   * @private
+   * @param movable
+   * @returns -1 if the movable is not found
    */
-  indexOf( movable ) {
+  private indexOf( movable: URMovable ): number {
     let index = -1;
     for ( let i = 0; i < this.cells.length; i++ ) {
       if ( this.cells[ i ].movable === movable ) {
@@ -188,45 +184,28 @@ export default class RowOfMovables {
 
   /**
    * Gets the distance between a cell and a position.
-   * @param {number} index - the cell index
-   * @param {Vector2} position
-   * @returns {number}
-   * @private
    */
-  getDistanceFromCell( index, position ) {
+  private getDistanceFromCell( index: number, position: Vector2 ): number {
     assert && assert( this.isValidCellIndex( index ), `invalid index: ${index}` );
     return this.getCellPosition( index ).distance( position );
   }
 
   /**
    * Is the cell index valid?
-   * @param {number} index - the cell index
-   * @returns {boolean}
-   * @private
    */
-  isValidCellIndex( index ) {
-    return ( ( typeof index === 'number' ) && !isNaN( index ) && index >= 0 && index < this.cells.length );
-  }
-
-  /**
-   * For use only by debug code in RowOfMovablesNode.
-   * @returns {*[]}
-   * @private
-   */
-  getCells() {
-    return this.cells;
+  private isValidCellIndex( index: number ): boolean {
+    return ( Number.isInteger( index ) && index >= 0 && index < this.cells.length );
   }
 }
 
 /**
  * Creates a row of empty cells.
- * @param {number} numberOfCells
- * @param {Vector2} position - bottom center of the row
- * @param {Dimension2} cellSize
- * @param {number} cellSpacing
- * @returns {{movable:URMovable|null, position:Vector2}[]}
+ * @param numberOfCells
+ * @param position - bottom center of the row
+ * @param cellSize
+ * @param cellSpacing
  */
-function createCells( numberOfCells, position, cellSize, cellSpacing ) {
+function createCells( numberOfCells: number, position: Vector2, cellSize: Dimension2, cellSpacing: number ): Cell[] {
 
   // distance between the centers of adjacent cells
   const deltaX = cellSize.width + cellSpacing;
