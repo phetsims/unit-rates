@@ -6,26 +6,29 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import StopSignNode from '../../../../scenery-phet/js/StopSignNode.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import BooleanRoundToggleButton from '../../../../sun/js/buttons/BooleanRoundToggleButton.js';
+import { Image, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
+import BooleanRoundToggleButton, { BooleanRoundToggleButtonOptions } from '../../../../sun/js/buttons/BooleanRoundToggleButton.js';
 import goButtonIcon_png from '../../../images/goButtonIcon_png.js';
 import unitRates from '../../unitRates.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = EmptySelfOptions;
+
+type StartStopButtonOptions = SelfOptions & NodeTranslationOptions;
 
 export default class StartStopButton extends BooleanRoundToggleButton {
 
-  /**
-   * @param {Property.<boolean>} runningProperty
-   * @param {Object} [options]
-   */
-  constructor( runningProperty, options ) {
+  public constructor( runningProperty: BooleanProperty, providedOptions?: StartStopButtonOptions ) {
 
-    options = merge( {
+    const options = optionize<StartStopButtonOptions, SelfOptions, BooleanRoundToggleButtonOptions>()( {
+
+      // BooleanRoundToggleButtonOptions
       radius: 45,
       xMargin: 8,
       yMargin: 8
-    }, options );
+    }, providedOptions );
 
     const goIcon = new Image( goButtonIcon_png, { scale: 0.5 } );
     const stopIcon = new StopSignNode( { fillRadius: 25 } );
