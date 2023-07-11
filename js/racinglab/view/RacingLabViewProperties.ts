@@ -11,32 +11,42 @@ import unitRates from '../../unitRates.js';
 
 export default class RacingLabViewProperties {
 
-  constructor() {
+  // Are the 'Double Number Line' accordion boxes expanded?
+  public readonly doubleNumberLine1ExpandedProperty: BooleanProperty;
+  public readonly doubleNumberLine2ExpandedProperty: BooleanProperty;
 
-    // @public are the 'Double Number Line' accordion boxes expanded?
-    this.doubleNumberLineExpandedProperty1 = new BooleanProperty( true );
-    this.doubleNumberLineExpandedProperty2 = new BooleanProperty( true );
+  // Are the 'Rate' accordion boxes expanded?
+  public readonly rate1ExpandedProperty: BooleanProperty;
+  public readonly rate2ExpandedProperty: BooleanProperty;
 
-    // @public are the 'Rate' accordion boxes expanded?
-    this.rateExpandedProperty1 = new BooleanProperty( true );
-    this.rateExpandedProperty2 = new BooleanProperty( true );
+  // Are the race timers expanded?
+  public readonly timer1ExpandedProperty: BooleanProperty;
+  public readonly timer2ExpandedProperty: BooleanProperty;
 
-    // @public are the race timers expanded?
-    this.timerExpandedProperty1 = new BooleanProperty( true );
-    this.timerExpandedProperty2 = new BooleanProperty( true );
+  // Are the drag arrows visible that surround the finish flag?
+  public readonly arrowsVisibleProperty: BooleanProperty;
 
-    // @public are the drag arrows visible that surround the finish flag?
+  public constructor() {
+
+    this.doubleNumberLine1ExpandedProperty = new BooleanProperty( true );
+    this.doubleNumberLine2ExpandedProperty = new BooleanProperty( true );
+
+    this.rate1ExpandedProperty = new BooleanProperty( true );
+    this.rate2ExpandedProperty = new BooleanProperty( true );
+
+    this.timer1ExpandedProperty = new BooleanProperty( true );
+    this.timer2ExpandedProperty = new BooleanProperty( true );
+
     this.arrowsVisibleProperty = new BooleanProperty( true );
   }
 
-  // @public
-  reset() {
-    this.doubleNumberLineExpandedProperty1.reset();
-    this.doubleNumberLineExpandedProperty2.reset();
-    this.rateExpandedProperty1.reset();
-    this.rateExpandedProperty2.reset();
-    this.timerExpandedProperty1.reset();
-    this.timerExpandedProperty2.reset();
+  public reset(): void {
+    this.doubleNumberLine1ExpandedProperty.reset();
+    this.doubleNumberLine2ExpandedProperty.reset();
+    this.rate1ExpandedProperty.reset();
+    this.rate2ExpandedProperty.reset();
+    this.timer1ExpandedProperty.reset();
+    this.timer2ExpandedProperty.reset();
     this.arrowsVisibleProperty.reset();
   }
 }
