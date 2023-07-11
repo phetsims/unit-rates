@@ -11,23 +11,26 @@ import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
 import ShoppingSceneComboBox from './ShoppingSceneComboBox.js';
 import ShoppingSceneNode from './ShoppingSceneNode.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
+import ShoppingCategory from '../model/ShoppingCategory.js';
+import Property from '../../../../axon/js/Property.js';
+import ShoppingViewProperties from './ShoppingViewProperties.js';
+import ShoppingScene from '../model/ShoppingScene.js';
 
 export default class ShoppingCategoryNode extends Node {
 
-  /**
-   * @param {ShoppingCategory} category
-   * @param {Property.<ShoppingCategory>} categoryProperty
-   * @param {Bounds2} layoutBounds
-   * @param {KeypadLayer} keypadLayer
-   * @param {ShoppingViewProperties} viewProperties
-   * @param {Object} [options]
-   */
-  constructor( category, categoryProperty, layoutBounds, keypadLayer, viewProperties, options ) {
+  private readonly disposeShoppingCategoryNode: () => void;
+
+  public constructor( category: ShoppingCategory,
+                      categoryProperty: Property<ShoppingCategory>,
+                      layoutBounds: Bounds2,
+                      keypadLayer: KeypadLayer,
+                      viewProperties: ShoppingViewProperties ) {
 
     super();
 
     // parent for stuff that's specific to a scene, to maintain rendering order
-    let shoppingSceneNode = null; // created below
     const shoppingSceneParent = new Node();
     this.addChild( shoppingSceneParent );
 
@@ -38,16 +41,15 @@ export default class ShoppingCategoryNode extends Node {
     } );
     this.addChild( comboBox );
 
-    this.mutate( options );
-
     // Show this category when it's selected.
-    const categoryObserver = newCategory => {
+    const categoryObserver = ( newCategory: ShoppingCategory ) => {
       this.visible = ( newCategory === category );
     };
     categoryProperty.link( categoryObserver ); // unlink in dispose
 
     // When the selected scene changes, replace the UI elements that are item-specific
-    const shoppingSceneObserver = shoppingScene => {
+    let shoppingSceneNode: Node;
+    const shoppingSceneObserver = ( shoppingScene: ShoppingScene ) => {
 
       // remove the old scene
       if ( shoppingSceneNode ) {
@@ -62,7 +64,6 @@ export default class ShoppingCategoryNode extends Node {
     };
     category.shoppingSceneProperty.link( shoppingSceneObserver ); // unlink in dispose
 
-    // @private
     this.disposeShoppingCategoryNode = () => {
       comboBox.dispose();
       categoryProperty.unlink( categoryObserver );
@@ -71,11 +72,7 @@ export default class ShoppingCategoryNode extends Node {
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeShoppingCategoryNode();
     super.dispose();
   }
