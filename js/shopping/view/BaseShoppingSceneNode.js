@@ -20,6 +20,9 @@ import ScaleNode from './ScaleNode.js';
 import ShelfNode from './ShelfNode.js';
 import ShoppingItemNode from './ShoppingItemNode.js';
 
+const BAG_ROW_STROKE = 'green';
+const ITEM_ROW_STROKE = 'blue';
+
 export default class BaseShoppingSceneNode extends Node {
   /**
    * @param {ShoppingScene} shoppingScene
@@ -113,17 +116,15 @@ export default class BaseShoppingSceneNode extends Node {
     if ( URQueryParameters.showCells ) {
 
       // cells for bags
-      const bagRowOptions = { stroke: 'green' };
-      this.addChild( new RowOfMovablesNode( shoppingScene.shelf.bagRow, bagRowOptions ) );
-      this.addChild( new RowOfMovablesNode( shoppingScene.scale.bagRow, bagRowOptions ) );
+      this.addChild( new RowOfMovablesNode( shoppingScene.shelf.bagRow, BAG_ROW_STROKE ) );
+      this.addChild( new RowOfMovablesNode( shoppingScene.scale.bagRow, BAG_ROW_STROKE ) );
 
       // cells for items
       if ( bagsOpen ) {
-        const itemRowOptions = { stroke: 'blue' };
-        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.backItemRow, itemRowOptions ) );
-        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.frontItemRow, itemRowOptions ) );
-        this.addChild( new RowOfMovablesNode( shoppingScene.scale.backItemRow, itemRowOptions ) );
-        this.addChild( new RowOfMovablesNode( shoppingScene.scale.frontItemRow, itemRowOptions ) );
+        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.backItemRow, ITEM_ROW_STROKE ) );
+        this.addChild( new RowOfMovablesNode( shoppingScene.shelf.frontItemRow, ITEM_ROW_STROKE ) );
+        this.addChild( new RowOfMovablesNode( shoppingScene.scale.backItemRow, ITEM_ROW_STROKE ) );
+        this.addChild( new RowOfMovablesNode( shoppingScene.scale.frontItemRow, ITEM_ROW_STROKE ) );
       }
     }
 
