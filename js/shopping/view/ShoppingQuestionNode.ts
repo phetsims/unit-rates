@@ -8,9 +8,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { FireListener, HStrut, Line, Node, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Color, FireListener, HStrut, Line, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import checkSolidShape from '../../../../sherpa/js/fontawesome-5/checkSolidShape.js';
 import editRegularShape from '../../../../sherpa/js/fontawesome-5/editRegularShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
@@ -18,34 +17,64 @@ import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
+import ShoppingQuestion from '../model/ShoppingQuestion.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import KeypadPanel from '../../common/view/KeypadPanel.js';
+
+type SelfOptions = {
+  valueBoxWidth?: number; // width of the value field, height determined by valueFont
+  denominatorVisible?: boolean; // is the denominator visible before the answer is visible?
+  neutralColor?: Color | string; // color for UI elements that are agnostic about whether the guess is correct
+  questionFont?: PhetFont; // font for the question
+  valueFont?: PhetFont; // font for the value
+  valueYMargin?: number; // vertical margin inside the value box
+  xSpacing?: number; // horizontal spacing between UI elements
+  ySpacing?: number;  // vertical spacing between UI elements
+  fractionYSpacing?: number; // vertical space above and below fraction line
+};
+
+type ShoppingQuestionNodeOptions = SelfOptions;
 
 export default class ShoppingQuestionNode extends Node {
 
-  /**
-   * @param {ShoppingQuestion} question - model element for the question
-   * @param {Node} questionsPanel - panel that contains the question, for positioning the keypad
-   * @param {KeypadLayer} keypadLayer - layer that manages the keypad
-   * @param {Object} [options]
-   */
-  constructor( question, questionsPanel, keypadLayer, options ) {
+  private readonly disposeShoppingQuestionNode: () => void;
 
-    options = merge( {
-      valueBoxWidth: 70, // {number} width of the value field, height determined by valueFont
-      denominatorVisible: false, // {boolean} is the denominator visible before the answer is visible?
-      neutralColor: 'black', // {Color|string} color for UI elements that are agnostic about whether the guess is correct
-      questionFont: new PhetFont( 14 ), // {Font} font for the question
-      valueFont: new PhetFont( 14 ), // {Font} font for the value
-      valueYMargin: 1, // {number} vertical margin inside the value box
-      xSpacing: 25, // {number} horizontal spacing between UI elements
-      ySpacing: 5,  // {number} vertical spacing between UI elements
-      fractionYSpacing: 3 // {number} vertical space above and below fraction line
-    }, options );
+  /**
+   * @param question - model element for the question
+   * @param questionsPanel - panel that contains the question, for positioning the keypad
+   * @param keypadLayer - layer that manages the keypad
+   * @param [providedOptions]
+   */
+  public constructor( question: ShoppingQuestion, questionsPanel: Node, keypadLayer: KeypadLayer,
+                      providedOptions?: ShoppingQuestionNodeOptions ) {
+
+    const options = optionize<ShoppingQuestionNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
+      valueBoxWidth: 70,
+      denominatorVisible: false,
+      neutralColor: 'black',
+      questionFont: new PhetFont( 14 ),
+      valueFont: new PhetFont( 14 ),
+      valueYMargin: 1,
+      xSpacing: 25,
+      ySpacing: 5,
+      fractionYSpacing: 3
+    }, providedOptions );
 
     super();
 
     // local vars to improve readability
     const answer = question.answer;
     const answerOptions = question.answerOptions;
+
+    const valueFormat = answerOptions.valueFormat!;
+    assert && assert( valueFormat !== undefined );
+    const maxDecimals = answerOptions.maxDecimals!;
+    assert && assert( maxDecimals !== undefined );
+    const trimZeros = answerOptions.trimZeros!;
+    assert && assert( trimZeros !== undefined );
 
     // box that is either empty or displays an incorrect value
     const valueBoxWidth = options.valueBoxWidth;
@@ -142,21 +171,21 @@ export default class ShoppingQuestionNode extends Node {
     this.mutate( options );
 
     // Update when the guess changes
-    const guessObserver = guess => {
+    const guessObserver = ( guess: number | null ) => {
 
       // compare guess to answer using the desired number of decimal places
       const correct = ( guess === answer );
 
       // update the guess
       if ( guess !== null ) {
-        guessNode.string = URUtils.formatNumber( answerOptions.valueFormat, guess, answerOptions.maxDecimals, answerOptions.trimZeros );
+        guessNode.string = URUtils.formatNumber( valueFormat, guess, maxDecimals, trimZeros );
         guessNode.fill = correct ? URColors.correctQuestion : URColors.incorrectQuestion;
       }
       else if ( phet.chipper.queryParameters.showAnswers ) {
 
         // show the answer, if query parameter is set
-        guessNode.string = URUtils.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
-        guessNode.string = URUtils.formatNumber( answerOptions.valueFormat, answer, answerOptions.maxDecimals, answerOptions.trimZeros );
+        guessNode.string = URUtils.formatNumber( valueFormat, answer, maxDecimals, trimZeros );
+        guessNode.string = URUtils.formatNumber( valueFormat, answer, maxDecimals, trimZeros );
         guessNode.fill = URColors.showAnswers;
       }
       else {
@@ -191,7 +220,7 @@ export default class ShoppingQuestionNode extends Node {
     };
 
     // position the keypad relative to the Questions panel
-    const setKeypadPanelPosition = keypadPanel => {
+    const setKeypadPanelPosition = ( keypadPanel: KeypadPanel ) => {
       const questionsPanelBounds = keypadPanel.globalToParentBounds( questionsPanel.localToGlobalBounds( questionsPanel.localBounds ) );
       keypadPanel.right = questionsPanelBounds.left - 10;
       keypadPanel.bottom = questionsPanelBounds.bottom;
@@ -214,18 +243,13 @@ export default class ShoppingQuestionNode extends Node {
       fire: editValue
     } ) );
 
-    // @private cleanup that's specific to this Node
     this.disposeShoppingQuestionNode = () => {
       question.guessProperty.unlink( guessObserver );
       editButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeShoppingQuestionNode();
     super.dispose();
   }
