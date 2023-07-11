@@ -114,8 +114,7 @@ export default class ScaleNode extends Node {
 
     // dispose required
     const costNode = new CostNode( scale.costProperty, {
-      extraDecimalVisible: options.extraCostDecimalVisible,
-      maxWidth: 90 // i18n, determined empirically
+      extraDecimalVisible: options.extraCostDecimalVisible
     } );
 
     // dispose required

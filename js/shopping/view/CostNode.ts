@@ -11,26 +11,38 @@
  */
 
 import Utils from '../../../../dot/js/Utils.js';
-import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Node, Text } from '../../../../scenery/js/imports.js';
+import { Color, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+  extraDecimalVisible?: boolean; // is the extra decimal place visible?
+  font?: PhetFont; // font for all parts of the value
+  extraDecimalColor?: Color | string; // color of the extra decimal place
+};
+
+type CostNodeOptions = SelfOptions;
 
 export default class CostNode extends Node {
 
-  /**
-   * @param {Property.<number>} costProperty
-   * @param {Object} [options]
-   */
-  constructor( costProperty, options ) {
+  private readonly disposeCostNode: () => void;
 
-    options = merge( {
-      extraDecimalVisible: false, // {boolean} is the extra decimal place visible?
-      font: new PhetFont( 20 ), // {Font} font for all parts of the value
-      extraDecimalColor: 'gray' // {Color|string} color of the extra decimal place
-    }, options );
+  public constructor( costProperty: TReadOnlyProperty<number>, providedOptions?: CostNodeOptions ) {
+
+    const options = optionize<CostNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
+      extraDecimalVisible: false,
+      font: new PhetFont( 20 ),
+      extraDecimalColor: 'gray',
+
+      // NodeOptions
+      maxWidth: 90 // i18n, determined empirically
+    }, providedOptions );
 
     super();
 
@@ -57,7 +69,7 @@ export default class CostNode extends Node {
     }
 
     // When cost changes, update the displayed value
-    const costObserver = cost => {
+    const costObserver = ( cost: number ) => {
 
       assert && assert( cost >= 0, `negative cost not supported: ${cost}` );
 
@@ -96,7 +108,6 @@ export default class CostNode extends Node {
     };
     costProperty.link( costObserver ); // unlink in dispose
 
-    // @private
     this.disposeCostNode = () => {
       costProperty.unlink( costObserver );
     };
@@ -104,11 +115,7 @@ export default class CostNode extends Node {
     this.mutate( options );
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeCostNode();
     super.dispose();
   }
