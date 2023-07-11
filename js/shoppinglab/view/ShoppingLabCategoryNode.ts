@@ -10,18 +10,18 @@
 import { Node } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 import ShoppingLabSceneNode from './ShoppingLabSceneNode.js';
+import ShoppingCategory from '../../shopping/model/ShoppingCategory.js';
+import Property from '../../../../axon/js/Property.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import ShoppingViewProperties from '../../shopping/view/ShoppingViewProperties.js';
 
 export default class ShoppingLabCategoryNode extends Node {
 
-  /**
-   * @param {ShoppingCategory} category
-   * @param {Property.<ShoppingCategory>} categoryProperty
-   * @param {Bounds2} layoutBounds
-   * @param {KeypadLayer} keypadLayer
-   * @param {ShoppingViewProperties} viewProperties
-   * @param {Object} [options]
-   */
-  constructor( category, categoryProperty, layoutBounds, keypadLayer, viewProperties, options ) {
+  private readonly disposeShoppingLabCategoryNode: () => void;
+
+  public constructor( category: ShoppingCategory, categoryProperty: Property<ShoppingCategory>, layoutBounds: Bounds2,
+                      keypadLayer: KeypadLayer, viewProperties: ShoppingViewProperties ) {
 
     super();
 
@@ -30,26 +30,19 @@ export default class ShoppingLabCategoryNode extends Node {
     const shoppingSceneNode = new ShoppingLabSceneNode( category.shoppingScenes[ 0 ], layoutBounds, keypadLayer, viewProperties );
     this.addChild( shoppingSceneNode );
 
-    this.mutate( options );
-
     // Show this category when it's selected.
-    const categoryObserver = newCategory => {
+    const categoryObserver = ( newCategory: ShoppingCategory ) => {
       this.visible = ( newCategory === category );
     };
     categoryProperty.link( categoryObserver ); // unlink in dispose
 
-    // @private
     this.disposeShoppingLabCategoryNode = () => {
       categoryProperty.unlink( categoryObserver );
       shoppingSceneNode.dispose();
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeShoppingLabCategoryNode();
     super.dispose();
   }
