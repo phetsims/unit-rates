@@ -8,9 +8,8 @@
  */
 
 import { Shape } from '../../../../kite/js/imports.js';
-import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import { Circle, HBox, Line, LinearGradient, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, HBox, Line, LinearGradient, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import URUtils from '../../common/URUtils.js';
 import ValueNode from '../../common/view/ValueNode.js';
@@ -18,6 +17,9 @@ import ValuePanel from '../../common/view/ValuePanel.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import CostNode from './CostNode.js';
+import Scale from '../model/Scale.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
 // constants
 const PANEL_WIDTH = 132;
@@ -25,18 +27,27 @@ const PANEL_MIN_HEIGHT = 32;
 const DISPLAY_X_MARGIN = 25;
 const DISPLAY_Y_MARGIN = 7;
 
-export default class ScaleNode extends Node {
-  /**
-   * @param {Scale} scale
-   * @param {Object} [options]
-   */
-  constructor( scale, options ) {
+type SelfOptions = {
+  costExpandedProperty?: BooleanProperty | null; // null indicates that cost display is not collapsible
+  extraCostDecimalVisible?: boolean; // does the scale show a 3rd decimal place for cost?
+  quantityIsDisplayed?: boolean; // does the scale show quantity?
+};
 
-    options = merge( {
-      costExpandedProperty: null, // {Property.<boolean>|null} null indicates that cost display is not collapsible
-      extraCostDecimalVisible: false, // {boolean} does the scale show a 3rd decimal place for cost?
-      quantityIsDisplayed: false // {boolean} does the scale show quantity?
-    }, options );
+type ScaleNodeOptions = SelfOptions;
+
+export default class ScaleNode extends Node {
+
+  private readonly disposeScaleNode: () => void;
+
+  public constructor( scale: Scale, providedOptions?: ScaleNodeOptions ) {
+
+    const options = optionize<ScaleNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
+      costExpandedProperty: null,
+      extraCostDecimalVisible: false,
+      quantityIsDisplayed: false
+    }, providedOptions );
 
     // round platter on top, origin at center ---------------------------------------------------
 
@@ -127,8 +138,8 @@ export default class ScaleNode extends Node {
     displayChildren.push( costPanel );
 
     // optional quantity display
-    let quantityNode = null;
-    let quantityPanel = null;
+    let quantityNode: Node;
+    let quantityPanel: Node;
     if ( options.quantityIsDisplayed ) {
 
       // dispose required
@@ -173,7 +184,6 @@ export default class ScaleNode extends Node {
     // move to model position
     this.translation = scale.position;
 
-    // @private
     this.disposeScaleNode = () => {
       costNode.dispose();
       costPanel.dispose();
@@ -182,11 +192,7 @@ export default class ScaleNode extends Node {
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeScaleNode();
     super.dispose();
   }
@@ -194,11 +200,8 @@ export default class ScaleNode extends Node {
 
 /**
  * Converts a quantity to a string with units, e.g. 10.5 -> '10.5 lb'
- * @param {number} quantity
- * @param {string} units
- * @returns {string}
  */
-function quantityToString( quantity, units ) {
+function quantityToString( quantity: number, units: string ): string {
   return StringUtils.format( UnitRatesStrings.pattern_0value_1units,
     URUtils.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */ ), units );
 }
