@@ -24,7 +24,7 @@ export default class RaceTimerNode extends ValuePanel {
 
   public constructor( timeProperty: TReadOnlyProperty<number>,
                       expandedProperty: BooleanProperty,
-                      titleString: string ) {
+                      titleStringProperty: TReadOnlyProperty<string> ) {
 
     // dispose not required, exists for sim lifetime
     const valueNode = new ValueNode( timeProperty, {
@@ -36,7 +36,7 @@ export default class RaceTimerNode extends ValuePanel {
     super( valueNode, {
       panelWidth: 132,
       expandedProperty: expandedProperty,
-      titleString: titleString,
+      titleStringProperty: titleStringProperty,
       titleFont: TIMER_FONT
     } );
   }

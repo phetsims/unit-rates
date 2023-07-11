@@ -11,6 +11,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../../axon/js/Property.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
@@ -38,7 +39,7 @@ export default class ValuePanel extends Panel {
       expandedProperty: null, // {Property.<boolean>|null} null indicates no expand/collapse button
 
       // title
-      titleString: '', // {string} string displayed when the panel is collapsed
+      titleStringProperty: new Property( '' ), // string displayed when the panel is collapsed
       titleFont: new PhetFont( 20 ),
       xSpacing: 8,  // space between expand/collapse button and title
 
@@ -89,30 +90,30 @@ export default class ValuePanel extends Panel {
       const maxExpandedWidth = contentWidth - expandCollapseButton.width - options.xSpacing;
 
       // title, displayed when collapsed
-      const titleNode = new Text( options.titleString, {
+      const titleText = new Text( options.titleStringProperty, {
         font: options.titleFont,
         maxWidth: maxExpandedWidth
       } );
-      contentNode.addChild( titleNode );
+      contentNode.addChild( titleText );
 
       // limit valueNode width
       valueNode.maxWidth = maxExpandedWidth;
 
       contentHeight = Math.max( minContentHeight,
-        _.maxBy( [ titleNode, valueNode, expandCollapseButton ], node => node.height ).height );
+        _.maxBy( [ titleText, valueNode, expandCollapseButton ], node => node.height ).height );
       backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight, { stroke: BACKGROUND_RECTANGLE_STROKE } );
       contentNode.addChild( backgroundNode );
 
       // layout
       expandCollapseButton.left = backgroundNode.left;
       expandCollapseButton.centerY = backgroundNode.centerY;
-      titleNode.left = expandCollapseButton.right + options.xSpacing;
-      titleNode.centerY = backgroundNode.centerY;
+      titleText.left = expandCollapseButton.right + options.xSpacing;
+      titleText.centerY = backgroundNode.centerY;
 
       // expand/collapse
       expandedObserver = expanded => {
         valueNode.visible = expanded;
-        titleNode.visible = !expanded;
+        titleText.visible = !expanded;
       };
       options.expandedProperty.link( expandedObserver ); // unlink in dispose
     }

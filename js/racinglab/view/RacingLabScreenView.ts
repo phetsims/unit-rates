@@ -30,13 +30,7 @@ const ACCORDION_BOX_X_SPACE = 10; // space between accordion boxes
 
 export default class RacingLabScreenView extends ScreenView {
 
-  /**
-   * @param {RacingLabModel} model
-   * @param {Tandem} tandem
-   */
-  constructor( model, tandem ) {
-    assert && assert( model instanceof RacingLabModel );
-    assert && assert( tandem instanceof Tandem );
+  public constructor( model: RacingLabModel, tandem: Tandem ) {
 
     super( {
       tandem: tandem
@@ -83,7 +77,7 @@ export default class RacingLabScreenView extends ScreenView {
 
     // Rate control for car1
     const rateAccordionBox1 = new RaceCarRateAccordionBox( model.car1, {
-      titleString: UnitRatesStrings.rate1StringProperty,
+      titleStringProperty: UnitRatesStrings.rate1StringProperty,
       expandedProperty: viewProperties.rate1ExpandedProperty,
       left: doubleNumberLineAccordionBox1.right + ACCORDION_BOX_X_SPACE,
       top: doubleNumberLineAccordionBox1.top
@@ -92,7 +86,7 @@ export default class RacingLabScreenView extends ScreenView {
 
     // Rate control for car2
     const rateAccordionBox2 = new RaceCarRateAccordionBox( model.car2, {
-      titleString: UnitRatesStrings.rate2StringProperty,
+      titleStringProperty: UnitRatesStrings.rate2StringProperty,
       expandedProperty: viewProperties.rate2ExpandedProperty,
       left: doubleNumberLineAccordionBox2.right + ACCORDION_BOX_X_SPACE,
       top: doubleNumberLineAccordionBox2.top
@@ -101,7 +95,7 @@ export default class RacingLabScreenView extends ScreenView {
 
     // Track for car1
     const trackNode1 = new RaceTrackNode( model.car1, viewProperties.timer1ExpandedProperty, viewProperties.arrowsVisibleProperty, {
-      timerTitleString: UnitRatesStrings.timer1StringProperty,
+      timerTitleStringProperty: UnitRatesStrings.timer1StringProperty,
       trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
       bottom: this.layoutBounds.centerY - 10
@@ -110,7 +104,7 @@ export default class RacingLabScreenView extends ScreenView {
 
     // Track for car2
     const trackNode2 = new RaceTrackNode( model.car2, viewProperties.timer2ExpandedProperty, viewProperties.arrowsVisibleProperty, {
-      timerTitleString: UnitRatesStrings.timer2StringProperty,
+      timerTitleStringProperty: UnitRatesStrings.timer2StringProperty,
       trackViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
       top: this.layoutBounds.centerY + ( this.layoutBounds.centerY - trackNode1.bottom )
@@ -155,7 +149,7 @@ export default class RacingLabScreenView extends ScreenView {
     } );
     playAreaLayer.addChild( resetAllButton );
 
-    // car1 should always be visible, because the view doesn't doesn't support hiding it. unlink not needed.
+    // car1 should always be visible, because the view doesn't support hiding it. unlink not needed.
     model.car1.visibleProperty.link( visible => {
       assert && assert( model.car1.visibleProperty.value, 'car1 should always be visible' );
     } );

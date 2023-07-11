@@ -27,6 +27,7 @@ import RaceTimerNode from './RaceTimerNode.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import RaceCar from '../model/RaceCar.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 // constants
 const NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates
@@ -46,7 +47,7 @@ const TRACK_MARKER_OPTIONS = {
 
 type SelfOptions = {
   trackViewLength: number; // view length of the track
-  timerTitleString: string; // title for the timer accordion box
+  timerTitleStringProperty: TReadOnlyProperty<string>; // title for the timer accordion box
 };
 
 type RaceTrackNodeOptions = SelfOptions & NodeTranslationOptions;
@@ -128,7 +129,7 @@ export default class RaceTrackNode extends Node {
     } );
 
     // Timer, dispose required
-    const timerNode = new RaceTimerNode( car.timeProperty, timerExpandedProperty, options.timerTitleString );
+    const timerNode = new RaceTimerNode( car.timeProperty, timerExpandedProperty, options.timerTitleStringProperty );
 
     // Label that indicates the length of the track
     const lengthNode = new Text( '', {
