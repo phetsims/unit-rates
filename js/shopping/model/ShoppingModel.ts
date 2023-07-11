@@ -1,13 +1,12 @@
 // Copyright 2016-2023, University of Colorado Boulder
 
 /**
- * Model for the 'Shopping' screen. Also used as the base type for the 'Shopping Lab' screen.
+ * Model for the 'Shopping' screen. Also used as the base class for the 'Shopping Lab' model.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
 import Property from '../../../../axon/js/Property.js';
-import merge from '../../../../phet-core/js/merge.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import apple_png from '../../../images/apple_png.js';
 import carrot_png from '../../../images/carrot_png.js';
@@ -18,22 +17,31 @@ import FruitScene from './FruitScene.js';
 import ShoppingCategory from './ShoppingCategory.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import VegetableScene from './VegetableScene.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import TModel from '../../../../joist/js/TModel.js';
 
-export default class ShoppingModel {
+type SelfOptions = {
+  categoryIndex?: number; // index of the category that is initially selected
+  categories?: ShoppingCategory[]; // categories, populated automatically if not provided
+};
 
-  /**
-   * @param {Tandem} tandem
-   * @param {Object} [options]
-   */
-  constructor( tandem, options ) {
-    assert && assert( tandem instanceof Tandem );
+export type ShoppingModelOptions = SelfOptions;
 
-    options = merge( {
-      categoryIndex: 0, // {number} index of the category that is initially selected
-      categories: null // {ShoppingCategory[]} categories, populated below if not provided
-    }, options );
+export default class ShoppingModel implements TModel {
 
-    // @public (read-only) items are grouped into categories
+  public readonly categories: ShoppingCategory[];
+  public readonly categoryProperty: Property<ShoppingCategory>; // the selected category
+
+  public constructor( tandem: Tandem, providedOptions?: ShoppingModelOptions ) {
+
+    const options = optionize<ShoppingModelOptions, StrictOmit<SelfOptions, 'categories'>>()( {
+
+      // SelfOptions
+      categoryIndex: 0
+    }, providedOptions );
+
+    // items are grouped into categories
     this.categories = options.categories || [
 
       // fruits
@@ -65,24 +73,21 @@ export default class ShoppingModel {
     assert && assert( options.categoryIndex >= 0 && options.categoryIndex < this.categories.length,
       `invalid categoryIndex: ${options.categoryIndex}` );
 
-    // @public the selected category
     this.categoryProperty = new Property( this.categories[ options.categoryIndex ], {
       validValues: this.categories
     } );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.categoryProperty.reset();
     this.categories.forEach( category => category.reset() );
   }
 
   /**
    * Updates time-dependent parts of the model.
-   * @param {number} dt - time since the previous step, in seconds
-   * @public
+   * @param dt - time since the previous step, in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
 
     // Cap dt, see https://github.com/phetsims/unit-rates/issues/193
     dt = Math.min( dt, 0.1 );

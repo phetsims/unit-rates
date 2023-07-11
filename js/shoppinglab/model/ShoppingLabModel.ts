@@ -21,8 +21,7 @@ import unitRates from '../../unitRates.js';
 
 export default class ShoppingLabModel extends ShoppingModel {
 
-  constructor( tandem ) {
-    assert && assert( tandem instanceof Tandem );
+  public constructor( tandem: Tandem ) {
 
     super( tandem, {
 
