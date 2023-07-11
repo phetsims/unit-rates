@@ -6,53 +6,62 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import Keypad from '../../../../scenery-phet/js/keypad/Keypad.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import Panel from '../../../../sun/js/Panel.js';
+import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import URColors from '../URColors.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+
+type SelfOptions = {
+  valueBoxWidth?: number; // width of the value field, height determined by valueFont
+  valueYMargin?: number; // vertical margin inside the value box
+  valueFont?: PhetFont;
+  valueString?: string; // initial value shown in the keypad
+  decimalPointKey?: boolean; // does the keypad have a decimal point key?
+  maxDigits?: number; // maximum number of digits that can be entered on the keypad
+  maxDecimals?: number; // maximum number of decimal places that can be entered on the keypad
+  enterButtonListener?: ( () => void ) | null;  // called when the Enter button is pressed
+};
+
+type KeypadPanelOptions = SelfOptions;
 
 export default class KeypadPanel extends Panel {
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+  public readonly valueStringProperty: TReadOnlyProperty<string>; // expose the Keypad's stringProperty
+  private readonly disposeKeypadPanel: () => void;
 
-    options = merge( {
+  public constructor( providedOptions?: KeypadPanelOptions ) {
 
-      // KeypadPanel options
-      valueBoxWidth: 85, // {number} width of the value field, height determined by valueFont
-      valueYMargin: 3, // {number} vertical margin inside the value box
+    const options = optionize<KeypadPanelOptions, SelfOptions, PanelOptions>()( {
+
+      // KeypadPanelOptions
+      valueBoxWidth: 85,
+      valueYMargin: 3,
       valueFont: new PhetFont( 16 ),
-      valueString: '', // {string} initial value shown in the keypad
-      decimalPointKey: true, // {boolean} does the keypad have a decimal point key?
-      maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
-      maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
+      valueString: '',
+      decimalPointKey: true,
+      maxDigits: 4,
+      maxDecimals: 2,
+      enterButtonListener: null,
 
-      // Panel options
-      fill: 'rgb( 230, 230, 230 )', // {Color|string} the keypad's background color
+      // PanelOptions
+      fill: 'rgb( 230, 230, 230 )',
       backgroundPickable: true, // {boolean} so that clicking in the keypad's background doesn't close the keypad
       xMargin: 10,
-      yMargin: 10,
-
-      // RectangularPushButton options
-      enterButtonListener: null  // {function} called when the Enter button is pressed
-
-    }, options );
+      yMargin: 10
+    }, providedOptions );
 
     const keypad = new Keypad( Keypad.PositiveDecimalLayout, {
+      buttonFont: new PhetFont( 20 ),
       accumulatorOptions: {
         maxDigits: options.maxDigits,
         maxDigitsRightOfMantissa: options.maxDecimals
-      },
-      minButtonWidth: 35,
-      minButtonHeight: 35,
-      buttonFont: new PhetFont( 20 )
+      }
     } );
 
     const valueNode = new Text( '', {
@@ -97,21 +106,15 @@ export default class KeypadPanel extends Panel {
 
     super( contentNode, options );
 
-    // @public
     this.valueStringProperty = keypad.stringProperty;
 
-    // @private
     this.disposeKeypadPanel = () => {
       keypad.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
       enterButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeKeypadPanel();
     super.dispose();
   }
