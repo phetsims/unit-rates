@@ -11,19 +11,19 @@ import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
 import BaseShoppingSceneNode from './BaseShoppingSceneNode.js';
 import ShoppingQuestionsAccordionBox from './ShoppingQuestionsAccordionBox.js';
+import ShoppingViewProperties from './ShoppingViewProperties.js';
+import ShoppingScene from '../model/ShoppingScene.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
 
 export default class ShoppingSceneNode extends BaseShoppingSceneNode {
 
-  /**
-   * @param {ShoppingScene} shoppingScene
-   * @param {Bounds2} layoutBounds
-   * @param {KeypadLayer} keypadLayer
-   * @param {ShoppingViewProperties} viewProperties
-   * @param {Object} [options]
-   */
-  constructor( shoppingScene, layoutBounds, keypadLayer, viewProperties, options ) {
+  private readonly disposeShoppingSceneNode: () => void;
 
-    super( shoppingScene, layoutBounds, keypadLayer, viewProperties, options );
+  public constructor( shoppingScene: ShoppingScene, layoutBounds: Bounds2, keypadLayer: KeypadLayer,
+                      viewProperties: ShoppingViewProperties ) {
+
+    super( shoppingScene, layoutBounds, keypadLayer, viewProperties );
 
     // Questions, dispose required
     const questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, {
@@ -34,17 +34,12 @@ export default class ShoppingSceneNode extends BaseShoppingSceneNode {
     this.addChild( questionsAccordionBox );
     questionsAccordionBox.moveToBack();
 
-    // @private
     this.disposeShoppingSceneNode = () => {
       questionsAccordionBox.dispose();
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeShoppingSceneNode();
     super.dispose();
   }
