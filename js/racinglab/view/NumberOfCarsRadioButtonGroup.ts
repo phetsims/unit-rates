@@ -6,60 +6,66 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import { Image, VBox } from '../../../../scenery/js/imports.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import { Image, Node, NodeTranslationOptions, VBox } from '../../../../scenery/js/imports.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import blueCar_png from '../../../images/blueCar_png.js';
 import redCar_png from '../../../images/redCar_png.js';
 import unitRates from '../../unitRates.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
-export default class NumberOfCarsRadioButtonGroup extends RectangularRadioButtonGroup {
+const RADIO_BUTTON_OPTIONS = {
+  baseColor: 'white',
+  xMargin: 12,
+  yMargin: 10
+};
+
+type SelfOptions = {
+  buttonWidth?: number;
+};
+type NumberOfCarsRadioButtonGroupOptions = SelfOptions & NodeTranslationOptions;
+
+export default class NumberOfCarsRadioButtonGroup extends RectangularRadioButtonGroup<boolean> {
 
   /**
-   * @param {Property.<boolean>} car2VisibleProperty - is car2 visible?
-   * @param {Object} [options]
+   * @param car2VisibleProperty - is car2 visible?
+   * @param [providedOptions]
    */
-  constructor( car2VisibleProperty, options ) {
+  public constructor( car2VisibleProperty: BooleanProperty, providedOptions?: NumberOfCarsRadioButtonGroupOptions ) {
 
-    options = merge( {
+    const options = optionize<NumberOfCarsRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
 
-      // NumberOfCarsRadioButtonGroup options
+      // SelfOptions
       buttonWidth: 68,
 
-      // RectangularRadioButtonGroup options
+      // RectangularRadioButtonGroupOptions
       orientation: 'vertical',
-      spacing: 11, // space between the buttons
-      radioButtonOptions: {
-        baseColor: 'white',
-        xMargin: 12,
-        yMargin: 10
-      }
-    }, options );
+      spacing: 11,
+      radioButtonOptions: RADIO_BUTTON_OPTIONS
+    }, providedOptions );
 
-    const maxCarWidth = options.buttonWidth - ( 2 * options.radioButtonOptions.xMargin );
+    const maxCarWidth = options.buttonWidth - ( 2 * RADIO_BUTTON_OPTIONS.xMargin );
 
-    super( car2VisibleProperty, [
+    const items: RectangularRadioButtonGroupItem<boolean>[] = [
       { value: false, createNode: () => createOneCarIcon( maxCarWidth ) },
       { value: true, createNode: () => createTwoCarsIcon( maxCarWidth ) }
-    ], options );
+    ];
+
+    super( car2VisibleProperty, items, options );
   }
 }
 
 /**
  * Creates the icon for the 1-car scene, scaled to fit a specified width.
- * @param {number} maxCarWidth
- * @returns {Node}
  */
-function createOneCarIcon( maxCarWidth ) {
+function createOneCarIcon( maxCarWidth: number ): Node {
   return createCarImage( redCar_png, maxCarWidth );
 }
 
 /**
  * Creates the icon for the 2-cars scene, scaled to fit a specified width.
- * @param {number} maxCarWidth
- * @returns {Node}
  */
-function createTwoCarsIcon( maxCarWidth ) {
+function createTwoCarsIcon( maxCarWidth: number ): Node {
   return new VBox( {
     spacing: 7, // space between the 2 cars
     children: [
@@ -71,11 +77,8 @@ function createTwoCarsIcon( maxCarWidth ) {
 
 /**
  * Creates a car icon, scaled to fit a specified width.
- * @param {HTMLImageElement} imageFile
- * @param {number} maxCarWidth
- * @returns {Node}
  */
-function createCarImage( imageFile, maxCarWidth ) {
+function createCarImage( imageFile: HTMLImageElement, maxCarWidth: number ): Node {
   const carImage = new Image( imageFile );
   carImage.setScaleMagnitude( maxCarWidth / carImage.width );
   return carImage;
