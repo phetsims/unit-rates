@@ -41,7 +41,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
     options = merge( {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
       // DoubleNumberLineAccordionBox options
-      titleString: UnitRatesStrings.doubleNumberLineStringProperty, // title displayed next to the expand/collapse button
+      titleStringProperty: UnitRatesStrings.doubleNumberLineStringProperty, // title displayed next to the expand/collapse button
       keypadPosition: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
 
       // DoubleNumberLineNode options
@@ -63,7 +63,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
     // title on the accordion box
     assert && assert( !options.titleNode, 'creates its own title node' );
-    options.titleNode = new Text( options.titleString, {
+    options.titleNode = new Text( options.titleStringProperty, {
       font: URConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 300 // i18n, determined empirically
     } );

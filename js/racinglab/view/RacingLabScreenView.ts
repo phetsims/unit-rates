@@ -51,7 +51,7 @@ export default class RacingLabScreenView extends ScreenView {
     const doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
       model.car1.doubleNumberLine, model.car1.markerEditor, keypadLayer, {
         axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
-        titleString: UnitRatesStrings.doubleNumberLine1StringProperty,
+        titleStringProperty: UnitRatesStrings.doubleNumberLine1StringProperty,
         expandedProperty: viewProperties.doubleNumberLine1ExpandedProperty,
         indicatorXProperty: model.car1.distanceProperty,
         indicatorColor: model.car1.color,
@@ -65,7 +65,7 @@ export default class RacingLabScreenView extends ScreenView {
     const doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
       model.car2.doubleNumberLine, model.car2.markerEditor, keypadLayer, {
         axisViewLength: URConstants.RACING_LAB_AXIS_LENGTH,
-        titleString: UnitRatesStrings.doubleNumberLine2StringProperty,
+        titleStringProperty: UnitRatesStrings.doubleNumberLine2StringProperty,
         expandedProperty: viewProperties.doubleNumberLine2ExpandedProperty,
         indicatorXProperty: model.car2.distanceProperty,
         indicatorColor: model.car2.color,
