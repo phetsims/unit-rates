@@ -123,7 +123,7 @@ export default class ScaleNode extends Node {
       panelWidth: PANEL_WIDTH,
       panelMinHeight: PANEL_MIN_HEIGHT,
       expandedProperty: options.costExpandedProperty,
-      titleString: UnitRatesStrings.cost
+      titleStringProperty: UnitRatesStrings.costStringProperty
     } );
     displayChildren.push( costPanel );
 

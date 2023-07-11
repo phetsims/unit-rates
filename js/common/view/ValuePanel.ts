@@ -12,43 +12,49 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
-import Panel from '../../../../sun/js/Panel.js';
+import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import unitRates from '../../unitRates.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
 // constants
 const BACKGROUND_RECTANGLE_STROKE = ( phet.chipper.queryParameters.dev ? 'red' : null );
 
+type SelfOptions = {
+  panelWidth?: number; // contents are scaled to fit, height depends on contents
+  panelMinHeight?: number; // minimum panel height
+  expandedProperty?: Property<boolean> | null; // expand/collapse button, null indicates no expand/collapse button
+  titleStringProperty?: TReadOnlyProperty<string>; // string displayed when the panel is collapsed
+  titleFont?: PhetFont; // font for the title
+  xSpacing?: number; // space between expand/collapse button and title
+};
+
+type ValuePanelOptions = SelfOptions;
+
 export default class ValuePanel extends Panel {
 
-  /**
-   * @param {Node} valueNode
-   * @param {Object} [options]
-   */
-  constructor( valueNode, options ) {
+  private readonly disposeValuePanel: () => void;
 
-    options = merge( {
+  public constructor( valueNode: Node, providedOptions?: ValuePanelOptions ) {
 
-      panelWidth: 100, // {number} contents are scaled to fit, height depends on contents
-      panelMinHeight: 0, // {number} minimum panel height
+    const options = optionize<ValuePanelOptions, SelfOptions, PanelOptions>()( {
 
-      // expand/collapse button
-      expandedProperty: null, // {Property.<boolean>|null} null indicates no expand/collapse button
-
-      // title
-      titleStringProperty: new Property( '' ), // string displayed when the panel is collapsed
+      // SelfOptions
+      panelWidth: 100,
+      panelMinHeight: 0,
+      expandedProperty: null,
+      titleStringProperty: new Property( '' ),
       titleFont: new PhetFont( 20 ),
-      xSpacing: 8,  // space between expand/collapse button and title
+      xSpacing: 8,
 
-      // Panel options
+      // PanelOptions
       cornerRadius: 4,
       xMargin: 8,
       yMargin: 4
-
-    }, options );
+    }, providedOptions );
 
     const contentNode = new Node();
     contentNode.addChild( valueNode );
@@ -58,11 +64,11 @@ export default class ValuePanel extends Panel {
     const minContentHeight = Math.max( 0, options.panelMinHeight - ( 2 * options.yMargin ) );
 
     // invisible rectangle whose size is equivalent to the size of the panel's content, used for right justifying valueNode
-    let backgroundNode = null; // assigned below
+    let backgroundNode: Node;
 
     let contentHeight = 0; // computed below
-    let expandCollapseButton = null;
-    let expandedObserver = null;
+    let expandCollapseButton: ExpandCollapseButton;
+    let expandedObserver: ( expanded: boolean ) => void;
     if ( !options.expandedProperty ) {
 
       // limit valueNode width
@@ -100,7 +106,7 @@ export default class ValuePanel extends Panel {
       valueNode.maxWidth = maxExpandedWidth;
 
       contentHeight = Math.max( minContentHeight,
-        _.maxBy( [ titleText, valueNode, expandCollapseButton ], node => node.height ).height );
+        _.maxBy( [ titleText, valueNode, expandCollapseButton ], node => node.height )!.height );
       backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight, { stroke: BACKGROUND_RECTANGLE_STROKE } );
       contentNode.addChild( backgroundNode );
 
@@ -111,7 +117,7 @@ export default class ValuePanel extends Panel {
       titleText.centerY = backgroundNode.centerY;
 
       // expand/collapse
-      expandedObserver = expanded => {
+      expandedObserver = ( expanded: boolean ) => {
         valueNode.visible = expanded;
         titleText.visible = !expanded;
       };
@@ -131,7 +137,6 @@ export default class ValuePanel extends Panel {
     };
     valueNode.boundsProperty.lazyLink( boundsListener ); // off in dispose
 
-    // @private
     this.disposeValuePanel = () => {
       expandCollapseButton && expandCollapseButton.dispose();
       options.expandedProperty && options.expandedProperty.unlink( expandedObserver );
@@ -139,11 +144,7 @@ export default class ValuePanel extends Panel {
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeValuePanel();
     super.dispose();
   }
