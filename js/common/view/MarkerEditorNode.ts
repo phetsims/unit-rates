@@ -9,13 +9,19 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { FireListener, Line, Node, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Color, FireListener, Line, Node, NodeOptions, NodeTranslationOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import editRegularShape from '../../../../sherpa/js/fontawesome-5/editRegularShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import unitRates from '../../unitRates.js';
 import URColors from '../URColors.js';
 import URConstants from '../URConstants.js';
 import URUtils from '../URUtils.js';
+import MarkerEditor from '../model/MarkerEditor.js';
+import KeypadLayer from './KeypadLayer.js';
+import { DenominatorOptions, NumeratorOptions } from '../../shopping/model/ShoppingQuestionFactory.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import Keypad from '../../../../scenery-phet/js/keypad/Keypad.js';
 
 // constants
 const KEYPAD_POSITION_VALUES = [ 'above', 'below' ];
@@ -25,17 +31,38 @@ const SHARED_OPTIONS = {
   trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
 };
 
+type SelfOptions = {
+  lineLength?: number; // length of the vertical line between numerator and denominator values
+  valueBoxWidth?: number; // width of the value field, height determined by valueFont
+  valueFont?: PhetFont; // font for the value
+  valueColor?: Color | string; // color of the value
+  zeroIsValid?: boolean; // zero is not a valid value for markers
+  valueXMargin?: number; //  horizontal margin inside the value box
+  valueYMargin?: number; // vertical margin inside the value box
+  ySpacing?: number;  // vertical spacing between UI elements
+  keypadPosition?: 'above' | 'below'; // 'above' or 'below' doubleNumberLinePanel
+  numeratorOptions?: NumeratorOptions; // options specific to the rate's numerator
+  denominatorOptions?: DenominatorOptions; // options specific to the rate's denominator
+};
+
+type MarkerEditorNodeOptions = SelfOptions & NodeTranslationOptions;
+
 export default class MarkerEditorNode extends Node {
 
-  /**
-   * @param {MarkerEditor} markerEditor
-   * @param {Node} doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
-   * @param {KeypadLayer} keypadLayer - layer that manages the keypad
-   * @param {Object} [options]
-   */
-  constructor( markerEditor, doubleNumberLinePanel, keypadLayer, options ) {
+  private readonly disposeMarkerEditorNode: () => void;
 
-    options = merge( {
+  /**
+   * @param markerEditor
+   * @param doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
+   * @param keypadLayer - layer that manages the keypad
+   * @param [providedOptions]
+   */
+  public constructor( markerEditor: MarkerEditor, doubleNumberLinePanel: Node, keypadLayer: KeypadLayer,
+                      providedOptions?: MarkerEditorNodeOptions ) {
+
+    const options = optionize<MarkerEditorNodeOptions, StrictOmit<SelfOptions, 'numeratorOptions' | 'denominatorOptions'>, NodeOptions>()( {
+
+      // SelfOptions
       lineLength: URConstants.MAJOR_MARKER_LENGTH, // {number} length of the vertical line between numerator and denominator values
       valueBoxWidth: 55, // {number} width of the value field, height determined by valueFont
       valueFont: new PhetFont( 12 ), // {Font} font for the value
@@ -44,14 +71,11 @@ export default class MarkerEditorNode extends Node {
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: URConstants.MARKER_Y_SPACING, // {number} vertical margin inside the value box
       ySpacing: 3,  // {number} vertical spacing between UI elements
-      keypadPosition: 'below', // {string} 'above' or 'below' doubleNumberLinePanel
-      numeratorOptions: null, // {*} options specific to the rate's numerator, see below
-      denominatorOptions: null // {*} options specific to the rate's denominator, see below
-    }, options );
+      keypadPosition: 'below' // {string} 'above' or 'below' doubleNumberLinePanel
+    }, providedOptions );
 
-    const numeratorOptions = merge( {}, SHARED_OPTIONS, options.numeratorOptions );
-
-    const denominatorOptions = merge( {}, SHARED_OPTIONS, options.denominatorOptions );
+    const numeratorOptions = combineOptions<NumeratorOptions>( {}, SHARED_OPTIONS, options.numeratorOptions );
+    const denominatorOptions = combineOptions<DenominatorOptions>( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     assert && assert( _.includes( KEYPAD_POSITION_VALUES, options.keypadPosition ),
       `invalid keypadPosition: ${options.keypadPosition}` );
@@ -92,7 +116,6 @@ export default class MarkerEditorNode extends Node {
     // numerator value
     const numeratorNode = new Text( '', {
       pickable: false, // so it doesn't interfere with clicking in numeratorBox to open keypad
-      fill: options.neutralColor,
       font: options.valueFont,
       center: numeratorBox.center
     } );
@@ -101,7 +124,6 @@ export default class MarkerEditorNode extends Node {
     // denominator value
     const denominatorNode = new Text( '', {
       pickable: false, // so it doesn't interfere with clicking in denominatorBox to open keypad
-      fill: options.neutralColor,
       font: options.valueFont,
       center: denominatorBox.center
     } );
@@ -136,7 +158,7 @@ export default class MarkerEditorNode extends Node {
     this.mutate( options );
 
     // Sets the position of the keypad
-    const setKeypadPosition = keypad => {
+    const setKeypadPosition = ( keypad: Keypad ) => {
 
       // This algorithm assumes that both buttons have the same centerX,
       // so either button can be used for horizontal positioning.
@@ -202,8 +224,7 @@ export default class MarkerEditorNode extends Node {
     } ) );
 
     // Observe edits to the numerator
-    const numeratorObserver = numerator => {
-      assert && assert( !isNaN( numerator ), `invalid numerator: ${numerator}` );
+    const numeratorObserver = ( numerator: number | null ) => {
 
       // update the numerator
       if ( numerator ) {
@@ -218,7 +239,7 @@ export default class MarkerEditorNode extends Node {
       // show the corresponding denominator
       if ( phet.chipper.queryParameters.showAnswers && !markerEditor.denominatorProperty.value ) {
         if ( numerator ) {
-          const denominator = markerEditor.numeratorProperty.value / markerEditor.unitRateProperty.value;
+          const denominator = numerator / markerEditor.unitRateProperty.value;
           denominatorNode.string = URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
         }
         else {
@@ -231,8 +252,7 @@ export default class MarkerEditorNode extends Node {
     markerEditor.numeratorProperty.link( numeratorObserver ); // unlink in dispose
 
     // Observe edits to the denominator
-    const denominatorObserver = denominator => {
-      assert && assert( !isNaN( denominator ), `invalid denominator: ${denominator}` );
+    const denominatorObserver = ( denominator: number | null ) => {
 
       // update the denominator
       if ( denominator ) {
@@ -247,7 +267,7 @@ export default class MarkerEditorNode extends Node {
       // show the corresponding numerator
       if ( phet.chipper.queryParameters.showAnswers && !markerEditor.numeratorProperty.value ) {
         if ( denominator ) {
-          const numerator = markerEditor.denominatorProperty.value * markerEditor.unitRateProperty.value;
+          const numerator = denominator * markerEditor.unitRateProperty.value;
           numeratorNode.string = URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
         }
         else {
@@ -259,24 +279,15 @@ export default class MarkerEditorNode extends Node {
     };
     markerEditor.denominatorProperty.link( denominatorObserver ); // unlink in dispose
 
-    // @private
     this.disposeMarkerEditorNode = () => {
       markerEditor.numeratorProperty.unlink( numeratorObserver );
       markerEditor.denominatorProperty.unlink( denominatorObserver );
       numeratorEditButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
       denominatorEditButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
-
-    // @private fields required by prototype functions
-    this.numeratorNode = numeratorNode;
-    this.denominatorNode = denominatorNode;
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeMarkerEditorNode();
     super.dispose();
   }
