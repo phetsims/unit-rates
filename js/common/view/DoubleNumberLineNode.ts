@@ -43,7 +43,7 @@ type SelfOptions = {
   indicatorColor?: Color | string;
 };
 
-type DoubleNumberLineNodeOptions = SelfOptions;
+export type DoubleNumberLineNodeOptions = SelfOptions;
 
 export default class DoubleNumberLineNode extends Node {
 

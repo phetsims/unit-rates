@@ -12,11 +12,10 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import merge from '../../../../phet-core/js/merge.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import { Node, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeTranslationOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import undoSolidShape from '../../../../sherpa/js/fontawesome-5/undoSolidShape.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
@@ -25,33 +24,45 @@ import UnitRatesStrings from '../../UnitRatesStrings.js';
 import Marker from '../model/Marker.js';
 import URColors from '../URColors.js';
 import URConstants from '../URConstants.js';
-import DoubleNumberLineNode from './DoubleNumberLineNode.js';
+import DoubleNumberLineNode, { DoubleNumberLineNodeOptions } from './DoubleNumberLineNode.js';
 import MarkerEditorNode from './MarkerEditorNode.js';
+import DoubleNumberLine from '../model/DoubleNumberLine.js';
+import MarkerEditor from '../model/MarkerEditor.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import { optionize4 } from '../../../../phet-core/js/optionize.js';
+import KeypadLayer from './KeypadLayer.js';
+
+type SelfOptions = {
+  titleStringProperty?: TReadOnlyProperty<string>; // title displayed next to the expand/collapse button
+  keypadPanelPosition?: 'above' | 'below'; // whether the keypad is 'above' or 'below' the double number line
+} & PickOptional<DoubleNumberLineNodeOptions, 'axisViewLength' | 'indicatorXProperty' | 'indicatorColor'>;
+
+type DoubleNumberLineAccordionBoxOptions = SelfOptions & NodeTranslationOptions &
+  PickRequired<AccordionBoxOptions, 'expandedProperty'>;
 
 export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
-  /**
-   * @param {DoubleNumberLine} doubleNumberLine
-   * @param {MarkerEditor} markerEditor
-   * @param {Node} keypadLayer - layer in which the (modal) keypad will be displayed
-   * @param {Object} [options]
-   */
-  constructor( doubleNumberLine, markerEditor, keypadLayer, options ) {
+  private readonly doubleNumberLineNode: DoubleNumberLineNode;
+  private readonly disposeDoubleNumberLineAccordionBox: () => void;
 
-    options = merge( {}, URConstants.ACCORDION_BOX_OPTIONS, {
+  public constructor( doubleNumberLine: DoubleNumberLine, markerEditor: MarkerEditor, keypadLayer: KeypadLayer,
+                      providedOptions?: DoubleNumberLineAccordionBoxOptions ) {
 
-      // DoubleNumberLineAccordionBox options
-      titleStringProperty: UnitRatesStrings.doubleNumberLineStringProperty, // title displayed next to the expand/collapse button
-      keypadPanelPosition: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
+    const options = optionize4<DoubleNumberLineAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()(
+      {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
-      // DoubleNumberLineNode options
-      axisViewLength: 1000, // {number} view length of doubleNumberLine's range
-      indicatorXProperty: null, // {Property.<number>|null} position of the indicator, in view coordinates. null means no indicator.
-      indicatorColor: 'green', // {Color|string} color of the indicator
+        // DoubleNumberLineAccordionBoxOptions
+        titleStringProperty: UnitRatesStrings.doubleNumberLineStringProperty,
+        keypadPanelPosition: 'below',
+        axisViewLength: 1000,
+        indicatorXProperty: null,
+        indicatorColor: 'green',
 
-      // AccordionBoxOptions
-      resize: false // see https://github.com/phetsims/unit-rates/issues/218
-    }, options );
+        // AccordionBoxOptions
+        resize: false // see https://github.com/phetsims/unit-rates/issues/218
+      }, providedOptions );
 
     // An invisible rectangle that has the same bounds as the accordion box. Used to position the keypad.
     // Dimensions will be set after calling super.  This was added so when converting to an ES6 class, because
@@ -71,8 +82,6 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
     // double number line
     const doubleNumberLineNode = new DoubleNumberLineNode( doubleNumberLine, {
       axisViewLength: options.axisViewLength,
-      numeratorOptions: doubleNumberLine.numeratorOptions,
-      denominatorOptions: doubleNumberLine.denominatorOptions,
       indicatorXProperty: options.indicatorXProperty,
       indicatorColor: options.indicatorColor
     } );
@@ -86,7 +95,9 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
     // marker editor
     const markerEditorNode = new MarkerEditorNode( markerEditor, thisBoundsNode, keypadLayer, {
+      // @ts-expect-error
       numeratorOptions: doubleNumberLine.numeratorOptions,
+      // @ts-expect-error
       denominatorOptions: doubleNumberLine.denominatorOptions,
       keypadPanelPosition: options.keypadPanelPosition,
       x: markerEditorNodeHomeX,
@@ -140,8 +151,8 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
     this.addChild( thisBoundsNode );
     thisBoundsNode.moveToBack();
 
-    // {Animation|null} animation for marker editor
-    let markerEditorAnimation = null;
+    // animation for marker editor
+    let markerEditorAnimation: Animation | null = null;
 
     // if false, move the marker editor immediately instead of animating.
     // Used to set the editor's initial position on startup.
@@ -229,10 +240,10 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
             }
           }
           else {
-            assert && assert( denominator !== null, 'expected a valid denominator' );
 
             // denominator is filled in
-            if ( denominator > maxDenominator ) {
+            assert && assert( denominator !== null, 'expected a valid denominator' );
+            if ( denominator! > maxDenominator ) {
 
               // move marker editor to right of axis arrows
               destinationX = markerEditorNodeOutOfRangeX;
@@ -241,7 +252,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
               // move marker editor to position of denominator
               destinationX = doubleNumberLineNode.x +
-                             doubleNumberLine.modelToViewDenominator( denominator, axisViewLength );
+                             doubleNumberLine.modelToViewDenominator( denominator!, axisViewLength );
             }
           }
 
@@ -274,10 +285,12 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
           markerEditorAnimation.startEmitter.addListener( function startListener() {
             markerEditorNode.pickable = false;
-            markerEditorAnimation.startEmitter.removeListener( startListener );
-            markerEditorAnimation.endedEmitter.addListener( function endedListener() {
+            assert && assert( markerEditorAnimation );
+            markerEditorAnimation!.startEmitter.removeListener( startListener );
+            markerEditorAnimation!.endedEmitter.addListener( function endedListener() {
               markerEditorNode.pickable = true;
-              markerEditorAnimation.endedEmitter.removeListener( endedListener );
+              assert && assert( markerEditorAnimation );
+              markerEditorAnimation!.endedEmitter.removeListener( endedListener );
             } );
           } );
 
@@ -291,7 +304,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
     // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
     // As soon as you enter a value using the marker editor, you lose the ability to undo the previous marker.
-    const undoMarkerObserver = marker => {
+    const undoMarkerObserver = ( marker: Marker | null ) => {
       if ( marker ) {
 
         // associate the undo button with the marker
@@ -314,7 +327,6 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
     };
     doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver ); // unlink in dispose
 
-    // @private
     this.disposeDoubleNumberLineAccordionBox = () => {
 
       // model cleanup
@@ -330,15 +342,10 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
       undoButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
 
-    // @private required by prototype functions
     this.doubleNumberLineNode = doubleNumberLineNode;
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeDoubleNumberLineAccordionBox();
     super.dispose();
   }
@@ -346,10 +353,8 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
   /**
    * Gets the origin of the double number line's origin in the global view coordinate frame.
    * This is used to line up other things (like the race track in 'Racing Lab' screen) with the double number line.
-   * @returns {Vector2}
-   * @public
    */
-  getGlobalOrigin() {
+  public getGlobalOrigin(): Vector2 {
     return this.doubleNumberLineNode.parentToGlobalPoint( new Vector2( this.doubleNumberLineNode.x, this.doubleNumberLineNode.y ) );
   }
 }
