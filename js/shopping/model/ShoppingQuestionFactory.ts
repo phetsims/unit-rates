@@ -12,21 +12,26 @@ import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingQuestion from './ShoppingQuestion.js';
+import { AxisOptions } from '../../common/model/DoubleNumberLine.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+
+type NumeratorOptions = WithRequired<AxisOptions, 'maxDecimals' | 'trimZeros'>;
+type DenominatorOptions = NumeratorOptions;
 
 const ShoppingQuestionFactory = {
 
   /**
    * Creates a question of the form 'Unit Rate?'
    *
-   * @param {number} unitRate
-   * @param {string} units - units for the denominator
-   * @param {Object} numeratorOptions - see ShoppingItem options.numeratorOptions
-   * @param {Object} denominatorOptions - see ShoppingItem options.denominatorOptions
-   * @returns {ShoppingQuestion}
-   * @public
-   * @static
+   * @param unitRate
+   * @param units - units for the denominator
+   * @param numeratorOptions
+   * @param denominatorOptions
    */
-  createUnitRateQuestion: function( unitRate, units, numeratorOptions, denominatorOptions ) {
+  createUnitRateQuestion( unitRate: number,
+                          units: string,
+                          numeratorOptions: NumeratorOptions,
+                          denominatorOptions: DenominatorOptions ): ShoppingQuestion {
 
     // '$0.50'
     const numerator = unitRate;
@@ -45,20 +50,23 @@ const ShoppingQuestionFactory = {
   /**
    * Creates question sets from raw data.
    *
-   * @param {number[][]} questionQuantities - number of items for each question, see ShoppingItemData
-   * @param {number} unitRate
-   * @param {string} singularUnits - denominator units to use for questions with singular quantities
-   * @param {string} pluralUnits - denominator units to use for questions with plural quantities
-   * @param {string} amountOfQuestionUnits - units used for "Apples for $10.00?" type questions
-   * @param {Object} numeratorOptions - see ShoppingItem.numeratorOptions
-   * @param {Object} denominatorOptions - see ShoppingItem.denominatorOptions
-   * @returns {ShoppingQuestion[][]}
-   * @public
-   * @static
+   * @param questionQuantities - number of items for each question, see ShoppingItemData
+   * @param unitRate
+   * @param singularUnits - denominator units to use for questions with singular quantities
+   * @param pluralUnits - denominator units to use for questions with plural quantities
+   * @param amountOfQuestionUnits - units used for "Apples for $10.00?" type questions
+   * @param numeratorOptions
+   * @param denominatorOptions
    */
-  createQuestionSets: function( questionQuantities, unitRate, singularUnits, pluralUnits, amountOfQuestionUnits, numeratorOptions, denominatorOptions ) {
+  createQuestionSets( questionQuantities: number[][],
+                      unitRate: number,
+                      singularUnits: string,
+                      pluralUnits: string,
+                      amountOfQuestionUnits: string,
+                      numeratorOptions: NumeratorOptions,
+                      denominatorOptions: DenominatorOptions ): ShoppingQuestion[][] {
 
-    const questionSets = []; // {ShoppingQuestion[][]}
+    const questionSets: ShoppingQuestion[][] = [];
 
     questionQuantities.forEach( quantities => {
 
@@ -85,15 +93,19 @@ const ShoppingQuestionFactory = {
 
 /**
  * Creates a question of the form 'Cost of 10 Apples?' or 'Cost of 2.2 pounds?'
- * @param {number} denominator
- * @param {number} unitRate
- * @param {string} singularUnits - denominator units to use for questions with singular quantities
- * @param {string} pluralUnits - denominator units to use for questions with plural quantities
- * @param {Object} numeratorOptions - see ShoppingItem options.numeratorOptions
- * @param {Object} denominatorOptions - see ShoppingItem options.denominatorOptions
- * @returns {ShoppingQuestion}
+ * @param denominator
+ * @param unitRate
+ * @param singularUnits - denominator units to use for questions with singular quantities
+ * @param pluralUnits - denominator units to use for questions with plural quantities
+ * @param numeratorOptions
+ * @param denominatorOptions
  */
-function createCostOfQuestion( denominator, unitRate, singularUnits, pluralUnits, numeratorOptions, denominatorOptions ) {
+function createCostOfQuestion( denominator: number,
+                               unitRate: number,
+                               singularUnits: string,
+                               pluralUnits: string,
+                               numeratorOptions: NumeratorOptions,
+                               denominatorOptions: DenominatorOptions ): ShoppingQuestion {
 
   // answer
   const numerator = denominator * unitRate;
@@ -121,16 +133,21 @@ function createCostOfQuestion( denominator, unitRate, singularUnits, pluralUnits
 
 /**
  * Creates a question of the form 'Apples for $3.00?'
- * @param {number} denominator
- * @param {number} unitRate
- * @param {string} singularUnits
- * @param {string} pluralUnits
- * @param {string} amountOfQuestionUnits - units used for "Apples for $10.00?" type questions
- * @param {Object} numeratorOptions - see ShoppingItem options.numeratorOptions
- * @param {Object} denominatorOptions - see ShoppingItem options.denominatorOptions
- * @returns {ShoppingQuestion}
+ * @param denominator
+ * @param unitRate
+ * @param singularUnits
+ * @param pluralUnits
+ * @param amountOfQuestionUnits - units used for "Apples for $10.00?" type questions
+ * @param numeratorOptions
+ * @param denominatorOptions
  */
-function createItemsForQuestion( denominator, unitRate, singularUnits, pluralUnits, amountOfQuestionUnits, numeratorOptions, denominatorOptions ) {
+function createItemsForQuestion( denominator: number,
+                                 unitRate: number,
+                                 singularUnits: string,
+                                 pluralUnits: string,
+                                 amountOfQuestionUnits: string,
+                                 numeratorOptions: NumeratorOptions,
+                                 denominatorOptions: DenominatorOptions ): ShoppingQuestion {
 
   // answer
   const answer = Utils.toFixedNumber( denominator, denominatorOptions.maxDecimals );
