@@ -15,16 +15,18 @@
 import LinearFunction from '../../../../dot/js/LinearFunction.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { DragListener, HBox, Image, Line, Node, Path, Text } from '../../../../scenery/js/imports.js';
+import { DragListener, HBox, Image, Line, Node, NodeOptions, NodeTranslationOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import finishFlag_png from '../../../images/finishFlag_png.js';
 import startFlag_png from '../../../images/startFlag_png.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceTimerNode from './RaceTimerNode.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import RaceCar from '../model/RaceCar.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
 // constants
 const NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates
@@ -42,20 +44,25 @@ const TRACK_MARKER_OPTIONS = {
   stroke: null
 };
 
+type SelfOptions = {
+  trackViewLength: number; // view length of the track
+  timerTitleString: string; // title for the timer accordion box
+};
+
+type RaceTrackNodeOptions = SelfOptions & NodeTranslationOptions;
+
 export default class RaceTrackNode extends Node {
 
   /**
-   * @param {RaceCar} car
-   * @param {Property.<boolean>} timerExpandedProperty
-   * @param {Property.<boolean>} arrowsVisibleProperty - are the 'drag cue' arrows are visible?
-   * @param {Object} [options]
+   * @param car
+   * @param timerExpandedProperty
+   * @param arrowsVisibleProperty - are the 'drag cue' arrows are visible?
+   * @param providedOptions
    */
-  constructor( car, timerExpandedProperty, arrowsVisibleProperty, options ) {
+  public constructor( car: RaceCar, timerExpandedProperty: BooleanProperty, arrowsVisibleProperty: BooleanProperty,
+                      providedOptions: RaceTrackNodeOptions ) {
 
-    options = merge( {
-      trackViewLength: 1000, // {number} view length of the track
-      timerTitleString: '' // {string} title for the timer accordion box
-    }, options );
+    const options = optionize<RaceTrackNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
 
     // maps 'miles' between model and view coordinate frames
     const modelToView = new LinearFunction( 0, car.track.maxLength, 0, options.trackViewLength );
@@ -74,7 +81,7 @@ export default class RaceTrackNode extends Node {
     } );
 
     // markers below the track
-    const markerNodes = [];
+    const markerNodes: Node[] = [];
     for ( let x = 0; x <= car.track.maxLength; ) {
 
       // create marker
@@ -136,12 +143,11 @@ export default class RaceTrackNode extends Node {
       bottom: solidLineNode.top
     } );
 
-    assert && assert( !options.children, 'decoration not supported' );
     options.children = [ dashedLineNode, solidLineNode, markersParent,
       startFlagNode, finishFlagNode, timerNode, lengthNode, cueArrowsNode, carNode ];
 
     // Synchronize track length with the model
-    const lengthObserver = length => {
+    const lengthObserver = ( length: number ) => {
 
       const finishX = modelToView.evaluate( length );
 
@@ -172,7 +178,7 @@ export default class RaceTrackNode extends Node {
     super( options );
 
     // {number} where the drag started relative to the finish flag's current position, in parent view coordinates
-    let startDragXOffset;
+    let startDragXOffset: number;
 
     // Drag the finish flag to change the track length
     const dragListener = new DragListener( {
@@ -180,10 +186,7 @@ export default class RaceTrackNode extends Node {
       // allow touch swipes across a bag to pick it up
       allowTouchSnag: true,
 
-      /**
-       * Called when a drag sequence starts.
-       * @param {SceneryEvent} event
-       */
+      // Called when a drag sequence starts.
       start: event => {
 
         // compute offset from current track length
@@ -191,10 +194,7 @@ export default class RaceTrackNode extends Node {
                            modelToView.evaluate( car.track.lengthProperty.value );
       },
 
-      /**
-       * Called when the pointer moves during a drag sequence.
-       * @param {SceneryEvent} event
-       */
+      // Called when the pointer moves during a drag sequence.
       drag: event => {
 
         // hide the 'drag cue' arrows
@@ -228,16 +228,13 @@ export default class RaceTrackNode extends Node {
 
 /**
  * Creates a track marker, an equilateral triangle, with origin at tip.
- * @returns {Node}
  */
-function createMarkerNode() {
-
+function createMarkerNode(): Node {
   const markerShape = new Shape()
     .moveTo( 0, 0 )
     .lineTo( TRACK_MARKER_SIDE_LENGTH / 2, TRACK_MARKER_SIDE_LENGTH )
     .lineTo( -TRACK_MARKER_SIDE_LENGTH / 2, TRACK_MARKER_SIDE_LENGTH )
     .close();
-
   return new Path( markerShape, TRACK_MARKER_OPTIONS );
 }
 
