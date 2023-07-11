@@ -6,39 +6,41 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import { DragListener } from '../../../../scenery/js/imports.js';
+import { DragListener, Node } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
+import ShoppingItemNode from './ShoppingItemNode.js';
+import ShoppingItem from '../model/ShoppingItem.js';
+import Shelf from '../model/Shelf.js';
+import Scale from '../model/Scale.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import ShoppingContainer from '../model/ShoppingContainer.js';
+import RowOfMovables from '../model/RowOfMovables.js';
+
+type RowAndCell = {
+  itemRow: RowOfMovables; // the front or back row of items
+  cellIndex: number; // a cell in itemRow
+};
 
 export default class ShoppingItemDragListener extends DragListener {
 
-  /**
-   * @param {ShoppingItemNode} itemNode
-   * @param {item} item
-   * @param {Shelf} shelf
-   * @param {Scale} scale
-   * @param {Node} frontItemLayer
-   * @param {Node} backItemLayer
-   * @param {Node} dragLayer
-   */
-  constructor( itemNode, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer ) {
+  public constructor( itemNode: ShoppingItemNode, item: ShoppingItem, shelf: Shelf, scale: Scale,
+                      frontItemLayer: Node, backItemLayer: Node, dragLayer: Node ) {
 
-    // {Vector2} where the drag started relative to the item's position, in parent view coordinates
-    let startDragOffset;
+    // where the drag started relative to the item's position, in parent view coordinates
+    let startDragOffset: Vector2;
 
     super( {
 
       // allow touch swipes across an item to pick it up
       allowTouchSnag: true,
 
-      /**
-       * Called when a drag sequence starts.
-       * @param {SceneryEvent} event
-       */
+      // Called when a drag sequence starts.
       start: event => {
 
         // move Node to the drag layer, so that it pops to the front
         item.dragging = true;
-        itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
+        const parent = itemNode.getParent();
+        parent && parent.removeChild( itemNode );
         dragLayer.addChild( itemNode );
 
         // remove item from shelf or scale
@@ -56,19 +58,14 @@ export default class ShoppingItemDragListener extends DragListener {
         startDragOffset = itemNode.globalToParentPoint( event.pointer.point ).minus( item.positionProperty.value );
       },
 
-      /**
-       * Called when the pointer moves during a drag sequence.
-       * @param {SceneryEvent} event
-       */
+      // Called when the pointer moves during a drag sequence.
       drag: event => {
 
         // move the item immediately while dragging
         item.moveTo( itemNode.globalToParentPoint( event.pointer.point ).minus( startDragOffset ) );
       },
 
-      /**
-       * Called when a drag sequence ends.
-       */
+      // Called when a drag sequence ends.
       end: () => {
 
         item.dragging = false;
@@ -76,7 +73,7 @@ export default class ShoppingItemDragListener extends DragListener {
         // if the item is released above the scale, item falls to scale, otherwise to shelf.
         const shoppingContainer = ( item.positionProperty.value.y < scale.yAboveScale ) ? scale : shelf;
 
-        // get the closest row and unoccupied cell, returns {itemRow: RowOfMovables, cellIndex: number}
+        // get the closest row and unoccupied cell
         const rowAndCell = getClosestRowAndUnoccupiedCell( shoppingContainer, item.positionProperty.value );
 
         animateItemToContainer( shoppingContainer, item, itemNode, rowAndCell.itemRow, rowAndCell.cellIndex,
@@ -88,17 +85,14 @@ export default class ShoppingItemDragListener extends DragListener {
 
 /**
  * Gets the row and unoccupied cell that are closest to the specified position.
- * @param {ShoppingContainer} shoppingContainer
- * @param {Vector2} position
- * @returns {{itemRow: RowOfMovables, cellIndex: number}}
  */
-function getClosestRowAndUnoccupiedCell( shoppingContainer, position ) {
+function getClosestRowAndUnoccupiedCell( shoppingContainer: ShoppingContainer, position: Vector2 ): RowAndCell {
 
   // to improve readability
   const backItemRow = shoppingContainer.backItemRow;
   const frontItemRow = shoppingContainer.frontItemRow;
 
-  // find closest cell in each row
+  // find the closest cell in each row
   const backCellIndex = backItemRow.getClosestUnoccupiedCell( position );
   const frontCellIndex = frontItemRow.getClosestUnoccupiedCell( position );
   assert && assert( !( backCellIndex === -1 && frontCellIndex === -1 ), 'container is full' );
@@ -134,24 +128,19 @@ function getClosestRowAndUnoccupiedCell( shoppingContainer, position ) {
   }
 
   return {
-    itemRow: itemRow, // {RowOfMovables} the front or back row of items
-    cellIndex: cellIndex // {number} a cell in itemRow
+    itemRow: itemRow,
+    cellIndex: cellIndex
   };
 }
 
 /**
  * Animates an item to a specified row and cell in a container.
  * The animation will change course immediately if the specified cell becomes occupied.
- * @param {ShoppingContainer} shoppingContainer
- * @param {ShoppingItem} item
- * @param {Node} itemNode
- * @param {RowOfMovables} itemRow
- * @param {number} cellIndex
- * @param {Node} frontItemLayer
- * @param {Node} backItemLayer
- * @private
  */
-function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cellIndex, frontItemLayer, backItemLayer ) {
+function animateItemToContainer( shoppingContainer: ShoppingContainer,
+                                 item: ShoppingItem, itemNode: Node,
+                                 itemRow: RowOfMovables, cellIndex: number,
+                                 frontItemLayer: Node, backItemLayer: Node ): void {
 
   // If the item's Node has been disposed (which means the item no longer exists), then ignore all of this.
   // See https://github.com/phetsims/unit-rates/issues/214
@@ -179,7 +168,7 @@ function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cel
   };
 
   // This function is called when animation completes.
-  // If the target cell is still empty, add the item. Otherwise animate to an unoccupied cell.
+  // If the target cell is still empty, add the item. Otherwise, animate to an unoccupied cell.
   const animationCompletedCallback = () => {
 
     // If the item's Node has been disposed (which means the item no longer exists), then ignore this.
@@ -194,7 +183,8 @@ function animateItemToContainer( shoppingContainer, item, itemNode, itemRow, cel
       itemRow.put( item, cellIndex );
 
       // move Node to front or back item layer
-      itemNode.getParent() && itemNode.getParent().removeChild( itemNode );
+      const parent = itemNode.getParent();
+      parent && parent.removeChild( itemNode );
       if ( itemRow === shoppingContainer.backItemRow ) {
         backItemLayer.addChild( itemNode );
       }
