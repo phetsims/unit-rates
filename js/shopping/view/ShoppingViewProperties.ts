@@ -11,23 +11,26 @@ import unitRates from '../../unitRates.js';
 
 export default class ShoppingViewProperties {
 
-  constructor() {
+  // Is the 'Double Number Line' accordion box expanded?
+  public readonly doubleNumberLineExpandedProperty: BooleanProperty;
 
-    // @public is the 'Double Number Line' accordion box expanded?
+  // Is the 'Questions' accordion box expanded?
+  public readonly questionsExpandedProperty: BooleanProperty;
+
+  // Is the cost display expanded on the scale?
+  public readonly scaleCostExpandedProperty: BooleanProperty;
+
+  // Is the 'Rate' accordion box expanded?
+  public readonly rateExpandedProperty: BooleanProperty;
+
+  public constructor() {
     this.doubleNumberLineExpandedProperty = new BooleanProperty( true );
-
-    // @public is the 'Questions' accordion box expanded?
     this.questionsExpandedProperty = new BooleanProperty( true );
-
-    // @public is the cost display expanded on the scale?
     this.scaleCostExpandedProperty = new BooleanProperty( true );
-
-    // @public is the 'Rate' accordion box expanded?
     this.rateExpandedProperty = new BooleanProperty( true );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.doubleNumberLineExpandedProperty.reset();
     this.questionsExpandedProperty.reset();
     this.scaleCostExpandedProperty.reset();
