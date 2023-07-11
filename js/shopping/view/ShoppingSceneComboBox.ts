@@ -7,40 +7,47 @@
  */
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, HStrut, Image, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
-import ComboBox from '../../../../sun/js/ComboBox.js';
+import { HBox, HStrut, Image, Node, NodeTranslationOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import ComboBox, { ComboBoxItem, ComboBoxOptions } from '../../../../sun/js/ComboBox.js';
 import unitRates from '../../unitRates.js';
+import ShoppingScene from '../model/ShoppingScene.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
-export default class ShoppingSceneComboBox extends ComboBox {
+type SelfOptions = {
+  iconSize?: Dimension2; // size of the icons in the combo box
+};
+
+type ShoppingSceneComboBoxOptions = SelfOptions & NodeTranslationOptions;
+
+export default class ShoppingSceneComboBox extends ComboBox<ShoppingScene> {
 
   /**
-   * @param {Property.<ShoppingScene>} shoppingSceneProperty - the selected scene
-   * @param {ShoppingScene[]} shoppingScenes
-   * @param {Node} parentNode - the parent node of the combo box
-   * @param {Object} [options]
-   * @constructor
+   * @param shoppingSceneProperty - the selected scene
+   * @param shoppingScenes
+   * @param parentNode - the parent node of the combo box
+   * @param [providedOptions]
    */
-  constructor( shoppingSceneProperty, shoppingScenes, parentNode, options ) {
+  public constructor( shoppingSceneProperty: Property<ShoppingScene>, shoppingScenes: ShoppingScene[],
+                      parentNode: Node, providedOptions?: ShoppingSceneComboBoxOptions ) {
 
-    assert && assert( shoppingScenes && shoppingScenes.length > 0, 'at least 1 ShoppingScene is required' );
+    assert && assert( shoppingScenes.length > 0, 'at least 1 ShoppingScene is required' );
 
-    options = merge( {
+    const options = optionize<ShoppingSceneComboBoxOptions, SelfOptions, ComboBoxOptions>()( {
 
-      // ShoppingSceneComboBox options
-      iconSize: new Dimension2( 30, 30 ), // {Dimension2} size of the icons in the combo box
+      // SelfOptions
+      iconSize: new Dimension2( 30, 30 ),
 
-      // ComboBox options
+      // ComboBoxOptions
       listPosition: 'above',
       cornerRadius: 5,
       xMargin: 10,
       yMargin: 10
-
-    }, options );
+    }, providedOptions );
 
     // {ComboBoxItem[]}
-    const items = shoppingScenes.map( shoppingScene => createItem( shoppingScene, options.iconSize ) );
+    const items: ComboBoxItem<ShoppingScene>[] = shoppingScenes.map( shoppingScene => createItem( shoppingScene, options.iconSize ) );
 
     super( shoppingSceneProperty, items, parentNode, options );
   }
@@ -48,12 +55,8 @@ export default class ShoppingSceneComboBox extends ComboBox {
 
 /**
  * Creates an item for the combo box.
- *
- * @param {ShoppingScene} shoppingScene
- * @param {Dimension2} iconSize
- * @returns {ComboBoxItem}
  */
-function createItem( shoppingScene, iconSize ) {
+function createItem( shoppingScene: ShoppingScene, iconSize: Dimension2 ): ComboBoxItem<ShoppingScene> {
 
   // Scale the image down if it's larger than iconSize
   const imageNode = new Image( shoppingScene.itemImage );
