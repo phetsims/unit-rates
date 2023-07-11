@@ -55,7 +55,7 @@ export default class RacingLabScreenView extends ScreenView {
         expandedProperty: viewProperties.doubleNumberLine1ExpandedProperty,
         indicatorXProperty: model.car1.distanceProperty,
         indicatorColor: model.car1.color,
-        keypadPosition: 'below',
+        keypadPanelPosition: 'below',
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
       } );
@@ -69,7 +69,7 @@ export default class RacingLabScreenView extends ScreenView {
         expandedProperty: viewProperties.doubleNumberLine2ExpandedProperty,
         indicatorXProperty: model.car2.distanceProperty,
         indicatorColor: model.car2.color,
-        keypadPosition: 'above',
+        keypadPanelPosition: 'above',
         left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
         bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
       } );

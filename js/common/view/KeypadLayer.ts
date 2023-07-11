@@ -6,24 +6,34 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import { Plane, PressListener } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 import KeypadPanel from './KeypadPanel.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+type BeginEditOptions = {
+  onBeginEdit?: ( () => void ) | null; // called by beginEdit
+  onEndEdit?: ( () => void ) | null; // called by endEdit
+  setKeypadPanelPosition?: ( ( keypadPanel: KeypadPanel ) => void ) | null; // called by beginEdit to set the KeypadPanel position
+  maxDigits?: number; // maximum number of digits that can be entered on the keypad
+  maxDecimals?: number; // maximum number of decimal places that can be entered on the keypad
+  zeroIsValid?: boolean; //  is zero a valid value?
+};
 
 export default class KeypadLayer extends Plane {
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+  private valueProperty: Property<number | null> | null;
+  private keypadPanel: KeypadPanel | null;
+  private onEndEdit: ( () => void ) | null;
+  private zeroIsValid: boolean;
 
-    options = merge( {
+  public constructor() {
+
+    super( {
       fill: 'rgba( 0, 0, 0, 0.2 )',
       visible: false
-    }, options );
-
-    super( options );
+    } );
 
     // clicking outside the keypad cancels the edit
     this.addInputListener( new PressListener( {
@@ -35,67 +45,68 @@ export default class KeypadLayer extends Plane {
       }
     } ) );
 
-    // @private these will be set when the client calls beginEdit
+    // These will be set when the client calls beginEdit.
     this.valueProperty = null;
-    this.keypad = null;
+    this.keypadPanel = null;
+    this.onEndEdit = null;
     this.zeroIsValid = true;
-    this.onEndEdit = null; // {function} called by endEdit
   }
 
   /**
    * Begins an edit, by opening a modal keypad.
-   * @param {Property.<number>} valueProperty - the Property to be set by the keypad
-   * @param {Object} [options]
-   * @public
+   * @param valueProperty - the Property to be set by the keypad
+   * @param [providedOptions]
    */
-  beginEdit( valueProperty, options ) {
+  public beginEdit( valueProperty: Property<number | null>, providedOptions?: BeginEditOptions ): void {
 
-    // Ignore attempts to open another keypad. This can happen in unlikely multi-touch scenarios.
+    // Ignore attempts to open another KeypadPanel. This can happen in unlikely multitouch scenarios.
     // See https://github.com/phetsims/unit-rates/issues/181
-    if ( this.keypad ) {
-      phet.log && phet.log( 'ignoring attempt to open another keypad' );
+    if ( this.keypadPanel ) {
+      phet.log && phet.log( 'ignoring attempt to open another KeypadPanel' );
       return;
     }
 
-    options = merge( {
-      onBeginEdit: null, // {function} called by beginEdit
-      onEndEdit: null, // {function} called by endEdit
-      setKeypadPosition: null, // {function:KeypadPanel} called by beginEdit to set the keypad position
-      maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
-      maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
-      zeroIsValid: true // {boolean} is zero a valid value?
-    }, options );
+    const options = optionize<BeginEditOptions>()( {
+      onBeginEdit: null,
+      onEndEdit: null,
+      setKeypadPanelPosition: null,
+      maxDigits: 4,
+      maxDecimals: 2,
+      zeroIsValid: true
+    }, providedOptions );
 
     this.valueProperty = valueProperty; // remove this reference in endEdit
     this.onEndEdit = options.onEndEdit;
     this.zeroIsValid = options.zeroIsValid;
 
-    // create a keypad
-    this.keypad = new KeypadPanel( {
+    this.keypadPanel = new KeypadPanel( {
       maxDigits: options.maxDigits,
       maxDecimals: options.maxDecimals,
       enterButtonListener: this.commitEdit.bind( this )
     } );
 
-    // display the keypad
-    this.addChild( this.keypad );
+    // display the KeypadPanel
+    this.addChild( this.keypadPanel );
     this.visible = true;
 
     // position the keypad
-    options.setKeypadPosition && options.setKeypadPosition( this.keypad );
+    options.setKeypadPanelPosition && options.setKeypadPanelPosition( this.keypadPanel );
 
     // execute client-specific hook
     options.onBeginEdit && options.onBeginEdit();
   }
 
-  // @private ends an edit
-  endEdit() {
+  /**
+   * Ends an edit.
+   */
+  private endEdit(): void {
 
     // hide the keypad
+    assert && assert( this.keypadPanel );
     this.visible = false;
-    this.removeChild( this.keypad );
-    this.keypad.dispose();
-    this.keypad = null;
+    this.removeChild( this.keypadPanel! );
+    this.keypadPanel!.dispose();
+    this.keypadPanel = null;
 
     // execute client-specific hook
     this.onEndEdit && this.onEndEdit();
@@ -104,15 +115,19 @@ export default class KeypadLayer extends Plane {
     this.valueProperty = null;
   }
 
-  // @private commits an edit
-  commitEdit() {
+  /**
+   * Commits an edit.
+   */
+  private commitEdit(): void {
 
     // get the value from the keypad
-    const value = Number( this.keypad.valueStringProperty.value );
+    assert && assert( this.keypadPanel );
+    const value = Number( this.keypadPanel!.valueStringProperty.value );
 
     // if the keypad contains a valid value ...
     if ( isValidValue( value, this.zeroIsValid ) ) {
-      this.valueProperty.value = value;
+      assert && assert( this.valueProperty );
+      this.valueProperty!.value = value;
       this.endEdit();
     }
     else {
@@ -120,19 +135,18 @@ export default class KeypadLayer extends Plane {
     }
   }
 
-  // @private cancels an edit
-  cancelEdit() {
+  /**
+   * Cancels an edit.
+   */
+  private cancelEdit(): void {
     this.endEdit();
   }
 }
 
 /**
  * Determines if the value from the keypad is a valid entry.
- * @param {number} value
- * @param {boolean} zeroIsValid - is zero a valid value?
- * @returns {boolean}
  */
-function isValidValue( value, zeroIsValid ) {
+function isValidValue( value: number, zeroIsValid: boolean ): boolean {
   return !isNaN( value ) && !( value === 0 && !zeroIsValid );
 }
 

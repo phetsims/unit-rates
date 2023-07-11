@@ -21,10 +21,9 @@ import KeypadLayer from './KeypadLayer.js';
 import { DenominatorOptions, NumeratorOptions } from '../../shopping/model/ShoppingQuestionFactory.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import Keypad from '../../../../scenery-phet/js/keypad/Keypad.js';
+import KeypadPanel from './KeypadPanel.js';
 
 // constants
-const KEYPAD_POSITION_VALUES = [ 'above', 'below' ];
 const SHARED_OPTIONS = {
   maxDigits: 4, // {number} maximum number of digits that can be entered via keypad
   maxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
@@ -40,7 +39,7 @@ type SelfOptions = {
   valueXMargin?: number; //  horizontal margin inside the value box
   valueYMargin?: number; // vertical margin inside the value box
   ySpacing?: number;  // vertical spacing between UI elements
-  keypadPosition?: 'above' | 'below'; // 'above' or 'below' doubleNumberLinePanel
+  keypadPanelPosition?: 'above' | 'below'; // 'above' or 'below' doubleNumberLinePanel
   numeratorOptions?: NumeratorOptions; // options specific to the rate's numerator
   denominatorOptions?: DenominatorOptions; // options specific to the rate's denominator
 };
@@ -71,14 +70,11 @@ export default class MarkerEditorNode extends Node {
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: URConstants.MARKER_Y_SPACING, // {number} vertical margin inside the value box
       ySpacing: 3,  // {number} vertical spacing between UI elements
-      keypadPosition: 'below' // {string} 'above' or 'below' doubleNumberLinePanel
+      keypadPanelPosition: 'below' // {string} 'above' or 'below' doubleNumberLinePanel
     }, providedOptions );
 
     const numeratorOptions = combineOptions<NumeratorOptions>( {}, SHARED_OPTIONS, options.numeratorOptions );
     const denominatorOptions = combineOptions<DenominatorOptions>( {}, SHARED_OPTIONS, options.denominatorOptions );
-
-    assert && assert( _.includes( KEYPAD_POSITION_VALUES, options.keypadPosition ),
-      `invalid keypadPosition: ${options.keypadPosition}` );
 
     super();
 
@@ -157,8 +153,8 @@ export default class MarkerEditorNode extends Node {
 
     this.mutate( options );
 
-    // Sets the position of the keypad
-    const setKeypadPosition = ( keypad: Keypad ) => {
+    // Sets the position of the KeypadPanel
+    const setKeypadPanelPosition = ( keypadPanel: KeypadPanel ) => {
 
       // This algorithm assumes that both buttons have the same centerX,
       // so either button can be used for horizontal positioning.
@@ -166,26 +162,26 @@ export default class MarkerEditorNode extends Node {
 
       // position the keypad relative to edit button and double number line panel
       const doubleNumberLinePanelBounds =
-        keypad.globalToParentBounds( doubleNumberLinePanel.localToGlobalBounds( doubleNumberLinePanel.localBounds ) );
+        keypadPanel.globalToParentBounds( doubleNumberLinePanel.localToGlobalBounds( doubleNumberLinePanel.localBounds ) );
       const editButtonBounds =
-        keypad.globalToParentBounds( numeratorEditButton.localToGlobalBounds( numeratorEditButton.localBounds ) );
+        keypadPanel.globalToParentBounds( numeratorEditButton.localToGlobalBounds( numeratorEditButton.localBounds ) );
 
       // Try to horizontally center the keypad on the edit button,
       // but don't let it go past the ends of the double number line panel.
-      keypad.centerX = editButtonBounds.centerX;
-      if ( keypad.left < doubleNumberLinePanelBounds.left ) {
-        keypad.left = doubleNumberLinePanelBounds.left;
+      keypadPanel.centerX = editButtonBounds.centerX;
+      if ( keypadPanel.left < doubleNumberLinePanelBounds.left ) {
+        keypadPanel.left = doubleNumberLinePanelBounds.left;
       }
-      else if ( keypad.right > doubleNumberLinePanelBounds.right ) {
-        keypad.right = doubleNumberLinePanelBounds.right;
+      else if ( keypadPanel.right > doubleNumberLinePanelBounds.right ) {
+        keypadPanel.right = doubleNumberLinePanelBounds.right;
       }
 
       // Put the key pad above or below the double number line panel.
-      if ( options.keypadPosition === 'above' ) {
-        keypad.bottom = doubleNumberLinePanelBounds.top - 10;
+      if ( options.keypadPanelPosition === 'above' ) {
+        keypadPanel.bottom = doubleNumberLinePanelBounds.top - 10;
       }
       else { // 'below'
-        keypad.top = doubleNumberLinePanelBounds.bottom + 10;
+        keypadPanel.top = doubleNumberLinePanelBounds.bottom + 10;
       }
     };
 
@@ -194,7 +190,7 @@ export default class MarkerEditorNode extends Node {
       keypadLayer.beginEdit( markerEditor.numeratorProperty, {
         onBeginEdit: () => { numeratorBox.fill = URColors.edit; },
         onEndEdit: () => { numeratorBox.fill = 'white'; },
-        setKeypadPosition: setKeypadPosition,
+        setKeypadPanelPosition: setKeypadPanelPosition,
         maxDigits: numeratorOptions.maxDigits,
         maxDecimals: numeratorOptions.maxDecimals,
         zeroIsValid: options.zeroIsValid
@@ -206,7 +202,7 @@ export default class MarkerEditorNode extends Node {
       keypadLayer.beginEdit( markerEditor.denominatorProperty, {
         onBeginEdit: () => { denominatorBox.fill = URColors.edit; },
         onEndEdit: () => { denominatorBox.fill = 'white'; },
-        setKeypadPosition: setKeypadPosition,
+        setKeypadPanelPosition: setKeypadPanelPosition,
         maxDigits: denominatorOptions.maxDigits,
         maxDecimals: denominatorOptions.maxDecimals,
         zeroIsValid: options.zeroIsValid

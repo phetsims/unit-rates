@@ -191,10 +191,10 @@ export default class ShoppingQuestionNode extends Node {
     };
 
     // position the keypad relative to the Questions panel
-    const setKeypadPosition = keypad => {
-      const questionsPanelBounds = keypad.globalToParentBounds( questionsPanel.localToGlobalBounds( questionsPanel.localBounds ) );
-      keypad.right = questionsPanelBounds.left - 10;
-      keypad.bottom = questionsPanelBounds.bottom;
+    const setKeypadPanelPosition = keypadPanel => {
+      const questionsPanelBounds = keypadPanel.globalToParentBounds( questionsPanel.localToGlobalBounds( questionsPanel.localBounds ) );
+      keypadPanel.right = questionsPanelBounds.left - 10;
+      keypadPanel.bottom = questionsPanelBounds.bottom;
     };
 
     // opens a keypad to edit the user's guess
@@ -202,7 +202,7 @@ export default class ShoppingQuestionNode extends Node {
       keypadLayer.beginEdit( question.guessProperty, {
         onBeginEdit: onBeginEdit,
         onEndEdit: onEndEdit,
-        setKeypadPosition: setKeypadPosition,
+        setKeypadPanelPosition: setKeypadPanelPosition,
         maxDigits: answerOptions.maxDigits,
         maxDecimals: answerOptions.maxDecimals
       } );

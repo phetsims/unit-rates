@@ -42,7 +42,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
       // DoubleNumberLineAccordionBox options
       titleStringProperty: UnitRatesStrings.doubleNumberLineStringProperty, // title displayed next to the expand/collapse button
-      keypadPosition: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
+      keypadPanelPosition: 'below', // {string} whether the keypad is 'above' or 'below' the double number line
 
       // DoubleNumberLineNode options
       axisViewLength: 1000, // {number} view length of doubleNumberLine's range
@@ -88,7 +88,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
     const markerEditorNode = new MarkerEditorNode( markerEditor, thisBoundsNode, keypadLayer, {
       numeratorOptions: doubleNumberLine.numeratorOptions,
       denominatorOptions: doubleNumberLine.denominatorOptions,
-      keypadPosition: options.keypadPosition,
+      keypadPanelPosition: options.keypadPanelPosition,
       x: markerEditorNodeHomeX,
       centerY: doubleNumberLineNode.centerY
     } );
