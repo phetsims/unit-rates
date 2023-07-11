@@ -7,28 +7,25 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import URConstants from '../../common/URConstants.js';
 import RateAccordionBox from '../../common/view/RateAccordionBox.js';
 import BaseShoppingSceneNode from '../../shopping/view/BaseShoppingSceneNode.js';
 import unitRates from '../../unitRates.js';
+import ShoppingScene from '../../shopping/model/ShoppingScene.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
+import ShoppingViewProperties from '../../shopping/view/ShoppingViewProperties.js';
 
 export default class ShoppingLabSceneNode extends BaseShoppingSceneNode {
 
-  /**
-   * @param {ShoppingScene} shoppingScene
-   * @param {Bounds2} layoutBounds
-   * @param {KeypadLayer} keypadLayer
-   * @param {ShoppingViewProperties} viewProperties
-   * @param {Object} [options]
-   */
-  constructor( shoppingScene, layoutBounds, keypadLayer, viewProperties, options ) {
+  private readonly disposeShoppingLabSceneNode: () => void;
 
-    options = merge( {
+  public constructor( shoppingScene: ShoppingScene, layoutBounds: Bounds2, keypadLayer: KeypadLayer,
+                      viewProperties: ShoppingViewProperties ) {
+
+    super( shoppingScene, layoutBounds, keypadLayer, viewProperties, {
       extraCostDecimalVisible: true // {boolean} add an extra decimal place to cost on the scale
-    }, options );
-
-    super( shoppingScene, layoutBounds, keypadLayer, viewProperties, options );
+    } );
 
     // Rate accordion box, dispose required
     const rateAccordionBox = new RateAccordionBox( shoppingScene.rate, {
@@ -45,21 +42,15 @@ export default class ShoppingLabSceneNode extends BaseShoppingSceneNode {
     this.addChild( rateAccordionBox );
     rateAccordionBox.moveToBack();
 
-    // @private
     this.disposeShoppingLabSceneNode = () => {
       rateAccordionBox.dispose();
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeShoppingLabSceneNode();
     super.dispose();
   }
-
 }
 
 unitRates.register( 'ShoppingLabSceneNode', ShoppingLabSceneNode );
