@@ -7,42 +7,49 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
-import { Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import { NodeTranslationOptions, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingQuestionNode from './ShoppingQuestionNode.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
+import ShoppingScene from '../model/ShoppingScene.js';
+import { optionize4 } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import ShoppingQuestion from '../model/ShoppingQuestion.js';
+
+type SelfOptions = {
+  vBoxSpacing?: number; // vertical spacing between UI elements in the accordion box's content
+};
+
+type ShoppingQuestionsAccordionBoxOptions = SelfOptions & NodeTranslationOptions & PickRequired<AccordionBox, 'expandedProperty'>;
 
 export default class ShoppingQuestionsAccordionBox extends AccordionBox {
 
-  /**
-   * @param {ShoppingScene} shoppingScene
-   * @param {Node} keypadLayer
-   * @param {Object} [options]
-   */
-  constructor( shoppingScene, keypadLayer, options ) {
+  private readonly disposeShoppingQuestionsAccordionBox: () => void;
 
-    options = merge( {}, URConstants.ACCORDION_BOX_OPTIONS, {
+  public constructor( shoppingScene: ShoppingScene, keypadLayer: KeypadLayer, providedOptions?: ShoppingQuestionsAccordionBoxOptions ) {
 
-      // AccordionBox options
-      // tight vertical margins and spacing, see https://github.com/phetsims/unit-rates/issues/140
-      titleYMargin: 0,
-      contentXMargin: 10,
-      contentYMargin: 6,
-      contentYSpacing: 2,
-      titleNode: new Text( UnitRatesStrings.questionsStringProperty, {
-        font: URConstants.ACCORDION_BOX_TITLE_FONT,
-        maxWidth: 100
-      } ),
+    const options = optionize4<ShoppingQuestionsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()(
+      {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
-      // VBox options
-      vBoxSpacing: 12 // vertical spacing between UI elements in the accordion box's content
+        // SelfOptions
+        vBoxSpacing: 12,
 
-    }, options );
+        // AccordionBoxOptions
+        // tight vertical margins and spacing, see https://github.com/phetsims/unit-rates/issues/140
+        titleYMargin: 0,
+        contentXMargin: 10,
+        contentYMargin: 6,
+        contentYSpacing: 2,
+        titleNode: new Text( UnitRatesStrings.questionsStringProperty, {
+          font: URConstants.ACCORDION_BOX_TITLE_FONT,
+          maxWidth: 100
+        } )
+      }, providedOptions );
 
     // An invisible rectangle that has the same bounds as the accordion box. Used to position the keypad.
     // Dimensions will be set after calling super.  This was added so when converting to an ES6 class, because
@@ -63,13 +70,10 @@ export default class ShoppingQuestionsAccordionBox extends AccordionBox {
       align: 'right',
       spacing: options.vBoxSpacing
     } );
-    const questionSetObserver = questionSet => {
+    const questionSetObserver = ( questionSet: ShoppingQuestion[] ) => {
 
       // remove previous questions
-      questionsParent.getChildren().forEach( child => {
-        assert && assert( child instanceof ShoppingQuestionNode );
-        child.dispose();
-      } );
+      questionsParent.getChildren().forEach( child => child.dispose() );
       questionsParent.removeAllChildren();
 
       // add new questions, dispose required
@@ -115,23 +119,15 @@ export default class ShoppingQuestionsAccordionBox extends AccordionBox {
     this.addChild( thisBoundsNode );
     thisBoundsNode.moveToBack();
 
-    // @private cleanup that's specific to this Node
     this.disposeShoppingQuestionsAccordionBox = () => {
       shoppingScene.questionSetProperty.unlink( questionSetObserver );
       unitRateQuestionNode.dispose();
-      questionsParent.getChildren().forEach( child => {
-        assert && assert( child instanceof ShoppingQuestionNode );
-        child.dispose();
-      } );
+      questionsParent.getChildren().forEach( child => child.dispose() );
       refreshButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeShoppingQuestionsAccordionBox();
     super.dispose();
   }
