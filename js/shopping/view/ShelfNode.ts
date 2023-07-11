@@ -11,13 +11,11 @@ import { Shape } from '../../../../kite/js/imports.js';
 import { Circle, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
+import Shelf from '../model/Shelf.js';
 
 export default class ShelfNode extends Node {
 
-  /**
-   * @param {Shelf} shelf
-   */
-  constructor( shelf ) {
+  public constructor( shelf: Shelf ) {
 
     // shelf.width is the width at the midpoint of the shelf's top face, compute the foreground and background widths
     const foregroundWidth = shelf.width + shelf.perspectiveXOffset;
