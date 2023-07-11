@@ -7,51 +7,73 @@
  */
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import merge from '../../../../phet-core/js/merge.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HStrut, Line, Node, Text } from '../../../../scenery/js/imports.js';
+import { Color, HStrut, Line, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 import URConstants from '../URConstants.js';
-import MarkerNode from './MarkerNode.js';
+import MarkerNode, { MarkerNodeOptions } from './MarkerNode.js';
+import DoubleNumberLine from '../model/DoubleNumberLine.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Marker from '../model/Marker.js';
+
+type SelfOptions = {
+
+  // common to all axes (horizontal and vertical)
+  axisColor?: Color | string;
+  axisLineWidth?: number;
+
+  // horizontal axes
+  axisViewLength?: number; // view length of doubleNumberLine's range
+  arrowSize?: Dimension2; // size of arrows on axes
+  axisYSpacing?: number; // vertical spacing between top and bottom axes
+  labelFont?: PhetFont; // font for axis labels
+  labelColor?: Color | string; // color of axis labels
+  labelMaxWidth?: number;
+  labelXSpacing?: number; // horizontal spacing between axis and its label
+
+  // markers
+  majorMarkerLength?: number;
+  minorMarkerLength?: number;
+
+  // Optional position indicator (vertical line).
+  // Used in the Racing Lab screen to indicate the current position of the race car.
+  indicatorXProperty?: TReadOnlyProperty<number> | null; // position of vertical indicator line, in model coordinates
+  indicatorColor?: Color | string;
+};
+
+type DoubleNumberLineNodeOptions = SelfOptions;
 
 export default class DoubleNumberLineNode extends Node {
 
-  /**
-   * @param {DoubleNumberLine} doubleNumberLine
-   * @param {Object} [options]
-   */
-  constructor( doubleNumberLine, options ) {
+  public readonly axisViewLength: number;
+  private readonly markersParent: Node; // parent for markers, to maintain rendering order
+  public readonly outOfRangeXOffset: number; // position for things that are "out of range", halfway between arrows and labels
+  private readonly disposeDoubleNumberLineNode: () => void;
 
-    options = merge( {
+  public constructor( doubleNumberLine: DoubleNumberLine, providedOptions?: DoubleNumberLineNodeOptions ) {
 
-      // common to all axes (horizontal and vertical)
+    const options = optionize<DoubleNumberLineNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // DoubleNumberLineNodeOptions
       axisColor: 'black',
       axisLineWidth: 1.5,
-
-      // horizontal axes
-      axisViewLength: 1000, // {number} view length of doubleNumberLine's range
-      arrowSize: new Dimension2( 8, 8 ), // size of arrows on axes
-      axisYSpacing: 20, // {number} vertical spacing between top and bottom axes
-      labelFont: new PhetFont( 14 ), // {Font} for axis labels
-      labelColor: 'black', // {Color|string} color of axis labels
-      labelMaxWidth: 70, // i18n, determined empirically
-      labelXSpacing: 12, // horizontal spacing between axis and its label
-
-      // markers
+      axisViewLength: 1000,
+      arrowSize: new Dimension2( 8, 8 ),
+      axisYSpacing: 20,
+      labelFont: new PhetFont( 14 ),
+      labelColor: 'black',
+      labelMaxWidth: 70,
+      labelXSpacing: 12,
       majorMarkerLength: URConstants.MAJOR_MARKER_LENGTH,
       minorMarkerLength: URConstants.MINOR_MARKER_LENGTH,
-
-      // Optional position indicator (vertical line).
-      // Used in the Racing Lab screen to indicate the current position of the race car.
-      indicatorXProperty: null, // {Property.<number>|null} position of vertical indicator line, in model coordinates
+      indicatorXProperty: null,
       indicatorColor: 'green'
-
-    }, options );
+    }, providedOptions );
 
     super();
 
-    // @public (read-only)
     this.axisViewLength = options.axisViewLength;
 
     // All other nodes are positioned relative to this one
@@ -77,7 +99,9 @@ export default class DoubleNumberLineNode extends Node {
     this.addChild( numeratorAxisNode );
 
     // numerator axis label
-    this.addChild( new Text( doubleNumberLine.numeratorOptions.axisLabel, {
+    const numeratorAxisLabel = doubleNumberLine.numeratorOptions.axisLabel!;
+    assert && assert( numeratorAxisLabel );
+    this.addChild( new Text( numeratorAxisLabel, {
       font: options.labelFont,
       fill: options.labelColor,
       maxWidth: options.labelMaxWidth,
@@ -98,7 +122,9 @@ export default class DoubleNumberLineNode extends Node {
     this.addChild( denominatorAxisNode );
 
     // denominator axis label
-    this.addChild( new Text( doubleNumberLine.denominatorOptions.axisLabel, {
+    const denominatorAxisLabel = doubleNumberLine.denominatorOptions.axisLabel!;
+    assert && assert( denominatorAxisLabel );
+    this.addChild( new Text( denominatorAxisLabel, {
       font: options.labelFont,
       fill: options.labelColor,
       maxWidth: options.labelMaxWidth,
@@ -108,7 +134,7 @@ export default class DoubleNumberLineNode extends Node {
     } ) );
 
     // position indicator (vertical line)
-    let indicatorXObserver = null;
+    let indicatorXObserver: ( x: number ) => void;
     if ( options.indicatorXProperty ) {
       const indicatorNode = new Line( 0, 0, 0, options.axisYSpacing, {
         stroke: options.indicatorColor,
@@ -118,30 +144,26 @@ export default class DoubleNumberLineNode extends Node {
       } );
       this.addChild( indicatorNode );
 
-      indicatorXObserver = x => {
+      indicatorXObserver = ( x: number ) => {
         indicatorNode.centerX = doubleNumberLine.modelToViewNumerator( x, this.axisViewLength );
       };
       options.indicatorXProperty.link( indicatorXObserver ); // unlink in dispose
     }
 
-    // @private parent for markers, to maintain rendering order
     this.markersParent = new Node();
     this.addChild( this.markersParent );
 
     this.mutate( options );
 
-    // @public (read-only) position for things that are "out of range", halfway between arrows and labels
     this.outOfRangeXOffset = horizontalAxisLength + ( options.labelXSpacing / 2 );
 
     // when a Marker is added, add a MarkerNode
-    const markerAddedListener = marker => {
+    const markerAddedListener = ( marker: Marker ) => {
 
       // The model may contain markers that don't fit on the view scale
       if ( doubleNumberLine.markerIsInRange( marker ) ) {
         this.addMarkerNode( marker, {
           lineLength: marker.isMajor ? options.majorMarkerLength : options.minorMarkerLength,
-          numeratorOptions: doubleNumberLine.numeratorOptions,
-          denominatorOptions: doubleNumberLine.denominatorOptions,
           centerX: doubleNumberLine.modelToViewDenominator( marker.denominatorProperty.value, this.axisViewLength ),
           centerY: verticalAxis.centerY
         } );
@@ -150,7 +172,7 @@ export default class DoubleNumberLineNode extends Node {
     doubleNumberLine.markers.addItemAddedListener( markerAddedListener );
 
     // when a Marker is removed, remove the corresponding MarkerNode
-    const markerRemovedListener = marker => {
+    const markerRemovedListener = ( marker: Marker ) => {
       this.removeMarkerNode( marker );
     };
     doubleNumberLine.markers.addItemRemovedListener( markerRemovedListener );
@@ -158,7 +180,6 @@ export default class DoubleNumberLineNode extends Node {
     // Add a MarkNode for each initial Marker
     doubleNumberLine.markers.forEach( markerAddedListener.bind( this ) );
 
-    // @private
     this.disposeDoubleNumberLineNode = () => {
       doubleNumberLine.markers.removeItemAddedListener( markerAddedListener );
       doubleNumberLine.markers.removeItemRemovedListener( markerRemovedListener );
@@ -166,22 +187,15 @@ export default class DoubleNumberLineNode extends Node {
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeDoubleNumberLineNode();
     super.dispose();
   }
 
   /**
    * Adds a MarkerNode to the double number line.
-   * @param {Marker} marker
-   * @param {Object} [options] - MarkerNode constructor options
-   * @private
    */
-  addMarkerNode( marker, options ) {
+  private addMarkerNode( marker: Marker, options?: MarkerNodeOptions ): void {
     phet.log && phet.log( `addMarker ${marker}` );
     assert && assert( !this.getMarkerNode( marker ), `already have a MarkerNode for ${marker}` );
     const markerNode = new MarkerNode( marker, options );
@@ -190,10 +204,8 @@ export default class DoubleNumberLineNode extends Node {
 
   /**
    * Removes a MarkerNode from the double number line.
-   * @param {Marker} marker
-   * @private
    */
-  removeMarkerNode( marker ) {
+  private removeMarkerNode( marker: Marker ): void {
     phet.log && phet.log( `removeMarker ${marker}` );
 
     // find the node that is associated with the marker
@@ -208,13 +220,14 @@ export default class DoubleNumberLineNode extends Node {
 
   /**
    * Gets the MarkerNode that is associated with marker.
-   * @param {Marker} marker
-   * @returns {MarkerNode|null} - null if there is no MarkerNode associated with marker
-   * @private
+   * @returns null if there is no MarkerNode associated with marker
    */
-  getMarkerNode( marker ) {
-    let markerNode = null;
-    const markerNodes = this.markersParent.getChildren();
+  private getMarkerNode( marker: Marker ): MarkerNode | null {
+
+    const markerNodes = this.markersParent.getChildren() as MarkerNode[];
+    assert && assert( _.every( markerNodes, markerNode => markerNode instanceof MarkerNode ) );
+
+    let markerNode: MarkerNode | null = null;
     for ( let i = 0; i < markerNodes.length && !markerNode; i++ ) {
       if ( markerNodes[ i ].marker === marker ) {
         markerNode = markerNodes[ i ];

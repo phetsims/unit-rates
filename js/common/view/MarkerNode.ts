@@ -30,7 +30,7 @@ type SelfOptions = {
   denominatorOptions?: DenominatorOptions;
 };
 
-type MarkerNodeOptions = SelfOptions & NodeTranslationOptions;
+export type MarkerNodeOptions = SelfOptions & NodeTranslationOptions;
 
 export default class MarkerNode extends Node {
 
