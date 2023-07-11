@@ -7,13 +7,14 @@
  */
 
 import Utils from '../../../../dot/js/Utils.js';
-import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import ValueNode from '../../common/view/ValueNode.js';
 import ValuePanel from '../../common/view/ValuePanel.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 // constants
 const TIMER_FONT = new PhetFont( 16 );
@@ -21,27 +22,23 @@ const DECIMAL_PLACES = 2;
 
 export default class RaceTimerNode extends ValuePanel {
 
-  /**
-   * @param {Property.<number>} timeProperty
-   * @param {Property.<boolean>} expandedProperty
-   * @param {string} titleString
-   * @param {Object} [options]
-   */
-  constructor( timeProperty, expandedProperty, titleString, options ) {
+  public constructor( timeProperty: TReadOnlyProperty<number>,
+                      expandedProperty: BooleanProperty,
+                      titleString: string ) {
 
     // dispose not required, exists for sim lifetime
     const valueNode = new ValueNode( timeProperty, {
       font: TIMER_FONT,
-      valueToString: value => StringUtils.format( UnitRatesStrings.pattern_0value_1units,
+      valueToString: ( value: number ) => StringUtils.format( UnitRatesStrings.pattern_0value_1units,
         Utils.toFixed( value, DECIMAL_PLACES ), UnitRatesStrings.hours )
     } );
 
-    super( valueNode, merge( {
+    super( valueNode, {
       panelWidth: 132,
       expandedProperty: expandedProperty,
       titleString: titleString,
       titleFont: TIMER_FONT
-    }, options ) );
+    } );
   }
 }
 
