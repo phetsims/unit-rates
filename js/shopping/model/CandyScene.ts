@@ -8,22 +8,24 @@
  */
 
 import Range from '../../../../dot/js/Range.js';
-import merge from '../../../../phet-core/js/merge.js';
 import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
-import ShoppingScene from './ShoppingScene.js';
+import ShoppingScene, { ShoppingSceneOptions } from './ShoppingScene.js';
+import ShoppingItemData from './ShoppingItemData.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+
+type SelfOptions = EmptySelfOptions;
+type CandySceneOptions = SelfOptions & PickOptional<ShoppingSceneOptions, 'rate' | 'denominatorOptions'>;
 
 export default class CandyScene extends ShoppingScene {
 
-  /**
-   * @param {Object} itemData - data structure that describes a type of candy, see ShoppingItemData
-   * @param {Object} [options]
-   */
-  constructor( itemData, options ) {
+  public constructor( itemData: ShoppingItemData, providedOptions?: CandySceneOptions ) {
 
-    options = merge( {
+    const options = optionize<CandySceneOptions, SelfOptions, ShoppingSceneOptions>()( {
 
+      // ShoppingSceneOptions
       // range of denominator, in pounds
       fixedAxisRange: new Range( 0, 1.6 ),
 
@@ -35,21 +37,18 @@ export default class CandyScene extends ShoppingScene {
       // This hack was required by https://github.com/phetsims/unit-rates/issues/20
       amountOfQuestionUnits: UnitRatesStrings.poundsCapitalized,
 
-      // {*|null} nest options for the rate's denominator, defaults provided below
-      denominatorOptions: null,
+      denominatorOptions: {
+        axisLabel: UnitRatesStrings.pounds
+      },
 
       // Scale displays quantity in 'lbs' for Candy
       scaleQuantityIsDisplayed: true,
       scaleQuantityUnits: UnitRatesStrings.lbs,
 
       // Major markers have 1 decimal place in the denominator
-      isMajorMarker: ( numerator, denominator ) => ( URUtils.decimalPlaces( denominator ) <= 1 )
+      isMajorMarker: ( numerator: number, denominator: number ) => ( URUtils.decimalPlaces( denominator ) <= 1 )
 
-    }, options );
-
-    options.denominatorOptions = merge( {
-      axisLabel: UnitRatesStrings.pounds
-    }, options.denominatorOptions );
+    }, providedOptions );
 
     super( itemData, options );
   }

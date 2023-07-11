@@ -16,22 +16,28 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Marker from './Marker.js';
+import { Color } from '../../../../scenery/js/imports.js';
+import SunConstants from '../../../../sun/js/SunConstants.js';
 
 // Which of the axes has a fix (immutable) range
 const FixedAxisValues = [ 'numerator', 'denominator' ] as const;
-type FixedAxis = ( typeof FixedAxisValues )[number];
+export type FixedAxis = ( typeof FixedAxisValues )[number];
 
 export type AxisOptions = {
-  axisLabel: string; // label for the axis
+  axisLabel?: string; // label for the axis
   maxDecimals?: number; // maximum number of decimal places, integer >= 0
   maxDigits?: number; // maximum number of digits on the keypad
   trimZeros?: boolean; // whether to trim trailing zeros from decimal places
+  pickerColor?: Color | string; // color of NumberPicker associated with the axis
+  valueFormat?: string; // pattern used to display value for the axis
 };
 
 const DEFAULT_AXIS_OPTIONS = {
   maxDecimals: 1,
   maxDigits: 1,
-  trimZeros: false
+  trimZeros: false,
+  pickerColor: 'white',
+  valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER
 };
 
 type SelfOptions = {

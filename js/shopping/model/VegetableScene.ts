@@ -7,16 +7,18 @@
  */
 
 import unitRates from '../../unitRates.js';
-import ShoppingScene from './ShoppingScene.js';
+import ShoppingScene, { ShoppingSceneOptions } from './ShoppingScene.js';
+import ShoppingItemData from './ShoppingItemData.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+
+type SelfOptions = EmptySelfOptions;
+type VegetableSceneOptions = SelfOptions & PickOptional<ShoppingSceneOptions, 'rate' | 'denominatorOptions'>;
 
 export default class VegetableScene extends ShoppingScene {
 
-  /**
-   * @param {Object} itemData - data structure that describes a type of vegetable, see ShoppingItemData
-   * @param {Object} [options]
-   */
-  constructor( itemData, options ) {
-    super( itemData, options );
+  public constructor( itemData: ShoppingItemData, providedOptions?: VegetableSceneOptions ) {
+    super( itemData, providedOptions );
   }
 }
 

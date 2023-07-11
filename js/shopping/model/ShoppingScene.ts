@@ -17,9 +17,8 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import merge from '../../../../phet-core/js/merge.js';
 import SunConstants from '../../../../sun/js/SunConstants.js';
-import DoubleNumberLine from '../../common/model/DoubleNumberLine.js';
+import DoubleNumberLine, { AxisOptions, FixedAxis } from '../../common/model/DoubleNumberLine.js';
 import Marker from '../../common/model/Marker.js';
 import MarkerEditor from '../../common/model/MarkerEditor.js';
 import Rate from '../../common/model/Rate.js';
@@ -32,84 +31,112 @@ import Bag from './Bag.js';
 import Scale from './Scale.js';
 import Shelf from './Shelf.js';
 import ShoppingItem from './ShoppingItem.js';
-import ShoppingQuestionFactory from './ShoppingQuestionFactory.js';
+import ShoppingQuestionFactory, { DenominatorOptions, NumeratorOptions } from './ShoppingQuestionFactory.js';
+import ShoppingItemData from './ShoppingItemData.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import ShoppingQuestion from './ShoppingQuestion.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
-// constants
-const SHARED_OPTIONS = {
+const DEFAULT_NUMERATOR_OPTIONS = {
   maxDigits: 4, // {number} number of digits that can be entered via the keypad
   maxDecimals: 2, // {number} maximum number of decimal places
   pickerColor: 'black' // {Color|string} color of the number picker for the numerator in the Rate accordion box
 };
+const DEFAULT_DENOMINATOR_OPTIONS = DEFAULT_NUMERATOR_OPTIONS;
+
+type SelfOptions = {
+  rate?: Rate | null; // if null, will be initialized to unit rate
+  fixedAxis?: FixedAxis;
+  fixedAxisRange?: Range;
+  numeratorOptions?: AxisOptions; // options specific to the rate's numerator
+  denominatorOptions?: AxisOptions; // options specific to the rate's denominator
+  isMajorMarker?: ( numerator: number, denominator: number ) => boolean;
+
+  // questions
+  quantitySingularUnits?: string; // units for questions with singular quantities
+  quantityPluralUnits?: string;  // units for questions with plural quantities
+  amountOfQuestionUnits?: string;  // units used for "Apples for $10.00?" type questions
+
+  // scale
+  scaleQuantityIsDisplayed?: boolean; // whether quantity is displayed on the scale
+  scaleQuantityUnits?: string; // units for quantity on scale
+  bagsOpen?: boolean; // do bags open to display individual items?
+};
+
+export type ShoppingSceneOptions = SelfOptions;
 
 export default class ShoppingScene {
 
-  /**
-   * @param {Object} itemData - data structure that describes the item, see ShoppingItemData.
-   *   Using a data structure like this is an alternative to having a large number of constructor parameters.
-   * @param {Object} [options]
-   */
-  constructor( itemData, options ) {
+  public readonly rate: Rate;
+  public readonly scaleQuantityIsDisplayed: boolean;
+  public readonly doubleNumberLine: DoubleNumberLine;
+  public readonly markerEditor: MarkerEditor;
+  public readonly shelf: Shelf;
+  public readonly scale: Scale;
+  public readonly bags: Bag[];
+
+  // unpacked from ShoppingItemData
+  public readonly numberOfBags: number;
+  public readonly quantityPerBag: number;
+  public readonly singularName: string;
+  public readonly pluralName: string;
+  public readonly itemImage: HTMLImageElement;
+  public readonly bagImage: HTMLImageElement;
+
+  public readonly unitRateQuestion: ShoppingQuestion; // 'Unit Rate?' type question
+  public readonly questionSets: ShoppingQuestion[][];
+  private readonly questionSetsIndexProperty: NumberProperty; // index of the question set that's being shown
+  public readonly questionSetProperty: Property<ShoppingQuestion[]>; // the current set of questions
+
+  public readonly numeratorOptions: NumeratorOptions;
+  public readonly denominatorOptions: DenominatorOptions;
+  private createMarkerEnabled: boolean; // flag to disable creation of spurious markers during reset
+
+  protected constructor( itemData: ShoppingItemData, providedOptions?: ShoppingSceneOptions ) {
 
     // verify that itemData has all required properties
     assert && assert( itemData.questionQuantities.length > 1, 'more than 1 set of questions is required' );
 
     // default option values apply to Fruit items
-    options = merge( {
+    const options = optionize<ShoppingSceneOptions, StrictOmit<SelfOptions, 'numeratorOptions' | 'denominatorOptions'>>()( {
 
-      rate: null, // {Rate|null} if null, will be initialized to unit rate
-
-      // range of the denominator (quantity) is fixed
-      fixedAxis: 'denominator',
+      // ShoppingSceneOptions
+      rate: null, // will be initialized to unit rate
+      fixedAxis: 'denominator', // range of the denominator (quantity) is fixed
       fixedAxisRange: new Range( 0, 16 ),
+      isMajorMarker: ( numerator: number, denominator: number ) => Number.isInteger( denominator ),
+      quantitySingularUnits: itemData.singularName,
+      quantityPluralUnits: itemData.pluralName,
+      amountOfQuestionUnits: itemData.pluralName,
+      scaleQuantityIsDisplayed: false,
+      scaleQuantityUnits: '',
+      bagsOpen: false
+    }, providedOptions );
 
-      numeratorOptions: null, // {*} options specific to the rate's numerator, see below
-      denominatorOptions: null, // {*} options specific to the rate's denominator, see below
+    this.numeratorOptions = combineOptions<NumeratorOptions>( {
+      axisLabel: UnitRatesStrings.dollars,
+      valueFormat: UnitRatesStrings.pattern_0cost,
+      trimZeros: false
+    }, DEFAULT_NUMERATOR_OPTIONS, options.numeratorOptions );
 
-      // questions
-      quantitySingularUnits: itemData.singularName, // {string} units for questions with singular quantities
-      quantityPluralUnits: itemData.pluralName,  // {string} units for questions with plural quantities
-      amountOfQuestionUnits: itemData.pluralName,  // {string} units used for "Apples for $10.00?" type questions
+    this.denominatorOptions = combineOptions<DenominatorOptions>( {
+      axisLabel: itemData.pluralName,
+      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER,
+      trimZeros: true
+    }, DEFAULT_DENOMINATOR_OPTIONS, options.denominatorOptions );
 
-      // scale
-      scaleQuantityIsDisplayed: false, // {boolean} whether quantity is displayed on the scale
-      scaleQuantityUnits: '', // {string} units for quantity on scale
-      bagsOpen: false, // {boolean} do bags open to display individual items?
-
-      // Major markers have integer denominators
-      isMajorMarker: ( numerator, denominator ) => Number.isInteger( denominator )
-
-    }, options );
-
-    // @public (read-only) options specific to the rate's numerator
-    this.numeratorOptions = merge( {
-      axisLabel: UnitRatesStrings.dollars, // {string} label for the axis on the double number line
-      valueFormat: UnitRatesStrings.pattern_0cost, // {string} format with placeholder for value
-      trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
-    }, SHARED_OPTIONS, options.numeratorOptions );
-
-    // @public (read-only) options specific to the rate's denominator
-    this.denominatorOptions = merge( {
-      axisLabel: itemData.pluralName, // {string} label for the axis on the double number line
-      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER, // {string} format with placeholder for value
-      trimZeros: true // {boolean} whether to trim trailing zeros from decimal places
-    }, SHARED_OPTIONS, options.denominatorOptions );
-
-    // @public {Rate}
     this.rate = options.rate || Rate.withUnitRate( itemData.unitRate );
 
-    // @public (read-only) unpack itemData
+    // unpack itemData: ShoppingItemData
     this.numberOfBags = itemData.numberOfBags;
     this.quantityPerBag = itemData.quantityPerBag;
     this.singularName = itemData.singularName;
     this.pluralName = itemData.pluralName;
     this.itemImage = itemData.itemImage;
-    this.itemRowOverlap = itemData.itemRowOverlap;
     this.bagImage = itemData.bagImage;
 
-    // @public (read-only) unpack options
     this.scaleQuantityIsDisplayed = options.scaleQuantityIsDisplayed;
 
-    // @public
     this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
       fixedAxis: options.fixedAxis,
       fixedAxisRange: options.fixedAxisRange,
@@ -118,7 +145,6 @@ export default class ShoppingScene {
       isMajorMarker: options.isMajorMarker
     } );
 
-    // @public
     this.markerEditor = new MarkerEditor( this.rate.unitRateProperty, {
       numeratorMaxDecimals: this.numeratorOptions.maxDecimals,
       denominatorMaxDecimals: this.denominatorOptions.maxDecimals
@@ -136,33 +162,28 @@ export default class ShoppingScene {
       URConstants.SHOPPING_ITEM_IMAGE_SCALE * this.itemImage.width,
       URConstants.SHOPPING_ITEM_IMAGE_SCALE * this.itemImage.height );
 
-    // @public
     this.shelf = new Shelf( {
       position: new Vector2( 512, 560 ),
       numberOfBags: this.numberOfBags,
       bagSize: bagSize,
       bagRowYOffset: ( options.bagsOpen ? 0 : 10 ),
       numberOfItems: this.numberOfBags * this.quantityPerBag,
-      itemSize: itemSize,
-      itemRowOverlap: this.itemRowOverlap
+      itemSize: itemSize
     } );
 
-    // @public
     this.scale = new Scale( this.rate.unitRateProperty, {
       position: this.shelf.position.minusXY( 0, 220 ), // centered above the shelf
       numberOfBags: this.numberOfBags,
       bagSize: bagSize,
       numberOfItems: this.numberOfBags * this.quantityPerBag,
       itemSize: itemSize,
-      itemRowOverlap: this.itemRowOverlap,
       quantityPerBag: this.quantityPerBag,
       quantityUnits: options.scaleQuantityUnits
     } );
 
     // The marker that corresponds to what's currently on the scale
-    let scaleMarker = null;
+    let scaleMarker: Marker | null = null;
 
-    // @private flag to disable creation of spurious markers during reset
     this.createMarkerEnabled = true;
 
     // Create a marker when what's on the scale changes
@@ -185,24 +206,32 @@ export default class ShoppingScene {
       }
     } );
 
-    // @public {ShoppingQuestion} 'Unit Rate?'
-    this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion( this.rate.unitRateProperty.value,
-      options.quantitySingularUnits, this.numeratorOptions, this.denominatorOptions );
+    this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion(
+      this.rate.unitRateProperty.value,
+      options.quantitySingularUnits,
+      this.numeratorOptions,
+      this.denominatorOptions
+    );
 
-    // @private {ShoppingQuestion[][]} instantiate ShoppingQuestions, grouped into sets
-    this.questionSets = ShoppingQuestionFactory.createQuestionSets( itemData.questionQuantities, this.rate.unitRateProperty.value,
-      options.quantitySingularUnits, options.quantityPluralUnits, options.amountOfQuestionUnits,
-      this.numeratorOptions, this.denominatorOptions );
+    this.questionSets = ShoppingQuestionFactory.createQuestionSets(
+      itemData.questionQuantities,
+      this.rate.unitRateProperty.value,
+      options.quantitySingularUnits,
+      options.quantityPluralUnits,
+      options.amountOfQuestionUnits,
+      this.numeratorOptions,
+      this.denominatorOptions
+    );
 
     // Randomize the order of the question sets
     if ( URQueryParameters.randomEnabled ) {
       this.questionSets = dotRandom.shuffle( this.questionSets );
     }
 
-    // @private index of the question set that's being shown
-    this.questionSetsIndexProperty = new NumberProperty( 0 );
+    this.questionSetsIndexProperty = new NumberProperty( 0, {
+      numberType: 'Integer'
+    } );
 
-    // @public (read-only) {Property.<ShoppingQuestion[]>} the current set of questions
     this.questionSetProperty = new Property( this.questionSets[ this.questionSetsIndexProperty.value ] );
 
     this.questionSetsIndexProperty.lazyLink( questionSetsIndex => { // no unlink required
@@ -214,11 +243,8 @@ export default class ShoppingScene {
       this.markerEditor.reset();
     } );
 
-    /**
-     * When a question is answered correctly, create a corresponding marker on the double number line.
-     * @param {ShoppingQuestion} question
-     */
-    const questionCorrectListener = question => {
+    // When a question is answered correctly, create a corresponding marker on the double number line.
+    const questionCorrectListener = ( question: ShoppingQuestion ) => {
       const marker = new Marker( question.numerator, question.denominator, 'question', {
         isMajor: true, // all question markers are major, per the design document
         color: URColors.questionMarker,
@@ -233,7 +259,7 @@ export default class ShoppingScene {
       } );
     } );
 
-    // @public (read-only) create bags and items
+    // Create bags and items
     this.bags = [];
     for ( let i = 0; i < this.numberOfBags; i++ ) {
 
@@ -271,10 +297,9 @@ export default class ShoppingScene {
 
   /**
    * Updates time-dependent parts of the model.
-   * @param {number} dt - time since the previous step, in seconds
-   * @public
+   * @param dt - time since the previous step, in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
 
     // animate bags
     for ( let i = 0; i < this.bags.length; i++ ) {
@@ -290,8 +315,7 @@ export default class ShoppingScene {
     }
   }
 
-  // @public
-  reset() {
+  public reset(): void {
 
     this.rate.reset();
 
@@ -312,9 +336,8 @@ export default class ShoppingScene {
   /**
    * Resets the shelf and scale.
    * All items are put back into bags, and all bags are returned to the shelf.
-   * @public
    */
-  resetShelfAndScale() {
+  public resetShelfAndScale(): void {
 
     // clear all cells on the shelf
     this.shelf.reset();
@@ -345,9 +368,8 @@ export default class ShoppingScene {
   /**
    * Gets the next set of questions.
    * While the order of the sets is random, we cycle through the sets in the same order each time.
-   * @public
    */
-  nextQuestionSet() {
+  public nextQuestionSet(): void {
 
     assert && assert( this.questionSets.length > 1, 'this implementation requires more than 1 question set' );
 

@@ -15,8 +15,8 @@ import ShoppingQuestion from './ShoppingQuestion.js';
 import { AxisOptions } from '../../common/model/DoubleNumberLine.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
-type NumeratorOptions = WithRequired<AxisOptions, 'maxDecimals' | 'trimZeros'>;
-type DenominatorOptions = NumeratorOptions;
+export type NumeratorOptions = WithRequired<AxisOptions, 'maxDecimals' | 'trimZeros'>;
+export type DenominatorOptions = NumeratorOptions;
 
 const ShoppingQuestionFactory = {
 

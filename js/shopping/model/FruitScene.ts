@@ -6,23 +6,24 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
-import ShoppingScene from './ShoppingScene.js';
+import ShoppingScene, { ShoppingSceneOptions } from './ShoppingScene.js';
+import ShoppingItemData from './ShoppingItemData.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+
+type SelfOptions = EmptySelfOptions;
+type FruitSceneOptions = SelfOptions & PickOptional<ShoppingSceneOptions, 'rate' | 'denominatorOptions'>;
 
 export default class FruitScene extends ShoppingScene {
 
-  /**
-   * @param {Object} itemData - data structure that describes a type of vegetable, see ShoppingItemData
-   * @param {Object} [options]
-   */
-  constructor( itemData, options ) {
+  public constructor( itemData: ShoppingItemData, providedOptions?: FruitSceneOptions ) {
 
-    options = merge( {
+    const options = optionize<FruitSceneOptions, SelfOptions, ShoppingSceneOptions>()( {
 
-      // Fruit bags open when placed on the scale
-      bagsOpen: true
-    }, options );
+      // ShoppingSceneOptions
+      bagsOpen: true // Fruit bags open when placed on the scale
+    }, providedOptions );
 
     super( itemData, options );
   }
