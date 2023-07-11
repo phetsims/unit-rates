@@ -10,52 +10,77 @@ import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Line, Node, Text } from '../../../../scenery/js/imports.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import { Color, Line, Node, NodeTranslationOptions, Text } from '../../../../scenery/js/imports.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import URConstants from '../URConstants.js';
+import Rate from '../model/Rate.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import { optionize4 } from '../../../../phet-core/js/optionize.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 // If the Rate accordion box appears to change size when switching categories, increase this value. Determined empirically.
 const MIN_FRACTION_LINE_LENGTH = 115;
 
+type SelfOptions = {
+  titleStringProperty?: TReadOnlyProperty<string>;
+  unitsFont?: PhetFont;
+  unitsMaxWidth?: number;
+  numeratorRange?: Range;
+  denominatorRange?: Range;
+  numeratorUnits?: string;
+  denominatorUnits?: string;
+  pickerFont?: PhetFont;
+  numeratorPickerColor?: Color | string;
+  denominatorPickerColor?: Color | string;
+  numeratorPickerIncrementFunction?: ( value: number ) => number;
+  numeratorPickerDecrementFunction?: ( value: number ) => number;
+  denominatorPickerIncrementFunction?: ( value: number ) => number;
+  denominatorPickerDecrementFunction?: ( value: number ) => number;
+  numeratorDecimals?: number;
+  denominatorDecimals?: number;
+  xSpacing?: number;
+  ySpacing?: number;
+};
+
+export type RateAccordionBoxOptions = SelfOptions & NodeTranslationOptions & PickRequired<AccordionBoxOptions, 'expandedProperty'>;
+
 export default class RateAccordionBox extends AccordionBox {
 
-  /**
-   * @param {Rate} rate
-   * @param {Object} [options]
-   */
-  constructor( rate, options ) {
+  private readonly disposeRateAccordionBox: () => void;
 
-    options = merge( {}, URConstants.ACCORDION_BOX_OPTIONS, {
+  public constructor( rate: Rate, providedOptions: RateAccordionBoxOptions ) {
 
-      // AccordionBox options
-      contentXMargin: 20,
-      contentYMargin: 24,
-      contentYSpacing: 20,
+    const options = optionize4<RateAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()(
+      {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
-      // RateAccordionBox options
-      titleString: UnitRatesStrings.rateStringProperty,
-      unitsFont: new PhetFont( 16 ),
-      unitsMaxWidth: 60, // i18n, determined empirically
-      numeratorRange: new Range( 0, 10 ),
-      denominatorRange: new Range( 0, 10 ),
-      numeratorUnits: '',
-      denominatorUnits: '',
-      pickerFont: new PhetFont( 24 ),
-      numeratorPickerColor: 'black',
-      denominatorPickerColor: 'black',
-      numeratorPickerIncrementFunction: value => value + 1,
-      numeratorPickerDecrementFunction: value => value - 1,
-      denominatorPickerIncrementFunction: value => value + 1,
-      denominatorPickerDecrementFunction: value => value - 1,
-      numeratorDecimals: 0,
-      denominatorDecimals: 0,
-      xSpacing: 10,
-      ySpacing: 8
+        // RateAccordionBox options
+        titleStringProperty: UnitRatesStrings.rateStringProperty,
+        unitsFont: new PhetFont( 16 ),
+        unitsMaxWidth: 60, // i18n, determined empirically
+        numeratorRange: new Range( 0, 10 ),
+        denominatorRange: new Range( 0, 10 ),
+        numeratorUnits: '',
+        denominatorUnits: '',
+        pickerFont: new PhetFont( 24 ),
+        numeratorPickerColor: 'black',
+        denominatorPickerColor: 'black',
+        numeratorPickerIncrementFunction: ( value: number ) => value + 1,
+        numeratorPickerDecrementFunction: ( value: number ) => value - 1,
+        denominatorPickerIncrementFunction: ( value: number ) => value + 1,
+        denominatorPickerDecrementFunction: ( value: number ) => value - 1,
+        numeratorDecimals: 0,
+        denominatorDecimals: 0,
+        xSpacing: 10,
+        ySpacing: 8,
 
-    }, options );
+        // AccordionBoxOptions
+        contentXMargin: 20,
+        contentYMargin: 24,
+        contentYSpacing: 20
+      }, providedOptions );
 
     assert && assert( options.numeratorRange.contains( rate.numeratorProperty.value ),
       `numerator out of range: ${rate.numeratorProperty.value}` );
@@ -63,7 +88,7 @@ export default class RateAccordionBox extends AccordionBox {
       `denominator out of range: ${rate.denominatorProperty.value}` );
 
     assert && assert( !options.titleNode, 'creates its own title node' );
-    options.titleNode = new Text( options.titleString, {
+    options.titleNode = new Text( options.titleStringProperty, {
       font: URConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 100  // i18n, determined empirically
     } );
@@ -127,18 +152,13 @@ export default class RateAccordionBox extends AccordionBox {
 
     super( contentNode, options );
 
-    // @private
     this.disposeRateAccordionBox = () => {
       numeratorPicker.dispose();
       denominatorPicker.dispose();
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeRateAccordionBox();
     super.dispose();
   }
