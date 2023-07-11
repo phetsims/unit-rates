@@ -6,24 +6,27 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import { Image, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
+import ShoppingCategory from '../model/ShoppingCategory.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
-export default class ShoppingCategoryRadioButtonGroup extends RectangularRadioButtonGroup {
+type SelfOptions = EmptySelfOptions;
 
-  /**
-   * @param {ShoppingCategory[]} categories
-   * @param {Property.<ShoppingCategory>} categoryProperty
-   * @param {Object} [options]
-   */
-  constructor( categories, categoryProperty, options ) {
+type ShoppingCategoryRadioButtonGroupOptions = SelfOptions & NodeTranslationOptions;
 
-    options = merge( {
+export default class ShoppingCategoryRadioButtonGroup extends RectangularRadioButtonGroup<ShoppingCategory> {
 
-      // RectangularRadioButtonGroup options
+  public constructor( categories: ShoppingCategory[],
+                      categoryProperty: Property<ShoppingCategory>,
+                      providedOptions?: ShoppingCategoryRadioButtonGroupOptions ) {
+
+    const options = optionize<ShoppingCategoryRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
+
+      // RectangularRadioButtonGroupOptions
       orientation: 'horizontal',
       spacing: 12,
       radioButtonOptions: {
@@ -31,18 +34,17 @@ export default class ShoppingCategoryRadioButtonGroup extends RectangularRadioBu
         xMargin: 5,
         yMargin: 5
       }
-    }, options );
+    }, providedOptions );
 
     // describe a radio button for each category
-    const contentArray = [];
-    categories.forEach( category => {
-      contentArray.push( {
+    const items: RectangularRadioButtonGroupItem<ShoppingCategory>[] = categories.map( category => {
+      return {
         value: category,
         createNode: () => new Image( category.image, { scale: 0.5 } )
-      } );
+      };
     } );
 
-    super( categoryProperty, contentArray, options );
+    super( categoryProperty, items, options );
   }
 }
 
