@@ -6,9 +6,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import ResetButton from '../../../../scenery-phet/js/buttons/ResetButton.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
@@ -19,23 +18,35 @@ import RowOfMovablesNode from './RowOfMovablesNode.js';
 import ScaleNode from './ScaleNode.js';
 import ShelfNode from './ShelfNode.js';
 import ShoppingItemNode from './ShoppingItemNode.js';
+import ShoppingScene from '../model/ShoppingScene.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
+import ShoppingViewProperties from './ShoppingViewProperties.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
 const BAG_ROW_STROKE = 'green';
 const ITEM_ROW_STROKE = 'blue';
 
-export default class BaseShoppingSceneNode extends Node {
-  /**
-   * @param {ShoppingScene} shoppingScene
-   * @param {Bounds2} layoutBounds
-   * @param {KeypadLayer} keypadLayer
-   * @param {ShoppingViewProperties} viewProperties
-   * @param {Object} [options]
-   */
-  constructor( shoppingScene, layoutBounds, keypadLayer, viewProperties, options ) {
+type SelfOptions = {
+  extraCostDecimalVisible?: boolean; // Does the scale show an extra decimal place for cost?
+};
 
-    options = merge( {
-      extraCostDecimalVisible: false // {boolean} does the scale show an extra decimal place for cost?
-    }, options );
+type BaseShoppingSceneNodeOptions = SelfOptions;
+
+export default class BaseShoppingSceneNode extends Node {
+
+  private readonly dragLayer: Node;
+  protected readonly doubleNumberLineAccordionBox: Node; // for layout in subtypes
+  private readonly disposeBaseShoppingSceneNode: () => void;
+
+  public constructor( shoppingScene: ShoppingScene, layoutBounds: Bounds2, keypadLayer: KeypadLayer,
+                      viewProperties: ShoppingViewProperties, providedOptions?: BaseShoppingSceneNodeOptions ) {
+
+    const options = optionize<BaseShoppingSceneNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
+      extraCostDecimalVisible: false
+    }, providedOptions );
 
     // Double number line, dispose required
     const doubleNumberLineAccordionBox = new DoubleNumberLineAccordionBox( shoppingScene.doubleNumberLine, shoppingScene.markerEditor, keypadLayer, {
@@ -55,6 +66,12 @@ export default class BaseShoppingSceneNode extends Node {
       quantityIsDisplayed: shoppingScene.scaleQuantityIsDisplayed
     } );
 
+    // layers for bags and items
+    const dragLayer = new Node(); // all Nodes are in this layer while being dragged
+    const bagLayer = new Node();  // the row of bags
+    const frontItemLayer = new Node(); // the front row of items
+    const backItemLayer = new Node(); // the back row of items
+
     // button that resets the shelf to its initial state
     const resetShelfButton = new ResetButton( {
       listener: () => {
@@ -69,20 +86,14 @@ export default class BaseShoppingSceneNode extends Node {
     } );
 
     // Disable the button when all bags are on the shelf
-    const numberOfBagsObserver = numberOfBags => {
+    const numberOfBagsObserver = ( numberOfBags: number ) => {
       resetShelfButton.enabled = ( numberOfBags !== shoppingScene.numberOfBags );
     };
     shoppingScene.shelf.numberOfBagsProperty.link( numberOfBagsObserver ); // unlink in dispose
 
-    // layers for bags and items
-    const dragLayer = new Node(); // all Nodes are in this layer while being dragged
-    const bagLayer = new Node();  // the row of bags
-    const frontItemLayer = new Node(); // the front row of items
-    const backItemLayer = new Node(); // the back row of items
-
     // bags and items, dispose required
-    const bagNodes = [];
-    const itemNodes = [];
+    const bagNodes: BagNode[] = [];
+    const itemNodes: ShoppingItemNode[] = [];
     let bagsOpen = false;
     shoppingScene.bags.forEach( bag => {
 
@@ -104,7 +115,6 @@ export default class BaseShoppingSceneNode extends Node {
       }
     } );
 
-    assert && assert( !options.children, 'decoration not supported' );
     options.children = [
       doubleNumberLineAccordionBox, scaleNode, shelfNode, resetShelfButton,
       bagLayer, backItemLayer, frontItemLayer, dragLayer
@@ -128,7 +138,6 @@ export default class BaseShoppingSceneNode extends Node {
       }
     }
 
-    // @private
     this.disposeBaseShoppingSceneNode = () => {
 
       shoppingScene.shelf.numberOfBagsProperty.unlink( numberOfBagsObserver );
@@ -140,18 +149,11 @@ export default class BaseShoppingSceneNode extends Node {
       itemNodes.forEach( node => node.dispose() );
     };
 
-    // @private
     this.dragLayer = dragLayer;
-
-    // @protected for layout in subtypes
     this.doubleNumberLineAccordionBox = doubleNumberLineAccordionBox;
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeBaseShoppingSceneNode();
     super.dispose();
   }

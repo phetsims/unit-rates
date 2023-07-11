@@ -17,9 +17,9 @@ export default class ShoppingItemNode extends Image {
    * @param {ShoppingItem} item
    * @param {Shelf} shelf
    * @param {Scale} scale
-   * @param {Node} frontItemLayer
-   * @param {Node} backItemLayer
-   * @param {Node} dragLayer
+   * @param {scenery.Node} frontItemLayer
+   * @param {scenery.Node} backItemLayer
+   * @param {scenery.Node} dragLayer
    */
   constructor( item, shelf, scale, frontItemLayer, backItemLayer, dragLayer ) {
 
