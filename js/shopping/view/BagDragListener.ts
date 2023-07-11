@@ -6,34 +6,28 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import { DragListener } from '../../../../scenery/js/imports.js';
+import { DragListener, Node } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 import Scale from '../model/Scale.js';
+import BagNode from './BagNode.js';
+import Bag from '../model/Bag.js';
+import Shelf from '../model/Shelf.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import ShoppingContainer from '../model/ShoppingContainer.js';
 
 export default class BagDragListener extends DragListener {
 
-  /**
-   * @param {BagNode} bagNode
-   * @param {Bag} bag
-   * @param {Shelf} shelf
-   * @param {Scale} scale
-   * @param {Node} bagLayer
-   * @param {Node} dragLayer
-   */
-  constructor( bagNode, bag, shelf, scale, bagLayer, dragLayer ) {
+  public constructor( bagNode: BagNode, bag: Bag, shelf: Shelf, scale: Scale, bagLayer: Node, dragLayer: Node ) {
 
-    // {Vector2} where the drag started relative to the bag's position, in parent view coordinates
-    let startDragOffset;
+    // where the drag started relative to the bag's position, in parent view coordinates
+    let startDragOffset: Vector2;
 
     super( {
 
       // allow touch swipes across a bag to pick it up
       allowTouchSnag: true,
 
-      /**
-       * Called when a drag sequence starts.
-       * @param {SceneryEvent} event
-       */
+      // Called when a drag sequence starts.
       start: event => {
 
         // prerequisites for the drag sequence
@@ -61,19 +55,14 @@ export default class BagDragListener extends DragListener {
         startDragOffset = bagNode.globalToParentPoint( event.pointer.point ).minus( bag.positionProperty.value );
       },
 
-      /**
-       * Called when the pointer moves during a drag sequence.
-       * @param {SceneryEvent} event
-       */
+      // Called when the pointer moves during a drag sequence.
       drag: event => {
 
         // move the bag immediately while dragging
         bag.moveTo( bagNode.globalToParentPoint( event.pointer.point ).minus( startDragOffset ) );
       },
 
-      /**
-       * Called when a drag sequence ends.
-       */
+      // Called when a drag sequence ends.
       end: () => {
 
         // return Node to bag layer
@@ -96,11 +85,8 @@ export default class BagDragListener extends DragListener {
 /**
  * Animates a bag to the closest unoccupied cell in a container.
  * The animation will change course immediately if the specified cell becomes occupied.
- * @param {Bag} bag
- * @param {ShoppingContainer} container
- * @private
  */
-function animateBagToContainer( bag, container ) {
+function animateBagToContainer( bag: Bag, container: ShoppingContainer ): void {
 
   const cellIndex = container.bagRow.getClosestUnoccupiedCell( bag.positionProperty.value );
   assert && assert( cellIndex !== -1, 'container is full' );
@@ -151,12 +137,11 @@ function animateBagToContainer( bag, container ) {
 
 /**
  * Replaces a bag with individual items on the scale.
- * @param {Bag} bag
- * @param {Scale} scale
  */
-function replaceBagWithItems( bag, scale ) {
+function replaceBagWithItems( bag: Bag, scale: Scale ): void {
 
-  assert && assert( scale instanceof Scale );
+  const items = bag.items!;
+  assert && assert( items );
 
   // replace bag with items
   bag.visibleProperty.value = false;
@@ -164,13 +149,13 @@ function replaceBagWithItems( bag, scale ) {
   // items will be placed in cells that are closest to the bag's position
   const bagPosition = bag.positionProperty.value;
 
-  for ( let i = 0; i < bag.items.length; i++ ) {
+  for ( let i = 0; i < items.length; i++ ) {
 
     // Update scale quantity only for the last item.
     // This effectively makes the addition of items atomic, resulting in only 1 marker created.
-    scale.quantityUpdateEnabled = ( i === bag.items.length - 1 );
+    scale.quantityUpdateEnabled = ( i === items.length - 1 );
 
-    const item = bag.items[ i ];
+    const item = items[ i ];
 
     // find closest cells in front and back rows
     const backCellIndex = scale.backItemRow.getClosestUnoccupiedCell( bagPosition );
