@@ -30,7 +30,7 @@ export default class ShoppingLabModel extends ShoppingModel {
 
         // fruits
         new ShoppingCategory( apple_png, [
-          new FruitScene( ShoppingItemData.Fruit.APPLES, {
+          new FruitScene( ShoppingItemData.APPLES, {
             rate: new Rate( 1, 1 ),
             denominatorOptions: {
               pickerColor: 'red'
@@ -40,7 +40,7 @@ export default class ShoppingLabModel extends ShoppingModel {
 
         // vegetables
         new ShoppingCategory( carrot_png, [
-          new VegetableScene( ShoppingItemData.Vegetable.CARROTS, {
+          new VegetableScene( ShoppingItemData.CARROTS, {
             rate: new Rate( 3, 4 ),
             denominatorOptions: {
               pickerColor: 'orange'
@@ -50,7 +50,7 @@ export default class ShoppingLabModel extends ShoppingModel {
 
         // candies
         new ShoppingCategory( purpleCandy_png, [
-          new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY, {
+          new CandyScene( ShoppingItemData.PURPLE_CANDY, {
             rate: new Rate( 3, 2 ),
             denominatorOptions: {
               pickerColor: 'purple'

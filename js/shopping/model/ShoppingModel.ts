@@ -15,11 +15,11 @@ import unitRates from '../../unitRates.js';
 import CandyScene from './CandyScene.js';
 import FruitScene from './FruitScene.js';
 import ShoppingCategory from './ShoppingCategory.js';
-import ShoppingItemData from './ShoppingItemData.js';
 import VegetableScene from './VegetableScene.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TModel from '../../../../joist/js/TModel.js';
+import ShoppingItemData from './ShoppingItemData.js';
 
 type SelfOptions = {
   categoryIndex?: number; // index of the category that is initially selected
@@ -46,26 +46,26 @@ export default class ShoppingModel implements TModel {
 
       // fruits
       new ShoppingCategory( apple_png, [
-        new FruitScene( ShoppingItemData.Fruit.APPLES ),
-        new FruitScene( ShoppingItemData.Fruit.LEMONS ),
-        new FruitScene( ShoppingItemData.Fruit.ORANGES ),
-        new FruitScene( ShoppingItemData.Fruit.PEARS )
+        new FruitScene( ShoppingItemData.APPLES ),
+        new FruitScene( ShoppingItemData.LEMONS ),
+        new FruitScene( ShoppingItemData.ORANGES ),
+        new FruitScene( ShoppingItemData.PEARS )
       ] ),
 
       // vegetables
       new ShoppingCategory( carrot_png, [
-        new VegetableScene( ShoppingItemData.Vegetable.CARROTS ),
-        new VegetableScene( ShoppingItemData.Vegetable.CUCUMBERS ),
-        new VegetableScene( ShoppingItemData.Vegetable.POTATOES ),
-        new VegetableScene( ShoppingItemData.Vegetable.TOMATOES )
+        new VegetableScene( ShoppingItemData.CARROTS ),
+        new VegetableScene( ShoppingItemData.CUCUMBERS ),
+        new VegetableScene( ShoppingItemData.POTATOES ),
+        new VegetableScene( ShoppingItemData.TOMATOES )
       ] ),
 
       // candies
       new ShoppingCategory( purpleCandy_png, [
-        new CandyScene( ShoppingItemData.Candy.PURPLE_CANDY ),
-        new CandyScene( ShoppingItemData.Candy.RED_CANDY ),
-        new CandyScene( ShoppingItemData.Candy.GREEN_CANDY ),
-        new CandyScene( ShoppingItemData.Candy.BLUE_CANDY )
+        new CandyScene( ShoppingItemData.PURPLE_CANDY ),
+        new CandyScene( ShoppingItemData.RED_CANDY ),
+        new CandyScene( ShoppingItemData.GREEN_CANDY ),
+        new CandyScene( ShoppingItemData.BLUE_CANDY )
       ] )
     ];
 

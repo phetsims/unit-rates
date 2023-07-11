@@ -32,7 +32,6 @@ import Bag from './Bag.js';
 import Scale from './Scale.js';
 import Shelf from './Shelf.js';
 import ShoppingItem from './ShoppingItem.js';
-import ShoppingItemData from './ShoppingItemData.js';
 import ShoppingQuestionFactory from './ShoppingQuestionFactory.js';
 
 // constants
@@ -52,7 +51,6 @@ export default class ShoppingScene {
   constructor( itemData, options ) {
 
     // verify that itemData has all required properties
-    assert && ShoppingItemData.assertIsItemData( itemData );
     assert && assert( itemData.questionQuantities.length > 1, 'more than 1 set of questions is required' );
 
     // default option values apply to Fruit items

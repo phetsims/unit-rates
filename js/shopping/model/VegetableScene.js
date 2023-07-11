@@ -7,7 +7,6 @@
  */
 
 import unitRates from '../../unitRates.js';
-import ShoppingItemData from './ShoppingItemData.js';
 import ShoppingScene from './ShoppingScene.js';
 
 export default class VegetableScene extends ShoppingScene {
@@ -17,7 +16,6 @@ export default class VegetableScene extends ShoppingScene {
    * @param {Object} [options]
    */
   constructor( itemData, options ) {
-    assert && assert( _.includes( _.values( ShoppingItemData.Vegetable ), itemData ), 'itemData is not a vegetable' );
     super( itemData, options );
   }
 }

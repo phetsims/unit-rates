@@ -8,7 +8,6 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import unitRates from '../../unitRates.js';
-import ShoppingItemData from './ShoppingItemData.js';
 import ShoppingScene from './ShoppingScene.js';
 
 export default class FruitScene extends ShoppingScene {
@@ -18,8 +17,6 @@ export default class FruitScene extends ShoppingScene {
    * @param {Object} [options]
    */
   constructor( itemData, options ) {
-
-    assert && assert( _.includes( _.values( ShoppingItemData.Fruit ), itemData ), 'itemData is not a fruit' );
 
     options = merge( {
 
