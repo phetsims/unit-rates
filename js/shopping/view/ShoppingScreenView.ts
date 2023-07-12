@@ -26,10 +26,10 @@ type SelfOptions = {
 
   // Creates a Node for a shopping category.
   createCategoryNode?: ( category: ShoppingCategory,
-                        categoryProperty: Property<ShoppingCategory>,
-                        layoutBounds: Bounds2,
-                        keypadLayer: KeypadLayer,
-                        viewProperties: ShoppingViewProperties ) => ShoppingCategoryNode;
+                         categoryProperty: Property<ShoppingCategory>,
+                         layoutBounds: Bounds2,
+                         keypadLayer: KeypadLayer,
+                         viewProperties: ShoppingViewProperties ) => Node;
 };
 
 type ShoppingScreenViewOptions = SelfOptions;
@@ -41,11 +41,7 @@ export default class ShoppingScreenView extends ScreenView {
     const options = optionize<ShoppingScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
 
       // SelfOptions
-      createCategoryNode: ( category: ShoppingCategory,
-                           categoryProperty: Property<ShoppingCategory>,
-                           layoutBounds: Bounds2,
-                           keypadLayer: KeypadLayer,
-                           viewProperties: ShoppingViewProperties ) =>
+      createCategoryNode: ( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ) =>
         new ShoppingCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ),
 
       // ScreenViewOptions
@@ -57,26 +53,19 @@ export default class ShoppingScreenView extends ScreenView {
     // Properties that are specific to the view
     const viewProperties = new ShoppingViewProperties();
 
-    // parent for everything expect the keypad
-    const playAreaLayer = new Node();
-    this.addChild( playAreaLayer );
-
     // separate layer for model keypad
     const keypadLayer = new KeypadLayer();
     this.addChild( keypadLayer );
 
-    // create the view for each category
-    model.categories.forEach( category => {
-      const categoryNode = options.createCategoryNode( category, model.categoryProperty, this.layoutBounds, keypadLayer, viewProperties );
-      playAreaLayer.addChild( categoryNode );
-    } );
+    // Create the view for each category
+    const categoryNodes = model.categories.map( category =>
+      options.createCategoryNode( category, model.categoryProperty, this.layoutBounds, keypadLayer, viewProperties ) );
 
     // Category radio button group
     const categoryRadioButtonGroup = new ShoppingCategoryRadioButtonGroup( model.categories, model.categoryProperty, {
       left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
       bottom: this.layoutBounds.bottom - ( 2 * URConstants.SCREEN_Y_MARGIN )
     } );
-    playAreaLayer.addChild( categoryRadioButtonGroup );
 
     // Reset All button
     const resetAllButton = new ResetAllButton( {
@@ -88,7 +77,12 @@ export default class ShoppingScreenView extends ScreenView {
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
     } );
-    playAreaLayer.addChild( resetAllButton );
+
+    // parent for everything expect the keypad
+    const screenViewRootNode = new Node( {
+      children: [ ...categoryNodes, categoryRadioButtonGroup, resetAllButton ]
+    } );
+    this.addChild( screenViewRootNode );
   }
 }
 
