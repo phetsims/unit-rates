@@ -31,30 +31,21 @@ export default class ShoppingLabModel extends ShoppingModel {
         // fruits
         new ShoppingCategory( apple_png, [
           new FruitScene( ShoppingItemData.APPLES, {
-            rate: new Rate( 1, 1 ),
-            denominatorOptions: {
-              pickerColor: 'red'
-            }
+            rate: new Rate( 1, 1 )
           } )
         ] ),
 
         // vegetables
         new ShoppingCategory( carrot_png, [
           new VegetableScene( ShoppingItemData.CARROTS, {
-            rate: new Rate( 3, 4 ),
-            denominatorOptions: {
-              pickerColor: 'orange'
-            }
+            rate: new Rate( 3, 4 )
           } )
         ] ),
 
         // candies
         new ShoppingCategory( purpleCandy_png, [
           new CandyScene( ShoppingItemData.PURPLE_CANDY, {
-            rate: new Rate( 3, 2 ),
-            denominatorOptions: {
-              pickerColor: 'purple'
-            }
+            rate: new Rate( 3, 2 )
           } )
         ] )
       ]

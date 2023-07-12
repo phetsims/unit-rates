@@ -37,13 +37,6 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import ShoppingQuestion from './ShoppingQuestion.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
-const DEFAULT_NUMERATOR_OPTIONS = {
-  maxDigits: 4, // {number} number of digits that can be entered via the keypad
-  maxDecimals: 2, // {number} maximum number of decimal places
-  pickerColor: 'black' // {Color|string} color of the number picker for the numerator in the Rate accordion box
-};
-const DEFAULT_DENOMINATOR_OPTIONS = DEFAULT_NUMERATOR_OPTIONS;
-
 type SelfOptions = {
   rate?: Rate | null; // if null, will be initialized to unit rate
   fixedAxis?: FixedAxis;
@@ -67,6 +60,7 @@ export type ShoppingSceneOptions = SelfOptions;
 
 export default class ShoppingScene {
 
+  public readonly itemData: ShoppingItemData;
   public readonly rate: Rate;
   public readonly scaleQuantityIsDisplayed: boolean;
   public readonly doubleNumberLine: DoubleNumberLine;
@@ -114,17 +108,22 @@ export default class ShoppingScene {
     }, providedOptions );
 
     this.numeratorOptions = combineOptions<NumeratorOptions>( {
-      axisLabel: UnitRatesStrings.dollars,
+      units: UnitRatesStrings.dollars,
+      maxDigits: 4, // number of digits that can be entered via the keypad
+      maxDecimals: 2, // maximum number of decimal places that can be entered via the keypad
       valueFormat: UnitRatesStrings.pattern_0cost,
       trimZeros: false
-    }, DEFAULT_NUMERATOR_OPTIONS, options.numeratorOptions );
+    }, options.numeratorOptions );
 
     this.denominatorOptions = combineOptions<DenominatorOptions>( {
-      axisLabel: itemData.pluralName,
+      units: itemData.pluralName,
+      maxDigits: 4, // number of digits that can be entered via the keypad
+      maxDecimals: 2, // maximum number of decimal places that can be entered via the keypad
       valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER,
       trimZeros: true
-    }, DEFAULT_DENOMINATOR_OPTIONS, options.denominatorOptions );
+    }, options.denominatorOptions );
 
+    this.itemData = itemData;
     this.rate = options.rate || Rate.withUnitRate( itemData.unitRate );
 
     // unpack itemData: ShoppingItemData

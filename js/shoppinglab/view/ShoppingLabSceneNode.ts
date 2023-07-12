@@ -31,10 +31,10 @@ export default class ShoppingLabSceneNode extends BaseShoppingSceneNode {
     const rateAccordionBox = new RateAccordionBox( shoppingScene.rate, {
       numeratorRange: URConstants.COST_RANGE,
       denominatorRange: URConstants.QUANTITY_RANGE,
-      numeratorUnits: shoppingScene.numeratorOptions.axisLabel,  // matches the axis of the double number line
-      numeratorPickerColor: shoppingScene.numeratorOptions.pickerColor,
-      denominatorUnits: shoppingScene.denominatorOptions.axisLabel,  // matches the axis of the double number line
-      denominatorPickerColor: shoppingScene.denominatorOptions.pickerColor,
+      numeratorUnits: shoppingScene.numeratorOptions.units,
+      numeratorPickerColor: shoppingScene.itemData.pickerColor,
+      denominatorUnits: shoppingScene.denominatorOptions.units,
+      denominatorPickerColor: shoppingScene.itemData.pickerColor,
       expandedProperty: viewProperties.rateExpandedProperty,
       left: layoutBounds.left + URConstants.SCREEN_X_MARGIN,
       bottom: layoutBounds.bottom - 100

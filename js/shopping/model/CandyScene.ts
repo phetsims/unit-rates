@@ -17,7 +17,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
 type SelfOptions = EmptySelfOptions;
-type CandySceneOptions = SelfOptions & PickOptional<ShoppingSceneOptions, 'rate' | 'denominatorOptions'>;
+type CandySceneOptions = SelfOptions & PickOptional<ShoppingSceneOptions, 'rate'>;
 
 export default class CandyScene extends ShoppingScene {
 
@@ -38,7 +38,7 @@ export default class CandyScene extends ShoppingScene {
       amountOfQuestionUnits: UnitRatesStrings.poundsCapitalized,
 
       denominatorOptions: {
-        axisLabel: UnitRatesStrings.pounds
+        units: UnitRatesStrings.pounds
       },
 
       // Scale displays quantity in 'lbs' for Candy

@@ -74,13 +74,13 @@ export default class RaceCar {
 
     this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
       numeratorOptions: {
-        axisLabel: UnitRatesStrings.miles,
+        units: UnitRatesStrings.miles,
         maxDigits: 5,
         maxDecimals: options.numeratorMaxDecimals,
         trimZeros: true
       },
       denominatorOptions: {
-        axisLabel: UnitRatesStrings.hours,
+        units: UnitRatesStrings.hours,
         maxDigits: 4,
         maxDecimals: options.denominatorMaxDecimals,
         trimZeros: true

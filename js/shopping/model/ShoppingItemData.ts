@@ -34,6 +34,7 @@ import tomato_png from '../../../images/tomato_png.js';
 import tomatoBag_png from '../../../images/tomatoBag_png.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import unitRates from '../../unitRates.js';
+import { Color } from '../../../../scenery/js/imports.js';
 
 // Description of a shopping item, all fields are required
 export type ShoppingItemDataOptions = {
@@ -46,6 +47,7 @@ export type ShoppingItemDataOptions = {
   itemImage: HTMLImageElement; // image for individual items
   itemRowOverlap: number; // for tweaking how items overlap when stacked, specific to itemImage
   bagImage: HTMLImageElement; // image for a bag of items
+  pickerColor: Color | string; // color of NumberPickers related to this item
 
   // Number of items (or pounds, for Candy) for each question, grouped into 'question sets'.
   // See 'Unit Rates & Challenge Prompts' table in design document.
@@ -64,6 +66,7 @@ export default class ShoppingItemData {
   public readonly itemImage: HTMLImageElement;
   public readonly itemRowOverlap: number;
   public readonly bagImage: HTMLImageElement;
+  public readonly pickerColor: Color | string;
   public readonly questionQuantities: number[][];
 
   // Constructor is private because all instances are static members of this class.
@@ -76,6 +79,7 @@ export default class ShoppingItemData {
     this.itemImage = options.itemImage;
     this.itemRowOverlap = options.itemRowOverlap;
     this.bagImage = options.bagImage;
+    this.pickerColor = options.pickerColor;
     this.questionQuantities = options.questionQuantities;
   }
 
@@ -88,6 +92,7 @@ export default class ShoppingItemData {
     itemImage: apple_png,
     itemRowOverlap: 7,
     bagImage: appleBag_png,
+    pickerColor: 'red',
     questionQuantities: [
       [ 10, 6, 8 ],
       [ 10, 14, 13 ],
@@ -105,6 +110,7 @@ export default class ShoppingItemData {
     itemImage: lemon_png,
     itemRowOverlap: 5,
     bagImage: lemonBag_png,
+    pickerColor: 'yellow',
 
     // number of items
     questionQuantities: [
@@ -124,6 +130,7 @@ export default class ShoppingItemData {
     itemImage: orange_png,
     itemRowOverlap: 5,
     bagImage: orangeBag_png,
+    pickerColor: 'orange',
 
     // number of items
     questionQuantities: [
@@ -143,6 +150,7 @@ export default class ShoppingItemData {
     itemImage: pear_png,
     itemRowOverlap: 5,
     bagImage: pearBag_png,
+    pickerColor: 'green',
 
     // number of items
     questionQuantities: [
@@ -162,6 +170,7 @@ export default class ShoppingItemData {
     itemImage: carrot_png,
     itemRowOverlap: 0,
     bagImage: carrotBag_png,
+    pickerColor: 'orange',
 
     // number of items
     questionQuantities: [
@@ -181,6 +190,7 @@ export default class ShoppingItemData {
     itemImage: cucumber_png,
     itemRowOverlap: 0,
     bagImage: cucumberBag_png,
+    pickerColor: 'green',
 
     // number of items
     questionQuantities: [
@@ -200,6 +210,7 @@ export default class ShoppingItemData {
     itemImage: potato_png,
     itemRowOverlap: 0,
     bagImage: potatoBag_png,
+    pickerColor: 'brown',
 
     // number of items
     questionQuantities: [
@@ -219,6 +230,7 @@ export default class ShoppingItemData {
     itemImage: tomato_png,
     itemRowOverlap: 0,
     bagImage: tomatoBag_png,
+    pickerColor: 'red',
 
     // number of items
     questionQuantities: [
@@ -238,6 +250,7 @@ export default class ShoppingItemData {
     itemImage: purpleCandy_png,
     itemRowOverlap: 0,
     bagImage: purpleCandyBag_png,
+    pickerColor: 'purple',
 
     // pounds
     questionQuantities: [
@@ -257,6 +270,7 @@ export default class ShoppingItemData {
     itemImage: redCandy_png,
     itemRowOverlap: 0,
     bagImage: redCandyBag_png,
+    pickerColor: 'red',
 
     // pounds
     questionQuantities: [
@@ -276,6 +290,7 @@ export default class ShoppingItemData {
     itemImage: greenCandy_png,
     itemRowOverlap: 0,
     bagImage: greenCandyBag_png,
+    pickerColor: 'green',
 
     // pounds
     questionQuantities: [
@@ -295,6 +310,7 @@ export default class ShoppingItemData {
     itemImage: blueCandy_png,
     itemRowOverlap: 0,
     bagImage: blueCandyBag_png,
+    pickerColor: 'blue',
 
     // pounds
     questionQuantities: [

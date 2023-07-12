@@ -13,7 +13,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
 type SelfOptions = EmptySelfOptions;
-type FruitSceneOptions = SelfOptions & PickOptional<ShoppingSceneOptions, 'rate' | 'denominatorOptions'>;
+type FruitSceneOptions = SelfOptions & PickOptional<ShoppingSceneOptions, 'rate'>;
 
 export default class FruitScene extends ShoppingScene {
 

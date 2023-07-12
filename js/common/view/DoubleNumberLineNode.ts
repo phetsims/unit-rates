@@ -99,9 +99,9 @@ export default class DoubleNumberLineNode extends Node {
     this.addChild( numeratorAxisNode );
 
     // numerator axis label
-    const numeratorAxisLabel = doubleNumberLine.numeratorOptions.axisLabel!;
-    assert && assert( numeratorAxisLabel );
-    this.addChild( new Text( numeratorAxisLabel, {
+    const numeratorUnits = doubleNumberLine.numeratorOptions.units!;
+    assert && assert( numeratorUnits );
+    this.addChild( new Text( numeratorUnits, {
       font: options.labelFont,
       fill: options.labelColor,
       maxWidth: options.labelMaxWidth,
@@ -122,9 +122,9 @@ export default class DoubleNumberLineNode extends Node {
     this.addChild( denominatorAxisNode );
 
     // denominator axis label
-    const denominatorAxisLabel = doubleNumberLine.denominatorOptions.axisLabel!;
-    assert && assert( denominatorAxisLabel );
-    this.addChild( new Text( denominatorAxisLabel, {
+    const denominatorUnits = doubleNumberLine.denominatorOptions.units!;
+    assert && assert( denominatorUnits );
+    this.addChild( new Text( denominatorUnits, {
       font: options.labelFont,
       fill: options.labelColor,
       maxWidth: options.labelMaxWidth,
