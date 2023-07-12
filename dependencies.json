@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.1.0-dev.4 Tue Jul 11 2023 08:57:13 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# unit-rates 1.1.0-dev.5 Tue Jul 11 2023 19:09:23 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "cc59d7f0574270924a886cb3d43a1b7507cd0553",
     "branch": "master"
@@ -53,7 +53,7 @@
     "branch": "master"
   },
   "phetmarks": {
-    "sha": "5c8921a993a1acf3e09cd9dc432ea8405d91f844",
+    "sha": "73e009e10b48d35e49cb7a670525b15c6825be95",
     "branch": "master"
   },
   "query-string-machine": {
@@ -93,7 +93,7 @@
     "branch": "master"
   },
   "unit-rates": {
-    "sha": "c395b1cc06dac9a4df44185f9ddd366233716c5a",
+    "sha": "fbad1dbd38a659c608cfbec76ee9fe17df5c6731",
     "branch": "master"
   },
   "utterance-queue": {
