@@ -6,8 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import ScreenView from '../../../../joist/js/ScreenView.js';
-import merge from '../../../../phet-core/js/merge.js';
+import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -18,33 +17,40 @@ import ShoppingModel from '../model/ShoppingModel.js';
 import ShoppingCategoryNode from './ShoppingCategoryNode.js';
 import ShoppingCategoryRadioButtonGroup from './ShoppingCategoryRadioButtonGroup.js';
 import ShoppingViewProperties from './ShoppingViewProperties.js';
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import ShoppingCategory from '../model/ShoppingCategory.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+
+  // Creates a Node for a shopping category.
+  createCategoryNode?: ( category: ShoppingCategory,
+                        categoryProperty: Property<ShoppingCategory>,
+                        layoutBounds: Bounds2,
+                        keypadLayer: KeypadLayer,
+                        viewProperties: ShoppingViewProperties ) => ShoppingCategoryNode;
+};
+
+type ShoppingScreenViewOptions = SelfOptions;
 
 export default class ShoppingScreenView extends ScreenView {
 
-  /**
-   * @param {ShoppingModel} model
-   * @param {Tandem} tandem
-   * @param {Object} [options]
-   */
-  constructor( model, tandem, options ) {
-    assert && assert( model instanceof ShoppingModel );
-    assert && assert( tandem instanceof Tandem );
+  public constructor( model: ShoppingModel, tandem: Tandem, providedOptions?: ShoppingScreenViewOptions ) {
 
-    options = merge( {
+    const options = optionize<ShoppingScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
 
-      /**
-       * Creates a Node for a category.
-       * @param {ShoppingCategory} category
-       * @param {Property.<ShoppingCategory>} categoryProperty
-       * @param {Bounds2} layoutBounds
-       * @param {KeypadLayer} keypadLayer
-       * @param {ShoppingViewProperties} viewProperties
-       * @returns {Node}
-       */
-      createCategoryNode: ( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ) =>
-        new ShoppingCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties )
+      // SelfOptions
+      createCategoryNode: ( category: ShoppingCategory,
+                           categoryProperty: Property<ShoppingCategory>,
+                           layoutBounds: Bounds2,
+                           keypadLayer: KeypadLayer,
+                           viewProperties: ShoppingViewProperties ) =>
+        new ShoppingCategoryNode( category, categoryProperty, layoutBounds, keypadLayer, viewProperties ),
 
-    }, options );
+      // ScreenViewOptions
+      tandem: tandem
+    }, providedOptions );
 
     super( options );
 
