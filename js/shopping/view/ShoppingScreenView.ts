@@ -55,7 +55,6 @@ export default class ShoppingScreenView extends ScreenView {
 
     // separate layer for model keypad
     const keypadLayer = new KeypadLayer();
-    this.addChild( keypadLayer );
 
     // Create the view for each category
     const categoryNodes = model.categories.map( category =>
@@ -78,9 +77,9 @@ export default class ShoppingScreenView extends ScreenView {
       bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
     } );
 
-    // parent for everything expect the keypad
+    // keypadLayer in the foreground!
     const screenViewRootNode = new Node( {
-      children: [ ...categoryNodes, categoryRadioButtonGroup, resetAllButton ]
+      children: [ ...categoryNodes, categoryRadioButtonGroup, resetAllButton, keypadLayer ]
     } );
     this.addChild( screenViewRootNode );
   }
