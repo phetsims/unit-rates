@@ -11,36 +11,24 @@
 import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
 import unitRates from '../../unitRates.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-
-type SelfOptions = {
-  numeratorMaxDecimals?: number; // maximum decimal places in the numerator, integer >= 0
-  denominatorMaxDecimals?: number; // maximum decimal places in the denominator, integer >= 0
-};
-
-type MarkerEditorOptions = SelfOptions;
+import Axis from './Axis.js';
 
 export default class MarkerEditor {
 
   public readonly unitRateProperty: TReadOnlyProperty<number>;
+  public readonly numeratorAxis: Axis;
+  public readonly denominatorAxis: Axis;
   public readonly numeratorProperty: Property<number | null>; // the numerator in the editor, null if no numerator
   public readonly denominatorProperty: Property<number | null>; // the denominator in the editor, null if no denominator
-  private readonly denominatorMaxDecimals: number;
 
-  public constructor( unitRateProperty: TReadOnlyProperty<number>, providedOptions?: MarkerEditorOptions ) {
-
-    const options = optionize<MarkerEditorOptions, SelfOptions>()( {
-
-      // SelfOptions
-      numeratorMaxDecimals: 2,
-      denominatorMaxDecimals: 2
-    }, providedOptions );
-
-    assert && assert( Number.isInteger( options.numeratorMaxDecimals ) && options.numeratorMaxDecimals >= 0 );
-    assert && assert( Number.isInteger( options.denominatorMaxDecimals ) && options.denominatorMaxDecimals >= 0 );
+  public constructor( unitRateProperty: TReadOnlyProperty<number>,
+                      numeratorAxis: Axis,
+                      denominatorAxis: Axis ) {
 
     this.unitRateProperty = unitRateProperty;
+    this.numeratorAxis = numeratorAxis;
+    this.denominatorAxis = denominatorAxis;
 
     this.numeratorProperty = new Property<number | null>( null, {
       reentrant: true // see https://github.com/phetsims/unit-rates/issues/216
@@ -50,12 +38,10 @@ export default class MarkerEditor {
       reentrant: true // see https://github.com/phetsims/unit-rates/issues/216
     } );
 
-    this.denominatorMaxDecimals = options.denominatorMaxDecimals;
-
     // if a numerator is entered that can't be computed from the existing denominator, then clear the denominator
     this.numeratorProperty.link( numerator => { // no unlink required
       if ( numerator !== null && this.denominatorProperty.value !== null ) {
-        const correctNumerator = Utils.toFixedNumber( this.denominatorProperty.value * unitRateProperty.value, options.numeratorMaxDecimals );
+        const correctNumerator = Utils.toFixedNumber( this.denominatorProperty.value * unitRateProperty.value, numeratorAxis.maxDecimals );
         if ( numerator !== correctNumerator ) {
           this.denominatorProperty.value = null;
         }
@@ -65,7 +51,7 @@ export default class MarkerEditor {
     // if a denominator is entered that can't be computed from the existing numerator, then clear the numerator
     this.denominatorProperty.link( denominator => { // no unlink required
       if ( denominator !== null && this.numeratorProperty.value !== null ) {
-        const correctDenominator = Utils.toFixedNumber( this.numeratorProperty.value / unitRateProperty.value, options.denominatorMaxDecimals );
+        const correctDenominator = Utils.toFixedNumber( this.numeratorProperty.value / unitRateProperty.value, denominatorAxis.maxDecimals );
         if ( denominator !== correctDenominator ) {
           this.numeratorProperty.value = null;
         }

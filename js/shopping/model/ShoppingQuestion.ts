@@ -8,16 +8,8 @@
 
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
-import SunConstants from '../../../../sun/js/SunConstants.js';
 import unitRates from '../../unitRates.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
-
-type AnswerOptions = {
-  valueFormat?: string; // format used by StringUtils.format to format the guess
-  maxDigits?: number; // maximum number of digits that can be entered on the keypad
-  maxDecimals?: number; // maximum number of decimal places that can be entered on the keypad
-  trimZeros?: boolean; // whether to trim trailing zeros in the decimal places
-};
+import Axis from '../../common/model/Axis.js';
 
 export default class ShoppingQuestion {
 
@@ -27,7 +19,7 @@ export default class ShoppingQuestion {
   public readonly denominator: number;
   public readonly numeratorString: string;
   public readonly denominatorString: string;
-  public readonly answerOptions: AnswerOptions;
+  public readonly answerAxis: Axis;
 
   public readonly guessProperty: Property<number | null>; // the user's guess, null indicates no guess
   public readonly correctEmitter: Emitter<[ShoppingQuestion]>; // emit is called when the question is answered correctly
@@ -39,10 +31,10 @@ export default class ShoppingQuestion {
    * @param denominator
    * @param numeratorString - the numerator to display when the answer is revealed
    * @param denominatorString - the denominator to display when the answer is revealed
-   * @param [answerOptions] - formatting for the answer (and guesses)
+   * @param answerAxis - provides formatting for the answer (and guesses)
    */
   public constructor( questionString: string, answer: number, numerator: number, denominator: number,
-                      numeratorString: string, denominatorString: string, answerOptions?: AnswerOptions ) {
+                      numeratorString: string, denominatorString: string, answerAxis: Axis ) {
 
     this.questionString = questionString;
     this.answer = answer;
@@ -50,13 +42,7 @@ export default class ShoppingQuestion {
     this.denominator = denominator;
     this.numeratorString = numeratorString;
     this.denominatorString = denominatorString;
-
-    this.answerOptions = combineOptions<AnswerOptions>( {
-      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER, // {string} format used by StringUtils.format to format the guess
-      maxDigits: 4, // {number} maximum number of digits that can be entered on the keypad
-      maxDecimals: 2, // {number} maximum number of decimal places that can be entered on the keypad
-      trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
-    }, answerOptions );
+    this.answerAxis = answerAxis;
 
     this.guessProperty = new Property<number | null>( null );
 

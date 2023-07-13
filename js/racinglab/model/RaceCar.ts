@@ -20,14 +20,14 @@ import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceTrack from './RaceTrack.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import Axis from '../../common/model/Axis.js';
+import SunConstants from '../../../../sun/js/SunConstants.js';
 
 type SelfOptions = {
   color?: Color | string; // color used for things that are associated with the car (markers, spinners, ...)
   rate?: Rate; // initial rate, in miles per hour
   visible?: boolean; // is this car visible?
   trackLength?: number; // length of this car's track
-  numeratorMaxDecimals?: number; // decimal places shown for numerator (miles)
-  denominatorMaxDecimals?: number; // decimal places shown for denominator (hours)
   majorMarkerSpacing?: number; // spacing for major markers on this car's double number line
 };
 
@@ -36,6 +36,8 @@ type RaceCarOptions = SelfOptions;
 export default class RaceCar {
 
   public readonly image: HTMLImageElement;
+  public readonly numeratorAxis: Axis;
+  public readonly denominatorAxis: Axis;
   public readonly color: Color | string;
   public readonly rate: Rate;
   public readonly distanceProperty: NumberProperty; // the car's distance from the starting line, in miles
@@ -54,8 +56,6 @@ export default class RaceCar {
       rate: new Rate( 50, 2 ),
       visible: true,
       trackLength: 200,
-      numeratorMaxDecimals: 1,
-      denominatorMaxDecimals: 2,
       majorMarkerSpacing: 25
     }, providedOptions );
 
@@ -72,19 +72,23 @@ export default class RaceCar {
       return ( numerator % options.majorMarkerSpacing === 0 );
     };
 
-    this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
-      numeratorOptions: {
-        units: UnitRatesStrings.miles,
-        maxDigits: 5,
-        maxDecimals: options.numeratorMaxDecimals,
-        trimZeros: true
-      },
-      denominatorOptions: {
-        units: UnitRatesStrings.hours,
-        maxDigits: 4,
-        maxDecimals: options.denominatorMaxDecimals,
-        trimZeros: true
-      },
+    this.numeratorAxis = new Axis( {
+      units: UnitRatesStrings.miles,
+      maxDigits: 5,
+      maxDecimals: 1,
+      trimZeros: true,
+      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER
+    } );
+
+    this.denominatorAxis = new Axis( {
+      units: UnitRatesStrings.hours,
+      maxDigits: 4,
+      maxDecimals: 2,
+      trimZeros: true,
+      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER
+    } );
+
+    this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, this.numeratorAxis, this.denominatorAxis, {
 
       // Numerator axis is fixed at 200 miles, so we will mutate the denominator (hours) when rate changes
       fixedAxis: 'numerator',
@@ -94,10 +98,7 @@ export default class RaceCar {
       isMajorMarker: isMajorMarker
     } );
 
-    this.markerEditor = new MarkerEditor( this.rate.unitRateProperty, {
-      numeratorMaxDecimals: options.numeratorMaxDecimals,
-      denominatorMaxDecimals: options.denominatorMaxDecimals
-    } );
+    this.markerEditor = new MarkerEditor( this.rate.unitRateProperty, this.numeratorAxis, this.denominatorAxis );
 
     // create a marker when the car reaches the finish line. unlink not needed
     let persistentMarker: Marker | null = null;
@@ -111,7 +112,7 @@ export default class RaceCar {
 
       // create a marker that is not erasable
       if ( distance === this.track.lengthProperty.value ) {
-        persistentMarker = new Marker( distance, this.timeProperty.value, 'race', {
+        persistentMarker = new Marker( 'race', distance, this.timeProperty.value, this.numeratorAxis, this.denominatorAxis, {
           isMajor: isMajorMarker( distance, this.timeProperty.value ),
           color: this.color,
           erasable: false

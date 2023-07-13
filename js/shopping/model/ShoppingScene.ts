@@ -17,8 +17,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import SunConstants from '../../../../sun/js/SunConstants.js';
-import DoubleNumberLine, { AxisOptions, FixedAxis } from '../../common/model/DoubleNumberLine.js';
+import DoubleNumberLine, { FixedAxis } from '../../common/model/DoubleNumberLine.js';
 import Marker from '../../common/model/Marker.js';
 import MarkerEditor from '../../common/model/MarkerEditor.js';
 import Rate from '../../common/model/Rate.js';
@@ -31,18 +30,19 @@ import Bag from './Bag.js';
 import Scale from './Scale.js';
 import Shelf from './Shelf.js';
 import ShoppingItem from './ShoppingItem.js';
-import ShoppingQuestionFactory, { DenominatorOptions, NumeratorOptions } from './ShoppingQuestionFactory.js';
+import ShoppingQuestionFactory from './ShoppingQuestionFactory.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ShoppingQuestion from './ShoppingQuestion.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import Axis, { AxisOptions } from '../../common/model/Axis.js';
 
 type SelfOptions = {
   rate?: Rate | null; // if null, will be initialized to unit rate
   fixedAxis?: FixedAxis;
   fixedAxisRange?: Range;
-  numeratorOptions?: AxisOptions; // options specific to the rate's numerator
-  denominatorOptions?: AxisOptions; // options specific to the rate's denominator
+  numeratorAxisOptions?: AxisOptions; // options specific to the rate's numerator
+  denominatorAxisOptions?: AxisOptions; // options specific to the rate's denominator
   isMajorMarker?: ( numerator: number, denominator: number ) => boolean;
 
   // questions
@@ -61,6 +61,8 @@ export type ShoppingSceneOptions = SelfOptions;
 export default class ShoppingScene {
 
   public readonly itemData: ShoppingItemData;
+  public readonly numeratorAxis: Axis;
+  public readonly denominatorAxis: Axis;
   public readonly rate: Rate;
   public readonly scaleQuantityIsDisplayed: boolean;
   public readonly doubleNumberLine: DoubleNumberLine;
@@ -82,8 +84,6 @@ export default class ShoppingScene {
   private readonly questionSetsIndexProperty: NumberProperty; // index of the question set that's being shown
   public readonly questionSetProperty: Property<ShoppingQuestion[]>; // the current set of questions
 
-  public readonly numeratorOptions: NumeratorOptions;
-  public readonly denominatorOptions: DenominatorOptions;
   private createMarkerEnabled: boolean; // flag to disable creation of spurious markers during reset
 
   protected constructor( itemData: ShoppingItemData, providedOptions?: ShoppingSceneOptions ) {
@@ -92,7 +92,7 @@ export default class ShoppingScene {
     assert && assert( itemData.questionQuantities.length > 1, 'more than 1 set of questions is required' );
 
     // default option values apply to Fruit items
-    const options = optionize<ShoppingSceneOptions, StrictOmit<SelfOptions, 'numeratorOptions' | 'denominatorOptions'>>()( {
+    const options = optionize<ShoppingSceneOptions, StrictOmit<SelfOptions, 'numeratorAxisOptions' | 'denominatorAxisOptions'>>()( {
 
       // ShoppingSceneOptions
       rate: null, // will be initialized to unit rate
@@ -107,23 +107,18 @@ export default class ShoppingScene {
       bagsOpen: false
     }, providedOptions );
 
-    this.numeratorOptions = combineOptions<NumeratorOptions>( {
-      units: UnitRatesStrings.dollars,
-      maxDigits: 4, // number of digits that can be entered via the keypad
-      maxDecimals: 2, // maximum number of decimal places that can be entered via the keypad
-      valueFormat: UnitRatesStrings.pattern_0cost,
-      trimZeros: false
-    }, options.numeratorOptions );
-
-    this.denominatorOptions = combineOptions<DenominatorOptions>( {
-      units: itemData.pluralName,
-      maxDigits: 4, // number of digits that can be entered via the keypad
-      maxDecimals: 2, // maximum number of decimal places that can be entered via the keypad
-      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER,
-      trimZeros: true
-    }, options.denominatorOptions );
-
     this.itemData = itemData;
+
+    this.numeratorAxis = new Axis( combineOptions<AxisOptions>( {
+      units: UnitRatesStrings.dollars,
+      valueFormat: UnitRatesStrings.pattern_0cost
+    }, options.numeratorAxisOptions ) );
+
+    this.denominatorAxis = new Axis( combineOptions<AxisOptions>( {
+      units: itemData.pluralName,
+      trimZeros: true
+    }, options.denominatorAxisOptions ) );
+
     this.rate = options.rate || Rate.withUnitRate( itemData.unitRate );
 
     // unpack itemData: ShoppingItemData
@@ -136,18 +131,13 @@ export default class ShoppingScene {
 
     this.scaleQuantityIsDisplayed = options.scaleQuantityIsDisplayed;
 
-    this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, {
+    this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, this.numeratorAxis, this.denominatorAxis, {
       fixedAxis: options.fixedAxis,
       fixedAxisRange: options.fixedAxisRange,
-      numeratorOptions: this.numeratorOptions,
-      denominatorOptions: this.denominatorOptions,
       isMajorMarker: options.isMajorMarker
     } );
 
-    this.markerEditor = new MarkerEditor( this.rate.unitRateProperty, {
-      numeratorMaxDecimals: this.numeratorOptions.maxDecimals,
-      denominatorMaxDecimals: this.denominatorOptions.maxDecimals
-    } );
+    this.markerEditor = new MarkerEditor( this.rate.unitRateProperty, this.numeratorAxis, this.denominatorAxis );
 
     // Does not work for mipmap, bagImage.width is undefined.
     // If considering a switch to mipmaps, see https://github.com/phetsims/unit-rates/issues/157
@@ -196,7 +186,7 @@ export default class ShoppingScene {
 
       // the new marker for what's on the scale
       if ( quantity > 0 && this.createMarkerEnabled ) {
-        scaleMarker = new Marker( this.scale.costProperty.value, quantity, 'scale', {
+        scaleMarker = new Marker( 'scale', this.scale.costProperty.value, quantity, this.numeratorAxis, this.denominatorAxis, {
           isMajor: true, // all scale markers are major, per the design document
           color: URColors.scaleMarker,
           erasable: false
@@ -208,8 +198,8 @@ export default class ShoppingScene {
     this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion(
       this.rate.unitRateProperty.value,
       options.quantitySingularUnits,
-      this.numeratorOptions,
-      this.denominatorOptions
+      this.numeratorAxis,
+      this.denominatorAxis
     );
 
     this.questionSets = ShoppingQuestionFactory.createQuestionSets(
@@ -218,8 +208,8 @@ export default class ShoppingScene {
       options.quantitySingularUnits,
       options.quantityPluralUnits,
       options.amountOfQuestionUnits,
-      this.numeratorOptions,
-      this.denominatorOptions
+      this.numeratorAxis,
+      this.denominatorAxis
     );
 
     // Randomize the order of the question sets
@@ -244,7 +234,7 @@ export default class ShoppingScene {
 
     // When a question is answered correctly, create a corresponding marker on the double number line.
     const questionCorrectListener = ( question: ShoppingQuestion ) => {
-      const marker = new Marker( question.numerator, question.denominator, 'question', {
+      const marker = new Marker( 'question', question.numerator, question.denominator, this.numeratorAxis, this.denominatorAxis, {
         isMajor: true, // all question markers are major, per the design document
         color: URColors.questionMarker,
         erasable: false

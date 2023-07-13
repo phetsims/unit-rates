@@ -95,10 +95,6 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
     // marker editor
     const markerEditorNode = new MarkerEditorNode( markerEditor, thisBoundsNode, keypadLayer, {
-      // @ts-expect-error TODO https://github.com/phetsims/unit-rates/issues/219
-      numeratorOptions: doubleNumberLine.numeratorOptions,
-      // @ts-expect-error TODO https://github.com/phetsims/unit-rates/issues/219
-      denominatorOptions: doubleNumberLine.denominatorOptions,
       keypadPanelPosition: options.keypadPanelPosition,
       x: markerEditorNodeHomeX,
       centerY: doubleNumberLineNode.centerY
@@ -178,7 +174,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
           // create a marker
           const isMajor = doubleNumberLine.isMajorMarker( numerator, denominator );
-          const marker = new Marker( numerator, denominator, 'editor', {
+          const marker = new Marker( 'editor', numerator, denominator, doubleNumberLine.numeratorAxis, doubleNumberLine.denominatorAxis, {
             isMajor: isMajor,
             color: isMajor ? URColors.majorMarker : URColors.minorMarker
           } );

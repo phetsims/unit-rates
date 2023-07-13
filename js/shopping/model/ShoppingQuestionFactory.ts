@@ -12,39 +12,27 @@ import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingQuestion from './ShoppingQuestion.js';
-import { AxisOptions } from '../../common/model/DoubleNumberLine.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-
-export type NumeratorOptions = WithRequired<AxisOptions, 'maxDecimals' | 'trimZeros'>;
-export type DenominatorOptions = NumeratorOptions;
+import Axis from '../../common/model/Axis.js';
 
 const ShoppingQuestionFactory = {
 
   /**
    * Creates a question of the form 'Unit Rate?'
-   *
-   * @param unitRate
-   * @param units - units for the denominator
-   * @param numeratorOptions
-   * @param denominatorOptions
    */
-  createUnitRateQuestion( unitRate: number,
-                          units: string,
-                          numeratorOptions: NumeratorOptions,
-                          denominatorOptions: DenominatorOptions ): ShoppingQuestion {
+  createUnitRateQuestion( unitRate: number, denominatorUnits: string, numeratorAxis: Axis, denominatorAxis: Axis ): ShoppingQuestion {
 
     // '$0.50'
     const numerator = unitRate;
     const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
-      URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+      URUtils.numberToString( numerator, numeratorAxis.maxDecimals, numeratorAxis.trimZeros ) );
 
     // '1 Apple'
     const denominator = 1;
     const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
-      URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
-      units );
+      URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
+      denominatorUnits );
 
-    return new ShoppingQuestion( UnitRatesStrings.unitRateQuestion, unitRate, numerator, denominator, numeratorString, denominatorString, numeratorOptions );
+    return new ShoppingQuestion( UnitRatesStrings.unitRateQuestion, unitRate, numerator, denominator, numeratorString, denominatorString, numeratorAxis );
   },
 
   /**
@@ -52,19 +40,19 @@ const ShoppingQuestionFactory = {
    *
    * @param questionQuantities - number of items for each question, see ShoppingItemData
    * @param unitRate
-   * @param singularUnits - denominator units to use for questions with singular quantities
-   * @param pluralUnits - denominator units to use for questions with plural quantities
-   * @param amountOfQuestionUnits - units used for "Apples for $10.00?" type questions
-   * @param numeratorOptions
-   * @param denominatorOptions
+   * @param denominatorSingularUnits - denominator units to use for questions with singular quantities
+   * @param denominatorPluralUnits - denominator units to use for questions with plural quantities
+   * @param questionUnits - units used for "Apples for $10.00?" type questions
+   * @param numeratorAxis
+   * @param denominatorAxis
    */
   createQuestionSets( questionQuantities: number[][],
                       unitRate: number,
-                      singularUnits: string,
-                      pluralUnits: string,
-                      amountOfQuestionUnits: string,
-                      numeratorOptions: NumeratorOptions,
-                      denominatorOptions: DenominatorOptions ): ShoppingQuestion[][] {
+                      denominatorSingularUnits: string,
+                      denominatorPluralUnits: string,
+                      questionUnits: string,
+                      numeratorAxis: Axis,
+                      denominatorAxis: Axis ): ShoppingQuestion[][] {
 
     const questionSets: ShoppingQuestion[][] = [];
 
@@ -74,15 +62,12 @@ const ShoppingQuestionFactory = {
 
       // the first N-1 questions are of the form 'Cost of 3 Apples?'
       for ( let i = 0; i < quantities.length - 1; i++ ) {
-        questions.push( createCostOfQuestion( quantities[ i ],
-          unitRate, singularUnits, pluralUnits,
-          numeratorOptions, denominatorOptions ) );
+        questions.push( createCostOfQuestion( quantities[ i ], unitRate, denominatorSingularUnits, denominatorPluralUnits, numeratorAxis, denominatorAxis ) );
       }
 
       // the last question is of the form 'Apples for $3.00?'
       questions.push( createItemsForQuestion( quantities[ quantities.length - 1 ],
-        unitRate, singularUnits, pluralUnits, amountOfQuestionUnits,
-        numeratorOptions, denominatorOptions ) );
+        unitRate, denominatorSingularUnits, denominatorPluralUnits, questionUnits, numeratorAxis, denominatorAxis ) );
 
       questionSets.push( questions );
     } );
@@ -95,82 +80,82 @@ const ShoppingQuestionFactory = {
  * Creates a question of the form 'Cost of 10 Apples?' or 'Cost of 2.2 pounds?'
  * @param denominator
  * @param unitRate
- * @param singularUnits - denominator units to use for questions with singular quantities
- * @param pluralUnits - denominator units to use for questions with plural quantities
- * @param numeratorOptions
- * @param denominatorOptions
+ * @param denominatorSingularUnits
+ * @param denominatorPluralUnits
+ * @param numeratorAxis
+ * @param denominatorAxis
  */
 function createCostOfQuestion( denominator: number,
                                unitRate: number,
-                               singularUnits: string,
-                               pluralUnits: string,
-                               numeratorOptions: NumeratorOptions,
-                               denominatorOptions: DenominatorOptions ): ShoppingQuestion {
-
-  // answer
-  const numerator = denominator * unitRate;
-  const answer = Utils.toFixedNumber( numerator, numeratorOptions.maxDecimals );
+                               denominatorSingularUnits: string,
+                               denominatorPluralUnits: string,
+                               numeratorAxis: Axis,
+                               denominatorAxis: Axis ): ShoppingQuestion {
 
   // 'Apples' or 'Apple'
-  const units = ( denominator > 1 ) ? pluralUnits : singularUnits;
-
-  // '$3.00'
-  const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
-    URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
-
-  // '10 Apples'
-  const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
-    URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
-    units );
+  const units = ( denominator > 1 ) ? denominatorPluralUnits : denominatorSingularUnits;
 
   // 'Cost of 10 Apples?'
   const questionString = StringUtils.format( UnitRatesStrings.pattern_costOf_0quantity_1units,
-    URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
+    URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
     units );
 
-  return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, numeratorOptions );
+  // answer
+  const numerator = denominator * unitRate;
+  const answer = Utils.toFixedNumber( numerator, numeratorAxis.maxDecimals );
+
+  // '$3.00'
+  const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
+    URUtils.numberToString( numerator, numeratorAxis.maxDecimals, numeratorAxis.trimZeros ) );
+
+  // '10 Apples'
+  const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
+    URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
+    units );
+
+  return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, numeratorAxis );
 }
 
 /**
  * Creates a question of the form 'Apples for $3.00?'
  * @param denominator
  * @param unitRate
- * @param singularUnits
- * @param pluralUnits
- * @param amountOfQuestionUnits - units used for "Apples for $10.00?" type questions
- * @param numeratorOptions
- * @param denominatorOptions
+ * @param denominatorSingularUnits
+ * @param denominatorPluralUnits
+ * @param questionUnits
+ * @param numeratorAxis
+ * @param denominatorAxis
  */
 function createItemsForQuestion( denominator: number,
                                  unitRate: number,
-                                 singularUnits: string,
-                                 pluralUnits: string,
-                                 amountOfQuestionUnits: string,
-                                 numeratorOptions: NumeratorOptions,
-                                 denominatorOptions: DenominatorOptions ): ShoppingQuestion {
+                                 denominatorSingularUnits: string,
+                                 denominatorPluralUnits: string,
+                                 questionUnits: string,
+                                 numeratorAxis: Axis,
+                                 denominatorAxis: Axis ): ShoppingQuestion {
+
+  const numerator = denominator * unitRate;
+
+  // 'Apples for $4.00?'
+  const questionString = StringUtils.format( UnitRatesStrings.pattern_0items_1cost, questionUnits,
+    URUtils.numberToString( numerator, numeratorAxis.maxDecimals, numeratorAxis.trimZeros ) );
 
   // answer
-  const answer = Utils.toFixedNumber( denominator, denominatorOptions.maxDecimals );
+  const answer = Utils.toFixedNumber( denominator, denominatorAxis.maxDecimals );
 
   // 'Apples' or 'Apple'
-  const units = ( denominator > 1 ) ? pluralUnits : singularUnits;
+  const denominatorUnits = ( denominator > 1 ) ? denominatorPluralUnits : denominatorSingularUnits;
 
   // '$4.00'
-  const numerator = denominator * unitRate;
   const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
-    URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
+    URUtils.numberToString( numerator, numeratorAxis.maxDecimals, numeratorAxis.trimZeros ) );
 
   // '8 Apples'
   const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
-    URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros ),
-    units );
+    URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
+    denominatorUnits );
 
-  // 'Apples for $4.00?'
-  const questionString = StringUtils.format( UnitRatesStrings.pattern_0items_1cost,
-    amountOfQuestionUnits,
-    URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros ) );
-
-  return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, denominatorOptions );
+  return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, denominatorAxis );
 }
 
 unitRates.register( 'ShoppingQuestionFactory', ShoppingQuestionFactory );

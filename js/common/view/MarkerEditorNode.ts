@@ -18,17 +18,8 @@ import URConstants from '../URConstants.js';
 import URUtils from '../URUtils.js';
 import MarkerEditor from '../model/MarkerEditor.js';
 import KeypadLayer from './KeypadLayer.js';
-import { DenominatorOptions, NumeratorOptions } from '../../shopping/model/ShoppingQuestionFactory.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import KeypadPanel from './KeypadPanel.js';
-
-// constants
-const SHARED_OPTIONS = {
-  maxDigits: 4, // {number} maximum number of digits that can be entered via keypad
-  maxDecimals: 1, // {number} maximum number of decimal places that can be entered via keypad
-  trimZeros: false // {boolean} whether to trim trailing zeros from decimal places
-};
 
 type SelfOptions = {
   lineLength?: number; // length of the vertical line between numerator and denominator values
@@ -40,8 +31,6 @@ type SelfOptions = {
   valueYMargin?: number; // vertical margin inside the value box
   ySpacing?: number;  // vertical spacing between UI elements
   keypadPanelPosition?: 'above' | 'below'; // 'above' or 'below' doubleNumberLinePanel
-  numeratorOptions?: NumeratorOptions; // options specific to the rate's numerator
-  denominatorOptions?: DenominatorOptions; // options specific to the rate's denominator
 };
 
 type MarkerEditorNodeOptions = SelfOptions & NodeTranslationOptions;
@@ -56,10 +45,12 @@ export default class MarkerEditorNode extends Node {
    * @param keypadLayer - layer that manages the keypad
    * @param [providedOptions]
    */
-  public constructor( markerEditor: MarkerEditor, doubleNumberLinePanel: Node, keypadLayer: KeypadLayer,
+  public constructor( markerEditor: MarkerEditor,
+                      doubleNumberLinePanel: Node,
+                      keypadLayer: KeypadLayer,
                       providedOptions?: MarkerEditorNodeOptions ) {
 
-    const options = optionize<MarkerEditorNodeOptions, StrictOmit<SelfOptions, 'numeratorOptions' | 'denominatorOptions'>, NodeOptions>()( {
+    const options = optionize<MarkerEditorNodeOptions, SelfOptions, NodeOptions>()( {
 
       // SelfOptions
       lineLength: URConstants.MAJOR_MARKER_LENGTH, // {number} length of the vertical line between numerator and denominator values
@@ -72,9 +63,6 @@ export default class MarkerEditorNode extends Node {
       ySpacing: 3,  // {number} vertical spacing between UI elements
       keypadPanelPosition: 'below' // {string} 'above' or 'below' doubleNumberLinePanel
     }, providedOptions );
-
-    const numeratorOptions = combineOptions<NumeratorOptions>( {}, SHARED_OPTIONS, options.numeratorOptions );
-    const denominatorOptions = combineOptions<DenominatorOptions>( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     super();
 
@@ -191,8 +179,8 @@ export default class MarkerEditorNode extends Node {
         onBeginEdit: () => { numeratorBox.fill = URColors.edit; },
         onEndEdit: () => { numeratorBox.fill = 'white'; },
         setKeypadPanelPosition: setKeypadPanelPosition,
-        maxDigits: numeratorOptions.maxDigits,
-        maxDecimals: numeratorOptions.maxDecimals,
+        maxDigits: markerEditor.numeratorAxis.maxDigits,
+        maxDecimals: markerEditor.numeratorAxis.maxDecimals,
         zeroIsValid: options.zeroIsValid
       } );
     };
@@ -203,8 +191,8 @@ export default class MarkerEditorNode extends Node {
         onBeginEdit: () => { denominatorBox.fill = URColors.edit; },
         onEndEdit: () => { denominatorBox.fill = 'white'; },
         setKeypadPanelPosition: setKeypadPanelPosition,
-        maxDigits: denominatorOptions.maxDigits,
-        maxDecimals: denominatorOptions.maxDecimals,
+        maxDigits: markerEditor.denominatorAxis.maxDigits,
+        maxDecimals: markerEditor.denominatorAxis.maxDecimals,
         zeroIsValid: options.zeroIsValid
       } );
     };
@@ -224,7 +212,7 @@ export default class MarkerEditorNode extends Node {
 
       // update the numerator
       if ( numerator ) {
-        numeratorNode.string = URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+        numeratorNode.string = URUtils.numberToString( numerator, markerEditor.numeratorAxis.maxDecimals, markerEditor.numeratorAxis.trimZeros );
       }
       else {
         numeratorNode.string = '';
@@ -236,7 +224,7 @@ export default class MarkerEditorNode extends Node {
       if ( phet.chipper.queryParameters.showAnswers && !markerEditor.denominatorProperty.value ) {
         if ( numerator ) {
           const denominator = numerator / markerEditor.unitRateProperty.value;
-          denominatorNode.string = URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+          denominatorNode.string = URUtils.numberToString( denominator, markerEditor.denominatorAxis.maxDecimals, markerEditor.denominatorAxis.trimZeros );
         }
         else {
           denominatorNode.string = '';
@@ -252,7 +240,7 @@ export default class MarkerEditorNode extends Node {
 
       // update the denominator
       if ( denominator ) {
-        denominatorNode.string = URUtils.numberToString( denominator, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+        denominatorNode.string = URUtils.numberToString( denominator, markerEditor.denominatorAxis.maxDecimals, markerEditor.denominatorAxis.trimZeros );
       }
       else {
         denominatorNode.string = '';
@@ -264,7 +252,7 @@ export default class MarkerEditorNode extends Node {
       if ( phet.chipper.queryParameters.showAnswers && !markerEditor.numeratorProperty.value ) {
         if ( denominator ) {
           const numerator = denominator * markerEditor.unitRateProperty.value;
-          numeratorNode.string = URUtils.numberToString( numerator, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+          numeratorNode.string = URUtils.numberToString( numerator, markerEditor.numeratorAxis.maxDecimals, markerEditor.numeratorAxis.trimZeros );
         }
         else {
           numeratorNode.string = '';

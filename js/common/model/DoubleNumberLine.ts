@@ -12,36 +12,18 @@ import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import unitRates from '../../unitRates.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Marker from './Marker.js';
-import SunConstants from '../../../../sun/js/SunConstants.js';
+import Axis from './Axis.js';
 
 // Which of the axes has a fix (immutable) range
 const FixedAxisValues = [ 'numerator', 'denominator' ] as const;
 export type FixedAxis = ( typeof FixedAxisValues )[number];
 
-export type AxisOptions = {
-  units?: string; // units, used to label the axis
-  maxDecimals?: number; // maximum number of decimal places, integer >= 0
-  maxDigits?: number; // maximum number of digits on the keypad
-  trimZeros?: boolean; // whether to trim trailing zeros from decimal places
-  valueFormat?: string; // pattern used to display value for the axis
-};
-
-const DEFAULT_AXIS_OPTIONS = {
-  maxDecimals: 1,
-  maxDigits: 1,
-  trimZeros: false,
-  valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER
-};
-
 type SelfOptions = {
   fixedAxis?: FixedAxis; // which of the axes has a fixed (immutable) range
   fixedAxisRange?: Range; // range of the fixed axis
-  numeratorOptions?: AxisOptions; // options specific to the rate's numerator
-  denominatorOptions?: AxisOptions; // options specific to the rate's denominator
   isMajorMarker?: ( numerator: number, denominator: number ) => boolean; // determines whether a marker is major
 };
 
@@ -50,9 +32,9 @@ type DoubleNumberLineOptions = SelfOptions;
 export default class DoubleNumberLine {
 
   public readonly unitRateProperty: TReadOnlyProperty<number>;
+  public readonly numeratorAxis: Axis; // axis for the numerator (top) number line
+  public readonly denominatorAxis: Axis; // axis for the denominator (bottom) number line
   public readonly fixedAxis: FixedAxis; // which of the axes has a fixed range, see FIXED_AXIS_VALUES
-  public readonly numeratorOptions: AxisOptions; // options for the numerator (top) number line
-  public readonly denominatorOptions: AxisOptions; // options for the denominator (bottom) number line
   public readonly isMajorMarker: ( numerator: number, denominator: number ) => boolean; // determines whether a marker is major
   private readonly numeratorRangeProperty: TReadOnlyProperty<Range>;
   private readonly denominatorRangeProperty: TReadOnlyProperty<Range>;
@@ -63,9 +45,12 @@ export default class DoubleNumberLine {
   // Marker that can be removed by pressing the undo button. A single level of undo is supported.
   public readonly undoMarkerProperty: Property<Marker | null>;
 
-  public constructor( unitRateProperty: TReadOnlyProperty<number>, providedOptions?: DoubleNumberLineOptions ) {
+  public constructor( unitRateProperty: TReadOnlyProperty<number>,
+                      numeratorAxis: Axis,
+                      denominatorAxis: Axis,
+                      providedOptions?: DoubleNumberLineOptions ) {
 
-    const options = optionize<DoubleNumberLineOptions, StrictOmit<SelfOptions, 'numeratorOptions' | 'denominatorOptions'>>()( {
+    const options = optionize<DoubleNumberLineOptions, SelfOptions>()( {
 
       // SelfOptions
       fixedAxis: 'denominator',
@@ -74,9 +59,9 @@ export default class DoubleNumberLine {
     }, providedOptions );
 
     this.unitRateProperty = unitRateProperty;
+    this.numeratorAxis = numeratorAxis;
+    this.denominatorAxis = denominatorAxis;
     this.fixedAxis = options.fixedAxis;
-    this.numeratorOptions = combineOptions<AxisOptions>( {}, DEFAULT_AXIS_OPTIONS, options.numeratorOptions );
-    this.denominatorOptions = combineOptions<AxisOptions>( {}, DEFAULT_AXIS_OPTIONS, options.denominatorOptions );
     this.isMajorMarker = options.isMajorMarker;
 
     this.markers = createObservableArray();

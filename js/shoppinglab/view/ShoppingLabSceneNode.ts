@@ -31,9 +31,8 @@ export default class ShoppingLabSceneNode extends BaseShoppingSceneNode {
     const rateAccordionBox = new RateAccordionBox( shoppingScene.rate, {
       numeratorRange: URConstants.COST_RANGE,
       denominatorRange: URConstants.QUANTITY_RANGE,
-      numeratorUnits: shoppingScene.numeratorOptions.units,
-      numeratorPickerColor: shoppingScene.itemData.pickerColor,
-      denominatorUnits: shoppingScene.denominatorOptions.units,
+      numeratorUnits: shoppingScene.numeratorAxis.units,
+      denominatorUnits: shoppingScene.denominatorAxis.units,
       denominatorPickerColor: shoppingScene.itemData.pickerColor,
       expandedProperty: viewProperties.rateExpandedProperty,
       left: layoutBounds.left + URConstants.SCREEN_X_MARGIN,

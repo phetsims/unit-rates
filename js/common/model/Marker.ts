@@ -15,6 +15,7 @@ import Property from '../../../../axon/js/Property.js';
 import unitRates from '../../unitRates.js';
 import { Color } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import Axis from './Axis.js';
 
 // how the marker was created, values ordered by ascending precedence
 const CreatorValues = [ 'editor', 'scale', 'question', 'race' ] as const;
@@ -30,21 +31,28 @@ type MarkerOptions = SelfOptions;
 
 export default class Marker {
 
+  public readonly creator: Creator;
+  public readonly numeratorAxis: Axis;
+  public readonly denominatorAxis: Axis;
   public readonly numeratorProperty: NumberProperty;
   public readonly denominatorProperty: NumberProperty;
-  public readonly creator: Creator;
   public readonly isMajor: boolean;
   public readonly colorProperty: Property<Color | string>;
 
   public erasable: boolean;
 
   /**
+   * @param creator - indicates how the marker was created
    * @param numerator
    * @param denominator
-   * @param creator - indicates how the marker was created, see CREATOR_VALUES
+   * @param numeratorAxis
+   * @param denominatorAxis
    * @param [providedOptions]
    */
-  public constructor( numerator: number, denominator: number, creator: Creator, providedOptions?: MarkerOptions ) {
+  public constructor( creator: Creator,
+                      numerator: number, denominator: number,
+                      numeratorAxis: Axis, denominatorAxis: Axis,
+                      providedOptions?: MarkerOptions ) {
 
     const options = optionize<MarkerOptions, SelfOptions>()( {
 
@@ -54,9 +62,11 @@ export default class Marker {
       erasable: true
     }, providedOptions );
 
+    this.creator = creator;
+    this.numeratorAxis = numeratorAxis;
+    this.denominatorAxis = denominatorAxis;
     this.numeratorProperty = new NumberProperty( numerator );
     this.denominatorProperty = new NumberProperty( denominator );
-    this.creator = creator;
     this.isMajor = options.isMajor;
     this.colorProperty = new Property( options.color );
     this.erasable = options.erasable;

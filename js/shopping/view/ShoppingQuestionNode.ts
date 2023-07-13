@@ -67,14 +67,7 @@ export default class ShoppingQuestionNode extends Node {
 
     // local vars to improve readability
     const answer = question.answer;
-    const answerOptions = question.answerOptions;
-
-    const valueFormat = answerOptions.valueFormat!;
-    assert && assert( valueFormat !== undefined );
-    const maxDecimals = answerOptions.maxDecimals!;
-    assert && assert( maxDecimals !== undefined );
-    const trimZeros = answerOptions.trimZeros!;
-    assert && assert( trimZeros !== undefined );
+    const answerAxis = question.answerAxis;
 
     // box that is either empty or displays an incorrect value
     const valueBoxWidth = options.valueBoxWidth;
@@ -178,14 +171,14 @@ export default class ShoppingQuestionNode extends Node {
 
       // update the guess
       if ( guess !== null ) {
-        guessNode.string = URUtils.formatNumber( valueFormat, guess, maxDecimals, trimZeros );
+        guessNode.string = URUtils.formatNumber( answerAxis.valueFormat, guess, answerAxis.maxDecimals, answerAxis.trimZeros );
         guessNode.fill = correct ? URColors.correctQuestion : URColors.incorrectQuestion;
       }
       else if ( phet.chipper.queryParameters.showAnswers ) {
 
         // show the answer, if query parameter is set
-        guessNode.string = URUtils.formatNumber( valueFormat, answer, maxDecimals, trimZeros );
-        guessNode.string = URUtils.formatNumber( valueFormat, answer, maxDecimals, trimZeros );
+        guessNode.string = URUtils.formatNumber( answerAxis.valueFormat, answer, answerAxis.maxDecimals, answerAxis.trimZeros );
+        guessNode.string = URUtils.formatNumber( answerAxis.valueFormat, answer, answerAxis.maxDecimals, answerAxis.trimZeros );
         guessNode.fill = URColors.showAnswers;
       }
       else {
@@ -232,8 +225,8 @@ export default class ShoppingQuestionNode extends Node {
         onBeginEdit: onBeginEdit,
         onEndEdit: onEndEdit,
         setKeypadPanelPosition: setKeypadPanelPosition,
-        maxDigits: answerOptions.maxDigits,
-        maxDecimals: answerOptions.maxDecimals
+        maxDigits: answerAxis.maxDigits,
+        maxDecimals: answerAxis.maxDecimals
       } );
     };
 

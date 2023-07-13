@@ -37,7 +37,7 @@ export default class CandyScene extends ShoppingScene {
       // This hack was required by https://github.com/phetsims/unit-rates/issues/20
       amountOfQuestionUnits: UnitRatesStrings.poundsCapitalized,
 
-      denominatorOptions: {
+      denominatorAxisOptions: {
         units: UnitRatesStrings.pounds
       },
 

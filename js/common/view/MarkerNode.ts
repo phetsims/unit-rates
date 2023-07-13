@@ -12,22 +12,13 @@ import unitRates from '../../unitRates.js';
 import URConstants from '../URConstants.js';
 import URUtils from '../URUtils.js';
 import Marker from '../model/Marker.js';
-import { DenominatorOptions, NumeratorOptions } from '../../shopping/model/ShoppingQuestionFactory.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-
-const SHARED_OPTIONS = {
-  maxDecimals: 2, // {number} maximum number of decimal places
-  trimZeros: false // {boolean} whether to trim trailing zeros in the decimal places
-};
+import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
   ySpacing?: number;
   font?: PhetFont;
   lineLength?: number;
   lineWidth?: number;
-  numeratorOptions?: NumeratorOptions;
-  denominatorOptions?: DenominatorOptions;
 };
 
 export type MarkerNodeOptions = SelfOptions & NodeTranslationOptions;
@@ -39,7 +30,7 @@ export default class MarkerNode extends Node {
 
   public constructor( marker: Marker, providedOptions?: MarkerNodeOptions ) {
 
-    const options = optionize<MarkerNodeOptions, StrictOmit<SelfOptions, 'numeratorOptions' | 'denominatorOptions'>, NodeOptions>()( {
+    const options = optionize<MarkerNodeOptions, SelfOptions, NodeOptions>()( {
 
       // SelfOptions
       ySpacing: 1,
@@ -47,9 +38,6 @@ export default class MarkerNode extends Node {
       lineLength: URConstants.MAJOR_MARKER_LENGTH,
       lineWidth: 1
     }, providedOptions );
-
-    const numeratorOptions = combineOptions<NumeratorOptions>( {}, SHARED_OPTIONS, options.numeratorOptions );
-    const denominatorOptions = combineOptions<DenominatorOptions>( {}, SHARED_OPTIONS, options.denominatorOptions );
 
     // vertical line
     const lineNode = new Line( 0, 0, 0, options.lineLength, {
@@ -59,7 +47,7 @@ export default class MarkerNode extends Node {
     // numerator
     const numeratorNode = new Text( '', { font: options.font } );
     const numeratorObserver = ( numerator: number ) => {
-      numeratorNode.string = URUtils.numberToString( marker.numeratorProperty.value, numeratorOptions.maxDecimals, numeratorOptions.trimZeros );
+      numeratorNode.string = URUtils.numberToString( numerator, marker.numeratorAxis.maxDecimals, marker.numeratorAxis.trimZeros );
       numeratorNode.centerX = lineNode.centerX;
       numeratorNode.bottom = lineNode.top - options.ySpacing;
     };
@@ -68,7 +56,7 @@ export default class MarkerNode extends Node {
     // denominator
     const denominatorNode = new Text( '', { font: options.font } );
     const denominatorObserver = ( denominator: number ) => {
-      denominatorNode.string = URUtils.numberToString( marker.denominatorProperty.value, denominatorOptions.maxDecimals, denominatorOptions.trimZeros );
+      denominatorNode.string = URUtils.numberToString( denominator, marker.denominatorAxis.maxDecimals, marker.denominatorAxis.trimZeros );
       denominatorNode.centerX = lineNode.centerX;
       denominatorNode.top = lineNode.bottom + options.ySpacing;
     };
