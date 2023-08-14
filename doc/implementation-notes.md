@@ -4,9 +4,9 @@ This document contains miscellaneous notes related to the implementation of Unit
 supplements the internal (source code) documentation, and (hopefully) provides insight into
 "big picture" implementation issues.  The audience for this document is software developers who are familiar
 with JavaScript and PhET simulation development (as described in [PhET Development Overview]
-(https://github.com/phetsims/phet-info/blob/master/doc/phet-development-overview.md)).
+(https://github.com/phetsims/phet-info/blob/main/doc/phet-development-overview.md)).
 
-First, read [model.md](https://github.com/phetsims/unit-rates/blob/master/doc/model.md), which provides
+First, read [model.md](https://github.com/phetsims/unit-rates/blob/main/doc/model.md), which provides
 a high-level description of the simulation model.
 
 ## Terminology
@@ -65,7 +65,7 @@ in `DoubleNumberLine`. For the race track, see `modelToView` in `RaceTrackNode`.
 
 **Query parameters**: Query parameters are used to enable sim-specific features, mainly for debugging and
 testing. All such query parameters are documented in
-[URQueryParameters](https://github.com/phetsims/unit-rates/blob/master/js/common/URQueryParameters.js).
+[URQueryParameters](https://github.com/phetsims/unit-rates/blob/main/js/common/URQueryParameters.js).
 
 **Nested options**: In this simulation, I tried a new pattern for nesting options. It allows clients to specify only the nested options 
 that they wish to override.  The pattern is used throughout the sim, mostly for specifying options related to a rate's numerator and denominator
@@ -95,7 +95,7 @@ See `Marker.CREATOR_VALUES` for the list of marker creators and their precedence
 creating corresponding markers, and animating the marker editor.
 
 **Rounding**: Values associated with marker terms are necessarily rounded to a specific number of decimal places, as described in the table that appears
-in [model.md](https://github.com/phetsims/unit-rates/blob/master/doc/model.md). Because values are rounded, it's possible to have 2 markers that
+in [model.md](https://github.com/phetsims/unit-rates/blob/main/doc/model.md). Because values are rounded, it's possible to have 2 markers that
 have the same value for one term, and different values for the other term. We say that these markers "conflict".  When this situation occurs, 
 the older marker is replaced by the newer marker (subject to the marker precedence rules).  See `Marker.conflictsWith` for details on 
 conflicting markers.
