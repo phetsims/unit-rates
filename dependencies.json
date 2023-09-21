@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.0.26 Wed May 10 2023 13:50:22 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# unit-rates 1.0.27-rc.1 Wed Sep 20 2023 23:50:43 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "a707328cc11048787a807714496af23e0bd25be1",
     "branch": "HEAD"
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "0ffc283a5976282bac305ad668e1e8caee6600f4",
+    "sha": "975d6bde76285da3b0ea26c2155115457777fc11",
     "branch": "1.0"
   }
 }
