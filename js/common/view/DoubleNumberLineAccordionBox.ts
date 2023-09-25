@@ -112,7 +112,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
         fill: 'black'
       } ),
       visible: false,
-      baseColor: URColors.undoButton,
+      baseColor: URColors.undoButtonColorProperty,
       listener: () => {
         if ( undoAppliesToEditor ) {
           markerEditor.reset();
@@ -128,7 +128,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
     // Pressing the eraser button erases all 'erasable' markers from the double number line.
     const eraserButton = new EraserButton( {
       scale: 0.92, // to approximately match height of marker editor buttons, determined empirically
-      baseColor: URColors.eraserButton,
+      baseColor: URColors.eraserButtonColorProperty,
       listener: () => doubleNumberLine.erase(),
       right: doubleNumberLineNode.right,
       bottom: markerEditorNode.bottom

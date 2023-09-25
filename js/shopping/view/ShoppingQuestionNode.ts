@@ -86,7 +86,7 @@ export default class ShoppingQuestionNode extends Node {
         scale: URConstants.EDIT_ICON_SCALE,
         fill: 'black'
       } ),
-      baseColor: URColors.editButton,
+      baseColor: URColors.editButtonColorProperty,
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY
     } );

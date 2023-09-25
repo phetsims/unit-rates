@@ -90,7 +90,7 @@ export default class ShoppingQuestionsAccordionBox extends AccordionBox {
       iconHeight: 14,
       xMargin: 10,
       yMargin: 5,
-      baseColor: URColors.refreshButton,
+      baseColor: URColors.refreshButtonColorProperty,
       listener: () => shoppingScene.nextQuestionSet()
     } );
     refreshButton.touchArea = refreshButton.localBounds.dilatedXY( 5, 5 );

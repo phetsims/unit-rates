@@ -78,7 +78,7 @@ export default class BaseShoppingSceneNode extends Node {
         dragLayer.interruptSubtreeInput();
         shoppingScene.resetShelfAndScale();
       },
-      baseColor: URColors.resetShelfButton,
+      baseColor: URColors.resetShelfButtonColorProperty,
       scale: 0.65,
       touchAreaDilation: 5,
       right: scaleNode.left,

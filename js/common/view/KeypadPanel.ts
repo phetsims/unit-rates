@@ -90,7 +90,7 @@ export default class KeypadPanel extends Panel {
 
     const enterButton = new RectangularPushButton( {
       listener: options.enterButtonListener,
-      baseColor: URColors.enterButton,
+      baseColor: URColors.enterButtonColorProperty,
       content: new Text( UnitRatesStrings.enterStringProperty, {
         font: new PhetFont( 16 ),
         fill: 'black',

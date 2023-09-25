@@ -119,7 +119,7 @@ export default class MarkerEditorNode extends Node {
         scale: URConstants.EDIT_ICON_SCALE,
         fill: 'black'
       } ),
-      baseColor: URColors.editButton,
+      baseColor: URColors.editButtonColorProperty,
       centerX: verticalLine.centerX,
       bottom: numeratorBox.top - options.ySpacing
     } );
@@ -132,7 +132,7 @@ export default class MarkerEditorNode extends Node {
         scale: URConstants.EDIT_ICON_SCALE,
         fill: 'black'
       } ),
-      baseColor: URColors.editButton,
+      baseColor: URColors.editButtonColorProperty,
       centerX: verticalLine.centerX,
       top: denominatorBox.bottom + options.ySpacing
     } );

@@ -30,7 +30,7 @@ export default class ShoppingCategoryRadioButtonGroup extends RectangularRadioBu
       orientation: 'horizontal',
       spacing: 12,
       radioButtonOptions: {
-        baseColor: URColors.categoryButton,
+        baseColor: URColors.categoryButtonColorProperty,
         xMargin: 5,
         yMargin: 5
       }

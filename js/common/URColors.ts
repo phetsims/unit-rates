@@ -24,13 +24,27 @@ const URColors = {
   } ),
 
   // buttons
-  categoryButton: 'white',
-  editButton: 'yellow',
-  enterButton: 'yellow',
-  eraserButton: DEFAULT_BUTTON_COLOR,
-  refreshButton: DEFAULT_BUTTON_COLOR,
-  undoButton: DEFAULT_BUTTON_COLOR,
-  resetShelfButton: DEFAULT_BUTTON_COLOR,
+  categoryButtonColorProperty: new ProfileColorProperty( unitRates, 'categoryButtonColor', {
+    default: 'white'
+  } ),
+  editButtonColorProperty: new ProfileColorProperty( unitRates, 'editButtonColor', {
+    default: 'yellow'
+  } ),
+  enterButtonColorProperty: new ProfileColorProperty( unitRates, 'enterButtonColor', {
+    default: 'yellow'
+  } ),
+  eraserButtonColorProperty: new ProfileColorProperty( unitRates, 'eraserButtonColor', {
+    default: DEFAULT_BUTTON_COLOR
+  } ),
+  refreshButtonColorProperty: new ProfileColorProperty( unitRates, 'refreshButtonColor', {
+    default: DEFAULT_BUTTON_COLOR
+  } ),
+  undoButtonColorProperty: new ProfileColorProperty( unitRates, 'undoButtonColor', {
+    default: DEFAULT_BUTTON_COLOR
+  } ),
+  resetShelfButtonColorProperty: new ProfileColorProperty( unitRates, 'resetShelfButtonColor', {
+    default: DEFAULT_BUTTON_COLOR
+  } ),
 
   // markers
   questionMarker: 'green', // markers created by answering questions
