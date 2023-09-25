@@ -48,12 +48,20 @@ const URColors = {
   showAnswers: 'lightGray', // show answers in this color when 'showAnswers' query parameter is present
 
   // shelf
-  shelf: 'rgb( 232, 201, 166 )', // light brown
+  shelfColorProperty: new ProfileColorProperty( unitRates, 'shelfColor', {
+    default: 'rgb( 232, 201, 166 )' // light brown
+  } ),
 
   // scale
-  scaleTopLight: 'white',
-  scaleTopDark: 'rgb( 220, 220, 220 )',
-  scaleBody: 'rgb( 113, 148, 152 )',
+  scaleTopLightColorProperty: new ProfileColorProperty( unitRates, 'scaleTopLightColor', {
+    default: 'white'
+  } ),
+  scaleTopDarkColorProperty: new ProfileColorProperty( unitRates, 'scaleTopDarkColor', {
+    default: 'rgb( 220, 220, 220 )'
+  } ),
+  scaleBodyColorProperty: new ProfileColorProperty( unitRates, 'scaleBodyColor', {
+    default: 'rgb( 113, 148, 152 )'
+  } ),
 
   // race cars
   car1: 'rgb( 236, 22, 44 )',  // red car, must match redCar.png

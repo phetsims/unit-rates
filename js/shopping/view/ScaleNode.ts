@@ -65,9 +65,9 @@ export default class ScaleNode extends Node {
 
     const topFaceNode = new Path( topFaceShape, {
       fill: new LinearGradient( -topRadiusX / 2, -topRadiusX / 2, topRadiusX / 2, topRadiusX / 2 )
-        .addColorStop( 0, URColors.scaleTopLight )
-        .addColorStop( 0.5, URColors.scaleTopDark )
-        .addColorStop( 1, URColors.scaleTopLight ),
+        .addColorStop( 0, URColors.scaleTopLightColorProperty )
+        .addColorStop( 0.5, URColors.scaleTopDarkColorProperty )
+        .addColorStop( 1, URColors.scaleTopLightColorProperty ),
       stroke: 'black'
     } );
     const topSideNode = new Path( topSideShape, {
@@ -103,7 +103,7 @@ export default class ScaleNode extends Node {
 
     // origin at center of top face
     const bodyNode = new Path( bodyShape, {
-      fill: URColors.scaleBody,
+      fill: URColors.scaleBodyColorProperty,
       stroke: 'black',
       lineJoin: 'round',
       centerX: topNode.centerX,

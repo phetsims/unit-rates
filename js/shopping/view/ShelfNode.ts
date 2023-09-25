@@ -33,7 +33,7 @@ export default class ShelfNode extends Node {
 
     // origin at center of top face
     const shelfNode = new Path( shelfShape, {
-      fill: URColors.shelf,
+      fill: URColors.shelfColorProperty,
       stroke: 'black',
       lineJoin: 'round',
       x: -foregroundWidth / 2,
