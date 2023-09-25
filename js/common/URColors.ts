@@ -51,8 +51,8 @@ const URColors = {
   scaleBody: 'rgb( 113, 148, 152 )',
 
   // race cars
-  car1: 'rgb( 236, 22, 44 )',  // red car
-  car2: 'rgb( 0, 143, 204 )' // blue car
+  car1: 'rgb( 236, 22, 44 )',  // red car, must match redCar.png
+  car2: 'rgb( 0, 143, 204 )' // blue car, must match blueCar.png
 };
 
 unitRates.register( 'URColors', URColors );
