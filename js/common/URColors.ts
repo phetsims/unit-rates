@@ -63,7 +63,7 @@ const URColors = {
     default: 'rgb( 113, 148, 152 )'
   } ),
 
-  // race cars
+  // Car colors must match PNG files, so they are not editable via Color Editor.
   car1: 'rgb( 236, 22, 44 )',  // red car, must match redCar.png
   car2: 'rgb( 0, 143, 204 )' // blue car, must match blueCar.png
 };
