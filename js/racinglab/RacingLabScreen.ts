@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Property from '../../../axon/js/Property.js';
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
@@ -25,7 +24,7 @@ export default class RacingLabScreen extends Screen<RacingLabModel, RacingLabScr
 
     const options: ScreenOptions = {
       name: UnitRatesStrings.screen.racingLabStringProperty,
-      backgroundColorProperty: new Property( URColors.racingLabScreenBackground ),
+      backgroundColorProperty: URColors.racingLabScreenBackgroundColorProperty,
       homeScreenIcon: new ScreenIcon( new Image( racingLabScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1

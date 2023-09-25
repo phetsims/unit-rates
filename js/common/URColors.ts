@@ -7,6 +7,7 @@
  */
 
 import unitRates from '../unitRates.js';
+import { ProfileColorProperty } from '../../../scenery/js/imports.js';
 
 // constants
 const DEFAULT_BUTTON_COLOR = 'rgb( 242, 242, 242 )';
@@ -15,8 +16,12 @@ const DEFAULT_BUTTON_COLOR = 'rgb( 242, 242, 242 )';
 const URColors = {
 
   // screens
-  shoppingScreenBackground: 'rgb( 226, 255, 249 )',
-  racingLabScreenBackground: 'rgb( 233, 242, 254 )',
+  shoppingScreenBackgroundColorProperty: new ProfileColorProperty( unitRates, 'shoppingScreenBackgroundColor', {
+    default: 'rgb( 226, 255, 249 )'
+  } ),
+  racingLabScreenBackgroundColorProperty: new ProfileColorProperty( unitRates, 'racingLabScreenBackgroundColor', {
+    default: 'rgb( 233, 242, 254 )'
+  } ),
 
   // buttons
   categoryButton: 'white',

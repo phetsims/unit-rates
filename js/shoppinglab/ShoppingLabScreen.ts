@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Property from '../../../axon/js/Property.js';
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
@@ -25,7 +24,7 @@ export default class ShoppingLabScreen extends Screen<ShoppingLabModel, Shopping
 
     const options: ScreenOptions = {
       name: UnitRatesStrings.screen.shoppingLabStringProperty,
-      backgroundColorProperty: new Property( URColors.shoppingScreenBackground ),
+      backgroundColorProperty: URColors.shoppingScreenBackgroundColorProperty,
       homeScreenIcon: new ScreenIcon( new Image( shoppingLabScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
