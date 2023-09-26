@@ -46,13 +46,12 @@ const URColors = {
     default: DEFAULT_BUTTON_COLOR
   } ),
 
-  // markers
+  // markers & marker editor
+  // These are problematic to convert to ProfileColorProperty, so leave as is unless there's a strong need.
   questionMarker: 'green', // markers created by answering questions
   scaleMarker: 'blue', // marker that corresponds to what's on the scale
   majorMarker: 'black', // major marker created by using editor or by putting things on the scale
   minorMarker: 'gray', // minor markers created by using editor
-
-  // marker editor
   edit: 'yellow', // corresponding value box is filled with this color while editing
 
   // questions
