@@ -69,7 +69,8 @@ const URColors = {
     default: 'red'
   } ),
 
-  showAnswers: 'lightGray', // show answers in this color when 'showAnswers' query parameter is present
+  // Show answers in this color when 'showAnswers' query parameter is present. No need for ProfileColorProperty.
+  showAnswers: 'lightGray',
 
   // shelf
   shelfColorProperty: new ProfileColorProperty( unitRates, 'shelfColor', {
