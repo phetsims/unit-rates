@@ -56,9 +56,19 @@ const URColors = {
   edit: 'yellow', // corresponding value box is filled with this color while editing
 
   // questions
-  checkMark: 'green', // check mark for correct answers
-  correctQuestion: 'green', // correct answer for other questions
-  incorrectQuestion: 'red', // incorrect guess
+  // check mark for correct answers
+  checkMarkColorProperty: new ProfileColorProperty( unitRates, 'checkMarkColor', {
+    default: 'green'
+  } ),
+  // correct answer for other questions
+  correctQuestionColorProperty: new ProfileColorProperty( unitRates, 'correctQuestionColor', {
+    default: 'green'
+  } ),
+  // incorrect guess
+  incorrectQuestionColorProperty: new ProfileColorProperty( unitRates, 'incorrectQuestionColor', {
+    default: 'red'
+  } ),
+
   showAnswers: 'lightGray', // show answers in this color when 'showAnswers' query parameter is present
 
   // shelf

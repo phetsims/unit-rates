@@ -9,7 +9,7 @@
  */
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Color, FireListener, HStrut, Line, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { FireListener, HStrut, Line, Node, NodeOptions, Path, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
 import checkSolidShape from '../../../../sherpa/js/fontawesome-5/checkSolidShape.js';
 import editRegularShape from '../../../../sherpa/js/fontawesome-5/editRegularShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
@@ -25,7 +25,7 @@ import KeypadPanel from '../../common/view/KeypadPanel.js';
 type SelfOptions = {
   valueBoxWidth?: number; // width of the value field, height determined by valueFont
   denominatorVisible?: boolean; // is the denominator visible before the answer is visible?
-  neutralColor?: Color | string; // color for UI elements that are agnostic about whether the guess is correct
+  neutralColor?: TColor; // color for UI elements that are agnostic about whether the guess is correct
   questionFont?: PhetFont; // font for the question
   valueFont?: PhetFont; // font for the value
   valueYMargin?: number; // vertical margin inside the value box
@@ -104,7 +104,7 @@ export default class ShoppingQuestionNode extends Node {
     // check mark to right of box, to indicate that the question has been correctly answered
     const checkMarkNode = new Path( checkSolidShape, {
       scale: 0.06,
-      fill: URColors.checkMark,
+      fill: URColors.checkMarkColorProperty,
       left: valueBox.right + options.xSpacing,
       centerY: valueBox.centerY,
       visible: false
@@ -132,7 +132,7 @@ export default class ShoppingQuestionNode extends Node {
 
     // numerator in the revealed answer, replaces the box when the answer is correct
     const numeratorNode = new Text( question.numeratorString, {
-      fill: URColors.correctQuestion,
+      fill: URColors.correctQuestionColorProperty,
       font: options.valueFont,
       center: valueBox.center,
       visible: false,
@@ -172,7 +172,7 @@ export default class ShoppingQuestionNode extends Node {
       // update the guess
       if ( guess !== null ) {
         guessNode.string = URUtils.formatNumber( answerAxis.valueFormat, guess, answerAxis.maxDecimals, answerAxis.trimZeros );
-        guessNode.fill = correct ? URColors.correctQuestion : URColors.incorrectQuestion;
+        guessNode.fill = correct ? URColors.correctQuestionColorProperty : URColors.incorrectQuestionColorProperty;
       }
       else if ( phet.chipper.queryParameters.showAnswers ) {
 
@@ -192,7 +192,7 @@ export default class ShoppingQuestionNode extends Node {
       valueBox.visible = !correct;
       checkMarkNode.visible = correct;
       numeratorNode.visible = correct;
-      fractionLineNode.stroke = denominatorNode.fill = ( correct ? URColors.correctQuestion : options.neutralColor );
+      fractionLineNode.stroke = denominatorNode.fill = ( correct ? URColors.correctQuestionColorProperty : options.neutralColor );
 
       // The denominator is sometimes visible at all times (e.g. for the 'Unit Rate?' question).
       // If it's not visible at all times, make it visible when the answer is revealed.
