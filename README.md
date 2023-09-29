@@ -8,8 +8,8 @@ published version,
 
 ### Try it!
 
-<a href="https://phet.colorado.edu/sims/html/unit-rates/latest/unit-rates_en.html" target="_blank">Click here to run "
-Unit Rates".</a>
+<a href="https://phet.colorado.edu/sims/html/unit-rates/latest/unit-rates_en.html" target="_blank">Click here to
+run "Unit Rates".</a>
 
 <a href="https://phet.colorado.edu/sims/html/unit-rates/latest/unit-rates_en.html" target="_blank">
 <img src="https://raw.githubusercontent.com/phetsims/unit-rates/main/assets/unit-rates-screenshot.png" alt="Screenshot" style="width: 400px;"/>
@@ -68,8 +68,8 @@ new or changed files.
 
 (4) In a new terminal/command prompt, start an http-server
 
-(5) Open in the browser: `http://localhost/unit-rates/unit-rates_en.html` (You will probably need to modify this URL
-based on your HTTP port and relative path.)
+(5) Open in the browser: `http://localhost/unit-rates/unit-rates_en.html` (You will probably need to modify this
+URL based on your HTTP port and relative path.)
 
 #### Optional: Build the simulation into a single file
 
@@ -79,8 +79,9 @@ based on your HTTP port and relative path.)
 like `>> WARNING404: Skipping potentially non-public dependency`, which indicate that non-public PhET-iO code is not
 being included in the build.
 
-(3) Open in the browser: `http://localhost/unit-rates/build/adapted-from-phet/unit-rates_en_adapted-from-phet.html` (You
-will probably need to modify this URL based on your HTTP port and relative path.)
+(3) Open in the
+browser: `http://localhost/unit-rates/build/adapted-from-phet/unit-rates_en_adapted-from-phet.html` (You will
+probably need to modify this URL based on your HTTP port and relative path.)
 
 ### Get Involved
 
