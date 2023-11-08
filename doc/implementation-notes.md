@@ -65,7 +65,7 @@ in `DoubleNumberLine`. For the race track, see `modelToView` in `RaceTrackNode`.
 
 **Query parameters**: Query parameters are used to enable sim-specific features, mainly for debugging and testing. All
 such query parameters are documented in
-[URQueryParameters](https://github.com/phetsims/unit-rates/blob/main/js/common/URQueryParameters.js).
+[URQueryParameters](https://github.com/phetsims/unit-rates/blob/main/js/common/URQueryParameters.ts).
 
 **Nested options**: In this simulation, I tried a new pattern for nesting options. It allows clients to specify only the
 nested options that they wish to override. The pattern is used throughout the sim, mostly for specifying options related
