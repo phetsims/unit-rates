@@ -73,6 +73,8 @@ export default class Scale extends ShoppingContainer {
         else {
           return this.quantityProperty.value;
         }
+      }, {
+        accessNonDependencies: true
       } );
 
     this.costProperty = new DerivedProperty(
