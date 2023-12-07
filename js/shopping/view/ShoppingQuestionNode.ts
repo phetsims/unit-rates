@@ -21,6 +21,7 @@ import ShoppingQuestion from '../model/ShoppingQuestion.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import KeypadPanel from '../../common/view/KeypadPanel.js';
+import AccordionBox from '../../../../sun/js/AccordionBox.js';
 
 type SelfOptions = {
   valueBoxWidth?: number; // width of the value field, height determined by valueFont
@@ -42,11 +43,11 @@ export default class ShoppingQuestionNode extends Node {
 
   /**
    * @param question - model element for the question
-   * @param questionsPanel - panel that contains the question, for positioning the keypad
+   * @param questionsAccordionBox - accordion box that contains the question, for positioning the keypad
    * @param keypadLayer - layer that manages the keypad
    * @param [providedOptions]
    */
-  public constructor( question: ShoppingQuestion, questionsPanel: Node, keypadLayer: KeypadLayer,
+  public constructor( question: ShoppingQuestion, questionsAccordionBox: AccordionBox, keypadLayer: KeypadLayer,
                       providedOptions?: ShoppingQuestionNodeOptions ) {
 
     const options = optionize<ShoppingQuestionNodeOptions, SelfOptions, NodeOptions>()( {
@@ -214,9 +215,9 @@ export default class ShoppingQuestionNode extends Node {
 
     // position the keypad relative to the Questions panel
     const setKeypadPanelPosition = ( keypadPanel: KeypadPanel ) => {
-      const questionsPanelBounds = keypadPanel.globalToParentBounds( questionsPanel.localToGlobalBounds( questionsPanel.localBounds ) );
-      keypadPanel.right = questionsPanelBounds.left - 10;
-      keypadPanel.bottom = questionsPanelBounds.bottom;
+      const questionsAccordionBoxBounds = keypadPanel.globalToParentBounds( questionsAccordionBox.localToGlobalBounds( questionsAccordionBox.localBounds ) );
+      keypadPanel.right = questionsAccordionBoxBounds.left - 10;
+      keypadPanel.bottom = questionsAccordionBoxBounds.bottom;
     };
 
     // opens a keypad to edit the user's guess

@@ -27,12 +27,14 @@ export default class ShoppingSceneNode extends BaseShoppingSceneNode {
 
     // Questions, dispose required
     const questionsAccordionBox = new ShoppingQuestionsAccordionBox( shoppingScene, keypadLayer, {
-      expandedProperty: viewProperties.questionsExpandedProperty,
-      right: layoutBounds.right - URConstants.SCREEN_X_MARGIN,
-      top: this.doubleNumberLineAccordionBox.bottom + 10
+      expandedProperty: viewProperties.questionsExpandedProperty
     } );
     this.addChild( questionsAccordionBox );
     questionsAccordionBox.moveToBack();
+    questionsAccordionBox.boundsProperty.link( () => {
+      questionsAccordionBox.right = layoutBounds.right - URConstants.SCREEN_X_MARGIN;
+      questionsAccordionBox.top = this.doubleNumberLineAccordionBox.bottom + 10;
+    } );
 
     this.disposeShoppingSceneNode = () => {
       questionsAccordionBox.dispose();

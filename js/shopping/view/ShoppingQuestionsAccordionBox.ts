@@ -8,7 +8,7 @@
  */
 
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
-import { NodeTranslationOptions, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Text, VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
@@ -25,7 +25,7 @@ type SelfOptions = {
   vBoxSpacing?: number; // vertical spacing between UI elements in the accordion box's content
 };
 
-type ShoppingQuestionsAccordionBoxOptions = SelfOptions & NodeTranslationOptions & PickRequired<AccordionBox, 'expandedProperty'>;
+type ShoppingQuestionsAccordionBoxOptions = SelfOptions & PickRequired<AccordionBox, 'expandedProperty'>;
 
 export default class ShoppingQuestionsAccordionBox extends AccordionBox {
 
@@ -51,40 +51,6 @@ export default class ShoppingQuestionsAccordionBox extends AccordionBox {
         } )
       }, providedOptions );
 
-    // An invisible rectangle that has the same bounds as the accordion box. Used to position the keypad.
-    // Dimensions will be set after calling super.  This was added so when converting to an ES6 class, because
-    // we can't use this before super.  See https://github.com/phetsims/tasks/issues/1026#issuecomment-594357784
-    const thisBoundsNode = new Rectangle( 0, 0, 1, 1, {
-      visible: false,
-      pickable: false
-    } );
-
-    // 'Unit Rate?' question, dispose required.
-    // This question is separate because it does not change when the refresh button is pressed.
-    const unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, thisBoundsNode, keypadLayer, {
-      denominatorVisible: true
-    } );
-
-    // Below the 'Unit Rate?' question is a set of questions that change when the refresh button is pressed.
-    const questionsParent = new VBox( {
-      align: 'right',
-      spacing: options.vBoxSpacing
-    } );
-    const questionSetObserver = ( questionSet: ShoppingQuestion[] ) => {
-
-      // remove previous questions
-      questionsParent.getChildren().forEach( child => child.dispose() );
-      questionsParent.removeAllChildren();
-
-      // add new questions, dispose required
-      const questionNodes = [];
-      for ( let i = 0; i < questionSet.length; i++ ) {
-        questionNodes.push( new ShoppingQuestionNode( questionSet[ i ], thisBoundsNode, keypadLayer ) );
-      }
-      questionsParent.setChildren( questionNodes );
-    };
-    shoppingScene.questionSetProperty.link( questionSetObserver ); // unlink in dispose
-
     // Refresh button, advances to the next question set
     const refreshButton = new RefreshButton( {
       iconHeight: 14,
@@ -95,34 +61,54 @@ export default class ShoppingQuestionsAccordionBox extends AccordionBox {
     } );
     refreshButton.touchArea = refreshButton.localBounds.dilatedXY( 5, 5 );
 
+    const questionsVBox = new VBox( {
+      spacing: options.vBoxSpacing,
+      align: 'right'
+    } );
+
     // AccordionBox content
     const contentNode = new VBox( {
       spacing: 0, // no space here, we want refreshButton snug against bottom question
       align: 'left',
       children: [
-        new VBox( {
-          spacing: options.vBoxSpacing,
-          align: 'right',
-          children: [
-            unitRateQuestionNode,
-            questionsParent
-          ]
-        } ),
+        questionsVBox,
         refreshButton
       ]
     } );
 
     super( contentNode, options );
 
-    // Adjust rectangle to match accordion box size.
-    thisBoundsNode.setRectBounds( this.localBounds );
-    this.addChild( thisBoundsNode );
-    thisBoundsNode.moveToBack();
+    // 'Unit Rate?' question, dispose required.
+    // This question is separate because it does not change when the refresh button is pressed.
+    const unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, this, keypadLayer, {
+      denominatorVisible: true
+    } );
+
+    // Below the 'Unit Rate?' question is a set of questions that change when the refresh button is pressed.
+    const dynamicQuestionNodes: ShoppingQuestionNode[] = [];
+    const questionSetObserver = ( questionSet: ShoppingQuestion[] ) => {
+
+      // remove previous questions
+      dynamicQuestionNodes.forEach( node => node.dispose() );
+      dynamicQuestionNodes.length = 0;
+
+      // add new questions, dispose required
+      for ( let i = 0; i < questionSet.length; i++ ) {
+        dynamicQuestionNodes.push( new ShoppingQuestionNode( questionSet[ i ], this, keypadLayer ) );
+      }
+
+      questionsVBox.children = [
+        unitRateQuestionNode,
+        ...dynamicQuestionNodes
+      ];
+    };
+    shoppingScene.questionSetProperty.link( questionSetObserver ); // unlink in dispose
 
     this.disposeShoppingQuestionsAccordionBox = () => {
       shoppingScene.questionSetProperty.unlink( questionSetObserver );
       unitRateQuestionNode.dispose();
-      questionsParent.getChildren().forEach( child => child.dispose() );
+      dynamicQuestionNodes.forEach( node => node.dispose() );
+      dynamicQuestionNodes.length = 0;
       refreshButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
   }
