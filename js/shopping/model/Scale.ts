@@ -74,7 +74,7 @@ export default class Scale extends ShoppingContainer {
           return this.quantityProperty.value;
         }
       }, {
-        accessNonDependencies: true //TODO https://github.com/phetsims/unit-rates/issues/223 dependency on itself
+        accessNonDependencies: true // see https://github.com/phetsims/unit-rates/issues/223#issuecomment-1861776252
       } );
 
     this.costProperty = new DerivedProperty(
