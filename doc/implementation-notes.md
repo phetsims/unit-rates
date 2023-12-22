@@ -73,12 +73,12 @@ to a rate's numerator and denominator
 (e.g. in `DoubleNumberLine`). The general pattern is:
 
 ```js
-options = _.extend( {
+options = _.assignIn( {
   nestedOptions: null, // {*} to be filled in with defaults below
   ...
 }, options );
 
-options.nestedOptions = _.extend( {
+options.nestedOptions = _.assignIn( {
   // default values go here
 }, options.nestedOptions );
 ```
