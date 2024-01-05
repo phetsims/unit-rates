@@ -8,6 +8,8 @@
  * - If cost has fewer than 3 decimals, then 3rd decimal is not displayed
  * - If 3rd decimal is not displayed, it still takes up space, so that cost value doesn't shift around
  * - Cost is truncated (not rounded) to 3 decimals (e.g. $1.2349 becomes $1.234)
+ *
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 
 import Utils from '../../../../dot/js/Utils.js';
