@@ -76,8 +76,8 @@ export default class Scale extends ShoppingContainer {
       }, {
 
         // This DerivedProperty has itself as a dependency, which is not supported by strictAxonDependencies.
-        // So we need to opt out. See see https://github.com/phetsims/unit-rates/issues/223#issuecomment-1861776252
-        strictAxonDependencies: false
+        // So we need to opt out. See https://github.com/phetsims/unit-rates/issues/223#issuecomment-1861776252
+        strictAxonDependencies: false // has itself as a dependency
       } );
 
     this.costProperty = new DerivedProperty(
