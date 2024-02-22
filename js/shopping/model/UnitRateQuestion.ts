@@ -1,7 +1,7 @@
 // Copyright 2024, University of Colorado Boulder
 
 /**
- * UnitRateQuestion is a question on the Shopping screen that asks the user to compute the unit rate of an item.
+ * UnitRateQuestion is a question of the form 'Unit Rate?' for the Shopping screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
