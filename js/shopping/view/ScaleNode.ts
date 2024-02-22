@@ -151,8 +151,6 @@ export default class ScaleNode extends Node {
           URUtils.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */ ), unitsString )
       );
 
-      //font: new PhetFont( 20 )
-
       // dispose required
       quantityText = new Text( quantityStringProperty, {
         font: QUANTITY_FONT
