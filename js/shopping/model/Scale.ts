@@ -15,7 +15,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
-  quantityUnits: string; // units for quantity
+  quantityUnitsStringProperty: TReadOnlyProperty<string>; // units for quantity
   quantityPerBag?: number; // quantity in each bag
 };
 
@@ -23,7 +23,7 @@ type ScaleOptions = SelfOptions & ShoppingContainerOptions;
 
 export default class Scale extends ShoppingContainer {
 
-  public readonly quantityUnits: string;
+  public readonly quantityUnitsStringProperty: TReadOnlyProperty<string>;
 
   // description of pseudo-3D shape
   public readonly width = 350; // diameter of the top platter
@@ -57,7 +57,7 @@ export default class Scale extends ShoppingContainer {
 
     super( options );
 
-    this.quantityUnits = options.quantityUnits;
+    this.quantityUnitsStringProperty = options.quantityUnitsStringProperty;
 
     // Offset determined empirically, see https://github.com/phetsims/unit-rates/issues/174
     this.yAboveScale = this.position.y + 70;

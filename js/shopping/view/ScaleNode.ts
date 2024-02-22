@@ -9,10 +9,9 @@
 
 import { Shape } from '../../../../kite/js/imports.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import { Circle, HBox, Line, LinearGradient, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, HBox, Line, LinearGradient, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import URUtils from '../../common/URUtils.js';
-import ValueNode from '../../common/view/ValueNode.js';
 import ValuePanel from '../../common/view/ValuePanel.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
@@ -20,12 +19,15 @@ import CostNode from './CostNode.js';
 import Scale from '../model/Scale.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import { DerivedStringProperty, TReadOnlyProperty } from '../../../../axon/js/imports.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
 // constants
 const PANEL_WIDTH = 132;
 const PANEL_MIN_HEIGHT = 32;
 const DISPLAY_X_MARGIN = 25;
 const DISPLAY_Y_MARGIN = 7;
+const QUANTITY_FONT = new PhetFont( 20 );
 
 type SelfOptions = {
   costExpandedProperty?: BooleanProperty | null; // null indicates that cost display is not collapsible
@@ -138,17 +140,26 @@ export default class ScaleNode extends Node {
     displayChildren.push( costPanel );
 
     // optional quantity display
-    let quantityNode: Node;
+    let quantityStringProperty: TReadOnlyProperty<string>;
+    let quantityText: Node;
     let quantityPanel: Node;
     if ( options.quantityIsDisplayed ) {
 
+      quantityStringProperty = new DerivedStringProperty(
+        [ scale.quantityProperty, UnitRatesStrings.pattern_0value_1unitsStringProperty, scale.quantityUnitsStringProperty ],
+        ( quantity, patternString, unitsString ) => StringUtils.format( patternString,
+          URUtils.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */ ), unitsString )
+      );
+
+      //font: new PhetFont( 20 )
+
       // dispose required
-      quantityNode = new ValueNode( scale.quantityProperty, {
-        valueToString: value => quantityToString( value, scale.quantityUnits )
+      quantityText = new Text( quantityStringProperty, {
+        font: QUANTITY_FONT
       } );
 
       // dispose required
-      quantityPanel = new ValuePanel( quantityNode, {
+      quantityPanel = new ValuePanel( quantityText, {
         panelWidth: PANEL_WIDTH,
         panelMinHeight: PANEL_MIN_HEIGHT
       } );
@@ -187,7 +198,7 @@ export default class ScaleNode extends Node {
     this.disposeScaleNode = () => {
       costNode.dispose();
       costPanel.dispose();
-      quantityNode && quantityNode.dispose();
+      quantityText && quantityText.dispose();
       quantityPanel && quantityPanel.dispose();
     };
   }
@@ -196,14 +207,6 @@ export default class ScaleNode extends Node {
     this.disposeScaleNode();
     super.dispose();
   }
-}
-
-/**
- * Converts a quantity to a string with units, e.g. 10.5 -> '10.5 lb'
- */
-function quantityToString( quantity: number, units: string ): string {
-  return StringUtils.format( UnitRatesStrings.pattern_0value_1units,
-    URUtils.numberToString( quantity, 1 /* maxDecimals */, false /* trimZeros */ ), units );
 }
 
 unitRates.register( 'ScaleNode', ScaleNode );

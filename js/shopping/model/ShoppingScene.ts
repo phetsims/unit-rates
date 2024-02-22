@@ -36,7 +36,9 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import ShoppingQuestion from './ShoppingQuestion.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Axis, { AxisOptions } from '../../common/model/Axis.js';
-import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
+import { StringProperty, TReadOnlyProperty } from '../../../../axon/js/imports.js';
+
+const noScaleUnitsStringProperty = new StringProperty( '' );
 
 type SelfOptions = {
   rate?: Rate | null; // if null, will be initialized to unit rate
@@ -53,7 +55,7 @@ type SelfOptions = {
 
   // scale
   scaleQuantityIsDisplayed?: boolean; // whether quantity is displayed on the scale
-  scaleQuantityUnits?: string; // units for quantity on scale
+  scaleQuantityUnitsStringProperty?: TReadOnlyProperty<string>; // units for quantity on scale
   bagsOpen?: boolean; // do bags open to display individual items?
 };
 
@@ -104,7 +106,7 @@ export default class ShoppingScene {
       quantityPluralUnitsStringProperty: itemData.pluralNameStringProperty,
       amountOfQuestionUnitsStringProperty: itemData.pluralNameStringProperty,
       scaleQuantityIsDisplayed: false,
-      scaleQuantityUnits: '',
+      scaleQuantityUnitsStringProperty: noScaleUnitsStringProperty,
       bagsOpen: false
     }, providedOptions );
 
@@ -168,7 +170,7 @@ export default class ShoppingScene {
       numberOfItems: this.numberOfBags * this.quantityPerBag,
       itemSize: itemSize,
       quantityPerBag: this.quantityPerBag,
-      quantityUnits: options.scaleQuantityUnits
+      quantityUnitsStringProperty: options.scaleQuantityUnitsStringProperty
     } );
 
     // The marker that corresponds to what's currently on the scale

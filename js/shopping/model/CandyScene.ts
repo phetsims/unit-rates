@@ -43,7 +43,7 @@ export default class CandyScene extends ShoppingScene {
 
       // Scale displays quantity in 'lbs' for Candy
       scaleQuantityIsDisplayed: true,
-      scaleQuantityUnits: UnitRatesStrings.lbs,
+      scaleQuantityUnitsStringProperty: UnitRatesStrings.lbsStringProperty,
 
       // Major markers have 1 decimal place in the denominator
       isMajorMarker: ( numerator: number, denominator: number ) => ( URUtils.decimalPlaces( denominator ) <= 1 )
