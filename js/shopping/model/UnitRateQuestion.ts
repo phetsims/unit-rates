@@ -1,7 +1,7 @@
 // Copyright 2024, University of Colorado Boulder
 
 /**
- * UnitRateQuestion is a question of the form 'Unit Rate?' for the Shopping screen.
+ * UnitRateQuestion is a question of the form 'Unit Rate?'.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
