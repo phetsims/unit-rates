@@ -116,31 +116,37 @@ export default class ShoppingQuestionNode extends Node {
     // the question, centered above the box
     const questionText = new Text( question.questionStringProperty, {
       font: options.questionFont,
-      centerX: valueBox.centerX,
-      bottom: valueBox.top - options.ySpacing,
       maxWidth: 180 // i18n, determined empirically
     } );
     this.addChild( questionText );
+    questionText.localBoundsProperty.link( () => {
+      questionText.centerX = valueBox.centerX;
+      questionText.bottom = valueBox.top - options.ySpacing;
+    } );
 
     // the user's guess, as entered via the keypad, appears centered in the box
     const guessNode = new Text( '', {
       pickable: false, // so it doesn't interfere with clicking in valueBox to open keypad
       fill: options.neutralColor,
       font: options.valueFont,
-      center: valueBox.center,
       maxWidth: 0.8 * valueBoxWidth
     } );
     this.addChild( guessNode );
+    guessNode.localBoundsProperty.link( () => {
+      guessNode.center = valueBox.center;
+    } );
 
     // numerator in the revealed answer, replaces the box when the answer is correct
     const numeratorText = new Text( question.numeratorStringProperty, {
       fill: URColors.correctQuestionColorProperty,
       font: options.valueFont,
-      center: valueBox.center,
       visible: false,
       maxWidth: 100 // i18n, determined empirically
     } );
     this.addChild( numeratorText );
+    numeratorText.localBoundsProperty.link( () => {
+      numeratorText.center = valueBox.center;
+    } );
 
     // fraction line in the revealed answer
     const fractionLineNode = new Line( 0, 0, 1.1 * valueBox.width, 0, {
@@ -156,12 +162,14 @@ export default class ShoppingQuestionNode extends Node {
     const denominatorText = new Text( question.denominatorStringProperty, {
       fill: options.neutralColor,
       font: options.valueFont,
-      centerX: valueBox.centerX,
-      top: fractionLineNode.bottom + options.fractionYSpacing,
       visible: options.denominatorVisible,
       maxWidth: 100 // i18n, determined empirically
     } );
     this.addChild( denominatorText );
+    denominatorText.localBoundsProperty.link( () => {
+      denominatorText.centerX = valueBox.centerX;
+      denominatorText.top = fractionLineNode.bottom + options.fractionYSpacing;
+    } );
 
     this.mutate( options );
 
