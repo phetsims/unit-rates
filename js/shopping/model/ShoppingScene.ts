@@ -30,7 +30,6 @@ import Bag from './Bag.js';
 import Scale from './Scale.js';
 import Shelf from './Shelf.js';
 import ShoppingItem from './ShoppingItem.js';
-import ShoppingQuestionFactory from './ShoppingQuestionFactory.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ShoppingQuestion from './ShoppingQuestion.js';
@@ -38,6 +37,8 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Axis, { AxisOptions } from '../../common/model/Axis.js';
 import { StringProperty, TReadOnlyProperty } from '../../../../axon/js/imports.js';
 import UnitRateQuestion from './UnitRateQuestion.js';
+import CostOfQuestion from './CostOfQuestion.js';
+import ItemsForQuestion from './ItemsForQuestion.js';
 
 const noScaleUnitsStringProperty = new StringProperty( '' );
 
@@ -206,7 +207,7 @@ export default class ShoppingScene {
       this.denominatorAxis
     );
 
-    this.questionSets = ShoppingQuestionFactory.createQuestionSets(
+    this.questionSets = ShoppingScene.createQuestionSets(
       itemData.questionQuantities,
       this.rate.unitRateProperty.value,
       options.quantitySingularUnitsStringProperty,
@@ -357,6 +358,49 @@ export default class ShoppingScene {
       }
     }
   }
+
+  /**
+   * Creates question sets from raw data.
+   *
+   * @param questionQuantities - number of items for each question, see ShoppingItemData
+   * @param unitRate
+   * @param denominatorSingularUnitsStringProperty - denominator units to use for questions with singular quantities
+   * @param denominatorPluralUnitsStringProperty - denominator units to use for questions with plural quantities
+   * @param questionUnitsStringProperty - units used for "Apples for $10.00?" type questions
+   * @param numeratorAxis
+   * @param denominatorAxis
+   */
+  private static createQuestionSets( questionQuantities: number[][],
+                                     unitRate: number,
+                                     denominatorSingularUnitsStringProperty: TReadOnlyProperty<string>,
+                                     denominatorPluralUnitsStringProperty: TReadOnlyProperty<string>,
+                                     questionUnitsStringProperty: TReadOnlyProperty<string>,
+                                     numeratorAxis: Axis,
+                                     denominatorAxis: Axis ): ShoppingQuestion[][] {
+
+    const questionSets: ShoppingQuestion[][] = [];
+
+    questionQuantities.forEach( quantities => {
+
+      const questions = [];
+
+      // the first N-1 questions are of the form 'Cost of 3 Apples?'
+      for ( let i = 0; i < quantities.length - 1; i++ ) {
+        questions.push( new CostOfQuestion( quantities[ i ], unitRate, denominatorSingularUnitsStringProperty,
+          denominatorPluralUnitsStringProperty, numeratorAxis, denominatorAxis ) );
+      }
+
+      // the last question is of the form 'Apples for $3.00?'
+      questions.push( new ItemsForQuestion( quantities[ quantities.length - 1 ],
+        unitRate, denominatorSingularUnitsStringProperty, denominatorPluralUnitsStringProperty,
+        questionUnitsStringProperty, numeratorAxis, denominatorAxis ) );
+
+      questionSets.push( questions );
+    } );
+
+    return questionSets;
+  }
+
 
   /**
    * Gets the next set of questions.
