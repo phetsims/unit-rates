@@ -19,6 +19,7 @@ import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import unitRates from '../../unitRates.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
 // constants
 const BACKGROUND_RECTANGLE_STROKE = ( phet.chipper.queryParameters.dev ? 'red' : null );
@@ -32,7 +33,7 @@ type SelfOptions = {
   xSpacing?: number; // space between expand/collapse button and title
 };
 
-type ValuePanelOptions = SelfOptions;
+type ValuePanelOptions = SelfOptions & PickOptional<PanelOptions, 'isDisposable'>;
 
 export default class ValuePanel extends Panel {
 

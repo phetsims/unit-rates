@@ -37,6 +37,7 @@ export default class RaceTimerNode extends ValuePanel {
     } );
 
     super( valueText, {
+      isDisposable: false,
       panelWidth: 132,
       expandedProperty: expandedProperty,
       titleStringProperty: titleStringProperty,
