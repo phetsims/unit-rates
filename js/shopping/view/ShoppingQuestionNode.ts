@@ -22,6 +22,7 @@ import KeypadLayer from '../../common/view/KeypadLayer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import KeypadPanel from '../../common/view/KeypadPanel.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import { Multilink } from '../../../../axon/js/imports.js';
 
 type SelfOptions = {
   valueBoxWidth?: number; // width of the value field, height determined by valueFont
@@ -165,45 +166,42 @@ export default class ShoppingQuestionNode extends Node {
     this.mutate( options );
 
     // Update when the guess changes
-    const guessObserver = ( guess: number | null ) => {
+    const multilink = new Multilink( [ question.guessProperty, answerAxis.valueFormatStringProperty ],
+      ( guess, valueFormat ) => {
 
-      // compare guess to answer using the desired number of decimal places
-      const correct = ( guess === answer );
+        // compare guess to answer using the desired number of decimal places
+        const correct = ( guess === answer );
 
-      //TODO https://github.com/phetsims/unit-rates/issues/222 support for dynamic locale
-      const valueFormat = answerAxis.valueFormatStringProperty.value;
+        // update the guess
+        if ( guess !== null ) {
+          guessNode.string = URUtils.formatNumber( valueFormat, guess, answerAxis.maxDecimals, answerAxis.trimZeros );
+          guessNode.fill = correct ? URColors.correctQuestionColorProperty : URColors.incorrectQuestionColorProperty;
+        }
+        else if ( phet.chipper.queryParameters.showAnswers ) {
 
-      // update the guess
-      if ( guess !== null ) {
-        guessNode.string = URUtils.formatNumber( valueFormat, guess, answerAxis.maxDecimals, answerAxis.trimZeros );
-        guessNode.fill = correct ? URColors.correctQuestionColorProperty : URColors.incorrectQuestionColorProperty;
-      }
-      else if ( phet.chipper.queryParameters.showAnswers ) {
+          // show the answer, if query parameter is set
+          guessNode.string = URUtils.formatNumber( valueFormat, answer, answerAxis.maxDecimals, answerAxis.trimZeros );
+          guessNode.fill = URColors.showAnswers;
+        }
+        else {
+          guessNode.string = '';
+        }
+        guessNode.visible = !correct;
+        guessNode.center = valueBox.center; // center guess in box
 
-        // show the answer, if query parameter is set
-        guessNode.string = URUtils.formatNumber( valueFormat, answer, answerAxis.maxDecimals, answerAxis.trimZeros );
-        guessNode.fill = URColors.showAnswers;
-      }
-      else {
-        guessNode.string = '';
-      }
-      guessNode.visible = !correct;
-      guessNode.center = valueBox.center; // center guess in box
+        // update other UI elements
+        editButton.visible = !correct;
+        valueBox.visible = !correct;
+        checkMarkNode.visible = correct;
+        numeratorText.visible = correct;
+        fractionLineNode.stroke = denominatorText.fill = ( correct ? URColors.correctQuestionColorProperty : options.neutralColor );
 
-      // update other UI elements
-      editButton.visible = !correct;
-      valueBox.visible = !correct;
-      checkMarkNode.visible = correct;
-      numeratorText.visible = correct;
-      fractionLineNode.stroke = denominatorText.fill = ( correct ? URColors.correctQuestionColorProperty : options.neutralColor );
-
-      // The denominator is sometimes visible at all times (e.g. for the 'Unit Rate?' question).
-      // If it's not visible at all times, make it visible when the answer is revealed.
-      if ( !options.denominatorVisible ) {
-        fractionLineNode.visible = denominatorText.visible = correct;
-      }
-    };
-    question.guessProperty.link( guessObserver ); // unlink in dispose
+        // The denominator is sometimes visible at all times (e.g. for the 'Unit Rate?' question).
+        // If it's not visible at all times, make it visible when the answer is revealed.
+        if ( !options.denominatorVisible ) {
+          fractionLineNode.visible = denominatorText.visible = correct;
+        }
+      } );
 
     // highlight the value box to indicate that an edit is in progress
     const onBeginEdit = () => {
@@ -243,7 +241,7 @@ export default class ShoppingQuestionNode extends Node {
       questionText.dispose();
       numeratorText.dispose();
       denominatorText.dispose();
-      question.guessProperty.unlink( guessObserver );
+      multilink.dispose();
       editButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
   }
