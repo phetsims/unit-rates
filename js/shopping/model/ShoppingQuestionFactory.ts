@@ -1,5 +1,6 @@
 // Copyright 2017-2023, University of Colorado Boulder
 
+//TODO https://github.com/phetsims/unit-rates/issues/222 support for dynamic locale, wherever 'StringProperty.value' appears
 /**
  * Functions for creating ShoppingQuestions and question sets.
  *
