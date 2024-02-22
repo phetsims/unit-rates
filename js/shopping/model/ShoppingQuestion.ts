@@ -1,7 +1,7 @@
 // Copyright 2016-2023, University of Colorado Boulder
 
 /**
- * A question that appears in the 'Questions' panel.
+ * ShoppingQuestion is the base class for questions that appears in the 'Questions' panel.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -34,9 +34,13 @@ export default class ShoppingQuestion {
    * @param denominatorStringProperty - the denominator to display when the answer is revealed
    * @param answerAxis - provides formatting for the answer (and guesses)
    */
-  public constructor( questionStringProperty: TReadOnlyProperty<string>, answer: number, numerator: number, denominator: number,
-                      numeratorStringProperty: TReadOnlyProperty<string>, denominatorStringProperty: TReadOnlyProperty<string>,
-                      answerAxis: Axis ) {
+  protected constructor( questionStringProperty: TReadOnlyProperty<string>,
+                         answer: number,
+                         numerator: number,
+                         denominator: number,
+                         numeratorStringProperty: TReadOnlyProperty<string>,
+                         denominatorStringProperty: TReadOnlyProperty<string>,
+                         answerAxis: Axis ) {
 
     this.questionStringProperty = questionStringProperty;
     this.answer = answer;
