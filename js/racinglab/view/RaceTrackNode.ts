@@ -28,6 +28,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import RaceCar from '../model/RaceCar.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { Multilink } from '../../../../axon/js/imports.js';
 
 // constants
 const NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates
@@ -63,7 +64,11 @@ export default class RaceTrackNode extends Node {
   public constructor( car: RaceCar, timerExpandedProperty: BooleanProperty, arrowsVisibleProperty: BooleanProperty,
                       providedOptions: RaceTrackNodeOptions ) {
 
-    const options = optionize<RaceTrackNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
+    const options = optionize<RaceTrackNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // NodeOptions
+      isDisposable: false
+    }, providedOptions );
 
     // maps 'miles' between model and view coordinate frames
     const modelToView = new LinearFunction( 0, car.track.maxLength, 0, options.trackViewLength );
@@ -148,33 +153,33 @@ export default class RaceTrackNode extends Node {
       startFlagNode, finishFlagNode, timerNode, lengthNode, cueArrowsNode, carNode ];
 
     // Synchronize track length with the model
-    const lengthObserver = ( length: number ) => {
+    Multilink.multilink( [ car.track.lengthProperty, UnitRatesStrings.pattern_0value_1unitsStringProperty, UnitRatesStrings.milesStringProperty ],
+      ( length, patternString, milesString ) => {
 
-      const finishX = modelToView.evaluate( length );
+        const finishX = modelToView.evaluate( length );
 
-      // adjust track length
-      solidLineNode.setLine( -NEGATIVE_TRACK_LENGTH, 0, finishX, 0 );
+        // adjust track length
+        solidLineNode.setLine( -NEGATIVE_TRACK_LENGTH, 0, finishX, 0 );
 
-      // flag at finish line
-      finishFlagNode.left = finishX;
-      finishFlagNode.bottom = solidLineNode.centerY;
+        // flag at finish line
+        finishFlagNode.left = finishX;
+        finishFlagNode.bottom = solidLineNode.centerY;
 
-      // timer above finish flag
-      timerNode.centerX = finishX;
-      timerNode.bottom = finishFlagNode.top - 3;
+        // timer above finish flag
+        timerNode.centerX = finishX;
+        timerNode.bottom = finishFlagNode.top - 3;
 
-      // distance label below finish flag
-      lengthNode.string = StringUtils.format( UnitRatesStrings.pattern_0value_1units, length, UnitRatesStrings.miles );
-      lengthNode.top = solidLineNode.bottom + TRACK_MARKER_SIDE_LENGTH + 4;
-      lengthNode.centerX = finishX;
+        // distance label below finish flag
+        lengthNode.string = StringUtils.format( patternString, length, milesString );
+        lengthNode.top = solidLineNode.bottom + TRACK_MARKER_SIDE_LENGTH + 4;
+        lengthNode.centerX = finishX;
 
-      // grey out markers that are past finish line
-      for ( let i = 0; i < markerNodes.length; i++ ) {
-        const enabled = ( i * car.track.markerSpacing <= length );
-        markerNodes[ i ].opacity = ( enabled ? 1 : 0.4 );
-      }
-    };
-    car.track.lengthProperty.link( lengthObserver ); // unlink in dispose
+        // grey out markers that are past finish line
+        for ( let i = 0; i < markerNodes.length; i++ ) {
+          const enabled = ( i * car.track.markerSpacing <= length );
+          markerNodes[ i ].opacity = ( enabled ? 1 : 0.4 );
+        }
+      } );
 
     super( options );
 
