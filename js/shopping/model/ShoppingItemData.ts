@@ -35,6 +35,7 @@ import tomatoBag_png from '../../../images/tomatoBag_png.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 import { Color } from '../../../../scenery/js/imports.js';
+import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
 
 // Description of a shopping item, all fields are required
 export type ShoppingItemDataOptions = {
@@ -42,8 +43,8 @@ export type ShoppingItemDataOptions = {
   unitRate: number; // cost per item, in $
   numberOfBags: number;  // number of bags of the item
   quantityPerBag: number;  // quantity in each bag
-  singularName: string; // name to use for singular quantities (e.g. '1 Apple')
-  pluralName: string; // name to use for plural quantities (e.g. '2 Apples')
+  singularNameStringProperty: TReadOnlyProperty<string>; // name to use for singular quantities (e.g. '1 Apple')
+  pluralNameStringProperty: TReadOnlyProperty<string>; // name to use for plural quantities (e.g. '2 Apples')
   itemImage: HTMLImageElement; // image for individual items
   itemRowOverlap: number; // for tweaking how items overlap when stacked, specific to itemImage
   bagImage: HTMLImageElement; // image for a bag of items
@@ -61,8 +62,8 @@ export default class ShoppingItemData {
   public readonly unitRate: number;
   public readonly numberOfBags: number;
   public readonly quantityPerBag: number;
-  public readonly singularName: string;
-  public readonly pluralName: string;
+  public readonly singularNameStringProperty: TReadOnlyProperty<string>;
+  public readonly pluralNameStringProperty: TReadOnlyProperty<string>;
   public readonly itemImage: HTMLImageElement;
   public readonly itemRowOverlap: number;
   public readonly bagImage: HTMLImageElement;
@@ -74,8 +75,8 @@ export default class ShoppingItemData {
     this.unitRate = options.unitRate;
     this.numberOfBags = options.numberOfBags;
     this.quantityPerBag = options.quantityPerBag;
-    this.singularName = options.singularName;
-    this.pluralName = options.pluralName;
+    this.singularNameStringProperty = options.singularNameStringProperty;
+    this.pluralNameStringProperty = options.pluralNameStringProperty;
     this.itemImage = options.itemImage;
     this.itemRowOverlap = options.itemRowOverlap;
     this.bagImage = options.bagImage;
@@ -87,8 +88,8 @@ export default class ShoppingItemData {
     unitRate: 0.5,
     numberOfBags: 3,
     quantityPerBag: 5,
-    singularName: UnitRatesStrings.apple,
-    pluralName: UnitRatesStrings.apples,
+    singularNameStringProperty: UnitRatesStrings.appleStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.applesStringProperty,
     itemImage: apple_png,
     itemRowOverlap: 7,
     bagImage: appleBag_png,
@@ -105,8 +106,8 @@ export default class ShoppingItemData {
     unitRate: 0.25,
     numberOfBags: 3,
     quantityPerBag: 5,
-    singularName: UnitRatesStrings.lemon,
-    pluralName: UnitRatesStrings.lemons,
+    singularNameStringProperty: UnitRatesStrings.lemonStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.lemonsStringProperty,
     itemImage: lemon_png,
     itemRowOverlap: 5,
     bagImage: lemonBag_png,
@@ -125,8 +126,8 @@ export default class ShoppingItemData {
     unitRate: 0.75,
     numberOfBags: 3,
     quantityPerBag: 5,
-    singularName: UnitRatesStrings.orange,
-    pluralName: UnitRatesStrings.oranges,
+    singularNameStringProperty: UnitRatesStrings.orangeStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.orangesStringProperty,
     itemImage: orange_png,
     itemRowOverlap: 5,
     bagImage: orangeBag_png,
@@ -145,8 +146,8 @@ export default class ShoppingItemData {
     unitRate: 0.40,
     numberOfBags: 3,
     quantityPerBag: 5,
-    singularName: UnitRatesStrings.pear,
-    pluralName: UnitRatesStrings.pears,
+    singularNameStringProperty: UnitRatesStrings.pearStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.pearsStringProperty,
     itemImage: pear_png,
     itemRowOverlap: 5,
     bagImage: pearBag_png,
@@ -165,8 +166,8 @@ export default class ShoppingItemData {
     unitRate: 0.15,
     numberOfBags: 4,
     quantityPerBag: 4,
-    singularName: UnitRatesStrings.carrot,
-    pluralName: UnitRatesStrings.carrots,
+    singularNameStringProperty: UnitRatesStrings.carrotStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.carrotsStringProperty,
     itemImage: carrot_png,
     itemRowOverlap: 0,
     bagImage: carrotBag_png,
@@ -185,8 +186,8 @@ export default class ShoppingItemData {
     unitRate: 0.22,
     numberOfBags: 4,
     quantityPerBag: 3,
-    singularName: UnitRatesStrings.cucumber,
-    pluralName: UnitRatesStrings.cucumbers,
+    singularNameStringProperty: UnitRatesStrings.cucumberStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.cucumbersStringProperty,
     itemImage: cucumber_png,
     itemRowOverlap: 0,
     bagImage: cucumberBag_png,
@@ -205,8 +206,8 @@ export default class ShoppingItemData {
     unitRate: 0.45,
     numberOfBags: 4,
     quantityPerBag: 3,
-    singularName: UnitRatesStrings.potato,
-    pluralName: UnitRatesStrings.potatoes,
+    singularNameStringProperty: UnitRatesStrings.potatoStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.potatoesStringProperty,
     itemImage: potato_png,
     itemRowOverlap: 0,
     bagImage: potatoBag_png,
@@ -225,8 +226,8 @@ export default class ShoppingItemData {
     unitRate: 0.3,
     numberOfBags: 4,
     quantityPerBag: 4,
-    singularName: UnitRatesStrings.tomato,
-    pluralName: UnitRatesStrings.tomatoes,
+    singularNameStringProperty: UnitRatesStrings.tomatoStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.tomatoesStringProperty,
     itemImage: tomato_png,
     itemRowOverlap: 0,
     bagImage: tomatoBag_png,
@@ -245,8 +246,8 @@ export default class ShoppingItemData {
     unitRate: 5.40,
     numberOfBags: 4,
     quantityPerBag: 0.4,
-    singularName: UnitRatesStrings.purpleCandy,
-    pluralName: UnitRatesStrings.purpleCandy,
+    singularNameStringProperty: UnitRatesStrings.purpleCandyStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.purpleCandyStringProperty,
     itemImage: purpleCandy_png,
     itemRowOverlap: 0,
     bagImage: purpleCandyBag_png,
@@ -265,8 +266,8 @@ export default class ShoppingItemData {
     unitRate: 3.80,
     numberOfBags: 4,
     quantityPerBag: 0.3,
-    singularName: UnitRatesStrings.redCandy,
-    pluralName: UnitRatesStrings.redCandy,
+    singularNameStringProperty: UnitRatesStrings.redCandyStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.redCandyStringProperty,
     itemImage: redCandy_png,
     itemRowOverlap: 0,
     bagImage: redCandyBag_png,
@@ -285,8 +286,8 @@ export default class ShoppingItemData {
     unitRate: 8.20,
     numberOfBags: 4,
     quantityPerBag: 0.3,
-    singularName: UnitRatesStrings.greenCandy,
-    pluralName: UnitRatesStrings.greenCandy,
+    singularNameStringProperty: UnitRatesStrings.greenCandyStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.greenCandyStringProperty,
     itemImage: greenCandy_png,
     itemRowOverlap: 0,
     bagImage: greenCandyBag_png,
@@ -305,8 +306,8 @@ export default class ShoppingItemData {
     unitRate: 1.30,
     numberOfBags: 4,
     quantityPerBag: 0.4,
-    singularName: UnitRatesStrings.blueCandy,
-    pluralName: UnitRatesStrings.blueCandy,
+    singularNameStringProperty: UnitRatesStrings.blueCandyStringProperty,
+    pluralNameStringProperty: UnitRatesStrings.blueCandyStringProperty,
     itemImage: blueCandy_png,
     itemRowOverlap: 0,
     bagImage: blueCandyBag_png,

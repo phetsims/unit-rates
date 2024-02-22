@@ -74,7 +74,7 @@ function createItem( shoppingScene: ShoppingScene, iconSize: Dimension2 ): Combo
   } );
 
   // Use the plural name to label the item
-  const labelNode = new Text( shoppingScene.pluralName, {
+  const labelNode = new Text( shoppingScene.pluralNameStringProperty, {
     font: new PhetFont( 18 ),
     maxWidth: 140,
     children: [ new HStrut( 140 ) ] // makes labels for all items the same width

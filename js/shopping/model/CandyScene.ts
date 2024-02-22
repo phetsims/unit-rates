@@ -30,15 +30,15 @@ export default class CandyScene extends ShoppingScene {
       fixedAxisRange: new Range( 0, 1.6 ),
 
       // Candy quantity is in pounds
-      quantitySingularUnits: UnitRatesStrings.pound,
-      quantityPluralUnits: UnitRatesStrings.pounds,
+      quantitySingularUnitsStringProperty: UnitRatesStrings.poundStringProperty,
+      quantityPluralUnitsStringProperty: UnitRatesStrings.poundsStringProperty,
 
       // Candy questions require capitalization of 'Pounds', e.g. 'Pounds for $10.50?'
       // This hack was required by https://github.com/phetsims/unit-rates/issues/20
-      amountOfQuestionUnits: UnitRatesStrings.poundsCapitalized,
+      amountOfQuestionUnitsStringProperty: UnitRatesStrings.poundsCapitalizedStringProperty,
 
       denominatorAxisOptions: {
-        units: UnitRatesStrings.pounds
+        unitsStringProperty: UnitRatesStrings.poundsStringProperty
       },
 
       // Scale displays quantity in 'lbs' for Candy

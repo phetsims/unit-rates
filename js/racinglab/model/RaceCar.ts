@@ -73,7 +73,7 @@ export default class RaceCar {
     };
 
     this.numeratorAxis = new Axis( {
-      units: UnitRatesStrings.miles,
+      unitsStringProperty: UnitRatesStrings.milesStringProperty,
       maxDigits: 5,
       maxDecimals: 1,
       trimZeros: true,
@@ -81,7 +81,7 @@ export default class RaceCar {
     } );
 
     this.denominatorAxis = new Axis( {
-      units: UnitRatesStrings.hours,
+      unitsStringProperty: UnitRatesStrings.hoursStringProperty,
       maxDigits: 4,
       maxDecimals: 2,
       trimZeros: true,

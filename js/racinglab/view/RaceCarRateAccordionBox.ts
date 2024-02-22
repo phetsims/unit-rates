@@ -28,8 +28,8 @@ export default class RaceCarRateAccordionBox extends RateAccordionBox {
     const options = optionize<RaceCarRateAccordionBoxOptions, SelfOptions, RateAccordionBoxOptions>()( {
 
       // RaceCarRateAccordionBoxOptions
-      numeratorUnits: UnitRatesStrings.miles,
-      denominatorUnits: UnitRatesStrings.hours,
+      numeratorUnitsStringProperty: UnitRatesStrings.milesStringProperty,
+      denominatorUnitsStringProperty: UnitRatesStrings.hoursStringProperty,
       numeratorRange: URConstants.MILES_RANGE,
       denominatorRange: URConstants.HOURS_RANGE,
       numeratorPickerColor: car.color,

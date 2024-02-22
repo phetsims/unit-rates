@@ -12,6 +12,7 @@ import URMovable, { URMovableOptions } from '../../common/model/URMovable.js';
 import unitRates from '../../unitRates.js';
 import ShoppingItem from './ShoppingItem.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
 
 type SelfOptions = {
   visible?: boolean; // is the bag initially visible?
@@ -22,17 +23,17 @@ type BagOptions = SelfOptions & URMovableOptions;
 
 export default class Bag extends URMovable {
 
-  public readonly name: string;
+  public readonly nameStringProperty: TReadOnlyProperty<string>;
   public readonly image: HTMLImageElement;
   public readonly items: ShoppingItem[] | null;
   public readonly visibleProperty: BooleanProperty;
 
   /**
-   * @param name - for internal use
+   * @param nameStringProperty - for internal use
    * @param image - image used by the view to represent this bag
    * @param [providedOptions]
    */
-  public constructor( name: string, image: HTMLImageElement, providedOptions?: BagOptions ) {
+  public constructor( nameStringProperty: TReadOnlyProperty<string>, image: HTMLImageElement, providedOptions?: BagOptions ) {
 
     const options = optionize<BagOptions, SelfOptions, URMovableOptions>()( {
 
@@ -46,7 +47,7 @@ export default class Bag extends URMovable {
 
     super( options );
 
-    this.name = name;
+    this.nameStringProperty = nameStringProperty;
     this.image = image;
     this.items = options.items;
 

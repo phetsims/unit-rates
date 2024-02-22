@@ -36,6 +36,7 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import ShoppingQuestion from './ShoppingQuestion.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Axis, { AxisOptions } from '../../common/model/Axis.js';
+import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
 
 type SelfOptions = {
   rate?: Rate | null; // if null, will be initialized to unit rate
@@ -46,9 +47,9 @@ type SelfOptions = {
   isMajorMarker?: ( numerator: number, denominator: number ) => boolean;
 
   // questions
-  quantitySingularUnits?: string; // units for questions with singular quantities
-  quantityPluralUnits?: string;  // units for questions with plural quantities
-  amountOfQuestionUnits?: string;  // units used for "Apples for $10.00?" type questions
+  quantitySingularUnitsStringProperty?: TReadOnlyProperty<string>; // units for questions with singular quantities
+  quantityPluralUnitsStringProperty?: TReadOnlyProperty<string>;  // units for questions with plural quantities
+  amountOfQuestionUnitsStringProperty?: TReadOnlyProperty<string>;  // units used for "Apples for $10.00?" type questions
 
   // scale
   scaleQuantityIsDisplayed?: boolean; // whether quantity is displayed on the scale
@@ -74,8 +75,8 @@ export default class ShoppingScene {
   // unpacked from ShoppingItemData
   public readonly numberOfBags: number;
   public readonly quantityPerBag: number;
-  public readonly singularName: string;
-  public readonly pluralName: string;
+  public readonly singularNameStringProperty: TReadOnlyProperty<string>;
+  public readonly pluralNameStringProperty: TReadOnlyProperty<string>;
   public readonly itemImage: HTMLImageElement;
   public readonly bagImage: HTMLImageElement;
 
@@ -99,9 +100,9 @@ export default class ShoppingScene {
       fixedAxis: 'denominator', // range of the denominator (quantity) is fixed
       fixedAxisRange: new Range( 0, 16 ),
       isMajorMarker: ( numerator: number, denominator: number ) => Number.isInteger( denominator ),
-      quantitySingularUnits: itemData.singularName,
-      quantityPluralUnits: itemData.pluralName,
-      amountOfQuestionUnits: itemData.pluralName,
+      quantitySingularUnitsStringProperty: itemData.singularNameStringProperty,
+      quantityPluralUnitsStringProperty: itemData.pluralNameStringProperty,
+      amountOfQuestionUnitsStringProperty: itemData.pluralNameStringProperty,
       scaleQuantityIsDisplayed: false,
       scaleQuantityUnits: '',
       bagsOpen: false
@@ -110,12 +111,12 @@ export default class ShoppingScene {
     this.itemData = itemData;
 
     this.numeratorAxis = new Axis( combineOptions<AxisOptions>( {
-      units: UnitRatesStrings.dollars,
+      unitsStringProperty: UnitRatesStrings.dollarsStringProperty,
       valueFormat: UnitRatesStrings.pattern_0cost
     }, options.numeratorAxisOptions ) );
 
     this.denominatorAxis = new Axis( combineOptions<AxisOptions>( {
-      units: itemData.pluralName,
+      unitsStringProperty: itemData.pluralNameStringProperty,
       trimZeros: true
     }, options.denominatorAxisOptions ) );
 
@@ -124,8 +125,8 @@ export default class ShoppingScene {
     // unpack itemData: ShoppingItemData
     this.numberOfBags = itemData.numberOfBags;
     this.quantityPerBag = itemData.quantityPerBag;
-    this.singularName = itemData.singularName;
-    this.pluralName = itemData.pluralName;
+    this.singularNameStringProperty = itemData.singularNameStringProperty;
+    this.pluralNameStringProperty = itemData.pluralNameStringProperty;
     this.itemImage = itemData.itemImage;
     this.bagImage = itemData.bagImage;
 
@@ -197,7 +198,7 @@ export default class ShoppingScene {
 
     this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion(
       this.rate.unitRateProperty.value,
-      options.quantitySingularUnits,
+      options.quantitySingularUnitsStringProperty,
       this.numeratorAxis,
       this.denominatorAxis
     );
@@ -205,9 +206,9 @@ export default class ShoppingScene {
     this.questionSets = ShoppingQuestionFactory.createQuestionSets(
       itemData.questionQuantities,
       this.rate.unitRateProperty.value,
-      options.quantitySingularUnits,
-      options.quantityPluralUnits,
-      options.amountOfQuestionUnits,
+      options.quantitySingularUnitsStringProperty,
+      options.quantityPluralUnitsStringProperty,
+      options.amountOfQuestionUnitsStringProperty,
       this.numeratorAxis,
       this.denominatorAxis
     );
@@ -265,7 +266,7 @@ export default class ShoppingScene {
         for ( let j = 0; j < this.quantityPerBag; j++ ) {
 
           // create item, initially invisible and not on shelf or scale
-          const item = new ShoppingItem( this.pluralName, this.itemImage, {
+          const item = new ShoppingItem( this.pluralNameStringProperty, this.itemImage, {
             visible: false
           } );
           items.push( item );
@@ -273,7 +274,7 @@ export default class ShoppingScene {
       }
 
       // create bag
-      const bag = new Bag( this.pluralName, this.bagImage, {
+      const bag = new Bag( this.pluralNameStringProperty, this.bagImage, {
         position: bagPosition,
         items: items
       } );

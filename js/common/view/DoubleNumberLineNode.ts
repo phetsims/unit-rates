@@ -99,7 +99,7 @@ export default class DoubleNumberLineNode extends Node {
     this.addChild( numeratorAxisNode );
 
     // numerator axis label
-    this.addChild( new Text( doubleNumberLine.numeratorAxis.units, {
+    this.addChild( new Text( doubleNumberLine.numeratorAxis.unitsStringProperty, {
       font: options.labelFont,
       fill: options.labelColor,
       maxWidth: options.labelMaxWidth,
@@ -120,7 +120,7 @@ export default class DoubleNumberLineNode extends Node {
     this.addChild( denominatorAxisNode );
 
     // denominator axis label
-    this.addChild( new Text( doubleNumberLine.denominatorAxis.units, {
+    this.addChild( new Text( doubleNumberLine.denominatorAxis.unitsStringProperty, {
       font: options.labelFont,
       fill: options.labelColor,
       maxWidth: options.labelMaxWidth,

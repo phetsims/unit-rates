@@ -13,13 +13,15 @@ import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingQuestion from './ShoppingQuestion.js';
 import Axis from '../../common/model/Axis.js';
+import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
 
 const ShoppingQuestionFactory = {
 
   /**
    * Creates a question of the form 'Unit Rate?'
    */
-  createUnitRateQuestion( unitRate: number, denominatorUnits: string, numeratorAxis: Axis, denominatorAxis: Axis ): ShoppingQuestion {
+  createUnitRateQuestion( unitRate: number, denominatorUnitsStringProperty: TReadOnlyProperty<string>,
+                          numeratorAxis: Axis, denominatorAxis: Axis ): ShoppingQuestion {
 
     // '$0.50'
     const numerator = unitRate;
@@ -30,7 +32,7 @@ const ShoppingQuestionFactory = {
     const denominator = 1;
     const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
       URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
-      denominatorUnits );
+      denominatorUnitsStringProperty.value );
 
     return new ShoppingQuestion( UnitRatesStrings.unitRateQuestion, unitRate, numerator, denominator, numeratorString, denominatorString, numeratorAxis );
   },
@@ -40,17 +42,17 @@ const ShoppingQuestionFactory = {
    *
    * @param questionQuantities - number of items for each question, see ShoppingItemData
    * @param unitRate
-   * @param denominatorSingularUnits - denominator units to use for questions with singular quantities
-   * @param denominatorPluralUnits - denominator units to use for questions with plural quantities
-   * @param questionUnits - units used for "Apples for $10.00?" type questions
+   * @param denominatorSingularUnitsStringProperty - denominator units to use for questions with singular quantities
+   * @param denominatorPluralUnitsStringProperty - denominator units to use for questions with plural quantities
+   * @param questionUnitsStringProperty - units used for "Apples for $10.00?" type questions
    * @param numeratorAxis
    * @param denominatorAxis
    */
   createQuestionSets( questionQuantities: number[][],
                       unitRate: number,
-                      denominatorSingularUnits: string,
-                      denominatorPluralUnits: string,
-                      questionUnits: string,
+                      denominatorSingularUnitsStringProperty: TReadOnlyProperty<string>,
+                      denominatorPluralUnitsStringProperty: TReadOnlyProperty<string>,
+                      questionUnitsStringProperty: TReadOnlyProperty<string>,
                       numeratorAxis: Axis,
                       denominatorAxis: Axis ): ShoppingQuestion[][] {
 
@@ -62,12 +64,14 @@ const ShoppingQuestionFactory = {
 
       // the first N-1 questions are of the form 'Cost of 3 Apples?'
       for ( let i = 0; i < quantities.length - 1; i++ ) {
-        questions.push( createCostOfQuestion( quantities[ i ], unitRate, denominatorSingularUnits, denominatorPluralUnits, numeratorAxis, denominatorAxis ) );
+        questions.push( createCostOfQuestion( quantities[ i ], unitRate, denominatorSingularUnitsStringProperty,
+          denominatorPluralUnitsStringProperty, numeratorAxis, denominatorAxis ) );
       }
 
       // the last question is of the form 'Apples for $3.00?'
       questions.push( createItemsForQuestion( quantities[ quantities.length - 1 ],
-        unitRate, denominatorSingularUnits, denominatorPluralUnits, questionUnits, numeratorAxis, denominatorAxis ) );
+        unitRate, denominatorSingularUnitsStringProperty, denominatorPluralUnitsStringProperty,
+        questionUnitsStringProperty, numeratorAxis, denominatorAxis ) );
 
       questionSets.push( questions );
     } );
@@ -80,25 +84,25 @@ const ShoppingQuestionFactory = {
  * Creates a question of the form 'Cost of 10 Apples?' or 'Cost of 2.2 pounds?'
  * @param denominator
  * @param unitRate
- * @param denominatorSingularUnits
- * @param denominatorPluralUnits
+ * @param denominatorSingularUnitsStringProperty
+ * @param denominatorPluralUnitsStringProperty
  * @param numeratorAxis
  * @param denominatorAxis
  */
 function createCostOfQuestion( denominator: number,
                                unitRate: number,
-                               denominatorSingularUnits: string,
-                               denominatorPluralUnits: string,
+                               denominatorSingularUnitsStringProperty: TReadOnlyProperty<string>,
+                               denominatorPluralUnitsStringProperty: TReadOnlyProperty<string>,
                                numeratorAxis: Axis,
                                denominatorAxis: Axis ): ShoppingQuestion {
 
   // 'Apples' or 'Apple'
-  const units = ( denominator > 1 ) ? denominatorPluralUnits : denominatorSingularUnits;
+  const unitsStringProperty = ( denominator > 1 ) ? denominatorSingularUnitsStringProperty : denominatorPluralUnitsStringProperty;
 
   // 'Cost of 10 Apples?'
   const questionString = StringUtils.format( UnitRatesStrings.pattern_costOf_0quantity_1units,
     URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
-    units );
+    unitsStringProperty.value );
 
   // answer
   const numerator = denominator * unitRate;
@@ -111,7 +115,7 @@ function createCostOfQuestion( denominator: number,
   // '10 Apples'
   const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
     URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
-    units );
+    unitsStringProperty.value );
 
   return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, numeratorAxis );
 }
@@ -120,31 +124,31 @@ function createCostOfQuestion( denominator: number,
  * Creates a question of the form 'Apples for $3.00?'
  * @param denominator
  * @param unitRate
- * @param denominatorSingularUnits
- * @param denominatorPluralUnits
- * @param questionUnits
+ * @param denominatorSingularUnitsStringProperty
+ * @param denominatorPluralUnitsStringProperty
+ * @param questionUnitsStringProperty
  * @param numeratorAxis
  * @param denominatorAxis
  */
 function createItemsForQuestion( denominator: number,
                                  unitRate: number,
-                                 denominatorSingularUnits: string,
-                                 denominatorPluralUnits: string,
-                                 questionUnits: string,
+                                 denominatorSingularUnitsStringProperty: TReadOnlyProperty<string>,
+                                 denominatorPluralUnitsStringProperty: TReadOnlyProperty<string>,
+                                 questionUnitsStringProperty: TReadOnlyProperty<string>,
                                  numeratorAxis: Axis,
                                  denominatorAxis: Axis ): ShoppingQuestion {
 
   const numerator = denominator * unitRate;
 
   // 'Apples for $4.00?'
-  const questionString = StringUtils.format( UnitRatesStrings.pattern_0items_1cost, questionUnits,
+  const questionString = StringUtils.format( UnitRatesStrings.pattern_0items_1cost, questionUnitsStringProperty.value,
     URUtils.numberToString( numerator, numeratorAxis.maxDecimals, numeratorAxis.trimZeros ) );
 
   // answer
   const answer = Utils.toFixedNumber( denominator, denominatorAxis.maxDecimals );
 
   // 'Apples' or 'Apple'
-  const denominatorUnits = ( denominator > 1 ) ? denominatorPluralUnits : denominatorSingularUnits;
+  const denominatorUnitsStringProperty = ( denominator > 1 ) ? denominatorSingularUnitsStringProperty : denominatorPluralUnitsStringProperty;
 
   // '$4.00'
   const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
@@ -153,7 +157,7 @@ function createItemsForQuestion( denominator: number,
   // '8 Apples'
   const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
     URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
-    denominatorUnits );
+    denominatorUnitsStringProperty.value );
 
   return new ShoppingQuestion( questionString, answer, numerator, denominator, numeratorString, denominatorString, denominatorAxis );
 }

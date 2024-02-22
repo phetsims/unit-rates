@@ -10,6 +10,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import URMovable, { URMovableOptions } from '../../common/model/URMovable.js';
 import unitRates from '../../unitRates.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
 
 type SelfOptions = {
   visible?: boolean; // is the item initially visible?
@@ -19,16 +20,16 @@ type ShoppingItemOptions = SelfOptions & URMovableOptions;
 
 export default class ShoppingItem extends URMovable {
 
-  public readonly name: string;
+  public readonly nameStringProperty: TReadOnlyProperty<string>;
   public readonly image: HTMLImageElement;
   public readonly visibleProperty: BooleanProperty;
 
   /**
-   * @param name - for internal use
+   * @param nameStringProperty - for internal use
    * @param image - image used by the view to represent this item
    * @param [providedOptions]
    */
-  public constructor( name: string, image: HTMLImageElement, providedOptions?: ShoppingItemOptions ) {
+  public constructor( nameStringProperty: TReadOnlyProperty<string>, image: HTMLImageElement, providedOptions?: ShoppingItemOptions ) {
 
     const options = optionize<ShoppingItemOptions, SelfOptions, URMovableOptions>()( {
 
@@ -41,7 +42,7 @@ export default class ShoppingItem extends URMovable {
 
     super( options );
 
-    this.name = name;
+    this.nameStringProperty = nameStringProperty;
     this.image = image;
     this.visibleProperty = new BooleanProperty( options.visible );
   }

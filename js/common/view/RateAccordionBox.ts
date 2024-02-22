@@ -30,8 +30,8 @@ type SelfOptions = {
   unitsMaxWidth?: number;
   numeratorRange?: Range;
   denominatorRange?: Range;
-  numeratorUnits?: string;
-  denominatorUnits?: string;
+  numeratorUnitsStringProperty: TReadOnlyProperty<string>;
+  denominatorUnitsStringProperty: TReadOnlyProperty<string>;
   pickerFont?: PhetFont;
   numeratorPickerColor?: Color | string;
   denominatorPickerColor?: Color | string;
@@ -62,8 +62,6 @@ export default class RateAccordionBox extends AccordionBox {
         unitsMaxWidth: 60, // i18n, determined empirically
         numeratorRange: new Range( 0, 10 ),
         denominatorRange: new Range( 0, 10 ),
-        numeratorUnits: '',
-        denominatorUnits: '',
         pickerFont: new PhetFont( 24 ),
         numeratorPickerColor: 'black',
         denominatorPickerColor: 'black',
@@ -104,7 +102,7 @@ export default class RateAccordionBox extends AccordionBox {
       } ) );
 
     // numerator units
-    const numeratorUnitsNode = new Text( options.numeratorUnits, {
+    const numeratorUnitsNode = new Text( options.numeratorUnitsStringProperty, {
       font: options.unitsFont,
       maxWidth: options.unitsMaxWidth
     } );
@@ -120,7 +118,7 @@ export default class RateAccordionBox extends AccordionBox {
       } ) );
 
     // denominator units
-    const denominatorUnitsNode = new Text( options.denominatorUnits, {
+    const denominatorUnitsNode = new Text( options.denominatorUnitsStringProperty, {
       font: options.unitsFont,
       maxWidth: options.unitsMaxWidth
     } );
