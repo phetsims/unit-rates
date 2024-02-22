@@ -182,7 +182,6 @@ export default class ShoppingQuestionNode extends Node {
 
         // show the answer, if query parameter is set
         guessNode.string = URUtils.formatNumber( valueFormat, answer, answerAxis.maxDecimals, answerAxis.trimZeros );
-        guessNode.string = URUtils.formatNumber( valueFormat, answer, answerAxis.maxDecimals, answerAxis.trimZeros );
         guessNode.fill = URColors.showAnswers;
       }
       else {
