@@ -113,13 +113,13 @@ export default class ShoppingQuestionNode extends Node {
     this.addChild( checkMarkNode );
 
     // the question, centered above the box
-    const questionTextNode = new Text( question.questionString, {
+    const questionText = new Text( question.questionStringProperty, {
       font: options.questionFont,
       centerX: valueBox.centerX,
       bottom: valueBox.top - options.ySpacing,
       maxWidth: 180 // i18n, determined empirically
     } );
-    this.addChild( questionTextNode );
+    this.addChild( questionText );
 
     // the user's guess, as entered via the keypad, appears centered in the box
     const guessNode = new Text( '', {
@@ -132,14 +132,14 @@ export default class ShoppingQuestionNode extends Node {
     this.addChild( guessNode );
 
     // numerator in the revealed answer, replaces the box when the answer is correct
-    const numeratorNode = new Text( question.numeratorString, {
+    const numeratorText = new Text( question.numeratorStringProperty, {
       fill: URColors.correctQuestionColorProperty,
       font: options.valueFont,
       center: valueBox.center,
       visible: false,
       maxWidth: 100 // i18n, determined empirically
     } );
-    this.addChild( numeratorNode );
+    this.addChild( numeratorText );
 
     // fraction line in the revealed answer
     const fractionLineNode = new Line( 0, 0, 1.1 * valueBox.width, 0, {
@@ -152,7 +152,7 @@ export default class ShoppingQuestionNode extends Node {
     this.addChild( fractionLineNode );
 
     // denominator in the revealed answer
-    const denominatorNode = new Text( question.denominatorString, {
+    const denominatorText = new Text( question.denominatorStringProperty, {
       fill: options.neutralColor,
       font: options.valueFont,
       centerX: valueBox.centerX,
@@ -160,7 +160,7 @@ export default class ShoppingQuestionNode extends Node {
       visible: options.denominatorVisible,
       maxWidth: 100 // i18n, determined empirically
     } );
-    this.addChild( denominatorNode );
+    this.addChild( denominatorText );
 
     this.mutate( options );
 
@@ -195,13 +195,13 @@ export default class ShoppingQuestionNode extends Node {
       editButton.visible = !correct;
       valueBox.visible = !correct;
       checkMarkNode.visible = correct;
-      numeratorNode.visible = correct;
-      fractionLineNode.stroke = denominatorNode.fill = ( correct ? URColors.correctQuestionColorProperty : options.neutralColor );
+      numeratorText.visible = correct;
+      fractionLineNode.stroke = denominatorText.fill = ( correct ? URColors.correctQuestionColorProperty : options.neutralColor );
 
       // The denominator is sometimes visible at all times (e.g. for the 'Unit Rate?' question).
       // If it's not visible at all times, make it visible when the answer is revealed.
       if ( !options.denominatorVisible ) {
-        fractionLineNode.visible = denominatorNode.visible = correct;
+        fractionLineNode.visible = denominatorText.visible = correct;
       }
     };
     question.guessProperty.link( guessObserver ); // unlink in dispose
@@ -241,6 +241,9 @@ export default class ShoppingQuestionNode extends Node {
     } ) );
 
     this.disposeShoppingQuestionNode = () => {
+      questionText.dispose();
+      numeratorText.dispose();
+      denominatorText.dispose();
       question.guessProperty.unlink( guessObserver );
       editButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };

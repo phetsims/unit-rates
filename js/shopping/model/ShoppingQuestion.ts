@@ -10,38 +10,40 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import unitRates from '../../unitRates.js';
 import Axis from '../../common/model/Axis.js';
+import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
 
 export default class ShoppingQuestion {
 
-  public readonly questionString: string;
+  public readonly questionStringProperty: TReadOnlyProperty<string>;
   public readonly answer: number;
   public readonly numerator: number;
   public readonly denominator: number;
-  public readonly numeratorString: string;
-  public readonly denominatorString: string;
+  public readonly numeratorStringProperty: TReadOnlyProperty<string>;
+  public readonly denominatorStringProperty: TReadOnlyProperty<string>;
   public readonly answerAxis: Axis;
 
   public readonly guessProperty: Property<number | null>; // the user's guess, null indicates no guess
-  public readonly correctEmitter: Emitter<[ShoppingQuestion]>; // emit is called when the question is answered correctly
+  public readonly correctEmitter: Emitter<[ ShoppingQuestion ]>; // emit is called when the question is answered correctly
 
   /**
-   * @param questionString - the question string to be displayed
+   * @param questionStringProperty - the question string to be displayed
    * @param answer - the correct answer
    * @param numerator
    * @param denominator
-   * @param numeratorString - the numerator to display when the answer is revealed
-   * @param denominatorString - the denominator to display when the answer is revealed
+   * @param numeratorStringProperty - the numerator to display when the answer is revealed
+   * @param denominatorStringProperty - the denominator to display when the answer is revealed
    * @param answerAxis - provides formatting for the answer (and guesses)
    */
-  public constructor( questionString: string, answer: number, numerator: number, denominator: number,
-                      numeratorString: string, denominatorString: string, answerAxis: Axis ) {
+  public constructor( questionStringProperty: TReadOnlyProperty<string>, answer: number, numerator: number, denominator: number,
+                      numeratorStringProperty: TReadOnlyProperty<string>, denominatorStringProperty: TReadOnlyProperty<string>,
+                      answerAxis: Axis ) {
 
-    this.questionString = questionString;
+    this.questionStringProperty = questionStringProperty;
     this.answer = answer;
     this.numerator = numerator;
     this.denominator = denominator;
-    this.numeratorString = numeratorString;
-    this.denominatorString = denominatorString;
+    this.numeratorStringProperty = numeratorStringProperty;
+    this.denominatorStringProperty = denominatorStringProperty;
     this.answerAxis = answerAxis;
 
     this.guessProperty = new Property<number | null>( null );
