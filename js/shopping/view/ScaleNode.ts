@@ -198,6 +198,7 @@ export default class ScaleNode extends Node {
     this.disposeScaleNode = () => {
       costNode.dispose();
       costPanel.dispose();
+      quantityStringProperty && quantityStringProperty.dispose();
       quantityText && quantityText.dispose();
       quantityPanel && quantityPanel.dispose();
     };
