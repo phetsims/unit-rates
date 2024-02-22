@@ -21,7 +21,6 @@ import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceTrack from './RaceTrack.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Axis from '../../common/model/Axis.js';
-import SunConstants from '../../../../sun/js/SunConstants.js';
 
 type SelfOptions = {
   color?: Color | string; // color used for things that are associated with the car (markers, spinners, ...)
@@ -76,16 +75,14 @@ export default class RaceCar {
       unitsStringProperty: UnitRatesStrings.milesStringProperty,
       maxDigits: 5,
       maxDecimals: 1,
-      trimZeros: true,
-      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER
+      trimZeros: true
     } );
 
     this.denominatorAxis = new Axis( {
       unitsStringProperty: UnitRatesStrings.hoursStringProperty,
       maxDigits: 4,
       maxDecimals: 2,
-      trimZeros: true,
-      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER
+      trimZeros: true
     } );
 
     this.doubleNumberLine = new DoubleNumberLine( this.rate.unitRateProperty, this.numeratorAxis, this.denominatorAxis, {

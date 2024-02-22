@@ -25,16 +25,17 @@ const ShoppingQuestionFactory = {
 
     // '$0.50'
     const numerator = unitRate;
-    const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
+    const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0costStringProperty.value,
       URUtils.numberToString( numerator, numeratorAxis.maxDecimals, numeratorAxis.trimZeros ) );
 
     // '1 Apple'
     const denominator = 1;
-    const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
+    const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1unitsStringProperty.value,
       URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
       denominatorUnitsStringProperty.value );
 
-    return new ShoppingQuestion( UnitRatesStrings.unitRateQuestion, unitRate, numerator, denominator, numeratorString, denominatorString, numeratorAxis );
+    return new ShoppingQuestion( UnitRatesStrings.unitRateQuestionStringProperty.value,
+      unitRate, numerator, denominator, numeratorString, denominatorString, numeratorAxis );
   },
 
   /**
@@ -100,7 +101,7 @@ function createCostOfQuestion( denominator: number,
   const unitsStringProperty = ( denominator > 1 ) ? denominatorSingularUnitsStringProperty : denominatorPluralUnitsStringProperty;
 
   // 'Cost of 10 Apples?'
-  const questionString = StringUtils.format( UnitRatesStrings.pattern_costOf_0quantity_1units,
+  const questionString = StringUtils.format( UnitRatesStrings.pattern_costOf_0quantity_1unitsStringProperty.value,
     URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
     unitsStringProperty.value );
 
@@ -109,11 +110,11 @@ function createCostOfQuestion( denominator: number,
   const answer = Utils.toFixedNumber( numerator, numeratorAxis.maxDecimals );
 
   // '$3.00'
-  const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
+  const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0costStringProperty.value,
     URUtils.numberToString( numerator, numeratorAxis.maxDecimals, numeratorAxis.trimZeros ) );
 
   // '10 Apples'
-  const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
+  const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1unitsStringProperty.value,
     URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
     unitsStringProperty.value );
 
@@ -141,7 +142,7 @@ function createItemsForQuestion( denominator: number,
   const numerator = denominator * unitRate;
 
   // 'Apples for $4.00?'
-  const questionString = StringUtils.format( UnitRatesStrings.pattern_0items_1cost, questionUnitsStringProperty.value,
+  const questionString = StringUtils.format( UnitRatesStrings.pattern_0items_1costStringProperty.value, questionUnitsStringProperty.value,
     URUtils.numberToString( numerator, numeratorAxis.maxDecimals, numeratorAxis.trimZeros ) );
 
   // answer
@@ -151,11 +152,11 @@ function createItemsForQuestion( denominator: number,
   const denominatorUnitsStringProperty = ( denominator > 1 ) ? denominatorSingularUnitsStringProperty : denominatorPluralUnitsStringProperty;
 
   // '$4.00'
-  const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0cost,
+  const numeratorString = StringUtils.format( UnitRatesStrings.pattern_0costStringProperty.value,
     URUtils.numberToString( numerator, numeratorAxis.maxDecimals, numeratorAxis.trimZeros ) );
 
   // '8 Apples'
-  const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1units,
+  const denominatorString = StringUtils.format( UnitRatesStrings.pattern_0value_1unitsStringProperty.value,
     URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros ),
     denominatorUnitsStringProperty.value );
 

@@ -114,7 +114,7 @@ export default class ShoppingScene {
 
     this.numeratorAxis = new Axis( combineOptions<AxisOptions>( {
       unitsStringProperty: UnitRatesStrings.dollarsStringProperty,
-      valueFormat: UnitRatesStrings.pattern_0cost
+      valueFormatStringProperty: UnitRatesStrings.pattern_0costStringProperty
     }, options.numeratorAxisOptions ) );
 
     this.denominatorAxis = new Axis( combineOptions<AxisOptions>( {

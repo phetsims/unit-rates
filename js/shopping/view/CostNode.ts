@@ -50,7 +50,7 @@ export default class CostNode extends Node {
 
     // dollar sign (or other currency symbol)
     // always to the left of the value on the scale, see https://github.com/phetsims/unit-rates/issues/176
-    const dollarSignNode = new Text( UnitRatesStrings.dollarSign, {
+    const dollarSignNode = new Text( UnitRatesStrings.dollarSignStringProperty, {
       font: options.font
     } );
     this.addChild( dollarSignNode );

@@ -9,13 +9,15 @@
 import unitRates from '../../unitRates.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import SunConstants from '../../../../sun/js/SunConstants.js';
-import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
+import { StringProperty, TReadOnlyProperty } from '../../../../axon/js/imports.js';
+
+const defaultValueFormatStringProperty = new StringProperty( SunConstants.VALUE_NUMBERED_PLACEHOLDER );
 
 type SelfOptions = {
   unitsStringProperty: TReadOnlyProperty<string>; // units for the axis, used to label the axis
   maxDigits?: number; // maximum number of digits on the keypad, integer > 0
   maxDecimals?: number; // maximum number of decimal places, integer >= 0
-  valueFormat?: string; // pattern used to display value for the axis
+  valueFormatStringProperty?: TReadOnlyProperty<string>; // pattern used to display value for the axis
   trimZeros?: boolean; // whether to trim trailing zeros from decimal places
 };
 
@@ -27,7 +29,7 @@ export default class Axis {
   public readonly unitsStringProperty: TReadOnlyProperty<string>;
   public readonly maxDigits: number;
   public readonly maxDecimals: number;
-  public readonly valueFormat: string;
+  public readonly valueFormatStringProperty: TReadOnlyProperty<string>;
   public readonly trimZeros: boolean;
 
   public constructor( providedOptions?: AxisOptions ) {
@@ -38,7 +40,7 @@ export default class Axis {
       maxDigits: 4,
       maxDecimals: 2,
       trimZeros: false,
-      valueFormat: SunConstants.VALUE_NUMBERED_PLACEHOLDER
+      valueFormatStringProperty: defaultValueFormatStringProperty
     }, providedOptions );
 
     assert && assert( Number.isInteger( options.maxDigits ) && options.maxDigits > 0 );
@@ -47,7 +49,7 @@ export default class Axis {
     this.unitsStringProperty = options.unitsStringProperty;
     this.maxDigits = options.maxDigits;
     this.maxDecimals = options.maxDecimals;
-    this.valueFormat = options.valueFormat;
+    this.valueFormatStringProperty = options.valueFormatStringProperty;
     this.trimZeros = options.trimZeros;
   }
 }

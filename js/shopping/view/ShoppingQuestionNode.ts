@@ -170,16 +170,19 @@ export default class ShoppingQuestionNode extends Node {
       // compare guess to answer using the desired number of decimal places
       const correct = ( guess === answer );
 
+      //TODO https://github.com/phetsims/unit-rates/issues/222 support for dynamic locale
+      const valueFormat = answerAxis.valueFormatStringProperty.value;
+
       // update the guess
       if ( guess !== null ) {
-        guessNode.string = URUtils.formatNumber( answerAxis.valueFormat, guess, answerAxis.maxDecimals, answerAxis.trimZeros );
+        guessNode.string = URUtils.formatNumber( valueFormat, guess, answerAxis.maxDecimals, answerAxis.trimZeros );
         guessNode.fill = correct ? URColors.correctQuestionColorProperty : URColors.incorrectQuestionColorProperty;
       }
       else if ( phet.chipper.queryParameters.showAnswers ) {
 
         // show the answer, if query parameter is set
-        guessNode.string = URUtils.formatNumber( answerAxis.valueFormat, answer, answerAxis.maxDecimals, answerAxis.trimZeros );
-        guessNode.string = URUtils.formatNumber( answerAxis.valueFormat, answer, answerAxis.maxDecimals, answerAxis.trimZeros );
+        guessNode.string = URUtils.formatNumber( valueFormat, answer, answerAxis.maxDecimals, answerAxis.trimZeros );
+        guessNode.string = URUtils.formatNumber( valueFormat, answer, answerAxis.maxDecimals, answerAxis.trimZeros );
         guessNode.fill = URColors.showAnswers;
       }
       else {
