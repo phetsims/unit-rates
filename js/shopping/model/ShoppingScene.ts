@@ -37,6 +37,7 @@ import ShoppingQuestion from './ShoppingQuestion.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Axis, { AxisOptions } from '../../common/model/Axis.js';
 import { StringProperty, TReadOnlyProperty } from '../../../../axon/js/imports.js';
+import UnitRateQuestion from './UnitRateQuestion.js';
 
 const noScaleUnitsStringProperty = new StringProperty( '' );
 
@@ -82,7 +83,7 @@ export default class ShoppingScene {
   public readonly itemImage: HTMLImageElement;
   public readonly bagImage: HTMLImageElement;
 
-  public readonly unitRateQuestion: ShoppingQuestion; // 'Unit Rate?' type question
+  public readonly unitRateQuestion: UnitRateQuestion; // 'Unit Rate?' type question
   public readonly questionSets: ShoppingQuestion[][];
   private readonly questionSetsIndexProperty: NumberProperty; // index of the question set that's being shown
   public readonly questionSetProperty: Property<ShoppingQuestion[]>; // the current set of questions
@@ -198,7 +199,7 @@ export default class ShoppingScene {
       }
     } );
 
-    this.unitRateQuestion = ShoppingQuestionFactory.createUnitRateQuestion(
+    this.unitRateQuestion = new UnitRateQuestion(
       this.rate.unitRateProperty.value,
       options.quantitySingularUnitsStringProperty,
       this.numeratorAxis,

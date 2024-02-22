@@ -18,34 +18,6 @@ import { DerivedStringProperty, TReadOnlyProperty } from '../../../../axon/js/im
 const ShoppingQuestionFactory = {
 
   /**
-   * Creates a question of the form 'Unit Rate?'
-   */
-  createUnitRateQuestion( unitRate: number, denominatorUnitsStringProperty: TReadOnlyProperty<string>,
-                          numeratorAxis: Axis, denominatorAxis: Axis ): ShoppingQuestion {
-
-    // '$0.50'
-    const numerator = unitRate;
-    const numeratorStringProperty = new DerivedStringProperty(
-      [ UnitRatesStrings.pattern_0costStringProperty ],
-      patternString => {
-        const valueString = URUtils.numberToString( numerator, numeratorAxis.maxDecimals, numeratorAxis.trimZeros );
-        return StringUtils.format( patternString, valueString );
-      } );
-
-    // '1 Apple'
-    const denominator = 1;
-    const denominatorStringProperty = new DerivedStringProperty(
-      [ UnitRatesStrings.pattern_0value_1unitsStringProperty, denominatorUnitsStringProperty ],
-      ( patternString, unitsString ) => {
-        const valueString = URUtils.numberToString( denominator, denominatorAxis.maxDecimals, denominatorAxis.trimZeros );
-        return StringUtils.format( patternString, valueString, unitsString );
-      } );
-
-    return new ShoppingQuestion( UnitRatesStrings.unitRateQuestionStringProperty,
-      unitRate, numerator, denominator, numeratorStringProperty, denominatorStringProperty, numeratorAxis );
-  },
-
-  /**
    * Creates question sets from raw data.
    *
    * @param questionQuantities - number of items for each question, see ShoppingItemData
