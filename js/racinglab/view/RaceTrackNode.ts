@@ -28,7 +28,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import RaceCar from '../model/RaceCar.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { Multilink } from '../../../../axon/js/imports.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 // constants
 const NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates

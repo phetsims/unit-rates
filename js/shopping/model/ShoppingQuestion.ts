@@ -10,7 +10,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import unitRates from '../../unitRates.js';
 import Axis from '../../common/model/Axis.js';
-import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 export default class ShoppingQuestion {
 

@@ -35,7 +35,7 @@ import tomatoBag_png from '../../../images/tomatoBag_png.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import unitRates from '../../unitRates.js';
 import { Color } from '../../../../scenery/js/imports.js';
-import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 // Description of a shopping item, all fields are required
 export type ShoppingItemDataOptions = {

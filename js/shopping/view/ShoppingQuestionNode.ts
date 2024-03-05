@@ -22,7 +22,7 @@ import KeypadLayer from '../../common/view/KeypadLayer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import KeypadPanel from '../../common/view/KeypadPanel.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
-import { Multilink } from '../../../../axon/js/imports.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   valueBoxWidth?: number; // width of the value field, height determined by valueFont

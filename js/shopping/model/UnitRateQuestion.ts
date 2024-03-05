@@ -8,11 +8,12 @@
 
 import unitRates from '../../unitRates.js';
 import ShoppingQuestion from './ShoppingQuestion.js';
-import { DerivedStringProperty, TReadOnlyProperty } from '../../../../axon/js/imports.js';
 import Axis from '../../common/model/Axis.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import URUtils from '../../common/URUtils.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 
 export default class UnitRateQuestion extends ShoppingQuestion {
 

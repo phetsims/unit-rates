@@ -10,7 +10,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import URMovable, { URMovableOptions } from '../../common/model/URMovable.js';
 import unitRates from '../../unitRates.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
   visible?: boolean; // is the item initially visible?

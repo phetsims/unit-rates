@@ -35,10 +35,11 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import ShoppingQuestion from './ShoppingQuestion.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Axis, { AxisOptions } from '../../common/model/Axis.js';
-import { StringProperty, TReadOnlyProperty } from '../../../../axon/js/imports.js';
 import UnitRateQuestion from './UnitRateQuestion.js';
 import CostOfQuestion from './CostOfQuestion.js';
 import ItemsForQuestion from './ItemsForQuestion.js';
+import StringProperty from '../../../../axon/js/StringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 const noScaleUnitsStringProperty = new StringProperty( '' );
 

@@ -15,7 +15,7 @@ import UnitRatesStrings from '../../UnitRatesStrings.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import { Text } from '../../../../scenery/js/imports.js';
-import { DerivedStringProperty } from '../../../../axon/js/imports.js';
+import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 
 // constants
 const TIMER_FONT = new PhetFont( 16 );

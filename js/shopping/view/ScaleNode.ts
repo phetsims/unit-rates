@@ -19,8 +19,9 @@ import CostNode from './CostNode.js';
 import Scale from '../model/Scale.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import { DerivedStringProperty, TReadOnlyProperty } from '../../../../axon/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 
 // constants
 const PANEL_WIDTH = 132;
