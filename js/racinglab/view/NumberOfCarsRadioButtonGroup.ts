@@ -68,6 +68,7 @@ function createOneCarIcon( maxCarWidth: number ): Node {
 function createTwoCarsIcon( maxCarWidth: number ): Node {
   return new VBox( {
     spacing: 7, // space between the 2 cars
+    sizable: false,
     children: [
       createCarImage( redCar_png, maxCarWidth ),
       createCarImage( blueCar_png, maxCarWidth )
