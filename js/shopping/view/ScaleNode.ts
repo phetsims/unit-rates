@@ -200,6 +200,8 @@ export default class ScaleNode extends Node {
       quantityStringProperty && quantityStringProperty.dispose();
       quantityText && quantityText.dispose();
       quantityPanel && quantityPanel.dispose();
+      topFaceNode.dispose();
+      bodyNode.dispose();
     };
   }
 

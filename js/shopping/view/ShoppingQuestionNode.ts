@@ -247,10 +247,13 @@ export default class ShoppingQuestionNode extends Node {
 
     this.disposeShoppingQuestionNode = () => {
       questionText.dispose();
+      guessNode.dispose();
       numeratorText.dispose();
       denominatorText.dispose();
+      fractionLineNode.dispose();
       multilink.dispose();
-      editButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      editButton.dispose();
+      checkMarkNode.dispose();
     };
   }
 

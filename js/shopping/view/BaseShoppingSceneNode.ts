@@ -145,6 +145,7 @@ export default class BaseShoppingSceneNode extends Node {
       doubleNumberLineAccordionBox.dispose();
       shelfNode.dispose();
       scaleNode.dispose();
+      resetShelfButton.dispose();
       bagNodes.forEach( node => node.dispose() );
       itemNodes.forEach( node => node.dispose() );
     };

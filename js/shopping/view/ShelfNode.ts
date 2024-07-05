@@ -15,6 +15,8 @@ import Shelf from '../model/Shelf.js';
 
 export default class ShelfNode extends Node {
 
+  private readonly disposeShelfNode: () => void;
+
   public constructor( shelf: Shelf ) {
 
     // shelf.width is the width at the midpoint of the shelf's top face, compute the foreground and background widths
@@ -53,6 +55,15 @@ export default class ShelfNode extends Node {
 
     // move to model position
     this.translation = shelf.position;
+
+    this.disposeShelfNode = () => {
+      shelfNode.dispose();
+    };
+  }
+
+  public override dispose(): void {
+    this.disposeShelfNode();
+    super.dispose();
   }
 }
 

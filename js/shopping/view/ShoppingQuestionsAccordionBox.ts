@@ -109,7 +109,7 @@ export default class ShoppingQuestionsAccordionBox extends AccordionBox {
       unitRateQuestionNode.dispose();
       dynamicQuestionNodes.forEach( node => node.dispose() );
       dynamicQuestionNodes.length = 0;
-      refreshButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      refreshButton.dispose();
       options.titleNode.dispose();
     };
   }

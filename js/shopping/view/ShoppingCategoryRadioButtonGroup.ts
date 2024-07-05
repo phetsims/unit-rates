@@ -27,6 +27,7 @@ export default class ShoppingCategoryRadioButtonGroup extends RectangularRadioBu
     const options = optionize<ShoppingCategoryRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
 
       // RectangularRadioButtonGroupOptions
+      isDisposable: false,
       orientation: 'horizontal',
       spacing: 12,
       radioButtonOptions: {

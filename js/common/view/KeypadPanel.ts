@@ -88,14 +88,15 @@ export default class KeypadPanel extends Panel {
       valueNode.center = valueBackgroundNode.center;
     } );
 
+    const enterText = new Text( UnitRatesStrings.enterStringProperty, {
+      font: new PhetFont( 16 ),
+      fill: 'black',
+      maxWidth: keypad.width // i18n
+    } );
     const enterButton = new RectangularPushButton( {
       listener: options.enterButtonListener,
       baseColor: URColors.enterButtonColorProperty,
-      content: new Text( UnitRatesStrings.enterStringProperty, {
-        font: new PhetFont( 16 ),
-        fill: 'black',
-        maxWidth: keypad.width // i18n
-      } )
+      content: enterText
     } );
 
     const contentNode = new VBox( {
@@ -110,6 +111,7 @@ export default class KeypadPanel extends Panel {
 
     this.disposeKeypadPanel = () => {
       keypad.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      enterText.dispose();
       enterButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
     };
   }
