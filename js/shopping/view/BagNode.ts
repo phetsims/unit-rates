@@ -46,6 +46,7 @@ export default class BagNode extends Image {
       bag.positionProperty.unlink( positionObserver );
       bag.visibleProperty.unlink( visibleObserver );
       this.removeInputListener( dragListener );
+      dragListener.dispose();
     };
   }
 

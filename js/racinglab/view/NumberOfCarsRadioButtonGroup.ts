@@ -39,6 +39,7 @@ export default class NumberOfCarsRadioButtonGroup extends RectangularRadioButton
       buttonWidth: 68,
 
       // RectangularRadioButtonGroupOptions
+      isDisposable: false,
       orientation: 'vertical',
       spacing: 11,
       radioButtonOptions: RADIO_BUTTON_OPTIONS
