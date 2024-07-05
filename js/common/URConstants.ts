@@ -29,7 +29,7 @@ const ACCORDION_BOX_OPTIONS: AccordionBoxOptions = {
     sideLength: 16,
     touchAreaXDilation: 8,
     touchAreaYDilation: 10,
-    touchAreaYShift: -4,
+    touchAreaYShift: -4, // see https://github.com/phetsims/unit-rates/issues/212#issuecomment-488778277
     mouseAreaXDilation: 4,
     mouseAreaYDilation: 4
   }
