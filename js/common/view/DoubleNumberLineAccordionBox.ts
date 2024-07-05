@@ -73,7 +73,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
     } );
 
     // title on the accordion box
-    assert && assert( !options.titleNode, 'creates its own title node' );
+    assert && assert( !options.titleNode, 'creates its own titleNode' );
     options.titleNode = new Text( options.titleStringProperty, {
       font: URConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 300 // i18n, determined empirically
@@ -336,6 +336,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
       doubleNumberLineNode.dispose();
       eraserButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
       undoButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      options.titleNode.dispose();
     };
 
     this.doubleNumberLineNode = doubleNumberLineNode;

@@ -99,14 +99,15 @@ export default class DoubleNumberLineNode extends Node {
     this.addChild( numeratorAxisNode );
 
     // numerator axis label
-    this.addChild( new Text( doubleNumberLine.numeratorAxis.unitsStringProperty, {
+    const numeratorAxisText = new Text( doubleNumberLine.numeratorAxis.unitsStringProperty, {
       font: options.labelFont,
       fill: options.labelColor,
       maxWidth: options.labelMaxWidth,
       left: numeratorAxisNode.right + options.labelXSpacing,
       centerY: numeratorAxisNode.centerY,
       children: [ new HStrut( options.labelMaxWidth ) ] // makes labels for all items the same width
-    } ) );
+    } );
+    this.addChild( numeratorAxisText );
 
     // denominator axis
     const denominatorAxisNode = new ArrowNode( 0, 0, horizontalAxisLength, 0, {
@@ -120,14 +121,15 @@ export default class DoubleNumberLineNode extends Node {
     this.addChild( denominatorAxisNode );
 
     // denominator axis label
-    this.addChild( new Text( doubleNumberLine.denominatorAxis.unitsStringProperty, {
+    const denominatorAxisText = new Text( doubleNumberLine.denominatorAxis.unitsStringProperty, {
       font: options.labelFont,
       fill: options.labelColor,
       maxWidth: options.labelMaxWidth,
       left: denominatorAxisNode.right + options.labelXSpacing,
       centerY: denominatorAxisNode.centerY,
       children: [ new HStrut( options.labelMaxWidth ) ] // makes labels for all items the same width
-    } ) );
+    } );
+    this.addChild( denominatorAxisText );
 
     // position indicator (vertical line)
     let indicatorXObserver: ( x: number ) => void;
@@ -180,6 +182,8 @@ export default class DoubleNumberLineNode extends Node {
       doubleNumberLine.markers.removeItemAddedListener( markerAddedListener );
       doubleNumberLine.markers.removeItemRemovedListener( markerRemovedListener );
       options.indicatorXProperty && options.indicatorXProperty.unlink( indicatorXObserver );
+      numeratorAxisText.dispose();
+      denominatorAxisText.dispose();
     };
   }
 

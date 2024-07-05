@@ -25,6 +25,7 @@ export default class StartStopButton extends BooleanRoundToggleButton {
     const options = optionize<StartStopButtonOptions, SelfOptions, BooleanRoundToggleButtonOptions>()( {
 
       // BooleanRoundToggleButtonOptions
+      isDisposable: false,
       radius: 45,
       xMargin: 8,
       yMargin: 8

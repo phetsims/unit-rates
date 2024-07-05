@@ -23,6 +23,7 @@ export default class ResetRaceButton extends RectangularPushButton {
     super( optionize<ResetRaceButtonOptions, SelfOptions, RectangularPushButtonOptions>()( {
 
       // RectangularPushButtonOptions
+      isDisposable: false,
       content: new Image( resetRaceButton_png, { scale: 0.5 } ),
       xMargin: 12,
       yMargin: 8

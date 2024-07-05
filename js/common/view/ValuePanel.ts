@@ -70,6 +70,7 @@ export default class ValuePanel extends Panel {
     let contentHeight = 0; // computed below
     let expandCollapseButton: ExpandCollapseButton;
     let expandedObserver: ( expanded: boolean ) => void;
+    let titleText: Text;
     if ( !options.expandedProperty ) {
 
       // limit valueNode width
@@ -97,7 +98,7 @@ export default class ValuePanel extends Panel {
       const maxExpandedWidth = contentWidth - expandCollapseButton.width - options.xSpacing;
 
       // title, displayed when collapsed
-      const titleText = new Text( options.titleStringProperty, {
+      titleText = new Text( options.titleStringProperty, {
         font: options.titleFont,
         maxWidth: maxExpandedWidth
       } );
@@ -139,6 +140,7 @@ export default class ValuePanel extends Panel {
     this.disposeValuePanel = () => {
       expandCollapseButton && expandCollapseButton.dispose();
       options.expandedProperty && options.expandedProperty.unlink( expandedObserver );
+      titleText && titleText.dispose();
       valueNode.boundsProperty.unlink( boundsListener );
     };
   }

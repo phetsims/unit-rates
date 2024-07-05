@@ -49,14 +49,13 @@ export type RateAccordionBoxOptions = SelfOptions & NodeTranslationOptions & Pic
 
 export default class RateAccordionBox extends AccordionBox {
 
-  private readonly disposeRateAccordionBox: () => void;
-
   public constructor( rate: Rate, providedOptions: RateAccordionBoxOptions ) {
 
     const options = optionize4<RateAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()(
       {}, URConstants.ACCORDION_BOX_OPTIONS, {
 
         // RateAccordionBox options
+        isDisposable: false,
         titleStringProperty: UnitRatesStrings.rateStringProperty,
         unitsFont: new PhetFont( 16 ),
         unitsMaxWidth: 60, // i18n, determined empirically
@@ -149,16 +148,6 @@ export default class RateAccordionBox extends AccordionBox {
     denominatorUnitsNode.centerY = denominatorPicker.centerY;
 
     super( contentNode, options );
-
-    this.disposeRateAccordionBox = () => {
-      numeratorPicker.dispose();
-      denominatorPicker.dispose();
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeRateAccordionBox();
-    super.dispose();
   }
 }
 
