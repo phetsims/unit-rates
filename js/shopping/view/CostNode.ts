@@ -116,6 +116,7 @@ export default class CostNode extends Node {
 
     this.disposeCostNode = () => {
       costProperty.unlink( costObserver );
+      dollarSignNode.dispose();
     };
 
     this.mutate( options );

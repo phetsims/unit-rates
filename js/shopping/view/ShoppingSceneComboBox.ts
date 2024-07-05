@@ -40,6 +40,7 @@ export default class ShoppingSceneComboBox extends ComboBox<ShoppingScene> {
       iconSize: new Dimension2( 30, 30 ),
 
       // ComboBoxOptions
+      isDisposable: false,
       listPosition: 'above',
       cornerRadius: 5,
       xMargin: 10,
