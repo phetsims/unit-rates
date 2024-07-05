@@ -20,6 +20,7 @@ import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   extraDecimalVisible?: boolean; // is the extra decimal place visible?
@@ -101,14 +102,17 @@ export default class CostNode extends Node {
         primaryNode.string = URUtils.numberToString( cost, 2, false /* trimZeros */ );
         extraDecimalNode.string = '0'; // will be invisible, but needs a valid digit for layout purposes
       }
-
-      // adjust layout
-      primaryNode.left = dollarSignNode.right + 1;
-      primaryNode.y = dollarSignNode.y;
-      extraDecimalNode.left = primaryNode.right + 1;
-      extraDecimalNode.y = primaryNode.y;
     };
     costProperty.link( costObserver ); // unlink in dispose
+
+    // Adjust layout when any of the subcomponents change.
+    Multilink.multilink( [ dollarSignNode.localBoundsProperty, primaryNode.localBoundsProperty, extraDecimalNode.localBoundsProperty ],
+      () => {
+        primaryNode.left = dollarSignNode.right + 1;
+        primaryNode.y = dollarSignNode.y;
+        extraDecimalNode.left = primaryNode.right + 1;
+        extraDecimalNode.y = primaryNode.y;
+      } );
 
     this.disposeCostNode = () => {
       costProperty.unlink( costObserver );

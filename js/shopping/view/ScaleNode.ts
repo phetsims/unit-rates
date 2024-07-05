@@ -26,7 +26,7 @@ import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js'
 // constants
 const PANEL_WIDTH = 132;
 const PANEL_MIN_HEIGHT = 32;
-const DISPLAY_X_MARGIN = 25;
+const DISPLAY_X_MARGIN = 10;
 const DISPLAY_Y_MARGIN = 7;
 const QUANTITY_FONT = new PhetFont( 20 );
 

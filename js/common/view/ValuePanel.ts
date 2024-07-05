@@ -126,8 +126,6 @@ export default class ValuePanel extends Panel {
     }
 
     backgroundNode.moveToBack();
-    valueNode.right = backgroundNode.right;
-    valueNode.centerY = backgroundNode.centerY;
 
     super( contentNode, options );
 
@@ -136,7 +134,7 @@ export default class ValuePanel extends Panel {
       valueNode.right = backgroundNode.right;
       valueNode.centerY = backgroundNode.centerY;
     };
-    valueNode.boundsProperty.lazyLink( boundsListener ); // off in dispose
+    valueNode.boundsProperty.link( boundsListener ); // off in dispose
 
     this.disposeValuePanel = () => {
       expandCollapseButton && expandCollapseButton.dispose();
