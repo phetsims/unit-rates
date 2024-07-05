@@ -16,11 +16,9 @@ import KeypadLayer from '../../common/view/KeypadLayer.js';
 import ShoppingCategory from '../model/ShoppingCategory.js';
 import Property from '../../../../axon/js/Property.js';
 import ShoppingViewProperties from './ShoppingViewProperties.js';
-import ShoppingScene from '../model/ShoppingScene.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 export default class ShoppingCategoryNode extends Node {
-
-  private readonly disposeShoppingCategoryNode: () => void;
 
   public constructor( category: ShoppingCategory,
                       categoryProperty: Property<ShoppingCategory>,
@@ -28,7 +26,12 @@ export default class ShoppingCategoryNode extends Node {
                       keypadLayer: KeypadLayer,
                       viewProperties: ShoppingViewProperties ) {
 
-    super();
+    super( {
+      isDisposable: false,
+
+      // Show this category when it's selected.
+      visibleProperty: new DerivedProperty( [ categoryProperty ], newCategory => newCategory === category )
+    } );
 
     // parent for stuff that's specific to a scene, to maintain rendering order
     const shoppingSceneParent = new Node();
@@ -41,19 +44,13 @@ export default class ShoppingCategoryNode extends Node {
     } );
     this.addChild( comboBox );
 
-    // Show this category when it's selected.
-    const categoryObserver = ( newCategory: ShoppingCategory ) => {
-      this.visible = ( newCategory === category );
-    };
-    categoryProperty.link( categoryObserver ); // unlink in dispose
-
-    // When the selected scene changes, replace the UI elements that are item-specific
+    // When the selected scene changes, replace the UI elements that are item-specific.
     let shoppingSceneNode: Node;
-    const shoppingSceneObserver = ( shoppingScene: ShoppingScene ) => {
+    category.shoppingSceneProperty.link( shoppingScene => {
 
       // remove the old scene
       if ( shoppingSceneNode ) {
-        shoppingSceneNode.interruptSubtreeInput(); // cancel drags that are in progress
+        shoppingSceneNode.interruptSubtreeInput(); // Cancel interactions that are in progress.
         shoppingSceneParent.removeChild( shoppingSceneNode );
         shoppingSceneNode.dispose();
       }
@@ -61,20 +58,7 @@ export default class ShoppingCategoryNode extends Node {
       // add the new scene
       shoppingSceneNode = new ShoppingSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties );
       shoppingSceneParent.addChild( shoppingSceneNode );
-    };
-    category.shoppingSceneProperty.link( shoppingSceneObserver ); // unlink in dispose
-
-    this.disposeShoppingCategoryNode = () => {
-      comboBox.dispose();
-      categoryProperty.unlink( categoryObserver );
-      category.shoppingSceneProperty.unlink( shoppingSceneObserver );
-      shoppingSceneNode.dispose();
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeShoppingCategoryNode();
-    super.dispose();
+    } );
   }
 }
 
