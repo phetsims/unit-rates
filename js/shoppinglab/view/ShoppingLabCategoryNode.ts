@@ -37,8 +37,8 @@ export default class ShoppingLabCategoryNode extends Node {
     categoryProperty.link( categoryObserver ); // unlink in dispose
 
     this.disposeShoppingLabCategoryNode = () => {
-      categoryProperty.unlink( categoryObserver );
       shoppingSceneNode.dispose();
+      categoryProperty.unlink( categoryObserver );
     };
   }
 
