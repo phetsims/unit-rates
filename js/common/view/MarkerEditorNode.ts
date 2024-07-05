@@ -266,8 +266,8 @@ export default class MarkerEditorNode extends Node {
     this.disposeMarkerEditorNode = () => {
       markerEditor.numeratorProperty.unlink( numeratorObserver );
       markerEditor.denominatorProperty.unlink( denominatorObserver );
-      numeratorEditButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
-      denominatorEditButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      numeratorEditButton.dispose();
+      denominatorEditButton.dispose();
     };
   }
 

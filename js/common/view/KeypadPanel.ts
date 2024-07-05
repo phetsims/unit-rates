@@ -110,9 +110,9 @@ export default class KeypadPanel extends Panel {
     this.valueStringProperty = keypad.stringProperty;
 
     this.disposeKeypadPanel = () => {
-      keypad.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      keypad.dispose();
       enterText.dispose();
-      enterButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      enterButton.dispose();
     };
   }
 

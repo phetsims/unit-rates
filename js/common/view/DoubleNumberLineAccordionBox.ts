@@ -334,8 +334,8 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
       markerEditorAnimation && markerEditorAnimation.stop();
       markerEditorNode.dispose();
       doubleNumberLineNode.dispose();
-      eraserButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
-      undoButton.dispose(); // workaround for memory leak https://github.com/phetsims/unit-rates/issues/207
+      eraserButton.dispose();
+      undoButton.dispose();
       options.titleNode.dispose();
     };
 
