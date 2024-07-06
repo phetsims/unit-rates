@@ -18,8 +18,6 @@ import ShoppingViewProperties from '../../shopping/view/ShoppingViewProperties.j
 
 export default class ShoppingLabCategoryNode extends Node {
 
-  private readonly disposeShoppingLabCategoryNode: () => void;
-
   public constructor( category: ShoppingCategory, categoryProperty: Property<ShoppingCategory>, layoutBounds: Bounds2,
                       keypadLayer: KeypadLayer, viewProperties: ShoppingViewProperties ) {
 
@@ -31,20 +29,9 @@ export default class ShoppingLabCategoryNode extends Node {
     this.addChild( shoppingSceneNode );
 
     // Show this category when it's selected.
-    const categoryObserver = ( newCategory: ShoppingCategory ) => {
+    categoryProperty.link( newCategory => {
       this.visible = ( newCategory === category );
-    };
-    categoryProperty.link( categoryObserver ); // unlink in dispose
-
-    this.disposeShoppingLabCategoryNode = () => {
-      shoppingSceneNode.dispose();
-      categoryProperty.unlink( categoryObserver );
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeShoppingLabCategoryNode();
-    super.dispose();
+    } );
   }
 }
 

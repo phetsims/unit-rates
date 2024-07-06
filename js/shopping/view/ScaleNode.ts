@@ -40,8 +40,6 @@ type ScaleNodeOptions = SelfOptions;
 
 export default class ScaleNode extends Node {
 
-  private readonly disposeScaleNode: () => void;
-
   public constructor( scale: Scale, providedOptions?: ScaleNodeOptions ) {
 
     const options = optionize<ScaleNodeOptions, SelfOptions, NodeOptions>()( {
@@ -49,7 +47,10 @@ export default class ScaleNode extends Node {
       // SelfOptions
       costExpandedProperty: null,
       extraCostDecimalVisible: false,
-      quantityIsDisplayed: false
+      quantityIsDisplayed: false,
+
+      // NodeOptions
+      isDisposable: false
     }, providedOptions );
 
     // round platter on top, origin at center ---------------------------------------------------
@@ -193,21 +194,6 @@ export default class ScaleNode extends Node {
 
     // move to model position
     this.translation = scale.position;
-
-    this.disposeScaleNode = () => {
-      costNode.dispose();
-      costPanel.dispose();
-      quantityStringProperty && quantityStringProperty.dispose();
-      quantityText && quantityText.dispose();
-      quantityPanel && quantityPanel.dispose();
-      topFaceNode.dispose();
-      bodyNode.dispose();
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeScaleNode();
-    super.dispose();
   }
 }
 

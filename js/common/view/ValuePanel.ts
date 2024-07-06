@@ -37,8 +37,6 @@ type ValuePanelOptions = SelfOptions & PickOptional<PanelOptions, 'isDisposable'
 
 export default class ValuePanel extends Panel {
 
-  private readonly disposeValuePanel: () => void;
-
   public constructor( valueNode: Node, providedOptions?: ValuePanelOptions ) {
 
     const options = optionize<ValuePanelOptions, SelfOptions, PanelOptions>()( {
@@ -52,6 +50,7 @@ export default class ValuePanel extends Panel {
       xSpacing: 8,
 
       // PanelOptions
+      isDisposable: false,
       cornerRadius: 4,
       xMargin: 8,
       yMargin: 4
@@ -123,7 +122,7 @@ export default class ValuePanel extends Panel {
         valueNode.visible = expanded;
         titleText.visible = !expanded;
       };
-      options.expandedProperty.link( expandedObserver ); // unlink in dispose
+      options.expandedProperty.link( expandedObserver );
     }
 
     backgroundNode.moveToBack();
@@ -136,18 +135,6 @@ export default class ValuePanel extends Panel {
       valueNode.centerY = backgroundNode.centerY;
     };
     valueNode.boundsProperty.link( boundsListener ); // off in dispose
-
-    this.disposeValuePanel = () => {
-      expandCollapseButton && expandCollapseButton.dispose();
-      options.expandedProperty && options.expandedProperty.unlink( expandedObserver );
-      titleText && titleText.dispose();
-      valueNode.boundsProperty.unlink( boundsListener );
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeValuePanel();
-    super.dispose();
   }
 }
 

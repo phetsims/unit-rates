@@ -13,29 +13,26 @@ import ShoppingItemDragListener from './ShoppingItemDragListener.js';
 import Shelf from '../model/Shelf.js';
 import Scale from '../model/Scale.js';
 import ShoppingItem from '../model/ShoppingItem.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 
 export default class ShoppingItemNode extends Image {
-
-  private readonly disposeShoppingItemNode: () => void;
 
   public constructor( item: ShoppingItem, shelf: Shelf, scale: Scale,
                       frontItemLayer: Node, backItemLayer: Node, dragLayer: Node ) {
 
     // This type does not propagate options to the supertype because the model determines position.
     super( item.image, {
+      isDisposable: false,
       scale: URConstants.SHOPPING_ITEM_IMAGE_SCALE,
       cursor: 'pointer'
     } );
 
     // origin is at bottom center
-    const positionObserver = ( position: Vector2 ) => {
+    item.positionProperty.link( position => {
       this.centerX = position.x;
       this.bottom = position.y;
-    };
-    item.positionProperty.link( positionObserver ); // unlink in dispose
+    } );
 
-    const visibleObserver = ( visible: boolean ) => {
+    item.visibleProperty.link( visible => {
       this.visible = visible;
       if ( visible ) {
         const parent = this.parent;
@@ -49,22 +46,10 @@ export default class ShoppingItemNode extends Image {
           backItemLayer.addChild( this );
         }
       }
-    };
-    item.visibleProperty.link( visibleObserver ); // unlink in dispose
+    } );
 
     const dragListener = new ShoppingItemDragListener( this, item, shelf, scale, frontItemLayer, backItemLayer, dragLayer );
-    this.addInputListener( dragListener ); // removeInputListener in dispose
-
-    this.disposeShoppingItemNode = () => {
-      item.positionProperty.unlink( positionObserver );
-      item.visibleProperty.unlink( visibleObserver );
-      this.removeInputListener( dragListener );
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeShoppingItemNode();
-    super.dispose();
+    this.addInputListener( dragListener );
   }
 }
 

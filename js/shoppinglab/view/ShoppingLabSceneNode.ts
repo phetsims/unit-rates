@@ -18,8 +18,6 @@ import ShoppingViewProperties from '../../shopping/view/ShoppingViewProperties.j
 
 export default class ShoppingLabSceneNode extends BaseShoppingSceneNode {
 
-  private readonly disposeShoppingLabSceneNode: () => void;
-
   public constructor( shoppingScene: ShoppingScene, layoutBounds: Bounds2, keypadLayer: KeypadLayer,
                       viewProperties: ShoppingViewProperties ) {
 
@@ -40,15 +38,6 @@ export default class ShoppingLabSceneNode extends BaseShoppingSceneNode {
     } );
     this.addChild( rateAccordionBox );
     rateAccordionBox.moveToBack();
-
-    this.disposeShoppingLabSceneNode = () => {
-      rateAccordionBox.dispose();
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeShoppingLabSceneNode();
-    super.dispose();
   }
 }
 

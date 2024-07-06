@@ -44,20 +44,17 @@ export default class ShoppingCategoryNode extends Node {
     } );
     this.addChild( comboBox );
 
-    // When the selected scene changes, replace the UI elements that are item-specific.
-    let shoppingSceneNode: Node;
-    category.shoppingSceneProperty.link( shoppingScene => {
+    // Create the UI for each scene. Make the selected scene visible.
+    category.shoppingScenes.forEach( shoppingScene => {
 
-      // remove the old scene
-      if ( shoppingSceneNode ) {
-        shoppingSceneNode.interruptSubtreeInput(); // Cancel interactions that are in progress.
-        shoppingSceneParent.removeChild( shoppingSceneNode );
-        shoppingSceneNode.dispose();
-      }
+      this.interruptSubtreeInput();
 
-      // add the new scene
-      shoppingSceneNode = new ShoppingSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties );
+      const shoppingSceneNode = new ShoppingSceneNode( shoppingScene, layoutBounds, keypadLayer, viewProperties );
       shoppingSceneParent.addChild( shoppingSceneNode );
+
+      category.shoppingSceneProperty.link( selectedShoppingScene => {
+        shoppingSceneNode.visible = ( shoppingScene === selectedShoppingScene );
+      } );
     } );
   }
 }

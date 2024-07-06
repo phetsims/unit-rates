@@ -29,8 +29,6 @@ type ShoppingQuestionsAccordionBoxOptions = SelfOptions & PickRequired<Accordion
 
 export default class ShoppingQuestionsAccordionBox extends AccordionBox {
 
-  private readonly disposeShoppingQuestionsAccordionBox: () => void;
-
   public constructor( shoppingScene: ShoppingScene, keypadLayer: KeypadLayer, providedOptions?: ShoppingQuestionsAccordionBoxOptions ) {
 
     const options = optionize4<ShoppingQuestionsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()(
@@ -41,6 +39,7 @@ export default class ShoppingQuestionsAccordionBox extends AccordionBox {
 
         // AccordionBoxOptions
         // tight vertical margins and spacing, see https://github.com/phetsims/unit-rates/issues/140
+        isDisposable: false,
         titleYMargin: 0,
         contentXMargin: 10,
         contentYMargin: 6,
@@ -102,21 +101,7 @@ export default class ShoppingQuestionsAccordionBox extends AccordionBox {
         ...dynamicQuestionNodes
       ];
     };
-    shoppingScene.questionSetProperty.link( questionSetObserver ); // unlink in dispose
-
-    this.disposeShoppingQuestionsAccordionBox = () => {
-      shoppingScene.questionSetProperty.unlink( questionSetObserver );
-      unitRateQuestionNode.dispose();
-      dynamicQuestionNodes.forEach( node => node.dispose() );
-      dynamicQuestionNodes.length = 0;
-      refreshButton.dispose();
-      options.titleNode.dispose();
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeShoppingQuestionsAccordionBox();
-    super.dispose();
+    shoppingScene.questionSetProperty.link( questionSetObserver );
   }
 }
 

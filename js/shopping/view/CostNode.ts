@@ -32,8 +32,6 @@ type CostNodeOptions = SelfOptions;
 
 export default class CostNode extends Node {
 
-  private readonly disposeCostNode: () => void;
-
   public constructor( costProperty: TReadOnlyProperty<number>, providedOptions?: CostNodeOptions ) {
 
     const options = optionize<CostNodeOptions, SelfOptions, NodeOptions>()( {
@@ -44,6 +42,7 @@ export default class CostNode extends Node {
       extraDecimalColor: 'gray',
 
       // NodeOptions
+      isDisposable: false,
       maxWidth: 90 // i18n, determined empirically
     }, providedOptions );
 
@@ -103,7 +102,7 @@ export default class CostNode extends Node {
         extraDecimalNode.string = '0'; // will be invisible, but needs a valid digit for layout purposes
       }
     };
-    costProperty.link( costObserver ); // unlink in dispose
+    costProperty.link( costObserver );
 
     // Adjust layout when any of the subcomponents change.
     Multilink.multilink( [ dollarSignNode.localBoundsProperty, primaryNode.localBoundsProperty, extraDecimalNode.localBoundsProperty ],
@@ -114,17 +113,7 @@ export default class CostNode extends Node {
         extraDecimalNode.y = primaryNode.y;
       } );
 
-    this.disposeCostNode = () => {
-      costProperty.unlink( costObserver );
-      dollarSignNode.dispose();
-    };
-
     this.mutate( options );
-  }
-
-  public override dispose(): void {
-    this.disposeCostNode();
-    super.dispose();
   }
 }
 

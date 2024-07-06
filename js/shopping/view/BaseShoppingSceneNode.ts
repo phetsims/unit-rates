@@ -37,7 +37,6 @@ export default class BaseShoppingSceneNode extends Node {
 
   private readonly dragLayer: Node;
   protected readonly doubleNumberLineAccordionBox: Node; // for layout in subtypes
-  private readonly disposeBaseShoppingSceneNode: () => void;
 
   public constructor( shoppingScene: ShoppingScene, layoutBounds: Bounds2, keypadLayer: KeypadLayer,
                       viewProperties: ShoppingViewProperties, providedOptions?: BaseShoppingSceneNodeOptions ) {
@@ -45,6 +44,7 @@ export default class BaseShoppingSceneNode extends Node {
     const options = optionize<BaseShoppingSceneNodeOptions, SelfOptions, NodeOptions>()( {
 
       // SelfOptions
+      isDisposable: false,
       extraCostDecimalVisible: false
     }, providedOptions );
 
@@ -86,20 +86,17 @@ export default class BaseShoppingSceneNode extends Node {
     } );
 
     // Disable the button when all bags are on the shelf
-    const numberOfBagsObserver = ( numberOfBags: number ) => {
+    shoppingScene.shelf.numberOfBagsProperty.link( numberOfBags => {
       resetShelfButton.enabled = ( numberOfBags !== shoppingScene.numberOfBags );
-    };
-    shoppingScene.shelf.numberOfBagsProperty.link( numberOfBagsObserver ); // unlink in dispose
+    } );
 
     // bags and items, dispose required
-    const bagNodes: BagNode[] = [];
     const itemNodes: ShoppingItemNode[] = [];
     let bagsOpen = false;
     shoppingScene.bags.forEach( bag => {
 
       // create the bag's Node, put it in the bag layer
       const bagNode = new BagNode( bag, shoppingScene.shelf, shoppingScene.scale, bagLayer, dragLayer );
-      bagNodes.push( bagNode );
       bagLayer.addChild( bagNode );
 
       // optional items in the bag
@@ -138,25 +135,8 @@ export default class BaseShoppingSceneNode extends Node {
       }
     }
 
-    this.disposeBaseShoppingSceneNode = () => {
-
-      shoppingScene.shelf.numberOfBagsProperty.unlink( numberOfBagsObserver );
-
-      doubleNumberLineAccordionBox.dispose();
-      shelfNode.dispose();
-      scaleNode.dispose();
-      resetShelfButton.dispose();
-      bagNodes.forEach( node => node.dispose() );
-      itemNodes.forEach( node => node.dispose() );
-    };
-
     this.dragLayer = dragLayer;
     this.doubleNumberLineAccordionBox = doubleNumberLineAccordionBox;
-  }
-
-  public override dispose(): void {
-    this.disposeBaseShoppingSceneNode();
-    super.dispose();
   }
 }
 

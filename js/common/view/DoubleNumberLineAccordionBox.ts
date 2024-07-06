@@ -45,7 +45,6 @@ type DoubleNumberLineAccordionBoxOptions = SelfOptions & NodeTranslationOptions 
 export default class DoubleNumberLineAccordionBox extends AccordionBox {
 
   private readonly doubleNumberLineNode: DoubleNumberLineNode;
-  private readonly disposeDoubleNumberLineAccordionBox: () => void;
 
   public constructor( doubleNumberLine: DoubleNumberLine, markerEditor: MarkerEditor, keypadLayer: KeypadLayer,
                       providedOptions?: DoubleNumberLineAccordionBoxOptions ) {
@@ -61,6 +60,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
         indicatorColor: 'green',
 
         // AccordionBoxOptions
+        isDisposable: false,
         resize: false // see https://github.com/phetsims/unit-rates/issues/218
       }, providedOptions );
 
@@ -294,8 +294,8 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
         }
       }
     };
-    markerEditor.numeratorProperty.link( markerEditorObserver ); // unlink in dispose
-    markerEditor.denominatorProperty.link( markerEditorObserver ); // unlink in dispose
+    markerEditor.numeratorProperty.link( markerEditorObserver );
+    markerEditor.denominatorProperty.link( markerEditorObserver );
     markerEditorAnimationEnabled = true;
 
     // Observe the 'undo' marker. One level of undo is supported, and the undo button is overloaded.
@@ -321,30 +321,9 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
         undoButton.visible = !markerEditor.isEmpty();
       }
     };
-    doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver ); // unlink in dispose
-
-    this.disposeDoubleNumberLineAccordionBox = () => {
-
-      // model cleanup
-      doubleNumberLine.undoMarkerProperty.unlink( undoMarkerObserver );
-      markerEditor.numeratorProperty.unlink( markerEditorObserver );
-      markerEditor.denominatorProperty.unlink( markerEditorObserver );
-
-      // view cleanup
-      markerEditorAnimation && markerEditorAnimation.stop();
-      markerEditorNode.dispose();
-      doubleNumberLineNode.dispose();
-      eraserButton.dispose();
-      undoButton.dispose();
-      options.titleNode.dispose();
-    };
+    doubleNumberLine.undoMarkerProperty.link( undoMarkerObserver );
 
     this.doubleNumberLineNode = doubleNumberLineNode;
-  }
-
-  public override dispose(): void {
-    this.disposeDoubleNumberLineAccordionBox();
-    super.dispose();
   }
 
   /**

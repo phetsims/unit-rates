@@ -18,8 +18,6 @@ import KeypadLayer from '../../common/view/KeypadLayer.js';
 
 export default class ShoppingSceneNode extends BaseShoppingSceneNode {
 
-  private readonly disposeShoppingSceneNode: () => void;
-
   public constructor( shoppingScene: ShoppingScene, layoutBounds: Bounds2, keypadLayer: KeypadLayer,
                       viewProperties: ShoppingViewProperties ) {
 
@@ -35,15 +33,6 @@ export default class ShoppingSceneNode extends BaseShoppingSceneNode {
       questionsAccordionBox.right = layoutBounds.right - URConstants.SCREEN_X_MARGIN;
       questionsAccordionBox.top = this.doubleNumberLineAccordionBox.bottom + 10;
     } );
-
-    this.disposeShoppingSceneNode = () => {
-      questionsAccordionBox.dispose();
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeShoppingSceneNode();
-    super.dispose();
   }
 }
 

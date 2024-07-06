@@ -50,7 +50,6 @@ export default class DoubleNumberLineNode extends Node {
   public readonly axisViewLength: number;
   private readonly markersParent: Node; // parent for markers, to maintain rendering order
   public readonly outOfRangeXOffset: number; // position for things that are "out of range", halfway between arrows and labels
-  private readonly disposeDoubleNumberLineNode: () => void;
 
   public constructor( doubleNumberLine: DoubleNumberLine, providedOptions?: DoubleNumberLineNodeOptions ) {
 
@@ -69,7 +68,10 @@ export default class DoubleNumberLineNode extends Node {
       majorMarkerLength: URConstants.MAJOR_MARKER_LENGTH,
       minorMarkerLength: URConstants.MINOR_MARKER_LENGTH,
       indicatorXProperty: null,
-      indicatorColor: 'green'
+      indicatorColor: 'green',
+
+      // NodeOptions
+      isDisposable: false
     }, providedOptions );
 
     super();
@@ -145,7 +147,7 @@ export default class DoubleNumberLineNode extends Node {
       indicatorXObserver = ( x: number ) => {
         indicatorNode.centerX = doubleNumberLine.modelToViewNumerator( x, this.axisViewLength );
       };
-      options.indicatorXProperty.link( indicatorXObserver ); // unlink in dispose
+      options.indicatorXProperty.link( indicatorXObserver );
     }
 
     this.markersParent = new Node();
@@ -177,21 +179,9 @@ export default class DoubleNumberLineNode extends Node {
 
     // Add a MarkNode for each initial Marker
     doubleNumberLine.markers.forEach( markerAddedListener.bind( this ) );
-
-    this.disposeDoubleNumberLineNode = () => {
-      doubleNumberLine.markers.removeItemAddedListener( markerAddedListener );
-      doubleNumberLine.markers.removeItemRemovedListener( markerRemovedListener );
-      options.indicatorXProperty && options.indicatorXProperty.unlink( indicatorXObserver );
-      numeratorAxisText.dispose();
-      denominatorAxisText.dispose();
-    };
   }
 
-  public override dispose(): void {
-    this.disposeDoubleNumberLineNode();
-    super.dispose();
-  }
-
+  /**
   /**
    * Adds a MarkerNode to the double number line.
    */
