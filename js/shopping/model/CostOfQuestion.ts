@@ -68,8 +68,9 @@ export default class CostOfQuestion extends ShoppingQuestion {
     };
   }
 
-  public dispose(): void {
+  public override dispose(): void {
     this.disposeCostOfQuestion();
+    super.dispose();
   }
 }
 

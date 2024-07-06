@@ -49,8 +49,9 @@ export default class UnitRateQuestion extends ShoppingQuestion {
     };
   }
 
-  public dispose(): void {
+  public override dispose(): void {
     this.disposeUnitRateQuestion();
+    super.dispose();
   }
 }
 

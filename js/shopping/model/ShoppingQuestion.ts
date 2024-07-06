@@ -25,6 +25,8 @@ export default class ShoppingQuestion {
   public readonly guessProperty: Property<number | null>; // the user's guess, null indicates no guess
   public readonly correctEmitter: Emitter<[ ShoppingQuestion ]>; // emit is called when the question is answered correctly
 
+  private readonly disposeShoppingQuestion: () => void;
+
   /**
    * @param questionStringProperty - the question string to be displayed
    * @param answer - the correct answer
@@ -62,10 +64,19 @@ export default class ShoppingQuestion {
         this.correctEmitter.emit( this );
       }
     } );
+
+    this.disposeShoppingQuestion = () => {
+      this.guessProperty.dispose();
+      this.correctEmitter.dispose();
+    };
   }
 
   public reset(): void {
     this.guessProperty.reset();
+  }
+
+  public dispose(): void {
+    this.disposeShoppingQuestion();
   }
 }
 

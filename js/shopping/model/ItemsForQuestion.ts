@@ -69,8 +69,9 @@ export default class ItemsForQuestion extends ShoppingQuestion {
     };
   }
 
-  public dispose(): void {
+  public override dispose(): void {
     this.disposeItemsForQuestion();
+    super.dispose();
   }
 }
 
