@@ -37,8 +37,6 @@ type MarkerEditorNodeOptions = SelfOptions & NodeTranslationOptions;
 
 export default class MarkerEditorNode extends Node {
 
-  private readonly disposeMarkerEditorNode: () => void;
-
   /**
    * @param markerEditor
    * @param doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
@@ -61,7 +59,10 @@ export default class MarkerEditorNode extends Node {
       valueXMargin: 5, // {number} horizontal margin inside the value box
       valueYMargin: URConstants.MARKER_Y_SPACING, // {number} vertical margin inside the value box
       ySpacing: 3,  // {number} vertical spacing between UI elements
-      keypadPanelPosition: 'below' // {string} 'above' or 'below' doubleNumberLinePanel
+      keypadPanelPosition: 'below', // {string} 'above' or 'below' doubleNumberLinePanel
+
+      // NodeOptions
+      isDisposable: false
     }, providedOptions );
 
     super();
@@ -262,18 +263,6 @@ export default class MarkerEditorNode extends Node {
       }
     };
     markerEditor.denominatorProperty.link( denominatorObserver );
-
-    this.disposeMarkerEditorNode = () => {
-      markerEditor.numeratorProperty.unlink( numeratorObserver );
-      markerEditor.denominatorProperty.unlink( denominatorObserver );
-      numeratorEditButton.dispose();
-      denominatorEditButton.dispose();
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeMarkerEditorNode();
-    super.dispose();
   }
 }
 
