@@ -31,6 +31,7 @@ export default class KeypadLayer extends Plane {
   public constructor() {
 
     super( {
+      isDisposable: false,
       fill: 'rgba( 0, 0, 0, 0.2 )',
       visible: false
     } );
