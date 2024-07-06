@@ -51,7 +51,7 @@ export default class MarkerNode extends Node {
       numeratorNode.centerX = lineNode.centerX;
       numeratorNode.bottom = lineNode.top - options.ySpacing;
     };
-    marker.numeratorProperty.link( numeratorObserver ); // unlink in dispose
+    marker.numeratorProperty.link( numeratorObserver );
 
     // denominator
     const denominatorNode = new Text( '', { font: options.font } );
@@ -60,7 +60,7 @@ export default class MarkerNode extends Node {
       denominatorNode.centerX = lineNode.centerX;
       denominatorNode.top = lineNode.bottom + options.ySpacing;
     };
-    marker.denominatorProperty.link( denominatorObserver ); // unlink in dispose
+    marker.denominatorProperty.link( denominatorObserver );
 
     options.children = [ numeratorNode, lineNode, denominatorNode ];
 
@@ -74,7 +74,7 @@ export default class MarkerNode extends Node {
       numeratorNode.fill = color;
       denominatorNode.fill = color;
     };
-    marker.colorProperty.link( colorObserver ); // unlink in dispose
+    marker.colorProperty.link( colorObserver );
 
     this.disposeMarkerNode = () => {
       marker.numeratorProperty.unlink( numeratorObserver );

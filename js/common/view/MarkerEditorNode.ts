@@ -233,7 +233,7 @@ export default class MarkerEditorNode extends Node {
         denominatorNode.center = denominatorBox.center;
       }
     };
-    markerEditor.numeratorProperty.link( numeratorObserver ); // unlink in dispose
+    markerEditor.numeratorProperty.link( numeratorObserver );
 
     // Observe edits to the denominator
     const denominatorObserver = ( denominator: number | null ) => {
@@ -261,7 +261,7 @@ export default class MarkerEditorNode extends Node {
         numeratorNode.center = numeratorBox.center;
       }
     };
-    markerEditor.denominatorProperty.link( denominatorObserver ); // unlink in dispose
+    markerEditor.denominatorProperty.link( denominatorObserver );
 
     this.disposeMarkerEditorNode = () => {
       markerEditor.numeratorProperty.unlink( numeratorObserver );

@@ -129,12 +129,11 @@ export default class ValuePanel extends Panel {
 
     super( contentNode, options );
 
-    // right justify valueNode when its bounds change
-    const boundsListener = () => {
+    // Right justify valueNode when its bounds change.
+    valueNode.boundsProperty.link( () => {
       valueNode.right = backgroundNode.right;
       valueNode.centerY = backgroundNode.centerY;
-    };
-    valueNode.boundsProperty.link( boundsListener ); // off in dispose
+    } );
   }
 }
 
