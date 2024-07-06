@@ -246,14 +246,14 @@ export default class ShoppingQuestionNode extends Node {
     } ) );
 
     this.disposeShoppingQuestionNode = () => {
+      editButton.dispose();
+      checkMarkNode.dispose();
       questionText.dispose();
       guessNode.dispose();
       numeratorText.dispose();
-      denominatorText.dispose();
       fractionLineNode.dispose();
+      denominatorText.dispose();
       multilink.dispose();
-      editButton.dispose();
-      checkMarkNode.dispose();
     };
   }
 
