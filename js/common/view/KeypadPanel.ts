@@ -1,4 +1,4 @@
-// Copyright 2016-2023, University of Colorado Boulder
+// Copyright 2016-2024, University of Colorado Boulder
 
 /***
  * KeypadPanel is a panel that contains a value display, keypad, and Enter button.
