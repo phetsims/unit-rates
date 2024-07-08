@@ -1,5 +1,5 @@
 {
-  "comment": "# unit-rates 1.1.0-dev.7 Fri Jul 05 2024 11:05:42 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# unit-rates 1.1.0-dev.8 Mon Jul 08 2024 14:28:28 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "4eaabfefb0b88b213e98b9c7f32d6c570c3fc122",
     "branch": "main"
@@ -13,7 +13,7 @@
     "branch": "main"
   },
   "chipper": {
-    "sha": "7d20efe9965456447f92df6046326a79f9f9e600",
+    "sha": "0810d710295be32154eaa7bb9daff90fbb3a4326",
     "branch": "main"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "main"
   },
   "joist": {
-    "sha": "dd68858ddf897461a3d34a0ce39f4e97b83d2c1d",
+    "sha": "c853a01069a81b659ffa09a3ceb9571536122929",
     "branch": "main"
   },
   "kite": {
@@ -41,7 +41,7 @@
     "branch": "main"
   },
   "phet-io-sim-specific": {
-    "sha": "aa7e3792b6b75bb453f89687a4ff78dc60bb6614",
+    "sha": "d07545e805d9856aff33d0a05aa751e238bd7961",
     "branch": "main"
   },
   "phet-io-wrappers": {
@@ -77,7 +77,7 @@
     "branch": "main"
   },
   "sun": {
-    "sha": "d66714118c023f905a4a1eb57ee3d87a95f23209",
+    "sha": "3871e9293ac69e479ad905a145094a0beab695c5",
     "branch": "main"
   },
   "tambo": {
@@ -93,7 +93,7 @@
     "branch": "main"
   },
   "unit-rates": {
-    "sha": "a2ad301b9a2226eea686e8181186f086690243ca",
+    "sha": "4104ff6df052ec457154d509ea5222df968a14ac",
     "branch": "main"
   },
   "utterance-queue": {
