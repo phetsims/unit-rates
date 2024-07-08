@@ -15,7 +15,6 @@ import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import URColors from '../URColors.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
   valueBoxWidth?: number; // width of the value field, height determined by valueFont
@@ -32,7 +31,7 @@ type KeypadPanelOptions = SelfOptions;
 
 export default class KeypadPanel extends Panel {
 
-  public readonly valueStringProperty: TReadOnlyProperty<string>; // expose the Keypad's stringProperty
+  private readonly keypad: Keypad;
   private readonly disposeKeypadPanel: () => void;
 
   public constructor( providedOptions?: KeypadPanelOptions ) {
@@ -64,7 +63,7 @@ export default class KeypadPanel extends Panel {
       }
     } );
 
-    const valueNode = new Text( '', {
+    const valueNode = new Text( keypad.stringProperty, {
       font: options.valueFont
     } );
 
@@ -76,11 +75,6 @@ export default class KeypadPanel extends Panel {
 
     const valueParent = new Node( {
       children: [ valueBackgroundNode, valueNode ]
-    } );
-
-    // Show the value entered on the keypad. No unlink is required.
-    keypad.stringProperty.link( string => {
-      valueNode.string = string;
     } );
 
     // Keep the value centered in the background. No unlink is required.
@@ -107,10 +101,11 @@ export default class KeypadPanel extends Panel {
 
     super( contentNode, options );
 
-    this.valueStringProperty = keypad.stringProperty;
+    this.keypad = keypad;
 
     this.disposeKeypadPanel = () => {
       keypad.dispose();
+      valueNode.dispose();
       enterText.dispose();
       enterButton.dispose();
     };
@@ -119,6 +114,13 @@ export default class KeypadPanel extends Panel {
   public override dispose(): void {
     this.disposeKeypadPanel();
     super.dispose();
+  }
+
+  /**
+   * Gets the string value shown on the keypad.
+   */
+  public get keypadString(): string {
+    return this.keypad.stringProperty.value;
   }
 }
 
