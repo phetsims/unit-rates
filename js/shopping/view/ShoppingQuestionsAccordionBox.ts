@@ -77,8 +77,7 @@ export default class ShoppingQuestionsAccordionBox extends AccordionBox {
 
     super( contentNode, options );
 
-    // 'Unit Rate?' question, dispose required.
-    // This question is separate because it does not change when the refresh button is pressed.
+    // 'Unit Rate?' question, which does not change when the refresh button is pressed.
     const unitRateQuestionNode = new ShoppingQuestionNode( shoppingScene.unitRateQuestion, this, keypadLayer, {
       denominatorVisible: true
     } );
