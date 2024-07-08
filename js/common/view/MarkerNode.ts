@@ -85,7 +85,7 @@ export default class MarkerNode extends Node {
 
   public override dispose(): void {
     this.disposeMarkerNode();
-    Node.prototype.dispose.call( this );
+    super.dispose();
   }
 }
 
