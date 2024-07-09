@@ -97,12 +97,10 @@ screen (`js/shopping/`).
 The model and most view components in these screens exists for the lifetime of the simulation.
 
 `ShoppingItemData` contains data structures that are used to instantiate `ShoppingScene` and its
-subtypes (`FruitScene`, `VegetableScene` and
-`CandyScene`). Using a data structure like this is an alternative to having a large number of constructor parameters.
+subtypes (`FruitScene`, `VegetableScene` and `CandyScene`). Using a data structure like this is an alternative to having a large number of constructor parameters.
 
 `Bags` and `ShoppingItems` are subtypes of `URMovable`, which implements model-based animation, complete with a callback
-system.
-`URMovable` is required reading.
+system.`URMovable` is required reading.
 
 The most complicated part of the implementation is the management of bags and items. This is especially true for Fruit,
 where bags "open" and become individual items when placed on the scale. In the model, `Scale` and `Shelf` are both
@@ -129,9 +127,7 @@ during the animation. When a bag "opens", it becomes individual items that fill 
 ## Shopping screen
 
 The Questions panel is unique to the Shopping screen. `ShoppingItemData` provides a data structure that describes the
-questions, in a
-"raw" format that matches the description in the design document. `ShoppingQuestionFactory.createQuestionSets` turns
-this raw data into sets of `ShoppingQuestion`.
+questions, in a "raw" format that matches the description in the design document. `ShoppingQuestionFactory.createQuestionSets` turns this raw data into sets of `ShoppingQuestion`.
 
 ## Shopping Lab screen
 
