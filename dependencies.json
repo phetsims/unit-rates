@@ -45,7 +45,7 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "9a0004890f85df92ceabd6d28cc646ba5eb6e59e",
+    "sha": "513c8d91ce4c293cb331cc8e3a818ed45d9febb1",
     "branch": "HEAD"
   },
   "scenery-phet": {
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "unit-rates": {
-    "sha": "eca726a1d47b7bfb3816dd375bcd3747af2c76d2",
+    "sha": "6241f153aad11d4a719c8d7a5362cac2957ea627",
     "branch": "1.0"
   }
 }
