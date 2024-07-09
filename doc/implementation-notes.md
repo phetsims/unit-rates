@@ -94,19 +94,7 @@ Shopping and Shopping Lab screens share a great deal of code. Since the Shopping
 specialization of the Shopping screen, code shared by these 2 screens lives in the directory for the Shopping
 screen (`js/shopping/`).
 
-The model in these screens exists for the lifetime of the simulation. But large portions of the view are reconstructed
-when the selected item changes. So `dispose` is required throughout the view, and all function calls that register an
-observer have an associated comment indicating whether a corresponding de-register call is required. For example, here's
-the general pattern used in `CostNode`:
-
-```js
-var costObserver = function( cost ) {...};
-costProperty.link( costObserver ); // unlink in dispose
-...
-this.disposeCostNode = function() {
-  costProperty.unlink( costObserver );
-};
-```
+The model and most view components in these screens exists for the lifetime of the simulation.
 
 `ShoppingItemData` contains data structures that are used to instantiate `ShoppingScene` and its
 subtypes (`FruitScene`, `VegetableScene` and
@@ -160,5 +148,4 @@ results in the creation of a corresponding marker on the double number line.
 The majority of the model logic resides in `RaceCar`, while `RaceTrackNode` contains most of the view components that
 are specific to this screen.
 
-In the Racing Lab screen, model and view components persist for the lifetime of the simulation, so `dispose` is
-unnecessary.
+In the Racing Lab screen, model and view components persist for the lifetime of the simulation.
