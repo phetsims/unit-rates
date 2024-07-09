@@ -67,22 +67,6 @@ in `DoubleNumberLine`. For the race track, see `modelToView` in `RaceTrackNode`.
 such query parameters are documented in
 [URQueryParameters](https://github.com/phetsims/unit-rates/blob/main/js/common/URQueryParameters.ts).
 
-**Nested options**: In this simulation, I tried a new pattern for nesting options. It allows clients to specify only the
-nested options that they wish to override. The pattern is used throughout the sim, mostly for specifying options related
-to a rate's numerator and denominator
-(e.g. in `DoubleNumberLine`). The general pattern is:
-
-```js
-options = _.assignIn( {
-  nestedOptions: null, // {*} to be filled in with defaults below
-  ...
-}, options );
-
-options.nestedOptions = _.assignIn( {
-  // default values go here
-}, options.nestedOptions );
-```
-
 ## Common to all screens
 
 This section highlights a few things that are common to all screens.
