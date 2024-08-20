@@ -13,7 +13,7 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import { Node, NodeTranslationOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeTranslationOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import undoSolidShape from '../../../../sherpa/js/fontawesome-5/undoSolidShape.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
@@ -64,13 +64,12 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
         resize: false // see https://github.com/phetsims/unit-rates/issues/218
       }, providedOptions );
 
-    // An invisible rectangle that has the same bounds as the accordion box. Used to position the keypad.
-    // Dimensions will be set after calling super.  This was added so when converting to an ES6 class, because
-    // we can't use this before super.  See https://github.com/phetsims/tasks/issues/1026#issuecomment-594357784
-    const thisBoundsNode = new Rectangle( 0, 0, 1, 1, {
-      visible: false,
-      pickable: false
-    } );
+    // Computes the global bounds of this AccordionBox. Used to position the keypad. Will be defined after calling
+    // super. This was added so when converting to an ES6 class, because we can't use this before super.
+    // See https://github.com/phetsims/tasks/issues/1026#issuecomment-5943577
+    const computeGlobalBounds = () => {
+      return this.globalBounds;
+    };
 
     // title on the accordion box
     assert && assert( !options.titleNode, 'creates its own titleNode' );
@@ -94,7 +93,7 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
     const markerEditorNodeOutOfRangeX = doubleNumberLineNode.x + doubleNumberLineNode.outOfRangeXOffset;
 
     // marker editor
-    const markerEditorNode = new MarkerEditorNode( markerEditor, thisBoundsNode, keypadLayer, {
+    const markerEditorNode = new MarkerEditorNode( markerEditor, computeGlobalBounds, keypadLayer, {
       keypadPanelPosition: options.keypadPanelPosition,
       x: markerEditorNodeHomeX,
       centerY: doubleNumberLineNode.centerY
@@ -141,11 +140,6 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
     } );
 
     super( contentNode, options );
-
-    // Adjust rectangle to match accordion box size.
-    thisBoundsNode.setRectBounds( this.localBounds );
-    this.addChild( thisBoundsNode );
-    thisBoundsNode.moveToBack();
 
     // animation for marker editor
     let markerEditorAnimation: Animation | null = null;

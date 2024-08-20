@@ -20,6 +20,7 @@ import MarkerEditor from '../model/MarkerEditor.js';
 import KeypadLayer from './KeypadLayer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import KeypadPanel from './KeypadPanel.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 type SelfOptions = {
   lineLength?: number; // length of the vertical line between numerator and denominator values
@@ -39,12 +40,12 @@ export default class MarkerEditorNode extends Node {
 
   /**
    * @param markerEditor
-   * @param doubleNumberLinePanel - panel that contains the double number line, for positioning the keypad
+   * @param computePanelGlobalBounds - computes global bounds of a containing panel, for positioning the keypad
    * @param keypadLayer - layer that manages the keypad
    * @param [providedOptions]
    */
   public constructor( markerEditor: MarkerEditor,
-                      doubleNumberLinePanel: Node,
+                      computePanelGlobalBounds: () => Bounds2,
                       keypadLayer: KeypadLayer,
                       providedOptions?: MarkerEditorNodeOptions ) {
 
@@ -151,7 +152,7 @@ export default class MarkerEditorNode extends Node {
 
       // position the keypad relative to edit button and double number line panel
       const doubleNumberLinePanelBounds =
-        keypadPanel.globalToParentBounds( doubleNumberLinePanel.localToGlobalBounds( doubleNumberLinePanel.localBounds ) );
+        keypadPanel.globalToParentBounds( computePanelGlobalBounds() );
       const editButtonBounds =
         keypadPanel.globalToParentBounds( numeratorEditButton.localToGlobalBounds( numeratorEditButton.localBounds ) );
 
