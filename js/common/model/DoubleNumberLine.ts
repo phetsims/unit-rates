@@ -249,8 +249,8 @@ export default class DoubleNumberLine {
 
     this.undoMarkerProperty.reset();
 
-    // remove all markers that are erasable
-    this.markers.forEach( marker => {
+    // Remove all markers that are erasable. Since this modified the array, iterator on a copy.
+    this.markers.slice().forEach( marker => {
       if ( marker.erasable ) {
         this.removeMarker( marker );
       }
