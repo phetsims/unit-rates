@@ -18,6 +18,8 @@ import Marker from './Marker.js';
 import Axis from './Axis.js';
 
 // Which of the axes has a fix (immutable) range
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const FixedAxisValues = [ 'numerator', 'denominator' ] as const;
 export type FixedAxis = ( typeof FixedAxisValues )[number];
 
