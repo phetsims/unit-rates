@@ -54,7 +54,7 @@
         },
         "parserOptions": {
           "project": [
-            "../unit-rates/tsconfig.json"
+            "../chipper/tsconfig/eslint-all/tsconfig.json"
           ]
         }
       }
