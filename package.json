@@ -51,6 +51,11 @@
               "ts-nocheck": true
             }
           ]
+        },
+        "parserOptions": {
+          "project": [
+            "../unit-rates/tsconfig.json"
+          ]
         }
       }
     ]
