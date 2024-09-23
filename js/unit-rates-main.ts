@@ -9,11 +9,11 @@
 
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import RacingLabScreen from './racinglab/RacingLabScreen.js';
 import ShoppingScreen from './shopping/ShoppingScreen.js';
 import ShoppingLabScreen from './shoppinglab/ShoppingLabScreen.js';
 import UnitRatesStrings from './UnitRatesStrings.js';
-import Tandem from '../../tandem/js/Tandem.js';
 
 const titleStringProperty = UnitRatesStrings[ 'unit-rates' ].titleStringProperty;
 
