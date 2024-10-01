@@ -1,103 +1,103 @@
 {
-  "comment": "# unit-rates 1.1.0-dev.10 Tue Aug 20 2024 14:59:46 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# unit-rates 1.1.0-dev.11 Mon Sep 30 2024 18:19:07 GMT-0600 (Mountain Daylight Time)",
   "assert": {
-    "sha": "4eaabfefb0b88b213e98b9c7f32d6c570c3fc122",
+    "sha": "31e3cab3f1de126d53782b5700e52c4fed423b09",
     "branch": "main"
   },
   "axon": {
-    "sha": "23bc36a7bc2c33b960d18e5f2c04d65510ffefd5",
+    "sha": "edcccbdb7c3b3785e2e8a2348425727cc659cc8a",
     "branch": "main"
   },
   "brand": {
-    "sha": "0e84d480a4e3e5ce0fc42537467d09e7d3ffb192",
+    "sha": "509a2a99877f7cec8475bb5b421c9d0cda9cbdf8",
     "branch": "main"
   },
   "chipper": {
-    "sha": "9e1607552621936a8864851362537fc84938957c",
+    "sha": "223cc8e331aa87b46cf35283358b341ec4e78a46",
     "branch": "main"
   },
   "dot": {
-    "sha": "892c07e3cd4c1beb7a1e0db69de2124c161b9279",
+    "sha": "9322db8f05d75dcd325f1f966fb9d87a0d713907",
     "branch": "main"
   },
   "joist": {
-    "sha": "1cf9d0082c5ef2b161dd54637efe120444f691e2",
+    "sha": "5a7fe1707bd7161d08182ee61004f2ca65e6c134",
     "branch": "main"
   },
   "kite": {
-    "sha": "d780083bfeb93b5e110c0554dad80adfe85e81b2",
+    "sha": "ca23a3b26120ddde2b5fabfcbe14fa1f05efe691",
     "branch": "main"
   },
   "perennial-alias": {
-    "sha": "062fccfcc5d598509f0e7d426f1e2926849c639c",
+    "sha": "a898675b09ee771c215633df10c3d534d16db61f",
     "branch": "main"
   },
   "phet-core": {
-    "sha": "0b24c6774f7712d405bd1fee51ffa4ded8d1de90",
+    "sha": "bfcfa8d4daeb2442467d6cf54da53da7ce499ab7",
     "branch": "main"
   },
   "phet-io": {
-    "sha": "2a33d2f65d3b4328382aa33b5b2b3b4d56cbec4c",
+    "sha": "e6e195ed17c7d3051a61895ed4609e786ac64ebf",
     "branch": "main"
   },
   "phet-io-sim-specific": {
-    "sha": "13d596359c98d3fa7e8d83d9d46d2c3a7685c47d",
+    "sha": "eb4acf43300ec212a1eb239d2c566e309491027f",
     "branch": "main"
   },
   "phet-io-wrappers": {
-    "sha": "e55a56cac8a8d0c7c90925b63d8f3462d09f77aa",
+    "sha": "a64c47d48c339e9a156eec9df7d0ebbbda380360",
     "branch": "main"
   },
   "phetcommon": {
-    "sha": "54b41ebbdddd743650d557910ec33b46b2b10317",
+    "sha": "5b768d9c49baeaaa7552ef25ea7509a340dd59ad",
     "branch": "main"
   },
   "phetmarks": {
-    "sha": "d3d9fb5b983d81838325533058159760bd507a1e",
+    "sha": "7ba9b4d2603ed07aa7fac8e3ef802cbf51e60730",
     "branch": "main"
   },
   "query-string-machine": {
-    "sha": "1dacedac04aa8515379d9eabff5849da4a244641",
+    "sha": "aa09f61ed143f36fd13e55677c6ae6b3ea437bbb",
     "branch": "main"
   },
   "scenery": {
-    "sha": "5f2ca96daf4e8da358a464dba277d713c75de68c",
+    "sha": "626b7e0d4ea5b0978425ccda796a12c8a8cbdffd",
     "branch": "main"
   },
   "scenery-phet": {
-    "sha": "dac3b744a120cc58e70de5a7141165472eca398d",
+    "sha": "ad2afb03851998f27263fa83d5583bf03b7cc976",
     "branch": "main"
   },
   "sherpa": {
-    "sha": "e8465b41d5376e0ac613c56323defd2929ccf369",
+    "sha": "43037b2fab162af61adae3a301283007195b3986",
     "branch": "main"
   },
   "studio": {
-    "sha": "25d3b0c2f79eabb12af99e10b71701c10c629136",
+    "sha": "0a679872a99c560e1e7f90c83f1f465cd36570ab",
     "branch": "main"
   },
   "sun": {
-    "sha": "0248f98c1bcfe37ceb4278e8a019543e8451a127",
+    "sha": "b6b4502c14306a8dfd629ac4f01a6704525d3741",
     "branch": "main"
   },
   "tambo": {
-    "sha": "5b60059e8ef8f9101db3e6cedd501f15acb0ba10",
+    "sha": "95fb84624ec5c5ab0e39a1035f1b11ba551b5f75",
     "branch": "main"
   },
   "tandem": {
-    "sha": "05021a8bb062b2b926d5d95b9afcbfc23de120ba",
+    "sha": "735ecdd289cdb4f64d682b754b153348b7787420",
     "branch": "main"
   },
   "twixt": {
-    "sha": "bcacbfb0295840eb491e4a03223c2c426ef2ae43",
+    "sha": "ad123945281c173ff0e8ee918ce0a438a0e65626",
     "branch": "main"
   },
   "unit-rates": {
-    "sha": "8d9bafd897cbcaa2336c5bd7e0d357806dcdfb7f",
+    "sha": "07de78dcdfaf7ef8ca37ec2c5f7096af328143a9",
     "branch": "main"
   },
   "utterance-queue": {
-    "sha": "ee4d5ce6849b90ed9cc7869e4673fcba9780df86",
+    "sha": "cad2e63d6c536a79bae6d126808b2133e93f14eb",
     "branch": "main"
   }
 }
