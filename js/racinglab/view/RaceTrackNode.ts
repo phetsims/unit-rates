@@ -123,6 +123,7 @@ export default class RaceTrackNode extends Node {
 
     // green arrows around the finish flag, cues the user to drag the flag
     const cueArrowsNode = new HBox( {
+      interruptSubtreeOnInvisible: false, // because arrows are draggable, see https://github.com/phetsims/unit-rates/issues/229
       cursor: 'pointer',
       spacing: 9,
       children: [
