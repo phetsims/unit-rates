@@ -240,7 +240,8 @@ export default class ShoppingScene {
 
     // When a question is answered correctly, create a corresponding marker on the double number line.
     const questionCorrectListener = ( question: ShoppingQuestion ) => {
-      const marker = new Marker( 'question', question.numerator, question.denominator, this.numeratorAxis, this.denominatorAxis, {
+      const creator = ( question instanceof UnitRateQuestion ) ? 'unitRateQuestion' : 'question';
+      const marker = new Marker( creator, question.numerator, question.denominator, this.numeratorAxis, this.denominatorAxis, {
         isMajor: true, // all question markers are major, per the design document
         color: URColors.questionMarker,
         erasable: false
@@ -410,6 +411,13 @@ export default class ShoppingScene {
   public nextQuestionSet(): void {
 
     assert && assert( this.questionSets.length > 1, 'this implementation requires more than 1 question set' );
+
+    // Clear markers related to previous questions from the number line. This does not clear the unit rate question.
+    this.doubleNumberLine.markers.slice().forEach( marker => {
+      if ( marker.creator === 'question' ) {
+        this.doubleNumberLine.removeMarker( marker );
+      }
+    } );
 
     // adjust the index to point to the next question set
     if ( this.questionSetsIndexProperty.value < this.questionSets.length - 1 ) {

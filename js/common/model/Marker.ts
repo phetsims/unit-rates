@@ -17,8 +17,8 @@ import { Color } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Axis from './Axis.js';
 
-// how the marker was created, values ordered by ascending precedence
-const CreatorValues = [ 'editor', 'scale', 'question', 'race' ] as const;
+// How the marker was created. Values are ordered by ascending precedence (described above).
+const CreatorValues = [ 'editor', 'scale', 'question', 'unitRateQuestion', 'race' ] as const;
 type Creator = ( typeof CreatorValues )[number];
 
 type SelfOptions = {
