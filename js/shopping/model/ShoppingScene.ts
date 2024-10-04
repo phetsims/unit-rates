@@ -419,6 +419,9 @@ export default class ShoppingScene {
       }
     } );
 
+    // Reset the previous questions so that they are all unsolved.
+    this.questionSetProperty.value.forEach( question => question.reset() );
+
     // adjust the index to point to the next question set
     if ( this.questionSetsIndexProperty.value < this.questionSets.length - 1 ) {
       this.questionSetsIndexProperty.value = this.questionSetsIndexProperty.value + 1;
