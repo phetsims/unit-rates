@@ -30,7 +30,7 @@ simLauncher.launch( () => {
       leadDesign: 'Amy Rouinfar',
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.), Dave Schmitz (Schmitzware)',
       team: 'Amy Hanson, Amanda McGarry, Susan Miller, Ariel Paul, Kathy Perkins',
-      qualityAssurance: 'Steele Dalton, Amanda Davis, Bryce Griebenow, Ethan Johnson',
+      qualityAssurance: 'Steele Dalton, Amanda Davis, Bryce Griebenow, Ethan Johnson, Matthew Moore, Ashton Morris, Nancy Salpepi, Kathryn Woessner',
       graphicArts: 'Mariah Hermsmeyer'
     }
   } );
