@@ -9,7 +9,7 @@
 import Multilink from '../../../../axon/js/Multilink.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { HBox, Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import URConstants from '../../common/URConstants.js';
 import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAccordionBox.js';
@@ -39,13 +39,8 @@ export default class RacingLabScreenView extends ScreenView {
     // Properties that are specific to the view
     const viewProperties = new RacingLabViewProperties();
 
-    // parent for everything expect the keypad
-    const playAreaLayer = new Node();
-    this.addChild( playAreaLayer );
-
     // separate layer for model keypad
     const keypadLayer = new KeypadLayer();
-    this.addChild( keypadLayer );
 
     // Double number line for car1
     const doubleNumberLineAccordionBox1 = new DoubleNumberLineAccordionBox(
@@ -55,11 +50,8 @@ export default class RacingLabScreenView extends ScreenView {
         expandedProperty: viewProperties.doubleNumberLine1ExpandedProperty,
         indicatorXProperty: model.car1.distanceProperty,
         indicatorColor: model.car1.color,
-        keypadPanelPosition: 'below',
-        left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
-        top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
+        keypadPanelPosition: 'below'
       } );
-    playAreaLayer.addChild( doubleNumberLineAccordionBox1 );
 
     // Double number line for car2
     const doubleNumberLineAccordionBox2 = new DoubleNumberLineAccordionBox(
@@ -69,29 +61,38 @@ export default class RacingLabScreenView extends ScreenView {
         expandedProperty: viewProperties.doubleNumberLine2ExpandedProperty,
         indicatorXProperty: model.car2.distanceProperty,
         indicatorColor: model.car2.color,
-        keypadPanelPosition: 'above',
-        left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
-        bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
+        keypadPanelPosition: 'above'
       } );
-    playAreaLayer.addChild( doubleNumberLineAccordionBox2 );
 
     // Rate control for car1
     const rateAccordionBox1 = new RaceCarRateAccordionBox( model.car1, {
       titleStringProperty: UnitRatesStrings.rate1StringProperty,
-      expandedProperty: viewProperties.rate1ExpandedProperty,
-      left: doubleNumberLineAccordionBox1.right + ACCORDION_BOX_X_SPACE,
-      top: doubleNumberLineAccordionBox1.top
+      expandedProperty: viewProperties.rate1ExpandedProperty
     } );
-    playAreaLayer.addChild( rateAccordionBox1 );
 
     // Rate control for car2
     const rateAccordionBox2 = new RaceCarRateAccordionBox( model.car2, {
       titleStringProperty: UnitRatesStrings.rate2StringProperty,
-      expandedProperty: viewProperties.rate2ExpandedProperty,
-      left: doubleNumberLineAccordionBox2.right + ACCORDION_BOX_X_SPACE,
-      top: doubleNumberLineAccordionBox2.top
+      expandedProperty: viewProperties.rate2ExpandedProperty
     } );
-    playAreaLayer.addChild( rateAccordionBox2 );
+
+    const hBox1 = new HBox( {
+      stretch: true,
+      children: [ doubleNumberLineAccordionBox1, rateAccordionBox1 ],
+      spacing: ACCORDION_BOX_X_SPACE,
+      align: 'top',
+      left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
+      top: this.layoutBounds.top + URConstants.SCREEN_Y_MARGIN
+    } );
+
+    const hBox2 = new HBox( {
+      stretch: true,
+      children: [ doubleNumberLineAccordionBox2, rateAccordionBox2 ],
+      spacing: ACCORDION_BOX_X_SPACE,
+      align: 'top',
+      left: this.layoutBounds.left + URConstants.SCREEN_X_MARGIN,
+      bottom: this.layoutBounds.bottom - URConstants.SCREEN_Y_MARGIN
+    } );
 
     // Track for car1
     const trackNode1 = new RaceTrackNode( model.car1, viewProperties.timer1ExpandedProperty, viewProperties.arrowsVisibleProperty, {
@@ -100,7 +101,6 @@ export default class RacingLabScreenView extends ScreenView {
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox1.getGlobalOrigin() ).x, // aligned with double number line
       bottom: this.layoutBounds.centerY - 10
     } );
-    playAreaLayer.addChild( trackNode1 );
 
     // Track for car2
     const trackNode2 = new RaceTrackNode( model.car2, viewProperties.timer2ExpandedProperty, viewProperties.arrowsVisibleProperty, {
@@ -109,21 +109,18 @@ export default class RacingLabScreenView extends ScreenView {
       x: this.globalToLocalPoint( doubleNumberLineAccordionBox2.getGlobalOrigin() ).x, // aligned with double number line
       top: this.layoutBounds.centerY + ( this.layoutBounds.centerY - trackNode1.bottom )
     } );
-    playAreaLayer.addChild( trackNode2 );
 
     // Radio button group for number of cars
     const numberOfCarsRadioButtonGroup = new NumberOfCarsRadioButtonGroup( model.car2.visibleProperty, {
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       centerY: this.layoutBounds.centerY
     } );
-    playAreaLayer.addChild( numberOfCarsRadioButtonGroup );
 
     // Start/Stop button
     const startStopButton = new StartStopButton( model.runningProperty, {
       right: numberOfCarsRadioButtonGroup.left - BUTTON_X_SPACE,
       centerY: this.layoutBounds.centerY
     } );
-    playAreaLayer.addChild( startStopButton );
 
     // Reset Race button
     const resetRace = new ResetRaceButton( {
@@ -135,7 +132,6 @@ export default class RacingLabScreenView extends ScreenView {
       right: startStopButton.left - BUTTON_X_SPACE,
       centerY: startStopButton.centerY
     } );
-    playAreaLayer.addChild( resetRace );
 
     // Reset All button
     const resetAllButton = new ResetAllButton( {
@@ -147,7 +143,21 @@ export default class RacingLabScreenView extends ScreenView {
       right: this.layoutBounds.maxX - URConstants.SCREEN_X_MARGIN,
       bottom: this.layoutBounds.maxY - URConstants.SCREEN_Y_MARGIN
     } );
-    playAreaLayer.addChild( resetAllButton );
+
+    const screenViewRootNode = new Node( {
+      children: [
+        hBox1,
+        hBox2,
+        trackNode1,
+        trackNode2,
+        numberOfCarsRadioButtonGroup,
+        startStopButton,
+        resetRace,
+        resetAllButton,
+        keypadLayer // last, so that keypad is in front of everything
+      ]
+    } );
+    this.addChild( screenViewRootNode );
 
     // car1 should always be visible, because the view doesn't support hiding it. unlink not needed.
     model.car1.visibleProperty.link( visible => {
