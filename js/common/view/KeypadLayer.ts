@@ -39,6 +39,7 @@ export default class KeypadLayer extends Plane {
     // clicking outside the keypad cancels the edit
     this.addInputListener( new PressListener( {
       attach: false,
+      pressCursor: null,
       press: event => {
         if ( this.visible && event.trail.lastNode() === this ) {
           this.cancelEdit();
