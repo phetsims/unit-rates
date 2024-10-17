@@ -123,10 +123,11 @@ export default class KeypadLayer extends Plane {
 
     // get the value from the keypad
     assert && assert( this.keypadPanel );
-    const value = Number( this.keypadPanel!.keypadString );
+    const keypadString = this.keypadPanel!.keypadString;
+    const value = Number( keypadString ); // Careful! Empty keypadString will be converted to 0.
 
     // if the keypad contains a valid value ...
-    if ( isValidValue( value, this.zeroIsValid ) ) {
+    if ( keypadString.length > 0 && isValidValue( value, this.zeroIsValid ) ) {
       assert && assert( this.valueProperty );
       this.valueProperty!.value = value;
       this.endEdit();
