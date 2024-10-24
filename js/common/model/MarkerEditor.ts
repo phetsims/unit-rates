@@ -8,7 +8,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Property from '../../../../axon/js/Property.js';
+import Property, { PropertyOptions } from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
 import unitRates from '../../unitRates.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -30,13 +30,21 @@ export default class MarkerEditor {
     this.numeratorAxis = numeratorAxis;
     this.denominatorAxis = denominatorAxis;
 
-    this.numeratorProperty = new Property<number | null>( null, {
-      reentrant: true // see https://github.com/phetsims/unit-rates/issues/216
-    } );
+    // Options shared by numeratorProperty and denominatorProperty.
+    const propertyOptions: PropertyOptions<number | null> = {
 
-    this.denominatorProperty = new Property<number | null>( null, {
-      reentrant: true // see https://github.com/phetsims/unit-rates/issues/216
-    } );
+      // Required by the implementation of DoubleNumberLineAccordionBox markerObserver.
+      // See https://github.com/phetsims/unit-rates/issues/216
+      reentrant: true,
+
+      // Required by the implementation of DoubleNumberLineAccordionBox markerObserver.
+      // See https://github.com/phetsims/unit-rates/issues/232.
+      reentrantNotificationStrategy: 'stack'
+    };
+
+    this.numeratorProperty = new Property<number | null>( null, propertyOptions );
+
+    this.denominatorProperty = new Property<number | null>( null, propertyOptions );
 
     // if a numerator is entered that can't be computed from the existing denominator, then clear the denominator
     this.numeratorProperty.link( numerator => { // no unlink required

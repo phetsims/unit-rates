@@ -173,8 +173,10 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
             color: isMajor ? URColors.majorMarker : URColors.minorMarker
           } );
 
-          // Return the marker editor to its home position.
-          // Do this before adding the marker so that the undo button is associated with the marker.
+          // Return the marker editor to its home position. Do this before adding the marker so that the undo button is
+          // associated with the marker. Note that this implementation relies on markerEditor.numeratorProperty and
+          // markerEditor.denominatorProperty both having reentrant: true and reentrantNotificationStrategy: 'stack'.
+          // See https://github.com/phetsims/unit-rates/issues/232.
           markerEditor.reset();
 
           // add marker to double number line
