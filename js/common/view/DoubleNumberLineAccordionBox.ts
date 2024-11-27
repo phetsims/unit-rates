@@ -11,7 +11,11 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import { optionize4 } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import { Node, NodeTranslationOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import undoSolidShape from '../../../../sherpa/js/fontawesome-5/undoSolidShape.js';
@@ -21,18 +25,14 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
+import DoubleNumberLine from '../model/DoubleNumberLine.js';
 import Marker from '../model/Marker.js';
+import MarkerEditor from '../model/MarkerEditor.js';
 import URColors from '../URColors.js';
 import URConstants from '../URConstants.js';
 import DoubleNumberLineNode, { DoubleNumberLineNodeOptions } from './DoubleNumberLineNode.js';
-import MarkerEditorNode from './MarkerEditorNode.js';
-import DoubleNumberLine from '../model/DoubleNumberLine.js';
-import MarkerEditor from '../model/MarkerEditor.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
-import { optionize4 } from '../../../../phet-core/js/optionize.js';
 import KeypadLayer from './KeypadLayer.js';
+import MarkerEditorNode from './MarkerEditorNode.js';
 
 type SelfOptions = {
   titleStringProperty?: TReadOnlyProperty<string>; // title displayed next to the expand/collapse button

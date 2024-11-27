@@ -8,9 +8,9 @@
 
 import Range from '../../../dot/js/Range.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import unitRates from '../unitRates.js';
 import { AccordionBoxOptions } from '../../../sun/js/AccordionBox.js';
 import { NumberPickerOptions } from '../../../sun/js/NumberPicker.js';
+import unitRates from '../unitRates.js';
 
 const ACCORDION_BOX_OPTIONS: AccordionBoxOptions = {
   titleBarExpandCollapse: false,

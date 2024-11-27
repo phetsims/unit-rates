@@ -7,19 +7,19 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import { optionize4 } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
 import { Text, VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
-import ShoppingQuestionNode from './ShoppingQuestionNode.js';
-import KeypadLayer from '../../common/view/KeypadLayer.js';
-import ShoppingScene from '../model/ShoppingScene.js';
-import { optionize4 } from '../../../../phet-core/js/optionize.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import ShoppingQuestion from '../model/ShoppingQuestion.js';
+import ShoppingScene from '../model/ShoppingScene.js';
+import ShoppingQuestionNode from './ShoppingQuestionNode.js';
 
 type SelfOptions = {
   vBoxSpacing?: number; // vertical spacing between UI elements in the accordion box's content

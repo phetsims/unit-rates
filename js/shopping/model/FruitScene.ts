@@ -6,11 +6,11 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import unitRates from '../../unitRates.js';
-import ShoppingScene, { ShoppingSceneOptions } from './ShoppingScene.js';
-import ShoppingItemData from './ShoppingItemData.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import unitRates from '../../unitRates.js';
+import ShoppingItemData from './ShoppingItemData.js';
+import ShoppingScene, { ShoppingSceneOptions } from './ShoppingScene.js';
 
 type SelfOptions = EmptySelfOptions;
 type FruitSceneOptions = SelfOptions & PickOptional<ShoppingSceneOptions, 'rate'>;

@@ -10,13 +10,13 @@
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import shoppingScreenIcon_png from '../../images/shoppingScreenIcon_png.js';
 import URColors from '../common/URColors.js';
 import unitRates from '../unitRates.js';
 import UnitRatesStrings from '../UnitRatesStrings.js';
 import ShoppingModel from './model/ShoppingModel.js';
 import ShoppingScreenView from './view/ShoppingScreenView.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 
 export default class ShoppingScreen extends Screen<ShoppingModel, ShoppingScreenView> {
 

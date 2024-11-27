@@ -9,10 +9,10 @@
 import { Image, Node } from '../../../../scenery/js/imports.js';
 import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
-import ShoppingItemDragListener from './ShoppingItemDragListener.js';
-import Shelf from '../model/Shelf.js';
 import Scale from '../model/Scale.js';
+import Shelf from '../model/Shelf.js';
 import ShoppingItem from '../model/ShoppingItem.js';
+import ShoppingItemDragListener from './ShoppingItemDragListener.js';
 
 export default class ShoppingItemNode extends Image {
 

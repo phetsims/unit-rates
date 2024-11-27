@@ -6,6 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import optionize from '../../../../phet-core/js/optionize.js';
 import Keypad from '../../../../scenery-phet/js/keypad/Keypad.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
@@ -14,7 +15,6 @@ import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import URColors from '../URColors.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
   valueBoxWidth?: number; // width of the value field, height determined by valueFont

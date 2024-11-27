@@ -6,16 +6,16 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { Text } from '../../../../scenery/js/imports.js';
 import ValuePanel from '../../common/view/ValuePanel.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 
 // constants
 const TIMER_FONT = new PhetFont( 16 );

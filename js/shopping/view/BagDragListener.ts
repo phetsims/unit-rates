@@ -6,14 +6,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Vector2 from '../../../../dot/js/Vector2.js';
 import { DragListener, Node } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
-import Scale from '../model/Scale.js';
-import BagNode from './BagNode.js';
 import Bag from '../model/Bag.js';
+import Scale from '../model/Scale.js';
 import Shelf from '../model/Shelf.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import ShoppingContainer from '../model/ShoppingContainer.js';
+import BagNode from './BagNode.js';
 
 export default class BagDragListener extends DragListener {
 

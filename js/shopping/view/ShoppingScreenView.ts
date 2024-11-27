@@ -6,21 +6,21 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import URConstants from '../../common/URConstants.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
 import unitRates from '../../unitRates.js';
+import ShoppingCategory from '../model/ShoppingCategory.js';
 import ShoppingModel from '../model/ShoppingModel.js';
 import ShoppingCategoryNode from './ShoppingCategoryNode.js';
 import ShoppingCategoryRadioButtonGroup from './ShoppingCategoryRadioButtonGroup.js';
 import ShoppingViewProperties from './ShoppingViewProperties.js';
-import Property from '../../../../axon/js/Property.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import ShoppingCategory from '../model/ShoppingCategory.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
 

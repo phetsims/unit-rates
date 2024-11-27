@@ -12,9 +12,9 @@
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import unitRates from '../../unitRates.js';
-import { Color } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import { Color } from '../../../../scenery/js/imports.js';
+import unitRates from '../../unitRates.js';
 import Axis from './Axis.js';
 
 // How the marker was created. Values are ordered by ascending precedence (described above).

@@ -6,13 +6,13 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import { Image, Node, NodeTranslationOptions, VBox } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import blueCar_png from '../../../images/blueCar_png.js';
 import redCar_png from '../../../images/redCar_png.js';
 import unitRates from '../../unitRates.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 
 const RADIO_BUTTON_OPTIONS = {
   baseColor: 'white',

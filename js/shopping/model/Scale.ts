@@ -7,12 +7,12 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import unitRates from '../../unitRates.js';
 import ShoppingContainer, { ShoppingContainerOptions } from './ShoppingContainer.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
   quantityUnitsStringProperty: TReadOnlyProperty<string>; // units for quantity

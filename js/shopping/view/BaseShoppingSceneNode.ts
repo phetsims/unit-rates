@@ -6,23 +6,23 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import ResetButton from '../../../../scenery-phet/js/buttons/ResetButton.js';
 import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
 import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAccordionBox.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
 import unitRates from '../../unitRates.js';
+import ShoppingScene from '../model/ShoppingScene.js';
 import BagNode from './BagNode.js';
 import RowOfMovablesNode from './RowOfMovablesNode.js';
 import ScaleNode from './ScaleNode.js';
 import ShelfNode from './ShelfNode.js';
 import ShoppingItemNode from './ShoppingItemNode.js';
-import ShoppingScene from '../model/ShoppingScene.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import KeypadLayer from '../../common/view/KeypadLayer.js';
 import ShoppingViewProperties from './ShoppingViewProperties.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 
 const BAG_ROW_STROKE = 'green';
 const ITEM_ROW_STROKE = 'blue';

@@ -12,9 +12,13 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import LinearFunction from '../../../../dot/js/LinearFunction.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -23,12 +27,8 @@ import finishFlag_png from '../../../images/finishFlag_png.js';
 import startFlag_png from '../../../images/startFlag_png.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
-import RaceTimerNode from './RaceTimerNode.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import RaceCar from '../model/RaceCar.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Multilink from '../../../../axon/js/Multilink.js';
+import RaceTimerNode from './RaceTimerNode.js';
 
 // constants
 const NEGATIVE_TRACK_LENGTH = 65; // length of track to left of starting flag, in view coordinates

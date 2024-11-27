@@ -6,13 +6,13 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import optionize from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Color, Line, Node, NodeOptions, NodeTranslationOptions, Text } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
+import Marker from '../model/Marker.js';
 import URConstants from '../URConstants.js';
 import URUtils from '../URUtils.js';
-import Marker from '../model/Marker.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
   ySpacing?: number;

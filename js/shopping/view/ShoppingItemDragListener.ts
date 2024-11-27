@@ -6,15 +6,15 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Vector2 from '../../../../dot/js/Vector2.js';
 import { DragListener, Node } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
-import ShoppingItemNode from './ShoppingItemNode.js';
-import ShoppingItem from '../model/ShoppingItem.js';
-import Shelf from '../model/Shelf.js';
-import Scale from '../model/Scale.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import ShoppingContainer from '../model/ShoppingContainer.js';
 import RowOfMovables from '../model/RowOfMovables.js';
+import Scale from '../model/Scale.js';
+import Shelf from '../model/Shelf.js';
+import ShoppingContainer from '../model/ShoppingContainer.js';
+import ShoppingItem from '../model/ShoppingItem.js';
+import ShoppingItemNode from './ShoppingItemNode.js';
 
 type RowAndCell = {
   itemRow: RowOfMovables; // the front or back row of items

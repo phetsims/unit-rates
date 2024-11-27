@@ -7,20 +7,20 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Color, FireListener, Line, Node, NodeOptions, NodeTranslationOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import editRegularShape from '../../../../sherpa/js/fontawesome-5/editRegularShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import unitRates from '../../unitRates.js';
+import MarkerEditor from '../model/MarkerEditor.js';
 import URColors from '../URColors.js';
 import URConstants from '../URConstants.js';
 import URUtils from '../URUtils.js';
-import MarkerEditor from '../model/MarkerEditor.js';
 import KeypadLayer from './KeypadLayer.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 import KeypadPanel from './KeypadPanel.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 type SelfOptions = {
   lineLength?: number; // length of the vertical line between numerator and denominator values

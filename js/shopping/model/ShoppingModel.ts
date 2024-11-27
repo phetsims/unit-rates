@@ -7,6 +7,9 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import TModel from '../../../../joist/js/TModel.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import apple_png from '../../../images/apple_png.js';
 import carrot_png from '../../../images/carrot_png.js';
@@ -15,11 +18,8 @@ import unitRates from '../../unitRates.js';
 import CandyScene from './CandyScene.js';
 import FruitScene from './FruitScene.js';
 import ShoppingCategory from './ShoppingCategory.js';
-import VegetableScene from './VegetableScene.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import TModel from '../../../../joist/js/TModel.js';
 import ShoppingItemData from './ShoppingItemData.js';
+import VegetableScene from './VegetableScene.js';
 
 type SelfOptions = {
   categoryIndex?: number; // index of the category that is initially selected

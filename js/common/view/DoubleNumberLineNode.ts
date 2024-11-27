@@ -6,17 +6,17 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Color, HStrut, Line, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
+import DoubleNumberLine from '../model/DoubleNumberLine.js';
+import Marker from '../model/Marker.js';
 import URConstants from '../URConstants.js';
 import MarkerNode, { MarkerNodeOptions } from './MarkerNode.js';
-import DoubleNumberLine from '../model/DoubleNumberLine.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Marker from '../model/Marker.js';
 
 type SelfOptions = {
 

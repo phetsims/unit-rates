@@ -8,15 +8,15 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Disposable from '../../../../axon/js/Disposable.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import unitRates from '../../unitRates.js';
 import Bag from './Bag.js';
 import RowOfMovables from './RowOfMovables.js';
 import ShoppingItem from './ShoppingItem.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Disposable from '../../../../axon/js/Disposable.js';
 
 type SelfOptions = {
   position?: Vector2; // position of the container

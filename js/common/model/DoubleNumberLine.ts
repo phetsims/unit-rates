@@ -9,13 +9,13 @@
 import createObservableArray, { ObservableArray } from '../../../../axon/js/createObservableArray.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import unitRates from '../../unitRates.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Marker from './Marker.js';
+import unitRates from '../../unitRates.js';
 import Axis from './Axis.js';
+import Marker from './Marker.js';
 
 // Which of the axes has a fix (immutable) range
 

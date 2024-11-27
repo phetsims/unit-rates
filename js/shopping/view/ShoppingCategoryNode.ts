@@ -6,17 +6,17 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import URConstants from '../../common/URConstants.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
 import unitRates from '../../unitRates.js';
+import ShoppingCategory from '../model/ShoppingCategory.js';
 import ShoppingSceneComboBox from './ShoppingSceneComboBox.js';
 import ShoppingSceneNode from './ShoppingSceneNode.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import KeypadLayer from '../../common/view/KeypadLayer.js';
-import ShoppingCategory from '../model/ShoppingCategory.js';
-import Property from '../../../../axon/js/Property.js';
 import ShoppingViewProperties from './ShoppingViewProperties.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 export default class ShoppingCategoryNode extends Node {
 

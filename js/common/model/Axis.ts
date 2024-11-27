@@ -6,11 +6,11 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import unitRates from '../../unitRates.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import SunConstants from '../../../../sun/js/SunConstants.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import SunConstants from '../../../../sun/js/SunConstants.js';
+import unitRates from '../../unitRates.js';
 
 const defaultValueFormatStringProperty = new StringProperty( SunConstants.VALUE_NUMBERED_PLACEHOLDER );
 

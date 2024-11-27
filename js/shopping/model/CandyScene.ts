@@ -8,13 +8,13 @@
  */
 
 import Range from '../../../../dot/js/Range.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import URUtils from '../../common/URUtils.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
-import ShoppingScene, { ShoppingSceneOptions } from './ShoppingScene.js';
 import ShoppingItemData from './ShoppingItemData.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import ShoppingScene, { ShoppingSceneOptions } from './ShoppingScene.js';
 
 type SelfOptions = EmptySelfOptions;
 type CandySceneOptions = SelfOptions & PickOptional<ShoppingSceneOptions, 'rate'>;

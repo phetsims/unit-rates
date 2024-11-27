@@ -7,21 +7,21 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Circle, HBox, Line, LinearGradient, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import URColors from '../../common/URColors.js';
 import URUtils from '../../common/URUtils.js';
 import ValuePanel from '../../common/view/ValuePanel.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
-import CostNode from './CostNode.js';
 import Scale from '../model/Scale.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
+import CostNode from './CostNode.js';
 
 // constants
 const PANEL_WIDTH = 132;

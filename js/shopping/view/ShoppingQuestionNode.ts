@@ -8,21 +8,21 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Multilink from '../../../../axon/js/Multilink.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { FireListener, HStrut, Line, Node, NodeOptions, Path, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
 import checkSolidShape from '../../../../sherpa/js/fontawesome-5/checkSolidShape.js';
 import editRegularShape from '../../../../sherpa/js/fontawesome-5/editRegularShape.js';
+import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import URUtils from '../../common/URUtils.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
+import KeypadPanel from '../../common/view/KeypadPanel.js';
 import unitRates from '../../unitRates.js';
 import ShoppingQuestion from '../model/ShoppingQuestion.js';
-import KeypadLayer from '../../common/view/KeypadLayer.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import KeypadPanel from '../../common/view/KeypadPanel.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   valueBoxWidth?: number; // width of the value field, height determined by valueFont

@@ -7,14 +7,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import URConstants from '../../common/URConstants.js';
-import RateAccordionBox from '../../common/view/RateAccordionBox.js';
-import BaseShoppingSceneNode from '../../shopping/view/BaseShoppingSceneNode.js';
-import unitRates from '../../unitRates.js';
-import ShoppingScene from '../../shopping/model/ShoppingScene.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import URConstants from '../../common/URConstants.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
+import RateAccordionBox from '../../common/view/RateAccordionBox.js';
+import ShoppingScene from '../../shopping/model/ShoppingScene.js';
+import BaseShoppingSceneNode from '../../shopping/view/BaseShoppingSceneNode.js';
 import ShoppingViewProperties from '../../shopping/view/ShoppingViewProperties.js';
+import unitRates from '../../unitRates.js';
 
 export default class ShoppingLabSceneNode extends BaseShoppingSceneNode {
 

@@ -8,13 +8,13 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import TModel from '../../../../joist/js/TModel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import blueCar_png from '../../../images/blueCar_png.js';
 import redCar_png from '../../../images/redCar_png.js';
 import URColors from '../../common/URColors.js';
 import unitRates from '../../unitRates.js';
 import RaceCar from './RaceCar.js';
-import TModel from '../../../../joist/js/TModel.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class RacingLabModel implements TModel {
 

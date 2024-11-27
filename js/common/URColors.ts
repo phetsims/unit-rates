@@ -6,8 +6,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import unitRates from '../unitRates.js';
 import { ProfileColorProperty } from '../../../scenery/js/imports.js';
+import unitRates from '../unitRates.js';
 
 // constants
 const DEFAULT_BUTTON_COLOR = 'rgb( 242, 242, 242 )';

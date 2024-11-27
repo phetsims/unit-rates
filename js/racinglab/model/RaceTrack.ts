@@ -7,8 +7,8 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import unitRates from '../../unitRates.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import unitRates from '../../unitRates.js';
 
 type SelfOptions = {
   length?: number; // initial distance between start and finish line, in miles

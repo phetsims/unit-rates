@@ -6,14 +6,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import unitRates from '../../unitRates.js';
-import ShoppingQuestion from './ShoppingQuestion.js';
-import Axis from '../../common/model/Axis.js';
-import UnitRatesStrings from '../../UnitRatesStrings.js';
-import URUtils from '../../common/URUtils.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import Axis from '../../common/model/Axis.js';
+import URUtils from '../../common/URUtils.js';
+import unitRates from '../../unitRates.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
+import ShoppingQuestion from './ShoppingQuestion.js';
 
 export default class UnitRateQuestion extends ShoppingQuestion {
 

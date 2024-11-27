@@ -6,13 +6,13 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StopSignNode from '../../../../scenery-phet/js/StopSignNode.js';
 import { Image, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
 import BooleanRoundToggleButton, { BooleanRoundToggleButtonOptions } from '../../../../sun/js/buttons/BooleanRoundToggleButton.js';
 import goButtonIcon_png from '../../../images/goButtonIcon_png.js';
 import unitRates from '../../unitRates.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;
 

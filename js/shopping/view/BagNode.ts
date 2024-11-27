@@ -9,10 +9,10 @@
 import { Image, Node } from '../../../../scenery/js/imports.js';
 import URConstants from '../../common/URConstants.js';
 import unitRates from '../../unitRates.js';
-import BagDragListener from './BagDragListener.js';
 import Bag from '../model/Bag.js';
-import Shelf from '../model/Shelf.js';
 import Scale from '../model/Scale.js';
+import Shelf from '../model/Shelf.js';
+import BagDragListener from './BagDragListener.js';
 
 export default class BagNode extends Image {
 

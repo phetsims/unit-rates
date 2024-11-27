@@ -7,19 +7,19 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
+import { optionize4 } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Color, Line, Node, NodeTranslationOptions, Text } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
-import URConstants from '../URConstants.js';
 import Rate from '../model/Rate.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { optionize4 } from '../../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import URConstants from '../URConstants.js';
 
 // If the Rate accordion box appears to change size when switching categories, increase this value. Determined empirically.
 const MIN_FRACTION_LINE_LENGTH = 115;

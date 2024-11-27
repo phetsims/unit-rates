@@ -7,14 +7,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import KeypadLayer from '../../common/view/KeypadLayer.js';
+import ShoppingCategory from '../../shopping/model/ShoppingCategory.js';
+import ShoppingViewProperties from '../../shopping/view/ShoppingViewProperties.js';
 import unitRates from '../../unitRates.js';
 import ShoppingLabSceneNode from './ShoppingLabSceneNode.js';
-import ShoppingCategory from '../../shopping/model/ShoppingCategory.js';
-import Property from '../../../../axon/js/Property.js';
-import KeypadLayer from '../../common/view/KeypadLayer.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import ShoppingViewProperties from '../../shopping/view/ShoppingViewProperties.js';
 
 export default class ShoppingLabCategoryNode extends Node {
 

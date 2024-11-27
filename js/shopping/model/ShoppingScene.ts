@@ -13,10 +13,15 @@
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import StringProperty from '../../../../axon/js/StringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import Axis, { AxisOptions } from '../../common/model/Axis.js';
 import DoubleNumberLine, { FixedAxis } from '../../common/model/DoubleNumberLine.js';
 import Marker from '../../common/model/Marker.js';
 import MarkerEditor from '../../common/model/MarkerEditor.js';
@@ -27,19 +32,14 @@ import URQueryParameters from '../../common/URQueryParameters.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import Bag from './Bag.js';
+import CostOfQuestion from './CostOfQuestion.js';
+import ItemsForQuestion from './ItemsForQuestion.js';
 import Scale from './Scale.js';
 import Shelf from './Shelf.js';
 import ShoppingItem from './ShoppingItem.js';
 import ShoppingItemData from './ShoppingItemData.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ShoppingQuestion from './ShoppingQuestion.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import Axis, { AxisOptions } from '../../common/model/Axis.js';
 import UnitRateQuestion from './UnitRateQuestion.js';
-import CostOfQuestion from './CostOfQuestion.js';
-import ItemsForQuestion from './ItemsForQuestion.js';
-import StringProperty from '../../../../axon/js/StringProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 const noScaleUnitsStringProperty = new StringProperty( '' );
 

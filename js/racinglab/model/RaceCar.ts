@@ -10,7 +10,9 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import { Color } from '../../../../scenery/js/imports.js';
+import Axis from '../../common/model/Axis.js';
 import DoubleNumberLine from '../../common/model/DoubleNumberLine.js';
 import Marker from '../../common/model/Marker.js';
 import MarkerEditor from '../../common/model/MarkerEditor.js';
@@ -19,8 +21,6 @@ import URQueryParameters from '../../common/URQueryParameters.js';
 import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceTrack from './RaceTrack.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import Axis from '../../common/model/Axis.js';
 
 type SelfOptions = {
   color?: Color | string; // color used for things that are associated with the car (markers, spinners, ...)

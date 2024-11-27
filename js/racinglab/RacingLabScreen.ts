@@ -10,13 +10,13 @@
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import racingLabScreenIcon_png from '../../images/racingLabScreenIcon_png.js';
 import URColors from '../common/URColors.js';
 import unitRates from '../unitRates.js';
 import UnitRatesStrings from '../UnitRatesStrings.js';
 import RacingLabModel from './model/RacingLabModel.js';
 import RacingLabScreenView from './view/RacingLabScreenView.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 
 export default class RacingLabScreen extends Screen<RacingLabModel, RacingLabScreenView> {
 

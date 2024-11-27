@@ -6,11 +6,11 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../../axon/js/Property.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import { Plane, PressListener } from '../../../../scenery/js/imports.js';
 import unitRates from '../../unitRates.js';
 import KeypadPanel from './KeypadPanel.js';
-import Property from '../../../../axon/js/Property.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 
 type BeginEditOptions = {
   onBeginEdit?: ( () => void ) | null; // called by beginEdit

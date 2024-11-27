@@ -8,6 +8,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { Color } from '../../../../scenery/js/imports.js';
 import apple_png from '../../../images/apple_png.js';
 import appleBag_png from '../../../images/appleBag_png.js';
 import blueCandy_png from '../../../images/blueCandy_png.js';
@@ -32,10 +34,8 @@ import redCandy_png from '../../../images/redCandy_png.js';
 import redCandyBag_png from '../../../images/redCandyBag_png.js';
 import tomato_png from '../../../images/tomato_png.js';
 import tomatoBag_png from '../../../images/tomatoBag_png.js';
-import UnitRatesStrings from '../../UnitRatesStrings.js';
 import unitRates from '../../unitRates.js';
-import { Color } from '../../../../scenery/js/imports.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import UnitRatesStrings from '../../UnitRatesStrings.js';
 
 // Description of a shopping item, all fields are required
 export type ShoppingItemDataOptions = {
