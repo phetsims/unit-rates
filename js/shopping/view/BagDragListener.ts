@@ -7,7 +7,8 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import { DragListener, Node } from '../../../../scenery/js/imports.js';
+import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import unitRates from '../../unitRates.js';
 import Bag from '../model/Bag.js';
 import Scale from '../model/Scale.js';

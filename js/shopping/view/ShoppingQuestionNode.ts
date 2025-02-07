@@ -11,7 +11,14 @@
 import Multilink from '../../../../axon/js/Multilink.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { FireListener, HStrut, Line, Node, NodeOptions, Path, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
+import FireListener from '../../../../scenery/js/listeners/FireListener.js';
+import HStrut from '../../../../scenery/js/nodes/HStrut.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import TColor from '../../../../scenery/js/util/TColor.js';
 import checkSolidShape from '../../../../sherpa/js/fontawesome-5/checkSolidShape.js';
 import editRegularShape from '../../../../sherpa/js/fontawesome-5/editRegularShape.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';

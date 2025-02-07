@@ -9,7 +9,7 @@
  */
 
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { Color } from '../../../../scenery/js/imports.js';
+import Color from '../../../../scenery/js/util/Color.js';
 import apple_png from '../../../images/apple_png.js';
 import appleBag_png from '../../../images/appleBag_png.js';
 import blueCandy_png from '../../../images/blueCandy_png.js';

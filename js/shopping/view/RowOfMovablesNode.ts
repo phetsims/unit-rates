@@ -7,8 +7,9 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import { Shape } from '../../../../kite/js/imports.js';
-import { Path, TPaint } from '../../../../scenery/js/imports.js';
+import Shape from '../../../../kite/js/Shape.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import TPaint from '../../../../scenery/js/util/TPaint.js';
 import unitRates from '../../unitRates.js';
 import RowOfMovables from '../model/RowOfMovables.js';
 
