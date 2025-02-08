@@ -1,4 +1,4 @@
-// Copyright 2016-2024, University of Colorado Boulder
+// Copyright 2016-2025, University of Colorado Boulder
 
 /**
  * Maker editor, used to manually enter markers on the double number line.
