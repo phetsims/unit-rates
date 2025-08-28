@@ -8,7 +8,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import apple_png from '../../../images/apple_png.js';
 import appleBag_png from '../../../images/appleBag_png.js';

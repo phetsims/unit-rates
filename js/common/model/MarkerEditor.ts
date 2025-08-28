@@ -9,7 +9,7 @@
  */
 
 import Property, { PropertyOptions } from '../../../../axon/js/Property.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import unitRates from '../../unitRates.js';
 import Axis from './Axis.js';

@@ -7,7 +7,7 @@
  */
 
 import StringProperty from '../../../../axon/js/StringProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import SunConstants from '../../../../sun/js/SunConstants.js';
 import unitRates from '../../unitRates.js';

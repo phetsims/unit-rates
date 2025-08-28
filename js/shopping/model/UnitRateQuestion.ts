@@ -7,7 +7,7 @@
  */
 
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import Axis from '../../common/model/Axis.js';
 import URUtils from '../../common/URUtils.js';
