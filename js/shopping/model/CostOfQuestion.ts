@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2025, University of Colorado Boulder
 
 /**
  * UnitRateQuestion is a question of the form of the form 'Cost of 10 Apples?' or 'Cost of 2.2 pounds?'
