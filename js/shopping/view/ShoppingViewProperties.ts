@@ -7,7 +7,6 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import unitRates from '../../unitRates.js';
 
 export default class ShoppingViewProperties {
 
@@ -37,5 +36,3 @@ export default class ShoppingViewProperties {
     this.rateExpandedProperty.reset();
   }
 }
-
-unitRates.register( 'ShoppingViewProperties', ShoppingViewProperties );

@@ -12,7 +12,6 @@
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import unitRates from '../../unitRates.js';
 
 type SelfOptions = {
   position?: Vector2; // initial position
@@ -135,5 +134,3 @@ export default class URMovable {
     }
   }
 }
-
-unitRates.register( 'URMovable', URMovable );

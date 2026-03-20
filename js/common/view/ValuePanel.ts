@@ -21,7 +21,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
-import unitRates from '../../unitRates.js';
 
 // constants
 const BACKGROUND_RECTANGLE_STROKE = ( phet.chipper.queryParameters.dev ? 'red' : null );
@@ -138,5 +137,3 @@ export default class ValuePanel extends Panel {
     } );
   }
 }
-
-unitRates.register( 'ValuePanel', ValuePanel );

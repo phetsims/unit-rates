@@ -34,7 +34,6 @@ import redCandy_png from '../../../images/redCandy_png.js';
 import redCandyBag_png from '../../../images/redCandyBag_png.js';
 import tomato_png from '../../../images/tomato_png.js';
 import tomatoBag_png from '../../../images/tomatoBag_png.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 
 // Description of a shopping item, all fields are required
@@ -322,5 +321,3 @@ export default class ShoppingItemData {
     ]
   } );
 }
-
-unitRates.register( 'ShoppingItemData', ShoppingItemData );

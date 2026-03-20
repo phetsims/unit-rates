@@ -13,7 +13,6 @@ import Image from '../../../scenery/js/nodes/Image.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import shoppingScreenIcon_png from '../../images/shoppingScreenIcon_png.js';
 import URColors from '../common/URColors.js';
-import unitRates from '../unitRates.js';
 import UnitRatesStrings from '../UnitRatesStrings.js';
 import ShoppingModel from './model/ShoppingModel.js';
 import ShoppingScreenView from './view/ShoppingScreenView.js';
@@ -39,5 +38,3 @@ export default class ShoppingScreen extends Screen<ShoppingModel, ShoppingScreen
     );
   }
 }
-
-unitRates.register( 'ShoppingScreen', ShoppingScreen );

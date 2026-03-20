@@ -29,7 +29,6 @@ import Rate from '../../common/model/Rate.js';
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import Bag from './Bag.js';
 import CostOfQuestion from './CostOfQuestion.js';
@@ -431,5 +430,3 @@ export default class ShoppingScene {
     }
   }
 }
-
-unitRates.register( 'ShoppingScene', ShoppingScene );

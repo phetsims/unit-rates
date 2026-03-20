@@ -14,7 +14,6 @@ import Node, { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import blueCar_png from '../../../images/blueCar_png.js';
 import redCar_png from '../../../images/redCar_png.js';
-import unitRates from '../../unitRates.js';
 
 const RADIO_BUTTON_OPTIONS = {
   baseColor: 'white',
@@ -87,5 +86,3 @@ function createCarImage( imageFile: HTMLImageElement, maxCarWidth: number ): Nod
   carImage.setScaleMagnitude( maxCarWidth / carImage.width );
   return carImage;
 }
-
-unitRates.register( 'NumberOfCarsRadioButtonGroup', NumberOfCarsRadioButtonGroup );

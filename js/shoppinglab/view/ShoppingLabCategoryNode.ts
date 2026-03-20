@@ -13,7 +13,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
 import ShoppingCategory from '../../shopping/model/ShoppingCategory.js';
 import ShoppingViewProperties from '../../shopping/view/ShoppingViewProperties.js';
-import unitRates from '../../unitRates.js';
 import ShoppingLabSceneNode from './ShoppingLabSceneNode.js';
 
 export default class ShoppingLabCategoryNode extends Node {
@@ -34,5 +33,3 @@ export default class ShoppingLabCategoryNode extends Node {
     } );
   }
 }
-
-unitRates.register( 'ShoppingLabCategoryNode', ShoppingLabCategoryNode );

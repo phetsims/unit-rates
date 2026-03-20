@@ -10,7 +10,6 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import URMovable, { URMovableOptions } from '../../common/model/URMovable.js';
-import unitRates from '../../unitRates.js';
 
 type SelfOptions = {
   visible?: boolean; // is the item initially visible?
@@ -52,5 +51,3 @@ export default class ShoppingItem extends URMovable {
     super.reset();
   }
 }
-
-unitRates.register( 'ShoppingItem', ShoppingItem );

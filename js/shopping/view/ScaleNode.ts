@@ -25,7 +25,6 @@ import LinearGradient from '../../../../scenery/js/util/LinearGradient.js';
 import URColors from '../../common/URColors.js';
 import URUtils from '../../common/URUtils.js';
 import ValuePanel from '../../common/view/ValuePanel.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import Scale from '../model/Scale.js';
 import CostNode from './CostNode.js';
@@ -203,5 +202,3 @@ export default class ScaleNode extends Node {
     this.translation = scale.position;
   }
 }
-
-unitRates.register( 'ScaleNode', ScaleNode );

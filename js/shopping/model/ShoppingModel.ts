@@ -14,7 +14,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import apple_png from '../../../images/apple_png.js';
 import carrot_png from '../../../images/carrot_png.js';
 import purpleCandy_png from '../../../images/purpleCandy_png.js';
-import unitRates from '../../unitRates.js';
 import CandyScene from './CandyScene.js';
 import FruitScene from './FruitScene.js';
 import ShoppingCategory from './ShoppingCategory.js';
@@ -101,5 +100,3 @@ export default class ShoppingModel implements TModel {
     }
   }
 }
-
-unitRates.register( 'ShoppingModel', ShoppingModel );

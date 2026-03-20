@@ -12,7 +12,6 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import URConstants from '../../common/URConstants.js';
 import RateAccordionBox, { RateAccordionBoxOptions } from '../../common/view/RateAccordionBox.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceCar from '../model/RaceCar.js';
 
@@ -45,5 +44,3 @@ export default class RaceCarRateAccordionBox extends RateAccordionBox {
     super( car.rate, options );
   }
 }
-
-unitRates.register( 'RaceCarRateAccordionBox', RaceCarRateAccordionBox );

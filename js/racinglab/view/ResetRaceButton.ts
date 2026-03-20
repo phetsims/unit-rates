@@ -12,7 +12,6 @@ import Image from '../../../../scenery/js/nodes/Image.js';
 import { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import resetRaceButton_png from '../../../images/resetRaceButton_png.js';
-import unitRates from '../../unitRates.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -31,5 +30,3 @@ export default class ResetRaceButton extends RectangularPushButton {
     }, providedOptions ) );
   }
 }
-
-unitRates.register( 'ResetRaceButton', ResetRaceButton );

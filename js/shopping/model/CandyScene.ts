@@ -11,7 +11,6 @@ import Range from '../../../../dot/js/Range.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import URUtils from '../../common/URUtils.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import ShoppingScene, { ShoppingSceneOptions } from './ShoppingScene.js';
@@ -53,5 +52,3 @@ export default class CandyScene extends ShoppingScene {
     super( itemData, options );
   }
 }
-
-unitRates.register( 'CandyScene', CandyScene );

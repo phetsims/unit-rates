@@ -13,7 +13,6 @@ import Image from '../../../../scenery/js/nodes/Image.js';
 import { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import BooleanRoundToggleButton, { BooleanRoundToggleButtonOptions } from '../../../../sun/js/buttons/BooleanRoundToggleButton.js';
 import goButtonIcon_png from '../../../images/goButtonIcon_png.js';
-import unitRates from '../../unitRates.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -44,5 +43,3 @@ export default class StartStopButton extends BooleanRoundToggleButton {
     } );
   }
 }
-
-unitRates.register( 'StartStopButton', StartStopButton );

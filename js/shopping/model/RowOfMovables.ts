@@ -17,7 +17,6 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import URMovable from '../../common/model/URMovable.js';
-import unitRates from '../../unitRates.js';
 
 type Cell = {
   movable: URMovable | null; // the URMovable that occupies cell, null if the cell is unoccupied
@@ -229,5 +228,3 @@ function createCells( numberOfCells: number, position: Vector2, cellSize: Dimens
 
   return cells;
 }
-
-unitRates.register( 'RowOfMovables', RowOfMovables );

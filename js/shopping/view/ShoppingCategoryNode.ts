@@ -12,7 +12,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import URConstants from '../../common/URConstants.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
-import unitRates from '../../unitRates.js';
 import ShoppingCategory from '../model/ShoppingCategory.js';
 import ShoppingSceneComboBox from './ShoppingSceneComboBox.js';
 import ShoppingSceneNode from './ShoppingSceneNode.js';
@@ -58,5 +57,3 @@ export default class ShoppingCategoryNode extends Node {
     } );
   }
 }
-
-unitRates.register( 'ShoppingCategoryNode', ShoppingCategoryNode );

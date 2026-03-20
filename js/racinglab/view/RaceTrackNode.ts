@@ -31,7 +31,6 @@ import Path from '../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import finishFlag_png from '../../../images/finishFlag_png.js';
 import startFlag_png from '../../../images/startFlag_png.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceCar from '../model/RaceCar.js';
 import RaceTimerNode from './RaceTimerNode.js';
@@ -250,5 +249,3 @@ function createMarkerNode(): Node {
     .close();
   return new Path( markerShape, TRACK_MARKER_OPTIONS );
 }
-
-unitRates.register( 'RaceTrackNode', RaceTrackNode );

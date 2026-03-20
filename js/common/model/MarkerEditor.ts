@@ -11,7 +11,6 @@
 import Property, { PropertyOptions } from '../../../../axon/js/Property.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
-import unitRates from '../../unitRates.js';
 import Axis from './Axis.js';
 
 export default class MarkerEditor {
@@ -85,5 +84,3 @@ export default class MarkerEditor {
     return ( this.numeratorProperty.value === null && this.denominatorProperty.value === null );
   }
 }
-
-unitRates.register( 'MarkerEditor', MarkerEditor );

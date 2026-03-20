@@ -14,7 +14,6 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import unitRates from '../../unitRates.js';
 import Axis from './Axis.js';
 
 // How the marker was created. Values are ordered by ascending precedence (described above).
@@ -107,5 +106,3 @@ export default class Marker {
     return CreatorValues.indexOf( marker.creator ) - CreatorValues.indexOf( this.creator );
   }
 }
-
-unitRates.register( 'Marker', Marker );

@@ -15,7 +15,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import URConstants from '../../common/URConstants.js';
 import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAccordionBox.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RacingLabModel from '../model/RacingLabModel.js';
 import NumberOfCarsRadioButtonGroup from './NumberOfCarsRadioButtonGroup.js';
@@ -178,5 +177,3 @@ export default class RacingLabScreenView extends ScreenView {
       } );
   }
 }
-
-unitRates.register( 'RacingLabScreenView', RacingLabScreenView );

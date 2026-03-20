@@ -8,7 +8,6 @@
 
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ShoppingScreenView from '../../shopping/view/ShoppingScreenView.js';
-import unitRates from '../../unitRates.js';
 import ShoppingLabModel from '../model/ShoppingLabModel.js';
 import ShoppingLabCategoryNode from './ShoppingLabCategoryNode.js';
 
@@ -22,5 +21,3 @@ export default class ShoppingLabScreenView extends ShoppingScreenView {
     } );
   }
 }
-
-unitRates.register( 'ShoppingLabScreenView', ShoppingLabScreenView );

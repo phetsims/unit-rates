@@ -9,7 +9,6 @@
 import Utils from '../../../dot/js/Utils.js';
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import SunConstants from '../../../sun/js/SunConstants.js';
-import unitRates from '../unitRates.js';
 
 const URUtils = {
 
@@ -70,7 +69,5 @@ const URUtils = {
     }
   }
 };
-
-unitRates.register( 'URUtils', URUtils );
 
 export default URUtils;

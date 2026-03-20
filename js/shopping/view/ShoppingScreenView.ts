@@ -15,7 +15,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import URConstants from '../../common/URConstants.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
-import unitRates from '../../unitRates.js';
 import ShoppingCategory from '../model/ShoppingCategory.js';
 import ShoppingModel from '../model/ShoppingModel.js';
 import ShoppingCategoryNode from './ShoppingCategoryNode.js';
@@ -83,5 +82,3 @@ export default class ShoppingScreenView extends ScreenView {
     this.addChild( screenViewRootNode );
   }
 }
-
-unitRates.register( 'ShoppingScreenView', ShoppingScreenView );

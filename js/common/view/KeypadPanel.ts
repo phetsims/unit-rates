@@ -15,7 +15,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import URColors from '../URColors.js';
 
@@ -126,5 +125,3 @@ export default class KeypadPanel extends Panel {
     return this.keypad.stringProperty.value;
   }
 }
-
-unitRates.register( 'KeypadPanel', KeypadPanel );

@@ -8,7 +8,6 @@
 
 import logGlobal from '../../../phet-core/js/logGlobal.js';
 import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
-import unitRates from '../unitRates.js';
 
 const URQueryParameters = QueryStringMachine.getAll( {
 
@@ -33,8 +32,6 @@ const URQueryParameters = QueryStringMachine.getAll( {
   // For internal use only.
   showCells: { type: 'flag' }
 } );
-
-unitRates.register( 'URQueryParameters', URQueryParameters );
 
 // Log query parameters
 logGlobal( 'phet.chipper.queryParameters' );

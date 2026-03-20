@@ -68,6 +68,4 @@ type StringsType = {
 
 const UnitRatesStrings = getStringModule( 'UNIT_RATES' ) as StringsType;
 
-unitRates.register( 'UnitRatesStrings', UnitRatesStrings );
-
 export default UnitRatesStrings;

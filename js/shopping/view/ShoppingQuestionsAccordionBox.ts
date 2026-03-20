@@ -16,7 +16,6 @@ import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionB
 import URColors from '../../common/URColors.js';
 import URConstants from '../../common/URConstants.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingQuestion from '../model/ShoppingQuestion.js';
 import ShoppingScene from '../model/ShoppingScene.js';
@@ -104,5 +103,3 @@ export default class ShoppingQuestionsAccordionBox extends AccordionBox {
     shoppingScene.questionSetProperty.link( questionSetObserver );
   }
 }
-
-unitRates.register( 'ShoppingQuestionsAccordionBox', ShoppingQuestionsAccordionBox );

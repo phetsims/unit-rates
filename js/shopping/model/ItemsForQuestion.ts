@@ -12,7 +12,6 @@ import Utils from '../../../../dot/js/Utils.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import Axis from '../../common/model/Axis.js';
 import URUtils from '../../common/URUtils.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import ShoppingQuestion from './ShoppingQuestion.js';
 
@@ -74,5 +73,3 @@ export default class ItemsForQuestion extends ShoppingQuestion {
     super.dispose();
   }
 }
-
-unitRates.register( 'ItemsForQuestion', ItemsForQuestion );

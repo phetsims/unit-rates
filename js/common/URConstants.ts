@@ -10,7 +10,6 @@ import Range from '../../../dot/js/Range.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { AccordionBoxOptions } from '../../../sun/js/AccordionBox.js';
 import { NumberPickerOptions } from '../../../sun/js/NumberPicker.js';
-import unitRates from '../unitRates.js';
 
 const ACCORDION_BOX_OPTIONS: AccordionBoxOptions = {
   titleBarExpandCollapse: false,
@@ -74,7 +73,5 @@ const URConstants = {
   MINOR_MARKER_LENGTH: 30,
   MARKER_Y_SPACING: 1  // space between the marker line and its values
 };
-
-unitRates.register( 'URConstants', URConstants );
 
 export default URConstants;

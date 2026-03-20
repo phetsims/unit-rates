@@ -19,7 +19,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import Rate from '../model/Rate.js';
 import URConstants from '../URConstants.js';
@@ -153,5 +152,3 @@ export default class RateAccordionBox extends AccordionBox {
     super( contentNode, options );
   }
 }
-
-unitRates.register( 'RateAccordionBox', RateAccordionBox );

@@ -28,7 +28,6 @@ import URConstants from '../../common/URConstants.js';
 import URUtils from '../../common/URUtils.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
 import KeypadPanel from '../../common/view/KeypadPanel.js';
-import unitRates from '../../unitRates.js';
 import ShoppingQuestion from '../model/ShoppingQuestion.js';
 
 type SelfOptions = {
@@ -269,5 +268,3 @@ export default class ShoppingQuestionNode extends Node {
     super.dispose();
   }
 }
-
-unitRates.register( 'ShoppingQuestionNode', ShoppingQuestionNode );

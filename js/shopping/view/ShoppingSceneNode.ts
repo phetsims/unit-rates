@@ -10,7 +10,6 @@
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import URConstants from '../../common/URConstants.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
-import unitRates from '../../unitRates.js';
 import ShoppingScene from '../model/ShoppingScene.js';
 import BaseShoppingSceneNode from './BaseShoppingSceneNode.js';
 import ShoppingQuestionsAccordionBox from './ShoppingQuestionsAccordionBox.js';
@@ -35,5 +34,3 @@ export default class ShoppingSceneNode extends BaseShoppingSceneNode {
     } );
   }
 }
-
-unitRates.register( 'ShoppingSceneNode', ShoppingSceneNode );

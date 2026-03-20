@@ -19,7 +19,6 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import unitRates from '../../unitRates.js';
 import URUtils from '../URUtils.js';
 
 export default class Rate {
@@ -73,5 +72,3 @@ export default class Rate {
     return new Rate( Utils.toFixedNumber( fraction.numerator, 0 ), Utils.toFixedNumber( fraction.denominator, 0 ) );
   }
 }
-
-unitRates.register( 'Rate', Rate );

@@ -13,7 +13,6 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import URColors from '../../common/URColors.js';
-import unitRates from '../../unitRates.js';
 import Shelf from '../model/Shelf.js';
 
 export default class ShelfNode extends Node {
@@ -59,5 +58,3 @@ export default class ShelfNode extends Node {
     this.translation = shelf.position;
   }
 }
-
-unitRates.register( 'ShelfNode', ShelfNode );

@@ -12,7 +12,6 @@ import Image from '../../../../scenery/js/nodes/Image.js';
 import { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import URColors from '../../common/URColors.js';
-import unitRates from '../../unitRates.js';
 import ShoppingCategory from '../model/ShoppingCategory.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -49,5 +48,3 @@ export default class ShoppingCategoryRadioButtonGroup extends RectangularRadioBu
     super( categoryProperty, items, options );
   }
 }
-
-unitRates.register( 'ShoppingCategoryRadioButtonGroup', ShoppingCategoryRadioButtonGroup );

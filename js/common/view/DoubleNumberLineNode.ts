@@ -16,7 +16,6 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import unitRates from '../../unitRates.js';
 import DoubleNumberLine from '../model/DoubleNumberLine.js';
 import Marker from '../model/Marker.js';
 import URConstants from '../URConstants.js';
@@ -230,5 +229,3 @@ export default class DoubleNumberLineNode extends Node {
     return markerNode;
   }
 }
-
-unitRates.register( 'DoubleNumberLineNode', DoubleNumberLineNode );

@@ -13,7 +13,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import blueCar_png from '../../../images/blueCar_png.js';
 import redCar_png from '../../../images/redCar_png.js';
 import URColors from '../../common/URColors.js';
-import unitRates from '../../unitRates.js';
 import RaceCar from './RaceCar.js';
 
 export default class RacingLabModel implements TModel {
@@ -102,5 +101,3 @@ export default class RacingLabModel implements TModel {
     }
   }
 }
-
-unitRates.register( 'RacingLabModel', RacingLabModel );

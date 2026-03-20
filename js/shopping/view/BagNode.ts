@@ -9,7 +9,6 @@
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import URConstants from '../../common/URConstants.js';
-import unitRates from '../../unitRates.js';
 import Bag from '../model/Bag.js';
 import Scale from '../model/Scale.js';
 import Shelf from '../model/Shelf.js';
@@ -37,5 +36,3 @@ export default class BagNode extends Image {
     this.addInputListener( dragListener );
   }
 }
-
-unitRates.register( 'BagNode', BagNode );

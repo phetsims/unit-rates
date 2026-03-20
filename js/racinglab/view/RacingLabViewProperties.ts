@@ -7,7 +7,6 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import unitRates from '../../unitRates.js';
 
 export default class RacingLabViewProperties {
 
@@ -50,5 +49,3 @@ export default class RacingLabViewProperties {
     this.arrowsVisibleProperty.reset();
   }
 }
-
-unitRates.register( 'RacingLabViewProperties', RacingLabViewProperties );

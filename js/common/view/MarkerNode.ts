@@ -12,7 +12,6 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node, { NodeOptions, NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import unitRates from '../../unitRates.js';
 import Marker from '../model/Marker.js';
 import URConstants from '../URConstants.js';
 import URUtils from '../URUtils.js';
@@ -91,5 +90,3 @@ export default class MarkerNode extends Node {
     super.dispose();
   }
 }
-
-unitRates.register( 'MarkerNode', MarkerNode );

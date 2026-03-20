@@ -9,7 +9,6 @@
 import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
-import unitRates from '../../unitRates.js';
 import ShoppingScene from './ShoppingScene.js';
 
 export default class ShoppingCategory {
@@ -53,5 +52,3 @@ export default class ShoppingCategory {
     this.shoppingSceneProperty.value.step( dt );
   }
 }
-
-unitRates.register( 'ShoppingCategory', ShoppingCategory );

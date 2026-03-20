@@ -92,6 +92,4 @@ const URColors = {
   car2: 'rgb( 0, 143, 204 )' // blue car, must match blueCar.png
 };
 
-unitRates.register( 'URColors', URColors );
-
 export default URColors;

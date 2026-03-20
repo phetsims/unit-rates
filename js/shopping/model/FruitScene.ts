@@ -8,7 +8,6 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
-import unitRates from '../../unitRates.js';
 import ShoppingItemData from './ShoppingItemData.js';
 import ShoppingScene, { ShoppingSceneOptions } from './ShoppingScene.js';
 
@@ -28,5 +27,3 @@ export default class FruitScene extends ShoppingScene {
     super( itemData, options );
   }
 }
-
-unitRates.register( 'FruitScene', FruitScene );

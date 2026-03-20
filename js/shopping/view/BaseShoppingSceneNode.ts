@@ -15,7 +15,6 @@ import URConstants from '../../common/URConstants.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
 import DoubleNumberLineAccordionBox from '../../common/view/DoubleNumberLineAccordionBox.js';
 import KeypadLayer from '../../common/view/KeypadLayer.js';
-import unitRates from '../../unitRates.js';
 import ShoppingScene from '../model/ShoppingScene.js';
 import BagNode from './BagNode.js';
 import RowOfMovablesNode from './RowOfMovablesNode.js';
@@ -139,5 +138,3 @@ export default class BaseShoppingSceneNode extends Node {
     this.doubleNumberLineAccordionBox = doubleNumberLineAccordionBox;
   }
 }
-
-unitRates.register( 'BaseShoppingSceneNode', BaseShoppingSceneNode );

@@ -21,7 +21,6 @@ import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import URUtils from '../../common/URUtils.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 
 type SelfOptions = {
@@ -118,5 +117,3 @@ export default class CostNode extends Node {
     this.mutate( options );
   }
 }
-
-unitRates.register( 'CostNode', CostNode );

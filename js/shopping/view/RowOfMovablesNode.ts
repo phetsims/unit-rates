@@ -10,7 +10,6 @@
 import Shape from '../../../../kite/js/Shape.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import TPaint from '../../../../scenery/js/util/TPaint.js';
-import unitRates from '../../unitRates.js';
 import RowOfMovables from '../model/RowOfMovables.js';
 
 export default class RowOfMovablesNode extends Path {
@@ -33,5 +32,3 @@ export default class RowOfMovablesNode extends Path {
     } );
   }
 }
-
-unitRates.register( 'RowOfMovablesNode', RowOfMovablesNode );

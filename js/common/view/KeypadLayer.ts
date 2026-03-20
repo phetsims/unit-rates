@@ -10,7 +10,6 @@ import Property from '../../../../axon/js/Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PressListener from '../../../../scenery/js/listeners/PressListener.js';
 import Plane from '../../../../scenery/js/nodes/Plane.js';
-import unitRates from '../../unitRates.js';
 import KeypadPanel from './KeypadPanel.js';
 
 type BeginEditOptions = {
@@ -153,5 +152,3 @@ export default class KeypadLayer extends Plane {
 function isValidValue( value: number, zeroIsValid: boolean ): boolean {
   return !isNaN( value ) && !( value === 0 && !zeroIsValid );
 }
-
-unitRates.register( 'KeypadLayer', KeypadLayer );

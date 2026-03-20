@@ -17,7 +17,6 @@ import Node, { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ComboBox, { ComboBoxItem, ComboBoxOptions } from '../../../../sun/js/ComboBox.js';
-import unitRates from '../../unitRates.js';
 import ShoppingScene from '../model/ShoppingScene.js';
 
 type SelfOptions = {
@@ -97,5 +96,3 @@ function createItem( shoppingScene: ShoppingScene, iconSize: Dimension2 ): Combo
     } )
   };
 }
-
-unitRates.register( 'ShoppingSceneComboBox', ShoppingSceneComboBox );

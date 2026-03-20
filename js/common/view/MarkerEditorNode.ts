@@ -20,7 +20,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import editRegularShape from '../../../../sherpa/js/fontawesome-5/editRegularShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import unitRates from '../../unitRates.js';
 import MarkerEditor from '../model/MarkerEditor.js';
 import URColors from '../URColors.js';
 import URConstants from '../URConstants.js';
@@ -272,5 +271,3 @@ export default class MarkerEditorNode extends Node {
     markerEditor.denominatorProperty.link( denominatorObserver );
   }
 }
-
-unitRates.register( 'MarkerEditorNode', MarkerEditorNode );

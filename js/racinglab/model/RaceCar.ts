@@ -18,7 +18,6 @@ import Marker from '../../common/model/Marker.js';
 import MarkerEditor from '../../common/model/MarkerEditor.js';
 import Rate from '../../common/model/Rate.js';
 import URQueryParameters from '../../common/URQueryParameters.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import RaceTrack from './RaceTrack.js';
 
@@ -173,5 +172,3 @@ export default class RaceCar {
     }
   }
 }
-
-unitRates.register( 'RaceCar', RaceCar );

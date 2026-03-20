@@ -25,7 +25,6 @@ import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionB
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import unitRates from '../../unitRates.js';
 import UnitRatesStrings from '../../UnitRatesStrings.js';
 import DoubleNumberLine from '../model/DoubleNumberLine.js';
 import Marker from '../model/Marker.js';
@@ -332,5 +331,3 @@ export default class DoubleNumberLineAccordionBox extends AccordionBox {
     return this.doubleNumberLineNode.parentToGlobalPoint( new Vector2( this.doubleNumberLineNode.x, this.doubleNumberLineNode.y ) );
   }
 }
-
-unitRates.register( 'DoubleNumberLineAccordionBox', DoubleNumberLineAccordionBox );

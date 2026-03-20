@@ -9,7 +9,6 @@
 import Vector2 from '../../../../dot/js/Vector2.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import unitRates from '../../unitRates.js';
 import Bag from '../model/Bag.js';
 import Scale from '../model/Scale.js';
 import Shelf from '../model/Shelf.js';
@@ -190,5 +189,3 @@ function replaceBagWithItems( bag: Bag, scale: Scale ): void {
     item.visibleProperty.value = true;
   }
 }
-
-unitRates.register( 'BagDragListener', BagDragListener );
