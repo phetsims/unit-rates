@@ -39,6 +39,6 @@ unitRates.register( 'URQueryParameters', URQueryParameters );
 // Log query parameters
 logGlobal( 'phet.chipper.queryParameters' );
 logGlobal( 'phet.preloads.phetio.queryParameters' );
-logGlobal( 'phet.unitRates.URQueryParameters' );
+phet.log && phet.log( `URQueryParameters: ${JSON.stringify( URQueryParameters, null, 2 )}` );
 
 export default URQueryParameters;
