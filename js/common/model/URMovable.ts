@@ -1,4 +1,4 @@
-// Copyright 2017-2024, University of Colorado Boulder
+// Copyright 2017-2026, University of Colorado Boulder
 
 /**
  * A model element that is movable.
